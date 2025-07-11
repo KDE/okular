@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-12-19 22:13+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -95,8 +95,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "פתיחה…"
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -194,3 +194,6 @@ msgstr "לא זמין"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "לא נמצאה תוצאה."
+
+#~ msgid "Open..."
+#~ msgstr "פתיחה…"

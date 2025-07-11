@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2014-10-29 17:45+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -321,8 +321,9 @@ msgstr ""
 "dokumentet kan være uleselig.</qt>"
 
 #: fontpool.cpp:482
-#, kde-format
-msgid "Currently generating %1 at %2 dpi..."
+#, fuzzy, kde-format
+#| msgid "Currently generating %1 at %2 dpi..."
+msgid "Currently generating %1 at %2 dpi…"
 msgstr "Lager nå %1 med %2 dpi …"
 
 #: generator_dvi.cpp:288

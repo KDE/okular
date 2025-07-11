@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2019-02-09 13:18-0800\n"
 "Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -260,7 +260,7 @@ msgstr ""
 #: fontpool.cpp:482
 #, fuzzy, kde-format
 #| msgid "Okular is currently generating bitmap fonts..."
-msgid "Currently generating %1 at %2 dpi..."
+msgid "Currently generating %1 at %2 dpi…"
 msgstr "ਓਕਲਾਰ ਇਸ ਵੇਲੇ ਬਿੱਟਮੈਪ ਫੋਂਟ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ..."
 
 #: generator_dvi.cpp:288

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -101,8 +101,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Адкрыць..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -204,3 +204,6 @@ msgstr "Недаступна"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Нічога не знойдзена."
+
+#~ msgid "Open..."
+#~ msgstr "Адкрыць..."

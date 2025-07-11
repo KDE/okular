@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-01-11 12:41+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -94,8 +94,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Öppna..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -193,6 +193,9 @@ msgstr "Inte tillgänglig"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Inga resultat hittades."
+
+#~ msgid "Open..."
+#~ msgstr "Öppna..."
 
 #~ msgid "Search..."
 #~ msgstr "Sök..."

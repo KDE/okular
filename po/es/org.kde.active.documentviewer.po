@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-05-20 02:18+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -96,8 +96,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Abrir…"
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -195,3 +195,6 @@ msgstr "No disponible"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "No se ha encontrado ningún resultado."
+
+#~ msgid "Open..."
+#~ msgstr "Abrir…"

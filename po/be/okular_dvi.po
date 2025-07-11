@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-08-11 21:04\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -322,8 +322,9 @@ msgstr ""
 "дакумент можа быць нечытальным.</qt>"
 
 #: fontpool.cpp:482
-#, kde-format
-msgid "Currently generating %1 at %2 dpi..."
+#, fuzzy, kde-format
+#| msgid "Currently generating %1 at %2 dpi..."
+msgid "Currently generating %1 at %2 dpi…"
 msgstr "Стварэнне %1 з %2 dpi..."
 
 #: generator_dvi.cpp:288

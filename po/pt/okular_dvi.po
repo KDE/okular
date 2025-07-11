@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2014-05-12 10:36+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
@@ -334,8 +334,9 @@ msgstr ""
 "ilegível.</qt>"
 
 #: fontpool.cpp:482
-#, kde-format
-msgid "Currently generating %1 at %2 dpi..."
+#, fuzzy, kde-format
+#| msgid "Currently generating %1 at %2 dpi..."
+msgid "Currently generating %1 at %2 dpi…"
 msgstr "A gerar de momento o %1 a %2 ppp..."
 
 #: generator_dvi.cpp:288

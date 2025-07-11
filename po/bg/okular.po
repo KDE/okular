@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-06-29 20:42+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -148,8 +148,9 @@ msgid "Open external file"
 msgstr "Отваряне на външен файл"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Изпълнение на „%1“..."
 
 #: core/action.cpp:296
@@ -199,17 +200,19 @@ msgstr "Край на презентация"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Търсене..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Отиване на страница..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Към страница"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Звуков сигнал..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -218,9 +221,10 @@ msgid "JavaScript Script"
 msgstr "JavaScript скрипт"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Видео..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Пускане на филм"
 
 #: core/action.cpp:556
 #, kde-format
@@ -291,35 +295,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Продължаващо търсене от началото"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Продължаващо търсене отдолу"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Не е намерена приставка за обработка на този документ."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "премахване на бележките"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +332,52 @@ msgstr ""
 "Документът се опитва да стартира външно приложение. От съображения за "
 "сигурност Okular не позволява това."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Не е намерена програма, която да може да отвори файла от типа %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Грешка при отваряне на временния файл"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Грешка при преобразуването за печат"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Процесът за печат блокира"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Процесът за печат не може да се зареди"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Грешка при печат към файл"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Принтерът е в неподходящо състояние"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Грешка при откриване на файл за печат"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Няма файл за отпечатване"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +386,92 @@ msgstr ""
 "Не е открита подходяща програма за печат. Уверете се, че програмата lpr на "
 "CUPS е налична"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Размерът на страницата за печат е невалиден"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "„%1“ не може да бъде отворен. Файлът не съществува."
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Заглавие"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Описание"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Автор"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Създател"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Производител"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Авторски права"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Страници"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Създаден"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Последна промяна"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "Тип MIME"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Категория"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Ключови думи"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Път до файла"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Големина на файла"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Размери на страницата"
@@ -539,8 +543,9 @@ msgid "edit form button states"
 msgstr "редактиране на състоянията на бутоните на формуляра"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Неформатиран &текст..."
 
 #: core/generator.cpp:790
@@ -1427,9 +1432,11 @@ msgid "Transparent"
 msgstr "Прозрачен"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Персонализиран цвят..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1676,9 +1683,11 @@ msgid "&Properties"
 msgstr "&Информация"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "&Запис на „%1“..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2193,28 +2202,28 @@ msgstr ""
 "Тази анотация може да съдържа LaTeX код. \n"
 "Щракнете тук, за да изобразите."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Не е намерена програмата latex."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Грешка при обработката с LaTeX"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Не е намерена програмата dvipng."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Възникна проблем при изпълнение на програмата \"latex\"."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Възникна проблем при изпълнение на програмата \"dvipng\"."
@@ -2251,8 +2260,9 @@ msgstr "Показване на всички документи"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
+#, fuzzy, kde-format
+#| msgid "Search..."
+msgid "Search…"
 msgstr "Търсене..."
 
 #: part/bookmarklist.cpp:257
@@ -2288,8 +2298,9 @@ msgid "Certificate Viewer"
 msgstr "Разглеждане на сертификати"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Експортиране..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3457,16 +3468,18 @@ msgid "Modified"
 msgstr "Последна промяна"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "Запи&с като..."
+msgid "&Save As…"
+msgstr "Запазване като"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "&Преглед..."
+msgid "&View…"
+msgstr "&Изглед"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3548,9 +3561,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Поле за подпис (Кликнете за подпис)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "&Подписване..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Подписване"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3734,8 +3749,9 @@ msgid "Selection Tools"
 msgstr "Инструменти за избор"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "Цифров &подпис..."
 
 #: part/pageview.cpp:711
@@ -3892,8 +3908,9 @@ msgid "Search for '%1' with"
 msgstr "Търсене на „%1“ с"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Настройки на уеб-препратки..."
 
 #: part/pageview.cpp:4408
@@ -4332,24 +4349,28 @@ msgid "Go to the next bookmark"
 msgstr "Към следващата отметка"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Настройки на Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Настройки на прегледа..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Настройки на прегледа"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Конфигуриране на пакети за преглед..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Конфигуриране на бекенд за преглед"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Настройки на бекенд"
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Настройване на бекенд"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4377,9 +4398,11 @@ msgid "Page Number"
 msgstr "Номер на страница"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Конфигуриране на цветовите режими..."
 
 #: part/part.cpp:858
@@ -4428,8 +4451,9 @@ msgid "Open Con&taining Folder"
 msgstr "Отваряне на съдържащата папка"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Внасяне на Postscript като PDF..."
 
 #: part/part.cpp:950
@@ -4443,8 +4467,9 @@ msgid "Erase Drawing"
 msgstr "Изтриване на рисунка"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Настройки на бележките..."
 
 #: part/part.cpp:968
@@ -4512,8 +4537,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript файлове (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Импортиране на PS файла като PDF (може да отнеме известно време)..."
 
 #: part/part.cpp:1490
@@ -4667,8 +4693,9 @@ msgstr ""
 "визуализатор."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Презареждане на документа..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4831,8 +4858,9 @@ msgid "Warning"
 msgstr "Внимание"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Запазване като архив на документи на Okular..."
 
 #: part/part.cpp:2792
@@ -5265,8 +5293,9 @@ msgid "&Fonts"
 msgstr "&Шрифтове"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Четене на информацията за шрифта..."
 
 #: part/propertiesdialog.cpp:158
@@ -5688,13 +5717,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Ревизия на документ %1 от %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Преглед на подписаната версия..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Преглед на сертификата..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5753,13 +5784,14 @@ msgstr "Не се поддържа видео"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "До&бавяне..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "&Редактиране..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "&Редактиране"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6028,6 +6060,41 @@ msgstr "Забравяне на всичко"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Скриване на приветстващия  прозорец"
+
+#~ msgid "Find..."
+#~ msgstr "Търсене..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Отиване на страница..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Видео..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "Запи&с като..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&Преглед..."
+
+#~ msgid "&Sign..."
+#~ msgstr "&Подписване..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Настройки на прегледа..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Конфигуриране на пакети за преглед..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Настройки на бекенд"
+
+#~ msgid "&Add..."
+#~ msgstr "До&бавяне..."
+
+#~ msgid "&Edit..."
+#~ msgstr "&Редактиране..."
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

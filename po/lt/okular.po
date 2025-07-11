@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-01-06 21:45+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -149,8 +149,9 @@ msgid "Open external file"
 msgstr "Atverti išorinį failą"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Vykdyti „%1“..."
 
 #: core/action.cpp:296
@@ -200,17 +201,19 @@ msgstr "Baigti pateiktį"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Rasti..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Eiti į puslapį..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Eiti į puslapį"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Atkurti garsą..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -219,9 +222,10 @@ msgid "JavaScript Script"
 msgstr "JavaScript scenarijus"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Atkurti filmą..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Atkurti filmą"
 
 #: core/action.cpp:556
 #, kde-format
@@ -292,35 +296,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Tęsiama paiešką nuo pradžios"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Tęsiama paiešką nuo apačios"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nepavyksta rasti įskiepio, kuris galėtų apdoroti perduodamą dokumentą."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "šalinti anotacijas"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -329,52 +333,52 @@ msgstr ""
 "Dokumentas bando paleisti išorinę programą ir, jūsų saugumo sumetimais, "
 "Okular to neleidžia."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nepavyko rasti programos, skirtos atverti mime tipą %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nepavyko atverti laikinojo failo"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Spausdinimo keitimas nepavyko"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Spausdinimo procesas užstrigo"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nepavyko pradėti spausdinimo proceso"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nepavyko spausdinti į failą"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Spausdintuvas buvo neteisingoje būsenoje"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nepavyko rasti failo, kurį spausdinti"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebuvo jokio failo, kurį spausdinti"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -383,92 +387,92 @@ msgstr ""
 "Nepavyko rasti tinkamo dvejetainio failo spausdinimui. Įsitikinkite, kad "
 "CUPS lpr dvejetainis failas yra prieinamas"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Puslapio spaudinio dydis yra neteisingas"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepavyko atverti „%1“. Failas nėra"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Aprašas"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Autorius"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Kūrėjas"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Gamintojas"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Autorių teisės"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Puslapiai"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Sukurta"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Modifikuota"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tipas"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Raktažodžiai"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Failo kelias"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Failo dydis"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Puslapio dydis"
@@ -540,8 +544,9 @@ msgid "edit form button states"
 msgstr "redaguoti formos mygtuko būsenas"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Grynasis &tekstas..."
 
 #: core/generator.cpp:790
@@ -1444,9 +1449,11 @@ msgid "Transparent"
 msgstr "Permatoma"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Tinkinta spalva..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1695,9 +1702,11 @@ msgid "&Properties"
 msgstr "&Savybės"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "Į&rašyti „%1“..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2214,28 +2223,28 @@ msgstr ""
 "Šioje anotacijoje gali būti LaTeX kodo.\n"
 "Spustelėkite čia, norėdami atvaizduoti."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Nepavyksta rasti latex vykdomojo failo."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX atvaizdavimas nepavyko"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Nepavyksta rasti dvipng vykdomojo failo."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Vykdant „latex“ komandą, atsirado problema."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Vykdant „dvipng“ komandą, atsirado problema."
@@ -2280,9 +2289,10 @@ msgstr "Rodyti visiems dokumentams"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "Ieškoti..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "I&eškoti:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2317,8 +2327,9 @@ msgid "Certificate Viewer"
 msgstr "Liudijimų žiūryklė"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Eksportuoti..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3493,16 +3504,18 @@ msgid "Modified"
 msgstr "Modifikuota"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "Į&rašyti kaip..."
+msgid "&Save As…"
+msgstr "Įrašyti kaip"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "&Rodinys..."
+msgid "&View…"
+msgstr "&Rodinys"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3585,9 +3598,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Nepasirašyto parašo laukas (Spustelėkite, norėdami pasirašyti)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "&Pasirašyti..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Pasirašyti"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3771,8 +3786,9 @@ msgid "Selection Tools"
 msgstr "Žymėjimo įrankiai"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "Skaitmeniškai pa&sirašyti..."
 
 #: part/pageview.cpp:711
@@ -3933,8 +3949,9 @@ msgid "Search for '%1' with"
 msgstr "Ieškoti „%1“ naudojant"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Konfigūruoti saityno trumpinius..."
 
 #: part/pageview.cpp:4408
@@ -4378,24 +4395,28 @@ msgid "Go to the next bookmark"
 msgstr "Eiti į kitą žymelę"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Konfigūruoti Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Konfigūruoti žiūryklę..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Konfigūruoti žiūryklę"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Konfigūruoti žiūryklės programines sąsajas..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Konfigūruoti žiūryklės programines sąsajas"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Konfigūruoti programines sąsajas..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Konfigūruoti programines sąsajas"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4423,9 +4444,11 @@ msgid "Page Number"
 msgstr "Puslapio numeris"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Konfigūruoti spalvos veiksenas..."
 
 #: part/part.cpp:858
@@ -4474,8 +4497,9 @@ msgid "Open Con&taining Folder"
 msgstr "Atverti &vidinį aplanką"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Importuoti PostScript kaip PDF..."
 
 #: part/part.cpp:950
@@ -4489,8 +4513,9 @@ msgid "Erase Drawing"
 msgstr "Ištrinti piešinį"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Konfigūruoti anotacijas..."
 
 #: part/part.cpp:968
@@ -4559,8 +4584,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript failai (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importuojamas PS failas kaip PDF (tai gali užtrukti)..."
 
 #: part/part.cpp:1490
@@ -4714,8 +4740,9 @@ msgstr ""
 "įtaisytąją žiūryklę."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Dokumentas įkeliamas iš naujo..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4876,8 +4903,9 @@ msgid "Warning"
 msgstr "Įspėjimas"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Įrašyti kaip Okular dokumento archyvą..."
 
 #: part/part.cpp:2792
@@ -5308,8 +5336,9 @@ msgid "&Fonts"
 msgstr "Šri&ftai"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Skaitoma šriftų informacija..."
 
 #: part/propertiesdialog.cpp:158
@@ -5733,13 +5762,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumento revizija %1 iš %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Rodyti pasirašytą versiją..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Rodyti liudijimą..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5798,13 +5829,14 @@ msgstr "Šioje Okular vaizdo įrašai yra nepalaikomi"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "&Pridėti..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "&Taisyti..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "&Taisyti"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6079,6 +6111,44 @@ msgstr "Išvalyti visus"
 msgid "Hide welcome screen"
 msgstr "Slėpti pasisveikinimo langą"
 
+#~ msgid "Find..."
+#~ msgstr "Rasti..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Eiti į puslapį..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Atkurti filmą..."
+
+#~ msgid "Search..."
+#~ msgstr "Ieškoti..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "Į&rašyti kaip..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&Rodinys..."
+
+#~ msgid "&Sign..."
+#~ msgstr "&Pasirašyti..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Konfigūruoti žiūryklę..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Konfigūruoti žiūryklės programines sąsajas..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Konfigūruoti programines sąsajas..."
+
+#~ msgid "&Add..."
+#~ msgstr "&Pridėti..."
+
+#~ msgid "&Edit..."
+#~ msgstr "&Taisyti..."
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6152,9 +6222,6 @@ msgstr "Slėpti pasisveikinimo langą"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "Automatiškai talpinti"
-
-#~ msgid "S&earch:"
-#~ msgstr "I&eškoti:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Visi failai"

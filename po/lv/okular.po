@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-03-18 18:00+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -151,8 +151,9 @@ msgid "Open external file"
 msgstr "Atvērt ārēju datni"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Izpildīt „%1“..."
 
 #: core/action.cpp:296
@@ -202,17 +203,19 @@ msgstr "Beigt prezentāciju"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Meklēt..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Iet uz lapu..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Iet uz lapu"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Atskaņot skaņu..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -221,9 +224,10 @@ msgid "JavaScript Script"
 msgstr "JavaScript skripts"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Atskaņot filmu..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Atskaņot filmu"
 
 #: core/action.cpp:556
 #, kde-format
@@ -294,35 +298,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Turpināt meklēšanu no sākuma"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Turpināt meklēšanu no beigām"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Neizdevās atrast spraudni, kas spētu apstrādāt padoto dokumentu."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "noņemt anotācijas"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -331,52 +335,52 @@ msgstr ""
 "Dokuments mēģina palaist ārēju programmu, bet jūsu drošībai „Okular“ to "
 "neatļauj."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nav atrasta neviena programma datnes ar %1 mime tipu atvēršanai."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Neizdevās atvērt pagaidu datni"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Drukāšanas pārveide neizdevās"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Drukāšanas process avarēja"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Drukāšanas procesu neizdevās palaist"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Drukāšana uz datni neizdevās"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printeris atradās neatļautā stāvoklī"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Neizdevās atrast drukājamo datni"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebija datnes, ko drukāt"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -385,92 +389,92 @@ msgstr ""
 "Neizdevās atrast piemērotu bināro datni drukāšanai. Pārliecinieties, ka CUPS "
 "lpr binārā datne ir pieejama"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Nederīgs lapas drukas izmērs"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Neizdevās atvērt „%1“. Datne neeksistē"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Virsraksts"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Tēma"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Apraksts"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Autors"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Izveidotājs"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Ražotājs"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Autortiesības"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Lapas"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Izveidots"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Mainīts"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tips"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Datnes ceļš"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Datnes izmērs"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Lapas izmērs"
@@ -542,8 +546,9 @@ msgid "edit form button states"
 msgstr "rediģēt formas pogas stāvokļus"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Vienkāršs &teksts..."
 
 #: core/generator.cpp:790
@@ -1449,9 +1454,11 @@ msgid "Transparent"
 msgstr "Caurspīdīgs"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Pielāgota krāsa..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1699,9 +1706,11 @@ msgid "&Properties"
 msgstr "Ī&pašības"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "&Saglabāt „%1“..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2216,28 +2225,28 @@ msgstr ""
 "Šī anotācija var saturēt LaTeX kodu.\n"
 "Noklikšķiniet šeit, lai to atveidotu."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Neizdevās atrast „latex“ izpildāmo programmu."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX atveidošana neizdevās"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Neizdevās atrast „dvipng“ izpildāmo programmu."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Komandas „latex“ izpildes laikā radās kļūda."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Komandas „dvipng“ izpildes laikā radās kļūda."
@@ -2278,9 +2287,10 @@ msgstr "Parādīt visiem dokumentiem"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "Meklēt..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "M&eklēt:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2315,8 +2325,9 @@ msgid "Certificate Viewer"
 msgstr "Sertifikātu skatītājs"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Eksportēt..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3483,16 +3494,18 @@ msgid "Modified"
 msgstr "Mainīts"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "&Saglabāt kā..."
+msgid "&Save As…"
+msgstr "Saglabāt kā"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "&Skats..."
+msgid "&View…"
+msgstr "&Skats"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3575,9 +3588,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Neparakstīts paraksta lauks (klikšķināt, lai parakstītu)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "&Parakstīt..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Parakstīt"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3761,8 +3776,9 @@ msgid "Selection Tools"
 msgstr "Iezīmēšanas rīki"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "Digitāli &parakstīt..."
 
 #: part/pageview.cpp:711
@@ -3921,8 +3937,9 @@ msgid "Search for '%1' with"
 msgstr "Meklēt „%1“ ar"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Pārvaldīt tīmekļa īsceļus..."
 
 #: part/pageview.cpp:4408
@@ -4359,24 +4376,28 @@ msgid "Go to the next bookmark"
 msgstr "Iet uz nākamo grāmatzīmi"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Pārvaldīt Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Pārvaldīt skatītāju..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Pārvaldīt skatītāju"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Pārvaldīt skatītāja aizmugursistēmas..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Pārvaldīt skatītāja aizmugursistēmas"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Pārvaldīt aizmugursistēmas..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Pārvaldīt aizmugursistēmas"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4404,9 +4425,11 @@ msgid "Page Number"
 msgstr "Lapas numurs"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Pārvaldīt krāsu režīmus..."
 
 #: part/part.cpp:858
@@ -4455,8 +4478,9 @@ msgid "Open Con&taining Folder"
 msgstr "Atvērt &saturošo mapi"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Importēt PostScript kā PDF..."
 
 #: part/part.cpp:950
@@ -4470,8 +4494,9 @@ msgid "Erase Drawing"
 msgstr "Dzēst zīmējumu"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Pārvaldīt anotācijas..."
 
 #: part/part.cpp:968
@@ -4539,8 +4564,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript datnes (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importē PS datni kā PDF (tas var prasīt kādu laiku)..."
 
 #: part/part.cpp:1490
@@ -4692,8 +4718,9 @@ msgstr ""
 "iegulto skatītāju."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Pārlādē dokumentu..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4853,8 +4880,9 @@ msgid "Warning"
 msgstr "Brīdinājums"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Saglabāt kā Okular dokumentu arhīvu..."
 
 #: part/part.cpp:2792
@@ -5284,8 +5312,9 @@ msgid "&Fonts"
 msgstr "&Fonti"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Nolasa fontu informāciju..."
 
 #: part/propertiesdialog.cpp:158
@@ -5706,13 +5735,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumenta revīzija %1. no %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Aplūkot parakstīto versiju..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Aplūkot sertifikātu..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5771,13 +5802,14 @@ msgstr "Šajā „Okular“ būvējumā video atskaņošana nav atbalstīta"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "&Pievienot..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "R&ediģēt..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "R&ediģēt"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6045,6 +6077,44 @@ msgstr "Aizmirst visus"
 msgid "Hide welcome screen"
 msgstr "Paslēpt sveiciena ekrānu"
 
+#~ msgid "Find..."
+#~ msgstr "Meklēt..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Iet uz lapu..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Atskaņot filmu..."
+
+#~ msgid "Search..."
+#~ msgstr "Meklēt..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "&Saglabāt kā..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&Skats..."
+
+#~ msgid "&Sign..."
+#~ msgstr "&Parakstīt..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Pārvaldīt skatītāju..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Pārvaldīt skatītāja aizmugursistēmas..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Pārvaldīt aizmugursistēmas..."
+
+#~ msgid "&Add..."
+#~ msgstr "&Pievienot..."
+
+#~ msgid "&Edit..."
+#~ msgstr "R&ediģēt..."
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6107,9 +6177,6 @@ msgstr "Paslēpt sveiciena ekrānu"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "Automātiska ietilpināšana"
-
-#~ msgid "S&earch:"
-#~ msgstr "M&eklēt:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Visi faili"

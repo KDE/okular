@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-12-27 17:40+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -95,8 +95,8 @@ msgid "Okular"
 msgstr "Okulara"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Malfermu..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -194,3 +194,6 @@ msgstr "Ne disponebla"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Neniuj rezultoj trovitaj."
+
+#~ msgid "Open..."
+#~ msgstr "Malfermu..."

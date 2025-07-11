@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-01-06 21:43+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -97,8 +97,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Atverti..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -196,6 +196,9 @@ msgstr "Neprieinama"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Rezultatų nerasta."
+
+#~ msgid "Open..."
+#~ msgstr "Atverti..."
 
 #~ msgid "Search..."
 #~ msgstr "Ieškoti..."

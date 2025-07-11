@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 00:41+0000\n"
-"PO-Revision-Date: 2025-03-07 09:39+0100\n"
+"PO-Revision-Date: 2025-07-10 08:54+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -309,12 +309,12 @@ msgstr "Configuració del dorsal de PDF"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Ha fallat en escriure el fitxer temporal"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Ha fallat en canviar de nom el fitxer temporal"
 
 #: generator_pdf.cpp:2274
 #, kde-format

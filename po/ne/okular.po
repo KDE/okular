@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -144,7 +144,7 @@ msgstr ""
 
 #: core/action.cpp:197
 #, kde-format
-msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr ""
 
 #: core/action.cpp:296
@@ -199,18 +199,18 @@ msgstr "प्रस्तुतिकरण"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
+msgid "Find…"
 msgstr ""
 
 #: core/action.cpp:316
 #, fuzzy, kde-format
 #| msgid "Go to Page"
-msgid "Go To Page..."
+msgid "Go To Page…"
 msgstr "पृष्ठमा जानुहोस्"
 
 #: core/action.cpp:367
 #, kde-format
-msgid "Play sound..."
+msgid "Play sound…"
 msgstr ""
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -219,9 +219,10 @@ msgid "JavaScript Script"
 msgstr ""
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Pages:"
+msgid "Play movie…"
+msgstr "पृष्ठहरू:"
 
 #: core/action.cpp:556
 #, kde-format
@@ -292,36 +293,36 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr ""
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "प्रस्तुतिकरण"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, fuzzy, kde-format
 #| msgid ""
 #| "The pdf file is trying to execute an external application and for your "
@@ -333,151 +334,151 @@ msgstr ""
 "पीडीएफ फाइल एउटा बाह्य अनुप्रयोग कार्यन्वयन गर्न प्रयास गरिरहेको छ र तपाईँको सुरक्षाका "
 "लागि केपीडीएफ ले त्यो अनुमति दिदैन ।"
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 माइमप्रकारको खुला फाइलका लागि कुनै अनुप्रयोग फेला परेन ।"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open a temporary file"
 msgstr "%1 खोल्न सकेन"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find file to print"
 msgstr "केपीडीएफ भाग फेला पार्न अक्षम भयो ।"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "विषय"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "लेखक"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "सर्जक"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "निर्माता"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "पृष्ठहरू:"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "सिर्जित"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "परिमार्जित"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "प्रकार"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Category"
 msgstr "सर्जक"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "शब्दकुञ्जी"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "पृष्ठहरू"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"
@@ -558,9 +559,10 @@ msgid "edit form button states"
 msgstr ""
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Fit to &Text"
+msgid "Plain &Text…"
+msgstr "पाठमा मिलाउनुहोस्"
 
 #: core/generator.cpp:790
 #, fuzzy, kde-format
@@ -1477,7 +1479,7 @@ msgstr ""
 #: part/annotationactionhandler.cpp:445
 #, kde-format
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr ""
 
 #: part/annotationactionhandler.cpp:499
@@ -1744,7 +1746,7 @@ msgstr "गुण"
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "फाइलमा बचत गर्नुहोस्..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2275,28 +2277,28 @@ msgid ""
 "Click here to render."
 msgstr ""
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr ""
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr ""
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr ""
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr ""
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""
@@ -2331,7 +2333,7 @@ msgstr "कागजात पुन: लोडिङ हुदैछ..."
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
-msgid "Search..."
+msgid "Search…"
 msgstr ""
 
 #: part/bookmarklist.cpp:257
@@ -2371,7 +2373,7 @@ msgstr "केपीडीएफ कन्फिगर गर्नुहोस�
 
 #: part/certificateviewer.cpp:50
 #, kde-format
-msgid "Export..."
+msgid "Export…"
 msgstr ""
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3617,13 +3619,13 @@ msgstr "परिमार्जित"
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgctxt "@action:inmenu"
-msgid "&Save As..."
+msgid "&Save As…"
 msgstr "फाइलमा बचत गर्नुहोस्..."
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "&View..."
+msgid "&View…"
 msgstr ""
 
 #: part/fileprinterpreview.cpp:113
@@ -3709,7 +3711,7 @@ msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
-msgid "&Sign..."
+msgid "&Sign…"
 msgstr ""
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
@@ -3913,7 +3915,7 @@ msgstr "उपकरण चयन गर्नुहोस्"
 
 #: part/pageview.cpp:705
 #, kde-format
-msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr ""
 
 #: part/pageview.cpp:711
@@ -4089,7 +4091,7 @@ msgstr ""
 #: part/pageview.cpp:4382
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/pageview.cpp:4408
@@ -4526,25 +4528,25 @@ msgstr "पुस्तकचिनो लगाइएका पृष्ठ म
 #: part/part.cpp:748
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:751
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Viewer..."
+msgid "Configure Viewer…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:757
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Viewer Backends..."
+msgid "Configure Viewer Backends…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:759
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Backends..."
+msgid "Configure Backends…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:795
@@ -4578,7 +4580,7 @@ msgstr "पृष्ठहरू"
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:858
@@ -4631,7 +4633,7 @@ msgstr ""
 
 #: part/part.cpp:946
 #, kde-format
-msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr ""
 
 #: part/part.cpp:950
@@ -4648,7 +4650,7 @@ msgstr "प्रस्तुतिकरण"
 #: part/part.cpp:963
 #, fuzzy, kde-format
 #| msgid "Configure KPDF..."
-msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/part.cpp:968
@@ -4717,7 +4719,7 @@ msgstr ""
 
 #: part/part.cpp:1358
 #, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr ""
 
 #: part/part.cpp:1490
@@ -4860,8 +4862,9 @@ msgstr ""
 "गर्दैन ।"
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "कागजात पुन: लोडिङ हुदैछ..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -5012,7 +5015,7 @@ msgstr ""
 
 #: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
-msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr ""
 
 #: part/part.cpp:2792
@@ -5429,7 +5432,7 @@ msgstr ""
 #: part/propertiesdialog.cpp:145
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
-msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "कागजात पुन: लोडिङ हुदैछ..."
 
 #: part/propertiesdialog.cpp:158
@@ -5875,13 +5878,14 @@ msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
-msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Configure KPDF..."
+msgid "View Certificate…"
+msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #: part/signaturepropertiesdialog.cpp:97
 #, fuzzy, kde-format
@@ -5941,12 +5945,12 @@ msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
+msgid "&Add…"
 msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
-msgid "&Edit..."
+msgid "&Edit…"
 msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:35
@@ -6220,6 +6224,27 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Go to Page"
+#~ msgid "Go To Page..."
+#~ msgstr "पृष्ठमा जानुहोस्"
+
+#, fuzzy
+#~| msgid "Save to File..."
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "फाइलमा बचत गर्नुहोस्..."
+
+#, fuzzy
+#~| msgid "Configure KPDF..."
+#~ msgid "Configure Viewer..."
+#~ msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
+
+#, fuzzy
+#~| msgid "Configure KPDF..."
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "केपीडीएफ कन्फिगर गर्नुहोस्..."
 
 #, fuzzy
 #~| msgid "Unknown"
@@ -6529,11 +6554,6 @@ msgstr ""
 #~| msgid "Moves to the next page of the document"
 #~ msgid "Could not load the necessary plugin to view the document."
 #~ msgstr "कागजातको पछिल्लो पृष्ठमा सर्दछ"
-
-#, fuzzy
-#~| msgid "Fit to &Text"
-#~ msgid "Fit &Text"
-#~ msgstr "पाठमा मिलाउनुहोस्"
 
 #, fuzzy
 #~| msgid "Advance every:"

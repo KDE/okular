@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -153,8 +153,9 @@ msgid "Open external file"
 msgstr "Άνοιγμα εξωτερικού αρχείου"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Εκτέλεση '%1'..."
 
 #: core/action.cpp:296
@@ -204,17 +205,19 @@ msgstr "Τερματισμός παρουσίασης"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Αναζήτηση..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Μετάβαση στη σελίδα..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Μετακίνηση στη σελίδα"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Αναπαραγωγή ήχου..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -223,9 +226,10 @@ msgid "JavaScript Script"
 msgstr "Σενάριο JavaScript"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Αναπαραγωγή ταινίας..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Αναπαραγωγή ταινίας"
 
 #: core/action.cpp:556
 #, kde-format
@@ -300,35 +304,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Συνέχιση της αναζήτησης από την αρχή"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Συνέχιση της αναζήτησης από το τέλος"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Αδυναμία εύρεσης ενός πρόσθετου για το χειρισμό του εγγράφου."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "διαγραφή σημειώσεων"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -337,52 +341,52 @@ msgstr ""
 "Το έγγραφο προσπαθεί να εκτελέσει μια εξωτερική εφαρμογή και για τη δική σας "
 "ασφάλεια το Okular δεν το επιτρέπει."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Δε βρέθηκε εφαρμογή για το άνοιγμα αρχείων τύπου %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Αδύνατο το άνοιγμα ενός προσωρινού αρχείου"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Αποτυχία μετατροπής εκτύπωσης"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Η διεργασία εκτύπωσης κατέρρευσε"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Αδυναμία εκκίνησης της εκτύπωσης"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Αποτυχία εκτύπωσης σε αρχείο"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Ο εκτυπωτής ήταν σε μη έγκυρη κατάσταση"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Αδυναμία εύρεσης αρχείου για εκτύπωση"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Δεν υπάρχει αρχείο για εκτύπωση"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -391,92 +395,92 @@ msgstr ""
 "Αδυναμία εύρεσης ενός κατάλληλου δυαδικού για την εκτύπωση. Σιγουρευτείτε "
 "ότι το δυαδικό CUPS lpr είναι διαθέσιμο"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Μη έγκυρο μέγεθος εκτύπωσης σελίδας"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Αδύνατο το άνοιγμα του \"%1\". Το αρχείο δεν υπάρχει."
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Τίτλος"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Θέμα"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Συγγραφέας"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Δημιουργός"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Παραγωγός"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Πνευματικά δικαιώματα"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Σελίδες"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Δημιουργήθηκε"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Τροποποιήθηκε"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "Τύπος MIME"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Κατηγορία"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Λέξεις κλειδιά"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Διαδρομή αρχείου"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Μέγεθος αρχείου"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Μέγεθος σελίδας"
@@ -548,8 +552,9 @@ msgid "edit form button states"
 msgstr "επεξεργασία της κατάστασης των κουμπιών της φόρμας"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Απλό &κείμενο..."
 
 #: core/generator.cpp:790
@@ -1454,9 +1459,11 @@ msgid "Transparent"
 msgstr "Διαφανές"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Προσαρμοσμένο χρώμα..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1704,9 +1711,11 @@ msgid "&Properties"
 msgstr "&Ιδιότητες"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "&Αποθήκευση '%1'..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2223,28 +2232,28 @@ msgstr ""
 "Αυτή η σημείωση μπορεί να περιέχει κώδικα LaTeX.\n"
 "Κάντε κλικ εδώ για την αποτύπωση."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Δεν ήταν δυνατό να βρεθεί το εκτελέσιμο latex."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Αποτυχία αποτύπωσης LaTeX"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Δεν ήταν δυνατό να βρεθεί το εκτελέσιμο dvipng."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Ένα πρόβλημα εμφανίστηκε κατά την εκτέλεση της εντολής 'latex'."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Ένα πρόβλημα εμφανίστηκε κατά την εκτέλεση της εντολής 'dvipng'."
@@ -2281,9 +2290,10 @@ msgstr "Εμφάνισε για όλα τα έγγραφα"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "Αναζήτηση..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "Α&ναζήτηση:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2318,8 +2328,9 @@ msgid "Certificate Viewer"
 msgstr "Προβολή πιστοποιητικού"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Εξαγωγή..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3500,16 +3511,18 @@ msgid "Modified"
 msgstr "Τροποποίηση"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "&Αποθήκευση ως..."
+msgid "&Save As…"
+msgstr "Αποθήκευση ως"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "Π&ροβολή..."
+msgid "&View…"
+msgstr "Π&ροβολή"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3592,9 +3605,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Ανυπόγραφο Πεδίο Υπογραφής (Πατήστε για Υπογραφή)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "Υπόγραψε..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Υπόγραψε"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3778,8 +3793,9 @@ msgid "Selection Tools"
 msgstr "Εργαλεία επιλογής"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "Ψηφιακή &υπογραφή..."
 
 #: part/pageview.cpp:711
@@ -3940,8 +3956,9 @@ msgid "Search for '%1' with"
 msgstr "Αναζήτηση για '%1' με"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Διαμόρφωση συντομεύσεων ιστού..."
 
 #: part/pageview.cpp:4408
@@ -4381,24 +4398,28 @@ msgid "Go to the next bookmark"
 msgstr "Μετάβαση στον επόμενο σελιδοδείκτη"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Διαμόρφωση του Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Διαμόρφωση προβολέα..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Διαμόρφωση προβολέα"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Διαμόρφωση συστημάτων υποστήριξης προβολέα..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Διαμόρφωση συστημάτων υποστήριξης προβολέα"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Διαμόρφωση συστημάτων υποστήριξης..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Διαμόρφωση συστημάτων υποστήριξης"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4426,9 +4447,11 @@ msgid "Page Number"
 msgstr "Αριθμός σελίδας"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Διαμόρφωση λειτουργιών χρώματος..."
 
 #: part/part.cpp:858
@@ -4477,8 +4500,9 @@ msgid "Open Con&taining Folder"
 msgstr "Άνοιγμα περιέχον&τος φακέλου"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Εισαγωγή Postscript ως PDF..."
 
 #: part/part.cpp:950
@@ -4492,8 +4516,9 @@ msgid "Erase Drawing"
 msgstr "Σβήσιμο σχεδίων"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Διαμόρφωση σημειώσεων..."
 
 #: part/part.cpp:968
@@ -4562,8 +4587,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript αρχεία (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Εισαγωγή αρχείου PS ως PDF (μπορεί να διαρκέσει αρκετά)..."
 
 #: part/part.cpp:1490
@@ -4718,8 +4744,9 @@ msgstr ""
 "λειτουργεί όταν χρησιμοποιείτε τον ενσωματωμένο προβολέα."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Επαναφόρτωση του εγγράφου..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4884,8 +4911,9 @@ msgid "Warning"
 msgstr "Προειδοποίηση"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Αποθήκευση ως αρχειοθήκη εγγράφων Okular..."
 
 #: part/part.cpp:2792
@@ -5320,8 +5348,9 @@ msgid "&Fonts"
 msgstr "&Γραμματοσειρές"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Ανάγνωση πληροφοριών γραμματοσειράς..."
 
 #: part/propertiesdialog.cpp:158
@@ -5748,13 +5777,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Αναθεώρηση εγγράφου %1 από %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Προβολή υπογεγραμμένης έκδοσης..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Προβολή πιστοποιητικού..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5813,12 +5844,13 @@ msgstr "Τα βίντεο δεν υποστηρίζονται από αυτό τ
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "&Προσθήκη..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
 msgstr "&Επεξεργασία"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
@@ -6091,6 +6123,44 @@ msgstr "Να ξεχαστούν όλα"
 msgid "Hide welcome screen"
 msgstr "Απόκρυψη οθόνης υποδοχής"
 
+#~ msgid "Find..."
+#~ msgstr "Αναζήτηση..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Μετάβαση στη σελίδα..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Αναπαραγωγή ταινίας..."
+
+#~ msgid "Search..."
+#~ msgstr "Αναζήτηση..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "&Αποθήκευση ως..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "Π&ροβολή..."
+
+#~ msgid "&Sign..."
+#~ msgstr "Υπόγραψε..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Διαμόρφωση προβολέα..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Διαμόρφωση συστημάτων υποστήριξης προβολέα..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Διαμόρφωση συστημάτων υποστήριξης..."
+
+#~ msgid "&Add..."
+#~ msgstr "&Προσθήκη..."
+
+#~ msgid "&Edit..."
+#~ msgstr "&Επεξεργασία"
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6160,9 +6230,6 @@ msgstr "Απόκρυψη οθόνης υποδοχής"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "Αυτόματη προσαρμογή"
-
-#~ msgid "S&earch:"
-#~ msgstr "Α&ναζήτηση:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Όλα τα αρχεία"

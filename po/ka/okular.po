@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
-"PO-Revision-Date: 2025-06-28 03:51+0200\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"PO-Revision-Date: 2025-07-10 03:50+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -146,8 +146,9 @@ msgid "Open external file"
 msgstr "გარე ფაილის გახსნა"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "'%1'-ის შესრულება..."
 
 #: core/action.cpp:296
@@ -197,17 +198,19 @@ msgstr "პრეზენტაციის დასასრული"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "მოძებნა…"
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "გვერდზე გადასვლა..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "გვერდზე გადასვლა"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "ხმის დაკვრა..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -216,9 +219,10 @@ msgid "JavaScript Script"
 msgstr "JavaScript-ის სკრიპტი"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "ფილმის დაკვრა..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "ფილმის დაკვრა"
 
 #: core/action.cpp:556
 #, kde-format
@@ -289,17 +293,17 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 მმ (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ძებნის თავიდან გაგრძელება"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "ძებნის ბოლოდან გაგრძელება"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -307,19 +311,19 @@ msgstr ""
 "დამატება, რომელიც გადმოცემული დოკუმენტის დასამუშავებლადაა საჭირო, აღმოჩენილი "
 "არაა."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "ამ დოკუმენტის ტიპისთვის ხელმოწერა განხორციელებული არაა"
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ანოტაციების წაშლა"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +332,52 @@ msgstr ""
 "დოკუმენტი ცდილობს, გაუშვას გარე აპლიკაცია და თქვენი უსაფრთხოებისთვის Okular "
 "მას ამის უფლებას არ აძლევს."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME ტიპის, %1 მქონე ფაილის გასახსნელად აპლიკაცია აღმოჩენილი არაა."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "დროებითი ფაილის გახსნის შეცდომა"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ბეჭდვის გადაყვანის შეცდომა"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ბეჭდვის პროცესი ავარიულად დასრულდა"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ბეჭდვის პროცესის გაშვების შეცდომა"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ფაილში დაბეჭდვის შეცდომა"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "პრინტერი არასწორ მდგომარეობაშია"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "დასაბეჭდი ფაილის აღმოჩენის შეცდომა"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "დასაბეჭდი ფაილი ვერ ვიპოვე"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +386,92 @@ msgstr ""
 "დაბეჭდვისთვის საჭირო გამშვები ფაილი აღმოჩენილი არაა. დარწმუნდით, რომ CUPS-ის "
 "lpr გამშვები ფაილი ხელმისაწვდომია"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "გვერდის დასაბეჭდი ზომა არასწორია"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ვერ გავხსენი. ფალი არ არსებობს"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "სათაური"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "თემა"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "აღწერა"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "ავტორი"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "შემქმნელი"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "პროდუსერი"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "საავტორო უფლებები"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "გვერდები"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "შექმნილია"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "შეიცვალა"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ტიპი"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "კატეგორია"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "ფაილის ბილიკი"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "ფაილის ზომა"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Page Size"
@@ -539,8 +543,9 @@ msgid "edit form button states"
 msgstr "ფორმის ღილაკის მდგომარეობების ჩასწორება"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "უბრალო &ტექსტი..."
 
 #: core/generator.cpp:790
@@ -1427,9 +1432,11 @@ msgid "Transparent"
 msgstr "გამჭვირვალე"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "ფერის ხელით მითითება..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1676,9 +1683,11 @@ msgid "&Properties"
 msgstr "&თვისებები"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "'%1'-ის &შენახვა..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2193,28 +2202,28 @@ msgstr ""
 "ანოტაცია, შეიძლება, LaTeX-ის კოდს შეიცავდეს.\n"
 "დასარენდერებლად აქ დააწკაპუნეთ."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "შეცდომა find პროგრამის გაშვებისას.."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX -ის რენდერის შეცდომა"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "შეცდომა dvipng პროგრამის გაშვებისას."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "პრობლემა ბრძანება 'latex'-ის შესრულებისას."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "პრობლემა ბრძანება 'dvipng'-ის შესრულებისას."
@@ -2251,9 +2260,10 @@ msgstr "ყველა დოკუმენტისთვის ჩვენ�
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "საძიებო სიტყვა..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "ძებ&ნა:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2288,8 +2298,9 @@ msgid "Certificate Viewer"
 msgstr "სერტიფიკატების ნახვა"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "გატანა..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3461,16 +3472,18 @@ msgid "Modified"
 msgstr "შეიცვალა"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "&შენახვა, როგორც..."
+msgid "&Save As…"
+msgstr "შენახვა, როგორც"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "&ნახვა..."
+msgid "&View…"
+msgstr "&ხედი"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3552,9 +3565,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "ხელმოწერის ადგილმჭერი (წკაპი ხელმოსაწერად)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "&ხელმოწერა..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "ხელმოწერა"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3738,8 +3753,9 @@ msgid "Selection Tools"
 msgstr "მონიშვნის ხელსაწყოები"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "ციფრული &ხელმოწერა..."
 
 #: part/pageview.cpp:711
@@ -3896,8 +3912,9 @@ msgid "Search for '%1' with"
 msgstr "'%1'-ის მოძებნა მოხდება"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "ვებ მალსახმობების მორგება..."
 
 #: part/pageview.cpp:4408
@@ -4330,24 +4347,28 @@ msgid "Go to the next bookmark"
 msgstr "შემდეგ სანიშნზე გადასვლა"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Okular-ის მორგება..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "დამთვალიერებლის მორგება..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "დამთვალიერებლის მორგება"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "დამთვალიერებლის უკანაბოლოების მორგება..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "დამთვალიერებლის უკანაბოლოების მორგება"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "უკანაბოლოების მორგება..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "უკანაბოლოების მორგება"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4375,9 +4396,11 @@ msgid "Page Number"
 msgstr "გვერდის ნომერი"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "ფერის რეჟიმების მორგება..."
 
 #: part/part.cpp:858
@@ -4426,8 +4449,9 @@ msgid "Open Con&taining Folder"
 msgstr "შ&ემცველი საქაღალდის ჩვენება"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "PostScript-ის შ&ემოტანა PDF-ის სახით..."
 
 #: part/part.cpp:950
@@ -4441,8 +4465,9 @@ msgid "Erase Drawing"
 msgstr "ნახატის წაშლა"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "ანოტაციების მორგება..."
 
 #: part/part.cpp:968
@@ -4510,8 +4535,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript ფაილები (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr ""
 "PS ფაილის შემოტანა PDF ფაილი სახით (ამას დიდი დრო შეიძლება დასჭირდეს)..."
 
@@ -4664,8 +4690,9 @@ msgstr ""
 "ჩაშენებულ დამთვალიერებელს იყენებთ."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "დოკუმენტის თავიდან ჩატვირთვა..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4825,8 +4852,9 @@ msgid "Warning"
 msgstr "გაფრთხილება"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "შენახვა, როგორც Okular-ის დოკუმენტების არქივი..."
 
 #: part/part.cpp:2792
@@ -5259,8 +5287,9 @@ msgid "&Fonts"
 msgstr "&ფონტები"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "ფონტის ინფორმაციის წაკითხვა..."
 
 #: part/propertiesdialog.cpp:158
@@ -5682,13 +5711,15 @@ msgid "Document Revision %1 of %2"
 msgstr "დოკუმენტის გადასინჯვა %1 %2-დან"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "ხელმოწერილი ვერსიის ნახვა..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "სერტიფიკატის ნახვა..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5747,13 +5778,14 @@ msgstr "ამ Okular-ში ვიდეოები მხარდაჭე�
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "&დამატება.."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "&ჩასწორება..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "რ&ედაქტირება"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6017,6 +6049,44 @@ msgstr "ყველას დავიწყება"
 msgid "Hide welcome screen"
 msgstr "საწყისი ეკრანის დამალვა"
 
+#~ msgid "Find..."
+#~ msgstr "მოძებნა…"
+
+#~ msgid "Go To Page..."
+#~ msgstr "გვერდზე გადასვლა..."
+
+#~ msgid "Play movie..."
+#~ msgstr "ფილმის დაკვრა..."
+
+#~ msgid "Search..."
+#~ msgstr "საძიებო სიტყვა..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "&შენახვა, როგორც..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&ნახვა..."
+
+#~ msgid "&Sign..."
+#~ msgstr "&ხელმოწერა..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "დამთვალიერებლის მორგება..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "დამთვალიერებლის უკანაბოლოების მორგება..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "უკანაბოლოების მორგება..."
+
+#~ msgid "&Add..."
+#~ msgstr "&დამატება.."
+
+#~ msgid "&Edit..."
+#~ msgstr "&ჩასწორება..."
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6073,9 +6143,6 @@ msgstr "საწყისი ეკრანის დამალვა"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "ავტომატური ჩატევა"
-
-#~ msgid "S&earch:"
-#~ msgstr "ძებ&ნა:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|ყველა ფაილი"

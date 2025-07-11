@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2024-01-01 12:20-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -96,8 +96,8 @@ msgid "Okular"
 msgstr "ਓਕੁਲਾਰ"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "...ਖੋਲ੍ਹੋ"
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -199,6 +199,9 @@ msgstr "ਮੌਜੂਦ ਨਹੀਂ"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਲੱਭਾ।"
+
+#~ msgid "Open..."
+#~ msgstr "...ਖੋਲ੍ਹੋ"
 
 #~ msgid "Search..."
 #~ msgstr "ਖੋਜੋ..."

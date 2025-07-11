@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2021-08-21 17:02+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -94,8 +94,8 @@ msgid "Okular"
 msgstr "ऑकुलर"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "खोलें..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -195,6 +195,9 @@ msgstr ""
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "कोई परिणाम नहीं मिला।"
+
+#~ msgid "Open..."
+#~ msgstr "खोलें..."
 
 #~ msgid "Search..."
 #~ msgstr "खोजें..."

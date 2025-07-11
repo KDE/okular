@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2023-07-03 00:55+0100\n"
 "Last-Translator: Pedro Morais <morais@kde.org>\n"
 "Language-Team: pt <kde-i18n-pt@kde.org>\n"
@@ -155,8 +155,9 @@ msgid "Open external file"
 msgstr "Abrir um ficheiro externo"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Executar o '%1'..."
 
 #: core/action.cpp:296
@@ -206,17 +207,19 @@ msgstr "Terminar a Apresentação"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Procurar..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Ir para a Página..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Ir para a Página"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Tocar um som..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -225,9 +228,10 @@ msgid "JavaScript Script"
 msgstr "Programa em JavaScript"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Reproduzir um filme..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Reproduzir o filme"
 
 #: core/action.cpp:556
 #, kde-format
@@ -302,17 +306,17 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "A retomar a pesquisa do início"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "A retomar a pesquisa do fundo"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -320,19 +324,19 @@ msgstr ""
 "Não é possível encontrar um 'plugin' que consiga lidar com o documento "
 "indicado."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "remover as anotações"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -341,52 +345,52 @@ msgstr ""
 "O documento está a tentar executar uma aplicação externa; para sua "
 "segurança, o Okular não permite isto."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nenhuma aplicação encontrada para abrir o ficheiro do tipo MIME %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Não foi possível aceder a um ficheiro temporário"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A conversão da impressão foi mal-sucedida"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "O processo de impressão estoirou"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Não foi possível iniciar o processo de impressão"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "A impressão para ficheiro foi mal-sucedida"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A impressora estava num estado inválido"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Não foi possível encontrar o ficheiro a imprimir"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Não havia nenhum ficheiro para imprimir"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -395,92 +399,92 @@ msgstr ""
 "Não foi possível encontrar um binário de impressão adequado. Certifique-se "
 "que o executável 'lpr' do CUPS está disponível"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "O tamanho de impressão da página é inválido"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Não é possível aceder ao '%1'. O ficheiro não existe"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Título"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Assunto"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Descrição"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Autoria"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Criado por"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Produtor"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Páginas"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Criado"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Modificado"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipo MIME"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Palavras-Chave"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Localização do Ficheiro"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Tamanho do Ficheiro"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Tamanho da Página"
@@ -552,8 +556,9 @@ msgid "edit form button states"
 msgstr "editar os estados do botão"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "&Texto Simples..."
 
 #: core/generator.cpp:790
@@ -1461,9 +1466,11 @@ msgid "Transparent"
 msgstr "Transparente"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Cor Personalizada..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1713,9 +1720,11 @@ msgid "&Properties"
 msgstr "&Propriedades"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "&Gravar o '%1'..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2232,28 +2241,28 @@ msgstr ""
 "Esta anotação poderá conter código em LaTeX.\n"
 "Carregue aqui para a desenhar."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Não é possível encontrar o executável 'latex'."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Erro na representação do LaTeX"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Não é possível encontrar o executável 'dvipng'."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Ocorreu um problema durante a execução do comando 'latex'."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Ocorreu um problema durante a execução do comando 'dvipng'."
@@ -2290,9 +2299,10 @@ msgstr "Mostrar para todos os documentos"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "Procurar..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "P&rocurar:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2327,8 +2337,9 @@ msgid "Certificate Viewer"
 msgstr "Visualizador do Certificado"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Exportar..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3515,16 +3526,18 @@ msgid "Modified"
 msgstr "Modificado"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "Gr&avar Como..."
+msgid "&Save As…"
+msgstr "Gravar Como"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "&Ver..."
+msgid "&View…"
+msgstr "&Ver"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3608,9 +3621,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Campo de Assinatura Não Assinado (Carregue para Assinar)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "A&ssinar..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Assinar"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3794,8 +3809,9 @@ msgid "Selection Tools"
 msgstr "Ferramentas de Selecção"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "A&ssinar Digitalmente..."
 
 #: part/pageview.cpp:711
@@ -3959,8 +3975,9 @@ msgid "Search for '%1' with"
 msgstr "Procurar por '%1' com"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Configurar os Atalhos Web..."
 
 #: part/pageview.cpp:4408
@@ -4394,24 +4411,28 @@ msgid "Go to the next bookmark"
 msgstr "Ir para o favorito seguinte"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Configurar o Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Configurar o Visualizador..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Configurar o Visualizador"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Configurar as Infra-Estruturas do Visualizador..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Configurar as Infra-Estruturas do Visualizador"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Configurar as Infra-Estruturas..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Configurar as Infra-Estruturas"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4439,9 +4460,11 @@ msgid "Page Number"
 msgstr "Número da Página"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Configurar os Modos das Cores..."
 
 #: part/part.cpp:858
@@ -4490,8 +4513,9 @@ msgid "Open Con&taining Folder"
 msgstr "Abrir a Pasta &Respectiva"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Importar o PostScript como PDF..."
 
 #: part/part.cpp:950
@@ -4505,8 +4529,9 @@ msgid "Erase Drawing"
 msgstr "Apagar os Desenhos"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Configurar as Anotações..."
 
 #: part/part.cpp:968
@@ -4575,8 +4600,9 @@ msgid "PostScript files (%1)"
 msgstr "Ficheiros PostScript (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "A importar o ficheiro PS como PDF (poderá levar algum tempo)..."
 
 #: part/part.cpp:1490
@@ -4731,8 +4757,9 @@ msgstr ""
 "usar o visualizador incorporado."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "A carregar de novo o documento..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4894,8 +4921,9 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Gravar como um pacote de documento do Okular..."
 
 #: part/part.cpp:2792
@@ -5329,8 +5357,9 @@ msgid "&Fonts"
 msgstr "&Tipos de Letra"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "A ler a informação dos tipos de letra..."
 
 #: part/propertiesdialog.cpp:158
@@ -5756,13 +5785,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Versão %1 de %2 do Documento"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Ver a Versão Assinada..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Ver o Certificado..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5821,13 +5852,14 @@ msgstr "Não existe suporte para vídeos neste Okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "&Adicionar..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "&Editar..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "&Editar"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6095,6 +6127,44 @@ msgstr "Esquecer Tudo"
 msgid "Hide welcome screen"
 msgstr "Esconder o ecrã de boas-vindas"
 
+#~ msgid "Find..."
+#~ msgstr "Procurar..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Ir para a Página..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Reproduzir um filme..."
+
+#~ msgid "Search..."
+#~ msgstr "Procurar..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "Gr&avar Como..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&Ver..."
+
+#~ msgid "&Sign..."
+#~ msgstr "A&ssinar..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Configurar o Visualizador..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Configurar as Infra-Estruturas do Visualizador..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Configurar as Infra-Estruturas..."
+
+#~ msgid "&Add..."
+#~ msgstr "&Adicionar..."
+
+#~ msgid "&Edit..."
+#~ msgstr "&Editar..."
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6168,9 +6238,6 @@ msgstr "Esconder o ecrã de boas-vindas"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "Ajuste Automático"
-
-#~ msgid "S&earch:"
-#~ msgstr "P&rocurar:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Todos os Ficheiros"

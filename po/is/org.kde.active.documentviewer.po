@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:39+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-04-17 14:03+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -95,8 +95,8 @@ msgid "Okular"
 msgstr "Okular"
 
 #: ui/Main.qml:42
-msgid "Open..."
-msgstr "Opna..."
+msgid "Open…"
+msgstr ""
 
 #: ui/Main.qml:49
 msgid "About"
@@ -194,6 +194,9 @@ msgstr "Ekki tiltækt"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Engar niðurstöður fundust."
+
+#~ msgid "Open..."
+#~ msgstr "Opna..."
 
 #~ msgid "Document viewer for Plasma Active using Okular"
 #~ msgstr "Skjalaskoðari fyrir Plasma Active byggður á Okular"

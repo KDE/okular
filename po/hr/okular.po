@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2011-08-25 19:25+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -160,8 +160,9 @@ msgid "Open external file"
 msgstr "Otvori vanjsku datoteku"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Izvrši '%1'…"
 
 #: core/action.cpp:296
@@ -211,17 +212,19 @@ msgstr "Završi prezentaciju"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Traži…"
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Idi na stranicu…"
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Idi na stranicu"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Reproduciraj zvuk…"
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -230,8 +233,9 @@ msgid "JavaScript Script"
 msgstr "Skripta u JavaScriptu"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
+#, fuzzy, kde-format
+#| msgid "Play movie..."
+msgid "Play movie…"
 msgstr "Reproduciraj film…"
 
 #: core/action.cpp:556
@@ -308,36 +312,36 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ne mogu pronaći priključak koji može obraditi proslijeđen dokument."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Prezentacija"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -346,52 +350,52 @@ msgstr ""
 "Dokument pokušava izvršiti vanjsku aplikaciju pa to Okular, radi vaše "
 "sigurnosti, ne dozvoljava."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nije pronađena aplikacija za otvaranje datoteke mime-vrste %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nije moguće otvoriti privremenu datoteku"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konverzija ispisa nije uspjela"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces ispisa se srušio"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proces ispisivanja nije moguće pokrenuti"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Ispis u datoteku nije uspio"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Pisač je bio u neispravnom stanju"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nije moguće pronaći datoteku za ispis."
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nema datoteke za ispis"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -400,93 +404,93 @@ msgstr ""
 "Ne mogu pronaći prikladan program za ispis. Pobrinite se da je CUPS-ov "
 "program lpr dostupan"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nije moguće otvoriti '%1'. Datoteka ne postoji"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Predmet"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Stvaralac"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Autorska prava"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Stranice"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Izrađeno"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Mijenjano"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Mime-vrsta"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne riječi"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Putanja datoteke"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Veličina datoteke"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Veličina stranice"
@@ -568,8 +572,9 @@ msgid "edit form button states"
 msgstr ""
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Čisti &tekst…"
 
 # pmap: =/nom=PDF/gen=PDF-a/dat=PDF-u/aku=PDF/lok=PDF-u/ins=PDF-om/_r=m/_b=j/
@@ -1512,7 +1517,7 @@ msgstr ""
 #: part/annotationactionhandler.cpp:445
 #, kde-format
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr ""
 
 #: part/annotationactionhandler.cpp:499
@@ -1793,9 +1798,11 @@ msgid "&Properties"
 msgstr "&Svojstva"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "&Spremi '%1'…"
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2336,28 +2343,28 @@ msgid ""
 "Click here to render."
 msgstr ""
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr ""
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr ""
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr ""
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr ""
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""
@@ -2401,7 +2408,7 @@ msgstr "Kraj dokumenta"
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
-msgid "Search..."
+msgid "Search…"
 msgstr "&Traži:"
 
 #: part/bookmarklist.cpp:257
@@ -2440,7 +2447,7 @@ msgstr "Konfiguriraj preglednik…"
 #: part/certificateviewer.cpp:50
 #, fuzzy, kde-format
 #| msgid "E&xport As"
-msgid "Export..."
+msgid "Export…"
 msgstr "I&zvezi kao"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3743,16 +3750,18 @@ msgid "Modified"
 msgstr "Izmijenjeno"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "&Save As..."
 msgctxt "@action:inmenu"
-msgid "&Save As..."
+msgid "&Save As…"
 msgstr "&Spremi kao…"
 
 #: part/embeddedfilesdialog.cpp:155
 #, fuzzy, kde-format
 #| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
+msgid "&View…"
 msgstr "&Prikaz"
 
 #: part/fileprinterpreview.cpp:113
@@ -3837,7 +3846,7 @@ msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
-msgid "&Sign..."
+msgid "&Sign…"
 msgstr ""
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
@@ -4042,7 +4051,7 @@ msgstr "Alati za odabir"
 
 #: part/pageview.cpp:705
 #, kde-format
-msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr ""
 
 #: part/pageview.cpp:711
@@ -4212,8 +4221,9 @@ msgid "Search for '%1' with"
 msgstr "Traži '%1' pomoću"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Podesi web kratice…"
 
 #: part/pageview.cpp:4408
@@ -4657,25 +4667,28 @@ msgid "Go to the next bookmark"
 msgstr "Idi na sljedeću označenu stranicu"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Konfiguriraj Okular…"
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer..."
+msgid "Configure Viewer…"
 msgstr "Konfiguriraj preglednik…"
 
 #: part/part.cpp:757
 #, fuzzy, kde-format
-#| msgid "Configure Backends..."
-msgid "Configure Viewer Backends..."
-msgstr "Konfiguriraj pozadinske servise…"
+#| msgid "Configure Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Konfiguriraj pozadinske servise"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Konfiguriraj pozadinske servise…"
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Konfiguriraj pozadinske servise"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4707,7 +4720,7 @@ msgstr "Veličina stranice"
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Konfiguriraj Okular…"
 
 #: part/part.cpp:858
@@ -4759,8 +4772,9 @@ msgid "Open Con&taining Folder"
 msgstr ""
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "Uvez&i PostScript kao PDF…"
 
 #: part/part.cpp:950
@@ -4777,7 +4791,7 @@ msgstr "Izbriši crteže"
 #: part/part.cpp:963
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
-msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Konfiguriraj pozadinske servise…"
 
 #: part/part.cpp:968
@@ -4848,8 +4862,9 @@ msgid "PostScript files (%1)"
 msgstr ""
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Uvozim datoteke PS kao PDF (ovo može potrajati)…"
 
 #: part/part.cpp:1490
@@ -4997,8 +5012,9 @@ msgstr ""
 "koristi ugrađeni preglednik."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Ponovno učitavam dokument…"
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -5152,7 +5168,7 @@ msgstr ""
 
 #: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
-msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr ""
 
 #: part/part.cpp:2792
@@ -5590,8 +5606,9 @@ msgid "&Fonts"
 msgstr "&Pisma"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Čitam informacije o pismu…"
 
 #: part/propertiesdialog.cpp:158
@@ -6041,13 +6058,14 @@ msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
-msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Configure Viewer..."
+msgid "View Certificate…"
+msgstr "Konfiguriraj preglednik…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, fuzzy, kde-format
@@ -6106,13 +6124,13 @@ msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
+msgid "&Add…"
 msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, fuzzy, kde-format
 #| msgid "&Edit"
-msgid "&Edit..."
+msgid "&Edit…"
 msgstr "&Uredi"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
@@ -6385,6 +6403,46 @@ msgstr ""
 msgid "Hide welcome screen"
 msgstr ""
 
+#~ msgid "Find..."
+#~ msgstr "Traži…"
+
+#~ msgid "Go To Page..."
+#~ msgstr "Idi na stranicu…"
+
+#~ msgid "Play movie..."
+#~ msgstr "Reproduciraj film…"
+
+#, fuzzy
+#~| msgid "S&earch:"
+#~ msgid "Search..."
+#~ msgstr "&Traži:"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "&Spremi kao…"
+
+#, fuzzy
+#~| msgid "&View"
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "&Prikaz"
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Konfiguriraj preglednik…"
+
+#, fuzzy
+#~| msgid "Configure Backends..."
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Konfiguriraj pozadinske servise…"
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Konfiguriraj pozadinske servise…"
+
+#, fuzzy
+#~| msgid "&Edit"
+#~ msgid "&Edit..."
+#~ msgstr "&Uredi"
+
 #, fuzzy
 #~| msgctxt "Unknown author"
 #~| msgid "Unknown"
@@ -6421,9 +6479,6 @@ msgstr ""
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Fit Page"
 #~ msgstr "Prilagodi stranici"
-
-#~ msgid "S&earch:"
-#~ msgstr "&Traži:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Sve datoteke"

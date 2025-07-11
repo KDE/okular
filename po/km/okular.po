@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -151,8 +151,9 @@ msgid "Open external file"
 msgstr "បើក​ឯកសារ​ខាងក្រៅ"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "ប្រតិបត្តិ '%1'..."
 
 #: core/action.cpp:296
@@ -202,17 +203,19 @@ msgstr "បញ្ចប់​ការ​បង្ហាញ"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "រក..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "ទៅកាន់​ទំព័រ..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "ទៅ​ទំព័រ"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "ចាក់​សំឡេង..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -221,8 +224,9 @@ msgid "JavaScript Script"
 msgstr "ស្គ្រីប JavaScript"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
+#, fuzzy, kde-format
+#| msgid "Play movie..."
+msgid "Play movie…"
 msgstr "ចាក់​ភាពយន្ត..."
 
 #: core/action.cpp:556
@@ -299,36 +303,36 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 ម.ម."
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "មិនអាច​ស្វែងរក​កម្មវិធី​ជំនួយ​ដែល​អាច​ដោះស្រាយ​ឯកសារ​ដែល​បាន​ហុច​បានទេ ។"
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ការ​បង្ហាញ"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -336,52 +340,52 @@ msgid ""
 msgstr ""
 "ឯកសារ​កំពុង​ប្រតិបត្តិ​កម្មវិធី​ខាងក្រៅ តែដើម្បី​ឲ្យ​មាន​សុវត្ថិភាព​ Okular មិន​អនុញ្ញាត​ឲ្យ​ធ្វើ​បែបនោះ​ទេ ។"
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "រក​មិនឃើញ​កម្មវិធី​សម្រាប់​បើក​ឯកសារ​ប្រភេទ mime %1 ទេ ។"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "មិនអាច​បើក​រក្សាទុក​ឯកសារ​បណ្ដោះអាសន្ន​បាន​ទេ ។"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "បាន​បរាជ័យ​ក្នុងកា​របម្លែង"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ដំណើរការ​បោះពុម្ព​បាន​គាំង"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ដំណើរការ​បោះពុម្ព​មិនអាច​ចាប់ផ្ដើម​បាន​ទេ"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "បាន​បរាជ័យ​ក្នុងកា​របោះពុម្ព​ឯកសារ"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "ម៉ាស៊ីនបោះពុម្ព​​ស្ថិត​ក្នុង​សភាព​មិន​ត្រឹមត្រូវ"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "មិនអាច​រកឯកសារ​ដើម្បី​បោះពុម្ព​បាន​ទេ"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "គ្មាន​ឯកសារ​ត្រូវ​បោះពុម្ព​ទេ"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -390,93 +394,93 @@ msgstr ""
 "រកមិនឃើញ​ប្រព័ន្ធគោលពីរ​ដែលសមស្រប​សម្រាប់បោះពុម្ព​ទេ ។ សូម​ប្រាកដ​ថា​ប្រព័ន្ធ​គោលពីរ CUPS lpr អាច​ប្រើ​"
 "បាន"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "មិន​អាច​បើក '%1' បាន​ទេ ។ មិនទាន់មាន​ឯកសារ​ទេ"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "ចំណងជើង"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "ប្រធានបទ"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "សេចក្ដី​ពិពណ៌នា"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "អ្នក​និពន្ធ"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "អ្នក​បង្កើត"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "អ្នក​ផលិត"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "រក្សាសិទ្ធិ"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "ទំព័រ"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "បាន​បង្កើត"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "បាន​កែប្រែ"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "ប្រភេទ Mime"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "ប្រភេទ"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "ពាក្យ​គន្លឹះ"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "ផ្លូវ​ឯកសា"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "ទំហំ​ឯកសារ"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "ទំហំ​ទំព័រ"
@@ -559,8 +563,9 @@ msgid "edit form button states"
 msgstr ""
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "អត្ថបទ​ធម្មតា..."
 
 #: core/generator.cpp:790
@@ -1500,7 +1505,7 @@ msgstr ""
 #: part/annotationactionhandler.cpp:445
 #, kde-format
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr ""
 
 #: part/annotationactionhandler.cpp:499
@@ -1777,9 +1782,11 @@ msgid "&Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "រក្សាទុក '%1'..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2322,28 +2329,28 @@ msgstr ""
 "ការ​ពន្យល់​នេះ​អាច​មាន​កូដ​ LaTeX ។\n"
 "ចុច​ទីនេះ ដើម្បី​បង្ហាញ ។"
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "រក​មិន​ឃើញ latex ដែល​អាច​ប្រតិបត្តិ​បាន​ទេ ។"
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "បាន​បរាជ័យ​ក្នុងកា​របង្ហាញ LaTeX"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "រក​មិន​ឃើញ​ dvipng ដែល​អាច​ប្រតិបត្តិ​បាន ។"
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "បញ្ហា​មួយ​បានកើត​ឡើង​ក្នុង​អំឡុង​ពេល​ប្រតិបត្តិ​ពាក្យ​បញ្ជា 'latex' ។"
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "បញ្ហា​មួយ​បានកើត​ឡើង​ក្នុង​អំឡុង​ពេល​ប្រតិបត្តិ​ពាក្យ​បញ្ជា 'dvipng' ។"
@@ -2379,7 +2386,7 @@ msgstr "ចុង​ឯកសារ"
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
-msgid "Search..."
+msgid "Search…"
 msgstr "ស្វែងរក ៖"
 
 #: part/bookmarklist.cpp:257
@@ -2418,7 +2425,7 @@ msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្ម
 #: part/certificateviewer.cpp:50
 #, fuzzy, kde-format
 #| msgid "E&xport As"
-msgid "Export..."
+msgid "Export…"
 msgstr "នាំចេញ​ជា"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3721,16 +3728,18 @@ msgid "Modified"
 msgstr "បាន​កែប្រែ"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "&Save As..."
 msgctxt "@action:inmenu"
-msgid "&Save As..."
+msgid "&Save As…"
 msgstr "រក្សាទុក​ជា..."
 
 #: part/embeddedfilesdialog.cpp:155
 #, fuzzy, kde-format
 #| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
+msgid "&View…"
 msgstr "មើល"
 
 #: part/fileprinterpreview.cpp:113
@@ -3815,7 +3824,7 @@ msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
-msgid "&Sign..."
+msgid "&Sign…"
 msgstr ""
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
@@ -4020,7 +4029,7 @@ msgstr "ឧបករណ៍​ជម្រើស"
 
 #: part/pageview.cpp:705
 #, kde-format
-msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr ""
 
 #: part/pageview.cpp:711
@@ -4186,8 +4195,9 @@ msgid "Search for '%1' with"
 msgstr "ស្វែងរក '%1' ដោយ"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​ផ្លូវកាត់​បណ្ដាញ..."
 
 #: part/pageview.cpp:4408
@@ -4626,24 +4636,28 @@ msgid "Go to the next bookmark"
 msgstr "ទៅ​ទំព័រ​ដែលបាន​ចំណាំ​បន្ទាប់"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "កំណត់​រចនា​សម្ព័ន្ធ Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​មើល..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​មើល"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ"
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "កំណត់​រចនាសម្ព័នធ​កម្មវិធី​ផ្នែក​ខា​ងក្រោយ​នៃ​កម្មវិធីមើល"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4674,7 +4688,7 @@ msgstr "ទំហំ​ទំព័រ"
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "កំណត់​រចនា​សម្ព័ន្ធ Okular..."
 
 #: part/part.cpp:858
@@ -4726,8 +4740,9 @@ msgid "Open Con&taining Folder"
 msgstr ""
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "នាំចូល Postscript ជា PDF..."
 
 #: part/part.cpp:950
@@ -4744,7 +4759,7 @@ msgstr "លុប​គំនូរ"
 #: part/part.cpp:963
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
-msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ..."
 
 #: part/part.cpp:968
@@ -4813,8 +4828,9 @@ msgid "PostScript files (%1)"
 msgstr ""
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "កំពុង​នាំចូល​ឯកសារ PS ជា PDF (ចំណាយពេល​បន្តិច)..."
 
 #: part/part.cpp:1490
@@ -4958,8 +4974,9 @@ msgid ""
 msgstr "តំណ​នេះ​ចង្អុល​ទៅ​អំពើចេញ​ពី​កម្មវិធី ដែល​មិន​ដំណើរការ​ឡើយ ពេល​ប្រើ​កម្មវិធី​បង្កប់ ។"
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "កំពុង​ផ្ទុក​ឯកសារ​ឡើង​វិញ..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -5111,7 +5128,7 @@ msgstr ""
 
 #: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
-msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr ""
 
 #: part/part.cpp:2792
@@ -5539,8 +5556,9 @@ msgid "&Fonts"
 msgstr "ពុម្ពអក្សរ"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "កំពុង​ផ្ទុក​ព័ត៌មាន​ពុម្ព​អក្សរ..."
 
 #: part/propertiesdialog.cpp:158
@@ -5990,13 +6008,14 @@ msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
-msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "View Certificate…"
+msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​មើល"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, fuzzy, kde-format
@@ -6055,13 +6074,13 @@ msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
+msgid "&Add…"
 msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, fuzzy, kde-format
 #| msgid "&Edit"
-msgid "&Edit..."
+msgid "&Edit…"
 msgstr "កែសម្រួល"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
@@ -6332,6 +6351,44 @@ msgstr ""
 msgid "Hide welcome screen"
 msgstr ""
 
+#~ msgid "Find..."
+#~ msgstr "រក..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "ទៅកាន់​ទំព័រ..."
+
+#~ msgid "Play movie..."
+#~ msgstr "ចាក់​ភាពយន្ត..."
+
+#, fuzzy
+#~| msgid "S&earch:"
+#~ msgid "Search..."
+#~ msgstr "ស្វែងរក ៖"
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "រក្សាទុក​ជា..."
+
+#, fuzzy
+#~| msgid "&View"
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "មើល"
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​មើល..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ"
+
+#~ msgid "Configure Backends..."
+#~ msgstr "កំណត់​រចនា​សម្ព័ន្ធ​កម្មវិធី​ខាងក្រោយ..."
+
+#, fuzzy
+#~| msgid "&Edit"
+#~ msgid "&Edit..."
+#~ msgstr "កែសម្រួល"
+
 #, fuzzy
 #~| msgctxt "Unknown author"
 #~| msgid "Unknown"
@@ -6366,9 +6423,6 @@ msgstr ""
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Fit Page"
 #~ msgstr "សម​ទំព័រ"
-
-#~ msgid "S&earch:"
-#~ msgstr "ស្វែងរក ៖"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|ឯកសារ​ទាំងអស់"

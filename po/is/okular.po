@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-07-11 00:41+0000\n"
 "PO-Revision-Date: 2025-04-17 14:03+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -152,8 +152,9 @@ msgid "Open external file"
 msgstr "Opna ytri skrá"
 
 #: core/action.cpp:197
-#, kde-format
-msgid "Execute '%1'..."
+#, fuzzy, kde-format
+#| msgid "Execute '%1'..."
+msgid "Execute '%1'…"
 msgstr "Keyra '%1'..."
 
 #: core/action.cpp:296
@@ -203,17 +204,19 @@ msgstr "Ljúka kynningu"
 
 #: core/action.cpp:314
 #, kde-format
-msgid "Find..."
-msgstr "Finna..."
+msgid "Find…"
+msgstr ""
 
 #: core/action.cpp:316
-#, kde-format
-msgid "Go To Page..."
-msgstr "Fara á síðu..."
+#, fuzzy, kde-format
+#| msgid "Go to Page"
+msgid "Go To Page…"
+msgstr "Fara á síðu"
 
 #: core/action.cpp:367
-#, kde-format
-msgid "Play sound..."
+#, fuzzy, kde-format
+#| msgid "Play sound..."
+msgid "Play sound…"
 msgstr "Spila hljóð..."
 
 #: core/action.cpp:435 core/action.cpp:551
@@ -222,9 +225,10 @@ msgid "JavaScript Script"
 msgstr "JavaScript-skrifta"
 
 #: core/action.cpp:485
-#, kde-format
-msgid "Play movie..."
-msgstr "Spila myndskeið..."
+#, fuzzy, kde-format
+#| msgid "Play movie"
+msgid "Play movie…"
+msgstr "Spila myndskeið"
 
 #: core/action.cpp:556
 #, kde-format
@@ -295,35 +299,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1717
+#: core/document.cpp:1716
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Halda leit áfram frá byrjun"
 
-#: core/document.cpp:1720
+#: core/document.cpp:1719
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Halda leit áfram neðan frá"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2454
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Finn enga viðbót sem getur unnið með skjalið sem um ræðir."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2891
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3618
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "fjarlægja glósu"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4208 core/document.cpp:4214
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -332,52 +336,52 @@ msgstr ""
 "Skjalið er að reyna að keyra ytra forrit og af öryggisástæðum leyfir Okular "
 "það ekki."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4224
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Ekkert forrit fannst sem getur opnað skrá af gerðinni %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Gat ekki opnað bráðabirgðaskrá"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Umbreyting fyrir prentun mistókst"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Prentferlið hrundi"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ekki var hægt að ræsa prentferlið"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Prentun í skrá mistókst"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Prentarinn var í ógildu ástandi"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Get ekki fundið skrá til að prenta"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4877
 #, kde-format
 msgid "There was no file to print"
 msgstr "Það var engin skrá til að prenta"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4879
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,92 +390,92 @@ msgstr ""
 "Gat ekki fundið hentugt forrit til að prenta með. Gakktu úr skugga um að "
 "CUPS lpr-tvíundaskráin (forritið) sé tiltæk"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4881
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Prentstærð síðunnar er ógild"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5559 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Gat ekki opnað '%1'. Skráin er ekki til."
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Title"
 msgstr "Titill"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Subject"
 msgstr "Efni"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Description"
 msgstr "Lýsing"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Author"
 msgstr "Höfundur"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Creator"
 msgstr "Skapari"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Producer"
 msgstr "Framleiðandi"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Copyright"
 msgstr "Höfundarréttur"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Pages"
 msgstr "Síður"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "Created"
 msgstr "Búið til"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Modified"
 msgstr "Breytt"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "MIME Type"
 msgstr "Mime-gerð"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "Category"
 msgstr "Flokkur"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "Keywords"
 msgstr "Stikkorð"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "File Path"
 msgstr "Skráarslóð"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6111
 #, kde-format
 msgid "File Size"
 msgstr "Skráarstærð"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6114
 #, kde-format
 msgid "Page Size"
 msgstr "Síðustærð"
@@ -543,8 +547,9 @@ msgid "edit form button states"
 msgstr "breyta stöðu formhnapps"
 
 #: core/generator.cpp:787
-#, kde-format
-msgid "Plain &Text..."
+#, fuzzy, kde-format
+#| msgid "Plain &Text..."
+msgid "Plain &Text…"
 msgstr "Hreinn &texti..."
 
 #: core/generator.cpp:790
@@ -1447,9 +1452,11 @@ msgid "Transparent"
 msgstr "Gagnsætt"
 
 #: part/annotationactionhandler.cpp:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox"
+#| msgid "Custom Color..."
 msgctxt "@item:inlistbox"
-msgid "Custom Color..."
+msgid "Custom Color…"
 msgstr "Sérsniðinn litur..."
 
 #: part/annotationactionhandler.cpp:499
@@ -1696,9 +1703,11 @@ msgid "&Properties"
 msgstr "&Eiginleikar"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
-msgid "&Save '%1'..."
+msgid "&Save '%1'…"
 msgstr "Vi&sta '%1'..."
 
 #: part/annotationpropertiesdialog.cpp:54
@@ -2212,28 +2221,28 @@ msgstr ""
 "Þessi glósa gæti innihaldið LaTeX-kóða.\n"
 "Smelltu hér til að myndgera."
 
-#: part/annotwindow.cpp:416
+#: part/annotwindow.cpp:418
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Fann ekki latex-keyrsluskrána."
 
-#: part/annotwindow.cpp:416 part/annotwindow.cpp:421 part/annotwindow.cpp:426
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX-myndgerð mistókst"
 
-#: part/annotwindow.cpp:421
+#: part/annotwindow.cpp:423
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Fann ekki dvipng-keyrsluskrána."
 
-#: part/annotwindow.cpp:426
+#: part/annotwindow.cpp:428
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Vandamál kom upp við keyrslu á 'latex' skipuninni."
 
-#: part/annotwindow.cpp:431
+#: part/annotwindow.cpp:433
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Vandamál kom upp við keyrslu á 'dvipng' skipuninni."
@@ -2270,9 +2279,10 @@ msgstr "Sýna fyrir öll skjöl"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, kde-format
-msgid "Search..."
-msgstr "Leita..."
+#, fuzzy, kde-format
+#| msgid "S&earch:"
+msgid "Search…"
+msgstr "L&eita:"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2307,8 +2317,9 @@ msgid "Certificate Viewer"
 msgstr "Vottorðaskoðari"
 
 #: part/certificateviewer.cpp:50
-#, kde-format
-msgid "Export..."
+#, fuzzy, kde-format
+#| msgid "Export..."
+msgid "Export…"
 msgstr "Flytja út..."
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
@@ -3473,16 +3484,18 @@ msgid "Modified"
 msgstr "Breytt"
 
 #: part/embeddedfilesdialog.cpp:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Save As"
 msgctxt "@action:inmenu"
-msgid "&Save As..."
-msgstr "Vista &sem..."
+msgid "&Save As…"
+msgstr "Vista sem"
 
 #: part/embeddedfilesdialog.cpp:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&View"
 msgctxt "@action:inmenu"
-msgid "&View..."
-msgstr "S&koða..."
+msgid "&View…"
+msgstr "S&koða"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3565,9 +3578,11 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Óútfylltur undirskriftarreitur (smelltu til að undirrita)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, kde-format
-msgid "&Sign..."
-msgstr "&Undirrita..."
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Sign"
+msgid "&Sign…"
+msgstr "Undirrita"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3751,8 +3766,9 @@ msgid "Selection Tools"
 msgstr "Valverkfæri"
 
 #: part/pageview.cpp:705
-#, kde-format
-msgid "Digitally &Sign..."
+#, fuzzy, kde-format
+#| msgid "Digitally &Sign..."
+msgid "Digitally &Sign…"
 msgstr "Undirrita &rafrænt..."
 
 #: part/pageview.cpp:711
@@ -3909,8 +3925,9 @@ msgid "Search for '%1' with"
 msgstr "Leita að '%1' með"
 
 #: part/pageview.cpp:4382
-#, kde-format
-msgid "Configure Web Shortcuts..."
+#, fuzzy, kde-format
+#| msgid "Configure Web Shortcuts..."
+msgid "Configure Web Shortcuts…"
 msgstr "Grunnstilla vefskammstafanir..."
 
 #: part/pageview.cpp:4408
@@ -4345,24 +4362,28 @@ msgid "Go to the next bookmark"
 msgstr "Fara á næsta bókamerki"
 
 #: part/part.cpp:748
-#, kde-format
-msgid "Configure Okular..."
+#, fuzzy, kde-format
+#| msgid "Configure Okular..."
+msgid "Configure Okular…"
 msgstr "Grunnstilla Okular..."
 
 #: part/part.cpp:751
-#, kde-format
-msgid "Configure Viewer..."
-msgstr "Grunnstilla skoðara..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer"
+msgid "Configure Viewer…"
+msgstr "Grunnstilla skoðara"
 
 #: part/part.cpp:757
-#, kde-format
-msgid "Configure Viewer Backends..."
-msgstr "Grunnstilla skoðunarbakenda..."
+#, fuzzy, kde-format
+#| msgid "Configure Viewer Backends"
+msgid "Configure Viewer Backends…"
+msgstr "Grunnstilla skoðunarbakenda"
 
 #: part/part.cpp:759
-#, kde-format
-msgid "Configure Backends..."
-msgstr "Grunnstilla bakenda..."
+#, fuzzy, kde-format
+#| msgid "Configure Backends"
+msgid "Configure Backends…"
+msgstr "Grunnstilla bakenda"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4390,9 +4411,11 @@ msgid "Page Number"
 msgstr "Blaðsíðutal"
 
 #: part/part.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Configure Color Modes..."
 msgctxt "@action"
-msgid "Configure Color Modes..."
+msgid "Configure Color Modes…"
 msgstr "Grunnstilla litasnið..."
 
 #: part/part.cpp:858
@@ -4441,8 +4464,9 @@ msgid "Open Con&taining Folder"
 msgstr "Opna &möppu sem skráin er í"
 
 #: part/part.cpp:946
-#, kde-format
-msgid "&Import PostScript as PDF..."
+#, fuzzy, kde-format
+#| msgid "&Import PostScript as PDF..."
+msgid "&Import PostScript as PDF…"
 msgstr "&Flytja inn PostScript sem PDF..."
 
 #: part/part.cpp:950
@@ -4456,8 +4480,9 @@ msgid "Erase Drawing"
 msgstr "Eyða teikningu"
 
 #: part/part.cpp:963
-#, kde-format
-msgid "Configure Annotations..."
+#, fuzzy, kde-format
+#| msgid "Configure Annotations..."
+msgid "Configure Annotations…"
 msgstr "Grunnstilla glósur..."
 
 #: part/part.cpp:968
@@ -4526,8 +4551,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript-skrár (%1)"
 
 #: part/part.cpp:1358
-#, kde-format
-msgid "Importing PS file as PDF (this may take a while)..."
+#, fuzzy, kde-format
+#| msgid "Importing PS file as PDF (this may take a while)..."
+msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Flyt inn PS-skrá sem PDF (þetta gæti tekið tíma)..."
 
 #: part/part.cpp:1490
@@ -4679,8 +4705,9 @@ msgstr ""
 "innfelldur skoðari er notaður."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, kde-format
-msgid "Reloading the document..."
+#, fuzzy, kde-format
+#| msgid "Reloading the document..."
+msgid "Reloading the document…"
 msgstr "Endurhleð skjalinu..."
 
 #: part/part.cpp:2289 part/toc.cpp:38
@@ -4839,8 +4866,9 @@ msgid "Warning"
 msgstr "Viðvörun"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, kde-format
-msgid "Save as Okular document archive..."
+#, fuzzy, kde-format
+#| msgid "Save as Okular document archive..."
+msgid "Save as Okular document archive…"
 msgstr "Vista sem Okular-skjalasafn..."
 
 #: part/part.cpp:2792
@@ -5268,8 +5296,9 @@ msgid "&Fonts"
 msgstr "&Letur"
 
 #: part/propertiesdialog.cpp:145
-#, kde-format
-msgid "Reading font information..."
+#, fuzzy, kde-format
+#| msgid "Reading font information..."
+msgid "Reading font information…"
 msgstr "Les upplýsingar um letur..."
 
 #: part/propertiesdialog.cpp:158
@@ -5690,13 +5719,15 @@ msgid "Document Revision %1 of %2"
 msgstr "Endurskoðuð útgáfa skjals %1 af %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, kde-format
-msgid "View Signed Version..."
+#, fuzzy, kde-format
+#| msgid "View Signed Version..."
+msgid "View Signed Version…"
 msgstr "Skoða undirritaða útgáfu..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, kde-format
-msgid "View Certificate..."
+#, fuzzy, kde-format
+#| msgid "View Certificate..."
+msgid "View Certificate…"
 msgstr "Skoða vottorð..."
 
 #: part/signaturepropertiesdialog.cpp:97
@@ -5755,13 +5786,14 @@ msgstr "Myndskeið eru ekki studd í þessari útgáfu af okular"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
-msgid "&Add..."
-msgstr "Bæt&a við..."
+msgid "&Add…"
+msgstr ""
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, kde-format
-msgid "&Edit..."
-msgstr "Br&eyta..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "&Edit…"
+msgstr "&Breyta"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -6027,6 +6059,44 @@ msgstr "Gleyma öllu"
 msgid "Hide welcome screen"
 msgstr "Fela upphafsskjá"
 
+#~ msgid "Find..."
+#~ msgstr "Finna..."
+
+#~ msgid "Go To Page..."
+#~ msgstr "Fara á síðu..."
+
+#~ msgid "Play movie..."
+#~ msgstr "Spila myndskeið..."
+
+#~ msgid "Search..."
+#~ msgstr "Leita..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&Save As..."
+#~ msgstr "Vista &sem..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "&View..."
+#~ msgstr "S&koða..."
+
+#~ msgid "&Sign..."
+#~ msgstr "&Undirrita..."
+
+#~ msgid "Configure Viewer..."
+#~ msgstr "Grunnstilla skoðara..."
+
+#~ msgid "Configure Viewer Backends..."
+#~ msgstr "Grunnstilla skoðunarbakenda..."
+
+#~ msgid "Configure Backends..."
+#~ msgstr "Grunnstilla bakenda..."
+
+#~ msgid "&Add..."
+#~ msgstr "Bæt&a við..."
+
+#~ msgid "&Edit..."
+#~ msgstr "Br&eyta..."
+
 #~ msgctxt "%1 is a file path"
 #~ msgid ""
 #~ "Could not sign. Invalid certificate password or could not write to '%1'"
@@ -6095,9 +6165,6 @@ msgstr "Fela upphafsskjá"
 #~ msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #~ msgid "Auto Fit"
 #~ msgstr "Aðlaga sjálfvirkt"
-
-#~ msgid "S&earch:"
-#~ msgstr "L&eita:"
 
 #~ msgid "*|All Files"
 #~ msgstr "*|Allar skrár"

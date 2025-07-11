@@ -7,13 +7,16 @@
 #ifndef OKULAR_SOURCEREFERENCE_P_H
 #define OKULAR_SOURCEREFERENCE_P_H
 
-class QString;
+#include "sourcereference.h"
+
+#include <optional>
+
 class QUrl;
 
 namespace Okular
 {
-bool extractLilyPondSourceReference(const QUrl &url, QString *file, int *row, int *col);
-QString sourceReferenceToolTip(const QString &source, int row, int col);
+std::optional<SourceReference> extractLilyPondSourceReference(const QUrl &url);
+QString sourceReferenceToolTip(const SourceReference &sourceReference);
 
 }
 

@@ -8,8 +8,8 @@
 #define OKULAR_SOURCEREFERENCE_H
 
 #include "okularcore_export.h"
+
 #include <QObject>
-class QString;
 
 namespace Okular
 {

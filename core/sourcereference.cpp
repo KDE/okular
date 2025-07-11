@@ -55,18 +55,18 @@ int SourceReference::column() const
     return d->column;
 }
 
-bool Okular::extractLilyPondSourceReference(const QUrl &url, QString *file, int *row, int *col)
+std::optional<SourceReference> Okular::extractLilyPondSourceReference(const QUrl &url)
 {
     // Example URL is: textedit:///home/foo/bar.ly:42:42:42
     // The three numbers are apparently: line:beginning of column:end of column
 
     if (url.scheme() != QStringLiteral("textedit")) {
-        return false;
+        return std::nullopt;
     }
 
     // There can be more, in case the filename contains :
     if (url.fileName().count(QLatin1Char(':')) < 3) {
-        return false;
+        return std::nullopt;
     }
 
     QStringList parts(url.path().split(QLatin1Char(':')));
@@ -76,27 +76,29 @@ bool Okular::extractLilyPondSourceReference(const QUrl &url, QString *file, int 
     int columnEnd = parts.takeLast().toInt(&ok); // apparently we don't use this
     Q_UNUSED(columnEnd);
     if (!ok) {
-        return false;
+        return std::nullopt;
     }
 
-    *col = parts.takeLast().toInt(&ok);
+    auto column = parts.takeLast().toInt(&ok);
     if (!ok) {
-        return false;
+        return std::nullopt;
     }
 
-    *row = parts.takeLast().toInt(&ok);
+    auto row = parts.takeLast().toInt(&ok);
     if (!ok) {
-        return false;
+        return std::nullopt;
     }
 
     // In case the path itself contains :, we need to reconstruct it after removing all the numbers
-    *file = parts.join(QLatin1Char(':'));
-    return (!file->isEmpty());
+    auto fileName = parts.join(QLatin1Char(':'));
+    if (fileName.isEmpty()) {
+        return std::nullopt;
+    }
+
+    return std::make_optional<SourceReference>(fileName, row, column);
 }
 
-QString Okular::sourceReferenceToolTip(const QString &source, int row, int col)
+QString Okular::sourceReferenceToolTip(const SourceReference &sourceReference)
 {
-    Q_UNUSED(row);
-    Q_UNUSED(col);
-    return i18nc("'source' is a source file", "Source: %1", source);
+    return i18nc("'source' is a source file", "Source: %1", sourceReference.fileName());
 }

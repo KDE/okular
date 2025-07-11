@@ -240,10 +240,8 @@ Action::ActionType BrowseAction::actionType() const
 QString BrowseAction::actionTip() const
 {
     Q_D(const Okular::BrowseAction);
-    QString source;
-    int row = 0, col = 0;
-    if (extractLilyPondSourceReference(d->m_url, &source, &row, &col)) {
-        return sourceReferenceToolTip(source, row, col);
+    if (auto ref = extractLilyPondSourceReference(d->m_url)) {
+        return sourceReferenceToolTip(*ref);
     }
     return d->m_url.toDisplayString();
 }

@@ -4226,14 +4226,11 @@ void Document::processAction(const Action *action)
 
     case Action::Browse: {
         const BrowseAction *browse = static_cast<const BrowseAction *>(action);
-        QString lilySource;
-        int lilyRow = 0, lilyCol = 0;
         // if the url is a mailto one, invoke mailer
         if (browse->url().scheme() == QLatin1String("mailto")) {
             QDesktopServices::openUrl(browse->url());
-        } else if (extractLilyPondSourceReference(browse->url(), &lilySource, &lilyRow, &lilyCol)) {
-            const SourceReference ref(lilySource, lilyRow, lilyCol);
-            processSourceReference(&ref);
+        } else if (auto ref = extractLilyPondSourceReference(browse->url())) {
+            processSourceReference(&*ref);
         } else {
             const QUrl url = browse->url();
 

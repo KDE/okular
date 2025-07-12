@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2016, 2018, 2019, 2020, 2022, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2016, 2018, 2019, 2020, 2022, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2024-12-19 22:26+0200\n"
+"PO-Revision-Date: 2025-07-11 09:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -98,7 +98,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Відкрити…"
 
 #: ui/Main.qml:49
 msgid "About"

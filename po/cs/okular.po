@@ -207,7 +207,7 @@ msgstr "Ukončit prezentaci"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Najít…"
 
 #: core/action.cpp:316
 #, fuzzy, kde-format
@@ -2261,10 +2261,9 @@ msgstr "Zobrazit pro všechny dokumenty"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "Search..."
+#, kde-format
 msgid "Search…"
-msgstr "Hledat..."
+msgstr "Hledat…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2299,10 +2298,9 @@ msgid "Certificate Viewer"
 msgstr "Prohlížeč certifikátů"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
-msgstr "Exportovat..."
+msgstr "Exportovat…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -5716,13 +5714,12 @@ msgstr "Videa v tomto Okularu nejsou podporována"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "Přid&at…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "Ú&pravy"
+msgstr "&Upravit…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

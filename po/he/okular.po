@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-06-28 17:30+0300\n"
+"PO-Revision-Date: 2025-07-11 10:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -153,8 +153,7 @@ msgid "Open external file"
 msgstr "פתיחת קובץ חיצוני"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
 msgstr "הרצת ‚%1’…"
 
@@ -206,17 +205,15 @@ msgstr "סיום המצגת"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "איתור…"
 
 #: core/action.cpp:316
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "מעבר לעמוד"
+msgstr "מעבר לעמוד…"
 
 #: core/action.cpp:367
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
 msgstr "ניגון קטע שמע…"
 
@@ -226,10 +223,9 @@ msgid "JavaScript Script"
 msgstr "סקריפט JavaScript"
 
 #: core/action.cpp:485
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "ניגון סרטון"
+msgstr "ניגון סרטון…"
 
 #: core/action.cpp:556
 #, kde-format
@@ -320,7 +316,7 @@ msgstr "לא ניתן למצוא תוסף אשר יכול לטפל במסמך ש
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "לא מומשה חתימה לסוג המסמכים הזה"
 
 #: core/document.cpp:3618
 #, kde-format
@@ -544,8 +540,7 @@ msgid "edit form button states"
 msgstr "עריכת מצבי כפתורים בטופס"
 
 #: core/generator.cpp:787
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
 msgstr "טקסט &פשוט…"
 
@@ -1423,9 +1418,7 @@ msgid "Transparent"
 msgstr "שקוף"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
 msgstr "צבע בהתאמה אישית…"
@@ -1676,9 +1669,7 @@ msgid "&Properties"
 msgstr "מ&אפיינים"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&שמירת ‚%1’…"
@@ -2260,10 +2251,9 @@ msgstr "הצגה לכל המסמכים"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "&חיפוש:"
+msgstr "חיפוש…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2298,8 +2288,7 @@ msgid "Certificate Viewer"
 msgstr "מציג אישורים"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
 msgstr "ייצוא…"
 
@@ -3460,18 +3449,16 @@ msgid "Modified"
 msgstr "שונה"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "שמירה בשם"
+msgstr "&שמירה בשם…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&תצוגה"
+msgstr "&תצוגה…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3553,11 +3540,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "ממלא מקום חתימה (לחיצה לחתימה)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "חתימה"
+msgstr "&חתימה…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3741,8 +3726,7 @@ msgid "Selection Tools"
 msgstr "כלי בחירה"
 
 #: part/pageview.cpp:705
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
 msgstr "חתימה &דיגיטלית…"
 
@@ -3904,8 +3888,7 @@ msgid "Search for '%1' with"
 msgstr "חיפוש אחר '%1' בעזרת"
 
 #: part/pageview.cpp:4382
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "הגדרת קיצורי רשת…"
 
@@ -4333,28 +4316,24 @@ msgid "Go to the next bookmark"
 msgstr "מעבר לסימנייה הבאה"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "הגדרת Okular…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "הגדרת המציג"
+msgstr "הגדרת המציג…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "הגדרת מנגנוני צפייה"
+msgstr "הגדרת מנגנוני ההצגה…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "הגדרת מנגנונים"
+msgstr "הגדרת מנגנונים…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4382,9 +4361,7 @@ msgid "Page Number"
 msgstr "מספר העמוד"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "הגדרת מצבי צבע…"
@@ -4435,8 +4412,7 @@ msgid "Open Con&taining Folder"
 msgstr "&פתיחת התיקייה המכילה"
 
 #: part/part.cpp:946
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "יי&בוא PostScript כ־PDF…"
 
@@ -4451,8 +4427,7 @@ msgid "Erase Drawing"
 msgstr "מחיקת ציורים"
 
 #: part/part.cpp:963
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
 msgstr "הגדרת פירושים…"
 
@@ -4519,10 +4494,9 @@ msgid "PostScript files (%1)"
 msgstr "קובצי PostScript‏ (%1)"
 
 #: part/part.cpp:1358
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "ייבוא קובץ PS כקובץ PDF (יכול לקחת זמן מה)…"
+msgstr "ייבוא קובץ PS כקובץ PDF (יכול לארוך זמן מה)…"
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4667,8 +4641,7 @@ msgid ""
 msgstr "הקישור מצביע על פעולת יציאה מיישום, אשר לא עובדת בשימוש במציג המשובץ."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
 msgstr "המסמך נטען מחדש…"
 
@@ -4824,8 +4797,7 @@ msgid "Warning"
 msgstr "אזהרה"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
 msgstr "שמירה כארכיון מסמכים של Okular…"
 
@@ -5251,10 +5223,9 @@ msgid "&Fonts"
 msgstr "&גופנים"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "מידע על הגופן נטען…"
+msgstr "נטען מידע על הגופן…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5674,14 +5645,12 @@ msgid "Document Revision %1 of %2"
 msgstr "מהדורת מסמך %1 מתוך %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
 msgstr "הצגת גרסה חתומה…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "הצגת האישור…"
 
@@ -5742,13 +5711,12 @@ msgstr "ב־Okular הזה אין תמיכה בסרטונים"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "הו&ספה…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&עריכה"
+msgstr "&עריכה…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

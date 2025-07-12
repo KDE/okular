@@ -4,13 +4,13 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2013, 2014, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2013, 2014, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2024-08-16 21:48+0300\n"
+"PO-Revision-Date: 2025-07-11 09:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -321,8 +321,7 @@ msgstr ""
 "вдалося знайти, — ваш документ може бути непридатним для читання.</qt>"
 
 #: fontpool.cpp:482
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Створюємо %1 з роздільністю %2 т/д…"
 

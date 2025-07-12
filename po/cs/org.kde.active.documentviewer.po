@@ -95,7 +95,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Otevřít…"
 
 #: ui/Main.qml:49
 msgid "About"

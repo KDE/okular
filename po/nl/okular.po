@@ -20,9 +20,9 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-07-10 12:46+0200\n"
+"PO-Revision-Date: 2025-07-11 22:43+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -161,10 +161,9 @@ msgid "Open external file"
 msgstr "Extern bestand openen"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
-msgstr "'%1' uitvoeren..."
+msgstr "'%1' uitvoeren…"
 
 #: core/action.cpp:296
 #, kde-format
@@ -214,19 +213,17 @@ msgstr "Presentatie beëindigen"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Zoeken…"
 
 #: core/action.cpp:316
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Ga naar pagina"
+msgstr "Ga naar pagina…"
 
 #: core/action.cpp:367
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
-msgstr "Geluid afspelen..."
+msgstr "Geluid afspelen…"
 
 #: core/action.cpp:435 core/action.cpp:551
 #, kde-format
@@ -234,10 +231,9 @@ msgid "JavaScript Script"
 msgstr "JavaScript-script"
 
 #: core/action.cpp:485
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Film afspelen"
+msgstr "Film afspelen…"
 
 #: core/action.cpp:556
 #, kde-format
@@ -556,10 +552,9 @@ msgid "edit form button states"
 msgstr "statussen van formulierknoppen bewerken"
 
 #: core/generator.cpp:787
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "Platte &tekst..."
+msgstr "Platte &tekst…"
 
 #: core/generator.cpp:790
 #, kde-format
@@ -1449,12 +1444,10 @@ msgid "Transparent"
 msgstr "Transparant"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "Aangepaste kleur..."
+msgstr "Aangepaste kleur…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1700,12 +1693,10 @@ msgid "&Properties"
 msgstr "Eigenscha&ppen"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "'%1' op&slaan"
+msgstr "'%1' op&slaan…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2277,10 +2268,9 @@ msgstr "Voor alle documenten tonen"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "Zo&eken:"
+msgstr "Zoeken…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2315,10 +2305,9 @@ msgid "Certificate Viewer"
 msgstr "Certificaatviewer"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
-msgstr "Exporteren..."
+msgstr "Exporteren…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -3489,18 +3478,16 @@ msgid "Modified"
 msgstr "Gewijzigd"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Opslaan als"
+msgstr "Opslaan &als…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "Beel&d"
+msgstr "&Beeld…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3582,11 +3569,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Plaatshouder voor ondertekening (klik om te ondertekenen)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Ondertekenen"
+msgstr "&Ondertekenen…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3770,10 +3755,9 @@ msgid "Selection Tools"
 msgstr "Selectiegereedschappen"
 
 #: part/pageview.cpp:705
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "Digitaal &ondertekenen..."
+msgstr "Digitaal &ondertekenen…"
 
 #: part/pageview.cpp:711
 #, kde-format
@@ -3929,10 +3913,9 @@ msgid "Search for '%1' with"
 msgstr "Zoekt naar '%1' met"
 
 #: part/pageview.cpp:4382
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "Websnelkoppelingen instellen..."
+msgstr "Websnelkoppelingen configureren…"
 
 #: part/pageview.cpp:4408
 #, kde-format
@@ -4369,28 +4352,24 @@ msgid "Go to the next bookmark"
 msgstr "Ga naar de volgende bladwijzer"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
-msgstr "Okular instellen..."
+msgstr "Okular configureren…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Viewer instellen"
+msgstr "Viewer configureren…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Viewer-backends instellen"
+msgstr "Viewer-backends configureren…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Backends instellen"
+msgstr "Backends configureren…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4418,12 +4397,10 @@ msgid "Page Number"
 msgstr "Paginanummer"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Kleurmodi configureren..."
+msgstr "Kleurmodi configureren…"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4471,10 +4448,9 @@ msgid "Open Con&taining Folder"
 msgstr "Map waarin he&t zich bevindt openen"
 
 #: part/part.cpp:946
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "PostScript als PDF &importeren..."
+msgstr "PostScript als PDF &importeren…"
 
 #: part/part.cpp:950
 #, kde-format
@@ -4487,10 +4463,9 @@ msgid "Erase Drawing"
 msgstr "Tekening wissen"
 
 #: part/part.cpp:963
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "Annotaties instellen..."
+msgstr "Annotaties configureren…"
 
 #: part/part.cpp:968
 #, kde-format
@@ -4558,10 +4533,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScriptbestanden (%1)"
 
 #: part/part.cpp:1358
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "PS-bestand wordt als PDF geïmporteerd (dit kan enige tijd duren)..."
+msgstr "PS-bestand wordt als PDF geïmporteerd (dit kan enige tijd duren)…"
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4715,10 +4689,9 @@ msgstr ""
 "werkt echter niet als de viewer is ingebed."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "Het document wordt opnieuw geladen..."
+msgstr "Het document wordt opnieuw geladen…"
 
 #: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
@@ -4881,10 +4854,9 @@ msgid "Warning"
 msgstr "Waarschuwing"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Als Okular-documentarchief opslaan..."
+msgstr "Als Okular-documentarchief opslaan…"
 
 #: part/part.cpp:2792
 #, kde-format
@@ -5316,10 +5288,9 @@ msgid "&Fonts"
 msgstr "&Lettertypen"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Lettertype-informatie wordt gelezen..."
+msgstr "Lettertype-informatie wordt gelezen…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5740,16 +5711,14 @@ msgid "Document Revision %1 of %2"
 msgstr "Documentrevisie %1 van %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
-msgstr "Ondertekende versie bekijken..."
+msgstr "Ondertekende versie bekijken…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
-msgstr "Certificaat weergeven..."
+msgstr "Certificaat weergeven…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5808,13 +5777,12 @@ msgstr "Videos worden in deze Okular niet ondersteund"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Toevoegen…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "Be&werken"
+msgstr "B&ewerken…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

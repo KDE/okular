@@ -311,7 +311,7 @@ msgstr "无法找到用于处理所给文档的插件。"
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "此文档类型尚未实现签名功能"
 
 #: core/document.cpp:3624
 #, kde-format

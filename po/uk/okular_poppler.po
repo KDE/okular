@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 02:33+0000\n"
-"PO-Revision-Date: 2025-03-07 16:20+0200\n"
+"PO-Revision-Date: 2025-07-12 20:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -311,12 +311,12 @@ msgstr "Налаштовування модуля PDF"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Не вдалося записати тимчасовий файл"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Не вдалося перейменувати тимчасовий файл"
 
 #: generator_pdf.cpp:2274
 #, kde-format

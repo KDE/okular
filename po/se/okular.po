@@ -5827,6 +5827,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgid "&Add..."
-#~ msgstr "Lasi&t …"

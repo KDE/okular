@@ -5914,31 +5914,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgid "Find..."
-#~ msgstr "Finn …"
-
-#~ msgid "Go To Page..."
-#~ msgstr "Gå til side …"
-
-#~ msgid "Play movie..."
-#~ msgstr "Kjør film …"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&Save As..."
-#~ msgstr "&Lagre som …"
-
-#~ msgid "Configure Viewer..."
-#~ msgstr "Sett opp viser …"
-
-#~ msgid "Configure Viewer Backends..."
-#~ msgstr "Sett opp visningsmotorer …"
-
-#~ msgid "Configure Backends..."
-#~ msgstr "Sett opp visningsmotorer …"
-
-#~ msgid "&Add..."
-#~ msgstr "&Legg til …"
-
-#~ msgid "&Edit..."
-#~ msgstr "&Rediger …"

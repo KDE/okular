@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-06-21 22:45+0200\n"
+"PO-Revision-Date: 2025-07-12 21:59+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -313,7 +313,7 @@ msgstr "Nem található a dokumentum kezelésére alkalmas modul."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Az aláírás nincs megvalósítva ehhez a dokumentumtípushoz"
 
 #: core/document.cpp:3618
 #, kde-format
@@ -604,12 +604,10 @@ msgstr ""
 "Hibakód: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Nem sikerült betölteni a(z) <filename>%1</filename> fájlt"
+msgstr "Nem sikerült aláírni a(z) <filename>%1</filename> dokumentumot"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -622,18 +620,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Nem sikerült aláírni. Hibás jelszó"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Nem sikerült a(z) <filename>%1</filename> felülírása, mert a fájl csak "
-"olvasható. Próbálja máshová menteni, vagy módosítsa a fájl jogosultságait."
+"Nem sikerült az aláírt dokumentum írása a(z) <filename>%1</filename> fájlba, "
+"ellenőrizze, hogy van írási jogosultsága a kiválasztott mappához."
 
 #: core/signatureutils.cpp:506
 #, kde-format
@@ -1096,11 +1090,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "A dokumentum integráció-ellenőrzése nem fejezhető be."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "A dokumentum aláírásmezője üres."
+msgstr "A dokumentumnak aláírás-helykitöltő mezői vannak."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1125,11 +1118,10 @@ msgstr ""
 "megfelelően."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Aláírás érvényessége:"
+msgstr "Aláírás helykitöltő %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1181,19 +1173,16 @@ msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Aláírás érvényessége:"
+msgstr "Aláírás helykitöltő"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -1838,12 +1827,10 @@ msgid "&Color:"
 msgstr "S&zín:"
 
 #: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "%1%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%1%"
+msgstr "%v%"
 
 #: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -2920,7 +2907,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Elemek a közeli előzményekben:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3107,15 +3094,12 @@ msgstr ""
 "teljes vagy a szabad memória 50%-át használja, amelyik nagyobb.)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] " másodperc"
-msgstr[1] " másodperc"
+msgstr[0] "%v másodpercenként"
+msgstr[1] "%v másodpercenként"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3423,7 +3407,7 @@ msgstr "&Vonalvastagság:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3571,11 +3555,10 @@ msgid "All Files (*)"
 msgstr "Minden fájl (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Üres aláírásmező (kattintson az aláíráshoz)"
+msgstr "Aláírás helykitöltő (kattintson az aláíráshoz)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
@@ -3995,38 +3978,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Az összes aláírási tanúsítványa érvénytelen. Amennyiben az aláírás korábban "
+"működött, ellenőrizze az érvényességi dátumokat."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Csak QES-tanúsítványok"
+msgstr "Nincsenek érvényes tanúsítványok"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Megtekintés a Tanúsítványkezelőben"
+msgstr "Tanúsítványkezelő megnyitása"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Nincsenek aláíró tanúsítványok.<br/>További információkért lásd a kézikönyv "
-"<a href=\"%1\">Digitális aláírások</a> fejezetét."
+"Nincsenek aláíró tanúsítványok.<br/>Indítsa el a Tanúsítványkezelőt "
+"tanúsítványok importálásához vagy kezeléséhez<br/>További információkért "
+"lásd a kézikönyv <a href=\"%1\">Digitális aláírások</a> fejezetét."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Tanúsítványok"
+msgstr "Nem találhatók tanúsítványok"
 
 #: part/pageview.cpp:5191
 #, kde-format

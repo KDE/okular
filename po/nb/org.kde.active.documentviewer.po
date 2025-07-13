@@ -195,6 +195,3 @@ msgstr ""
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Ingen resultater funnet."
-
-#~ msgid "Open..."
-#~ msgstr "Åpne …"

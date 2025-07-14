@@ -4422,13 +4422,16 @@ QString DocumentPrivate::evaluateKeystrokeEventChange(const QString &oldVal, con
 
         Since QString methods work in terms of code units, we convert the strings to UTF-32.
     */
-    std::u32string oldUcs4 = oldVal.toStdU32String();
-    std::u32string newUcs4 = newVal.toStdU32String();
+    const std::u32string oldUcs4 = oldVal.toStdU32String();
+    const std::u32string newUcs4 = newVal.toStdU32String();
     if (selStart < 0 || selEnd < 0 || (selEnd - selStart) + (static_cast<int>(newUcs4.size()) - static_cast<int>(oldUcs4.size())) < 0) {
         // Prevent Okular from crashing if incorrect parameters are passed or some bug causes incorrect calculation
         return {};
     }
     const size_t changeLength = (selEnd - selStart) + (newUcs4.size() - oldUcs4.size());
+    if (selStart + changeLength > newUcs4.size()) {
+        return {};
+    }
     auto subview = std::u32string_view {newUcs4}.substr(selStart, changeLength);
     if (subview.empty()) {
         // If subview is empty (in scenarios when selStart is at end and changeLength is non-zero) fromUcs4 returns \u0000.

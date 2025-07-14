@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 02:33+0000\n"
-"PO-Revision-Date: 2025-03-07 05:54+0100\n"
+"PO-Revision-Date: 2025-07-13 05:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -155,7 +155,7 @@ msgstr "სერტიფიკატის მონაცემთა ბა�
 #: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
-msgstr "ნაგულისხმები:"
+msgstr "ნაგულისხმევი:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:226
@@ -306,12 +306,12 @@ msgstr "PDF უკანაბოლოს მორგება"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "დროებითი ფაილის ჩაწერა ჩავარდა"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "დროებითი ფაილის სახელის გადარქმევის შეცდომა"
 
 #: generator_pdf.cpp:2274
 #, kde-format

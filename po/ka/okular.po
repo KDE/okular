@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 02:33+0000\n"
-"PO-Revision-Date: 2025-06-28 03:51+0200\n"
+"PO-Revision-Date: 2025-07-13 05:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -311,7 +311,7 @@ msgstr ""
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "ამ დოკუმენტის ტიპისთვის ხელმოწერის მხარდაჭერა განხორციელებული არაა"
 
 #: core/document.cpp:3624
 #, kde-format
@@ -640,7 +640,7 @@ msgstr "წყარო: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "&ნაგულისხმები ფონტი:"
+msgstr "&ნაგულისხმევი ფონტი:"
 
 #: gui/certificatemodel.cpp:39
 #, kde-format
@@ -2979,7 +2979,7 @@ msgstr ""
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "ნაგულისხმები მასშტაბირება:"
+msgstr "ნაგულისხმევი მასშტაბირება:"
 
 #: part/dlgperformance.cpp:26
 #, kde-format
@@ -3003,7 +3003,7 @@ msgstr "დაბალი"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Normal (default)"
-msgstr "ნორმალური (ნაგულისხმები)"
+msgstr "ნორმალური (ნაგულისხმევი)"
 
 #: part/dlgperformance.cpp:37
 #, kde-format
@@ -3296,7 +3296,7 @@ msgstr "გადაშლა ზემოთ"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, transitions"
 msgid "Default transition:"
-msgstr "ნაგულისხმები გარდასვლა:"
+msgstr "ნაგულისხმევი გარდასვლა:"
 
 #: part/dlgpresentation.cpp:130
 #, kde-format
@@ -3322,7 +3322,7 @@ msgstr "მიმდინარე ეკრანი"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
-msgstr "ნაგულისხმები ეკრანი"
+msgstr "ნაგულისხმევი ეკრანი"
 
 #: part/dlgpresentation.cpp:178
 #, kde-format

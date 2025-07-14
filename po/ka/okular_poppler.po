@@ -155,7 +155,7 @@ msgstr "სერტიფიკატის მონაცემთა ბა�
 #: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
-msgstr "ნაგულისხმები:"
+msgstr "ნაგულისხმევი:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:226

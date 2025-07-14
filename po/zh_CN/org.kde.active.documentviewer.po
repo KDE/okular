@@ -194,6 +194,3 @@ msgstr "不可用"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "未找到任何结果。"
-
-#~ msgid "Open..."
-#~ msgstr "打开..."

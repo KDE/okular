@@ -297,10 +297,9 @@ msgstr ""
 "些字体文件因此无法找到。此文档可能无法正确显示。</qt>"
 
 #: fontpool.cpp:482
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "正在生成 %1，分辨率为 %2 dpi..."
+msgstr ""
 
 #: generator_dvi.cpp:288
 #, kde-format

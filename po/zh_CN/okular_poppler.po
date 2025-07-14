@@ -297,12 +297,12 @@ msgstr "PDF 后端程序配置"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "写入临时文件失败"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "重命名临时文件失败"
 
 #: generator_pdf.cpp:2274
 #, kde-format

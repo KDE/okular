@@ -24,7 +24,6 @@ public:
 #if HAVE_JS
         , m_js(nullptr)
 #endif
-        , m_event(nullptr)
     {
     }
 
@@ -32,7 +31,6 @@ public:
 #if HAVE_JS
     QScopedPointer<ExecutorJS> m_js;
 #endif
-    Event *m_event;
 };
 
 Scripter::Scripter(DocumentPrivate *doc)
@@ -45,7 +43,7 @@ Scripter::~Scripter()
     delete d;
 }
 
-void Scripter::execute(ScriptType type, const QString &script)
+void Scripter::execute(Event *event, ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;
 #if HAVE_JS
@@ -65,17 +63,7 @@ void Scripter::execute(ScriptType type, const QString &script)
         if (!d->m_js) {
             d->m_js.reset(new ExecutorJS(d->m_doc));
         }
-        d->m_js->execute(builtInScript + script, d->m_event);
+        d->m_js->execute(builtInScript + script, event);
     }
 #endif
-}
-
-void Scripter::setEvent(Event *event)
-{
-    d->m_event = event;
-}
-
-Event *Scripter::event() const
-{
-    return d->m_event;
 }

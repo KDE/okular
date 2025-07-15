@@ -2250,11 +2250,7 @@ void DocumentPrivate::executeScriptEvent(const std::shared_ptr<Event> &event, co
     if (!m_scripter) {
         m_scripter = new Scripter(this);
     }
-    m_scripter->setEvent(event.get());
-    m_scripter->execute(linkscript->scriptType(), linkscript->script());
-
-    // Clear out the event after execution
-    m_scripter->setEvent(nullptr);
+    m_scripter->execute(event.get(), linkscript->scriptType(), linkscript->script());
 }
 
 Document::Document(QWidget *widget)
@@ -4328,7 +4324,7 @@ void Document::processAction(const Action *action)
         if (!d->m_scripter) {
             d->m_scripter = new Scripter(d);
         }
-        d->m_scripter->execute(linkscript->scriptType(), linkscript->script());
+        d->m_scripter->execute(nullptr, linkscript->scriptType(), linkscript->script());
     } break;
 
     case Action::Movie:
@@ -4340,7 +4336,7 @@ void Document::processAction(const Action *action)
             if (!d->m_scripter) {
                 d->m_scripter = new Scripter(d);
             }
-            d->m_scripter->execute(linkrendition->scriptType(), linkrendition->script());
+            d->m_scripter->execute(nullptr, linkrendition->scriptType(), linkrendition->script());
         }
 
         Q_EMIT processRenditionAction(static_cast<const RenditionAction *>(action));
@@ -5584,7 +5580,7 @@ void DocumentPrivate::executeScript(const QString &function)
     if (!m_scripter) {
         m_scripter = new Scripter(this);
     }
-    m_scripter->execute(JavaScript, function);
+    m_scripter->execute(nullptr, JavaScript, function);
 }
 
 void DocumentPrivate::requestDone(PixmapRequest *req)

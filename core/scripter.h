@@ -29,10 +29,7 @@ public:
     Scripter(const Scripter &) = delete;
     Scripter &operator=(const Scripter &) = delete;
 
-    void execute(ScriptType type, const QString &script);
-
-    void setEvent(Event *event);
-    Event *event() const;
+    void execute(Event *event, ScriptType type, const QString &script);
 
 private:
     friend class ScripterPrivate;

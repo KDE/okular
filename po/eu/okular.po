@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-06-28 10:12+0200\n"
+"PO-Revision-Date: 2025-07-14 09:22+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -150,8 +150,7 @@ msgid "Open external file"
 msgstr "Ireki kanpoko fitxategia"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
 msgstr "Exekutatu '%1'..."
 
@@ -203,17 +202,15 @@ msgstr "Amaitu aurkezpena"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Aurkitu…"
 
 #: core/action.cpp:316
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Joan orrialdera"
+msgstr "Joan orrialdera..."
 
 #: core/action.cpp:367
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
 msgstr "Jo soinua..."
 
@@ -223,10 +220,9 @@ msgid "JavaScript Script"
 msgstr "JavaScript script-a"
 
 #: core/action.cpp:485
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Jo filma"
+msgstr "Jo filma..."
 
 #: core/action.cpp:556
 #, kde-format
@@ -317,7 +313,7 @@ msgstr "Ezin da aurkitu pasatu den dokumentua erabiltzeko gauza den pluginik."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Sinadura ez dago dokumentu mota honetarako inplementatuta"
 
 #: core/document.cpp:3618
 #, kde-format
@@ -545,8 +541,7 @@ msgid "edit form button states"
 msgstr "editatu inprimakiko botoiaren egoerak"
 
 #: core/generator.cpp:787
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
 msgstr "&Testu arrunta..."
 
@@ -1439,12 +1434,10 @@ msgid "Transparent"
 msgstr "Gardena"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "Norberak finkatutako kolorea..."
+msgstr "Neurrira ipinitako kolorea..."
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1690,9 +1683,7 @@ msgid "&Properties"
 msgstr "&Propietateak"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Gorde '%1'..."
@@ -2267,10 +2258,9 @@ msgstr "Erakutsi dokumentu guztietarako"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "&Bilatu:"
+msgstr "Bilatu..."
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2305,8 +2295,7 @@ msgid "Certificate Viewer"
 msgstr "Ziurtagiri erakuslea"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
 msgstr "Esportatu..."
 
@@ -3479,18 +3468,16 @@ msgid "Modified"
 msgstr "Aldatua"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Gorde honela"
+msgstr "&Gorde honela..."
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&Ikuspegia"
+msgstr "&Ikuspegia…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3572,11 +3559,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Sinadura leku-marka (Egin klik sinatzeko)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Sinatu"
+msgstr "&Sinatu…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3760,8 +3745,7 @@ msgid "Selection Tools"
 msgstr "Hautapen tresnak"
 
 #: part/pageview.cpp:705
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
 msgstr "Digitalki &sinatu..."
 
@@ -3919,10 +3903,9 @@ msgid "Search for '%1' with"
 msgstr "Bilatu '%1' honekin"
 
 #: part/pageview.cpp:4382
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "Konfiguratu web lasterbideak..."
+msgstr "Konfiguratu web-lasterbideak..."
 
 #: part/pageview.cpp:4408
 #, kde-format
@@ -4354,28 +4337,24 @@ msgid "Go to the next bookmark"
 msgstr "Joan hurrengo laster-markara"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "Konfiguratu Okular..."
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Konfiguratu erakuslea"
+msgstr "Konfiguratu erakuslea…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Konfiguratu erakuslearen bizkarraldekoak"
+msgstr "Konfiguratu erakuslearen bizkarraldekoak…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Konfiguratu bizkarraldekoak"
+msgstr "Konfiguratu bizkarraldekoak…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4403,12 +4382,10 @@ msgid "Page Number"
 msgstr "Orrialde zenbakia"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Konfiguratu kolore moduak..."
+msgstr "Konfiguratu kolore-moduak..."
 
 #: part/part.cpp:858
 #, kde-format
@@ -4456,8 +4433,7 @@ msgid "Open Con&taining Folder"
 msgstr "Ireki hau &barnean duen karpeta"
 
 #: part/part.cpp:946
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Inportatu PostScript PDF gisa..."
 
@@ -4472,8 +4448,7 @@ msgid "Erase Drawing"
 msgstr "Ezabatu marrazkia"
 
 #: part/part.cpp:963
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
 msgstr "Konfiguratu idatzoharrak..."
 
@@ -4543,10 +4518,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript fitxategiak (%1)"
 
 #: part/part.cpp:1358
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "PS fitxategia PDF gisa inportatzea (denbora pixka bat beharko du)..."
+msgstr "PS fitxategia PDF gisa inportatzen (denbora pixka bat iraun dezake)..."
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4696,8 +4670,7 @@ msgstr ""
 "ezin da erabili erakusle kapsulatua darabilgunean."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
 msgstr "Dokumentua birzamatzen..."
 
@@ -4860,8 +4833,7 @@ msgid "Warning"
 msgstr "Abisua"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Gorde Okular dokumentu artxibo gisa..."
 
@@ -5292,8 +5264,7 @@ msgid "&Fonts"
 msgstr "&Letra-tipoak"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
 msgstr "Letra-tipoaren informazioa irakurtzen..."
 
@@ -5715,14 +5686,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumentuaren berrikuspena %1/%2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
 msgstr "Ikusi sinatutako bertsioa..."
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "Ikusi ziurtagiria..."
 
@@ -5783,13 +5752,12 @@ msgstr "Okular honetan ez dago bideoentzako euskarririk"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Gehitu..."
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Editatu"
+msgstr "&Editatu..."
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

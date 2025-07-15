@@ -150,7 +150,7 @@ msgstr "打开外部文件"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'…"
-msgstr ""
+msgstr "执行“%1”…"
 
 #: core/action.cpp:296
 #, kde-format
@@ -200,17 +200,17 @@ msgstr "结束演示"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "查找…"
 
 #: core/action.cpp:316
 #, kde-format
 msgid "Go To Page…"
-msgstr ""
+msgstr "跳转到页面…"
 
 #: core/action.cpp:367
 #, kde-format
 msgid "Play sound…"
-msgstr ""
+msgstr "播放声音…"
 
 #: core/action.cpp:435 core/action.cpp:551
 #, kde-format
@@ -220,7 +220,7 @@ msgstr "JavaScript 脚本"
 #: core/action.cpp:485
 #, kde-format
 msgid "Play movie…"
-msgstr ""
+msgstr "播放影片…"
 
 #: core/action.cpp:556
 #, kde-format
@@ -539,7 +539,7 @@ msgstr "编辑表单按钮状态"
 #: core/generator.cpp:787
 #, kde-format
 msgid "Plain &Text…"
-msgstr ""
+msgstr "纯文本(&T)…"
 
 #: core/generator.cpp:790
 #, kde-format
@@ -1414,7 +1414,7 @@ msgstr "透明"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr ""
+msgstr "自定义颜色…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1662,7 +1662,7 @@ msgstr "属性(&P)"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr ""
+msgstr "保存“%1”(&S)…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2231,7 +2231,7 @@ msgstr "显示到所有文档中"
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search…"
-msgstr ""
+msgstr "搜索…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2268,7 +2268,7 @@ msgstr "证书查看器"
 #: part/certificateviewer.cpp:50
 #, kde-format
 msgid "Export…"
-msgstr ""
+msgstr "导出…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -3425,13 +3425,13 @@ msgstr "修改时间"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr ""
+msgstr "另存为(&S)…"
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr ""
+msgstr "视图(&V)…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3515,7 +3515,7 @@ msgstr "签名占位符 (点击签名)"
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
-msgstr ""
+msgstr "签名(&S)…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3701,7 +3701,7 @@ msgstr "选择工具"
 #: part/pageview.cpp:705
 #, kde-format
 msgid "Digitally &Sign…"
-msgstr ""
+msgstr "数字签名(&S)…"
 
 #: part/pageview.cpp:711
 #, kde-format
@@ -3857,7 +3857,7 @@ msgstr "搜索网页中的“%1”，使用"
 #: part/pageview.cpp:4382
 #, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr ""
+msgstr "配置网页搜索缩略词…"
 
 #: part/pageview.cpp:4408
 #, kde-format
@@ -4279,22 +4279,22 @@ msgstr "跳转到下一个书签"
 #: part/part.cpp:748
 #, kde-format
 msgid "Configure Okular…"
-msgstr ""
+msgstr "配置 Okular…"
 
 #: part/part.cpp:751
 #, kde-format
 msgid "Configure Viewer…"
-msgstr ""
+msgstr "配置查看器…"
 
 #: part/part.cpp:757
 #, kde-format
 msgid "Configure Viewer Backends…"
-msgstr ""
+msgstr "配置查看器后端程序…"
 
 #: part/part.cpp:759
 #, kde-format
 msgid "Configure Backends…"
-msgstr ""
+msgstr "配置后端程序…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4325,7 +4325,7 @@ msgstr "页码"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr ""
+msgstr "配置颜色模式…"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4375,7 +4375,7 @@ msgstr "打开所在文件夹(&T)"
 #: part/part.cpp:946
 #, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr ""
+msgstr "导入 Postscript 为 PDF(&I)…"
 
 #: part/part.cpp:950
 #, kde-format
@@ -4390,7 +4390,7 @@ msgstr "清除绘制的图案"
 #: part/part.cpp:963
 #, kde-format
 msgid "Configure Annotations…"
-msgstr ""
+msgstr "配置批注…"
 
 #: part/part.cpp:968
 #, kde-format
@@ -4457,7 +4457,7 @@ msgstr "PostScript 文件 (%1)"
 #: part/part.cpp:1358
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr ""
+msgstr "正在将 PS 文件导入为 PDF (可能需要一些时间)…"
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4604,7 +4604,7 @@ msgstr "此链接指向一个退出程序的操作，但该操作在使用嵌入
 #: part/part.cpp:2114 part/part.cpp:2132
 #, kde-format
 msgid "Reloading the document…"
-msgstr ""
+msgstr "正在重新加载文档…"
 
 #: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
@@ -4761,7 +4761,7 @@ msgstr "警告"
 #: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
 msgid "Save as Okular document archive…"
-msgstr ""
+msgstr "另存为 Okular 文档存档…"
 
 #: part/part.cpp:2792
 #, kde-format
@@ -5179,7 +5179,7 @@ msgstr "字体(&F)"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information…"
-msgstr ""
+msgstr "正在读取字体信息…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5601,12 +5601,12 @@ msgstr "文档修订版本 %1，共 %2 版"
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
 msgid "View Signed Version…"
-msgstr ""
+msgstr "查看已签名版本…"
 
 #: part/signaturepropertiesdialog.cpp:95
 #, kde-format
 msgid "View Certificate…"
-msgstr ""
+msgstr "查看证书…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5665,12 +5665,12 @@ msgstr "此版本的 Okular 不支持视频"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "添加(&A)…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
 msgid "&Edit…"
-msgstr ""
+msgstr "编辑(&E)…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

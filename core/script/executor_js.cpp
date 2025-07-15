@@ -27,6 +27,7 @@
 
 #include <QDebug>
 #include <QJSEngine>
+#include <QStack>
 #include <QThread>
 #include <QTimer>
 
@@ -49,11 +50,15 @@ public:
 
     void initTypes();
 
+    void updateEvent();
+
     DocumentPrivate *m_doc;
     QJSEngine m_interpreter;
 
     QThread m_watchdogThread;
     QTimer *m_watchdogTimer = nullptr;
+
+    QStack<Event *> m_events;
 };
 
 void ExecutorJSPrivate::initTypes()
@@ -75,6 +80,17 @@ void ExecutorJSPrivate::initTypes()
     m_interpreter.globalObject().setProperty(QStringLiteral("global"), m_interpreter.newQObject(new JSGlobal));
 }
 
+void ExecutorJSPrivate::updateEvent()
+{
+    if (!m_events.isEmpty()) {
+        Event *event = m_events.top();
+        const auto eventVal = event ? m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
+        m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);
+    } else {
+        m_interpreter.globalObject().setProperty(QStringLiteral("event"), QJSValue(QJSValue::UndefinedValue));
+    }
+}
+
 ExecutorJS::ExecutorJS(DocumentPrivate *doc)
     : d(new ExecutorJSPrivate(doc))
 {
@@ -89,8 +105,8 @@ ExecutorJS::~ExecutorJS()
 
 void ExecutorJS::execute(const QString &script, Event *event)
 {
-    const auto eventVal = event ? d->m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
-    d->m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);
+    d->m_events.push(event);
+    d->updateEvent();
 
     QMetaObject::invokeMethod(d->m_watchdogTimer, qOverload<>(&QTimer::start));
     d->m_interpreter.setInterrupted(false);
@@ -106,4 +122,6 @@ void ExecutorJS::execute(const QString &script, Event *event)
             qCDebug(OkularCoreDebug) << "Event Result:" << event->name() << event->type() << "value:" << event->value();
         }
     }
+    d->m_events.pop();
+    d->updateEvent();
 }

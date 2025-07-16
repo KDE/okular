@@ -9,7 +9,6 @@
 // qt/kde includes
 #include <KBookmarkAction>
 #include <KBookmarkManager>
-#include <KBookmarkMenu>
 #include <KBookmarkOwner>
 #include <QDebug>
 #include <QFileInfo>

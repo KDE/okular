@@ -172,7 +172,7 @@ void AnnotsPropertiesDialog::slotapply()
 
     m_document->modifyPageAnnotationProperties(m_page, m_annot);
 
-    m_modifyDateLabel->setText(i18n("Modified: %1", QLocale().toString(m_annot->modificationDate(), QLocale::LongFormat)));
+    m_modifyDateLabel->setText(QLocale().toString(m_annot->modificationDate(), QLocale::LongFormat));
 
     modified = false;
     button(QDialogButtonBox::Apply)->setEnabled(false);

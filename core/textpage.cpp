@@ -22,6 +22,7 @@
 #include <QtAlgorithms>
 
 using namespace Okular;
+using namespace Qt::Literals::StringLiterals;
 
 // Many of the strings are being reused; especially
 // those less than 2 letters are very common
@@ -930,18 +931,9 @@ void TextPagePrivate::setWordList(const TextEntity::List &list)
  * Remove all the spaces in between texts. It will make all the generators
  * same, whether they save spaces(like pdf) or not(like djvu).
  */
-static void removeSpace(TextEntity::List *words)
+static void removeSpace(TextEntity::List &words)
 {
-    TextEntity::List::Iterator it = words->begin();
-    const QString str(QLatin1Char(' '));
-
-    while (it != words->end()) {
-        if (it->text() == str) {
-            it = words->erase(it);
-        } else {
-            ++it;
-        }
-    }
+    erase_if(words, [](const TextEntity &word) { return word.text() == " "_L1; });
 }
 
 /**
@@ -1644,7 +1636,7 @@ void TextPagePrivate::correctTextOrder()
     /**
      * Remove spaces from the text
      */
-    removeSpace(&characters);
+    removeSpace(characters);
 
     /**
      * Construct words from characters

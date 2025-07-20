@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 02:33+0000\n"
-"PO-Revision-Date: 2025-06-10 22:39+0200\n"
+"PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -202,7 +202,7 @@ msgstr "찾기..."
 #: core/action.cpp:316
 #, kde-format
 msgid "Go To Page..."
-msgstr "쪽으로 가기..."
+msgstr "쪽으로 이동..."
 
 #: core/action.cpp:367
 #, kde-format
@@ -308,7 +308,7 @@ msgstr "전달된 문서를 처리할 플러그인을 찾을 수 없습니다."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "이 문서 형식에 서명하는 것은 구현되지 않았음"
 
 #: core/document.cpp:3624
 #, kde-format
@@ -596,11 +596,10 @@ msgstr ""
 "%1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "다음 위치에 있는 문서에 서명할 수 없음: <filename>%1</filename>"
+msgstr "문서에 서명할 수 없음: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -613,10 +612,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "서명할 수 없습니다. 암구호가 잘못되었습니다"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
@@ -2876,7 +2872,7 @@ msgstr "탐색 도구를 사용할 때 화면 경계에서 커서 둘러싸기"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "최근 기록의 항목:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3934,38 +3930,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"모든 서명용 인증서가 잘못되었습니다. 이전에 서명을 사용한 적이 있다면 유효 기"
+"간을 사용하십시오."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "QES 인증서만"
+msgstr "올바른 인증서가 없음"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "인증서 관리자에서 보기"
+msgstr "인증서 관리자 열기"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"서명용 인증서를 사용할 수 없습니다.<br/>자세한 정보를 보려면 도움말의 <a "
-"href=\"%1\">디지털 서명 추가</a>를 참조하십시오."
+"서명용 인증서를 사용할 수 없습니다.<br/>인증서 관리자를 실행하여 인증서를 가"
+"져오거나 관리할 수 있습니다.<br/>자세한 정보를 보려면 도움말의 <a href="
+"\"%1\">디지털 서명 추가</a>를 참조하십시오."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "인증서"
+msgstr "인증서를 찾을 수 없음"
 
 #: part/pageview.cpp:5191
 #, kde-format

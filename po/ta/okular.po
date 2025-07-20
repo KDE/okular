@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 02:33+0000\n"
-"PO-Revision-Date: 2025-04-20 18:12+0530\n"
+"PO-Revision-Date: 2025-07-19 19:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -307,7 +307,7 @@ msgstr "கொடுத்த ஆவணத்தைக் கையாளக் 
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "இவ்வகையான ஆவணங்களுக்கு கையொப்பமிடுவதை ஆக்குலர் ஆதரிக்காது"
 
 #: core/document.cpp:3624
 #, kde-format
@@ -597,11 +597,10 @@ msgstr ""
 "சிக்கல் எண்: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "<filename>%1</filename> என்கிற கோப்பிற்கு கையொப்பமிட முடியவில்லை"
+msgstr "இக்கோப்பிற்கு கையொப்பமிட முடியவில்லை: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -614,10 +613,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "கையொப்பமிட முடியவில்லை. தவறான கடவுச்சொல்"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
@@ -1085,11 +1081,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "ஆவண நம்பகத்தை சரிபார்த்தலை முடிக்க முடியவில்லை."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "இவ்வாவணத்தில் எண்ம‍முறையில் கையொப்பமிடப்படாத கையொப்ப புலங்கள் உள்ளன."
+msgstr "இவ்வாவணத்தில் எண்ம‍முறை கையொப்ப புலங்கள் உள்ளன."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1111,11 +1106,10 @@ msgstr ""
 "இந்த ஆவணம் டிஜிட்டலாக கையொப்பமிடப்பட்டது. சில கையொப்பங்களை சரிபார்க்க முடியவில்லை."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "கையொப்ப வகை: %1"
+msgstr "கையொப்ப கொள்ளிடம் %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1125,7 +1119,7 @@ msgstr "புலம்: %1 (பக்கம் %2)"
 #: gui/signaturemodel.cpp:152
 #, kde-format
 msgid "Rev. %1: Signed By %2"
-msgstr "சீராய்வு. %1: கையொப்பமிட்டவர் %2"
+msgstr "சீராய்வு %1: கையொப்பமிட்டவர் %2"
 
 #: gui/signaturemodel.cpp:167
 #, kde-format
@@ -1143,9 +1137,7 @@ msgid "Location: %1"
 msgstr "இடம்: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "PGP கையொப்பம்"
@@ -1169,19 +1161,16 @@ msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr "தெரியாதவர்"
+msgstr "தெரியாதது"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "கையொப்பத்தின் செல்லுபடி நிலை:"
+msgstr "கையொப்ப கொள்ளிடம்"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -2297,7 +2286,7 @@ msgstr "ஏற்றுமதி..."
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
 msgid "General"
-msgstr "பொதுவான"
+msgstr "பொதுவானவை"
 
 #: part/certificateviewer.cpp:58
 #, kde-format
@@ -2896,7 +2885,7 @@ msgstr "உலாவல் கருவி திரையின் ஓரத்
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "சமீப வரலாற்றிலுள்ள உருப்படிகள்:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3551,11 +3540,10 @@ msgid "All Files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "கையொப்பமிடப்படாத கையொப்ப புலம் (கையொப்பமிட கிளிக் செய்யுங்கள்)"
+msgstr "கையொப்ப கொள்ளிடம் (கையொப்பமிட கிளிக் செய்யவும்)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
@@ -3973,18 +3961,18 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகாதவை. இதற்கு முன்னர் நீங்கள் வெற்றிகரமாக "
+"கையொப்பமிட்டிருந்தால், உங்கள் சான்றிதழ்கள் காலாவதியாகியுள்ளனவா என பார்க்கவும்."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "QES சான்றிதழ்கள் மட்டும்"
+msgstr "செல்லுபடியாகும் சான்றிதழ்கள் இல்லை"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "சான்றிதழ் மேலாளியில் காட்டு"
+msgstr "சான்றிதழ் மேலாளியைத் திற"
 
 #: part/pageview.cpp:5178
 #, fuzzy, kde-format
@@ -4001,10 +3989,9 @@ msgstr ""
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "சான்றிதழ்கள்"
+msgstr "எந்த சான்றிதழும் கண்டுபிடிக்கப்படவில்லை"
 
 #: part/pageview.cpp:5191
 #, kde-format

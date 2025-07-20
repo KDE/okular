@@ -1,14 +1,14 @@
 # Translation of okular_dvi.po to Korean.
 # Copyright (C) 2007 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdegraphics package.
-# SPDX-FileCopyrightText: 2007, 2009, 2013, 2014, 2020, 2022, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2007, 2009, 2013, 2014, 2020, 2022, 2024, 2025 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2024-08-21 00:32+0200\n"
+"PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -309,10 +309,9 @@ msgstr ""
 "수도 있습니다.</qt>"
 
 #: fontpool.cpp:482
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "%1을(를) %2 dpi로 생성 중..."
+msgstr "%1을(를) %2 dpi로 생성 중…"
 
 #: generator_dvi.cpp:288
 #, kde-format

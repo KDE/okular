@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-06-10 22:39+0200\n"
+"PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -145,10 +145,9 @@ msgid "Open external file"
 msgstr "외부 파일 열기"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
-msgstr "'%1' 실행..."
+msgstr "'%1' 실행…"
 
 #: core/action.cpp:296
 #, kde-format
@@ -198,19 +197,17 @@ msgstr "프레젠테이션 끝"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "찾기…"
 
 #: core/action.cpp:316
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "쪽으로 가기"
+msgstr "쪽으로 이동…"
 
 #: core/action.cpp:367
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
-msgstr "소리 재생..."
+msgstr "소리 재생…"
 
 #: core/action.cpp:435 core/action.cpp:551
 #, kde-format
@@ -218,10 +215,9 @@ msgid "JavaScript Script"
 msgstr "자바스크립트 스크립트"
 
 #: core/action.cpp:485
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "동영상 재생"
+msgstr "동영상 재생…"
 
 #: core/action.cpp:556
 #, kde-format
@@ -312,7 +308,7 @@ msgstr "전달된 문서를 처리할 플러그인을 찾을 수 없습니다."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "이 문서 형식에 서명하는 것은 구현되지 않았음"
 
 #: core/document.cpp:3618
 #, kde-format
@@ -538,10 +534,9 @@ msgid "edit form button states"
 msgstr "양식 단추 상태 편집"
 
 #: core/generator.cpp:787
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "일반 텍스트(&T)..."
+msgstr "일반 텍스트(&T)…"
 
 #: core/generator.cpp:790
 #, kde-format
@@ -601,11 +596,10 @@ msgstr ""
 "%1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "다음 위치에 있는 문서에 서명할 수 없음: <filename>%1</filename>"
+msgstr "문서에 서명할 수 없음: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -618,10 +612,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "서명할 수 없습니다. 암구호가 잘못되었습니다"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
@@ -1424,12 +1415,10 @@ msgid "Transparent"
 msgstr "투명"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "사용자 정의 색상..."
+msgstr "사용자 정의 색상…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1674,12 +1663,10 @@ msgid "&Properties"
 msgstr "속성(&P)"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "'%1' 저장(&S)..."
+msgstr "'%1' 저장(&S)…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2246,10 +2233,9 @@ msgstr "모든 문서에 표시"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "찾기(&E):"
+msgstr "찾기…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2284,10 +2270,9 @@ msgid "Certificate Viewer"
 msgstr "인증서 뷰어"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
-msgstr "내보내기..."
+msgstr "내보내기…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2887,7 +2872,7 @@ msgstr "탐색 도구를 사용할 때 화면 경계에서 커서 둘러싸기"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "최근 기록의 항목:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3443,18 +3428,16 @@ msgid "Modified"
 msgstr "수정한 날짜"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "다른 이름으로 저장"
+msgstr "다른 이름으로 저장(&S)…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "보기(&V)"
+msgstr "보기(&V)…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3536,11 +3519,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "서명 자리 비움자(클릭하여 서명)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "서명"
+msgstr "서명(&S)…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3724,10 +3705,9 @@ msgid "Selection Tools"
 msgstr "선택 도구"
 
 #: part/pageview.cpp:705
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "디지털 서명(&S)..."
+msgstr "디지털 서명(&S)…"
 
 #: part/pageview.cpp:711
 #, kde-format
@@ -3881,10 +3861,9 @@ msgid "Search for '%1' with"
 msgstr "다음으로 '%1' 찾기"
 
 #: part/pageview.cpp:4382
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "웹 바로가기 설정..."
+msgstr "웹 바로 가기 설정…"
 
 #: part/pageview.cpp:4408
 #, kde-format
@@ -3951,38 +3930,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"모든 서명용 인증서가 잘못되었습니다. 이전에 서명을 사용한 적이 있다면 유효 기"
+"간을 사용하십시오."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "QES 인증서만"
+msgstr "올바른 인증서가 없음"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "인증서 관리자에서 보기"
+msgstr "인증서 관리자 열기"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"서명용 인증서를 사용할 수 없습니다.<br/>자세한 정보를 보려면 도움말의 <a "
-"href=\"%1\">디지털 서명 추가</a>를 참조하십시오."
+"서명용 인증서를 사용할 수 없습니다.<br/>인증서 관리자를 실행하여 인증서를 가"
+"져오거나 관리할 수 있습니다.<br/>자세한 정보를 보려면 도움말의 <a href="
+"\"%1\">디지털 서명 추가</a>를 참조하십시오."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "인증서"
+msgstr "인증서를 찾을 수 없음"
 
 #: part/pageview.cpp:5191
 #, kde-format
@@ -4314,28 +4289,24 @@ msgid "Go to the next bookmark"
 msgstr "다음 책갈피로 가기"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
-msgstr "Okular 설정..."
+msgstr "Okular 설정…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "뷰어 설정"
+msgstr "뷰어 설정…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "뷰어 백엔드 설정"
+msgstr "뷰어 백엔드 설정…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "백엔드 설정"
+msgstr "백엔드 설정…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4363,12 +4334,10 @@ msgid "Page Number"
 msgstr "쪽 번호"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "색상 모드 설정..."
+msgstr "색상 모드 설정…"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4416,10 +4385,9 @@ msgid "Open Con&taining Folder"
 msgstr "포함하는 폴더 열기(&T)"
 
 #: part/part.cpp:946
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "포스트스크립트를 PDF로 불러오기(&I)..."
+msgstr "포스트스크립트를 PDF로 불러오기(&I)…"
 
 #: part/part.cpp:950
 #, kde-format
@@ -4432,10 +4400,9 @@ msgid "Erase Drawing"
 msgstr "그리기 삭제"
 
 #: part/part.cpp:963
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "주석 설정..."
+msgstr "주석 설정…"
 
 #: part/part.cpp:968
 #, kde-format
@@ -4500,10 +4467,9 @@ msgid "PostScript files (%1)"
 msgstr "포스트스크립트 파일(%1)"
 
 #: part/part.cpp:1358
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "PS 파일을 PDF로 불러오는 중 (이 작업은 시간이 걸릴 수 있습니다)..."
+msgstr "PS 파일을 PDF로 불러오는 중 (이 작업은 시간이 걸릴 수 있습니다)…"
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4651,10 +4617,9 @@ msgstr ""
 "이 링크는 임베드된 뷰어를 사용할 때 작동하지 않는 앱 종료 동작을 가리킵니다."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "문서 새로 읽는 중..."
+msgstr "문서 새로 읽는 중…"
 
 #: part/part.cpp:2289 part/toc.cpp:38
 #, kde-format
@@ -4810,10 +4775,9 @@ msgid "Warning"
 msgstr "경고"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Okular 문서 압축 파일로 저장..."
+msgstr "Okular 문서 압축 파일로 저장…"
 
 #: part/part.cpp:2792
 #, kde-format
@@ -5239,10 +5203,9 @@ msgid "&Fonts"
 msgstr "글꼴(&F)"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "글꼴 정보 읽는 중..."
+msgstr "글꼴 정보 읽는 중…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5662,16 +5625,14 @@ msgid "Document Revision %1 of %2"
 msgstr "문서 리비전 %2 중 %1"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
-msgstr "서명된 버전 보기..."
+msgstr "서명된 버전 보기…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
-msgstr "인증서 보기..."
+msgstr "인증서 보기…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5730,13 +5691,12 @@ msgstr "이 Okular에서는 동영상을 지원하지 않음"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "추가(&A)…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "편집(&E)"
+msgstr "편집(&E)…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

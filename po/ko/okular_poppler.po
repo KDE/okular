@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-10 00:41+0000\n"
-"PO-Revision-Date: 2025-04-07 00:08+0200\n"
+"PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -299,12 +299,12 @@ msgstr "PDF 백엔드 설정"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "임시 파일에 기록할 수 없음"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "임시 파일의 이름을 변경할 수 없음"
 
 #: generator_pdf.cpp:2274
 #, kde-format

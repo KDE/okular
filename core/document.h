@@ -16,6 +16,7 @@
 #include "okularcore_export.h"
 #include "pagesize.h"
 #include "signatureutils.h"
+#include "sourcereference.h"
 
 #include <QDomDocument>
 #include <QList>
@@ -26,6 +27,8 @@
 #include <QMimeType>
 #include <QUrl>
 #include <QVariant>
+
+#include <optional>
 
 class KConfigDialog;
 class KPluginMetaData;
@@ -58,7 +61,6 @@ class PixmapRequest;
 class RenditionAction;
 class NewSignatureData;
 struct NewSignatureDataPrivate;
-struct SourceReference;
 class View;
 class VisiblePageRect;
 class SignatureInfo;
@@ -1050,7 +1052,7 @@ public:
      *
      * @since 0.10 (KDE 4.4)
      */
-    const SourceReference *dynamicSourceReference(int pageNr, double absX, double absY);
+    std::optional<SourceReference> dynamicSourceReference(int pageNr, double absX, double absY);
 
     /**
      * Returns the orientation of the document (for printing purposes). This

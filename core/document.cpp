@@ -4734,10 +4734,10 @@ void Document::processSourceReference(const SourceReference &ref)
     KProcess::startDetached(progFullPath, args);
 }
 
-const SourceReference *Document::dynamicSourceReference(int pageNr, double absX, double absY)
+std::optional<SourceReference> Document::dynamicSourceReference(int pageNr, double absX, double absY)
 {
     if (!d->m_synctex_scanner) {
-        return nullptr;
+        return std::nullopt;
     }
 
     const QSizeF dpi = d->m_generator->dpi();
@@ -4754,10 +4754,10 @@ const SourceReference *Document::dynamicSourceReference(int pageNr, double absX,
             }
             const char *name = synctex_scanner_get_name(d->m_synctex_scanner, synctex_node_tag(node));
 
-            return new Okular::SourceReference(QFile::decodeName(name), line, col);
+            return std::make_optional<Okular::SourceReference>(QFile::decodeName(name), line, col);
         }
     }
-    return nullptr;
+    return std::nullopt;
 }
 
 Document::PrintingType Document::printingSupport() const

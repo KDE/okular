@@ -2625,9 +2625,8 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                         d->document->processSourceReference(*ref);
                     }
                 } else {
-                    if (const Okular::SourceReference *ref = d->document->dynamicSourceReference(pageItem->pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height())) {
+                    if (auto ref = d->document->dynamicSourceReference(pageItem->pageNumber(), nX * pageItem->page()->width(), nY * pageItem->page()->height())) {
                         d->document->processSourceReference(*ref);
-                        delete ref;
                     }
                 }
             }

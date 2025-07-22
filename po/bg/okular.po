@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-22 00:41+0000\n"
 "PO-Revision-Date: 2025-07-11 23:34+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -337,47 +337,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Не е намерена програма, която да може да отвори файла от типа %1."
 
-#: core/document.cpp:4863
+#: core/document.cpp:4857
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Грешка при отваряне на временния файл"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4859
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Грешка при преобразуването за печат"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4861
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Процесът за печат блокира"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4863
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Процесът за печат не може да се зареди"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4865
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Грешка при печат към файл"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4867
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Принтерът е в неподходящо състояние"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4869
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Грешка при откриване на файл за печат"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4871
 #, kde-format
 msgid "There was no file to print"
 msgstr "Няма файл за отпечатване"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4873
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,92 +386,92 @@ msgstr ""
 "Не е открита подходяща програма за печат. Уверете се, че програмата lpr на "
 "CUPS е налична"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4875
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Размерът на страницата за печат е невалиден"
 
-#: core/document.cpp:5559 part/part.cpp:1146
+#: core/document.cpp:5553 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "„%1“ не може да бъде отворен. Файлът не съществува."
 
-#: core/document.cpp:6069
+#: core/document.cpp:6063
 #, kde-format
 msgid "Title"
 msgstr "Заглавие"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6066
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6069
 #, kde-format
 msgid "Description"
 msgstr "Описание"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6072
 #, kde-format
 msgid "Author"
 msgstr "Автор"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6075
 #, kde-format
 msgid "Creator"
 msgstr "Създател"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6078
 #, kde-format
 msgid "Producer"
 msgstr "Производител"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6081
 #, kde-format
 msgid "Copyright"
 msgstr "Авторски права"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6084
 #, kde-format
 msgid "Pages"
 msgstr "Страници"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6087
 #, kde-format
 msgid "Created"
 msgstr "Създаден"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6090
 #, kde-format
 msgid "Modified"
 msgstr "Последна промяна"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6093
 #, kde-format
 msgid "MIME Type"
 msgstr "Тип MIME"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6096
 #, kde-format
 msgid "Category"
 msgstr "Категория"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6099
 #, kde-format
 msgid "Keywords"
 msgstr "Ключови думи"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6102
 #, kde-format
 msgid "File Path"
 msgstr "Път до файла"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6105
 #, kde-format
 msgid "File Size"
 msgstr "Големина на файла"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6108
 #, kde-format
 msgid "Page Size"
 msgstr "Размери на страницата"
@@ -1665,8 +1665,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Копиране на текста в клипборда"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
-#: part/pageview.cpp:2522 part/pageview.cpp:2842 part/pageview.cpp:2986
-#: part/pageview.cpp:3042
+#: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
+#: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копирането забранено поради DRM"
@@ -2183,17 +2183,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:52
+#: part/annotwindow.cpp:53
 #, kde-format
 msgid "Close this note"
 msgstr "Затваряне на бележката"
 
-#: part/annotwindow.cpp:95 part/findbar.cpp:63
+#: part/annotwindow.cpp:96 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Настройки"
 
-#: part/annotwindow.cpp:106
+#: part/annotwindow.cpp:107
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2202,28 +2202,28 @@ msgstr ""
 "Тази анотация може да съдържа LaTeX код. \n"
 "Щракнете тук, за да изобразите."
 
-#: part/annotwindow.cpp:418
+#: part/annotwindow.cpp:439
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Не е намерена програмата latex."
 
-#: part/annotwindow.cpp:418 part/annotwindow.cpp:423 part/annotwindow.cpp:428
-#: part/annotwindow.cpp:433
+#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
+#: part/annotwindow.cpp:454
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Грешка при обработката с LaTeX"
 
-#: part/annotwindow.cpp:423
+#: part/annotwindow.cpp:444
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Не е намерена програмата dvipng."
 
-#: part/annotwindow.cpp:428
+#: part/annotwindow.cpp:449
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Възникна проблем при изпълнение на програмата \"latex\"."
 
-#: part/annotwindow.cpp:433
+#: part/annotwindow.cpp:454
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Възникна проблем при изпълнение на програмата \"dvipng\"."
@@ -3600,300 +3600,300 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "от"
 
-#: part/pageview.cpp:501
+#: part/pageview.cpp:507
 #, kde-format
 msgid "Zoom"
 msgstr "Мащабиране"
 
-#: part/pageview.cpp:513
+#: part/pageview.cpp:519
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Мащабиране до 100%"
 
-#: part/pageview.cpp:524
+#: part/pageview.cpp:530
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Завъртане на&дясно"
 
-#: part/pageview.cpp:525
+#: part/pageview.cpp:531
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Надясно"
 
-#: part/pageview.cpp:529
+#: part/pageview.cpp:535
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Завъртане на&ляво"
 
-#: part/pageview.cpp:530
+#: part/pageview.cpp:536
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Наляво"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:540
 #, kde-format
 msgid "Original Orientation"
 msgstr "Първоначална ориентация"
 
-#: part/pageview.cpp:540
+#: part/pageview.cpp:546
 #, kde-format
 msgid "&Trim View"
 msgstr "&Изрязване на изглед"
 
-#: part/pageview.cpp:544
+#: part/pageview.cpp:550
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Отр&язване на отстъпите"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Подрязване до &избор"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:563
 #, kde-format
 msgid "Fit &Width"
 msgstr "До &широчината на страницата"
 
-#: part/pageview.cpp:561
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Fit &Page"
 msgstr "До &височината на страницата"
 
-#: part/pageview.cpp:565
+#: part/pageview.cpp:571
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Автоматично напасване"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:575
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Напасване на &прозореца към страницата"
 
-#: part/pageview.cpp:576
+#: part/pageview.cpp:582
 #, kde-format
 msgid "&View Mode"
 msgstr "&Режим на преглед"
 
-#: part/pageview.cpp:588
+#: part/pageview.cpp:594
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Една страница"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:595
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Облицовъчни страници"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:596
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Облицовъчни страници (&Център за първа страница)"
 
-#: part/pageview.cpp:593
+#: part/pageview.cpp:599
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Общ преглед"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:611
 #, kde-format
 msgid "&Continuous"
 msgstr "Б&ез прекъсване между страниците"
 
-#: part/pageview.cpp:612
+#: part/pageview.cpp:618
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Използване на посока за четене отдясно наляво"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:627
 #, kde-format
 msgid "&Browse"
 msgstr "&Преглед"
 
-#: part/pageview.cpp:629
+#: part/pageview.cpp:635
 #, kde-format
 msgid "&Zoom"
 msgstr "&Мащабиране"
 
-#: part/pageview.cpp:649
+#: part/pageview.cpp:655
 #, kde-format
 msgid "Area &Selection"
 msgstr "Избор на &област"
 
-#: part/pageview.cpp:656
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Text Selection"
 msgstr "&Избор на текст"
 
-#: part/pageview.cpp:663
+#: part/pageview.cpp:669
 #, kde-format
 msgid "T&able Selection"
 msgstr "Избор на &таблица"
 
-#: part/pageview.cpp:670
+#: part/pageview.cpp:676
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Лупа"
 
-#: part/pageview.cpp:679
+#: part/pageview.cpp:685
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Инструменти за избор"
 
-#: part/pageview.cpp:705
+#: part/pageview.cpp:711
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
 msgid "Digitally &Sign…"
 msgstr "Цифров &подпис..."
 
-#: part/pageview.cpp:711
+#: part/pageview.cpp:717
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Произнасяне на документа"
 
-#: part/pageview.cpp:716
+#: part/pageview.cpp:722
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Произнасяне на страницата"
 
-#: part/pageview.cpp:721
+#: part/pageview.cpp:727
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Произнасяне на страницата"
 
-#: part/pageview.cpp:726
+#: part/pageview.cpp:732
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Спиране на произнасянето"
 
-#: part/pageview.cpp:731
+#: part/pageview.cpp:737
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Пауза/възобновяване на говоренето"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Scroll Up"
 msgstr "Превъртане нагоре"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:755
 #, kde-format
 msgid "Scroll Down"
 msgstr "Превъртане надолу"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Превъртане страница нагоре"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:767
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Превъртане страница надолу"
 
-#: part/pageview.cpp:767
+#: part/pageview.cpp:773
 #, kde-format
 msgid "Show Forms"
 msgstr "Показване на формуляри"
 
-#: part/pageview.cpp:1271
+#: part/pageview.cpp:1278
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Зареден е документ от една страница."
 msgstr[1] " Зареден е документ от %1 страници."
 
-#: part/pageview.cpp:2517
+#: part/pageview.cpp:2526
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Копиране на таблицата в клипборда"
 
-#: part/pageview.cpp:2836
+#: part/pageview.cpp:2845
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Текст (1 знак)"
 msgstr[1] "Текст (%1 знака)"
 
-#: part/pageview.cpp:2837 part/pageview.cpp:2855
+#: part/pageview.cpp:2846 part/pageview.cpp:2864
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Копиране в системния буфер"
 
-#: part/pageview.cpp:2846 part/pageview.cpp:3037
+#: part/pageview.cpp:2855 part/pageview.cpp:3046
 #, kde-format
 msgid "Speak Text"
 msgstr "Произнасяне на текст"
 
-#: part/pageview.cpp:2854
+#: part/pageview.cpp:2863
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Изображение (%1 × %2 пиксела)"
 
-#: part/pageview.cpp:2856
+#: part/pageview.cpp:2865
 #, kde-format
 msgid "Save to File…"
 msgstr "Запис във файл..."
 
-#: part/pageview.cpp:2876
+#: part/pageview.cpp:2885
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Изображението [%1 × %2] е копирано в системния буфер."
 
-#: part/pageview.cpp:2879
+#: part/pageview.cpp:2888
 #, kde-format
 msgid "Save file"
 msgstr "Запишете файла"
 
-#: part/pageview.cpp:2879
+#: part/pageview.cpp:2888
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Изображения (* .png * .jpeg)"
 
-#: part/pageview.cpp:2881
+#: part/pageview.cpp:2890
 #, kde-format
 msgid "File not saved."
 msgstr "Файлът не е записан."
 
-#: part/pageview.cpp:2892
+#: part/pageview.cpp:2901
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Изображениетo [%1 × %2] е записано във файла %3."
 
-#: part/pageview.cpp:3033
+#: part/pageview.cpp:3042
 #, kde-format
 msgid "Copy Text"
 msgstr "Копиране на текст"
 
-#: part/pageview.cpp:3053
+#: part/pageview.cpp:3062
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Отиване до „%1“"
 
-#: part/pageview.cpp:4062 part/part.cpp:3179
+#: part/pageview.cpp:4084 part/part.cpp:3179
 #, kde-format
 msgid "Fit Width"
 msgstr "До широчината на страницата"
 
-#: part/pageview.cpp:4062
+#: part/pageview.cpp:4084
 #, kde-format
 msgid "Fit Page"
 msgstr "До височината на страницата"
 
-#: part/pageview.cpp:4062
+#: part/pageview.cpp:4084
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автоматично напасване"
 
-#: part/pageview.cpp:4085
+#: part/pageview.cpp:4107
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3902,71 +3902,71 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4368
+#: part/pageview.cpp:4390
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Търсене на „%1“ с"
 
-#: part/pageview.cpp:4382
+#: part/pageview.cpp:4404
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "Настройки на уеб-препратки..."
 
-#: part/pageview.cpp:4408
+#: part/pageview.cpp:4430
 #, kde-format
 msgid "Follow This Link"
 msgstr "Към връзката"
 
-#: part/pageview.cpp:4411
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Play this Sound"
 msgstr "Пусни този звук"
 
-#: part/pageview.cpp:4413
+#: part/pageview.cpp:4435
 #, kde-format
 msgid "Stop Sound"
 msgstr "Спиране на звука"
 
-#: part/pageview.cpp:4419
+#: part/pageview.cpp:4441
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Копиране адреса на връзката"
 
-#: part/pageview.cpp:4440
+#: part/pageview.cpp:4462
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Търсене на „%1“ в този документ"
 
-#: part/pageview.cpp:4972
+#: part/pageview.cpp:4994
 #, kde-format
 msgid "Welcome"
 msgstr "Добре дошли"
 
-#: part/pageview.cpp:5094
+#: part/pageview.cpp:5116
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Маркирайте желаната част от документа. За намаляване щракнете с десния бутон "
 "на мишката."
 
-#: part/pageview.cpp:5107
+#: part/pageview.cpp:5129
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Щракнете, за да видите увеличения изглед."
 
-#: part/pageview.cpp:5122
+#: part/pageview.cpp:5144
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 "Изчертайте правоъгълник около текста/изображението, което искате да копирате."
 
-#: part/pageview.cpp:5136
+#: part/pageview.cpp:5158
 #, kde-format
 msgid "Select text"
 msgstr "Избиране на текст"
 
-#: part/pageview.cpp:5150
+#: part/pageview.cpp:5172
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3975,7 +3975,7 @@ msgstr ""
 "Начертайте правоъгълник около таблицата, след това щракнете в близост до "
 "ръбовете, за да разделите; натиснете Esc, за да изчистите."
 
-#: part/pageview.cpp:5165 part/pageview.cpp:5173
+#: part/pageview.cpp:5187 part/pageview.cpp:5195
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -3984,17 +3984,17 @@ msgstr ""
 "Всички ваши сертификати за подписване са невалидни. В случай, че "
 "подписването е работило преди, моля, проверете датите им на валидност."
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5188
 #, kde-format
 msgid "No valid certificates"
 msgstr "Няма валидни сертификати"
 
-#: part/pageview.cpp:5167 part/pageview.cpp:5182
+#: part/pageview.cpp:5189 part/pageview.cpp:5204
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Отваряне на мениджъра за сертификати"
 
-#: part/pageview.cpp:5178
+#: part/pageview.cpp:5200
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4006,12 +4006,12 @@ msgstr ""
 "информация, моля вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</"
 "a> в ръководството."
 
-#: part/pageview.cpp:5181 part/pageview.cpp:5193
+#: part/pageview.cpp:5203 part/pageview.cpp:5215
 #, kde-format
 msgid "No certificates found"
 msgstr "Няма намерени сертификати"
 
-#: part/pageview.cpp:5191
+#: part/pageview.cpp:5213
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4022,18 +4022,18 @@ msgstr ""
 "вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</a> в "
 "ръководството."
 
-#: part/pageview.cpp:5216
+#: part/pageview.cpp:5238
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Имате незаписани промени. Моля, запишете документа, преди да го подпишете."
 
-#: part/pageview.cpp:5239
+#: part/pageview.cpp:5261
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Начертайте правоъгълник, за да вмъкнете полето за подпис"
 
-#: part/pageview.cpp:5383
+#: part/pageview.cpp:5405
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

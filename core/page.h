@@ -28,7 +28,6 @@ class DocumentPrivate;
 class FormField;
 class PagePrivate;
 class PageTransition;
-class SourceReference;
 class TextSelection;
 class Tile;
 

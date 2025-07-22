@@ -11,51 +11,7 @@
 #include <QString>
 #include <QUrl>
 
-using namespace Okular;
-
-class SourceReference::Private
-{
-public:
-    Private()
-        : row(0)
-        , column(0)
-    {
-    }
-
-    QString filename;
-    int row;
-    int column;
-};
-
-SourceReference::SourceReference(const QString &fileName, int row, int column)
-    : d(new Private)
-{
-    d->filename = fileName;
-    d->row = row;
-    d->column = column;
-}
-
-SourceReference::~SourceReference()
-{
-    delete d;
-}
-
-QString SourceReference::fileName() const
-{
-    return d->filename;
-}
-
-int SourceReference::row() const
-{
-    return d->row;
-}
-
-int SourceReference::column() const
-{
-    return d->column;
-}
-
-std::optional<SourceReference> Okular::extractLilyPondSourceReference(const QUrl &url)
+std::optional<Okular::SourceReference> Okular::extractLilyPondSourceReference(const QUrl &url)
 {
     // Example URL is: textedit:///home/foo/bar.ly:42:42:42
     // The three numbers are apparently: line:beginning of column:end of column
@@ -100,5 +56,5 @@ std::optional<SourceReference> Okular::extractLilyPondSourceReference(const QUrl
 
 QString Okular::sourceReferenceToolTip(const SourceReference &sourceReference)
 {
-    return i18nc("'source' is a source file", "Source: %1", sourceReference.fileName());
+    return i18nc("'source' is a source file", "Source: %1", sourceReference.fileName);
 }

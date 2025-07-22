@@ -19,40 +19,21 @@ namespace Okular
  * A source reference is a reference to one of the source(s) of the loaded
  * document.
  */
-class OKULARCORE_EXPORT SourceReference
-{
-public:
+struct OKULARCORE_EXPORT SourceReference final {
     /**
      * Creates a reference to the row @p row and column @p column of the
      * source @p fileName
      */
-    SourceReference(const QString &fileName, int row, int column = 0);
+    SourceReference(const QString &fileName, int row, int column = 0)
+        : fileName(fileName)
+        , row(row)
+        , column(column)
+    {
+    }
 
-    /**
-     * Destroys the source reference.
-     */
-    ~SourceReference();
-
-    /**
-     * Returns the filename of the source.
-     */
-    QString fileName() const;
-
-    /**
-     * Returns the row of the position in the source file.
-     */
-    int row() const;
-
-    /**
-     * Returns the column of the position in the source file.
-     */
-    int column() const;
-
-private:
-    class Private;
-    Private *const d;
-
-    Q_DISABLE_COPY(SourceReference)
+    QString fileName;
+    int row = 0;
+    int column = 0;
 };
 
 }

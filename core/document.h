@@ -58,7 +58,7 @@ class PixmapRequest;
 class RenditionAction;
 class NewSignatureData;
 struct NewSignatureDataPrivate;
-class SourceReference;
+struct SourceReference;
 class View;
 class VisiblePageRect;
 class SignatureInfo;

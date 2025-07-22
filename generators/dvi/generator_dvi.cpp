@@ -384,7 +384,7 @@ Okular::FontInfo::List DviGenerator::fontsForPage(int page)
 
             of.setFile(fontFileName);
 
-            Okular::FontInfo::FontType ft;
+            Okular::FontInfo::FontType ft = Okular::FontInfo::Unknown;
             switch (font->getFontType()) {
             case TeXFontDefinition::TEX_PK:
                 ft = Okular::FontInfo::TeXPK;

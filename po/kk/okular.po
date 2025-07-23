@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2013-10-30 03:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1873,11 +1873,6 @@ msgstr "Фильм қасиеттері"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Аңдатпа қасиеттері"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Өзгертілген кезі: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6315,6 +6310,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "Өзгертілген кезі: %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

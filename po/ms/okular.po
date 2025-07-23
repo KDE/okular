@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2010-12-13 13:37+0800\n"
 "Last-Translator: Muhammad Najmi bin Ahmad Zabidi <najmi.zabidi@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -1835,12 +1835,6 @@ msgstr "&Ciri"
 #| msgid "%1 Properties"
 msgid "Annotation Properties"
 msgstr "Ciri %1"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, fuzzy, kde-format
-#| msgid "Modified"
-msgid "Modified: %1"
-msgstr "Terubah suai"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6202,6 +6196,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Modified"
+#~ msgid "Modified: %1"
+#~ msgstr "Terubah suai"
 
 #, fuzzy
 #~| msgid "Unknown"

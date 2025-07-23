@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-14 09:08+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1782,11 +1782,6 @@ msgstr "Filmaren propietateak"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Idatzoharren propietateak"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Aldatua: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6029,6 +6024,9 @@ msgstr "Ahaztu denak"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ezkutatu ongietorri pantaila"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Aldatua: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

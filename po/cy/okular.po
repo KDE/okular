@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ../cy/messages//kdegraphics/kpdf.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2004-09-20 15:44+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: cy <LL@li.org>\n"
@@ -1807,12 +1807,6 @@ msgstr "&Priodweddau"
 #, fuzzy, kde-format
 msgid "Annotation Properties"
 msgstr "&Priodweddau"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, fuzzy, kde-format
-#| msgid "Modified"
-msgid "Modified: %1"
-msgstr "Addaswyd"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6041,6 +6035,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Modified"
+#~ msgid "Modified: %1"
+#~ msgstr "Addaswyd"
 
 #, fuzzy
 #~| msgid "Unknown"

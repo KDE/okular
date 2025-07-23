@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-12 21:59+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -1775,11 +1775,6 @@ msgstr "Videobeállítások"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Jegyzet tulajdonságai"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Módosítva: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6016,6 +6011,9 @@ msgstr "Összes elfelejtése"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Kezdőképernyő elrejtése"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Módosítva: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

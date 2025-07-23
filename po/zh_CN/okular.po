@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1758,11 +1758,6 @@ msgstr "影片属性"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "批注属性"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "修改时间：%1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -5928,3 +5923,6 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
+
+#~ msgid "Modified: %1"
+#~ msgstr "修改时间：%1"

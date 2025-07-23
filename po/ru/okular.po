@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-05-20 21:25+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -1814,11 +1814,6 @@ msgstr "Свойства видео"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Свойства комментария"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Изменёно: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6084,6 +6079,9 @@ msgstr "Очистить список"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Не использовать экран приветствия"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Изменёно: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

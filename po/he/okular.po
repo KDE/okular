@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-11 10:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1768,11 +1768,6 @@ msgstr "מאפייני סרטון"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "מאפייני פירוש"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "שונה: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -5976,6 +5971,9 @@ msgstr "לשכוח הכול"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "הסתרת מסך קבלת הפנים"
+
+#~ msgid "Modified: %1"
+#~ msgstr "שונה: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

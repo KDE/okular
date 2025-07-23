@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -1886,11 +1886,6 @@ msgstr "චිත්‍රපට වත්කම්"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "අනුසටහන් වත්කම්"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "වෙනස්කල: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6342,6 +6337,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "වෙනස්කල: %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

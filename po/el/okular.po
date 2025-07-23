@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1803,11 +1803,6 @@ msgstr "Ιδιότητες ταινίας"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Ιδιότητες σημείωσης"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Τροποποιήθηκε: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6090,6 +6085,9 @@ msgstr "Να ξεχαστούν όλα"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Απόκρυψη οθόνης υποδοχής"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Τροποποιήθηκε: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

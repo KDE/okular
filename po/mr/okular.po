@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2013-04-06 13:06+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1886,11 +1886,6 @@ msgstr "चलचित्र गुणधर्म"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "टीपा गुणधर्म"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "सुधारित केले : %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6354,6 +6349,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "सुधारित केले : %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

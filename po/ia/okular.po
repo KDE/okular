@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-05-30 18:52+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1784,11 +1784,6 @@ msgstr "Proprietates de film"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Proprietates de annotation"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Modificate: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6048,6 +6043,9 @@ msgstr "Oblida Toto"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Cela schermo de benvenite"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Modificate: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

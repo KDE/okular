@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-03-18 18:00+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -1798,11 +1798,6 @@ msgstr "Video īpašības"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Anotācijas īpašības"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Mainīts: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6044,6 +6039,9 @@ msgstr "Aizmirst visus"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Paslēpt sveiciena ekrānu"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Mainīts: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

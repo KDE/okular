@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -1801,11 +1801,6 @@ msgstr "Vlastnosti filmu"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Vlastnosti poznámky"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Zmenené: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6081,6 +6076,9 @@ msgstr "Zabudnúť všetko"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skryť uvítaciu obrazovku"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Zmenené: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

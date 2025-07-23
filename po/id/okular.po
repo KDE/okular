@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -1796,11 +1796,6 @@ msgstr "Properti Filem"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Properti Anotasi"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Dimodifikasi: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6092,6 +6087,9 @@ msgstr "Lupakan Semuanya"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Dimodifikasi: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

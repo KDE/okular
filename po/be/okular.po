@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1789,11 +1789,6 @@ msgstr "Уласцівасці відэа"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Уласцівасці анатацыі"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Зменена: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6064,6 +6059,9 @@ msgstr "Забыцца на ўсе"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Схаваць уводную старонку"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Зменена: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

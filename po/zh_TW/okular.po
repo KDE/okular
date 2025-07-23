@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-01 19:51+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1762,11 +1762,6 @@ msgstr "電影屬性"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "註記屬性"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "修改時間：%1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -5928,6 +5923,9 @@ msgstr "忘記全部"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隱藏歡迎畫面"
+
+#~ msgid "Modified: %1"
+#~ msgstr "修改時間：%1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

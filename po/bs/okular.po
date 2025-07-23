@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -1875,11 +1875,6 @@ msgstr "Svojstva filma"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Svojstva zabilješke"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Izmjenjeno: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6341,6 +6336,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "Izmjenjeno: %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -1864,12 +1864,6 @@ msgstr "Eigenski&ppen"
 #, fuzzy, kde-format
 msgid "Annotation Properties"
 msgstr "%1-eigenskippen"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, fuzzy, kde-format
-#| msgid "Modified:"
-msgid "Modified: %1"
-msgstr "Wizige:"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6263,6 +6257,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Modified:"
+#~ msgid "Modified: %1"
+#~ msgstr "Wizige:"
 
 #, fuzzy
 #~| msgid "Unknown"

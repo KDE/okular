@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-19 19:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1766,11 +1766,6 @@ msgstr "ஒளிக்காட்சி பண்புகள்"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "குறிப்பின் பண்புகள்"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "மாற்றப்பட்டது: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6008,6 +6003,9 @@ msgstr "அனைத்தையும் மற"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "வரவேற்புத்திரையை மறை"
+
+#~ msgid "Modified: %1"
+#~ msgstr "மாற்றப்பட்டது: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

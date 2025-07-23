@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -1852,12 +1852,6 @@ msgstr "&Својства"
 #| msgid "%1 Properties"
 msgid "Annotation Properties"
 msgstr "Својства за %1"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, fuzzy, kde-format
-#| msgid "Modified"
-msgid "Modified: %1"
-msgstr "Изменето"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6240,6 +6234,11 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Modified"
+#~ msgid "Modified: %1"
+#~ msgstr "Изменето"
 
 #, fuzzy
 #~| msgid "Unknown"

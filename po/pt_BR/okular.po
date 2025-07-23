@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-04-14 01:25-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -1817,11 +1817,6 @@ msgstr "Propriedades do filme"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Propriedades da anotação"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Modificado: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6066,6 +6061,9 @@ msgstr "Esquecer todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar tela de boas vindas"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Modificado: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

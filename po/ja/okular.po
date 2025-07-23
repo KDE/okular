@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2022-08-28 21:16-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1807,11 +1807,6 @@ msgstr "動画のプロパティ"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "注釈のプロパティ"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "変更日: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6046,6 +6041,9 @@ msgstr "すべて忘れる"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "ようこそスクリーンを隠す"
+
+#~ msgid "Modified: %1"
+#~ msgstr "変更日: %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

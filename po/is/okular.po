@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-04-17 14:03+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -1795,11 +1795,6 @@ msgstr "Eiginleikar myndskeiða"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Eiginleikar glósu"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Breytt: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6026,6 +6021,9 @@ msgstr "Gleyma öllu"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Fela upphafsskjá"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Breytt: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

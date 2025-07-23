@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1889,11 +1889,6 @@ msgstr "सिनेमा गुन"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "एन्नोटेसन गुन"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "परिवर्धित: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6307,6 +6302,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "परिवर्धित: %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

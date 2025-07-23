@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-10 12:46+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
@@ -1792,11 +1792,6 @@ msgstr "Film-eigenschappen"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Eigenschappen annotaties"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Gewijzigd: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6047,6 +6042,9 @@ msgstr "Alles vergeten"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Welkomstscherm verbergen"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Gewijzigd: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

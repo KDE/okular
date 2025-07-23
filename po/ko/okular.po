@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1762,11 +1762,6 @@ msgstr "동영상 속성"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "주석 속성"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "수정한 날짜: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -5960,6 +5955,9 @@ msgstr "모두 잊기"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "시작 화면 숨기기"
+
+#~ msgid "Modified: %1"
+#~ msgstr "수정한 날짜: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

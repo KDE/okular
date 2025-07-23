@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-12-15 19:31+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1829,11 +1829,6 @@ msgstr "चलचित्र के गुण"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "एन्नोटेशन गुण"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "परिवर्धित : %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6171,6 +6166,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "परिवर्धित : %1"
 
 #, fuzzy
 #~| msgid "Digital Signature"

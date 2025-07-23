@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2025-07-13 05:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1775,11 +1775,6 @@ msgstr "ფილმის თვისებები"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "ანოტაციის თვისებები"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "ცვლილება: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6016,6 +6011,9 @@ msgstr "ყველას დავიწყება"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "საწყისი ეკრანის დამალვა"
+
+#~ msgid "Modified: %1"
+#~ msgstr "ცვლილება: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1782,11 +1782,6 @@ msgstr "Video xüsusiyyətləri"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Şərh xüsusiyyətləri"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Dəyişdirildi: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6034,6 +6029,9 @@ msgstr "Hamısını unudun"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Salamlama səhifəsini gizlətmək"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Dəyişdirildi: %1"
 
 #~ msgctxt "%1 is a file path"
 #~ msgid ""

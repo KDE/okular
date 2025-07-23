@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 02:33+0000\n"
+"POT-Creation-Date: 2025-07-23 02:36+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -1884,11 +1884,6 @@ msgstr "លក្ខណៈ​សម្បត្តិ​​ភាពយន្ត
 #, kde-format
 msgid "Annotation Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ចំណារ​ពន្យល់"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "បានកែប្រែ ៖ %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6331,6 +6326,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "បានកែប្រែ ៖ %1"
 
 #, fuzzy
 #~| msgctxt "Unknown author"

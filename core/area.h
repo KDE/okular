@@ -950,9 +950,21 @@ class HighlightAreaRect : public RegularAreaRect
 public:
     /**
      * Creates a new highlight area rect with the coordinates of
-     * the given @p area.
+     * the given @p area, @p color and @p search_id.
+     *
+     * @since 25.12
      */
-    explicit HighlightAreaRect(const RegularAreaRect *area = nullptr);
+    explicit HighlightAreaRect(const RegularAreaRect &area, const QColor &color, int search_id = INVALID_SEARCH_ID);
+
+    /**
+     * Creates a new highlight area rect with the coordinates of
+     * the given @p area.
+     *
+     * @deprecated use HighlightAreaRect(const RegularAreaRect &area, const QColor &color, int id)
+     */
+    OKULARCORE_DEPRECATED explicit HighlightAreaRect(const RegularAreaRect *area = nullptr);
+
+    static constexpr int INVALID_SEARCH_ID = -1;
 
     /**
      * The search ID of the highlight owner.

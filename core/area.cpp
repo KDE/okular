@@ -291,17 +291,20 @@ RegularAreaRect &RegularAreaRect::operator=(const RegularAreaRect &rar)
     return *this;
 }
 
-HighlightAreaRect::HighlightAreaRect(const RegularAreaRect *area)
+HighlightAreaRect::HighlightAreaRect(const RegularAreaRect &area, const QColor &color, int search_id)
     : RegularAreaRect()
-    , s_id(-1)
+    , s_id(search_id)
+    , color(color)
 {
-    if (area) {
-        RegularAreaRect::ConstIterator it = area->begin();
-        RegularAreaRect::ConstIterator itEnd = area->end();
-        for (; it != itEnd; ++it) {
-            append(NormalizedRect(*it));
-        }
+    reserve(area.size());
+    for (const NormalizedRect &rect : area) {
+        append(rect);
     }
+}
+
+HighlightAreaRect::HighlightAreaRect(const RegularAreaRect *area)
+    : HighlightAreaRect(area ? *area : RegularAreaRect(), {}, INVALID_SEARCH_ID)
+{
 }
 
 /** class ObjectRect **/

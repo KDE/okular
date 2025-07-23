@@ -1754,7 +1754,7 @@ void DocumentPrivate::doProcessSearchMatch(RegularAreaRect *match, RunningSearch
         search->continueOnMatch = *match;
         search->highlightedPages.insert(currentPage);
         // ..add highlight to the page..
-        m_pagesVector[currentPage]->d->setHighlight(searchID, match, color);
+        m_pagesVector[currentPage]->d->setHighlight(*match, color, searchID);
 
         // ..queue page for notifying changes..
         pagesToNotify->insert(currentPage);
@@ -1850,7 +1850,7 @@ void DocumentPrivate::doContinueAllDocumentSearch(QSet<int> *pagesToNotify, QHas
         bool foundAMatch = pageMatches->count() != 0;
         for (auto [key, value] : pageMatches->asKeyValueRange()) {
             for (RegularAreaRect *&match : value) {
-                key->d->setHighlight(searchID, match, search->cachedColor);
+                key->d->setHighlight(*match, search->cachedColor, searchID);
                 delete match;
                 match = nullptr;
             }
@@ -1972,7 +1972,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, 
         bool foundAMatch = pageMatches->count() != 0;
         for (auto [page, matches] : pageMatches->asKeyValueRange()) {
             for (auto &[area, color] : matches) {
-                page->d->setHighlight(searchID, area, color);
+                page->d->setHighlight(*area, color, searchID);
                 delete area;
             }
             search->highlightedPages.insert(page->number());

@@ -26,6 +26,7 @@
 #include "action.h"
 #include "annotations.h"
 #include "annotations_p.h"
+#include "area.h"
 #include "debug_p.h"
 #include "document.h"
 #include "document_p.h"
@@ -617,22 +618,15 @@ const QList<ObjectRect *> &Page::objectRects() const
     return m_rects;
 }
 
-void PagePrivate::setHighlight(int s_id, RegularAreaRect *rect, const QColor &color)
+void PagePrivate::setHighlight(const RegularAreaRect &rect, const QColor &color, int search_id)
 {
-    HighlightAreaRect *hr = new HighlightAreaRect(rect);
-    hr->s_id = s_id;
-    hr->color = color;
-
-    m_page->m_highlights.append(hr);
+    m_page->m_highlights.append(new HighlightAreaRect(rect, color, search_id));
 }
 
-void PagePrivate::setTextSelections(const RegularAreaRect &r, const QColor &color)
+void PagePrivate::setTextSelections(const RegularAreaRect &rect, const QColor &color)
 {
     deleteTextSelections();
-    HighlightAreaRect *hr = new HighlightAreaRect(&r);
-    hr->s_id = -1;
-    hr->color = color;
-    m_textSelections = hr;
+    m_textSelections = new HighlightAreaRect(rect, color);
 }
 
 void Page::setSourceReferences(const QList<SourceRefObjectRect *> &refRects)

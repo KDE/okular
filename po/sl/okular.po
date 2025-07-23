@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-22 00:41+0000\n"
+"POT-Creation-Date: 2025-07-23 00:41+0000\n"
 "PO-Revision-Date: 2025-07-11 07:48+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -154,92 +154,92 @@ msgstr "Odpri zunanjo datoteko"
 msgid "Execute '%1'…"
 msgstr "Izvedi '%1'…"
 
-#: core/action.cpp:296
+#: core/action.cpp:294
 #, kde-format
 msgid "First Page"
 msgstr "Prva stran"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:184
+#: core/action.cpp:296 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Predhodna stran"
 
-#: core/action.cpp:300 part/presentationwidget.cpp:201
+#: core/action.cpp:298 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Naslednja stran"
 
-#: core/action.cpp:302
+#: core/action.cpp:300
 #, kde-format
 msgid "Last Page"
 msgstr "Zadnja stran"
 
-#: core/action.cpp:304
+#: core/action.cpp:302
 #, kde-format
 msgid "Back"
 msgstr "Nazaj"
 
-#: core/action.cpp:306
+#: core/action.cpp:304
 #, kde-format
 msgid "Forward"
 msgstr "Naprej"
 
-#: core/action.cpp:308
+#: core/action.cpp:306
 #, kde-format
 msgid "Quit"
 msgstr "Končaj"
 
-#: core/action.cpp:310
+#: core/action.cpp:308
 #, kde-format
 msgid "Start Presentation"
 msgstr "Zaženi predstavitev"
 
-#: core/action.cpp:312
+#: core/action.cpp:310
 #, kde-format
 msgid "End Presentation"
 msgstr "Končaj predstavitev"
 
-#: core/action.cpp:314
+#: core/action.cpp:312
 #, kde-format
 msgid "Find…"
 msgstr "Najdi…"
 
-#: core/action.cpp:316
+#: core/action.cpp:314
 #, kde-format
 msgid "Go To Page…"
 msgstr "Pojdi na stran…"
 
-#: core/action.cpp:367
+#: core/action.cpp:365
 #, kde-format
 msgid "Play sound…"
 msgstr "Predvajaj zvok…"
 
-#: core/action.cpp:435 core/action.cpp:551
+#: core/action.cpp:433 core/action.cpp:549
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Skript JavaScript"
 
-#: core/action.cpp:485
+#: core/action.cpp:483
 #, kde-format
 msgid "Play movie…"
 msgstr "Predvajaj film…"
 
-#: core/action.cpp:556
+#: core/action.cpp:554
 #, kde-format
 msgid "Play movie"
 msgstr "Predvajaj film"
 
-#: core/action.cpp:558
+#: core/action.cpp:556
 #, kde-format
 msgid "Stop movie"
 msgstr "Zaustavi film"
 
-#: core/action.cpp:560
+#: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
 msgstr "Prekini film"
 
-#: core/action.cpp:562
+#: core/action.cpp:560
 #, kde-format
 msgid "Resume movie"
 msgstr "Nadaljuj film"
@@ -263,65 +263,65 @@ msgstr ""
 "<qt>Za to vrsto dokumenta je na voljo več zaledij:<br /><b>%1</b> (%2).<br /"
 "><br />Izberite tisto, ki bi jo radi uporabljali:</qt>"
 
-#: core/document.cpp:205
+#: core/document.cpp:201
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Večina strani so %1."
 
-#: core/document.cpp:226
+#: core/document.cpp:222
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Pokončno %1"
 
-#: core/document.cpp:228
+#: core/document.cpp:224
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Ležeče %1"
 
-#: core/document.cpp:251
+#: core/document.cpp:247
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 ⨯ %2 palcev (%3)"
 
-#: core/document.cpp:253
+#: core/document.cpp:249
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 ⨯ %2 mm (%3)"
 
-#: core/document.cpp:1716
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Nadaljevanje iskanja z vrha"
 
-#: core/document.cpp:1719
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Nadaljevanje iskanja z dna"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2426
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ni bilo mogoče najti vstavka, ki bi znal prebrati dani dokument."
 
-#: core/document.cpp:2891
+#: core/document.cpp:2848
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "Podpisovanje ni izvedeno za to vrsto dokumenta"
 
-#: core/document.cpp:3618
+#: core/document.cpp:3562
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "odstrani zabeležke"
 
-#: core/document.cpp:4208 core/document.cpp:4214
+#: core/document.cpp:4154 core/document.cpp:4160
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -330,52 +330,52 @@ msgstr ""
 "Dokument poskuša izvesti zunanji program, zaradi vaše varnosti pa Okular "
 "tega ne dovoljuje."
 
-#: core/document.cpp:4224
+#: core/document.cpp:4170
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Ni bilo mogoče najti program za odpiranje datoteke zvrsti MIME %1."
 
-#: core/document.cpp:4857
+#: core/document.cpp:4800
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ni bilo mogoče odpreti začasne datoteke"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4802
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Pretvorba za tiskanje je spodletela"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4804
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces za tiskanje se je sesul"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesa za tiskanje ni bilo mogoče zagnati"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Tiskanje v datoteko je spodletelo"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Tiskalnik ni bil v veljavnem stanju"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4812
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ni bilo mogoče najti datoteke za tiskanje"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4814
 #, kde-format
 msgid "There was no file to print"
 msgstr "Datoteka za tiskanje ne obstaja"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4816
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -384,92 +384,92 @@ msgstr ""
 "Ni bilo mogoče najti ustreznega programa za tiskanje. Prepričajte se, da je "
 "na voljo CUPS-ov program lpr"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4818
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Velikost strani za tisk ni veljavna"
 
-#: core/document.cpp:5553 part/part.cpp:1146
+#: core/document.cpp:5492 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ni bilo mogoče odpreti »%1«. Datoteka ne obstaja"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6001
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6004
 #, kde-format
 msgid "Subject"
 msgstr "Zadeva"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6007
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6010
 #, kde-format
 msgid "Author"
 msgstr "Avtor"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6013
 #, kde-format
 msgid "Creator"
 msgstr "Ustvarjalec"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6016
 #, kde-format
 msgid "Producer"
 msgstr "Izdelovalec"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6019
 #, kde-format
 msgid "Copyright"
 msgstr "Avtorske pravice"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6022
 #, kde-format
 msgid "Pages"
 msgstr "Strani"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6025
 #, kde-format
 msgid "Created"
 msgstr "Ustvarjeno"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6028
 #, kde-format
 msgid "Modified"
 msgstr "Spremenjeno"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6031
 #, kde-format
 msgid "MIME Type"
 msgstr "Vrsta MIME"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6034
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6037
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne besede"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6040
 #, kde-format
 msgid "File Path"
 msgstr "Pot do datoteke"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6043
 #, kde-format
 msgid "File Size"
 msgstr "Velikost datoteke"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6046
 #, kde-format
 msgid "Page Size"
 msgstr "Velikost strani"
@@ -633,7 +633,7 @@ msgstr ""
 msgid "Unknown signing error"
 msgstr "Neznana napaka pri podpisovanju"
 
-#: core/sourcereference.cpp:101
+#: core/sourcereference.cpp:103
 #, kde-format
 msgctxt "'source' is a source file"
 msgid "Source: %1"
@@ -1777,11 +1777,6 @@ msgstr "Lastnosti filma"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Lastnosti zabeležk"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Spremenjeno: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6026,6 +6021,9 @@ msgstr "Pozabi vse"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrij zaslon dobrodošlice"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Spremenjeno: %1"
 
 #~ msgid "Find..."
 #~ msgstr "Najdi …"

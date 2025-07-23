@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-22 00:41+0000\n"
+"POT-Creation-Date: 2025-07-23 00:41+0000\n"
 "PO-Revision-Date: 2024-06-09 14:16+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -151,95 +151,95 @@ msgstr "Deschide un fișier extern"
 msgid "Execute '%1'…"
 msgstr "Execută „%1”…"
 
-#: core/action.cpp:296
+#: core/action.cpp:294
 #, kde-format
 msgid "First Page"
 msgstr "Prima pagină"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:184
+#: core/action.cpp:296 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Pagina precedentă"
 
-#: core/action.cpp:300 part/presentationwidget.cpp:201
+#: core/action.cpp:298 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Pagina următoare"
 
-#: core/action.cpp:302
+#: core/action.cpp:300
 #, kde-format
 msgid "Last Page"
 msgstr "Ultima pagină"
 
-#: core/action.cpp:304
+#: core/action.cpp:302
 #, kde-format
 msgid "Back"
 msgstr "Înapoi"
 
-#: core/action.cpp:306
+#: core/action.cpp:304
 #, kde-format
 msgid "Forward"
 msgstr "Înainte"
 
-#: core/action.cpp:308
+#: core/action.cpp:306
 #, kde-format
 msgid "Quit"
 msgstr "Ieșire"
 
-#: core/action.cpp:310
+#: core/action.cpp:308
 #, kde-format
 msgid "Start Presentation"
 msgstr "Începe prezentarea"
 
-#: core/action.cpp:312
+#: core/action.cpp:310
 #, kde-format
 msgid "End Presentation"
 msgstr "Încheie prezentarea"
 
-#: core/action.cpp:314
+#: core/action.cpp:312
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:316
+#: core/action.cpp:314
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "Mergi la pagina"
 
-#: core/action.cpp:367
+#: core/action.cpp:365
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play sound…"
 msgstr "Redă sunet…"
 
-#: core/action.cpp:435 core/action.cpp:551
+#: core/action.cpp:433 core/action.cpp:549
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Script JavaScript"
 
-#: core/action.cpp:485
+#: core/action.cpp:483
 #, fuzzy, kde-format
 #| msgid "Play movie"
 msgid "Play movie…"
 msgstr "Redă filmul"
 
-#: core/action.cpp:556
+#: core/action.cpp:554
 #, kde-format
 msgid "Play movie"
 msgstr "Redă filmul"
 
-#: core/action.cpp:558
+#: core/action.cpp:556
 #, kde-format
 msgid "Stop movie"
 msgstr "Oprește filmul"
 
-#: core/action.cpp:560
+#: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
 msgstr "Întrerupe filmul"
 
-#: core/action.cpp:562
+#: core/action.cpp:560
 #, kde-format
 msgid "Resume movie"
 msgstr "Reia filmul"
@@ -263,25 +263,25 @@ msgstr ""
 "<qt>Au fost găsite mai multe platforme pentru tipul MIME:<br /><b>%1</b> "
 "(%2).<br /><br />Alegeți care dintre acestea să fie utilizată:</qt>"
 
-#: core/document.cpp:205
+#: core/document.cpp:201
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Majoritatea paginilor sunt %1."
 
-#: core/document.cpp:226
+#: core/document.cpp:222
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Portret %1"
 
-#: core/document.cpp:228
+#: core/document.cpp:224
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Peisaj %1"
 
-#: core/document.cpp:251
+#: core/document.cpp:247
 #, fuzzy, kde-format
 #| msgctxt "%1 is width, %2 is height, %3 is paper size name"
 #| msgid "%1 x %2 in (%3)"
@@ -289,7 +289,7 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 țoli (%3)"
 
-#: core/document.cpp:253
+#: core/document.cpp:249
 #, fuzzy, kde-format
 #| msgctxt "%1 is width, %2 is height, %3 is paper size name"
 #| msgid "%1 x %2 mm (%3)"
@@ -297,35 +297,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1716
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Se continuă căutarea de la început"
 
-#: core/document.cpp:1719
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Se continuă căutarea de la sfârșit"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2426
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nu poate fi găsit niciun modul capabil să manevreze documentul cerut."
 
-#: core/document.cpp:2891
+#: core/document.cpp:2848
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3618
+#: core/document.cpp:3562
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "elimină adnotările"
 
-#: core/document.cpp:4208 core/document.cpp:4214
+#: core/document.cpp:4154 core/document.cpp:4160
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -334,146 +334,146 @@ msgstr ""
 "Documentul încearcă să execute o aplicație externă și, pentru siguranța "
 "dumneavoastră, Okular nu permite acest lucru."
 
-#: core/document.cpp:4224
+#: core/document.cpp:4170
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 "Nu a fost găsită nicio aplicație pentru deschiderea fișierului cu tipul MIME "
 "%1."
 
-#: core/document.cpp:4857
+#: core/document.cpp:4800
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Fișierul temporar nu a putut fi deschis"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4802
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Conversia pentru imprimare a eșuat"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4804
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Procesul de imprimare s-a prăbușit"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Procesul de imprimare nu s-a putut porni"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Imprimarea în fișier a eșuat"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Imprimanta era în stare nevalidă"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4812
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Fișierul de tipărit nu a putut fi găsit"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4814
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nu era niciun fișier de tipărit"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4816
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4875
+#: core/document.cpp:4818
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Dimensiunea de tipar a paginii nu e validă"
 
-#: core/document.cpp:5553 part/part.cpp:1146
+#: core/document.cpp:5492 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nu s-a putut deschide „%1”. Fișierul nu există"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6001
 #, kde-format
 msgid "Title"
 msgstr "Titlu"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6004
 #, kde-format
 msgid "Subject"
 msgstr "Subiect"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6007
 #, kde-format
 msgid "Description"
 msgstr "Descriere"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6010
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6013
 #, kde-format
 msgid "Creator"
 msgstr "Creator"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6016
 #, kde-format
 msgid "Producer"
 msgstr "Producător"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6019
 #, kde-format
 msgid "Copyright"
 msgstr "Drept de autor"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6022
 #, kde-format
 msgid "Pages"
 msgstr "Pagini"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6025
 #, kde-format
 msgid "Created"
 msgstr "Creat"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6028
 #, kde-format
 msgid "Modified"
 msgstr "Modificat"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6031
 #, kde-format
 msgid "MIME Type"
 msgstr "Tip MIME"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6034
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6037
 #, kde-format
 msgid "Keywords"
 msgstr "Cuvinte-cheie"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6040
 #, kde-format
 msgid "File Path"
 msgstr "Calea fișierului"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6043
 #, kde-format
 msgid "File Size"
 msgstr "Dimensiune fișier"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6046
 #, kde-format
 msgid "Page Size"
 msgstr "Dimensiune pagină"
@@ -638,7 +638,7 @@ msgstr "Fișier nesalvat."
 msgid "Unknown signing error"
 msgstr "Fișier necunoscut"
 
-#: core/sourcereference.cpp:101
+#: core/sourcereference.cpp:103
 #, kde-format
 msgctxt "'source' is a source file"
 msgid "Source: %1"
@@ -1793,11 +1793,6 @@ msgstr "Proprietăți film"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Proprietăți adnotare"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Modificat: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6022,6 +6017,9 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#~ msgid "Modified: %1"
+#~ msgstr "Modificat: %1"
 
 #~ msgid "Find..."
 #~ msgstr "Găsește…"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-22 00:41+0000\n"
+"POT-Creation-Date: 2025-07-23 00:41+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -150,95 +150,95 @@ msgstr "Buka file external"
 msgid "Execute '%1'…"
 msgstr "Eksekusi '%1'..."
 
-#: core/action.cpp:296
+#: core/action.cpp:294
 #, kde-format
 msgid "First Page"
 msgstr "Halaman Pertama"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:184
+#: core/action.cpp:296 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Halaman Sebelumnya"
 
-#: core/action.cpp:300 part/presentationwidget.cpp:201
+#: core/action.cpp:298 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Halaman Selanjutnya"
 
-#: core/action.cpp:302
+#: core/action.cpp:300
 #, kde-format
 msgid "Last Page"
 msgstr "Halaman Terakhir"
 
-#: core/action.cpp:304
+#: core/action.cpp:302
 #, kde-format
 msgid "Back"
 msgstr "Kembali"
 
-#: core/action.cpp:306
+#: core/action.cpp:304
 #, kde-format
 msgid "Forward"
 msgstr "Maju"
 
-#: core/action.cpp:308
+#: core/action.cpp:306
 #, kde-format
 msgid "Quit"
 msgstr "Berhenti"
 
-#: core/action.cpp:310
+#: core/action.cpp:308
 #, kde-format
 msgid "Start Presentation"
 msgstr "Mulai Presentasi"
 
-#: core/action.cpp:312
+#: core/action.cpp:310
 #, kde-format
 msgid "End Presentation"
 msgstr "Akhiri Presentasi"
 
-#: core/action.cpp:314
+#: core/action.cpp:312
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:316
+#: core/action.cpp:314
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "Menuju ke Halaman"
 
-#: core/action.cpp:367
+#: core/action.cpp:365
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play sound…"
 msgstr "Bunyikan suara..."
 
-#: core/action.cpp:435 core/action.cpp:551
+#: core/action.cpp:433 core/action.cpp:549
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Skrip JavaScript"
 
-#: core/action.cpp:485
+#: core/action.cpp:483
 #, fuzzy, kde-format
 #| msgid "Play movie"
 msgid "Play movie…"
 msgstr "Putar filem"
 
-#: core/action.cpp:556
+#: core/action.cpp:554
 #, kde-format
 msgid "Play movie"
 msgstr "Putar filem"
 
-#: core/action.cpp:558
+#: core/action.cpp:556
 #, kde-format
 msgid "Stop movie"
 msgstr "Hentikan filem"
 
-#: core/action.cpp:560
+#: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
 msgstr "Jeda filem"
 
-#: core/action.cpp:562
+#: core/action.cpp:560
 #, kde-format
 msgid "Resume movie"
 msgstr "Melanjutkan filem"
@@ -262,25 +262,25 @@ msgstr ""
 "<qt>Lebih dari satu backend ditemukan untuk tipe MIME:<br /><b>%1</b> (%2)."
 "<br /><br />Silakan pilih salah satu yang mana untuk digunakan:</qt>"
 
-#: core/document.cpp:205
+#: core/document.cpp:201
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Sebagian besar halaman %1."
 
-#: core/document.cpp:226
+#: core/document.cpp:222
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Potret %1"
 
-#: core/document.cpp:228
+#: core/document.cpp:224
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Lanskap %1"
 
-#: core/document.cpp:251
+#: core/document.cpp:247
 #, fuzzy, kde-format
 #| msgctxt "%1 is width, %2 is height, %3 is paper size name"
 #| msgid "%1 x %2 in (%3)"
@@ -288,7 +288,7 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:253
+#: core/document.cpp:249
 #, fuzzy, kde-format
 #| msgctxt "%1 is width, %2 is height, %3 is paper size name"
 #| msgid "%1 x %2 mm (%3)"
@@ -296,36 +296,36 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1716
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Meneneruskan pencarian dari awal"
 
-#: core/document.cpp:1719
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Meneruskan pencarian dari bagian bawah"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2426
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Tak bisa menemukan plugin yang mampu menangani dokumen yang sedang berlalu."
 
-#: core/document.cpp:2891
+#: core/document.cpp:2848
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3618
+#: core/document.cpp:3562
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "hapus anotasi"
 
-#: core/document.cpp:4208 core/document.cpp:4214
+#: core/document.cpp:4154 core/document.cpp:4160
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -334,52 +334,52 @@ msgstr ""
 "Dokumen telah mencoba untuk mengeksekusi sebuah aplikasi external dan, untuk "
 "keamanan Anda, Okular tidak membolehkan hal itu."
 
-#: core/document.cpp:4224
+#: core/document.cpp:4170
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Tidak ada aplikasi yang ditemukan untuk membuka file dari mimetype %1."
 
-#: core/document.cpp:4857
+#: core/document.cpp:4800
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Tidak bisa membuka file temporer"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4802
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konversi cetak gagal"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4804
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proses pencetakan mogok"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proses pencetakan tidak bisa dimulai"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Pencetakan ke file gagal"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Pencetak telah dalam keadaan tidak absah"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4812
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Tak mampu menemukan file untuk cetak"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4814
 #, kde-format
 msgid "There was no file to print"
 msgstr "Tidak adanya file untuk mencetak"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4816
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -388,92 +388,92 @@ msgstr ""
 "Tidak bisa menemukan biner yang cocok untuk pencetakan. Pastikan biner CUPS "
 "lpr telah tersedia"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4818
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Ukuran cetak halaman tak absah"
 
-#: core/document.cpp:5553 part/part.cpp:1146
+#: core/document.cpp:5492 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Tidak bisa membuka file '%1'. File tidak ada"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6001
 #, kde-format
 msgid "Title"
 msgstr "Judul"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6004
 #, kde-format
 msgid "Subject"
 msgstr "Subjek"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6007
 #, kde-format
 msgid "Description"
 msgstr "Deskripsi"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6010
 #, kde-format
 msgid "Author"
 msgstr "Penulis"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6013
 #, kde-format
 msgid "Creator"
 msgstr "Pencipta"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6016
 #, kde-format
 msgid "Producer"
 msgstr "Produsen"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6019
 #, kde-format
 msgid "Copyright"
 msgstr "Hak Cipta"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6022
 #, kde-format
 msgid "Pages"
 msgstr "Halaman"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6025
 #, kde-format
 msgid "Created"
 msgstr "Diciptakan"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6028
 #, kde-format
 msgid "Modified"
 msgstr "Dimodifikasi"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6031
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipe MIME"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6034
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6037
 #, kde-format
 msgid "Keywords"
 msgstr "Katakunci"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6040
 #, kde-format
 msgid "File Path"
 msgstr "Alur File"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6043
 #, kde-format
 msgid "File Size"
 msgstr "Ukuran File"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6046
 #, kde-format
 msgid "Page Size"
 msgstr "Ukuran Halaman"
@@ -643,7 +643,7 @@ msgstr ""
 msgid "Unknown signing error"
 msgstr "File Tak Diketahui"
 
-#: core/sourcereference.cpp:101
+#: core/sourcereference.cpp:103
 #, kde-format
 msgctxt "'source' is a source file"
 msgid "Source: %1"
@@ -1805,11 +1805,6 @@ msgstr "Properti Filem"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "Properti Anotasi"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "Dimodifikasi: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6124,6 +6119,9 @@ msgstr "Lupakan Semuanya"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"
+
+#~ msgid "Modified: %1"
+#~ msgstr "Dimodifikasi: %1"
 
 #~ msgid "Find..."
 #~ msgstr "Temukan..."

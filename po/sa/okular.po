@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-22 00:41+0000\n"
+"POT-Creation-Date: 2025-07-23 00:41+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -150,95 +150,95 @@ msgstr "बाह्यसञ्चिकां उद्घाटयन्त�
 msgid "Execute '%1'…"
 msgstr "'%1' निष्पादयन्तु..."
 
-#: core/action.cpp:296
+#: core/action.cpp:294
 #, kde-format
 msgid "First Page"
 msgstr "प्रथम पृष्ठ"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:184
+#: core/action.cpp:296 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "पूर्व पृष्ठ"
 
-#: core/action.cpp:300 part/presentationwidget.cpp:201
+#: core/action.cpp:298 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "अग्रिमः पृष्ठः"
 
-#: core/action.cpp:302
+#: core/action.cpp:300
 #, kde-format
 msgid "Last Page"
 msgstr "अन्तिम पृष्ठ"
 
-#: core/action.cpp:304
+#: core/action.cpp:302
 #, kde-format
 msgid "Back"
 msgstr "पृष्ठभागः"
 
-#: core/action.cpp:306
+#: core/action.cpp:304
 #, kde-format
 msgid "Forward"
 msgstr "अग्रतः"
 
-#: core/action.cpp:308
+#: core/action.cpp:306
 #, kde-format
 msgid "Quit"
 msgstr "परिजहातु"
 
-#: core/action.cpp:310
+#: core/action.cpp:308
 #, kde-format
 msgid "Start Presentation"
 msgstr "प्रस्तुतिम् आरभत"
 
-#: core/action.cpp:312
+#: core/action.cpp:310
 #, kde-format
 msgid "End Presentation"
 msgstr "अन्त प्रस्तुति"
 
-#: core/action.cpp:314
+#: core/action.cpp:312
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:316
+#: core/action.cpp:314
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "Page इति गच्छन्तु"
 
-#: core/action.cpp:367
+#: core/action.cpp:365
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play sound…"
 msgstr "ध्वनिं वादयन्तु..."
 
-#: core/action.cpp:435 core/action.cpp:551
+#: core/action.cpp:433 core/action.cpp:549
 #, kde-format
 msgid "JavaScript Script"
 msgstr "जावास्क्रिप्ट स्क्रिप्ट"
 
-#: core/action.cpp:485
+#: core/action.cpp:483
 #, fuzzy, kde-format
 #| msgid "Play movie"
 msgid "Play movie…"
 msgstr "चलचित्रं वादयन्तु"
 
-#: core/action.cpp:556
+#: core/action.cpp:554
 #, kde-format
 msgid "Play movie"
 msgstr "चलचित्रं वादयन्तु"
 
-#: core/action.cpp:558
+#: core/action.cpp:556
 #, kde-format
 msgid "Stop movie"
 msgstr "चलचित्रं स्थगयन्तु"
 
-#: core/action.cpp:560
+#: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
 msgstr "चलचित्रं विरामयतु"
 
-#: core/action.cpp:562
+#: core/action.cpp:560
 #, kde-format
 msgid "Resume movie"
 msgstr "चलच्चित्रं पुनः आरभत"
@@ -262,65 +262,65 @@ msgstr ""
 "<qt>MIME प्रकारस्य कृते एकादशाधिकं पृष्ठभागं प्राप्तम्:<br /> <b>%1</b> (%2) इति ।<br /"
 "><br /> कृपया कस्य उपयोगः करणीयः इति चिनोतु:</qt>"
 
-#: core/document.cpp:205
+#: core/document.cpp:201
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "अधिकांशं पृष्ठं %1 अस्ति ।"
 
-#: core/document.cpp:226
+#: core/document.cpp:222
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "चित्रम् %1"
 
-#: core/document.cpp:228
+#: core/document.cpp:224
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "परिदृश्य %1"
 
-#: core/document.cpp:251
+#: core/document.cpp:247
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 × %2 in (%3)"
 
-#: core/document.cpp:253
+#: core/document.cpp:249
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 मि.मी.(%3)"
 
-#: core/document.cpp:1716
+#: core/document.cpp:1703
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "आरम्भादेव अन्वेषणं निरन्तरं कुर्वन्"
 
-#: core/document.cpp:1719
+#: core/document.cpp:1706
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "अधः अन्वेषणं निरन्तरं कुर्वन्"
 
-#: core/document.cpp:2454
+#: core/document.cpp:2426
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "प्लगिन् न प्राप्नुयात् यत् पारितं दस्तावेजं सम्भालितुं समर्थं भवति ।"
 
-#: core/document.cpp:2891
+#: core/document.cpp:2848
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3618
+#: core/document.cpp:3562
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "टिप्पणीं निष्कासयन्तु"
 
-#: core/document.cpp:4208 core/document.cpp:4214
+#: core/document.cpp:4154 core/document.cpp:4160
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +328,52 @@ msgid ""
 msgstr ""
 "दस्तावेजं बाह्य-अनुप्रयोगं निष्पादयितुं प्रयतते तथा च, भवतः सुरक्षार्थं, Okular तत् न अनुमन्यते ।"
 
-#: core/document.cpp:4224
+#: core/document.cpp:4170
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "mimetype %1 इत्यस्य सञ्चिकां उद्घाटयितुं कोऽपि अनुप्रयोगः न प्राप्तः ।"
 
-#: core/document.cpp:4857
+#: core/document.cpp:4800
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "अस्थायीसञ्चिकां उद्घाटयितुं न शक्तवान्"
 
-#: core/document.cpp:4859
+#: core/document.cpp:4802
 #, kde-format
 msgid "Print conversion failed"
 msgstr "मुद्रणरूपान्तरणं विफलम् अभवत्"
 
-#: core/document.cpp:4861
+#: core/document.cpp:4804
 #, kde-format
 msgid "Printing process crashed"
 msgstr "मुद्रणप्रक्रिया दुर्घटितवती"
 
-#: core/document.cpp:4863
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process could not start"
 msgstr "मुद्रणप्रक्रिया आरभ्यतुं न शक्तवती"
 
-#: core/document.cpp:4865
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing to file failed"
 msgstr "सञ्चिकायां मुद्रणं विफलम् अभवत्"
 
-#: core/document.cpp:4867
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "मुद्रकः अमान्यस्थितौ आसीत्"
 
-#: core/document.cpp:4869
+#: core/document.cpp:4812
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "मुद्रणार्थं सञ्चिकां अन्वेष्टुं असमर्थः"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4814
 #, kde-format
 msgid "There was no file to print"
 msgstr "मुद्रणार्थं सञ्चिका नासीत्"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4816
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +382,92 @@ msgstr ""
 "मुद्रणार्थं उपयुक्तं द्विचक्रिका न प्राप्नोत् । CUPS lpr द्विचक्रिका उपलब्धा इति सुनिश्चितं "
 "कुर्वन्तु"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4818
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "पृष्ठमुद्रणस्य आकारः अमान्यः अस्ति"
 
-#: core/document.cpp:5553 part/part.cpp:1146
+#: core/document.cpp:5492 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' उद्घाटयितुं न शक्यते । सञ्चिका नास्ति"
 
-#: core/document.cpp:6063
+#: core/document.cpp:6001
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6066
+#: core/document.cpp:6004
 #, kde-format
 msgid "Subject"
 msgstr "विषयः"
 
-#: core/document.cpp:6069
+#: core/document.cpp:6007
 #, kde-format
 msgid "Description"
 msgstr "वर्णनम्‌"
 
-#: core/document.cpp:6072
+#: core/document.cpp:6010
 #, kde-format
 msgid "Author"
 msgstr "लेखकः"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6013
 #, kde-format
 msgid "Creator"
 msgstr "प्रजापति"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6016
 #, kde-format
 msgid "Producer"
 msgstr "निर्माता"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6019
 #, kde-format
 msgid "Copyright"
 msgstr "प्रतिलिपि अधिकार"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6022
 #, kde-format
 msgid "Pages"
 msgstr "पृष्ठहरू"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6025
 #, kde-format
 msgid "Created"
 msgstr "निर्मितम्"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6028
 #, kde-format
 msgid "Modified"
 msgstr "परिवर्तित"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6031
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME प्रकार"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6034
 #, kde-format
 msgid "Category"
 msgstr "कोटी"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6037
 #, kde-format
 msgid "Keywords"
 msgstr "कीवर्ड"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6040
 #, kde-format
 msgid "File Path"
 msgstr "सञ्चिकामार्गः"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6043
 #, kde-format
 msgid "File Size"
 msgstr "सञ्चिकायाः आकारः"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6046
 #, kde-format
 msgid "Page Size"
 msgstr "पृष्ठ आकार"
@@ -637,7 +637,7 @@ msgstr ""
 msgid "Unknown signing error"
 msgstr "अज्ञात सञ्चिका"
 
-#: core/sourcereference.cpp:101
+#: core/sourcereference.cpp:103
 #, kde-format
 msgctxt "'source' is a source file"
 msgid "Source: %1"
@@ -1786,11 +1786,6 @@ msgstr "चलचित्रगुणाः"
 #, kde-format
 msgid "Annotation Properties"
 msgstr "एनोटेशन गुण"
-
-#: part/annotationpropertiesdialog.cpp:175
-#, kde-format
-msgid "Modified: %1"
-msgstr "परिवर्तितं: %1"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -6027,6 +6022,9 @@ msgstr "सर्वं विस्मरतु"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "स्वागतपटलं गोपयन्तु"
+
+#~ msgid "Modified: %1"
+#~ msgstr "परिवर्तितं: %1"
 
 #~ msgid "Find..."
 #~ msgstr "अन्वेषय..."

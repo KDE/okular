@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-23 02:36+0000\n"
-"PO-Revision-Date: 2025-04-14 01:25-0300\n"
+"POT-Creation-Date: 2025-07-24 02:38+0000\n"
+"PO-Revision-Date: 2025-07-23 00:51-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -313,26 +313,26 @@ msgstr "Continuando a pesquisa do início"
 msgid "Continuing search from bottom"
 msgstr "Continuando a pesquisa do final"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2456
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Não foi possível encontrar um plugin para lidar com o documento indicado."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2893
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Assinatura não implementada para este tipo de documento"
 
-#: core/document.cpp:3624
+#: core/document.cpp:3620
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "remover anotações"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4210 core/document.cpp:4216
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -341,52 +341,52 @@ msgstr ""
 "O documento está tentando executar um aplicativo externo e, para sua "
 "segurança, o Okular não permitiu esta operação."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4226
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nenhum aplicativo foi encontrado para abrir o arquivo do tipo MIME %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4868
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Não foi possível abrir um arquivo temporário"
 
-#: core/document.cpp:4871
+#: core/document.cpp:4870
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A conversão da impressão falhou"
 
-#: core/document.cpp:4873
+#: core/document.cpp:4872
 #, kde-format
 msgid "Printing process crashed"
 msgstr "O processo de extração falhou"
 
-#: core/document.cpp:4875
+#: core/document.cpp:4874
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Não foi possível iniciar o processo de impressão"
 
-#: core/document.cpp:4877
+#: core/document.cpp:4876
 #, kde-format
 msgid "Printing to file failed"
 msgstr "A impressão para arquivo falhou"
 
-#: core/document.cpp:4879
+#: core/document.cpp:4878
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A impressora estava num estado inválido"
 
-#: core/document.cpp:4881
+#: core/document.cpp:4880
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Não foi possível encontrar o arquivo a imprimir"
 
-#: core/document.cpp:4883
+#: core/document.cpp:4882
 #, kde-format
 msgid "There was no file to print"
 msgstr "Não havia nenhum arquivo para imprimir"
 
-#: core/document.cpp:4885
+#: core/document.cpp:4884
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -395,92 +395,92 @@ msgstr ""
 "Não foi possível encontrar um binário de impressão adequado. Certifique-se "
 "de que o executável lpr do CUPS está disponível"
 
-#: core/document.cpp:4887
+#: core/document.cpp:4886
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "O tamanho de impressão da página não é válido"
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5564 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Não foi possível abrir o '%1'. O arquivo não existe"
 
-#: core/document.cpp:6075
+#: core/document.cpp:6074
 #, kde-format
 msgid "Title"
 msgstr "Título"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6077
 #, kde-format
 msgid "Subject"
 msgstr "Assunto"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6080
 #, kde-format
 msgid "Description"
 msgstr "Descrição"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6083
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6086
 #, kde-format
 msgid "Creator"
 msgstr "Criador"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6089
 #, kde-format
 msgid "Producer"
 msgstr "Produtor"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6092
 #, kde-format
 msgid "Copyright"
 msgstr "Direitos autorais"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6095
 #, kde-format
 msgid "Pages"
 msgstr "Páginas"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6098
 #, kde-format
 msgid "Created"
 msgstr "Criado"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6101
 #, kde-format
 msgid "Modified"
 msgstr "Modificado"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6104
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipo MIME"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6107
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6110
 #, kde-format
 msgid "Keywords"
 msgstr "Palavras-chave"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6113
 #, kde-format
 msgid "File Path"
 msgstr "Caminho do arquivo"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6116
 #, kde-format
 msgid "File Size"
 msgstr "Tamanho do arquivo"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6119
 #, kde-format
 msgid "Page Size"
 msgstr "Tamanho da página"
@@ -614,13 +614,10 @@ msgstr ""
 "Código de erro %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr ""
-"Não foi possível assinar o documento com a localização: <filename>%1</"
-"filename>"
+msgstr "Não foi possível assinar o documento: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -633,16 +630,13 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Não foi possível assinar. A frase secreta está incorreta"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Não foi possível escrever documento assinado em <filename>%1</filename>, "
+"Não foi possível escrever o documento assinado em <filename>%1</filename>, "
 "certifique-se de ter selecionado uma pasta com permissão de escrita"
 
 #: core/signatureutils.cpp:506
@@ -1109,11 +1103,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "A verificação da integridade do documento não pôde ser concluída."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Este documento contém campos de assinatura não assinados."
+msgstr "Este documento contém campos de assinatura."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1138,11 +1131,10 @@ msgstr ""
 "puderam ser validadas corretamente."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Tipo da assinatura: %1"
+msgstr "Campo de assinatura %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1171,51 +1163,40 @@ msgid "Location: %1"
 msgstr "Localização: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Assinatura PGP"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Validade da assinatura:"
+msgstr "Campo de assinatura"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -2935,7 +2916,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Itens no histórico recente:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3579,11 +3560,10 @@ msgid "All Files (*)"
 msgstr "Todos os arquivos (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Campo de assinatura não assinado (clique para assinar)"
+msgstr "Campo de assinatura (clique para assinar)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
@@ -4000,39 +3980,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Todos os seus certificados de assinatura são inválidos. Caso a assinatura "
+"tenha funcionado antes, verifique as datas de validade."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Apenas certificados QES"
+msgstr "Nenhum certificado válido"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Visualizar no gerenciador de certificados"
+msgstr "Abrir gerenciador de certificados"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Não há certificados de assinatura disponíveis.<br/>Para mais informações, "
-"veja a seção sobre <a href=\"%1\">Adicionando assinaturas digitais</a> no "
-"manual."
+"Não há certificados de assinatura disponíveis.<br/>Inicie o gerenciador de "
+"certificados para importar ou gerenciar certificados<br/>Para mais "
+"informações, veja a seção sobre <a href=\"%1\">Adicionando assinaturas "
+"digitais</a> no manual."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificados"
+msgstr "Nenhum certificado encontrado"
 
 #: part/pageview.cpp:5191
 #, kde-format

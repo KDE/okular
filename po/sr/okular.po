@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-23 02:36+0000\n"
+"POT-Creation-Date: 2025-07-24 02:38+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -315,26 +315,26 @@ msgstr "Настављам претрагу од почетка"
 msgid "Continuing search from bottom"
 msgstr "Настављам претрагу са дна"
 
-#: core/document.cpp:2460
+#: core/document.cpp:2456
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Не могу да нађем прикључак који је у стању да обради прослеђени документ."
 
-#: core/document.cpp:2897
+#: core/document.cpp:2893
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3624
+#: core/document.cpp:3620
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Уклони тумачења"
 
-#: core/document.cpp:4214 core/document.cpp:4220
+#: core/document.cpp:4210 core/document.cpp:4216
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -343,53 +343,53 @@ msgstr ""
 "Документ покушава да изврши спољашњи програм, што због ваше безбедности "
 "Окулар не дозвољава."
 
-#: core/document.cpp:4230
+#: core/document.cpp:4226
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Није нађен ниједан програм за отварање фајла МИМЕ типа %1."
 
-#: core/document.cpp:4869
+#: core/document.cpp:4868
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Не могу да отворим привремени фајл."
 
-#: core/document.cpp:4871
+#: core/document.cpp:4870
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Претварање за штампу није успело."
 
-#: core/document.cpp:4873
+#: core/document.cpp:4872
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Штампарски процес се срушио."
 
-#: core/document.cpp:4875
+#: core/document.cpp:4874
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Штампарски процес не може да се покрене."
 
-#: core/document.cpp:4877
+#: core/document.cpp:4876
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Штампање у фајл није успело."
 
-#: core/document.cpp:4879
+#: core/document.cpp:4878
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Штампач је у погрешном стању."
 
-#: core/document.cpp:4881
+#: core/document.cpp:4880
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Не могу да нађем фајл за штампање."
 
-#: core/document.cpp:4883
+#: core/document.cpp:4882
 #, kde-format
 msgid "There was no file to print"
 msgstr "Нема фајла за штампање."
 
 # rewrite-msgid: /binary/command/
-#: core/document.cpp:4885
+#: core/document.cpp:4884
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -399,93 +399,93 @@ msgstr ""
 "буде доступна."
 
 # rewrite-msgid: /print//
-#: core/document.cpp:4887
+#: core/document.cpp:4886
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Величина странице није добра."
 
-#: core/document.cpp:5565 part/part.cpp:1146
+#: core/document.cpp:5564 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Не могу да отворим „%1“. Фајл не постоји."
 
-#: core/document.cpp:6075
+#: core/document.cpp:6074
 #, kde-format
 msgid "Title"
 msgstr "Наслов"
 
-#: core/document.cpp:6078
+#: core/document.cpp:6077
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:6081
+#: core/document.cpp:6080
 #, kde-format
 msgid "Description"
 msgstr "Опис"
 
-#: core/document.cpp:6084
+#: core/document.cpp:6083
 #, kde-format
 msgid "Author"
 msgstr "Аутор"
 
-#: core/document.cpp:6087
+#: core/document.cpp:6086
 #, kde-format
 msgid "Creator"
 msgstr "Стваралац"
 
-#: core/document.cpp:6090
+#: core/document.cpp:6089
 #, kde-format
 msgid "Producer"
 msgstr "Произвођач"
 
-#: core/document.cpp:6093
+#: core/document.cpp:6092
 #, kde-format
 msgid "Copyright"
 msgstr "Ауторска права"
 
-#: core/document.cpp:6096
+#: core/document.cpp:6095
 #, kde-format
 msgid "Pages"
 msgstr "Страница"
 
-#: core/document.cpp:6099
+#: core/document.cpp:6098
 #, kde-format
 msgid "Created"
 msgstr "Направљен"
 
-#: core/document.cpp:6102
+#: core/document.cpp:6101
 #, kde-format
 msgid "Modified"
 msgstr "Измењен"
 
-#: core/document.cpp:6105
+#: core/document.cpp:6104
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "МИМЕ тип"
 
-#: core/document.cpp:6108
+#: core/document.cpp:6107
 #, kde-format
 msgid "Category"
 msgstr "Категорија"
 
-#: core/document.cpp:6111
+#: core/document.cpp:6110
 #, kde-format
 msgid "Keywords"
 msgstr "Кључне речи"
 
-#: core/document.cpp:6114
+#: core/document.cpp:6113
 #, kde-format
 msgid "File Path"
 msgstr "Путања фајла"
 
-#: core/document.cpp:6117
+#: core/document.cpp:6116
 #, kde-format
 msgid "File Size"
 msgstr "Величина фајла"
 
-#: core/document.cpp:6120
+#: core/document.cpp:6119
 #, kde-format
 msgid "Page Size"
 msgstr "Величина странице"

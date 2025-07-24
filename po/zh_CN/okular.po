@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-23 00:41+0000\n"
+"POT-Creation-Date: 2025-07-24 00:41+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -301,77 +301,77 @@ msgstr "正在从文档开头继续搜索"
 msgid "Continuing search from bottom"
 msgstr "正在从文档末尾继续搜索"
 
-#: core/document.cpp:2426
+#: core/document.cpp:2422
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "无法找到用于处理所给文档的插件。"
 
-#: core/document.cpp:2848
+#: core/document.cpp:2844
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "此文档类型尚未实现签名功能"
 
-#: core/document.cpp:3562
+#: core/document.cpp:3558
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除批注"
 
-#: core/document.cpp:4154 core/document.cpp:4160
+#: core/document.cpp:4150 core/document.cpp:4156
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文档正在试图执行外部应用程序。出于安全考虑，Okular 不允许这样做。"
 
-#: core/document.cpp:4170
+#: core/document.cpp:4166
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用于打开 MIME 类型为 %1 的应用程序。"
 
-#: core/document.cpp:4800
+#: core/document.cpp:4799
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "无法打开临时文件"
 
-#: core/document.cpp:4802
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr "打印转换失败"
 
-#: core/document.cpp:4804
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr "打印进程崩溃"
 
-#: core/document.cpp:4806
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr "打印进程无法启动"
 
-#: core/document.cpp:4808
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr "打印到文件失败"
 
-#: core/document.cpp:4810
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "打印机状态无效"
 
-#: core/document.cpp:4812
+#: core/document.cpp:4811
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "无法找到要打印的文件"
 
-#: core/document.cpp:4814
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr "没有要打印的文件"
 
-#: core/document.cpp:4816
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -380,92 +380,92 @@ msgstr ""
 "无法找到打印所需的二进制程序。请检查并确保 CUPS lpr 二进制程序已经安装并可"
 "用。"
 
-#: core/document.cpp:4818
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "页面的打印尺寸无效"
 
-#: core/document.cpp:5492 part/part.cpp:1146
+#: core/document.cpp:5491 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "无法打开“%1”。文件不存在"
 
-#: core/document.cpp:6001
+#: core/document.cpp:6000
 #, kde-format
 msgid "Title"
 msgstr "标题"
 
-#: core/document.cpp:6004
+#: core/document.cpp:6003
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: core/document.cpp:6007
+#: core/document.cpp:6006
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:6010
+#: core/document.cpp:6009
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:6013
+#: core/document.cpp:6012
 #, kde-format
 msgid "Creator"
 msgstr "创建程序"
 
-#: core/document.cpp:6016
+#: core/document.cpp:6015
 #, kde-format
 msgid "Producer"
 msgstr "转换程序"
 
-#: core/document.cpp:6019
+#: core/document.cpp:6018
 #, kde-format
 msgid "Copyright"
 msgstr "版权"
 
-#: core/document.cpp:6022
+#: core/document.cpp:6021
 #, kde-format
 msgid "Pages"
 msgstr "页数"
 
-#: core/document.cpp:6025
+#: core/document.cpp:6024
 #, kde-format
 msgid "Created"
 msgstr "创建时间"
 
-#: core/document.cpp:6028
+#: core/document.cpp:6027
 #, kde-format
 msgid "Modified"
 msgstr "修改时间"
 
-#: core/document.cpp:6031
+#: core/document.cpp:6030
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 类型"
 
-#: core/document.cpp:6034
+#: core/document.cpp:6033
 #, kde-format
 msgid "Category"
 msgstr "类别"
 
-#: core/document.cpp:6037
+#: core/document.cpp:6036
 #, kde-format
 msgid "Keywords"
 msgstr "关键词"
 
-#: core/document.cpp:6040
+#: core/document.cpp:6039
 #, kde-format
 msgid "File Path"
 msgstr "文件路径"
 
-#: core/document.cpp:6043
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Size"
 msgstr "文件大小"
 
-#: core/document.cpp:6046
+#: core/document.cpp:6045
 #, kde-format
 msgid "Page Size"
 msgstr "页面大小"
@@ -5923,6 +5923,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Modified: %1"
-#~ msgstr "修改时间：%1"

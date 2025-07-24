@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-23 00:41+0000\n"
+"POT-Creation-Date: 2025-07-24 00:41+0000\n"
 "PO-Revision-Date: 2022-08-28 21:16-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -317,25 +317,25 @@ msgstr "先頭から検索を続行します"
 msgid "Continuing search from bottom"
 msgstr "末尾から検索を続行します"
 
-#: core/document.cpp:2426
+#: core/document.cpp:2422
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "渡された文書を扱えるプラグインが見つかりません。"
 
-#: core/document.cpp:2848
+#: core/document.cpp:2844
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3562
+#: core/document.cpp:3558
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "注釈を削除"
 
-#: core/document.cpp:4154 core/document.cpp:4160
+#: core/document.cpp:4150 core/document.cpp:4156
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -344,52 +344,52 @@ msgstr ""
 "文書が外部アプリケーションを実行しようとしていますが、安全のために Okular は"
 "これを許可しません。"
 
-#: core/document.cpp:4170
+#: core/document.cpp:4166
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME タイプ %1 のファイルを開くアプリケーションが見つかりません。"
 
-#: core/document.cpp:4800
+#: core/document.cpp:4799
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "一時ファイルを開けませんでした"
 
-#: core/document.cpp:4802
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4804
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr "印刷プロセスがクラッシュしました"
 
-#: core/document.cpp:4806
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr "印刷プロセスを起動できませんでした"
 
-#: core/document.cpp:4808
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ファイルへ印刷できませんでした"
 
-#: core/document.cpp:4810
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "プリンタの状態が不正です"
 
-#: core/document.cpp:4812
+#: core/document.cpp:4811
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "印刷するファイルが見つかりません"
 
-#: core/document.cpp:4814
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr "印刷するファイルがありません"
 
-#: core/document.cpp:4816
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -398,92 +398,92 @@ msgstr ""
 "印刷に必要な実行ファイルがありません。CUPS の lpr があることを確認してくださ"
 "い。"
 
-#: core/document.cpp:4818
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "このページ印刷サイズは無効です"
 
-#: core/document.cpp:5492 part/part.cpp:1146
+#: core/document.cpp:5491 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "‘%1’ を開けませんでした。ファイルが存在しません。"
 
-#: core/document.cpp:6001
+#: core/document.cpp:6000
 #, kde-format
 msgid "Title"
 msgstr "タイトル"
 
-#: core/document.cpp:6004
+#: core/document.cpp:6003
 #, kde-format
 msgid "Subject"
 msgstr "主題"
 
-#: core/document.cpp:6007
+#: core/document.cpp:6006
 #, kde-format
 msgid "Description"
 msgstr "説明"
 
-#: core/document.cpp:6010
+#: core/document.cpp:6009
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:6013
+#: core/document.cpp:6012
 #, kde-format
 msgid "Creator"
 msgstr "作成ソフト"
 
-#: core/document.cpp:6016
+#: core/document.cpp:6015
 #, kde-format
 msgid "Producer"
 msgstr "生成ソフト"
 
-#: core/document.cpp:6019
+#: core/document.cpp:6018
 #, kde-format
 msgid "Copyright"
 msgstr "著作権"
 
-#: core/document.cpp:6022
+#: core/document.cpp:6021
 #, kde-format
 msgid "Pages"
 msgstr "ページ数"
 
-#: core/document.cpp:6025
+#: core/document.cpp:6024
 #, kde-format
 msgid "Created"
 msgstr "作成日"
 
-#: core/document.cpp:6028
+#: core/document.cpp:6027
 #, kde-format
 msgid "Modified"
 msgstr "変更日"
 
-#: core/document.cpp:6031
+#: core/document.cpp:6030
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME タイプ"
 
-#: core/document.cpp:6034
+#: core/document.cpp:6033
 #, kde-format
 msgid "Category"
 msgstr "カテゴリ"
 
-#: core/document.cpp:6037
+#: core/document.cpp:6036
 #, kde-format
 msgid "Keywords"
 msgstr "キーワード"
 
-#: core/document.cpp:6040
+#: core/document.cpp:6039
 #, kde-format
 msgid "File Path"
 msgstr "ファイルのパス"
 
-#: core/document.cpp:6043
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Size"
 msgstr "ファイルサイズ"
 
-#: core/document.cpp:6046
+#: core/document.cpp:6045
 #, kde-format
 msgid "Page Size"
 msgstr "ページサイズ"

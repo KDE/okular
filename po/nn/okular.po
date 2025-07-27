@@ -6049,6 +6049,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "Modified: %1"
-#~ msgstr "Endra: %1"

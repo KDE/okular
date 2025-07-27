@@ -5909,6 +5909,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgid "Modified: %1"
-#~ msgstr "Endret: %1"

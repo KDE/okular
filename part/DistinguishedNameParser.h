@@ -141,6 +141,9 @@ static std::pair<std::optional<std::string_view>, std::pair<std::string, std::st
         /* hexstring */
         stringv.remove_prefix(1);
         auto endHex = stringv.find_first_not_of("1234567890abcdefABCDEF");
+        if (endHex == std::string_view::npos) {
+            endHex = stringv.size();
+        }
         if (!endHex || (endHex % 2 == 1)) {
             return {}; /* empty or odd number of digits */
         }

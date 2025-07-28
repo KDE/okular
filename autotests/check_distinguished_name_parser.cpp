@@ -80,6 +80,7 @@ void TestDistinguishedNameParser::testParser_data()
     QTest::newRow("frompdf2") << std::string {"2.5.4.5=#34,CN=Koch\\, Werner,2.5.4.42=#5765726E6572,2.5.4.4=#4B6F6368,C=DE"} << DN::Result {{"SerialNumber", "4"}, {"CN", "Koch, Werner"}, {"GN", "Werner"}, {"SN", "Koch"}, {"C", "DE"}};
     QTest::newRow("frompdf2a") << std::string {"2.5.4.5=#34,CN=Koch\\, Werner,oid.2.5.4.42=#5765726E6572,OID.2.5.4.4=#4B6F6368,C=DE"}
                                << DN::Result {{"SerialNumber", "4"}, {"CN", "Koch, Werner"}, {"GN", "Werner"}, {"SN", "Koch"}, {"C", "DE"}};
+    QTest::newRow("ends with hex string") << std::string {"2.5.4.5=#34"} << DN::Result {{"SerialNumber", "4"}};
 
     // weird spacing
     QTest::newRow("CN =Simple") << std::string {"CN =Simple"} << DN::Result {{"CN", "Simple"}};

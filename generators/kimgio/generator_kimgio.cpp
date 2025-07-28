@@ -55,6 +55,10 @@ bool KIMGIOGenerator::loadDocument(const QString &fileName, QList<Okular::Page *
         Q_EMIT error(i18n("Unable to load document: %1", f.errorString()), -1);
         return false;
     }
+    auto size = f.size();
+    if (size > (INT_MAX / 4)) {
+        return false;
+    }
     return loadDocumentInternal(f.readAll(), fileName, pagesVector);
 }
 

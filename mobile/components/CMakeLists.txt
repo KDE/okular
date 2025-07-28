@@ -17,7 +17,7 @@ target_sources(okularplugin PRIVATE
     ${CMAKE_SOURCE_DIR}/gui/certificatemodel.cpp
     ${CMAKE_SOURCE_DIR}/gui/pagepainter.cpp
     ${CMAKE_SOURCE_DIR}/gui/debug_ui.cpp
-    ${CMAKE_SOURCE_DIR}/shell/recentitemsmodel.cpp
+    ${CMAKE_SOURCE_DIR}/gui/recentitemsmodel.cpp
     pageitem.cpp
     documentitem.cpp
     thumbnailitem.cpp

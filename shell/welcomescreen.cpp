@@ -19,7 +19,7 @@
 #include <QResizeEvent>
 #include <QStyledItemDelegate>
 
-#include "recentitemsmodel.h"
+#include "gui/recentitemsmodel.h"
 
 class RecentsListItemDelegate : public QStyledItemDelegate
 {

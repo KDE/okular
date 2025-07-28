@@ -11,8 +11,9 @@ set(okular_SRCS
    okular_main.cpp
    shell.cpp
    shellutils.cpp
-   recentitemsmodel.cpp
    welcomescreen.cpp
+
+   ../gui/recentitemsmodel.cpp
 
    shell.qrc
 )

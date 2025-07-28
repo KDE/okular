@@ -7,7 +7,7 @@
 #include <qqml.h>
 
 #include "gui/certificatemodel.h"
-#include "shell/recentitemsmodel.h"
+#include "gui/recentitemsmodel.h"
 
 class CertificateModelForeign : public QObject
 {

@@ -9,7 +9,7 @@
 #include <QObject>
 #include <qqmlregistration.h>
 
-#include <shell/recentitemsmodel.h>
+#include <gui/recentitemsmodel.h>
 
 class WelcomeItem : public QObject
 {

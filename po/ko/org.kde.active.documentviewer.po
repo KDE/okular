@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -105,17 +105,13 @@ msgstr "정보"
 msgid "Password Needed"
 msgstr "암호가 필요함"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "책갈피 삭제"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "이 페이지 책갈피"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "연 문서 없음"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "사용할 수 없음"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "결과가 없습니다."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "연 문서 없음"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "문서 버전"
 
 #~ msgid "Open..."
 #~ msgstr "열기..."

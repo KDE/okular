@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-01-26 17:37+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -105,17 +105,13 @@ msgstr "பற்றி"
 msgid "Password Needed"
 msgstr "கடவுச்சொல் தேவை"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "நினைவுக்குறியை நீக்கு"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "இப்பக்கத்தில் நினைவுக்குறியிடு"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "எந்த ஆவணமும் திறக்கப்படவில்லை"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "கிட்டவில்லை"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "எதுவும் கண்டுபிடிக்கப்படவில்லை"
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "எந்த ஆவணமும் திறக்கப்படவில்லை"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "ஆவண பதிப்பு"
 
 #~ msgid "Open..."
 #~ msgstr "திற..."

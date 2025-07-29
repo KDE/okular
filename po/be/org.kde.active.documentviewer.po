@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2024-02-12 20:00\n"
 "Last-Translator: Zmicier <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -112,17 +112,13 @@ msgstr "Пра праграму"
 msgid "Password Needed"
 msgstr "Патрэбны пароль"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Выдаліць закладку"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Дадаць гэтую старонку ў закладкі"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Няма дакументаў для адкрыцця"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -204,6 +200,22 @@ msgstr "Недаступна"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Нічога не знойдзена."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Няма дакументаў для адкрыцця"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Версія дакумента"
 
 #~ msgid "Open..."
 #~ msgstr "Адкрыць..."

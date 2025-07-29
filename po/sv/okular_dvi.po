@@ -2,20 +2,20 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013, 2014, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013, 2014, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2024-08-16 09:32+0200\n"
+"PO-Revision-Date: 2025-07-28 18:35+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -323,10 +323,9 @@ msgstr ""
 "dokumentet kan vara oläsbart.</qt>"
 
 #: fontpool.cpp:482
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "Skapar för närvarande %1 med %2 punkter/tum..."
+msgstr "Skapar för närvarande %1 med %2 punkter/tum…"
 
 #: generator_dvi.cpp:288
 #, kde-format

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2022-02-04 13:52+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -106,17 +106,13 @@ msgstr "Despre"
 msgid "Password Needed"
 msgstr ""
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Elimină semnul de carte"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Însemnează această pagină"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Niciun document deschis"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -196,6 +192,22 @@ msgstr ""
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nu s-a găsit niciun rezultat."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Niciun document deschis"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "No document open"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Niciun document deschis"
 
 #~ msgid "Open..."
 #~ msgstr "Deschide…"

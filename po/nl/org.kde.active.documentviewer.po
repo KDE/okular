@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-11 22:38+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -105,17 +105,13 @@ msgstr "Info over"
 msgid "Password Needed"
 msgstr "Wachtwoord vereist"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Bladwijzer verwijderen"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Bladwijzer aanmaken voor deze pagina"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Geen geopend document"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "Niet beschikbaar"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Geen resultaten gevonden."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Geen geopend document"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Documentversie"
 
 #~ msgid "Open..."
 #~ msgstr "Openen..."

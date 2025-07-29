@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-12 17:33+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -112,17 +112,13 @@ msgstr "À propos"
 msgid "Password Needed"
 msgstr "Un mot de passe est requis."
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Supprimer le signet"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Ajouter cette page aux signets"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Aucun document ouvert"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -200,6 +196,22 @@ msgstr "Non disponible"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Aucun résultat n'a été trouvé."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Aucun document ouvert"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Version de document"
 
 #~ msgid "Open..."
 #~ msgstr "Ouvrir..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-04-17 14:03+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -106,17 +106,13 @@ msgstr "Um hugbúnaðinn"
 msgid "Password Needed"
 msgstr "Lykilorðs er krafist"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Fjarlægja bókamerki"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Bókamerkja þessa síðu"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Ekkert skjal opið"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -194,6 +190,22 @@ msgstr "Ekki tiltækt"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Engar niðurstöður fundust."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Ekkert skjal opið"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Útgáfa skjals"
 
 #~ msgid "Open..."
 #~ msgstr "Opna..."

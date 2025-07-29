@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
-"PO-Revision-Date: 2025-01-11 12:41+0100\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
+"PO-Revision-Date: 2025-07-28 18:35+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -95,7 +95,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Öppna…"
 
 #: ui/Main.qml:49
 msgid "About"
@@ -105,17 +105,13 @@ msgstr "Om"
 msgid "Password Needed"
 msgstr "Lösenord krävs"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Ta bort bokmärke"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Spara sidan som bokmärke"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Inget dokument öppet"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "Inte tillgänglig"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Inga resultat hittades."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Inget dokument öppet"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Dokumentversion"
 
 #~ msgid "Open..."
 #~ msgstr "Öppna..."

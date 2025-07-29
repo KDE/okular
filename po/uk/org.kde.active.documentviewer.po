@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-11 09:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -108,17 +108,13 @@ msgstr "Про програму"
 msgid "Password Needed"
 msgstr "Потрібен пароль"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Вилучити закладку"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Додати цю сторінку до закладок"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Немає відкритих документів"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -196,6 +192,22 @@ msgstr "Недоступний"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Нічого не знайдено."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Немає відкритих документів"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Версія документа"
 
 #~ msgid "Open..."
 #~ msgstr "Відкрити…"

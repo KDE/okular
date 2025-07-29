@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-14 09:40+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -109,17 +109,13 @@ msgstr "Honi buruz"
 msgid "Password Needed"
 msgstr "Pasahitza behar da"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Kendu laster-marka"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Sortu orri honen laster-marka"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Ez dago dokumentu irekirik"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -197,6 +193,22 @@ msgstr "Ez dago eskuragarri"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Ez du emaitzarik aurkitu."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Ez dago dokumentu irekirik"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Dokumentuaren bertsioa"
 
 #~ msgid "Open..."
 #~ msgstr "Ireki..."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2023-02-19 16:51+0100\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -107,17 +107,13 @@ msgstr "O aplikácii"
 msgid "Password Needed"
 msgstr "Vyžaduje sa heslo"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Odstrániť záložku"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Pridať túto stránku do záložiek"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Žiadny dokument nie je otvorený"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -199,6 +195,22 @@ msgstr "Nedostupné"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nenájdené žiadne výsledky."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Žiadny dokument nie je otvorený"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Verzia dokumentu"
 
 #~ msgid "Open..."
 #~ msgstr "Otvoriť..."

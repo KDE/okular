@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2024-12-19 17:34+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -108,17 +108,13 @@ msgstr "關於"
 msgid "Password Needed"
 msgstr "需要密碼"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "移除書籤"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "將此頁面加入書籤"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "沒有開啟文件"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -196,6 +192,22 @@ msgstr "不可用"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "找不到資料。"
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "沒有開啟文件"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "文件版本"
 
 #~ msgid "Open..."
 #~ msgstr "開啟…"

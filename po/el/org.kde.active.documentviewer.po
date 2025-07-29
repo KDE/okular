@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2024-09-19 17:12+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -108,17 +108,13 @@ msgstr "Περίγραμμα"
 msgid "Password Needed"
 msgstr "Απαιτείται Κωδικός"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Αφαίρεση σελιδοδείκτη"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Προσθέστε αυτήν τη σελίδα στους σελιδοδείκτες"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Κανένα ανοικτό έγγραφο"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -198,6 +194,22 @@ msgstr "Μη διαθέσιμη"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Δεν βρέθηκαν αποτελέσματα."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Κανένα ανοικτό έγγραφο"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "No document open"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Κανένα ανοικτό έγγραφο"
 
 #~ msgid "Open..."
 #~ msgstr "Άνοιγμα..."

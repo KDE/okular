@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-01-12 16:58+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -107,17 +107,13 @@ msgstr "Tietoa"
 msgid "Password Needed"
 msgstr "Salasana vaaditaan"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Poista kirjanmerkki"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Tee sivusta kirjanmerkki"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Ei avoinna olevaa tiedostoa"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -195,6 +191,22 @@ msgstr "Ei saatavilla"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Ei löytynyt."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Ei avoinna olevaa tiedostoa"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Tiedostoversio"
 
 #~ msgid "Open..."
 #~ msgstr "Avaa..."

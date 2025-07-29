@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-07-14 13:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -107,17 +107,13 @@ msgstr "Hakkında"
 msgid "Password Needed"
 msgstr "Parola Gerekiyor"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Yer imini kaldır"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Bu sayfaya yer imi koy"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Açık belge yok"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -195,6 +191,22 @@ msgstr "Kullanılabilir Değil"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Sonuç bulunamadı."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Açık belge yok"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Belge Sürümü"
 
 #~ msgid "Open..."
 #~ msgstr "Aç…"

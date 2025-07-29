@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2023-08-03 19:41+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -108,17 +108,13 @@ msgstr "Om"
 msgid "Password Needed"
 msgstr "Krev passord"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Fjern bokmerke"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Bokmerk denne sida"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Ingen opne dokument"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -198,3 +194,19 @@ msgstr "Ikkje tilgjengeleg"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Fann ingen resultat."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Ingen opne dokument"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Dokumentversjon"

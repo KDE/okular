@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2024-12-21 11:18+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -105,17 +105,13 @@ msgstr "O programie"
 msgid "Password Needed"
 msgstr "Wymagane hasło"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Usuń zakładkę"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Dodaj tę stronę do zakładek"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Nie otwarto żadnego dokumentu"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "Niedostępne"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Brak wyników."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Nie otwarto żadnego dokumentu"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Wersja dokumentu"
 
 #~ msgid "Open..."
 #~ msgstr "Otwórz..."

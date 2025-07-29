@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2023-02-03 13:47+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -105,17 +105,13 @@ msgstr "O aplikaci"
 msgid "Password Needed"
 msgstr "Je potřeba heslo"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Smazat záložku"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Přidat stránku do záložek"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Není otevřen žádný dokument"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -193,6 +189,22 @@ msgstr "Nedostupný"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Nenalezeny žádné výsledky."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Není otevřen žádný dokument"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Verze dokumentu"
 
 #~ msgid "Open..."
 #~ msgstr "Otevřít..."

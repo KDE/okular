@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -106,17 +106,13 @@ msgstr "关于"
 msgid "Password Needed"
 msgstr "需要输入密码"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "移除书签"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "添加此页到书签"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "没有打开文档"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -194,3 +190,19 @@ msgstr "不可用"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "未找到任何结果。"
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "没有打开文档"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "文档版本"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-07-29 00:40+0000\n"
 "PO-Revision-Date: 2025-01-06 21:43+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -108,17 +108,13 @@ msgstr "Apie"
 msgid "Password Needed"
 msgstr "Reikia slaptažodžio"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Remove bookmark"
 msgstr "Šalinti žymelę"
 
-#: ui/MainView.qml:26
+#: ui/MainView.qml:29
 msgid "Bookmark this page"
 msgstr "Įtraukti šį puslapį į žymeles"
-
-#: ui/MainView.qml:82
-msgid "No document open"
-msgstr "Neatvertas joks dokumentas"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -196,6 +192,22 @@ msgstr "Neprieinama"
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
 msgstr "Rezultatų nerasta."
+
+#: ui/WelcomeView.qml:43
+msgid "No document open"
+msgstr "Neatvertas joks dokumentas"
+
+#: ui/WelcomeView.qml:49
+msgctxt "in welcome screen"
+msgid "Recent Documents"
+msgstr ""
+
+#: ui/WelcomeView.qml:108
+#, fuzzy
+#| msgid "Document Version"
+msgctxt "in welcome screen"
+msgid "My Documents"
+msgstr "Dokumento versija"
 
 #~ msgid "Open..."
 #~ msgstr "Atverti..."

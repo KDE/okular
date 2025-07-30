@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2025-07-11 10:01+0300\n"
+"PO-Revision-Date: 2025-07-29 08:23+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -198,14 +198,12 @@ msgstr "אין מסמך פתוח"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "מסמכים אחרונים"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "גרסת מסמך"
+msgstr "המסמכים שלי"
 
 #~ msgid "Open..."
 #~ msgstr "פתיחה…"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2025-07-11 07:36+0200\n"
+"PO-Revision-Date: 2025-07-29 06:47+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -201,14 +201,12 @@ msgstr "Ni odprtih dokumentov"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Nedavni dokumenti"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "Različica dokumenta"
+msgstr "Moji dokumenti"
 
 #~ msgid "Open..."
 #~ msgstr "Odpri ..."

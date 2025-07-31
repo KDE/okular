@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2025-07-23 00:42-0300\n"
+"PO-Revision-Date: 2025-07-30 19:28-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -201,14 +201,12 @@ msgstr "Nenhum documento aberto"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Documentos recentes"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "Versão do documento"
+msgstr "Meus documentos"
 
 #~ msgid "Open..."
 #~ msgstr "Abrir..."

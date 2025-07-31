@@ -201,8 +201,6 @@ msgid "Recent Documents"
 msgstr ""
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "文档版本"
+msgstr ""

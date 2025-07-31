@@ -135,13 +135,54 @@ public:
     {
         if (clicked) {
             if (m_block) {
-                const QPen origpen = painter->pen();
-                QPen pen = painter->pen();
-                pen.setStyle(Qt::DashLine);
-                painter->setPen(pen);
                 const Okular::NormalizedRect tmprect(qMin(startpoint.x, point.x), qMin(startpoint.y, point.y), qMax(startpoint.x, point.x), qMax(startpoint.y, point.y));
                 const QRect realrect = tmprect.geometry((int)xScale, (int)yScale);
-                painter->drawRect(realrect);
+                const QPen origpen = painter->pen();
+                QPen pen = painter->pen();
+                // Draw rectangle in 3 colored dashed line
+                const QColor baseColor = QApplication::palette().base().color();
+                const QColor textColor = QApplication::palette().text().color();
+                const QColor highlightColor = QApplication::palette().highlight().color();
+                const qreal penWidth = pen.widthF();
+                pen.setDashPattern({penWidth * 5, penWidth * 10} /* { dash, empty space } */);
+                pen.setColor(baseColor);
+                painter->setPen(pen);
+                // Use drawLine instead of drawRect to avoid shimering on resize
+                painter->drawLine(realrect.topLeft(), realrect.topRight());
+                painter->drawLine(realrect.topLeft(), realrect.bottomLeft());
+                painter->drawLine(realrect.topRight(), realrect.bottomRight());
+                painter->drawLine(realrect.bottomLeft(), realrect.bottomRight());
+
+                pen.setDashOffset(penWidth * 5);
+                pen.setColor(textColor);
+                painter->setPen(pen);
+                painter->drawLine(realrect.topLeft(), realrect.topRight());
+                painter->drawLine(realrect.topLeft(), realrect.bottomLeft());
+                painter->drawLine(realrect.topRight(), realrect.bottomRight());
+                painter->drawLine(realrect.bottomLeft(), realrect.bottomRight());
+
+                pen.setDashOffset(penWidth * 10);
+                pen.setColor(highlightColor);
+                painter->setPen(pen);
+                painter->drawLine(realrect.topLeft(), realrect.topRight());
+                painter->drawLine(realrect.topLeft(), realrect.bottomLeft());
+                painter->drawLine(realrect.topRight(), realrect.bottomRight());
+                painter->drawLine(realrect.bottomLeft(), realrect.bottomRight());
+
+                // and draw the internal 3x3 grid
+                pen.setStyle(Qt::DashLine);
+                pen.setColor(highlightColor);
+                painter->setPen(pen);
+                const QPoint rectTopLeft = realrect.topLeft();
+                const QPoint rectBottomRight = realrect.bottomRight();
+                const int yHorizontal1 = rectTopLeft.y() + (realrect.height() + 2) / 3;
+                const int yHorizontal2 = rectTopLeft.y() + (realrect.height() + 2) / 3 * 2;
+                painter->drawLine(rectTopLeft.x(), yHorizontal1, rectBottomRight.x(), yHorizontal1);
+                painter->drawLine(rectTopLeft.x(), yHorizontal2, rectBottomRight.x(), yHorizontal2);
+                const int xVertical1 = rectTopLeft.x() + (realrect.width() + 2) / 3;
+                const int xVertical2 = rectTopLeft.x() + (realrect.width() + 2) / 3 * 2;
+                painter->drawLine(xVertical1, rectTopLeft.y(), xVertical1, rectBottomRight.y());
+                painter->drawLine(xVertical2, rectTopLeft.y(), xVertical2, rectBottomRight.y());
                 painter->setPen(origpen);
             }
             if (!pixmap.isNull()) {

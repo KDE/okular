@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 00:41+0000\n"
-"PO-Revision-Date: 2025-07-10 22:32+0300\n"
+"PO-Revision-Date: 2025-07-13 23:15+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -166,10 +166,9 @@ msgid "Open external file"
 msgstr "Avaa ulkoinen tiedosto"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
-msgstr "Suorita %1…"
+msgstr "Suorita ”%1”…"
 
 #: core/action.cpp:294
 #, kde-format
@@ -219,17 +218,15 @@ msgstr "Päätä esitys"
 #: core/action.cpp:312
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Etsi…"
 
 #: core/action.cpp:314
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Siirry sivulle"
+msgstr "Siirry sivulle…"
 
 #: core/action.cpp:365
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
 msgstr "Toista ääni…"
 
@@ -239,10 +236,9 @@ msgid "JavaScript Script"
 msgstr "JavaScript-komentojono"
 
 #: core/action.cpp:483
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Toista elokuva"
+msgstr "Toista elokuva…"
 
 #: core/action.cpp:554
 #, kde-format
@@ -333,7 +329,7 @@ msgstr "Annetun tiedoston käsittelyyn vaadittavaa liitännäistä ei löytynyt.
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Tälle tiedostotyypille allekirjoittamista ei ole toteutettu"
 
 # Tekstiä käytetään viestien ”Undo %1” ja ”Redo %1” yhteydessä.
 #: core/document.cpp:3558
@@ -573,10 +569,9 @@ msgid "edit form button states"
 msgstr "lomakkeen painiketilan muokkaus"
 
 #: core/generator.cpp:787
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "Pelkkä &teksti…"
+msgstr "&Pelkkä teksti…"
 
 #: core/generator.cpp:790
 #, kde-format
@@ -1465,9 +1460,7 @@ msgid "Transparent"
 msgstr "Läpinäkyvä"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
 msgstr "Mukautettu väri…"
@@ -1718,9 +1711,7 @@ msgid "&Properties"
 msgstr "O&minaisuudet"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Tallenna ”%1”…"
@@ -2291,10 +2282,9 @@ msgstr "Näytä kaikille tiedostoille"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "&Etsi:"
+msgstr "Etsi…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2329,8 +2319,7 @@ msgid "Certificate Viewer"
 msgstr "Varmennekatselin"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
 msgstr "Vie…"
 
@@ -2934,7 +2923,7 @@ msgstr "Selaustyökalua käytettäessä rivitä kohdistin näytön reunoilla"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Kohteet äskettäisessä historiassa:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3494,18 +3483,16 @@ msgid "Modified"
 msgstr "Muutettu"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Tallenna nimellä"
+msgstr "Tallenna nimellä…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&Näytä"
+msgstr "&Näytä…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3587,11 +3574,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Allekirjoitusvaraus (allekirjoita napsauttamalla)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Allekirjoita"
+msgstr "&Allekirjoita…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3777,8 +3762,7 @@ msgid "Selection Tools"
 msgstr "Valintatyökalut"
 
 #: part/pageview.cpp:711
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
 msgstr "Allekirjoita &digitaalisesti…"
 
@@ -3936,8 +3920,7 @@ msgid "Search for '%1' with"
 msgstr "Etsi ”%1” hakukoneella"
 
 #: part/pageview.cpp:4404
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "WWW-pikavalintojen asetukset…"
 
@@ -4006,39 +3989,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Kaikki allekirjoitusvarmenteet ovat virheellisiä. Jos allekirjoittaminen on "
+"aiemmin toiminut, tarkista niiden kelpoisuuspäiväykset."
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Vain QES-varmenteet"
+msgstr "Ei kelvollisia varmenteita"
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Näytä varmenteenhallinnassa"
+msgstr "Avaa varmenteiden hallinta"
 
 #: part/pageview.cpp:5200
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Allekirjoitusvarmenteita ei ole saatavilla.<br/>Lisätietoa löytyy "
+"Allekirjoitusvarmenteita ei ole saatavilla.<br/>Tuo tai hallinnoi "
+"varmenteita käynnistämällä varmenteiden hallinta<br/>Lisätietoa löytyy "
 "käyttöoppaan osiosta <a href=\"%1\">Digitaalisten allekirjoitusten "
 "lisääminen</a>."
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Varmenteet"
+msgstr "Varmenteita ei löytynyt"
 
 #: part/pageview.cpp:5213
 #, kde-format
@@ -4378,28 +4357,24 @@ msgid "Go to the next bookmark"
 msgstr "Siirry seuraavaan kirjanmerkkiin"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "Okularin asetukset…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Asiakirjakatselimen asetukset"
+msgstr "Katselimen asetukset…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Katselimen taustaosien asetukset"
+msgstr "Katselimen taustajärjestelmien asetukset…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Taustaosa-asetukset"
+msgstr "Taustajärjestelmien asetukset…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4427,9 +4402,7 @@ msgid "Page Number"
 msgstr "Sivunumero"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Väritila-asetukset…"
@@ -4480,10 +4453,9 @@ msgid "Open Con&taining Folder"
 msgstr "Avaa yläkansio"
 
 #: part/part.cpp:946
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "&Tuo Postscript PDF:ksi…"
+msgstr "Tuo &Postscript PDF:ksi…"
 
 #: part/part.cpp:950
 #, kde-format
@@ -4496,8 +4468,7 @@ msgid "Erase Drawing"
 msgstr "Poista piirrokset"
 
 #: part/part.cpp:963
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
 msgstr "Merkintäasetukset…"
 
@@ -4567,10 +4538,9 @@ msgid "PostScript files (%1)"
 msgstr "Postscript-tiedostot (%1)"
 
 #: part/part.cpp:1358
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "Tuodaan Postscript-tiedosto PDF:ksi (voi kestää hetken)…"
+msgstr "Tuodaan Postscript-tiedostoa PDF:ksi (voi kestää hetken)…"
 
 #: part/part.cpp:1490
 #, kde-format
@@ -4719,8 +4689,7 @@ msgstr ""
 "upotetussa katselimessa."
 
 #: part/part.cpp:2114 part/part.cpp:2132
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
 msgstr "Avataan tiedostoa uudelleen…"
 
@@ -4882,8 +4851,7 @@ msgid "Warning"
 msgstr "Varoitus"
 
 #: part/part.cpp:2780 part/part.cpp:2802
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Tallenna Okularin tiedostoarkistoksi…"
 
@@ -5314,10 +5282,9 @@ msgid "&Fonts"
 msgstr "&Fontit"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Luetaan fonttitietoja…"
+msgstr "Luetaan fonttitietoa…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5738,14 +5705,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Tiedoston versio %1/%2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
 msgstr "Näytä allekirjoitettu versio…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "Näytä varmenne…"
 
@@ -5807,13 +5772,12 @@ msgstr "Tämä Okular ei tue videoita"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "L&isää…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Muokkaa"
+msgstr "&Muokkaa…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

@@ -198,9 +198,9 @@ msgstr "没有打开文档"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "最近文档"
 
 #: ui/WelcomeView.qml:108
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr ""
+msgstr "我的文档"

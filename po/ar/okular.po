@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 02:38+0000\n"
-"PO-Revision-Date: 2025-07-14 19:07+0400\n"
+"PO-Revision-Date: 2025-07-31 18:26+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2026,7 +2026,7 @@ msgstr "سهم مغلق"
 #: part/annotationwidgets.cpp:514
 #, kde-format
 msgid "None"
-msgstr "بدون"
+msgstr "لا شيء"
 
 #: part/annotationwidgets.cpp:515
 #, kde-format
@@ -2153,7 +2153,7 @@ msgstr "رمز القبعة:"
 #, kde-format
 msgctxt "Symbol for caret annotations"
 msgid "None"
-msgstr "بدون"
+msgstr "لا شيء"
 
 #: part/annotationwidgets.cpp:846
 #, kde-format

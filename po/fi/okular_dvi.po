@@ -5,7 +5,7 @@
 # Mikko Piippo <mikko.piippo@helsinki.fi>, 2008.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010.
 # Lasse Liehu <lliehu@kolumbus.fi>, 2011, 2013, 2014.
-# SPDX-FileCopyrightText: 2024 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2024, 2025 Tommi Nieminen <translator@legisign.org>
 #
 # KDE Finnish translation sprint participants:
 msgid ""

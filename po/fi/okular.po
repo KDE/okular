@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 02:38+0000\n"
-"PO-Revision-Date: 2025-07-10 22:32+0300\n"
+"PO-Revision-Date: 2025-07-13 23:15+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -329,7 +329,7 @@ msgstr "Annetun tiedoston käsittelyyn vaadittavaa liitännäistä ei löytynyt.
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Tälle tiedostotyypille allekirjoittamista ei ole toteutettu"
 
 # Tekstiä käytetään viestien ”Undo %1” ja ”Redo %1” yhteydessä.
 #: core/document.cpp:3620
@@ -2923,7 +2923,7 @@ msgstr "Selaustyökalua käytettäessä rivitä kohdistin näytön reunoilla"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Kohteet äskettäisessä historiassa:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3989,39 +3989,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Kaikki allekirjoitusvarmenteet ovat virheellisiä. Jos allekirjoittaminen on "
+"aiemmin toiminut, tarkista niiden kelpoisuuspäiväykset."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Vain QES-varmenteet"
+msgstr "Ei kelvollisia varmenteita"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Näytä varmenteenhallinnassa"
+msgstr "Avaa varmenteiden hallinta"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Allekirjoitusvarmenteita ei ole saatavilla.<br/>Lisätietoa löytyy "
+"Allekirjoitusvarmenteita ei ole saatavilla.<br/>Tuo tai hallinnoi "
+"varmenteita käynnistämällä varmenteiden hallinta<br/>Lisätietoa löytyy "
 "käyttöoppaan osiosta <a href=\"%1\">Digitaalisten allekirjoitusten "
 "lisääminen</a>."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Varmenteet"
+msgstr "Varmenteita ei löytynyt"
 
 #: part/pageview.cpp:5191
 #, kde-format

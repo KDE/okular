@@ -272,6 +272,11 @@ void PartTest::testSelectText()
     Okular::Part part(nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
+
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -306,6 +311,10 @@ void PartTest::testSelectTextMultiline()
     Okular::Part part(nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(1);
@@ -363,6 +372,10 @@ void PartTest::testClickInternalLink()
     Okular::Part part(nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -393,6 +406,10 @@ void PartTest::testScrollBarAndMouseWheel()
     Okular::Part part(nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/simple-multipage.pdf")));
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -433,6 +450,10 @@ void PartTest::testMouseMoveOverLinkWhileInSelectionMode()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -462,6 +483,10 @@ void PartTest::testClickUrlLinkWhileInSelectionMode()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -512,6 +537,10 @@ void PartTest::testeTextSelectionOverAndAcrossLinks()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -550,6 +579,10 @@ void PartTest::testClickUrlLinkWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -595,6 +628,10 @@ void PartTest::testRClickWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -661,6 +698,10 @@ void PartTest::testRClickOverLinkWhileLinkTextIsSelected()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -722,6 +763,10 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -777,6 +822,10 @@ void PartTest::testClickAnywhereAfterSelectionShouldUnselect()
     // resize window to avoid problem with selection areas
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -819,6 +868,10 @@ void PartTest::testeRectSelectionStartingOnLinks()
     Okular::Settings::self()->setShowOSD(false);
 
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -1444,6 +1497,10 @@ void PartTest::test388288()
     new QAbstractItemModelTester(part.annotationsModel(), &part);
 
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
@@ -1607,6 +1664,10 @@ void PartTest::testCrashTextEditDestroy()
     Okular::Part part(nullptr, {});
     part.openDocument(testFile);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.widget()->findChild<QTextEdit *>()->setText(QStringLiteral("HOLA"));
@@ -1620,6 +1681,10 @@ void PartTest::testAnnotWindow()
     part.widget()->show();
     part.widget()->resize(800, 600);
     new QAbstractItemModelTester(part.annotationsModel(), &part);
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->setViewportPage(0);
@@ -1722,6 +1787,10 @@ void PartTest::testAdditionalActionTriggers()
     part.widget()->resize(800, 600);
 
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>(QStringLiteral("delayResizeEventTimer")).at(0);
@@ -1833,6 +1902,10 @@ void PartTest::testTypewriterAnnotTool()
     part.openUrl(QUrl::fromLocalFile(QStringLiteral(KDESRCDIR "data/file1.pdf")));
 
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
@@ -1869,6 +1942,10 @@ void PartTest::testJumpToPage()
     part.openDocument(testFile);
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     part.m_document->pages();
@@ -1918,6 +1995,10 @@ void PartTest::testForwardBackwardNavigation()
     part.openDocument(testFile);
     part.widget()->resize(800, 600);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     // Go to some page
@@ -2007,6 +2088,10 @@ void PartTest::testOpenPrintPreview()
     Okular::Part part(nullptr, dummyArgs);
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
     TestingUtils::CloseDialogHelper closeDialogHelper(QDialogButtonBox::Close);
     part.slotPrintPreview();
@@ -2079,6 +2164,10 @@ void PartTest::testZoomInFacingPages()
     KSelectAction *zoomSelectAction = part.m_pageView->findChild<KSelectAction *>(QStringLiteral("zoom_to"));
     part.widget()->resize(600, 400);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
     facingAction->trigger();
     while (zoomSelectAction->currentText() != QStringLiteral("12%")) {
@@ -2110,6 +2199,10 @@ void PartTest::testZoomWithCrop()
 
     part.widget()->resize(600, 400);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     // Activate "Trim Margins"
@@ -2174,6 +2267,10 @@ void PartTest::testLinkWithCrop()
 
     part.widget()->resize(600, 400);
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     // wait for pixmap
@@ -2230,6 +2327,10 @@ void PartTest::testFieldFormatting()
     part.widget()->resize(800, 600);
 
     part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
 
     // Field names in test document are:

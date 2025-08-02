@@ -136,6 +136,10 @@ void AnnotationToolBarTest::testAnnotationToolBar()
     QCOMPARE(status, Okular::Success);
     Shell *s = findShell();
     QVERIFY(s);
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(s));
     QFETCH(int, tabIndex);
     s->m_tabWidget->tabBar()->setCurrentIndex(tabIndex);
@@ -262,6 +266,10 @@ void AnnotationToolBarTest::testAnnotationToolBarActionsEnabledState()
     QCOMPARE(status, Okular::Success);
     Shell *s = findShell();
     QVERIFY(s);
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(s));
 
     Okular::Part *part = s->findChild<Okular::Part *>();
@@ -352,6 +360,10 @@ void AnnotationToolBarTest::testAnnotationToolBarConfigActionsEnabledState()
     QCOMPARE(status, Okular::Success);
     Shell *s = findShell();
     QVERIFY(s);
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
     QVERIFY(QTest::qWaitForWindowExposed(s));
 
     Okular::Part *part = s->findChild<Okular::Part *>();

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2013-03-03 22:14+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -123,7 +123,7 @@ msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"

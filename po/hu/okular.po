@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-24 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2025-07-12 21:59+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -335,47 +335,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nincs kezelőalkalmazás %1 MIME-típusú fájlokhoz."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4802
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nem sikerült megnyitni egy ideiglenes fájlt"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4804
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A nyomtatáskonverzió nem sikerült"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process crashed"
 msgstr "A nyomtatási folyamat összeomlott"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nem sikerült elindítani a nyomtatási folyamatot"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nem sikerült nyomtatni a fájlba"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4812
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A nyomtató érvénytelen állapotban voltcén"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4814
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nem található nyomtatandó fájlfájl a ny"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4816
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nem volt nyomtatandó fájl"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4818
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -384,92 +384,92 @@ msgstr ""
 "Nem található megfelelő bináris a nyomtatáshoz. Ellenőrizze hogy a CUPS lpr "
 "bináris elérhető-e"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4820
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Az oldal nyomtatási mérete érvénytelen"
 
-#: core/document.cpp:5491 part/part.cpp:1146
+#: core/document.cpp:5494 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nem sikerült megnyitni ezt a fájlt: „%1”. A fájl nem létezik"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6003
 #, kde-format
 msgid "Title"
 msgstr "Cím"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6006
 #, kde-format
 msgid "Subject"
 msgstr "Tárgy"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6009
 #, kde-format
 msgid "Description"
 msgstr "Leírás"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6012
 #, kde-format
 msgid "Author"
 msgstr "Szerző"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6015
 #, kde-format
 msgid "Creator"
 msgstr "Létrehozó"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6018
 #, kde-format
 msgid "Producer"
 msgstr "Készítő"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6021
 #, kde-format
 msgid "Copyright"
 msgstr "Szerzői jog"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6024
 #, kde-format
 msgid "Pages"
 msgstr "Oldalszám"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6027
 #, kde-format
 msgid "Created"
 msgstr "Létrehozási dátum"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6030
 #, kde-format
 msgid "Modified"
 msgstr "Utolsó módosítás"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6033
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-típus"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6036
 #, kde-format
 msgid "Category"
 msgstr "Kategória"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6039
 #, kde-format
 msgid "Keywords"
 msgstr "Kulcsszavak"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Path"
 msgstr "Fájl útvonalaó"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6045
 #, kde-format
 msgid "File Size"
 msgstr "Fájlméret"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6048
 #, kde-format
 msgid "Page Size"
 msgstr "Oldalméret"

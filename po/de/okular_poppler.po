@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2025-07-18 14:15+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -123,7 +123,7 @@ msgstr ""
 "Widerruf der digitalen Zertifikate mithilfe von Servern von Drittanbietern "
 "überprüfen"
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"

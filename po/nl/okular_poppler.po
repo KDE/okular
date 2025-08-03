@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2025-07-10 12:47+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 "Intrekking controleren van certificaten voor digitale ondertekening met "
 "gebruik van servers van derden"
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"

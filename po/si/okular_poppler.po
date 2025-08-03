@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-10 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2011-08-20 10:23+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -115,7 +115,7 @@ msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"

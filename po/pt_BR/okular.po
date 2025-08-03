@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-24 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2025-07-23 00:54-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -346,47 +346,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nenhum aplicativo foi encontrado para abrir o arquivo do tipo MIME %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4802
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Não foi possível abrir um arquivo temporário"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4804
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A conversão da impressão falhou"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process crashed"
 msgstr "O processo de extração falhou"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Não foi possível iniciar o processo de impressão"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printing to file failed"
 msgstr "A impressão para arquivo falhou"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4812
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A impressora estava num estado inválido"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4814
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Não foi possível encontrar o arquivo a imprimir"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4816
 #, kde-format
 msgid "There was no file to print"
 msgstr "Não havia nenhum arquivo para imprimir"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4818
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -395,92 +395,92 @@ msgstr ""
 "Não foi possível encontrar um binário de impressão adequado. Certifique-se "
 "de que o executável lpr do CUPS está disponível"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4820
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "O tamanho de impressão da página não é válido"
 
-#: core/document.cpp:5491 part/part.cpp:1146
+#: core/document.cpp:5494 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Não foi possível abrir o '%1'. O arquivo não existe"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6003
 #, kde-format
 msgid "Title"
 msgstr "Título"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6006
 #, kde-format
 msgid "Subject"
 msgstr "Assunto"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6009
 #, kde-format
 msgid "Description"
 msgstr "Descrição"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6012
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6015
 #, kde-format
 msgid "Creator"
 msgstr "Criador"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6018
 #, kde-format
 msgid "Producer"
 msgstr "Produtor"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6021
 #, kde-format
 msgid "Copyright"
 msgstr "Direitos autorais"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6024
 #, kde-format
 msgid "Pages"
 msgstr "Páginas"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6027
 #, kde-format
 msgid "Created"
 msgstr "Criado"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6030
 #, kde-format
 msgid "Modified"
 msgstr "Modificado"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6033
 #, kde-format
 msgid "MIME Type"
 msgstr "Tipo MIME"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6036
 #, kde-format
 msgid "Category"
 msgstr "Categoria"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6039
 #, kde-format
 msgid "Keywords"
 msgstr "Palavras-chave"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Path"
 msgstr "Caminho do arquivo"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6045
 #, kde-format
 msgid "File Size"
 msgstr "Tamanho do arquivo"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6048
 #, kde-format
 msgid "Page Size"
 msgstr "Tamanho da página"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-24 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -335,47 +335,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Žana aplikacija definowana za wočinjenje datajow mimetypa %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4802
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Njemóžu temporarnu dataju wočinić"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4804
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konwertěrowanje za ćišć zwrěšćiło"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Ćišćenski proces je znjezbožił"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ćišćenski proces njehodźi so startować"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Njemóžu do dataje ćišćeć"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4812
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Ćišćak njeje w korektnym stawje"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4814
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Njemóžu dataju za ćišć namakać"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4816
 #, kde-format
 msgid "There was no file to print"
 msgstr "Njebě žaneje dataje za ćišć"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4818
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -384,92 +384,92 @@ msgstr ""
 "Njemóžach kmany binary namakać za ćišć. Hladajće, zo steji CUPS lpr k "
 "dispoziciji"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4820
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Wulkosć strony za ćišć njeje prawa"
 
-#: core/document.cpp:5491 part/part.cpp:1146
+#: core/document.cpp:5494 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Njemóžach '%1' wočinić. Dataja njeeksistuje"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6003
 #, kde-format
 msgid "Title"
 msgstr "Titl"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6006
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6009
 #, kde-format
 msgid "Description"
 msgstr "Wopisanje"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6012
 #, kde-format
 msgid "Author"
 msgstr "Awtor"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6015
 #, kde-format
 msgid "Creator"
 msgstr "Originalny awtor"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6018
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6021
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6024
 #, kde-format
 msgid "Pages"
 msgstr "Strony"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6027
 #, kde-format
 msgid "Created"
 msgstr "Wutworjene"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6030
 #, kde-format
 msgid "Modified"
 msgstr "Změnjene"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6033
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-typ"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6036
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6039
 #, kde-format
 msgid "Keywords"
 msgstr "Klučowe słowa"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Path"
 msgstr "Puć k dataji"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6045
 #, kde-format
 msgid "File Size"
 msgstr "Wulkosć dataje"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6048
 #, kde-format
 msgid "Page Size"
 msgstr "Wulkosć strony"

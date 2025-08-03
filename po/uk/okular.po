@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-24 00:41+0000\n"
+"POT-Creation-Date: 2025-08-03 00:40+0000\n"
 "PO-Revision-Date: 2025-07-11 09:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -339,47 +339,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "Не знайдено програми для відкриття файли з типом MIME %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4802
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Не вдалося відкрити тимчасовий файл"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4804
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Помилка перетворення даних для друку"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Процес друку завершив роботу у аварійному режимі"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Не вдалося розпочати процес друку"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Помилка під час друку до файла"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4812
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Принтер перебував у некоректному стані"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4814
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Не вдалося знайти файл для друку"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4816
 #, kde-format
 msgid "There was no file to print"
 msgstr "Не виявлено файла для друку"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4818
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -388,92 +388,92 @@ msgstr ""
 "Не вдалося знайти відповідну програму для друку. Переконайтеся, що у системі "
 "належним чином встановлено програму lpr зі складу комплексу CUPS."
 
-#: core/document.cpp:4817
+#: core/document.cpp:4820
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Друкований розмір сторінки є некоректним"
 
-#: core/document.cpp:5491 part/part.cpp:1146
+#: core/document.cpp:5494 part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Не вдалося відкрити «%1». Вказаного файла не існує."
 
-#: core/document.cpp:6000
+#: core/document.cpp:6003
 #, kde-format
 msgid "Title"
 msgstr "Заголовок"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6006
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6009
 #, kde-format
 msgid "Description"
 msgstr "Опис"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6012
 #, kde-format
 msgid "Author"
 msgstr "Автор"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6015
 #, kde-format
 msgid "Creator"
 msgstr "Створено у"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6018
 #, kde-format
 msgid "Producer"
 msgstr "Виготовлено"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6021
 #, kde-format
 msgid "Copyright"
 msgstr "Авторські права"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6024
 #, kde-format
 msgid "Pages"
 msgstr "Сторінок"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6027
 #, kde-format
 msgid "Created"
 msgstr "Дата створення"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6030
 #, kde-format
 msgid "Modified"
 msgstr "Змінено"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6033
 #, kde-format
 msgid "MIME Type"
 msgstr "Тип MIME"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6036
 #, kde-format
 msgid "Category"
 msgstr "Категорія"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6039
 #, kde-format
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6042
 #, kde-format
 msgid "File Path"
 msgstr "Шлях до файла"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6045
 #, kde-format
 msgid "File Size"
 msgstr "Розмір файла"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6048
 #, kde-format
 msgid "Page Size"
 msgstr "Розмір сторінки"

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-03 00:40+0000\n"
-"PO-Revision-Date: 2025-07-14 20:16+0400\n"
+"PO-Revision-Date: 2025-08-03 15:53+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -245,12 +245,12 @@ msgstr "التنسيق"
 #: generator_pdf.cpp:1032
 #, kde-format
 msgid "Encrypted"
-msgstr "مشفّرة"
+msgstr "معمى"
 
 #: generator_pdf.cpp:1032
 #, kde-format
 msgid "Unencrypted"
-msgstr "غير مشفّرة"
+msgstr "غير معمى"
 
 #: generator_pdf.cpp:1032
 #, kde-format
@@ -362,7 +362,7 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
-"أنت تستخدم مكتبة Poppler تم إنشاؤها بدون دعم NSS. \n"
+"أنت تستخدم مكتبة Poppler مبنية دون دعم NSS. \n"
 "لا تتوفر إضافة التوقيعات الرقمية لهذا السبب"
 
 #: pdfsettingswidget.cpp:197

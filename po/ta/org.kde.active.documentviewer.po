@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2025-01-26 17:37+0530\n"
+"PO-Revision-Date: 2025-08-03 21:07+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -95,7 +95,7 @@ msgstr "ஆக்குலர்"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "திற…"
 
 #: ui/Main.qml:49
 msgid "About"
@@ -197,14 +197,12 @@ msgstr "எந்த ஆவணமும் திறக்கப்படவி�
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "சமீப ஆவணங்கள்"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "ஆவண பதிப்பு"
+msgstr "என் ஆவணங்கள்"
 
 #~ msgid "Open..."
 #~ msgstr "திற..."

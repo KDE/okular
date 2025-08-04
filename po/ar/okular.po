@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 02:38+0000\n"
-"PO-Revision-Date: 2025-07-31 18:26+0400\n"
+"PO-Revision-Date: 2025-08-03 15:19+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -611,7 +611,7 @@ msgstr "ألغي التوقيع بواسطة المستخدم"
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr "تعذر التوقيع. عبارة المرور خاطئة"
+msgstr "تعذر التوقيع. عبارة السر خاطئة"
 
 #: core/signatureutils.cpp:504
 #, kde-kuit-format
@@ -1016,12 +1016,12 @@ msgstr "عدم التنصل"
 #: gui/signatureguiutils.cpp:126
 #, kde-format
 msgid "Encrypt Keys"
-msgstr "مفاتيح التشفير"
+msgstr "مفاتيح التعمية"
 
 #: gui/signatureguiutils.cpp:129
 #, kde-format
 msgid "Decrypt Keys"
-msgstr "مفاتيح فك التشفير"
+msgstr "مفاتيح فك التعمية"
 
 #: gui/signatureguiutils.cpp:132
 #, kde-format
@@ -1041,7 +1041,7 @@ msgstr "وقع CRL"
 #: gui/signatureguiutils.cpp:141
 #, kde-format
 msgid "Encrypt Only"
-msgstr "التشفير فقط"
+msgstr "التعمية فقط"
 
 #: gui/signatureguiutils.cpp:144
 #, kde-format
@@ -4434,7 +4434,7 @@ msgstr "بدل نمط الشاشة السوداء"
 #: part/part.cpp:958
 #, kde-format
 msgid "Erase Drawing"
-msgstr "امسح الرسومات"
+msgstr "امحُ الرسومات"
 
 #: part/part.cpp:963
 #, kde-format
@@ -4759,7 +4759,7 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 "المستند الحالي محمي بكلمة مرور. <br/> من أجل الحفظ ، يجب إعادة تحميل الملف. "
-"ستطالب بكلمة المرور مرة أخرى وستفقد سجل التراجع / الإعادة. <br /> هل تريد "
+"ستطالب بكلمة السر مرة أخرى وستفقد سجل التراجع / الإعادة. <br /> هل تريد "
 "المتابعة؟"
 
 #: part/part.cpp:2714
@@ -5594,7 +5594,7 @@ msgstr "انسَ كل الصور"
 #: part/signaturepartutils.cpp:224
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr "أدخل كلمة المرور (إن وجدت) لفتح الشهادة: %1"
+msgstr "أدخل كلمة السر (إن وجدت) لفتح الشهادة: %1"
 
 #: part/signaturepartutils.cpp:226
 #, kde-format

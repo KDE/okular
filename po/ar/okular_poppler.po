@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-03 00:40+0000\n"
-"PO-Revision-Date: 2025-08-03 15:53+0400\n"
+"PO-Revision-Date: 2025-08-03 23:10+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -36,7 +36,7 @@ msgstr "safa1996alfulaij@gmail.com,zayed.alsaidi@gmail.com"
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr "فعّل معاينة فوق المطبوع:"
+msgstr "مكّن معاينة فوق المطبوع:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27

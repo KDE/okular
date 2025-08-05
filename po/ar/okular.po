@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 02:38+0000\n"
-"PO-Revision-Date: 2025-08-03 15:19+0400\n"
+"PO-Revision-Date: 2025-08-04 19:56+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3091,7 +3091,7 @@ msgstr[5] "كل %vثانية"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, presentation page"
 msgid "Advance automatically:"
-msgstr "التقدم آلي:"
+msgstr "التقدم آليّ:"
 
 #: part/dlgpresentation.cpp:53
 #, kde-format
@@ -3315,7 +3315,7 @@ msgstr "الشّاشة الحاليّة"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
-msgstr "الشّاشة الافتراضيّة"
+msgstr "الشّاشة المبدئية"
 
 #: part/dlgpresentation.cpp:178
 #, kde-format
@@ -5202,7 +5202,7 @@ msgid ""
 msgstr ""
 "هناك طريقتان للخروج من نمط العرض التقديمي ، يمكنك ضغط مفتاح ESC أو نقر زر "
 "خروج الذي يظهر عند وضع الفأرة على الزاوية العلوية اليسارية. بلا شك يمكنك "
-"تدوير النوافذ (Alt+TAB بشكل افتراضي)"
+"تدوير النوافذ (Alt+TAB بشكل مبدئي)"
 
 #: part/presentationwidget.cpp:1718
 #, kde-format

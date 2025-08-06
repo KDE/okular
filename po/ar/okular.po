@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-24 02:38+0000\n"
-"PO-Revision-Date: 2025-08-04 19:56+0400\n"
+"PO-Revision-Date: 2025-08-05 20:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -200,7 +200,7 @@ msgstr "أنهِ العرض"
 #: core/action.cpp:314
 #, kde-format
 msgid "Find..."
-msgstr "بحث..."
+msgstr "اعثر..."
 
 #: core/action.cpp:316
 #, kde-format
@@ -4589,8 +4589,7 @@ msgid ""
 msgstr ""
 "الملف <filename>%1</filename> به تغييرات غير محفوظة ولكنها عدلت بواسطة "
 "برنامج آخر. ستؤدي إعادة تحميله إلى استبدال بالتغييرات غير المحفوظة التغييرات "
-"التي تم إجراؤها في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إعادة تحميل "
-"الملف؟"
+"التي تجري في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إعادة تحميل الملف؟"
 
 #: part/part.cpp:1865 part/part.cpp:1875
 #, kde-format
@@ -4618,7 +4617,7 @@ msgid ""
 msgstr ""
 "الملف <filename>%1</filename> به تغييرات غير محفوظة ولكنها عدلت بواسطة "
 "برنامج آخر. سيؤدي إغلاقه إلى استبدال بالتغييرات غير المحفوظة التغييرات التي "
-"تم إجراؤها في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إغلاق الملف؟"
+"تجري في البرنامج الآخر. <nl/><nl/> هل تريد متابعة إغلاق الملف؟"
 
 #: part/part.cpp:1876
 #, kde-format
@@ -4971,7 +4970,7 @@ msgid ""
 "strong></nobr> for uncompression. The file will not be loaded.</qt>"
 msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فتح الملف <nobr><strong>%1</strong></"
-"nobr> لفك الضغط. لن يتم تحميل الملف.</qt>"
+"nobr> لفك الضغط. لن يُحمل الملف.</qt>"
 
 #: part/part.cpp:3750
 #, kde-format
@@ -4992,7 +4991,7 @@ msgid ""
 "%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فك ضغط الملف <nobr><strong>%1</strong></"
-"nobr>. لن يتم تحميل الملف.</qt>"
+"nobr>. لن يُحمل الملف.</qt>"
 
 #: part/part.cpp:3776
 #, kde-format

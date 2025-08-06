@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-03 00:41+0000\n"
-"PO-Revision-Date: 2025-08-04 21:08+0400\n"
+"PO-Revision-Date: 2025-08-05 21:41+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -190,7 +190,7 @@ msgstr "لا يمكن تضمين كل ملفات بوست سكرِبت في مس
 #: dviRenderer.cpp:329
 #, kde-format
 msgid "All external PostScript files were embedded into your document."
-msgstr "تم تضمين كل ملفات بوست سكرِبت في مستندِك."
+msgstr "ضُمنت كل ملفات بوست سكرِبت في مستندِك."
 
 #: dviRenderer.cpp:419
 #, kde-format
@@ -238,17 +238,17 @@ msgstr "المكدس كان فارغا عندما لاقى أمر POP  "
 #: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr "رمز الـ DVI  أشار إلى خط لم يتم تعريفه"
+msgstr "رمز الـ DVI  أشار إلى خط لم يُعرّف"
 
 #: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
-msgstr "تم مواجهة أمر غير شرعي"
+msgstr "واجه أمر غير شرعي"
 
 #: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
-msgstr "تم مواجهة %1 op-code المجهول."
+msgstr "واجه %1 op-code المجهول."
 
 #: dviRenderer_prescan.cpp:87
 #, kde-format
@@ -268,8 +268,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
-msgstr ""
-"صفحة %1: ملف ال PostScript  <strong>%2</strong>  لم يتم العثور عليه. <br>"
+msgstr "صفحة %1: ملف ال PostScript  <strong>%2</strong>  لم يعثر عليه. <br>"
 
 #: dviRenderer_prescan.cpp:261
 #, kde-format
@@ -326,7 +325,7 @@ msgstr "مولد/تاريخ"
 #: generator_dvi.cpp:377
 #, kde-format
 msgid "Font file not found"
-msgstr "ملف الخط لم يتم العثور عليه"
+msgstr "ملف الخط لم يعثر عليه"
 
 #: pageSize.cpp:298
 #, kde-format
@@ -361,7 +360,7 @@ msgid ""
 "support has therefore been turned off in Okular."
 msgstr ""
 "لا يحوي إصدار جوستسكرِبت المثبَّت على هذا الحاسوب أيًّا من معرّفات عتاد جوستسكرِبت "
-"التي يعرفها أوكلار. لذا تم تعطيل دعم بوست سكرِبت في أوكلار."
+"التي يعرفها أوكلار. لذا عُطل دعم بوست سكرِبت في أوكلار."
 
 #: special.cpp:36
 #, kde-format
@@ -374,8 +373,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
-"خطأ فى ملف ال  DVI  '%1'  صفحة  %2. تم مواجهة أمر اللون الشعبى  عندما كانت "
-"كومة اﻷلوان فارغة."
+"خطأ في ملف ال  DVI  '%1'  صفحة  %2. واجه أمر اللون بوب عندما كانت كومة "
+"اﻷلوان فارغة."
 
 #: special.cpp:318
 #, kde-format
@@ -392,7 +391,7 @@ msgid ""
 "File not found: \n"
 " %1"
 msgstr ""
-"لم يتم العثور على ملف\n"
+"لم يعثر على ملف\n"
 " %1"
 
 #: special.cpp:695

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-03 00:40+0000\n"
-"PO-Revision-Date: 2025-08-03 23:10+0400\n"
+"PO-Revision-Date: 2025-08-05 21:10+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -113,8 +113,7 @@ msgid ""
 "their creation."
 msgstr ""
 "سيسمح تمكين هذا الخيار لأوكلار بالاتصال بخوادم OCSP التابعة لجهات خارجية "
-"للتحقق مما إذا كانت الشهادات المستخدمة للتوقيع الرقمي قد تم إبطالها منذ "
-"إنشائها."
+"للتحقق مما إذا كانت الشهادات المستخدمة للتوقيع الرقمي أبطلت منذ إنشائها."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:152

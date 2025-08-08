@@ -1,0 +1,301 @@
+{
+    "id": "org.kde.okular",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.9",
+    "sdk": "org.kde.Sdk",
+    "command": "okular",
+    "tags": [
+        "nightly"
+    ],
+    "desktop-file-name-suffix": " (Nightly)",
+    "finish-args": [
+        "--device=dri",
+        "--share=ipc",
+        "--socket=cups",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--system-talk-name=org.kde.okular"
+    ],
+    "modules": [
+        {
+            "name": "ghostscript",
+            "config-opts": [
+                "--disable-cups"
+            ],
+            "make-args": [
+                "so"
+            ],
+            "make-install-args": [
+                "soinstall"
+            ],
+            "cleanup": [
+                "/share/ghostscript/*/doc/",
+                "/share/ghostscript/*/examples"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.gz",
+                    "sha256": "121861b6d29b2461dec6575c9f3cab665b810bd408d4ec02c86719fa708b0a49",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1157,
+                        "stable-only": true,
+                        "url-template": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs${major}0$minor$patch/ghostscript-$version.tar.gz"
+                    }
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
+                        "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
+                        "rm -rf libpng/pngread.c"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "libspectre",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://libspectre.freedesktop.org/releases/libspectre-0.2.12.tar.gz",
+                    "sha256": "55a7517cd3572bd2565df0cf450944a04d5273b279ebb369a895391957f0f960",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1724,
+                        "stable-only": true,
+                        "url-template": "http://libspectre.freedesktop.org/releases/libspectre-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "discount",
+            "buildsystem": "simple",
+            "build-commands": [
+                "CFLAGS=-Wno-incompatible-pointer-types ./configure.sh --prefix=/app --enable-all-features --with-fenced-code --shared",
+                "sed -e 's|/sbin/ldconfig|/sbin/ldconfig -n|' -i librarian.sh",
+                "make install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Orc/discount/archive/v2.2.7.tar.gz",
+                    "sha256": "72c1325ddfc40871d6810f1e272cf2d45b361f26357eb38f170fd04d737bb9f2",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 14521,
+                        "stable-only": true,
+                        "url-template": "https://github.com/Orc/discount/archive/v$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "djvulibre",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/djvu/djvulibre-3.5.29.tar.gz",
+                    "sha256": "d3b4b03ae2bdca8516a36ef6eb27b777f0528c9eda26745d9962824a3fdfeccf",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10159,
+                        "stable-only": true,
+                        "url-template": "https://downloads.sourceforge.net/djvu/djvulibre-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "inih",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddefault_library=shared",
+                "-Ddistro_install=true",
+                "-Dwith_INIReader=true"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r61.tar.gz",
+                    "sha256": "7caf26a2202a4ca689df3fe4175dfa74e0faa18fcca07331bba934fd0ecb8f12",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 11600,
+                        "stable-only": true,
+                        "url-template": "https://github.com/benhoyt/inih/archive/refs/tags/r$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "exiv2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.5.tar.gz",
+                    "sha256": "e1671f744e379a87ba0c984617406fdf8c0ad0c594e5122f525b2fb7c28d394d",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 769,
+                        "stable-only": true,
+                        "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libkexiv2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DQT_MAJOR_VERSION=6"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/release-service/25.04.3/src/libkexiv2-25.04.3.tar.xz",
+                    "sha256": "d7b8d791e9db8facf16a95447daa597efaaa6b42d300fa7cbe9d1ff5b9e7b5a8",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 8763,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/release-service/$version/src/libkexiv2-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "boost",
+            "buildsystem": "simple",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2",
+                    "sha256": "46d9d2c06637b219270877c9e16155cbd015b6dc84349af064c088e9b5b12f7b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 6845,
+                        "stable-only": true,
+                        "url-template": "https://archives.boost.io/release/$version/source/boost_${major}_${minor}_$patch.tar.bz2"
+                    }
+                }
+            ],
+            "build-commands": [
+                "./bootstrap.sh --prefix=/app --with-libraries=system",
+                "./b2 -j $FLATPAK_BUILDER_N_JOBS install"
+            ]
+        },
+        {
+            "name": "poppler",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DBUILD_GTK_TESTS=OFF",
+                "-DBUILD_QT5_TESTS=OFF",
+                "-DBUILD_QT6_TESTS=OFF",
+                "-DBUILD_CPP_TESTS=OFF",
+                "-DENABLE_UTILS=OFF",
+                "-DENABLE_CPP=OFF",
+                "-DENABLE_GLIB=OFF",
+                "-DENABLE_QT5=OFF",
+                "-DENABLE_QT6=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-25.02.0.tar.xz",
+                    "sha256": "21234cb2a9647d73c752ce4031e65a79d11a511a835f2798284c2497b8701dee",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 3686,
+                        "stable-only": true,
+                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "phonon",
+            "config-opts": [
+                "-DBUILD_TESTING=OFF",
+                "-DPHONON_BUILD_QT5=OFF",
+                "-DPHONON_BUILD_QT6=ON"
+            ],
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.kde.org/stable/phonon/4.12.0/phonon-4.12.0.tar.xz",
+                    "sha256": "3287ffe0fbcc2d4aa1363f9e15747302d0b080090fe76e5f211d809ecb43f39a",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 229047,
+                        "stable-only": true,
+                        "url-template": "https://download.kde.org/stable/phonon/$version/phonon-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "libzip",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://libzip.org/download/libzip-1.11.4.tar.xz",
+                    "sha256": "8a247f57d1e3e6f6d11413b12a6f28a9d388de110adc0ec608d893180ed7097b",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10649,
+                        "stable-only": true,
+                        "url-template": "https://libzip.org/download/libzip-$version.tar.xz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ebook-tools",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz",
+                    "sha256": "cbc35996e911144fa62925366ad6a6212d6af2588f1e39075954973bbee627ae",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 17771,
+                        "stable-only": true,
+                        "url-template": "https://downloads.sourceforge.net/project/ebook-tools/ebook-tools/$version/ebook-tools-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "okular",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}

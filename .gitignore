@@ -11,3 +11,7 @@ CMakeLists.txt.user*
 .cache
 .idea
 /cmake-build*
+
+# Flatpak
+.flatpak-builder
+build-dir

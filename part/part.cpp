@@ -859,8 +859,7 @@ void Part::setupActions()
     connect(m_selectCurrentPage, &QAction::triggered, m_pageView, &PageView::slotSelectPage);
     m_selectCurrentPage->setEnabled(false);
 
-    m_save = KStandardAction::save(
-        this, [this] { saveFile(); }, ac);
+    m_save = KStandardAction::save(this, [this] { saveFile(); }, ac);
 
     m_save->setEnabled(false);
 

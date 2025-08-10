@@ -79,7 +79,7 @@
 // transition effect to the next frame
 struct PresentationFrame {
     explicit PresentationFrame(const Okular::Page *_page)
-        : page(_page) {};
+        : page(_page) { };
 
     ~PresentationFrame()
     {

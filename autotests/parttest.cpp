@@ -1095,14 +1095,10 @@ void PartTest::testSaveAs_data()
     QTest::addColumn<bool>("nativelySupportsAnnotations");
     QTest::addColumn<bool>("canSwapBackingFile");
 
-    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf"
-                         << "pdf" << true << true;
-    QTest::newRow("pdf.gz") << KDESRCDIR "data/file1.pdf.gz"
-                            << "pdf" << true << true;
-    QTest::newRow("epub") << KDESRCDIR "data/contents.epub"
-                          << "epub" << false << false;
-    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg"
-                         << "jpg" << false << true;
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true;
+    QTest::newRow("pdf.gz") << KDESRCDIR "data/file1.pdf.gz" << "pdf" << true << true;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false;
+    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true;
 }
 
 void PartTest::testSidebarItemAfterSaving()
@@ -1334,16 +1330,11 @@ void PartTest::testSaveAsUndoStackAnnotations_data()
     QTest::addColumn<bool>("canSwapBackingFile");
     QTest::addColumn<bool>("saveToArchive");
 
-    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf"
-                         << "pdf" << true << true << false;
-    QTest::newRow("epub") << KDESRCDIR "data/contents.epub"
-                          << "epub" << false << false << false;
-    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg"
-                         << "jpg" << false << true << false;
-    QTest::newRow("pdfarchive") << KDESRCDIR "data/file1.pdf"
-                                << "okular" << true << true << true;
-    QTest::newRow("jpgarchive") << KDESRCDIR "data/potato.jpg"
-                                << "okular" << false << true << true;
+    QTest::newRow("pdf") << KDESRCDIR "data/file1.pdf" << "pdf" << true << true << false;
+    QTest::newRow("epub") << KDESRCDIR "data/contents.epub" << "epub" << false << false << false;
+    QTest::newRow("jpg") << KDESRCDIR "data/potato.jpg" << "jpg" << false << true << false;
+    QTest::newRow("pdfarchive") << KDESRCDIR "data/file1.pdf" << "okular" << true << true << true;
+    QTest::newRow("jpgarchive") << KDESRCDIR "data/potato.jpg" << "okular" << false << true << true;
 }
 
 void PartTest::testSaveAsUndoStackForms()
@@ -1427,10 +1418,8 @@ void PartTest::testSaveAsUndoStackForms_data()
     QTest::addColumn<QString>("extension");
     QTest::addColumn<bool>("saveToArchive");
 
-    QTest::newRow("pdf") << KDESRCDIR "data/formSamples.pdf"
-                         << "pdf" << false;
-    QTest::newRow("pdfarchive") << KDESRCDIR "data/formSamples.pdf"
-                                << "okular" << true;
+    QTest::newRow("pdf") << KDESRCDIR "data/formSamples.pdf" << "pdf" << false;
+    QTest::newRow("pdfarchive") << KDESRCDIR "data/formSamples.pdf" << "okular" << true;
 }
 
 void PartTest::testOpenUrlArguments()

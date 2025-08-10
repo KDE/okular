@@ -233,7 +233,7 @@ typedef QList<WordWithCharacters> WordsWithCharacters;
 class RegionText
 {
 public:
-    RegionText() {};
+    RegionText() { };
 
     RegionText(const WordsWithCharacters &wordsWithCharacters, const QRect area)
         : m_region_wordWithCharacters(wordsWithCharacters)

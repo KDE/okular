@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-03 00:40+0000\n"
-"PO-Revision-Date: 2025-08-05 20:12+0400\n"
+"PO-Revision-Date: 2025-08-09 21:57+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4514,7 +4514,7 @@ msgstr "يستورد ملفات PS كبي دي اف (قد يأخذ هذا وقت
 #: part/part.cpp:1490
 #, kde-format
 msgid "Please enter the password to read the document:"
-msgstr "يُرجى إدخال كلمة السِر لقراءة المستنَد:"
+msgstr "يُرجى إدخال كلمة السر لقراءة المستنَد:"
 
 #: part/part.cpp:1492
 #, kde-format
@@ -4757,7 +4757,7 @@ msgid ""
 "the file needs to be reloaded. You will be asked for the password again and "
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
-"المستند الحالي محمي بكلمة مرور. <br/> من أجل الحفظ ، يجب إعادة تحميل الملف. "
+"المستند الحالي محمي بكلمة سر. <br/> من أجل الحفظ ، يجب إعادة تحميل الملف. "
 "ستطالب بكلمة السر مرة أخرى وستفقد سجل التراجع / الإعادة. <br /> هل تريد "
 "المتابعة؟"
 
@@ -5598,7 +5598,7 @@ msgstr "أدخل كلمة السر (إن وجدت) لفتح الشهادة: %1"
 #: part/signaturepartutils.cpp:226
 #, kde-format
 msgid "Enter certificate password"
-msgstr "أدخل كلمة مرور الشهادة"
+msgstr "أدخل كلمة سر الشهادة"
 
 #: part/signaturepartutils.cpp:239
 #, kde-format

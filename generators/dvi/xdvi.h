@@ -6,7 +6,7 @@
  *  Written by Eric C. Cooper, CMU
  */
 
-#define ROUNDUP(x, y) (((x) + (y)-1) / (y))
+#define ROUNDUP(x, y) (((x) + (y) - 1) / (y))
 
 extern unsigned long num(FILE *, int);
 extern long snum(FILE *, int);

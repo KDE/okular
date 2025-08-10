@@ -540,7 +540,7 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
                 errorMsg = i18n("The unknown op-code %1 was encountered.", ch);
                 return;
             } /* end switch*/
-        }     /* end else (ch not a SETCHAR or FNTNUM) */
+        } /* end else (ch not a SETCHAR or FNTNUM) */
 
 #ifdef DEBUG_RENDER
         if (currentlyDrawnPage->textBoxList.size() > 0)

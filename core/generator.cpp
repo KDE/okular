@@ -73,8 +73,7 @@ PixmapGenerationThread *GeneratorPrivate::pixmapGenerationThread()
 
     Q_Q(Generator);
     mPixmapGenerationThread = new PixmapGenerationThread(q);
-    QObject::connect(
-        mPixmapGenerationThread, &PixmapGenerationThread::finished, q, [this] { pixmapGenerationFinished(); }, Qt::QueuedConnection);
+    QObject::connect(mPixmapGenerationThread, &PixmapGenerationThread::finished, q, [this] { pixmapGenerationFinished(); }, Qt::QueuedConnection);
 
     return mPixmapGenerationThread;
 }
@@ -87,8 +86,7 @@ TextPageGenerationThread *GeneratorPrivate::textPageGenerationThread()
 
     Q_Q(Generator);
     mTextPageGenerationThread = new TextPageGenerationThread(q);
-    QObject::connect(
-        mTextPageGenerationThread, &TextPageGenerationThread::finished, q, [this] { textpageGenerationFinished(); }, Qt::QueuedConnection);
+    QObject::connect(mTextPageGenerationThread, &TextPageGenerationThread::finished, q, [this] { textpageGenerationFinished(); }, Qt::QueuedConnection);
 
     return mTextPageGenerationThread;
 }

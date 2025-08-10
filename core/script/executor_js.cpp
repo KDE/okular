@@ -68,8 +68,7 @@ void ExecutorJSPrivate::initTypes()
     m_watchdogTimer->setInterval(std::chrono::seconds(2)); // max 2 secs allowed
     m_watchdogTimer->setSingleShot(true);
     m_watchdogTimer->moveToThread(&m_watchdogThread);
-    QObject::connect(
-        m_watchdogTimer, &QTimer::timeout, &m_interpreter, [this]() { m_interpreter.setInterrupted(true); }, Qt::DirectConnection);
+    QObject::connect(m_watchdogTimer, &QTimer::timeout, &m_interpreter, [this]() { m_interpreter.setInterrupted(true); }, Qt::DirectConnection);
 
     m_interpreter.globalObject().setProperty(QStringLiteral("app"), m_interpreter.newQObject(new JSApp(m_doc, m_watchdogTimer)));
     m_interpreter.globalObject().setProperty(QStringLiteral("console"), m_interpreter.newQObject(new JSConsole));

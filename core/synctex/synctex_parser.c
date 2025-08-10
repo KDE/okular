@@ -695,7 +695,7 @@ static synctex_open_s _synctex_open_v2(const char *output, const char *build_dir
             }
             _synctex_free(build_output);
         } /* if ((build_output... */
-    }     /* if (build_directory...) */
+    } /* if (build_directory...) */
     return open;
 }
 void synctex_reader_free(synctex_reader_p reader)
@@ -6271,8 +6271,8 @@ int synctex_node_hbox_depth(synctex_node_p node)
 #endif
 
 #define SYNCTEX_VISIBLE_SIZE(node, s) (s) * node->class->scanner->unit
-#define SYNCTEX_VISIBLE_DISTANCE_h(node, d) ((d)*node->class->scanner->unit + node->class->scanner->x_offset)
-#define SYNCTEX_VISIBLE_DISTANCE_v(node, d) ((d)*node->class->scanner->unit + node->class->scanner->y_offset)
+#define SYNCTEX_VISIBLE_DISTANCE_h(node, d) ((d) * node->class->scanner->unit + node->class->scanner->x_offset)
+#define SYNCTEX_VISIBLE_DISTANCE_v(node, d) ((d) * node->class->scanner->unit + node->class->scanner->y_offset)
 static float __synctex_node_visible_h(synctex_node_p node)
 {
     return SYNCTEX_VISIBLE_DISTANCE_h(node, synctex_node_h(node));

@@ -816,5 +816,5 @@ void dviRenderer::prescan(parseSpecials specialParser)
         default:
             return;
         } /* end switch */
-    }     /* end for */
+    } /* end for */
 }

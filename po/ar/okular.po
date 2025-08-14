@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-11 02:40+0000\n"
-"PO-Revision-Date: 2025-08-09 21:57+0400\n"
+"PO-Revision-Date: 2025-08-13 19:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -40,7 +40,7 @@ msgstr "أوكلار"
 #: aboutdata.h:21
 #, kde-format
 msgid "Okular, a universal document viewer"
-msgstr "أوكلار ، عارض عالمي للمستندات"
+msgstr "أوكلار، عارض عالمي للمستندات"
 
 #: aboutdata.h:23
 #, kde-format
@@ -75,7 +75,7 @@ msgstr "توبياس كونيغ"
 #: aboutdata.h:32
 #, kde-format
 msgid "Lots of framework work, FictionBook backend and former ODT backend"
-msgstr "الكثير من هياكل العمل ، نهايات خلفية ل ODT السابقة و FictionBook"
+msgstr "الكثير من هياكل العمل، نهايات خلفية ل ODT السابقة و FictionBook"
 
 #: aboutdata.h:33
 #, kde-format
@@ -245,7 +245,7 @@ msgstr "استأنِف الفِلم"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr "هذه الإصدارة من أوكلار مبنية دون دعم الصوت"
+msgstr "هذه الإصدارة من أوكلار مبنية دون توفير الصوت"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -324,7 +324,7 @@ msgstr "أزِل الشروح"
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
-msgstr "المستند يحاول تشغيل تطبيق خارجي ؛ و لأمانك أوكلار لا يسمح بذلك."
+msgstr "المستند يحاول تشغيل تطبيق خارجي؛ و لأمانك أوكلار لا يسمح بذلك."
 
 #: core/document.cpp:4226
 #, kde-format
@@ -1066,7 +1066,7 @@ msgid ""
 "modified;\n"
 "however there have been subsequent changes to the document."
 msgstr ""
-"لم تعدل مراجعة الوثيقة التي يغطيها هذا التوقيع ؛ \n"
+"لم تعدل مراجعة الوثيقة التي يغطيها هذا التوقيع؛ \n"
 "ومع ذلك كانت هناك تغييرات لاحقة على المستند."
 
 #: gui/signatureguiutils.cpp:172
@@ -1376,7 +1376,7 @@ msgid ""
 "current annotation)"
 msgstr ""
 "قيد نسبة الشكل إلى 1:1 أو زاوية الخط بـ 15 درجة من الخطوات (الشرح حالي لا "
-"يدعمه)"
+"يتيحه)"
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
@@ -3987,8 +3987,8 @@ msgid ""
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
 "لا توجد شهادات توقيع متوفرة.<br/>شغّل مدير الشهادات لاستيراد الشهادات أو "
-"إدارتها<br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول <a href=\"%1\"> "
-"إضافة التوقيعات الرقمية </a> في الدليل."
+"إدارتها<br/> لمزيد من المعلومات، يرجى مراجعة القسم حول <a href=\"%1\"> إضافة "
+"التوقيعات الرقمية </a> في الدليل."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
 #, kde-format
@@ -4002,7 +4002,7 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
-"لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات ، يرجى مراجعة القسم حول "
+"لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات، يرجى مراجعة القسم حول "
 "<a href=\"%1\"> إضافة التوقيعات الرقمية </a> في الدليل."
 
 #: part/pageview.cpp:5216
@@ -4050,8 +4050,8 @@ msgid ""
 "interface> and draw a bigger rectangle."
 msgstr ""
 "قد يكون توقيع بهذا الحجم صغيرًا جدًا بحيث لا يمكن قراءته. إذا كنت ترغب في "
-"إنشاء توقيع يحتمل أن يكون أكثر قابلية للقراءة ، فاضغط على <interface> ابدأ "
-"من جديد </interface> وارسم مستطيلاً أكبر."
+"إنشاء توقيع يحتمل أن يكون أكثر قابلية للقراءة، فاضغط على <interface> ابدأ من "
+"جديد </interface> وارسم مستطيلاً أكبر."
 
 #: part/pageviewannotator.cpp:448
 #, kde-format
@@ -4493,7 +4493,7 @@ msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr ""
-"البرنامج \"ps2pdf\" غير موجود ، لذا لا يمكن لأوكلار استيراد ملفات PS  أو "
+"البرنامج \"ps2pdf\" غير موجود، لذا لا يمكن لأوكلار استيراد ملفات PS  أو "
 "استخدامها."
 
 #: part/part.cpp:1336
@@ -4519,7 +4519,7 @@ msgstr "يُرجى إدخال كلمة السر لقراءة المستنَد:"
 #: part/part.cpp:1491
 #, kde-format
 msgid "Incorrect password. Try again:"
-msgstr "كلمة سر خاطئة ، الرجاء المحاولة مرة أخرى:"
+msgstr "كلمة سر خاطئة، الرجاء المحاولة مرة أخرى:"
 
 #: part/part.cpp:1502
 #, kde-format
@@ -4537,7 +4537,7 @@ msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
-"هذا المستند فيه استمارات. انقر على الزر للتعامل معها ، أو استعمل عرض -> اعرض "
+"هذا المستند فيه استمارات. انقر على الزر للتعامل معها، أو استعمل عرض -> اعرض "
 "الاستمارات."
 
 #: part/part.cpp:1648
@@ -4757,7 +4757,7 @@ msgid ""
 "the file needs to be reloaded. You will be asked for the password again and "
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
-"المستند الحالي محمي بكلمة سر. <br/> من أجل الحفظ ، يجب إعادة تحميل الملف. "
+"المستند الحالي محمي بكلمة سر. <br/> من أجل الحفظ، يجب إعادة تحميل الملف. "
 "ستطالب بكلمة السر مرة أخرى وستفقد سجل التراجع / الإعادة. <br /> هل تريد "
 "المتابعة؟"
 
@@ -4782,7 +4782,7 @@ msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
-"بعد الحفظ ، يتطلب تنسيق المستند الحالي إعادة تحميل الملف.ستفقد سجل التراجع / "
+"بعد الحفظ، يتطلب تنسيق المستند الحالي إعادة تحميل الملف.ستفقد سجل التراجع / "
 "الإعادة الخاص بك. <br /> هل تريد المتابعة؟"
 
 #: part/part.cpp:2753 part/part.cpp:2822 part/part.cpp:2843 part/part.cpp:3499
@@ -4807,7 +4807,7 @@ msgid ""
 "saving the following elements. Please use the <i>Okular document archive</i> "
 "format to preserve them."
 msgstr ""
-"أنت على وشك حفظ التغييرات ، لكن تنسيق الملف الحالي لا يدعم حفظ العناصر "
+"أنت على وشك حفظ التغييرات، لكن تنسيق الملف الحالي لا يتيح حفظ العناصر "
 "التالية. الرجاء استخدام تنسيق <i> أرشيف مستندات أوكلار </i> للحفاظ عليها."
 
 #: part/part.cpp:2778 part/part.cpp:2800
@@ -4828,9 +4828,9 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save the document and "
 "discard these elements."
 msgstr ""
-"أنت على وشك حفظ التغييرات ، لكن تنسلملف الحالي لا يدعم حفظ العناصر التالية. "
-"الرجاء استخدام تنسيق <i> أرشيف مستندات أوكلار </i> للحفاظ عليها. انقر "
-"<i>تابع</i> لتحفظ المستند وتتجاهل هذه العناصر."
+"أنت على وشك حفظ التغييرات، لكن تنسيق الملف الحالي لا يتيح حفظ العناصر "
+"التالية. الرجاء استخدام تنسيق <i> أرشيف مستندات أوكلار </i> للحفاظ عليها. "
+"انقر <i>تابع</i> لتحفظ المستند وتتجاهل هذه العناصر."
 
 #: part/part.cpp:2794
 #, kde-format
@@ -4840,9 +4840,9 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save, but you will lose "
 "these elements as well as the undo/redo history."
 msgstr ""
-"أنت على وشك حفظ التغييرات ، لكن تنسيق الملف الحالي لا يدعم حفظ العناصر "
+"أنت على وشك حفظ التغييرات، لكن تنسيق الملف الحالي لا يتيح حفظ العناصر "
 "التالية. الرجاء استخدام تنسيق <i> أرشيف مستندات أوكلار </i> للحفاظ عليها. "
-"انقر <i>تابع</i> لتحفظ المستند ولكن ستنفقد هذه العناصر بالإضافة إلى سجل "
+"انقر <i>تابع</i> لتحفظ المستند ولكن ستقد هذه العناصر بالإضافة إلى سجل "
 "الإعادة/التراجع."
 
 #: part/part.cpp:2796
@@ -5199,7 +5199,7 @@ msgid ""
 "key or click with the quit button that appears when placing the mouse in the "
 "top-right corner. Of course you can cycle windows (Alt+TAB by default)"
 msgstr ""
-"هناك طريقتان للخروج من نمط العرض التقديمي ، يمكنك ضغط مفتاح ESC أو نقر زر "
+"هناك طريقتان للخروج من نمط العرض التقديمي، يمكنك ضغط مفتاح ESC أو نقر زر "
 "خروج الذي يظهر عند وضع الفأرة على الزاوية العلوية اليسارية. بلا شك يمكنك "
 "تدوير النوافذ (Alt+TAB بشكل مبدئي)"
 
@@ -5815,9 +5815,9 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
-"لا يمكنك تعيين أمر المحرر نسخة عاملة من أوكلار.يرجى تعطيل الألسنة وحاول مرة "
-"أخرى. الرجاء ملاحظة أن ذاك المتفرد لا  يدعم أيضًا عند تعيين أمر المحرر في سطر "
-"الأوامر. \n"
+"لا يمكنك تعيين أمر المحرر لنسخة عاملة من أوكلار. يرجى تعطيل الألسنة وحاول "
+"مرة أخرى.  يرجى ملاحظة أن النسخة الفريدة غير متاحة أيضًا عند تعيين أمر المحرر "
+"في سطر الأوامر.\n"
 
 #: shell/okular_main.cpp:186
 #, kde-format

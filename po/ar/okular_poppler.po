@@ -319,8 +319,7 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
-"عثر على بعض الأخطاء في المستند ، قد لا تتمكن اوكلار من إظهار المحتوى بشكل "
-"صحيح"
+"عثر على بعض الأخطاء في المستند، قد لا تتمكن اوكلار من إظهار المحتوى بشكل صحيح"
 
 #: pdfsettingswidget.cpp:119
 #, kde-format

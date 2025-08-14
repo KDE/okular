@@ -43,7 +43,7 @@ msgid ""
 "Determines whether Ghostscript should be allowed to use platform fonts, if "
 "false only usage of fonts embedded in the document will be allowed."
 msgstr ""
-"تحدد إذا ما كان يستطيع Ghostscript أن يستخدم خطوط المنصة ، إذا كان لا ؛ فإنه "
+"تحدد إذا ما كان يستطيع Ghostscript أن يستخدم خطوط المنصة، إذا كان لا؛ فإنه "
 "سيستعمل الخطوط المضمنة في المستند."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)

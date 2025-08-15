@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-11 00:41+0000\n"
-"PO-Revision-Date: 2025-08-13 19:48+0400\n"
+"PO-Revision-Date: 2025-08-14 11:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2837,7 +2837,7 @@ msgstr "افتح الملفات الجديدة في ألسِنة"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr "بدّل إلى اللسان الموجود إذا كان الملف مفتوح بالفعل"
+msgstr "بدّل إلى اللسان الموجود إذا كان الملف مفتوح فعلًا"
 
 #: part/dlggeneral.cpp:139
 #, kde-format
@@ -4453,8 +4453,7 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
-"لقد قمت للتو بتعديل المستند المفتوح، لكن لا يمكن حفظ هذا النوع من "
-"المستندات.\n"
+"لقد عدلت للتو المستند المفتوح، لكن لا يمكن حفظ هذا النوع من المستندات.\n"
 "ستفقد أي تعديل بمجرد إغلاق أوكلار."
 
 #: part/part.cpp:1123
@@ -4982,7 +4981,7 @@ msgid ""
 msgstr ""
 "<qt>يحدث هذا الخطأ إذا لم يكن لديك الصلاحيّات الكافية لقراءة الملف. يمكنك فحص "
 "الملكية والصلاحيات إذا ضغطت بالزر الأيمن على الملف في مدير الملفات دولفين ثم "
-"قمت باختيار لسان `التصاريح`</qt>"
+"اختر لسان `الأذونات`</qt>"
 
 #: part/part.cpp:3771
 #, kde-format
@@ -5756,7 +5755,7 @@ msgstr "أداة الرسم المبدئية #%1"
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr "هناك بالفعل أداة بهذا الاسم. سيستخدم المبدئي"
+msgstr "هناك فعلًا أداة بهذا الاسم. سيستخدم المبدئي"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
@@ -5859,7 +5858,7 @@ msgstr "الشريط الجانبي"
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
-msgstr "هناك جلسة أوكلار فريدة مفتوحة بالفعل. لن تكون هذه الجلسة جلسة فريدة."
+msgstr "هناك جلسة أوكلار فريدة مفتوحة فعلًا. لن تكون هذه الجلسة جلسة فريدة."
 
 #: shell/shell.cpp:318
 #, kde-format

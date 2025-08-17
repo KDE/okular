@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-11 02:40+0000\n"
-"PO-Revision-Date: 2025-01-06 21:45+0200\n"
+"PO-Revision-Date: 2025-08-16 15:05+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -312,7 +312,7 @@ msgstr "Nepavyksta rasti įskiepio, kuris galėtų apdoroti perduodamą dokument
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Šiam dokumentų tipui pasirašymas neįgyvendintas"
 
 #: core/document.cpp:3620
 #, kde-format
@@ -598,44 +598,39 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Vidinė pasirašymo klaida. Prašome apie ją pranešti kartu nurodant žingsnius, "
+"kaip ją galima būtų pakartoti. Klaidos kodas %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Nepavyko įkelti failo <filename>%1</filename>"
+msgstr "Nepavyko pasirašyti dokumento: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Naudotojas atsisakė pasirašymo"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Nepavyko pasirašyti. Neteisinga slaptafrazė"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid ""
-#| "Could not overwrite <filename>%1</filename> because that file is read-"
-#| "only. Try saving to another location or changing that file's permissions."
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Nepavyko perrašyti <filename>%1</filename>, nes tas failas yra skirtas tik "
-"skaitymui. Pabandykite įrašyti failą į kitą vietą arba pakeisti jo leidimus."
+"Nepavyko rašyti pasirašyto dokumento į <filename>%1</filename>, "
+"įsitikinkite, kad pasirinkote aplanką, į kurį turite leidimą rašyti"
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
-#| msgid "Unknown File"
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Nežinomas failas"
+msgstr "Nežinoma pasirašymo klaida"
 
 #: core/sourcereference.cpp:101
 #, kde-format
@@ -1092,11 +1087,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Nepavyko užbaigti dokumento vientisumo patikrinimo."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Šiame dokumente yra nepasirašytų parašo laukų."
+msgstr "Šiame dokumente yra parašui rezervuotų vietų."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1121,11 +1115,10 @@ msgstr ""
 "tinkamai patikrinti."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Parašo galiojimas:"
+msgstr "Parašui rezervuota vieta %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1153,50 +1146,45 @@ msgid "Location: %1"
 msgstr "Vieta: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "Parašai"
+msgstr "PGP parašai"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Nežinomas"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Parašo galiojimas:"
+msgstr "Parašui rezervuota vieta"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Parašo galiojimas:"
+msgstr "Parašo tipas: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1833,9 +1821,7 @@ msgid "&Color:"
 msgstr "&Spalva:"
 
 #: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
-#| msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
-#| msgid "%v%"
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
 msgstr "%v%"
@@ -2895,14 +2881,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Naudoti informaciją apie failą, kad būtų nustatyta, ar atverti pagal "
+"numatymą nuoseklioje veiksenoje"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
-#| msgctxt "@option:check Config dialog, general page"
-#| msgid "Open in continuous mode by default"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Pagal numatymą, atverti nuoseklioje veiksenoje"
+msgstr ""
+"Failus, kuriuose nėra informacijos apie failą, pagal numatymą atverti "
+"nuoseklioje veiksenoje"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -2921,7 +2909,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Paskiausiai naudotų elementų istorijoje:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3109,17 +3097,14 @@ msgstr ""
 "priklausomai nuo to, kurios yra daugiau.)"
 
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
-#| msgctxt "Advance every %1 seconds"
-#| msgid " second"
-#| msgid_plural " seconds"
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] "  sekundę"
-msgstr[1] "  sekundes"
-msgstr[2] "  sekundžių"
-msgstr[3] "  sekundę"
+msgstr[0] "kas %v sekundę"
+msgstr[1] "kas %v sekundes"
+msgstr[2] "kas %v sekundžių"
+msgstr[3] "kas %v sekundę"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3427,7 +3412,7 @@ msgstr "Rašiklio &storis:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v piks."
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3573,11 +3558,10 @@ msgid "All Files (*)"
 msgstr "Visi failai (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Nepasirašyto parašo laukas (Spustelėkite, norėdami pasirašyti)"
+msgstr "Parašui rezervuota vieta (Spustelėkite norėdami pasirašyti)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
@@ -4001,39 +3985,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Visi jūsų pasirašymo liudijimai yra negaliojantys. Tuo atveju, jei "
+"pasirašymas anksčiau veikdavo, patikrinkite jų galiojimo datas."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Liudijimai"
+msgstr "Nėra galiojančių liudijimų"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Rodyti liudijimų tvarkytuvėje"
+msgstr "Atverti liudijimų tvarkytuvę"
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Nėra prieinamų pasirašymo liudijimų.<br/>Išsamesnei informacijai, programos "
-"vadove žiūrėkite sekciją apie <a href=\"%1\">Skaitmeninių parašų pridėjimą</"
-"a>."
+"Nėra prieinamų pasirašymo liudijimų.<br/>Paleiskite liudijimų tvarkytuvę, "
+"kad importuotumėte ar tvarkytumėte liudijimus<br/>Išsamesnei informacijai "
+"programos vadove žiūrėkite dalį apie <a href=\"%1\">Skaitmeninių parašų "
+"pridėjimą</a>."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Liudijimai"
+msgstr "Nerasta jokių liudijimų"
 
 #: part/pageview.cpp:5191
 #, kde-format
@@ -5539,24 +5519,22 @@ msgstr "Pasirinkite liudijimą, kuriuo pasirašyti:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Leisti"
+msgstr "Visi"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Liudijimai"
+msgstr "Tik kvalifikuotų elektroninių parašų liudijimai"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Tik PGP raktai"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:71
@@ -5751,12 +5729,12 @@ msgstr "KDE liudijimų tvarkytuvė (kleopatra) nerasta"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalifikuotas"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1015
 #, kde-format

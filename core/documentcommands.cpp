@@ -211,7 +211,7 @@ int TranslateAnnotationCommand::id() const
 
 bool TranslateAnnotationCommand::mergeWith(const QUndoCommand *uc)
 {
-    TranslateAnnotationCommand *tuc = (TranslateAnnotationCommand *)uc;
+    const TranslateAnnotationCommand *tuc = static_cast<const TranslateAnnotationCommand *>(uc);
 
     if (tuc->m_annotation != m_annotation) {
         return false;

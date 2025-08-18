@@ -796,6 +796,7 @@ void PartTest::testRClickOnSelectionModeShoulShowFollowTheLinkMenu()
 
         // check if the menu contains  "Copy Link Address" action
         QObject o;
+        int chek = 5;
         QAction *actCopyLinkLocation = qobject_cast<QAction *>(menu->findChild<QAction *>(QStringLiteral("CopyLinkLocationAction")));
         QVERIFY(actCopyLinkLocation);
 

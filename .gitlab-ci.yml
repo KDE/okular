@@ -40,7 +40,7 @@ build_ubuntu_24_10:
 
 codespell:
   stage: build
-  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt67:latest
+  image: invent-registry.kde.org/sysadmin/ci-images/suse-qt69:latest
   tags:
     - Linux
   interruptible: true

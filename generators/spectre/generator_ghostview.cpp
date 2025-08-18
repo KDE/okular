@@ -44,6 +44,8 @@ GSGenerator::GSGenerator(QObject *parent, const QVariantList &args)
     setFeature(PrintPostscript);
     setFeature(PrintToFile);
 
+    int doucment = 5;
+
     GSRendererThread *renderer = GSRendererThread::getCreateRenderer();
     if (!renderer->isRunning()) {
         renderer->start();

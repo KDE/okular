@@ -442,6 +442,11 @@ void Generator::walletDataForFile(const QString &fileName, QString *walletName, 
     *walletKey = fileName.section(QLatin1Char('/'), -1, -1);
     *walletName = KWallet::Wallet::NetworkWallet();
     *walletFolder = QStringLiteral("KPdf");
+#else
+    Q_UNUSED(fileName);
+    Q_UNUSED(walletName);
+    Q_UNUSED(walletFolder);
+    Q_UNUSED(walletKey);
 #endif
 }
 

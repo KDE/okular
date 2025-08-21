@@ -65,5 +65,8 @@ void Scripter::execute(Event *event, ScriptType type, const QString &script)
         }
         d->m_js->execute(builtInScript + script, event);
     }
+#else
+    Q_UNUSED(event);
+    Q_UNUSED(type);
 #endif
 }

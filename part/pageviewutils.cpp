@@ -199,9 +199,6 @@ PageViewMessage::PageViewMessage(QWidget *parent)
 {
     setObjectName(QStringLiteral("pageViewMessage"));
     setFocusPolicy(Qt::NoFocus);
-    QPalette pal = palette();
-    pal.setColor(QPalette::Active, QPalette::Window, QApplication::palette().color(QPalette::Active, QPalette::Window));
-    setPalette(pal);
     // if the layout is LtR, we can safely place it in the right position
     if (layoutDirection() == Qt::LeftToRight) {
         move(10, 10);
@@ -371,12 +368,7 @@ void PageViewMessage::paintEvent(QPaintEvent * /* e */)
     const int yStartPoint = textYOffset;
     const int textDrawingFlags = Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap;
 
-    // draw shadow and text
-    painter.setPen(palette().color(QPalette::Window).darker(115));
-    painter.drawText(xStartPoint + shadowOffset, yStartPoint + shadowOffset, textRect.width(), textRect.height(), textDrawingFlags, m_message);
-    if (!m_details.isEmpty()) {
-        painter.drawText(xStartPoint + shadowOffset, yStartPoint + textRect.height() + m_lineSpacing + shadowOffset, textRect.width(), detailsRect.height(), textDrawingFlags, m_details);
-    }
+    // draw text
     painter.setPen(palette().color(QPalette::WindowText));
     painter.drawText(xStartPoint, yStartPoint, textRect.width(), textRect.height(), textDrawingFlags, m_message);
     if (!m_details.isEmpty()) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-11 00:41+0000\n"
+"POT-Creation-Date: 2025-08-22 00:40+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -745,21 +745,21 @@ msgid "Value"
 msgstr ""
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
+#: part/pageviewannotator.cpp:276 part/pageviewannotator.cpp:1477
 #, fuzzy, kde-format
 #| msgid "&Open Pop-up Note"
 msgid "Pop-up Note"
 msgstr "&Iepenje Pop-up Note"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
+#: part/pageviewannotator.cpp:263 part/pageviewannotator.cpp:1493
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgid "Typewriter"
 msgstr "Oerskriuwe"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
+#: part/pageviewannotator.cpp:258 part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Inline Note"
 msgstr ""
@@ -770,7 +770,7 @@ msgid "Straight Line with Comment"
 msgstr "Eigenski&ppen"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1446
+#: part/pageviewannotator.cpp:1487
 #, fuzzy, kde-format
 #| msgid "Straight Yellow Line"
 msgid "Straight Line"
@@ -782,7 +782,7 @@ msgid "Polygon with Comment"
 msgstr "Eigenski&ppen"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1438
+#: part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Polygon"
 msgstr ""
@@ -815,7 +815,7 @@ msgid "Squiggle with Comment"
 msgstr "Tekst selektearje."
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1442
+#: part/pageviewannotator.cpp:1483
 #, kde-format
 msgid "Squiggle"
 msgstr ""
@@ -827,7 +827,7 @@ msgid "Underline with Comment"
 msgstr "&Understreke"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1450
+#: part/pageviewannotator.cpp:1491
 #, kde-format
 msgid "Underline"
 msgstr "&Understreke"
@@ -851,7 +851,7 @@ msgid "Stamp with Comment"
 msgstr "Tekst selektearje."
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1444
+#: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Stamp"
 msgstr "Postsegel"
@@ -862,7 +862,7 @@ msgid "Freehand Line with Comment"
 msgstr "Eigenski&ppen"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1432
+#: part/pageviewannotator.cpp:1473
 #, kde-format
 msgid "Freehand Line"
 msgstr ""
@@ -2187,17 +2187,17 @@ msgstr "Opslaan nei triem..."
 msgid "Type:"
 msgstr "Type:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Strike out"
 msgstr ""
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Rectangle"
 msgstr "Rjochthoeke"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1469
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellips"
@@ -4242,17 +4242,17 @@ msgstr ""
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Tekenje in rjochthoeke om de tekst/ôfbylding om te kopiearjen."
 
-#: part/pageviewannotator.cpp:220
+#: part/pageviewannotator.cpp:261
 #, kde-format
 msgid "New Text Note"
 msgstr ""
 
-#: part/pageviewannotator.cpp:220
+#: part/pageviewannotator.cpp:261
 #, kde-format
 msgid "Text of the new note:"
 msgstr ""
 
-#: part/pageviewannotator.cpp:365
+#: part/pageviewannotator.cpp:406
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4260,7 +4260,7 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: part/pageviewannotator.cpp:446
+#: part/pageviewannotator.cpp:487
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4269,127 +4269,127 @@ msgid ""
 "interface> and draw a bigger rectangle."
 msgstr ""
 
-#: part/pageviewannotator.cpp:448
+#: part/pageviewannotator.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr ""
 
-#: part/pageviewannotator.cpp:449
+#: part/pageviewannotator.cpp:490
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1286
+#: part/pageviewannotator.cpp:1327
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author name"
 msgstr "Skriuwer"
 
-#: part/pageviewannotator.cpp:1286
+#: part/pageviewannotator.cpp:1327
 #, fuzzy, kde-format
 #| msgid "Annotation"
 msgid "Author name for the annotation:"
 msgstr "Presintaasje"
 
-#: part/pageviewannotator.cpp:1347
+#: part/pageviewannotator.cpp:1388
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1349
+#: part/pageviewannotator.cpp:1390
 #, fuzzy, kde-format
 #| msgid "Highlight"
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Opljochtsje litte"
 
-#: part/pageviewannotator.cpp:1351
+#: part/pageviewannotator.cpp:1392
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1353
+#: part/pageviewannotator.cpp:1394
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1355
+#: part/pageviewannotator.cpp:1396
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1357
+#: part/pageviewannotator.cpp:1398
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1359
+#: part/pageviewannotator.cpp:1400
 #, fuzzy, kde-format
 #| msgid "Rectangle"
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Rjochthoeke"
 
-#: part/pageviewannotator.cpp:1361
+#: part/pageviewannotator.cpp:1402
 #, fuzzy, kde-format
 #| msgid "Select text."
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Tekst selektearje."
 
-#: part/pageviewannotator.cpp:1363
+#: part/pageviewannotator.cpp:1404
 #, fuzzy, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Postsegelsymboal"
 
-#: part/pageviewannotator.cpp:1365
+#: part/pageviewannotator.cpp:1406
 #, fuzzy, kde-format
 #| msgid "Straight Yellow Line"
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Rjochte giele streek"
 
-#: part/pageviewannotator.cpp:1367
+#: part/pageviewannotator.cpp:1408
 #, fuzzy, kde-format
 #| msgid "Select text."
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Tekst selektearje."
 
-#: part/pageviewannotator.cpp:1369
+#: part/pageviewannotator.cpp:1410
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "&Understreke"
 
-#: part/pageviewannotator.cpp:1371
+#: part/pageviewannotator.cpp:1412
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1430
+#: part/pageviewannotator.cpp:1471
 #, fuzzy, kde-format
 #| msgid "Highlight"
 msgid "Highlighter"
 msgstr "Opljochtsje litte"
 
-#: part/pageviewannotator.cpp:1727
+#: part/pageviewannotator.cpp:1768
 #, fuzzy, kde-format
 #| msgid "Annotation"
 msgid "Add favorite annotation"
 msgstr "Presintaasje"
 
-#: part/pageviewannotator.cpp:1727
+#: part/pageviewannotator.cpp:1768
 #, fuzzy, kde-format
 #| msgid "Annotation"
 msgid "Custom annotation name:"

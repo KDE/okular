@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-11 00:41+0000\n"
+"POT-Creation-Date: 2025-08-22 00:40+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -715,19 +715,19 @@ msgid "Value"
 msgstr "Dəyər"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:235 part/pageviewannotator.cpp:1436
+#: part/pageviewannotator.cpp:276 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Açılabilən Qeyd"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:222 part/pageviewannotator.cpp:1452
+#: part/pageviewannotator.cpp:263 part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Typewriter"
 msgstr "Çap maşını"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:217 part/pageviewannotator.cpp:1434
+#: part/pageviewannotator.cpp:258 part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Inline Note"
 msgstr "Daxili Qeyd"
@@ -738,7 +738,7 @@ msgid "Straight Line with Comment"
 msgstr "Şərhlərdən ibarət birbaşa xətt"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1446
+#: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Straight Line"
 msgstr "Birbaşa xətt"
@@ -749,7 +749,7 @@ msgid "Polygon with Comment"
 msgstr "Şərhlərdən ibarət çoxbucaqlı"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1438
+#: part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Polygon"
 msgstr "Çoxbucaqlı"
@@ -780,7 +780,7 @@ msgid "Squiggle with Comment"
 msgstr "Dalğavari xətlə altı cizilan şərhlər"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1442
+#: part/pageviewannotator.cpp:1483
 #, kde-format
 msgid "Squiggle"
 msgstr "Dalğavari xətt"
@@ -791,7 +791,7 @@ msgid "Underline with Comment"
 msgstr "Altı cızılan sərhlər"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1450
+#: part/pageviewannotator.cpp:1491
 #, kde-format
 msgid "Underline"
 msgstr "Alt cizgi"
@@ -812,7 +812,7 @@ msgid "Stamp with Comment"
 msgstr "Şərhlərdən ibarət möhür"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1444
+#: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Stamp"
 msgstr "Möhür"
@@ -823,7 +823,7 @@ msgid "Freehand Line with Comment"
 msgstr "Şərhlərdən ibarət sərbəst xətt"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1432
+#: part/pageviewannotator.cpp:1473
 #, kde-format
 msgid "Freehand Line"
 msgstr "Sərbəst xətt"
@@ -2099,17 +2099,17 @@ msgstr "Dolğu:"
 msgid "Type:"
 msgstr "Növü:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1448
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Strike out"
 msgstr "Üzərində cizgi"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1440
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Rectangle"
 msgstr "Düzbucaqlı"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1428
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1469
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellips"
@@ -4061,17 +4061,17 @@ msgstr "Düzbucaqlı çəkərək imzalama sahəsi əlavə edin"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"
 
-#: part/pageviewannotator.cpp:220
+#: part/pageviewannotator.cpp:261
 #, kde-format
 msgid "New Text Note"
 msgstr "Yeni mətn qeydi"
 
-#: part/pageviewannotator.cpp:220
+#: part/pageviewannotator.cpp:261
 #, kde-format
 msgid "Text of the new note:"
 msgstr "Yeni qeydin mətni:"
 
-#: part/pageviewannotator.cpp:365
+#: part/pageviewannotator.cpp:406
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4079,7 +4079,7 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: part/pageviewannotator.cpp:446
+#: part/pageviewannotator.cpp:487
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4091,117 +4091,117 @@ msgstr ""
 "oxunaqlı imza yaratmaq istəyirsinizsə <interface>Yenidən başlamaq</"
 "interface> vurun və daha böyük ölçülü düzbucaqlı çəkin."
 
-#: part/pageviewannotator.cpp:448
+#: part/pageviewannotator.cpp:489
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Əvvəldən başlayın"
 
-#: part/pageviewannotator.cpp:449
+#: part/pageviewannotator.cpp:490
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "İmzalayın"
 
-#: part/pageviewannotator.cpp:1286
+#: part/pageviewannotator.cpp:1327
 #, kde-format
 msgid "Author name"
 msgstr "Müəllifin adı"
 
-#: part/pageviewannotator.cpp:1286
+#: part/pageviewannotator.cpp:1327
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Əlavə şərh üçün müəllifin adı:"
 
-#: part/pageviewannotator.cpp:1347
+#: part/pageviewannotator.cpp:1388
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Ellips çəkin (sahəni siçanla seçin)"
 
-#: part/pageviewannotator.cpp:1349
+#: part/pageviewannotator.cpp:1390
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Mətni vurğulamaq"
 
-#: part/pageviewannotator.cpp:1351
+#: part/pageviewannotator.cpp:1392
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Sərbəst xətt çəkin"
 
-#: part/pageviewannotator.cpp:1353
+#: part/pageviewannotator.cpp:1394
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Daxili şərh mətni (sahəni siçanla seçin)"
 
-#: part/pageviewannotator.cpp:1355
+#: part/pageviewannotator.cpp:1396
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Asılan qeyd əlavə edin"
 
-#: part/pageviewannotator.cpp:1357
+#: part/pageviewannotator.cpp:1398
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Çoxbucaqlı çəkin (bağlamaq üçün birinci nöqtəyə vurun)"
 
-#: part/pageviewannotator.cpp:1359
+#: part/pageviewannotator.cpp:1400
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Düzbucaqlı çəkin"
 
-#: part/pageviewannotator.cpp:1361
+#: part/pageviewannotator.cpp:1402
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Dalğavari xəttli mətn"
 
-#: part/pageviewannotator.cpp:1363
+#: part/pageviewannotator.cpp:1404
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Möhür simvolu qoyun"
 
-#: part/pageviewannotator.cpp:1365
+#: part/pageviewannotator.cpp:1406
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Birbaşa xətt çəkin"
 
-#: part/pageviewannotator.cpp:1367
+#: part/pageviewannotator.cpp:1408
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Üzəri cizgili mətn"
 
-#: part/pageviewannotator.cpp:1369
+#: part/pageviewannotator.cpp:1410
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Alt cizgili mətn"
 
-#: part/pageviewannotator.cpp:1371
+#: part/pageviewannotator.cpp:1412
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "\"Çap maşını\" şərhi (sahəni siçanla seçin)"
 
-#: part/pageviewannotator.cpp:1430
+#: part/pageviewannotator.cpp:1471
 #, kde-format
 msgid "Highlighter"
 msgstr "Vurğulayıcı"
 
-#: part/pageviewannotator.cpp:1727
+#: part/pageviewannotator.cpp:1768
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Xüsusi şərhlər əlavə edin"
 
-#: part/pageviewannotator.cpp:1727
+#: part/pageviewannotator.cpp:1768
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Şərhə ad verin:"

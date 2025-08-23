@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-22 00:40+0000\n"
-"PO-Revision-Date: 2025-05-20 21:25+0300\n"
+"PO-Revision-Date: 2025-08-18 11:41+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.07.90\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -335,7 +335,7 @@ msgstr "Невозможно найти модуль для обработки �
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Подписывание документов этого типа не реализовано."
 
 #: core/document.cpp:3558
 #, kde-format
@@ -626,12 +626,10 @@ msgstr ""
 "(с указанием шагов, позволяющих её воспроизвести). Код ошибки: %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr ""
-"Не удалось подписать документ по следующему адресу: <filename>%1</filename>"
+msgstr "Не удалось подписать документ: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -644,10 +642,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Не удалось подписать. Неверная парольная фраза"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
@@ -1114,11 +1109,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Не удаётся проверить целостность документа."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "В этом документе имеются неподписанные поля подписи."
+msgstr "В этом документе имеются поля подписи."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1142,11 +1136,10 @@ msgstr ""
 "подписей."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Тип подписи: %1"
+msgstr "Поле подписи %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1174,51 +1167,40 @@ msgid "Location: %1"
 msgstr "Расположение: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
 msgstr "Подпись PGP"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr "Неизвестный"
+msgstr "Неизвестная"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Достоверность подписи:"
+msgstr "Поле подписи"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -2949,7 +2931,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Длина журнала последних файлов:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3598,11 +3580,10 @@ msgid "All Files (*)"
 msgstr "Все файлы (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Неподписанное поле подписи (щёлкните для подписания)"
+msgstr "Поле подписи (нажмите для подписания)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
@@ -4027,39 +4008,36 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Все ваши сертификаты для создания подписей недействительны. Если они ранее "
+"использовались для подписания, проверьте срок их действия."
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Только сертификаты QES"
+msgstr "Нет ни одного действительного действующего сертификата"
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Просмотреть в диспетчере сертификатов"
+msgstr "Открыть диспетчер сертификатов"
 
 #: part/pageview.cpp:5200
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Не найдено ни одного сертификата, пригодного для подписания.<br/> "
-"Дополнительная информация приведена в руководстве пользователя программы в "
-"разделе <a href=\"%1\">Добавление цифровых подписей</a>."
+"Не найдено ни одного сертификата, пригодного для создания подписи.<br/"
+">Используйте приложение «Диспетчер сертификатов» для импорта или управления "
+"сертификатами.<br/>Дополнительная информация приведена в руководстве "
+"пользователя программы в разделе <a href=\"%1\">Добавление цифровых "
+"подписей</a>."
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Сертификаты"
+msgstr "Не найдено ни одного сертификата"
 
 #: part/pageview.cpp:5213
 #, kde-format

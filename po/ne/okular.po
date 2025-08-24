@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-22 00:40+0000\n"
+"POT-Creation-Date: 2025-08-24 00:40+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -262,67 +262,67 @@ msgid ""
 "><br />Please select which one to use:</qt>"
 msgstr ""
 
-#: core/document.cpp:201
+#: core/document.cpp:200
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "पृष्ठमा जानुहोस्"
 
-#: core/document.cpp:222
+#: core/document.cpp:221
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr ""
 
-#: core/document.cpp:224
+#: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr ""
 
-#: core/document.cpp:247
+#: core/document.cpp:246
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr ""
 
-#: core/document.cpp:249
+#: core/document.cpp:248
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr ""
 
-#: core/document.cpp:1703
+#: core/document.cpp:1702
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1706
+#: core/document.cpp:1705
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2422
+#: core/document.cpp:2421
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 
-#: core/document.cpp:2844
+#: core/document.cpp:2843
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3558
+#: core/document.cpp:3557
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "प्रस्तुतिकरण"
 
-#: core/document.cpp:4150 core/document.cpp:4156
+#: core/document.cpp:4149 core/document.cpp:4155
 #, fuzzy, kde-format
 #| msgid ""
 #| "The pdf file is trying to execute an external application and for your "
@@ -334,151 +334,151 @@ msgstr ""
 "पीडीएफ फाइल एउटा बाह्य अनुप्रयोग कार्यन्वयन गर्न प्रयास गरिरहेको छ र तपाईँको सुरक्षाका "
 "लागि केपीडीएफ ले त्यो अनुमति दिदैन ।"
 
-#: core/document.cpp:4166
+#: core/document.cpp:4165
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 माइमप्रकारको खुला फाइलका लागि कुनै अनुप्रयोग फेला परेन ।"
 
-#: core/document.cpp:4802
+#: core/document.cpp:4801
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open a temporary file"
 msgstr "%1 खोल्न सकेन"
 
-#: core/document.cpp:4804
+#: core/document.cpp:4803
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4806
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4808
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4810
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4812
+#: core/document.cpp:4811
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4814
+#: core/document.cpp:4813
 #, fuzzy, kde-format
 #| msgid "Unable to find kpdf part."
 msgid "Unable to find file to print"
 msgstr "केपीडीएफ भाग फेला पार्न अक्षम भयो ।"
 
-#: core/document.cpp:4816
+#: core/document.cpp:4815
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4818
+#: core/document.cpp:4817
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4820
+#: core/document.cpp:4819
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5494 part/part.cpp:1145
+#: core/document.cpp:5493 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:6003
+#: core/document.cpp:6002
 #, kde-format
 msgid "Title"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6005
 #, kde-format
 msgid "Subject"
 msgstr "विषय"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6008
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:6012
+#: core/document.cpp:6011
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "लेखक"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6014
 #, kde-format
 msgid "Creator"
 msgstr "सर्जक"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6017
 #, kde-format
 msgid "Producer"
 msgstr "निर्माता"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6020
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:6024
+#: core/document.cpp:6023
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "पृष्ठहरू:"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6026
 #, kde-format
 msgid "Created"
 msgstr "सिर्जित"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6029
 #, kde-format
 msgid "Modified"
 msgstr "परिमार्जित"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6032
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "प्रकार"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6035
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Category"
 msgstr "सर्जक"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6038
 #, kde-format
 msgid "Keywords"
 msgstr "शब्दकुञ्जी"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6041
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "शीर्षक"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6044
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "पृष्ठहरू"
 
-#: core/document.cpp:6048
+#: core/document.cpp:6047
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"
@@ -558,26 +558,26 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr ""
 
-#: core/generator.cpp:785
+#: core/generator.cpp:790
 #, fuzzy, kde-format
 #| msgid "Fit to &Text"
 msgid "Plain &Text…"
 msgstr "पाठमा मिलाउनुहोस्"
 
-#: core/generator.cpp:788
+#: core/generator.cpp:793
 #, fuzzy, kde-format
 #| msgid "KPDF"
 msgid "PDF"
 msgstr "केपीडीएफ"
 
-#: core/generator.cpp:792
+#: core/generator.cpp:797
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "हालको सम्भारकर्ता"
 
-#: core/generator.cpp:795
+#: core/generator.cpp:800
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

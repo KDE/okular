@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-22 00:40+0000\n"
+"POT-Creation-Date: 2025-08-24 00:40+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -264,66 +264,66 @@ msgstr ""
 "<qt>Pli ol unu interno troviĝis por la mime-tipo:<br /><b>%1</b> (%2).<br /"
 "><br />Bonvolu elekti la unu uzendan:</qt>"
 
-#: core/document.cpp:201
+#: core/document.cpp:200
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Plej multaj paĝoj estas %1."
 
-#: core/document.cpp:222
+#: core/document.cpp:221
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Portreto %1"
 
-#: core/document.cpp:224
+#: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Pejzaĝo %1"
 
-#: core/document.cpp:247
+#: core/document.cpp:246
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 in (%3)"
 
-#: core/document.cpp:249
+#: core/document.cpp:248
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1703
+#: core/document.cpp:1702
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Daŭrigante serĉon de la komenco"
 
-#: core/document.cpp:1706
+#: core/document.cpp:1705
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Daŭrigante serĉon de malsupre"
 
-#: core/document.cpp:2422
+#: core/document.cpp:2421
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Ne povas trovi kromprogramon kiu kapablas pritrakti la pasitan dokumenton."
 
-#: core/document.cpp:2844
+#: core/document.cpp:2843
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3558
+#: core/document.cpp:3557
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "forigi komentariojn"
 
-#: core/document.cpp:4150 core/document.cpp:4156
+#: core/document.cpp:4149 core/document.cpp:4155
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -332,52 +332,52 @@ msgstr ""
 "La dokumento provas lanĉi eksteran aplikaĵon kaj, por via sekureco, Okular "
 "ne permesas tion."
 
-#: core/document.cpp:4166
+#: core/document.cpp:4165
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Neniu programo troviĝis por malfermi dosieron de mime-tipo %1."
 
-#: core/document.cpp:4802
+#: core/document.cpp:4801
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Ne eblis malfermi provizoran dosieron"
 
-#: core/document.cpp:4804
+#: core/document.cpp:4803
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Presa konvertiĝo malsukcesis"
 
-#: core/document.cpp:4806
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Presa procezo paneis"
 
-#: core/document.cpp:4808
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing process could not start"
 msgstr "La presa procezo ne povis komenci"
 
-#: core/document.cpp:4810
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Presado al dosiero malsukcesis"
 
-#: core/document.cpp:4812
+#: core/document.cpp:4811
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Presilo estis en nevalida stato"
 
-#: core/document.cpp:4814
+#: core/document.cpp:4813
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Ne eblas trovi dosieron por presi"
 
-#: core/document.cpp:4816
+#: core/document.cpp:4815
 #, kde-format
 msgid "There was no file to print"
 msgstr "Ne estis dosiero por presi"
 
-#: core/document.cpp:4818
+#: core/document.cpp:4817
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,92 +386,92 @@ msgstr ""
 "Ne eblis trovi taŭgan binaron por presi. Certigu, ke CUPS lpr-binaro estas "
 "disponebla"
 
-#: core/document.cpp:4820
+#: core/document.cpp:4819
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "La paĝa presa grandeco estas nevalida"
 
-#: core/document.cpp:5494 part/part.cpp:1145
+#: core/document.cpp:5493 part/part.cpp:1145
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ne eblis malfermi '%1'. Dosiero ne ekzistas"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6002
 #, kde-format
 msgid "Title"
 msgstr "Titolo"
 
-#: core/document.cpp:6006
+#: core/document.cpp:6005
 #, kde-format
 msgid "Subject"
 msgstr "Temo"
 
-#: core/document.cpp:6009
+#: core/document.cpp:6008
 #, kde-format
 msgid "Description"
 msgstr "Priskribo"
 
-#: core/document.cpp:6012
+#: core/document.cpp:6011
 #, kde-format
 msgid "Author"
 msgstr "Aŭtoro"
 
-#: core/document.cpp:6015
+#: core/document.cpp:6014
 #, kde-format
 msgid "Creator"
 msgstr "Kreinto"
 
-#: core/document.cpp:6018
+#: core/document.cpp:6017
 #, kde-format
 msgid "Producer"
 msgstr "Faristo"
 
-#: core/document.cpp:6021
+#: core/document.cpp:6020
 #, kde-format
 msgid "Copyright"
 msgstr "Kopirajto"
 
-#: core/document.cpp:6024
+#: core/document.cpp:6023
 #, kde-format
 msgid "Pages"
 msgstr "Paĝoj"
 
-#: core/document.cpp:6027
+#: core/document.cpp:6026
 #, kde-format
 msgid "Created"
 msgstr "Kreita"
 
-#: core/document.cpp:6030
+#: core/document.cpp:6029
 #, kde-format
 msgid "Modified"
 msgstr "Ŝanĝita"
 
-#: core/document.cpp:6033
+#: core/document.cpp:6032
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-Tipo"
 
-#: core/document.cpp:6036
+#: core/document.cpp:6035
 #, kde-format
 msgid "Category"
 msgstr "Kategorio"
 
-#: core/document.cpp:6039
+#: core/document.cpp:6038
 #, kde-format
 msgid "Keywords"
 msgstr "Ĉefvortoj"
 
-#: core/document.cpp:6042
+#: core/document.cpp:6041
 #, kde-format
 msgid "File Path"
 msgstr "Dosiera vojo"
 
-#: core/document.cpp:6045
+#: core/document.cpp:6044
 #, kde-format
 msgid "File Size"
 msgstr "Dosiera grandeco"
 
-#: core/document.cpp:6048
+#: core/document.cpp:6047
 #, kde-format
 msgid "Page Size"
 msgstr "Paĝgrandeco"
@@ -542,24 +542,24 @@ msgctxt "Edit the state of a group of form buttons"
 msgid "edit form button states"
 msgstr "redakti formularajn butonstatojn"
 
-#: core/generator.cpp:785
+#: core/generator.cpp:790
 #, fuzzy, kde-format
 #| msgid "Plain &Text..."
 msgid "Plain &Text…"
 msgstr "Plata &teksto..."
 
-#: core/generator.cpp:788
+#: core/generator.cpp:793
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: core/generator.cpp:792
+#: core/generator.cpp:797
 #, kde-format
 msgctxt "This is the document format"
 msgid "OpenDocument Text"
 msgstr "OpenDocument Teksto"
 
-#: core/generator.cpp:795
+#: core/generator.cpp:800
 #, kde-format
 msgctxt "This is the document format"
 msgid "HTML"

@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-03 00:40+0000\n"
-"PO-Revision-Date: 2025-03-18 17:56+0200\n"
+"PO-Revision-Date: 2025-08-21 15:00+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
@@ -310,12 +310,12 @@ msgstr "PDF aizmugursistēmas pielāgošana"
 #: generator_pdf.cpp:2203 generator_pdf.cpp:2210
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Neizdevās rakstīt pagaidu datni"
 
 #: generator_pdf.cpp:2254
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Neizdevās pārdēvēt pagaidu datni"
 
 #: generator_pdf.cpp:2274
 #, kde-format

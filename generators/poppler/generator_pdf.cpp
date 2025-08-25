@@ -2228,9 +2228,14 @@ std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSi
     }
 
     // now copy over old file
-    QFile::remove(rFilename);
+    if (QFile::exists(rFilename)) {
+        if (!QFile::remove(rFilename)) {
+            tf.setAutoRemove(true);
+            return {Okular::SignatureWriteFailed, i18n("Failed removing file")};
+        }
+    }
     if (!tf.rename(rFilename)) {
-        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file")};
+        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file: %1", tf.errorString())};
     }
 
     return {Okular::SigningSuccess, {}};

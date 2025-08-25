@@ -14,6 +14,9 @@
 #include "pdfsettings.h"
 #include "pdfsignatureutils.h"
 
+#include <KLocalizedString>
+#include <QFileInfo>
+#include <QTemporaryFile>
 #include <poppler-qt6.h>
 
 extern Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, std::unique_ptr<Poppler::Link>> popplerLink);
@@ -530,8 +533,14 @@ Okular::SigningResult fromPoppler(Poppler::FormFieldSignature::SigningResult r)
     return Okular::SigningResult::GenericSigningError;
 }
 
-std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &newPath) const
+std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const Okular::NewSignatureData &oData, const QString &fileName) const
 {
+    // save to tmp file - poppler doesn't like overwriting in-place
+    QTemporaryFile tf(QFileInfo(fileName).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
+    tf.setAutoRemove(false);
+    if (!tf.open()) {
+        return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
+    }
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 03, 0)
@@ -539,11 +548,22 @@ std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const 
     pData.setFontSize(0);
     pData.setLeftFontSize(0);
 #endif
-    auto result = fromPoppler(m_field->sign(newPath, pData));
+    auto result = fromPoppler(m_field->sign(tf.fileName(), pData));
 #if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
     QString errorDetails = m_field->lastSigningErrorDetails().data.toString();
 #else
     QString errorDetails;
 #endif
-    return {result, errorDetails};
+    if (result != Okular::SigningSuccess) {
+        tf.remove();
+        return {result, errorDetails};
+    }
+
+    // now copy over old file
+    QFile::remove(fileName);
+    if (!tf.rename(fileName)) {
+        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file")};
+    }
+
+    return {Okular::SigningSuccess, {}};
 }

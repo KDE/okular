@@ -144,7 +144,7 @@ public:
     // inherited from Okular::FormFieldSignature
     SignatureType signatureType() const override;
     Okular::SignatureInfo signatureInfo() const override;
-    std::pair<Okular::SigningResult, QString> sign(const Okular::NewSignatureData &oData, const QString &newPath) const override;
+    std::pair<Okular::SigningResult, QString> sign(const Okular::NewSignatureData &oData, const QString &fileName) const override;
 
     SubscriptionHandle subscribeUpdates(const std::function<void()> &callback) const final;
     bool unsubscribeUpdates(const SubscriptionHandle &handle) const final;

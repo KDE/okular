@@ -51,9 +51,12 @@ private Q_SLOTS:
     void init();
     void cleanup();
     void testSignUnsignedField();
+    void testSignUnsignedFieldWriteCurrentFile();
 
 private:
     Okular::Document *m_document;
+    std::unique_ptr<QTemporaryDir> m_workdir;
+    QString m_targetFile;
 };
 
 void SignUnsignedFieldTest::initTestCase()
@@ -73,8 +76,13 @@ void SignUnsignedFieldTest::init()
 {
     const QString testFile = QStringLiteral(KDESRCDIR "data/hello_with_dummy_signature.pdf");
     QMimeDatabase db;
-    const QMimeType mime = db.mimeTypeForFile(testFile);
-    QCOMPARE(m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess);
+    QFileInfo fi(testFile);
+    m_workdir = std::make_unique<QTemporaryDir>();
+    m_targetFile = m_workdir->filePath(fi.fileName());
+    QFile::copy(fi.absoluteFilePath(), m_targetFile);
+
+    const QMimeType mime = db.mimeTypeForFile(m_targetFile);
+    QCOMPARE(m_document->openDocument(m_targetFile, QUrl(), mime), Okular::Document::OpenSuccess);
 }
 
 void SignUnsignedFieldTest::cleanup()
@@ -100,16 +108,50 @@ void SignUnsignedFieldTest::testSignUnsignedField()
 
     Okular::NewSignatureData data;
     data.setCertNickname(QStringLiteral("fake-okular"));
-    QTemporaryFile f;
-    bool success = f.open();
-    QVERIFY(success);
-    auto signResult = ffs->sign(data, f.fileName());
+    auto signedFileName = m_workdir->filePath(QStringLiteral("signedDoc.pdf"));
+    auto signResult = ffs->sign(data, signedFileName);
     QCOMPARE(signResult.first, Okular::SigningResult::SigningSuccess);
 
     m_document->closeDocument();
     QMimeDatabase db;
-    const QMimeType mime = db.mimeTypeForFile(f.fileName());
-    QCOMPARE(m_document->openDocument(f.fileName(), QUrl(), mime), Okular::Document::OpenSuccess);
+    const QMimeType mime = db.mimeTypeForFile(signedFileName);
+    QCOMPARE(m_document->openDocument(signedFileName, QUrl(), mime), Okular::Document::OpenSuccess);
+
+    const QList<Okular::FormField *> newForms = m_document->page(0)->formFields();
+    QCOMPARE(newForms.count(), 1);
+    ffs = dynamic_cast<Okular::FormFieldSignature *>(newForms.first());
+    QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::AdbePkcs7detached);
+    QCOMPARE(ffs->signatureInfo().signerName(), QStringLiteral("FakeOkular"));
+}
+
+void SignUnsignedFieldTest::testSignUnsignedFieldWriteCurrentFile()
+{
+    const QList<Okular::FormField *> forms = m_document->page(0)->formFields();
+    QCOMPARE(forms.count(), 1);
+    Okular::FormFieldSignature *ffs = dynamic_cast<Okular::FormFieldSignature *>(forms.first());
+
+    QCOMPARE(ffs->signatureType(), Okular::FormFieldSignature::UnsignedSignature);
+
+    const Okular::CertificateStore *certStore = m_document->certificateStore();
+    bool userCancelled, nonDateValidCerts;
+    {
+        EnterPasswordDialogHelper helper;
+        const QList<Okular::CertificateInfo> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+        QCOMPARE(certs.count(), 1);
+    }
+
+    Okular::NewSignatureData data;
+    data.setCertNickname(QStringLiteral("fake-okular"));
+    auto signResult = ffs->sign(data, m_targetFile);
+#if defined(Q_OS_WIN)
+    QSKIP("Writing to current document not supported");
+#endif
+    QCOMPARE(signResult.first, Okular::SigningResult::SigningSuccess);
+
+    m_document->closeDocument();
+    QMimeDatabase db;
+    const QMimeType mime = db.mimeTypeForFile(m_targetFile);
+    QCOMPARE(m_document->openDocument(m_targetFile, QUrl(), mime), Okular::Document::OpenSuccess);
 
     const QList<Okular::FormField *> newForms = m_document->page(0)->formFields();
     QCOMPARE(newForms.count(), 1);

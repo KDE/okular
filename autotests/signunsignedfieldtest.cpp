@@ -103,6 +103,7 @@ void SignUnsignedFieldTest::testSignUnsignedField()
     QTemporaryFile f;
     f.open();
     auto signResult = ffs->sign(data, f.fileName());
+    qDebug() << signResult.second;
     QCOMPARE(signResult.first, Okular::SigningResult::SigningSuccess);
 
     m_document->closeDocument();

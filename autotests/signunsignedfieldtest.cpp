@@ -54,6 +54,7 @@ private Q_SLOTS:
 
 private:
     Okular::Document *m_document;
+    std::unique_ptr<QTemporaryDir> m_workdir;
 };
 
 void SignUnsignedFieldTest::initTestCase()
@@ -73,8 +74,13 @@ void SignUnsignedFieldTest::init()
 {
     const QString testFile = QStringLiteral(KDESRCDIR "data/hello_with_dummy_signature.pdf");
     QMimeDatabase db;
-    const QMimeType mime = db.mimeTypeForFile(testFile);
-    QCOMPARE(m_document->openDocument(testFile, QUrl(), mime), Okular::Document::OpenSuccess);
+    QFileInfo fi (testFile);
+    m_workdir = std::make_unique<QTemporaryDir>();
+    QString targetFile = m_workdir->filePath(fi.fileName());
+    QFile::copy(fi.absoluteFilePath(), targetFile);
+
+    const QMimeType mime = db.mimeTypeForFile(targetFile);
+    QCOMPARE(m_document->openDocument(targetFile, QUrl(), mime), Okular::Document::OpenSuccess);
 }
 
 void SignUnsignedFieldTest::cleanup()

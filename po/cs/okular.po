@@ -154,10 +154,9 @@ msgid "Open external file"
 msgstr "Otevřít externí soubor"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
-msgstr "Spustit '%1'..."
+msgstr ""
 
 #: core/action.cpp:294
 #, kde-format
@@ -210,16 +209,14 @@ msgid "Find…"
 msgstr "Najít…"
 
 #: core/action.cpp:314
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Přejít na stranu"
+msgstr ""
 
 #: core/action.cpp:365
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
-msgstr "Přehrát zvuk..."
+msgstr ""
 
 #: core/action.cpp:433 core/action.cpp:549
 #, kde-format
@@ -227,10 +224,9 @@ msgid "JavaScript Script"
 msgstr "Skript JavaScriptu"
 
 #: core/action.cpp:483
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Přehrát film"
+msgstr ""
 
 #: core/action.cpp:554
 #, kde-format
@@ -549,10 +545,9 @@ msgid "edit form button states"
 msgstr "upravit stavy tlačítek"
 
 #: core/generator.cpp:790
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "Obyčejný &text..."
+msgstr ""
 
 #: core/generator.cpp:793
 #, kde-format
@@ -1089,11 +1084,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Ověření Požadovanou operaci není možné dokončit"
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Tento dokument má nepodepsaná pole s podpisem."
+msgstr ""
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1116,11 +1110,10 @@ msgstr ""
 "Tento dokument je digitálně podepsán. Některé z podpisů nešlo pořádně ověřit."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Platnost podpisu:"
+msgstr ""
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1148,11 +1141,10 @@ msgid "Location: %1"
 msgstr "Umístění: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgid "Signatures"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "Podpisy"
+msgstr ""
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -1173,19 +1165,16 @@ msgid "ETSI CAdES"
 msgstr ""
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr "Neznámý"
+msgstr ""
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Platnost podpisu:"
+msgstr ""
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -1428,12 +1417,10 @@ msgid "Transparent"
 msgstr "Průhledná"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "Vlastní barva..."
+msgstr ""
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1680,12 +1667,10 @@ msgid "&Properties"
 msgstr "V&lastnosti"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "&Uložit '%1'..."
+msgstr ""
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -3457,18 +3442,16 @@ msgid "Modified"
 msgstr "Změněno"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Uložit jako"
+msgstr ""
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "Po&hled"
+msgstr ""
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3550,11 +3533,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Podepsat"
+msgstr ""
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3738,10 +3719,9 @@ msgid "Selection Tools"
 msgstr "Nástroje výběru"
 
 #: part/pageview.cpp:711
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "Digitálně podep&sat..."
+msgstr ""
 
 #: part/pageview.cpp:717
 #, kde-format
@@ -3899,10 +3879,9 @@ msgid "Search for '%1' with"
 msgstr "Vyhledat '%1' pomocí"
 
 #: part/pageview.cpp:4404
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "Nastavit webové zkratky..."
+msgstr ""
 
 #: part/pageview.cpp:4430
 #, kde-format
@@ -3972,16 +3951,14 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Certifikáty"
+msgstr ""
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Pohled na správce certifikátů"
+msgstr ""
 
 #: part/pageview.cpp:5200
 #, kde-format
@@ -3992,10 +3969,9 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certifikáty"
+msgstr ""
 
 #: part/pageview.cpp:5213
 #, kde-format
@@ -4322,28 +4298,24 @@ msgid "Go to the next bookmark"
 msgstr "Přejít na následující záložku"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
-msgstr "Nastavit Okular..."
+msgstr ""
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Nastavit prohlížeč"
+msgstr ""
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Nastavit podpůrné vrstvy prohlížeče"
+msgstr ""
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Nastavit podpůrné vrstvy"
+msgstr ""
 
 #: part/part.cpp:795
 #, kde-format
@@ -4371,12 +4343,10 @@ msgid "Page Number"
 msgstr "Číslo strany"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Nastavit režimy barvy..."
+msgstr ""
 
 #: part/part.cpp:858
 #, kde-format
@@ -4424,10 +4394,9 @@ msgid "Open Con&taining Folder"
 msgstr "Otevřít odpovídající s&ložku"
 
 #: part/part.cpp:945
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "&Importovat Postscript jako PDF..."
+msgstr ""
 
 #: part/part.cpp:949
 #, kde-format
@@ -4440,10 +4409,9 @@ msgid "Erase Drawing"
 msgstr "Smazat kreslení"
 
 #: part/part.cpp:962
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "Nastavit poznámky..."
+msgstr ""
 
 #: part/part.cpp:967
 #, kde-format
@@ -4508,10 +4476,9 @@ msgid "PostScript files (%1)"
 msgstr "Soubory PostScript (%1)"
 
 #: part/part.cpp:1357
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "Importuji PS soubor jako PDF (bude to nějakou dobu trvat)...."
+msgstr ""
 
 #: part/part.cpp:1489
 #, kde-format
@@ -4652,10 +4619,9 @@ msgstr ""
 "prohlížeči použitelné."
 
 #: part/part.cpp:2113 part/part.cpp:2131
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "Znovu načítám dokument..."
+msgstr ""
 
 #: part/part.cpp:2288 part/toc.cpp:38
 #, kde-format
@@ -4803,10 +4769,9 @@ msgid "Warning"
 msgstr "Varování"
 
 #: part/part.cpp:2779 part/part.cpp:2801
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Uložit jako archiv dokumentu Okular..."
+msgstr ""
 
 #: part/part.cpp:2791
 #, kde-format
@@ -5218,10 +5183,9 @@ msgid "&Fonts"
 msgstr "&Písma"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Načítají se informace o písmech..."
+msgstr ""
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5641,16 +5605,14 @@ msgid "Document Revision %1 of %2"
 msgstr "Revize dokumentu %1 z %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
-msgstr "Zobrazit podepsanou verzi..."
+msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
-msgstr "Prohlížet certifikát..."
+msgstr ""
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5976,44 +5938,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgid "Modified: %1"
-#~ msgstr "Změněno: %1"
-
-#~ msgid "Find..."
-#~ msgstr "Najít..."
-
-#~ msgid "Go To Page..."
-#~ msgstr "Přejít na stranu..."
-
-#~ msgid "Play movie..."
-#~ msgstr "Přehrát film..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&Save As..."
-#~ msgstr "Uložit &jako..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&View..."
-#~ msgstr "Po&hled..."
-
-#~ msgid "&Sign..."
-#~ msgstr "Podep&sat..."
-
-#~ msgid "Configure Viewer..."
-#~ msgstr "Nastavit prohlížeč..."
-
-#~ msgid "Configure Viewer Backends..."
-#~ msgstr "Nastavit podpůrné vrstvy prohlížeče..."
-
-#~ msgid "Configure Backends..."
-#~ msgstr "Nastavit podpůrné vrstvy..."
-
-#~ msgid "&Add..."
-#~ msgstr "Přid&at..."
-
-#~ msgid "&Edit..."
-#~ msgstr "&Upravit..."
-
-#~ msgid "Unsigned Signature %1"
-#~ msgstr "Nepodepsaný podpis %1"

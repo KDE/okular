@@ -200,11 +200,6 @@ msgid "Recent Documents"
 msgstr ""
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "Verze dokumentu"
-
-#~ msgid "Open..."
-#~ msgstr "Otevřít..."
+msgstr ""

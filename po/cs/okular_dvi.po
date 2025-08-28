@@ -313,10 +313,9 @@ msgstr ""
 "dokument může být nečitelný.</qt>"
 
 #: fontpool.cpp:482
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "Aktuálně vytvářím %1 v %2 dpi..."
+msgstr ""
 
 #: generator_dvi.cpp:288
 #, kde-format

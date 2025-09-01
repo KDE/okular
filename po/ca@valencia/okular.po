@@ -251,7 +251,7 @@ msgstr "Este Okular s'ha construït sense suport d'àudio"
 #: core/chooseenginedialog.cpp:22
 #, kde-format
 msgid "Backend Selection"
-msgstr "Seleccioneu el dorsal"
+msgstr "Trieu el dorsal"
 
 #: core/chooseenginedialog.cpp:40
 #, kde-format
@@ -260,7 +260,7 @@ msgid ""
 "><br />Please select which one to use:</qt>"
 msgstr ""
 "<qt>S'ha trobat més d'un dorsal per al tipus MIME:<br /><b>%1</b> (%2).<br /"
-"><br />Seleccioneu quin s'ha d'utilitzar:</qt>"
+"><br />Trieu quin s'ha d'utilitzar:</qt>"
 
 #: core/document.cpp:205
 #, kde-format
@@ -1444,7 +1444,7 @@ msgstr "Color personalitzat…"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
-msgstr "Seleccioneu un color"
+msgstr "Trieu un color"
 
 #: part/annotationactionhandler.cpp:551
 #, kde-format
@@ -1563,7 +1563,7 @@ msgstr "Anotacions ràpides"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr "Selecciona una eina d'anotació de les anotacions ràpides"
+msgstr "Tria una eina d'anotació de les anotacions ràpides"
 
 #: part/annotationactionhandler.cpp:650
 #, kde-format
@@ -1788,13 +1788,13 @@ msgstr "Propietats de les anotacions"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a custom stamp symbol from file"
-msgstr "Seleccioneu un símbol de segell personalitzat des d'un fitxer"
+msgstr "Trieu un símbol de segell personalitzat des d'un fitxer"
 
 #: part/annotationwidgets.cpp:154
 #, kde-format
 msgctxt "@title:window file chooser"
 msgid "Select custom stamp symbol"
-msgstr "Seleccioneu un símbol de segell personalitzat"
+msgstr "Trieu un símbol de segell personalitzat"
 
 #: part/annotationwidgets.cpp:154
 #, kde-format
@@ -2674,8 +2674,8 @@ msgctxt "@info:whatsthis Config dialog, editor page"
 msgid ""
 "Choose the editor you want to launch when Okular wants to open a source file."
 msgstr ""
-"Seleccioneu l'editor que voleu executar quan Okular necessite obrir un "
-"fitxer de codi font."
+"Trieu l'editor que voleu executar quan Okular necessite obrir un fitxer de "
+"codi font."
 
 #: part/dlgeditor.cpp:29
 #, kde-format
@@ -3726,17 +3726,17 @@ msgstr "&Zoom"
 #: part/pageview.cpp:649
 #, kde-format
 msgid "Area &Selection"
-msgstr "&Seleccioneu un àrea"
+msgstr "&Trieu un àrea"
 
 #: part/pageview.cpp:656
 #, kde-format
 msgid "&Text Selection"
-msgstr "Seleccioneu el &text"
+msgstr "Trieu el &text"
 
 #: part/pageview.cpp:663
 #, kde-format
 msgid "T&able Selection"
-msgstr "Seleccioneu la t&aula"
+msgstr "Trieu la t&aula"
 
 #: part/pageview.cpp:670
 #, kde-format
@@ -3947,7 +3947,7 @@ msgstr "Us donem la benvinguda"
 #: part/pageview.cpp:5094
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
-msgstr "Seleccioneu l'àrea de zoom. Cliqueu amb el botó dret per a allunyar."
+msgstr "Trieu l'àrea de zoom. Cliqueu amb el botó dret per a allunyar."
 
 #: part/pageview.cpp:5107
 #, kde-format
@@ -4400,7 +4400,7 @@ msgstr "Configura els modes de color…"
 #: part/part.cpp:858
 #, kde-format
 msgid "Select All Text on Current Page"
-msgstr "Selecciona tot el text de la pàgina actual"
+msgstr "Tria tot el text de la pàgina actual"
 
 #: part/part.cpp:871
 #, kde-format
@@ -4754,7 +4754,7 @@ msgstr "Extensió no admesa"
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
-msgstr "Seleccioneu un nom nou"
+msgstr "Trieu un nom nou"
 
 #: part/part.cpp:2665
 #, kde-kuit-format
@@ -5022,8 +5022,8 @@ msgstr ""
 "<qt>Este error normalment passa quan no teniu permisos suficients per a "
 "llegir el fitxer. Podeu comprovar el propietari i els permisos si feu clic "
 "dret damunt del fitxer en el gestor de fitxers Dolphin, després trieu "
-"l'opció «Propietats». i seleccioneu la pestanya «Permisos» en la finestra "
-"oberta.</qt>"
+"l'opció «Propietats». i trieu la pestanya «Permisos» en la finestra oberta.</"
+"qt>"
 
 #: part/part.cpp:3771
 #, kde-format
@@ -5514,7 +5514,7 @@ msgstr "Certificats"
 #: part/selectcertificatedialog.ui:20
 #, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Seleccioneu un certificat amb el qual signar:"
+msgstr "Trieu un certificat amb el qual signar:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
@@ -5566,7 +5566,7 @@ msgstr "Fons:"
 #: part/selectcertificatedialog.ui:123
 #, kde-format
 msgid "Choose..."
-msgstr "Trieu…"
+msgstr "Tria…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
 #: part/selectcertificatedialog.ui:135
@@ -5581,7 +5581,7 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align=center><h3>Sense anotacions</h3>Per a crear anotacions noves "
-"premeu «F6» o seleccioneu «<i>Eines -&gt; Anotacions</i>» en el menú.</div>"
+"premeu «F6» o trieu «<i>Eines -&gt; Anotacions</i>» en el menú.</div>"
 
 #: part/side_reviews.cpp:142
 #, kde-format
@@ -5622,7 +5622,7 @@ msgstr "Imatges (%1)"
 #: part/signaturepartutils.cpp:176
 #, kde-format
 msgid "Select background image"
-msgstr "Seleccioneu una imatge de fons"
+msgstr "Trieu una imatge de fons"
 
 #: part/signaturepartutils.cpp:181
 #, kde-format
@@ -6052,6 +6052,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgid "Modified: %1"
-#~ msgstr "Modificat: %1"

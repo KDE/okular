@@ -233,7 +233,8 @@
             "config-opts": [
                 "-DBUILD_TESTING=OFF",
                 "-DPHONON_BUILD_QT5=OFF",
-                "-DPHONON_BUILD_QT6=ON"
+                "-DPHONON_BUILD_QT6=ON",
+                "-DPHONON_BUILD_DESIGNER_PLUGIN=OFF"
             ],
             "buildsystem": "cmake-ninja",
             "sources": [

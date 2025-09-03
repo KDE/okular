@@ -1,0 +1,12 @@
+diff --git a/shell/org.kde.okular.desktop b/shell/org.kde.okular.desktop
+index 8e0141735..370b82277 100755
+--- a/shell/org.kde.okular.desktop
++++ b/shell/org.kde.okular.desktop
+@@ -164,6 +164,6 @@ Type=Application
+ X-DocPath=okular/index.html
+ InitialPreference=7
+ Categories=Qt;KDE;Graphics;Office;Viewer;
+-MimeType=application/vnd.kde.okular-archive;
++MimeType=application/epub+zip;application/oxps;application/pdf;application/postscript;application/prs.plucker;application/vnd.kde.okular-archive;application/vnd.ms-xpsdocument;application/x-bzdvi;application/x-bzpdf;application/x-bzpostscript;application/x-cbr;application/x-cbt;application/x-cbz;application/x-dvi;application/x-fictionbook+xml;application/x-gzdvi;application/x-gzpdf;application/x-gzpostscript;application/x-mobipocket-ebook;application/x-wwf;image/bmp;image/fax-g3;image/gif;image/g3fax;image/jpeg;image/jp2;image/png;image/tiff;image/vnd.djvu;image/x-bzeps;image/x-dds;image/x-eps;image/x-exr;image/x-gzeps;image/x-hdr;image/x-ico;image/x-pcx;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-rgb;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;text/markdown;text/plain;video/x-mng;
+ X-DBUS-ServiceName=org.kde.okular
+ 

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-11 02:40+0000\n"
-"PO-Revision-Date: 2025-05-30 18:52+0200\n"
+"PO-Revision-Date: 2025-09-02 17:11+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -310,7 +310,7 @@ msgstr ""
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Signarnon es actuate per iste typo de documento"
 
 #: core/document.cpp:3620
 #, kde-format
@@ -600,11 +600,10 @@ msgstr ""
 "reproducer lo.Codice de error %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Non poteva signar documento con location:  <filename>%1</filename>"
+msgstr "Non poteva signar le documento:  <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -617,17 +616,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Il non pote signar.  Phrase de contrasigno errate"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Non poteva scriber documento signate a <filename>%1</filename>, pro favor  "
-"tu assecura te que tu ha seligite un dossier con permission a scriber"
+"Non poteva scriber le documento signate a <filename>%1</filename>, pro "
+"favor  tu assecura te que tu ha seligite un dossier con permission a scriber"
 
 #: core/signatureutils.cpp:506
 #, kde-format
@@ -2905,7 +2901,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Elementos in chronologia recente:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3970,39 +3966,35 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Omne tu certificatos de signar es invalide.In casoque lesignar functionava "
+"ante pro favor tu verifica lor datas de validitate."
 
 #: part/pageview.cpp:5166
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Solmente Certificatos QES"
+msgstr "Nulle certificatos valide"
 
 #: part/pageview.cpp:5167 part/pageview.cpp:5182
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Vide in Gerente de Certificato (Certificate Manager)"
+msgstr "Aperi gerente de certificat&o "
 
 #: part/pageview.cpp:5178
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Il non ha sertificatos de signar disponibile.<br/>Per plus  information, pro "
+"Il non ha certificatos de signar disponibile.<br/>Lancea Gerente de "
+"Certificato per importar o gerer certificatos<br/>Per plus  information, pro "
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
 #: part/pageview.cpp:5181 part/pageview.cpp:5193
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificatos"
+msgstr "Nulle certificatos trovate"
 
 #: part/pageview.cpp:5191
 #, kde-format
@@ -4011,7 +4003,7 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
-"Il non ha sertificatos de signar disponibile.<br/>Per plus  information, pro "
+"Il non ha certificatos de signar disponibile.<br/>Per plus  information, pro "
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 

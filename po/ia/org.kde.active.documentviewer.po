@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2025-04-02 15:53+0200\n"
+"PO-Revision-Date: 2025-09-02 17:18+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -95,7 +95,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Aperi…"
 
 #: ui/Main.qml:49
 msgid "About"
@@ -197,14 +197,12 @@ msgstr "Necun Documento de aperir"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Documentos recente"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "Version de documento"
+msgstr "Mi documentos"
 
 #~ msgid "Open..."
 #~ msgstr "Aperi..."

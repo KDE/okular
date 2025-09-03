@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-24 00:40+0000\n"
-"PO-Revision-Date: 2025-05-30 18:52+0200\n"
+"PO-Revision-Date: 2025-09-02 17:17+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -145,8 +145,7 @@ msgid "Open external file"
 msgstr "Aperi file externe"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
 msgstr "Executa '%1'..."
 
@@ -198,17 +197,15 @@ msgstr "Termina presentation"
 #: core/action.cpp:312
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Trova..."
 
 #: core/action.cpp:314
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Va a pagina"
+msgstr "Va a pagina…"
 
 #: core/action.cpp:365
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
 msgstr "Reproduce sono..."
 
@@ -218,10 +215,9 @@ msgid "JavaScript Script"
 msgstr "Script de Javascript"
 
 #: core/action.cpp:483
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Reproduce film"
+msgstr "Reproduce film…"
 
 #: core/action.cpp:554
 #, kde-format
@@ -314,7 +310,7 @@ msgstr ""
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Signarnon es actuate per iste typo de documento"
 
 #: core/document.cpp:3557
 #, kde-format
@@ -542,8 +538,7 @@ msgid "edit form button states"
 msgstr "modific statos de button del formulario"
 
 #: core/generator.cpp:790
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
 msgstr "&Texto simplice..."
 
@@ -605,11 +600,10 @@ msgstr ""
 "reproducer lo.Codice de error %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Non poteva signar documento con location:  <filename>%1</filename>"
+msgstr "Non poteva signar le documento:  <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -622,17 +616,14 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Il non pote signar.  Phrase de contrasigno errate"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Non poteva scriber documento signate a <filename>%1</filename>, pro favor  "
-"tu assecura te que tu ha seligite un dossier con permission a scriber"
+"Non poteva scriber le documento signate a <filename>%1</filename>, pro "
+"favor  tu assecura te que tu ha seligite un dossier con permission a scriber"
 
 #: core/signatureutils.cpp:506
 #, kde-format
@@ -1441,9 +1432,7 @@ msgid "Transparent"
 msgstr "Transparente"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
 msgstr "Color personalisate..."
@@ -1692,12 +1681,10 @@ msgid "&Properties"
 msgstr "&Proprietates"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "&Salveguarda '%1'..."
+msgstr "&Salveguarda '%1'…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2263,10 +2250,9 @@ msgstr "Monstra per omne documentos"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "C&erca:"
+msgstr "Cerca…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2301,8 +2287,7 @@ msgid "Certificate Viewer"
 msgstr "Certifica Visor"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
 msgstr "Exporta..."
 
@@ -2916,7 +2901,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Elementos in chronologia recente:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3477,18 +3462,16 @@ msgid "Modified"
 msgstr "Modificate"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Salveguarda como"
+msgstr "&Salveguarda como..."
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&Vide"
+msgstr "&Vide…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3570,11 +3553,9 @@ msgid "Signature placeholder (Click to Sign)"
 msgstr "Substituto de Signatura (clicca per signar)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Signa"
+msgstr "&Signa…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3758,10 +3739,9 @@ msgid "Selection Tools"
 msgstr "Instrumentos de selection"
 
 #: part/pageview.cpp:711
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "&Signa digitalmente..."
+msgstr "&Signa digitalmente…"
 
 #: part/pageview.cpp:717
 #, kde-format
@@ -3917,8 +3897,7 @@ msgid "Search for '%1' with"
 msgstr "Cerca de '%1' con"
 
 #: part/pageview.cpp:4404
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Configura vias breve de Web..."
 
@@ -3987,39 +3966,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Omne tu certificatos de signar es invalide.In casoque lesignar functionava "
+"ante pro favor tu verifica lor datas de validitate."
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Solmente Certificatos QES"
+msgstr "Nulle certificatos valide"
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Vide in Gerente de Certificato (Certificate Manager)"
+msgstr "Aperi gerente de certificat&o "
 
 #: part/pageview.cpp:5200
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Il non ha sertificatos de signar disponibile.<br/>Per plus  information, pro "
+"Il non ha certificatos de signar disponibile.<br/>Per plus  information, pro "
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificatos"
+msgstr "Nulle certificatos trovate"
 
 #: part/pageview.cpp:5213
 #, kde-format
@@ -4028,7 +4002,7 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
-"Il non ha sertificatos de signar disponibile.<br/>Per plus  information, pro "
+"Il non ha certificatos de signar disponibile.<br/>Per plus  information, pro "
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
@@ -4358,28 +4332,24 @@ msgid "Go to the next bookmark"
 msgstr "Va al proxime marcator de libro"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "Configura Okular ..."
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Configura visor"
+msgstr "Configura visor…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Configura retroadministrationes de visor"
+msgstr "Configura retroadministrationes de visor…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Configura retroadministrationes"
+msgstr "Configura retroadministrationes…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4407,12 +4377,10 @@ msgid "Page Number"
 msgstr "Numero de Pagina"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Configura Modos de Color de Okular ..."
+msgstr "Configura Modos de Color de Okular …"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4460,10 +4428,9 @@ msgid "Open Con&taining Folder"
 msgstr "Aperi dossier con&tinente"
 
 #: part/part.cpp:945
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "&Importa PostScript como PDF..."
+msgstr "&Importa PostScript como PDF…"
 
 #: part/part.cpp:949
 #, kde-format
@@ -4476,10 +4443,9 @@ msgid "Erase Drawing"
 msgstr "Rade designos"
 
 #: part/part.cpp:962
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "Configura annotationes..."
+msgstr "Configura annotationes…"
 
 #: part/part.cpp:967
 #, kde-format
@@ -4547,10 +4513,9 @@ msgid "PostScript files (%1)"
 msgstr "Files PostScript (%1)"
 
 #: part/part.cpp:1357
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "Importante file PS como PDF (isto pote prender del tempore)..."
+msgstr "Importante file PS como PDF (isto pote prender del tempore)…"
 
 #: part/part.cpp:1489
 #, kde-format
@@ -4704,10 +4669,9 @@ msgstr ""
 "quando on usa le visor incorporate."
 
 #: part/part.cpp:2113 part/part.cpp:2131
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "Recargante le documento..."
+msgstr "Recargante le documento…"
 
 #: part/part.cpp:2288 part/toc.cpp:38
 #, kde-format
@@ -4871,10 +4835,9 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: part/part.cpp:2779 part/part.cpp:2801
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Salveguarda como archivo de documento de Okular..."
+msgstr "Salveguarda como archivo de documento de Okular…"
 
 #: part/part.cpp:2791
 #, kde-format
@@ -5305,10 +5268,9 @@ msgid "&Fonts"
 msgstr "&Fonts"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Legente information de font..."
+msgstr "Legente information de font…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5729,14 +5691,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Revision de documento %1 de %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
-msgstr "Vide version signate..."
+msgstr "Vide version signate…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "Vide certificato..."
 
@@ -5799,13 +5759,12 @@ msgstr "Video non supportate in iste okular"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Adde..."
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Edita"
+msgstr "&Edita…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

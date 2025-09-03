@@ -510,7 +510,7 @@ public:
     virtual void setAppearanceChoiceText(const QString &text) = 0;
 
     /**
-     * Sets the @p value asssociated with the choice form field.
+     * Sets the @p value associated with the choice form field.
      * It does not set anything for ListBox for now, only for the ComboBox.
      *
      * Expected type of @p value is QString.

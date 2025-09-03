@@ -263,7 +263,7 @@ function AFTime_Format( ptf )
         return;
     }
 
-    // Make it of lenght 3, since we use hh, mm, ss
+    // Make it of length 3, since we use hh, mm, ss
     while( tokens.length < 3 )
         tokens.push( 0 );
 

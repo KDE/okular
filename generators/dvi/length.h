@@ -191,7 +191,7 @@ public:
         return fabs(length_in_mm - o.getLength_in_mm()) <= 2.0;
     }
 
-    /** Comparison of two lengthes */
+    /** Comparison of two lengths */
     bool operator>(const Length o) const
     {
         return (length_in_mm > o.getLength_in_mm());
@@ -201,7 +201,7 @@ public:
         return (length_in_mm < o.getLength_in_mm());
     }
 
-    /** Comparison of two lengthes */
+    /** Comparison of two lengths */
     bool operator>=(const Length o) const
     {
         return (length_in_mm >= o.getLength_in_mm());
@@ -211,22 +211,22 @@ public:
         return (length_in_mm <= o.getLength_in_mm());
     }
 
-    /** Ratio of two lengthes
+    /** Ratio of two lengths
 
-    @warning There is no safeguared to prevent you from division by
+    @warning There is no safeguard to prevent you from division by
     zero. If the length in the denominator is near 0.0, a floating point
     exception may occur.
 
-    @returns the ratio of the two lengthes as a double
+    @returns the ratio of the two lengths as a double
     */
     double operator/(const Length o) const
     {
         return (length_in_mm / o.getLength_in_mm());
     }
 
-    /** Sum of two lengthes
+    /** Sum of two lengths
 
-    @returns the sum of the lengthes as a Length
+    @returns the sum of the lengths as a Length
     */
     Length operator+(const Length o) const
     {
@@ -235,9 +235,9 @@ public:
         return r;
     }
 
-    /** Difference of two lengthes
+    /** Difference of two lengths
 
-    @returns the difference of the lengthes as a Length
+    @returns the difference of the lengths as a Length
     */
     Length operator-(const Length o) const
     {
@@ -248,7 +248,7 @@ public:
 
     /** Division of a length
 
-    @warning There is no safeguared to prevent you from division by
+    @warning There is no safeguard to prevent you from division by
     zero. If the number in the denominator is near 0.0, a floating point
     exception may occur.
 

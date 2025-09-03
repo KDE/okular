@@ -39,7 +39,7 @@ public:
 
     @param bl value for the baseline field
     @param re value for the box
-    @param lT valus for the text field
+    @param lT value for the text field
     */
     Hyperlink(quint32 bl, const QRect re, const QString &lT)
         : baseline(bl)

@@ -30,7 +30,7 @@ using namespace Qt::Literals::StringLiterals;
 // not keep multiple same strings around, but just up the
 // refcount a bit
 // The main reason for '2' is that most calls here happens
-// in auxillary threads that are following a document
+// in auxiliary threads that are following a document
 // and keeping the pool thread_local gives quite a bit
 // of advantage here.
 // Some calls though comes from the main thread, so we
@@ -615,7 +615,7 @@ static int stringLengthAdaptedWithHyphen(const QString &str, TextEntity::List::C
     // check if the string contains a '-' character
     // if the '-' is the last entry
     if (str.endsWith(QLatin1Char('-'))) {
-        // validity chek of it + 1
+        // validity check of it + 1
         if ((it + 1) != textListEnd) {
             // 1. if the next character is '\n'
             const QString &lookahedStr = (it + 1)->text();
@@ -1500,7 +1500,7 @@ static RegionTextList XYCutForBoundingBoxes(const QList<WordWithCharacters> &wor
             cut_hor = true;
         } else {
             // no cut possible
-            // we can now update the node rectangle with the shrinked rectangle
+            // we can now update the node rectangle with the shrunken rectangle
             RegionText tmpNode = tree.at(i);
             tmpNode.setArea(regionRect);
             tree.replace(i, tmpNode);

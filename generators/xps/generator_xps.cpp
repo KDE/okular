@@ -1480,7 +1480,7 @@ QImage XpsPage::loadImageFromFile(const QString &fileName)
 
     /* WORKAROUND:
         XPS standard requires to use 96dpi for images which doesn't have dpi specified (in file). When Qt loads such an image,
-        it sets its dpi to qt_defaultDpi and doesn't allow to find out that it happend.
+        it sets its dpi to qt_defaultDpi and doesn't allow to find out that it happened.
 
         To workaround this I used this procedure: load image, set its dpi to 96, load image again. When dpi isn't set in file,
         dpi set by me stays unchanged.

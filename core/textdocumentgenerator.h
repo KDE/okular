@@ -191,7 +191,7 @@ public:
     /**
      * Config skeleton for TextDocumentSettingsWidget
      *
-     * You must use new construtor to initialize TextDocumentSettings,
+     * You must use new constructor to initialize TextDocumentSettings,
      * that contain @p configName .
      *
      * @since 0.17 (KDE 4.11)

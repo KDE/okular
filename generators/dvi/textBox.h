@@ -41,7 +41,7 @@ public:
     Trivial constructor leaves that initialized all members.
 
     @param re value for the box
-    @param lT valus for the text field
+    @param lT value for the text field
     */
     TextBox(const QRect re, const QString &lT)
         : box(re)

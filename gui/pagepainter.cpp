@@ -740,7 +740,7 @@ void PagePainter::invertLightness(QImage *image)
         // Hint: Lightness L = m + C / 2; L' = 255 - L = 255 - (m + C / 2) => m' = 255 - C - m
         uchar m_ = 255 - C - m;
 
-        // Add m' to color compontents
+        // Add m' to color components
         R += m_;
         G += m_;
         B += m_;
@@ -848,7 +848,7 @@ void PagePainter::invertLumaPixel(uchar &R, uchar &G, uchar &B, float Y_R, float
     // Calculate missing luma (in range 0..255), to get common component m_inv
     float m_inv = Y_inv - (Y_R * R_ + Y_G * G_ + Y_B * B_);
 
-    // Add m_inv to color compontents
+    // Add m_inv to color components
     R_ += m_inv;
     G_ += m_inv;
     B_ += m_inv;

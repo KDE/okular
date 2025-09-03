@@ -63,7 +63,7 @@ class View;
 class VisiblePageRect;
 class SignatureInfo;
 
-/** IDs for seaches. Globally defined here. **/
+/** IDs for searches. Globally defined here. **/
 #define PART_SEARCH_ID 1
 #define PAGEVIEW_SEARCH_ID 2
 #define SW_SEARCH_ID 3
@@ -1133,7 +1133,7 @@ public:
 
     /** returns the overriding editor command.
      *
-     * If the editor command was not overriden, the string is empty.
+     * If the editor command was not overridden, the string is empty.
      *
      * @since 22.04
      */

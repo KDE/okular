@@ -995,7 +995,7 @@ Document::OpenResult DocumentPrivate::openDocumentInternal(const KPluginMetaData
         }
     } else {
         /*
-         *  Now that the documen is opened, the tab (if using tabs) is visible, which mean that
+         * Now that the document is opened, the tab (if using tabs) is visible, which means that
          * we can now connect the error reporting signal directly to the parent
          */
 
@@ -1943,7 +1943,7 @@ void DocumentPrivate::doContinueGooglesDocumentSearch(QSet<int> *pagesToNotify, 
                     break;
                 }
 
-                // add highligh rect to the matches map
+                // add highlight rect to the matches map
                 (*pageMatches)[page].append(MatchColor(lastMatch, wordColor));
                 wordMatched = true;
             }
@@ -4344,7 +4344,7 @@ void Document::processFormatAction(const Action *action, Okular::FormField *ff)
         // When the field was calculated we need to refresh even
         // if the format script changed nothing. e.g. on error.
         // This is because the recalculateForms function delegated
-        // the responsiblity for the refresh to us.
+        // the responsibility for the refresh to us.
         Q_EMIT refreshFormWidget(ff);
         d->refreshPixmaps(foundPage);
     }
@@ -4401,7 +4401,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormField *f
        When encoded using 2 code units, the units are referred to as surrogate pairs.
        selectionStart() and selectionEnd() methods evaluate prevCursorPos and prevAnchorPos based on code units during selection.
 
-       While this unit-based evaulation is suitable for detecting changes, for providing consistency with Adobe Reader for values of selStart and selEnd,
+       While this unit-based evaluation is suitable for detecting changes, for providing consistency with Adobe Reader for values of selStart and selEnd,
        it would be best to evaluate in terms of code points rather than the code units.
 
        To correct the values of selStart and selEnd accordingly, we iterate over the code units. If a surrogate pair is encountered, then selStart and

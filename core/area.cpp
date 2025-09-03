@@ -453,7 +453,7 @@ bool AnnotationObjectRect::contains(double x, double y, double xScale, double yS
 
 AnnotationObjectRect::~AnnotationObjectRect()
 {
-    // the annotation pointer is kept elsewehere (in Page, most probably),
+    // the annotation pointer is kept elsewhere (in Page, most probably)
     // so just release its pointer
     m_object = nullptr;
 }

@@ -16,7 +16,7 @@
 
 quint8 bigEndianByteReader::readUINT8()
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
 #ifdef DEBUG_ENDIANREADER
@@ -32,7 +32,7 @@ quint8 bigEndianByteReader::readUINT8()
 
 quint16 bigEndianByteReader::readUINT16()
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
         return EOP;
@@ -46,7 +46,7 @@ quint16 bigEndianByteReader::readUINT16()
 
 quint32 bigEndianByteReader::readUINT32()
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
         return EOP;
@@ -62,7 +62,7 @@ quint32 bigEndianByteReader::readUINT32()
 
 void bigEndianByteReader::writeUINT32(quint32 a)
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
         return;
@@ -82,7 +82,7 @@ void bigEndianByteReader::writeUINT32(quint32 a)
 
 quint32 bigEndianByteReader::readUINT(quint8 size)
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
         return EOP;
@@ -98,7 +98,7 @@ quint32 bigEndianByteReader::readUINT(quint8 size)
 
 qint32 bigEndianByteReader::readINT(quint8 length)
 {
-    // This check saveguards us against segmentation fault. It is also
+    // This check safeguards us against segmentation fault. It is also
     // necessary for virtual fonts, which do not end with EOP.
     if (command_pointer >= end_pointer) {
         return EOP;

@@ -20,7 +20,7 @@ class Page;
 /**
  * @short A JavaScript Event Object data container.
  *
- * Object to represet a JavaScript Event Object as described in the
+ * Object to represent a JavaScript Event Object as described in the
  * Acrobat JavaScript Scripting Reference.
  *
  * The implementation is currently limited. To implement support

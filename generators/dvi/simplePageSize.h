@@ -137,7 +137,7 @@ public:
 
     /** \brief Returns a zoom to fit into a certain page size
 
-    This method computes the larget zoom value such that *this, zoomed
+    This method computes the largest zoom value such that *this, zoomed
     by the computed values fits into the page size 'target'. If *this or
     if target are invalid, or is this->isSmall() is true, an undefined
     value is returned. If height or width of this is nearly 0.0, a

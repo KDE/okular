@@ -447,7 +447,7 @@ void DviGenerator::loadPages(QList<Okular::Page *> &pagesVector)
 
         pagesVector[i] = page;
     }
-    qCDebug(OkularDviDebug) << "pagesVector successfully inizialized!";
+    qCDebug(OkularDviDebug) << "pagesVector successfully initialized!";
 
     // filling the pages with the source references rects
     const QList<DVI_SourceFileAnchor> &sourceAnchors = m_dviRenderer->sourceAnchors();

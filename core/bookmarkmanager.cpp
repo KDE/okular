@@ -454,7 +454,7 @@ bool BookmarkManager::addBookmark(const QUrl &documentUrl, const Okular::Documen
     if (title.isEmpty()) {
         // if we have no title specified for the new bookmark, then give it the
         // name '#p' where p is the page number where the bookmark is located.
-        // if there's more than one bookmark per page, give the name '#p-n'
+        // if there's more than one bookmark per page, give the name '#p-n' ///
         // where n is the index of this bookmark among the ones of its page.
         const QString pageLabel = d->document->m_parent->page(vp.pageNumber)->label();
         newtitle = QStringLiteral("#");

@@ -37,6 +37,7 @@ Options:
   require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
   per-test-timeout: 300
   cppcheck-arguments: '--enable=warning,style,performance --library=okular-cppcheck.xml --suppress-xml=cppcheck-suppressions.xml'
+  clang-format-versions: [19]
   cppcheck-ignore-files:
     - autotests
     - core/synctex/synctex_parser.c

@@ -19,6 +19,7 @@
 #include "dlgpresentation.h"
 
 #include <QLabel>
+#include <QVBoxLayout>
 
 PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton, Okular::EmbedMode embedMode, const QString &editCmd)
     : KConfigDialog(parent, QStringLiteral("preferences"), skeleton)
@@ -59,6 +60,29 @@ PreferencesDialog::PreferencesDialog(QWidget *parent, KConfigSkeleton *skeleton,
             addPage(editor, i18n("Editor"), QStringLiteral("accessories-text-editor"), i18n("Editor Options"));
         }
     }
+
+#if HAVE_KUSERFEEDBACK
+    // KUserFeedback Config
+    if (Okular::Part::userFeedbackProvider()) {
+        auto page = new QFrame(this);
+        auto vlayout = new QVBoxLayout(page);
+        vlayout->setContentsMargins(0, 0, 0, 0);
+        vlayout->setSpacing(0);
+
+        m_userFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(page);
+        m_userFeedbackWidget->setFeedbackProvider(Okular::Part::userFeedbackProvider());
+        vlayout->addWidget(m_userFeedbackWidget);
+
+        // set current active mode + write back the config for future starts
+        connect(this, &QDialog::accepted, m_userFeedbackWidget, [this]() {
+            Okular::Part::userFeedbackProvider()->setTelemetryMode(m_userFeedbackWidget->telemetryMode());
+            Okular::Part::userFeedbackProvider()->setSurveyInterval(m_userFeedbackWidget->surveyInterval());
+        });
+
+        addPage(page, i18n("User Feedback"), QStringLiteral("preferences-desktop-locale"), i18n("User Feedback"));
+    }
+#endif
+
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     addPage(m_debug, "Debug", "system-run", "Debug options");
 #endif

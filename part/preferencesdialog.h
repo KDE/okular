@@ -11,6 +11,10 @@
 #include "settings.h"
 #include <KConfigDialog>
 
+#if HAVE_KUSERFEEDBACK
+#include <KUserFeedback/FeedbackConfigWidget>
+#endif
+
 class QWidget;
 class KConfigSkeleton;
 
@@ -50,6 +54,10 @@ private:
     DlgSignatures *m_signatures;
 #ifdef OKULAR_DEBUG_CONFIGPAGE
     DlgDebug *m_debug;
+#endif
+
+#if HAVE_KUSERFEEDBACK
+    KUserFeedback::FeedbackConfigWidget *m_userFeedbackWidget = nullptr;
 #endif
 
     KPageWidgetItem *m_accessibilityPage;

@@ -34,6 +34,10 @@
 #include <KParts/ReadWritePart>
 #include <KPluginFactory>
 
+#if HAVE_KUSERFEEDBACK
+#include <KUserFeedback/Provider>
+#endif
+
 #include "../core/document.h"
 #include "../core/observer.h"
 #include "../interfaces/viewerinterface.h"
@@ -160,6 +164,17 @@ public:
      * please reconsider or at least update this comment.
      */
     QAbstractItemModel *annotationsModel() const;
+
+#if HAVE_KUSERFEEDBACK
+    /**
+     * Get our global user feedback provider
+     * @return user feedback provider
+     */
+    static KUserFeedback::Provider *userFeedbackProvider()
+    {
+        return s_userFeedbackProvider;
+    }
+#endif
 
 public Q_SLOTS: // dbus
     Q_SCRIPTABLE Q_NOREPLY void goToPage(uint page) override;
@@ -305,6 +320,10 @@ private:
     void setupViewerActions();
     void setViewerShortcuts();
     void setupActions();
+
+#if HAVE_KUSERFEEDBACK
+    void setupUserFeedback();
+#endif
 
     void setupPrint(QPrinter &printer);
     bool doPrint(QPrinter &printer);
@@ -476,6 +495,11 @@ private:
 
     // Current value of maxRecentItems to detect value change, and inform shell
     int m_maxRecentItems;
+
+#if HAVE_KUSERFEEDBACK
+    // global instance, just filled if the part is used inside Okular itself
+    static QPointer<KUserFeedback::Provider> s_userFeedbackProvider;
+#endif
 
 private Q_SLOTS:
     void slotAccessibilityPreferences();

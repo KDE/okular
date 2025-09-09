@@ -13,6 +13,7 @@ Dependencies:
     'frameworks/karchive': '@latest-kf6'
     'frameworks/kparts': '@latest-kf6'
     'frameworks/ktextwidgets': '@latest-kf6'
+    'frameworks/kuserfeedback': '@latest-kf6'
     'frameworks/kwidgetsaddons': '@latest-kf6'
     'frameworks/kxmlgui': '@latest-kf6'
     'libraries/phonon': '@latest-kf6'

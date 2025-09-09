@@ -513,7 +513,8 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6UserFeedback"
             ],
             "post-install": [
                 "mv /app/bin/okular /app/bin/okular-bin",

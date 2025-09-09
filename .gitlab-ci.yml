@@ -33,7 +33,7 @@ build_ubuntu_24_10:
    - apt-get update
    - apt-get install --yes eatmydata
    - eatmydata apt-get build-dep --yes --no-install-recommends okular
-   - eatmydata apt-get install --yes --no-install-recommends ninja-build
+   - eatmydata apt-get install --yes --no-install-recommends ninja-build libkf6userfeedback-dev
  script:
    - mkdir -p build && cd build
    - cmake -DOKULAR_UI=both -G Ninja ..

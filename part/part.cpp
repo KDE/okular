@@ -90,6 +90,15 @@
 #include <purpose_version.h>
 #endif
 
+#if HAVE_KUSERFEEDBACK
+#include <KUserFeedback/ApplicationVersionSource>
+#include <KUserFeedback/PlatformInfoSource>
+#include <KUserFeedback/QtVersionSource>
+#include <KUserFeedback/ScreenInfoSource>
+#include <KUserFeedback/StartCountSource>
+#include <KUserFeedback/UsageTimeSource>
+#endif
+
 // local includes
 #include "aboutdata.h"
 #include "bookmarklist.h"
@@ -618,6 +627,10 @@ Part::Part(QObject *parent, const QVariantList &args)
 
 #ifdef OKULAR_KEEP_FILE_OPEN
     m_keeper = new FileKeeper();
+#endif
+
+#if HAVE_KUSERFEEDBACK
+    setupUserFeedback();
 #endif
 }
 
@@ -3906,6 +3919,50 @@ QAbstractItemModel *Part::annotationsModel() const
 {
     return m_reviewsWidget ? m_reviewsWidget->annotationsModel() : nullptr;
 }
+
+#if HAVE_KUSERFEEDBACK
+
+QPointer<KUserFeedback::Provider> Part::s_userFeedbackProvider;
+
+void Part::setupUserFeedback()
+{
+    // only do that if we are in the Okular application
+    if (m_embedMode != NativeShellMode) {
+        return;
+    }
+
+    // instantiate once per application
+    if (!s_userFeedbackProvider) {
+        s_userFeedbackProvider = new KUserFeedback::Provider(qApp);
+    }
+
+    /**
+     * defaults, inspired by plasma
+     */
+    s_userFeedbackProvider->setProductIdentifier(QStringLiteral("org.kde.okular"));
+    s_userFeedbackProvider->setFeedbackServer(QUrl(QStringLiteral("https://telemetry.kde.org/")));
+    s_userFeedbackProvider->setSubmissionInterval(7);
+    s_userFeedbackProvider->setApplicationStartsUntilEncouragement(5);
+    s_userFeedbackProvider->setEncouragementDelay(30);
+
+    /**
+     * add some feedback providers
+     */
+
+    // software version info
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::ApplicationVersionSource);
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::QtVersionSource);
+
+    // info about the machine
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::PlatformInfoSource);
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::ScreenInfoSource);
+
+    // usage info
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::StartCountSource);
+    s_userFeedbackProvider->addDataSource(new KUserFeedback::UsageTimeSource);
+}
+
+#endif
 
 } // namespace Okular
 

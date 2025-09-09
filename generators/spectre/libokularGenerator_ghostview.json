@@ -52,7 +52,6 @@
                 "Name[tr]": "Albert Astals Cid",
                 "Name[uk]": "Albert Astals Cid",
                 "Name[vi]": "Albert Astals Cid",
-                "Name[x-test]": "xxAlbert Astals Cidxx",
                 "Name[zh_CN]": "Albert Astals Cid",
                 "Name[zh_TW]": "Albert Astals Cid"
             }
@@ -105,7 +104,6 @@
         "Copyright[tr]": "© 2007–2008 Albert Astals Cid",
         "Copyright[uk]": "© Albert Astals Cid, 2007–2008",
         "Copyright[vi]": "© 2007-2008 Albert Astals Cid",
-        "Copyright[x-test]": "xx© 2007-2008 Albert Astals Cidxx",
         "Copyright[zh_CN]": "© 2007-2008 Albert Astals Cid",
         "Copyright[zh_TW]": "© 2007-2008 Albert Astals Cid",
         "Description": "A PostScript file renderer based on the Spectre library",
@@ -153,7 +151,6 @@
         "Description[tr]": "Spectre kitaplığına dayalı bir PostScript dosyası sunucu",
         "Description[uk]": "Обробник файлів PostScript на основі бібліотеки Spectre",
         "Description[vi]": "Một trình kết xuất tệp PostScript dựa trên thư viện Spectre",
-        "Description[x-test]": "xxA PostScript file renderer based on the Spectre libraryxx",
         "Description[zh_CN]": "基于 Spectre 程序库的 PostScript 文件渲染程序",
         "Description[zh_TW]": "基於 Spectre 函式庫的 PostScript 檔成像器",
         "License": "GPL",
@@ -210,7 +207,6 @@
         "Name[tr]": "PS Arka Ucu",
         "Name[uk]": "Модуль PS",
         "Name[vi]": "Hậu phương PS",
-        "Name[x-test]": "xxPS Backendxx",
         "Name[zh_CN]": "PS 后端程序",
         "Name[zh_TW]": "PS 後端介面",
         "Version": "0.1.7"

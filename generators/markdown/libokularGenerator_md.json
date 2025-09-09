@@ -50,7 +50,6 @@
                 "Name[tr]": "Julian Wolff",
                 "Name[uk]": "Julian Wolff",
                 "Name[vi]": "Julian Wolff",
-                "Name[x-test]": "xxJulian Wolffxx",
                 "Name[zh_CN]": "Julian Wolff",
                 "Name[zh_TW]": "Julian Wolff"
             }
@@ -103,7 +102,6 @@
         "Copyright[tr]": "© 2017 Julian Wolff",
         "Copyright[uk]": "© Julian Wolff, 2017",
         "Copyright[vi]": "© 2017 Julian Wolff",
-        "Copyright[x-test]": "xx© 2017 Julian Wolffxx",
         "Copyright[zh_CN]": "© 2017 Julian Wolff",
         "Copyright[zh_TW]": "© 2017 Julian Wolff",
         "License": "GPL",
@@ -158,7 +156,6 @@
         "Name[tr]": "Markdown Arka Ucu",
         "Name[uk]": "Модуль Markdown",
         "Name[vi]": "Hậu phương Markdown",
-        "Name[x-test]": "xxMarkdown Backendxx",
         "Name[zh_CN]": "Markdown 后端程序",
         "Name[zh_TW]": "Markdown 後端介面",
         "Version": "0.1.0"

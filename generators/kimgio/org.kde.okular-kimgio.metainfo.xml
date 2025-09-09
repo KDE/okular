@@ -54,7 +54,6 @@
   <name xml:lang="tr">Görseller</name>
   <name xml:lang="uk">Зображення</name>
   <name xml:lang="vi">Ảnh</name>
-  <name xml:lang="x-test">xxImagesxx</name>
   <name xml:lang="zh-CN">图像</name>
   <name xml:lang="zh-TW">影像</name>
   <summary>Adds support for reading many image formats</summary>
@@ -106,7 +105,6 @@
   <summary xml:lang="tr">Birçok görsel biçimini okuma desteği ekler</summary>
   <summary xml:lang="uk">Додає підтримку читання зображень у багатьох форматах</summary>
   <summary xml:lang="vi">Thêm hỗ trợ đọc nhiều định dạng ảnh</summary>
-  <summary xml:lang="x-test">xxAdds support for reading many image formatsxx</summary>
   <summary xml:lang="zh-CN">增加对多种图像格式的阅读支持</summary>
   <summary xml:lang="zh-TW">加入讀取許多影像格式的支援</summary>
   <provides>

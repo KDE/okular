@@ -24,3 +24,6 @@
 
 /* Defines whether we are building with dbus enabled */
 #cmakedefine01 HAVE_DBUS
+
+/* Defines whether we are building with telemetry enabled */
+#cmakedefine01 HAVE_KUSERFEEDBACK

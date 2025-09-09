@@ -180,6 +180,16 @@ if (BUILD_DESKTOP)
     else()
         set(HAVE_SPEECH 0)
     endif()
+
+    # optional KUserFeedback integration
+    find_package(KF6UserFeedback ${KF_REQUIRED_VERSION} CONFIG)
+    set_okular_optional_package_properties(KF6UserFeedback PROPERTIES
+        PURPOSE "Enables opt-in telemetry via KUserFeedback.")
+    if (KF6UserFeedback_FOUND)
+        set(HAVE_KUSERFEEDBACK 1)
+    else()
+        set(HAVE_KUSERFEEDBACK 0)
+    endif()
 endif()
 
 if (BUILD_MOBILE)
@@ -607,6 +617,9 @@ if (TARGET Qt6::DBus)
 endif()
 if (Phonon4Qt6_FOUND)
    target_link_libraries(okularpart Phonon::phonon4qt6)
+endif()
+if (HAVE_KUSERFEEDBACK)
+    target_link_libraries(okularpart KF6::UserFeedbackWidgets)
 endif()
 
 if(KF6Wallet_FOUND)

@@ -206,8 +206,8 @@ if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
     else()
         find_package(Qt6Gui REQUIRED COMPONENTS Private)
     endif()
-    find_package(PlasmaActivities REQUIRED)
-    set_package_properties("PlasmaActivities" PROPERTIES
+    find_package(PlasmaActivities)
+    set_okular_optional_package_properties(PlasmaActivities PROPERTIES
         DESCRIPTION  "Activities interface library"
         URL "https://invent.kde.org/plasma/plasma-activities"
         PURPOSE "Required for Activities integration."

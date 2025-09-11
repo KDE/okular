@@ -118,10 +118,10 @@ ecm_add_test(check_distinguished_name_parser.cpp
     TEST_NAME "distinguishednameparser"
     LINK_LIBRARIES Qt6::Test)
 
-if(PlasmaActivities_FOUND AND BUILD_DESKTOP)
+if(BUILD_DESKTOP)
     ecm_add_test(mainshelltest.cpp ../shell/okular_main.cpp ../shell/shellutils.cpp ../shell/shell.cpp ../shell/welcomescreen.cpp ../gui/recentitemsmodel.cpp closedialoghelper.cpp
         TEST_NAME "mainshelltest"
-        LINK_LIBRARIES Qt6::Test Plasma::Activities okularpart okularcore
+        LINK_LIBRARIES Qt6::Test okularpart okularcore
     )
     target_compile_definitions(mainshelltest PRIVATE OKULAR_BINARY="$<TARGET_FILE:okular>")
 

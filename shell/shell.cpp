@@ -53,9 +53,6 @@
 #include <QTabBar>
 #include <QTabWidget>
 #include <QTimer>
-#ifdef WITH_KACTIVITIES
-#include <PlasmaActivities/ResourceInstance>
-#endif
 
 #include <kio_version.h>
 #include <kxmlgui_version.h>
@@ -489,9 +486,6 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
         const bool isstdin = url.fileName() == QLatin1String("-") || url.scheme() == QLatin1String("fd");
         if (!isstdin) {
             if (openOk) {
-#ifdef WITH_KACTIVITIES
-                KActivities::ResourceInstance::notifyAccessed(url);
-#endif
                 m_recent->addUrl(url);
             } else {
                 m_recent->removeUrl(url);

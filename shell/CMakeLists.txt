@@ -30,11 +30,6 @@ target_link_libraries(okular KF6::I18n KF6::Parts KF6::WindowSystem KF6::Crash K
 if (TARGET Qt6::DBus)
     target_link_libraries(okular Qt6::DBus)
 endif()
-if(TARGET Plasma::Activities)
-    target_compile_definitions(okular PUBLIC -DWITH_KACTIVITIES=1)
-    target_link_libraries(okular Plasma::Activities)
-endif()
-
 if (HAVE_X11)
     target_link_libraries(okular Qt6::GuiPrivate)
 endif()

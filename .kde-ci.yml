@@ -24,10 +24,6 @@ Dependencies:
     'frameworks/breeze-icons': '@latest-kf6'
     'graphics/libkexiv2': '@same'
 
-- 'on': ['Linux', 'FreeBSD']
-  'require':
-    'frameworks/kpty': '@latest-kf6'
-
 - 'on': ['Android']
   'require':
     'frameworks/kirigami': '@latest-kf6'

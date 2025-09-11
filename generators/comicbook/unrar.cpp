@@ -10,13 +10,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QGlobalStatic>
-#include <QTemporaryDir>
-
 #include <QLoggingCategory>
-#if defined(WITH_KPTY)
-#include <KPtyDevice>
-#include <KPtyProcess>
-#endif
+#include <QTemporaryDir>
 
 #include "debug_comicbook.h"
 
@@ -255,43 +250,21 @@ int Unrar::startSyncProcess(const ProcessArgs &args)
 {
     int ret = 0;
 
-#if !defined(WITH_KPTY)
     mProcess = new QProcess(this);
     connect(mProcess, &QProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
     connect(mProcess, &QProcess::readyReadStandardError, this, &Unrar::readFromStderr);
     connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Unrar::finished);
 
-#else
-    mProcess = new KPtyProcess(this);
-    mProcess->setOutputChannelMode(KProcess::SeparateChannels);
-    connect(mProcess, &KPtyProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
-    connect(mProcess, &KPtyProcess::readyReadStandardError, this, &Unrar::readFromStderr);
-    connect(mProcess, static_cast<void (KPtyProcess::*)(int, QProcess::ExitStatus)>(&KPtyProcess::finished), this, &Unrar::finished);
-
-#endif
-
-#if !defined(WITH_KPTY)
     if (helper->kind->name() == QLatin1String("unar") && args.useLsar) {
         mProcess->start(helper->lsarPath, args.appArgs, QIODevice::ReadWrite | QIODevice::Unbuffered);
     } else {
         mProcess->start(helper->unrarPath, args.appArgs, QIODevice::ReadWrite | QIODevice::Unbuffered);
     }
 
-    ret = mProcess->waitForFinished(-1) ? 0 : 1;
-#else
-    if (helper->kind->name() == QLatin1String("unar") && args.useLsar) {
-        mProcess->setProgram(helper->lsarPath, args.appArgs);
-    } else {
-        mProcess->setProgram(helper->unrarPath, args.appArgs);
-    }
-
-    mProcess->setNextOpenMode(QIODevice::ReadWrite | QIODevice::Unbuffered);
-    mProcess->start();
     QEventLoop loop;
     mLoop = &loop;
     ret = loop.exec(QEventLoop::WaitForMoreEvents | QEventLoop::ExcludeUserInputEvents);
     mLoop = nullptr;
-#endif
 
     delete mProcess;
     mProcess = nullptr;
@@ -305,9 +278,5 @@ void Unrar::writeToProcess(const QByteArray &data)
         return;
     }
 
-#if !defined(WITH_KPTY)
     mProcess->write(data);
-#else
-    mProcess->pty()->write(data);
-#endif
 }

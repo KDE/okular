@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2025-09-11 00:40+0000\n"
 "PO-Revision-Date: 2020-10-16 11:47+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "xxmn77@gmail.com"
 
-#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:82
 #, kde-format
 msgid "Unable to load document: %1"
 msgstr "Sənədi yükləmək mümkün olmadı: %1"
 
-#: generator_kimgio.cpp:76
+#: generator_kimgio.cpp:80
 #, kde-format
 msgid ""
 "This document appears malformed. Here is a best approximation of the "

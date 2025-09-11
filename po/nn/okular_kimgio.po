@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_kimgio\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:27+0000\n"
+"POT-Creation-Date: 2025-09-11 00:40+0000\n"
 "PO-Revision-Date: 2018-01-21 15:33+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -29,12 +29,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "karl@huftis.org"
 
-#: generator_kimgio.cpp:55 generator_kimgio.cpp:78
+#: generator_kimgio.cpp:55 generator_kimgio.cpp:82
 #, kde-format
 msgid "Unable to load document: %1"
 msgstr "Klarte ikkje lasta dokumentet: %1"
 
-#: generator_kimgio.cpp:76
+#: generator_kimgio.cpp:80
 #, kde-format
 msgid ""
 "This document appears malformed. Here is a best approximation of the "

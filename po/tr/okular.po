@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2025-07-14 13:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -5869,17 +5869,17 @@ msgstr "Hata: --page anahtarıyla birden çok belge açılamaz"
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Hata: --print anahtarıyla birden çok belge açılamaz"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Okular bileşeni bulunamıyor: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
 msgstr "Kenar Çubuğu"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5888,12 +5888,12 @@ msgstr ""
 "Benzersiz bir Okular örneği halihazırda çalışıyor. Bu örnek benzersiz "
 "olmayacaktır."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular bileşeni bulunamıyor."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5902,7 +5902,7 @@ msgstr ""
 "Bir dosyayı açmak için tıklayın\n"
 "Son kullanılan dosyaları açmak için tıklayın ve bekleyin"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5910,57 +5910,57 @@ msgstr ""
 "Bir dosya açmak için <b>tıklayın</b> veya Son kullanılan bir dosyayı açmak "
 "için <b>tıklayın ve bekleyin</b>"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Sonraki Sekme"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Önceki Sekme"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "Sekme Kapatmayı Geri Al"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Kenar Çubuğunu Kilitle"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "Tüm dosyalar (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Desteklenen tüm dosyalar (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Belge Aç"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "Kapatmayı Onayla"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "Sekmeleri Kapat"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 sekmeyi kapatmak üzeresiniz. Sürdürmek istediğinizden emin misiniz?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Çok sayıda sekmeyi kapatmaya çalıştığımda beni uyar"

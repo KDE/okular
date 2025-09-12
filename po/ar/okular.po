@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2025-08-14 11:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -5843,29 +5843,29 @@ msgstr "خطأ: لا يُمكِن فتح أكثر من مستند واحد با�
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "خطأ: لا يُمكِن فتح أكثر من مستند واحد باستخدام الخيار find--"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "عجز عن إيجاد مكون أوكلار: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
 msgstr "الشريط الجانبي"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr "هناك جلسة أوكلار فريدة مفتوحة فعلًا. لن تكون هذه الجلسة جلسة فريدة."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "عجز عن إيجاد مكون أوكلار."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5874,63 +5874,63 @@ msgstr ""
 "انقر لفتح ملف\n"
 "انقر و أمسك لفتح ملف أخير"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>انقر</b> لفتح ملف <b>انقر وأمسك</b> لتحديد ملف حديث"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "اللسان التالي"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "اللسان السابق"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "تراجع عن إغلاق اللسان"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "اقفل الشريط الجانبي"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "كلّ الملفّات (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "كلّ الملفّات المدعومة (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "المستند المفتوح"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "أكد الغلق"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "أغلق الألسنة"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "أنت على وشك غلق الألسنة %1. أمتأكد من المتابعة؟"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "حذرني عند محاولة غلق عدة ألسنة"

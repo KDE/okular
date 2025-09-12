@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2025-08-18 11:41+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -5939,17 +5939,17 @@ msgstr ""
 "Ошибка: параметр «--find» может быть использован при открытии только одного "
 "документа."
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Не удалось найти компонент Okular: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
 msgstr "Боковая панель"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5958,12 +5958,12 @@ msgstr ""
 "Единственный экземпляр Okular уже запущен. Этот экземпляр не будет "
 "единственным."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Невозможно найти компонент Okular."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5972,7 +5972,7 @@ msgstr ""
 "Нажмите для открытия файла\n"
 "Нажмите и удерживайте кнопку мыши для открытия последнего файла"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5980,57 +5980,57 @@ msgstr ""
 "<b>Нажмите</b> для открытия файла или <b>нажмите и удерживайте кнопку мыши</"
 "b> для открытия последнего файла"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Следующая вкладка"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Предыдущая вкладка"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "Восстановить закрытую вкладку"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Зафиксировать боковую панель"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "Все файлы (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Все поддерживаемые файлы (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Открыть документ"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "Подтверждение выхода"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрыть вкладки"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Будут закрыты %1 вкладок. Продолжить?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Предупреждать при попытке закрытия нескольких вкладок"

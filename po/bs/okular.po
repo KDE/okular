@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -6199,19 +6199,19 @@ msgstr ""
 "Greška: Ne možete otvoriti više od jednog dokumenta pomoću --presentation "
 "prekidača"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, fuzzy, kde-format
 #| msgid "Unable to find the Okular component."
 msgid "Unable to find the Okular component: %1"
 msgstr "Ne mogu pronaći komponentu Okulara."
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "Prikaži &traku stranica"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -6219,12 +6219,12 @@ msgid ""
 msgstr ""
 "Već postoji jedna kopija programa Okular. Ova kopija neće biti jedinstvena."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Ne mogu pronaći komponentu Okulara."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6233,7 +6233,7 @@ msgstr ""
 "Kliknite da otvorite datoteku\n"
 "Kliknite i držite da otvorite skorašnju datoteku"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6241,60 +6241,60 @@ msgstr ""
 "<b>Kliknite</b> da otvorite datoteka ili <b>kliknite i držite</b> da "
 "izaberete skorašnju datoteku"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Sljedeća kartica"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Prethodna kartica"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "Prikaži &traku stranica"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|Sve datoteke"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Otvori dokument"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Zatvori"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

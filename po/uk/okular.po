@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2025-07-11 09:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -5917,17 +5917,17 @@ msgstr ""
 "Помилка: якщо вказано параметр --find, не можна відкривати декілька "
 "документів"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Не вдається знайти компонент Okular: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
 msgstr "Бічна панель"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5935,12 +5935,12 @@ msgid ""
 msgstr ""
 "Один екземпляр програми вже запущено. Цей екземпляр не буде унікальним."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Не вдається знайти компонент Okular."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5949,7 +5949,7 @@ msgstr ""
 "Клацніть, щоб відкрити файл\n"
 "Натисніть і тримайте, щоб відкрити недавній файл"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5957,57 +5957,57 @@ msgstr ""
 "<b>Клацніть</b>, щоб відкрити файл або <b>натисніть і тримайте</b>, щоб "
 "відкрити недавній файл"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Наступна вкладка"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Попередня вкладка"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "Скасувати закриття вкладки"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Заблокувати бічну панель"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "усі файли (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "усі файли, що підтримуються (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Відкрити документ"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "Підтвердити закриття"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрити вкладки"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Ви наказали програми закрити вкладки (%1). Ви справді цього хочете?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Попереджати, якщо відбувається спроба закрити декілька вкладок"

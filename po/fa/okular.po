@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -6028,30 +6028,30 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, fuzzy, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Sidebar"
 msgstr "نمایش &میله‌های لغزش‌"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, fuzzy, kde-format
 msgid "Unable to find the Okular component."
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6060,7 +6060,7 @@ msgstr ""
 "فشار دهید تا یک پرونده باز شود\n"
 "فشار دهید و نگه دارید تا پرونده جاری باز شود"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6068,56 +6068,56 @@ msgstr ""
 "<b>فشار دهید</b> تا یک پرونده باز شود، یا <b>فشار دهید و نگه دارید</b> تا "
 "پرونده اخیر گزینش شود"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "صفحه بعدی"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "صفحه قبلی"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "نمایش &میله‌های لغزش‌"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, fuzzy, kde-format
 msgid "All files (*)"
 msgstr "همه پرونده‌ها"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, fuzzy, kde-format
 msgid "Open Document"
 msgstr "باز کردن یک سند"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "بستن"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -6126,7 +6126,7 @@ msgstr ""
 "پرونده‌ای با نام »%1« از قبل موجود است. مطمئن هستید می‌خواهید آن را جای‌نوشت "
 "کنید؟"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

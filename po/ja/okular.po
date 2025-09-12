@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2022-08-28 21:16-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -5917,30 +5917,30 @@ msgstr ""
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Okular のコンポーネントが見つかりません: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "サイドバーを表示(&S)"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okular のコンポーネントが見つかりません。"
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5949,64 +5949,64 @@ msgstr ""
 "クリックしてファイルを開く\n"
 "最近のファイルを開くにはクリックして保持"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "クリックしてファイルを開く、最近のファイルを開くにはクリックして保持"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "次のタブ"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "前のタブ"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "閉じたタブを戻す"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "サイドバーを表示(&S)"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "すべてのファイル (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "すべてのサポートされたファイル (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "文書を開く"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "続行"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "タブを閉じる"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 個のタブが閉じられます。本当に続行しますか？"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "複数のタブが閉じられそうになったとき警告する"

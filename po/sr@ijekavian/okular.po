@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -6294,18 +6294,18 @@ msgstr "Грешка: уз опцију --page може да се отвори �
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Грешка: уз опцију --print може да се отвори само један документ"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Не могу да пронађем компоненту Окулара: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Sidebar"
 msgstr "Прикажи &траку страница"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -6314,12 +6314,12 @@ msgstr ""
 "Јединствени примерак Окулара већ је у погону. Овај примерак неће бити "
 "јединствени."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Не могу да пронађем део Окулара."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6328,7 +6328,7 @@ msgstr ""
 "Кликните да отворите фајл\n"
 "Кликните и држите да отворите недавни фајл"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6336,58 +6336,58 @@ msgstr ""
 "<b>Кликните</b> да отворите фајл или <b>кликните и држите</b> да изаберете "
 "недавни фајл"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Сљедећи језичак"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Претходни језичак"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, fuzzy, kde-format
 #| msgid "Show &Page Bar"
 msgid "Lock Sidebar"
 msgstr "Прикажи &траку страница"
 
 # >> @item
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "сви фајлови (*)"
 
 # >> @item
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "сви подржани фајлови (%1)"
 
 # >> @title:window
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Отварање документа"
 
 # >> @title:window
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "Потврда затварања"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "Затвори језичке"
 
 # >! Plurals.
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
@@ -6395,7 +6395,7 @@ msgstr ""
 "затворити %1 $[множ ^1 језичак језичка језичака]. Желите ли заиста да "
 "наставите?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Упозори ме на покушај затварања више језичака"

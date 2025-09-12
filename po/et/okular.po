@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2020-10-15 14:19+0200\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -6072,18 +6072,18 @@ msgstr "Tõrge: võtit --page kasutades ei saa avada üle ühe dokumendi korraga
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Tõrge: võtit --find kasutades ei saa avada üle ühe dokumendi korraga"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Okulari komponendi leidmine nurjus: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Sidebar"
 msgstr "Külgr&iba näitamine"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -6091,12 +6091,12 @@ msgid ""
 msgstr ""
 "Okulari unikaalne isend juba töötab. Käesolev isend ei oleks unikaalne."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okulari komponendi leidmine nurjus."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6105,7 +6105,7 @@ msgstr ""
 "Klõpsa faili avamiseks\n"
 "Klõpsa ja hoia nuppu all viimati kasutatud faili avamiseks"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6113,58 +6113,58 @@ msgstr ""
 "<b>Klõpsa</b> faili avamiseks või <b>klõpsa ja hoia nuppu all</b> viimati "
 "kasutatud faili avamiseks"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "Järgmine kaart"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "Eelmine kaart"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "Võta kaardi sulgemine tagasi"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "Külgr&iba näitamine"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "Kõik failid (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Kõik toetatud failid (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "Ava dokument"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "Sulgemise kinnitus"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "Sulge kaardid"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Kavatsed sulgeda %1 kaarti. Kas tõesti jätkata?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Hoiatus, kui ma proovin sulgeda palju aknaid"

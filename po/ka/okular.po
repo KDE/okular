@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-24 00:40+0000\n"
+"POT-Creation-Date: 2025-09-12 00:41+0000\n"
 "PO-Revision-Date: 2025-07-11 03:42+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -5860,17 +5860,17 @@ msgstr "შეცდომა: პარამეტრით --page ერთ �
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "შეცდომა: პარამეტრით --find ერთ დოკუმენტზე მეტს ვერ გავხსნი"
 
-#: shell/shell.cpp:210
+#: shell/shell.cpp:207
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "ვერ ვიპოვე Okular-ის კომპონენტი: %1"
 
-#: shell/shell.cpp:253
+#: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
 msgstr "გვერდითი ზოლი"
 
-#: shell/shell.cpp:289
+#: shell/shell.cpp:286
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -5879,12 +5879,12 @@ msgstr ""
 "უნიკალური Okular-ის გაშვებული ასლი უკვე არსებობს. ეს გაშვებული ასლი "
 "უნიკალური არ იქნება."
 
-#: shell/shell.cpp:318
+#: shell/shell.cpp:315
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Okualar-ის კომპონენტის პოვნა ვერ მოხერხდა."
 
-#: shell/shell.cpp:574
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5893,7 +5893,7 @@ msgstr ""
 "დააწკაპუნეთ ფაილის გასახსნელად\n"
 "დააწკაპუნეთ და გეჭიროთ უახლესი ფაილის გასახსნელად"
 
-#: shell/shell.cpp:575
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5901,57 +5901,57 @@ msgstr ""
 "<b>დააწკაპუნეთ</b> ფაილის გასახსნელად, ან <b>დააწკაპუნეთ და გეჭიროთ</b> "
 "უახლესი ფაილის ასარჩევად"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:582
 #, kde-format
 msgid "Next Tab"
 msgstr "შემდეგი ჩანართი"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:588
 #, kde-format
 msgid "Previous Tab"
 msgstr "წინა ჩანართი"
 
-#: shell/shell.cpp:600
+#: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
 msgstr "ჩანართის დახურვის გაუქმება"
 
-#: shell/shell.cpp:609
+#: shell/shell.cpp:603
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "გვერდითი პანელის დაბლოკვა"
 
-#: shell/shell.cpp:709
+#: shell/shell.cpp:703
 #, kde-format
 msgid "All files (*)"
 msgstr "ყველა ფაილი (*)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ყველა მხარდაჭერილი ფაილი (%1)"
 
-#: shell/shell.cpp:714
+#: shell/shell.cpp:708
 #, kde-format
 msgid "Open Document"
 msgstr "დოკუმენტის გახსნა"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
 msgstr "დახურვის დასტური"
 
-#: shell/shell.cpp:832
+#: shell/shell.cpp:826
 #, kde-format
 msgid "Close Tabs"
 msgstr "ჩანართების დახურვა"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:833
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "აპირებთ, დახუროთ %1 ჩანართი. დარწმუნებული ბრძანდებით?"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "გამაფრთხილე, როცა ერთზე მეტი ჩანართის დახურვას დავაპირებ"

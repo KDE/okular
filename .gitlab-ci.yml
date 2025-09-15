@@ -19,9 +19,9 @@ include:
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
 
 # Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
-build_ubuntu_24_10:
+build_ubuntu_25_04:
  stage: build
- image: ubuntu:24.10
+ image: ubuntu:25.04
  tags:
    - Linux
  only:

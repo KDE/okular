@@ -28,6 +28,8 @@ build_ubuntu_24_10:
    - merge_requests
  before_script:
    - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+   - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+   - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
    - apt-get update
    - apt-get install --yes eatmydata
    - eatmydata apt-get build-dep --yes --no-install-recommends okular

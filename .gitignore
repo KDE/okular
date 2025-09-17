@@ -10,6 +10,7 @@ CMakeLists.txt.user*
 .clangd
 .cache
 .idea
+.qtcreator
 /cmake-build*
 
 # Flatpak

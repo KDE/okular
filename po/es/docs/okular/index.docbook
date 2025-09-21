@@ -1464,7 +1464,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<entry>
 					  <para
 >Pulse este botón para escoger la opacidad de la anotación en la lista desplegable (<guimenuitem
->100%</guimenuitem
+>100 %</guimenuitem
 > es para crear anotaciones opacas). </para>
 					</entry>
 				      </row>
@@ -2587,7 +2587,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Ver</guimenu
 > <guimenuitem
->Ampliar al 100%</guimenuitem
+>Ampliar al 100 %</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2718,7 +2718,7 @@ Context menu actions like Rename Bookmarks etc.)
 >recortar a la selección</quote
 > le permite dibujar una selección sobre la página visualizada para definir un rectángulo de recorte a aplicar a <emphasis
 >todas las páginas</emphasis
-> del documento. Si selecciona un rectángulo de recorte pequeño, se fuerza un tamaño de mínimas dimensiones (20% como porcentaje del tamaño total de la página). </para>
+> del documento. Si selecciona un rectángulo de recorte pequeño, se fuerza un tamaño de mínimas dimensiones (20 % como porcentaje del tamaño total de la página). </para>
 						<para
 >El modo <quote
 >recortar márgenes</quote
@@ -4008,7 +4008,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular; puede mejorar notablemente el rendimiento afinando el uso de la memoria, dependiendo de su sistema y sus gustos. Cuanta más memoria le permita utilizar, más rápido se comportará el programa. El perfil predeterminado es bueno para cualquier sistema. Aun así, puede impedir que &okular; utilice más memoria de la necesaria seleccionando el perfil «Bajo», o dejarle utilizar más seleccionando el «Agresivo». Use el perfil «Voraz» para precargar todas las páginas sin riesgo de que se colapse la memoria del sistema (solo se usará el 50% de la memoria total o de la memoria libre).</para>
+>&okular; puede mejorar notablemente el rendimiento afinando el uso de la memoria, dependiendo de su sistema y sus gustos. Cuanta más memoria le permita utilizar, más rápido se comportará el programa. El perfil predeterminado es bueno para cualquier sistema. Aun así, puede impedir que &okular; utilice más memoria de la necesaria seleccionando el perfil «Bajo», o dejarle utilizar más seleccionando el «Agresivo». Use el perfil «Voraz» para precargar todas las páginas sin riesgo de que se colapse la memoria del sistema (solo se usará el 50 % de la memoria total o de la memoria libre).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

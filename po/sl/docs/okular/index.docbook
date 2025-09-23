@@ -85,8 +85,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >dvi</keyword>
 			<keyword
->chm</keyword>
-			<keyword
 >xps</keyword>
 			<keyword
 >comicbook</keyword>
@@ -106,8 +104,8 @@ Context menu actions like Rename Bookmarks etc.)
 		<para
 >&okular; je &kde; univerzalni pregledovalnik dokumentov, ki temelji na kodi &kpdf; aplikacije. Čeprav temelji na &kpdf; kodi, ima &okular; nekaj edinstvenih funkcij, kot je način pregleda, izboljšana podpora za predstavitve in podpora za opombe. </para>
 		<para
->&okular; podpira veliko različnih formatov, kot so &PDF;, &PostScript;, Tiff, CHM, DjVU, slike (png, jpg itd.) XPS, leposlovne knjige, stripi, Plucker, EPub, faks in Markdown. Za vse podprte formate in njihove funkcije glejte <ulink url="https://okular.kde.org/formats.php"
-> &okular; obdelovalci formatov dokumentov</ulink
+>&okular; podpira veliko različnih formatov, kot so &PDF;, &PostScript;, Tiff, DjVU, slike (png, jpg itd.) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax in Markdown. Za vse podprte formate in njihove funkcije glejte <ulink url="https://okular.kde.org/formats.php"
+> &okular; obdelovalniki formatov dokumentov</ulink
 >. </para>
 		<screenshot>
 		<screeninfo
@@ -615,7 +613,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Da bi lahko podpisali dokument, morate imeti v sistemu na voljo ustrezno podpisno potrdilo <acronym
 >PKCS</acronym
->. &okular; nima zmožnosti ustvariti takih potrdil, ker jih morajo izdati overitelji potrdil, da so uporabna za preverjanje itd. </para>
+>. &okular; nima zmožnosti ustvariti takih potrdil, ker jih morajo izdati overitelji potrdil, da so uporabna za preverjanje &etc; </para>
 				<para
 >Za podpisovanje &PDF; dokumentov uporabljamo knjižnico Poppler, ki uporablja knjižnico NSS za obdelavo potrdil. V trenutku pisanja bo Poppler poskušal uporabiti eno od naslednjih shramb potrdil NSS po vrstnem redu (prvo, ki obstaja): </para>
 				<itemizedlist>
@@ -1329,7 +1327,7 @@ Context menu actions like Rename Bookmarks etc.)
                                   <para
 >To so privzete opombe, ki jih ponuja &okular;. Na <link linkend="configannotations"
 >strani z opombami</link
-> v konfiguracijskem pogovornem oknu lahko dodate lastne opombe, kot so žigi po meri, oznake besedila ali geometrijske oblike z notranjo barvo za označevanje regij itd. </para>
+> v konfiguracijskem pogovornem oknu lahko dodate lastne opombe, kot so žigi po meri, oznake besedila ali geometrijske oblike z notranjo barvo za označevanje regij &etc; </para>
                                   <note>
                                       <para
 >Možno je dodati &latex; kodo v besedilo opomb. Če želite to narediti, dodajte <userinput
@@ -3588,7 +3586,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Ali naj prikaže nekatera informativna sporočila ob zagonu, nalaganju datoteke itd.</para>
+>Ali naj prikaže nekatera informativna sporočila ob zagonu, nalaganju datoteke &etc;</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3598,7 +3596,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Ali želite prikazati informativne plošče o vdelanih datotekah, obrazcih ali podpisih itd.</para>
+>Ali želite prikazati informativne plošče o vdelanih datotekah, obrazcih ali podpisih &etc;</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3766,7 +3764,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Ta možnost določa privzeti način povečave za datoteko, ki še nikoli ni bila odprta. Za tiste datoteke, ki so bile odprte, preden je bil uporabljen prejšnji način povečave. </para>
+>Ta možnost določa privzeti način povečave za datoteko, ki še nikoli ni bila odprta. Za datoteke, ki so bile odprte že prej, se uporabi prejšnji način povečave. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -4002,7 +4000,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Omogoči prevleko besedila</guilabel
 > in <guilabel
 >Omogoči prevleko grafike</guilabel
-> lahko uporabite za vklop in izklop <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing "
+> lahko uporabite za vklop in izklop <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing"
 >prostorsko izravnavanje</ulink
 > besedila in slik v dokumentu, ustrezno. Element <guilabel
 >Omogoči namigovanje besedila</guilabel

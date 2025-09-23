@@ -40,20 +40,6 @@ int main(int argc, char **argv)
     KIconTheme::initTheme();
 #endif
 
-    /**
-     * enable dark mode for title bar on Windows
-     */
-#if defined(Q_OS_WIN)
-    if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM")) {
-        qputenv("QT_QPA_PLATFORM", "windows:darkmode=1");
-    }
-#endif
-
-    /**
-     * allow fractional scaling
-     */
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
-
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
 
     QApplication app(argc, argv);

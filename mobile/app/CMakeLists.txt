@@ -54,6 +54,8 @@ if (ANDROID)
     endif()
 
     kirigami_package_breeze_icons(ICONS
+        ${KIRIGAMI_ADDONS_ICONS}
+
         application-pkcs7-signature
         bookmark-remove
         bookmarks-organize

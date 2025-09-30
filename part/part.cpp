@@ -2947,11 +2947,6 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
         closeUrl();
     }
 
-    // Restore watcher
-    if (url().isLocalFile()) {
-        setFileToWatch(localFilePath());
-    }
-
     // Set correct permission taking into account the umask value
 #ifndef Q_OS_WIN
     const QString saveFilePath = saveUrl.toLocalFile();
@@ -2962,6 +2957,11 @@ bool Part::saveAs(const QUrl &saveUrl, SaveAsFlags flags)
         chmod(QFile::encodeName(saveFilePath).constData(), fileMode);
     }
 #endif
+
+    // Restore watcher
+    if (url().isLocalFile()) {
+        setFileToWatch(localFilePath());
+    }
 
     return true;
 }

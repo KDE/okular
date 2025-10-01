@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-12 00:41+0000\n"
+"POT-Creation-Date: 2025-10-01 00:43+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -5861,47 +5861,47 @@ msgstr "Інструмент з такой назвай ужо існуе. Вы�
 msgid "Duplicated Name"
 msgstr "Паўторная назва"
 
-#: shell/main.cpp:89
+#: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Старонка дакумента, якая паказваецца спачатку"
 
-#: shell/main.cpp:90
+#: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Пачынаць у рэжыме прэзентацыі"
 
-#: shell/main.cpp:91
+#: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Пачынаць з дыялогавага акна друкавання"
 
-#: shell/main.cpp:92
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Пачынаць з дыялогавага акна друкавання і выходзіць пасля друкавання"
 
-#: shell/main.cpp:93
+#: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Кіраванне \"унікальным асобнікам\""
 
-#: shell/main.cpp:94
+#: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
 msgstr "Не ўзнімаць акно"
 
-#: shell/main.cpp:95
+#: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Пошук радка ў тэксце"
 
-#: shell/main.cpp:96
+#: shell/main.cpp:82
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Вызначэнне каманды вонкавага рэдактара"
 
-#: shell/main.cpp:97
+#: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Дакументы для адкрыцця. Пазначце \"-\" для чытання з stdin."

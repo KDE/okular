@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-12 00:41+0000\n"
+"POT-Creation-Date: 2025-10-01 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -5697,47 +5697,47 @@ msgstr "已有其他工具使用了该名称。将使用默认名称"
 msgid "Duplicated Name"
 msgstr "名称重复"
 
-#: shell/main.cpp:89
+#: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "要显示的文档页码"
 
-#: shell/main.cpp:90
+#: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "在演示模式下打开文档"
 
-#: shell/main.cpp:91
+#: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
 msgstr "启动时显示打印对话框"
 
-#: shell/main.cpp:92
+#: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "启动时打开打印对话框，并在打印完成后退出"
 
-#: shell/main.cpp:93
+#: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "“唯一实例”控制"
 
-#: shell/main.cpp:94
+#: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
 msgstr "不升起窗口"
 
-#: shell/main.cpp:95
+#: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
 msgstr "查找文字中的字符串"
 
-#: shell/main.cpp:96
+#: shell/main.cpp:82
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "设置外部编辑器命令"
 
-#: shell/main.cpp:97
+#: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "要打开的文档。指定“-”以读取标准输入。"

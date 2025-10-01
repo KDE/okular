@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-12 00:41+0000\n"
+"POT-Creation-Date: 2025-10-01 00:43+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -6108,48 +6108,48 @@ msgstr ""
 msgid "Duplicated Name"
 msgstr ""
 
-#: shell/main.cpp:89
+#: shell/main.cpp:75
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Siet vun't Dokment, de wiest warrn schall"
 
-#: shell/main.cpp:90
+#: shell/main.cpp:76
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Dokment in'n Presentatschoonbedrief starten"
 
-#: shell/main.cpp:91
+#: shell/main.cpp:77
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Mit Druckdialoog starten"
 
-#: shell/main.cpp:92
+#: shell/main.cpp:78
 #, fuzzy, kde-format
 #| msgid "Start with print dialog"
 msgid "Start with print dialog and exit after printing"
 msgstr "Mit Druckdialoog starten"
 
-#: shell/main.cpp:93
+#: shell/main.cpp:79
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "\"Eenkennig Utgaav\"-Kuntrull"
 
-#: shell/main.cpp:94
+#: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
 msgstr "Finster nich na vörn stellen"
 
-#: shell/main.cpp:95
+#: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
 msgstr ""
 
-#: shell/main.cpp:96
+#: shell/main.cpp:82
 #, kde-format
 msgid "Sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:97
+#: shell/main.cpp:83
 #, fuzzy, kde-format
 #| msgid "Document to open. Specify '-' to read from stdin."
 msgid "Documents to open. Specify '-' to read from stdin."

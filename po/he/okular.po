@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-11 02:40+0000\n"
-"PO-Revision-Date: 2025-09-17 10:47+0300\n"
+"PO-Revision-Date: 2025-10-05 11:35+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3225,7 +3225,7 @@ msgstr "נצנוץ ימינה"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Glitter right-down"
-msgstr "נצנןץ ימינה־מטה"
+msgstr "נצנוץ ימינה־מטה"
 
 #: part/dlgpresentation.cpp:112
 #, kde-format
@@ -3943,7 +3943,7 @@ msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr ""
-"יש לצייר מלבן סביב הטבלה, לאחר מכן ללחוץ ליד הקצבות כדי לחלק לחלקים קטנםי "
+"יש לצייר מלבן סביב הטבלה, לאחר מכן ללחוץ ליד הקצבות כדי לחלק לחלקים קטנים "
 "יותר, Esc לפינוי."
 
 #: part/pageview.cpp:5165 part/pageview.cpp:5173

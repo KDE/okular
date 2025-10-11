@@ -1,7 +1,6 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
-#
-# Burkhard Lück <lueck@hube-lueck.de>, 2017, 2018, 2019.
+# Copyright (C) 2025 This_file_is_part_of_KDE
+# This file is distributed under the same license as the okular package.
+# SPDX-FileCopyrightText: 2017, 2018, 2019 Burkhard Lück <lueck@hube-lueck.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_markdown\n"

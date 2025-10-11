@@ -1,12 +1,12 @@
 # SPDX-FileCopyrightText: 2010, 2024 Johannes Obermayr <johannesobermayr@gmx.de>
-# Stephan Johach <hunsum@gmx.de>, 2003, 2005.
-# Stefan Winter <swinter@kde.org>, 2004, 2005, 2006.
-# Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2007, 2008, 2009, 2010.
-# Burkhard Lück <lueck@hube-lueck.de>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
-# Stephan Johach <lucardus@onlinehome.de>, 2006.
-# Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022, 2023.
-# Panagiotis Papadopoulos <pano_90@gmx.net>, 2010, 2011.
-# Michael Weghorn <m.weghorn@posteo.de>, 2017.
+# SPDX-FileCopyrightText: 2003, 2005 Stephan Johach <hunsum@gmx.de>
+# SPDX-FileCopyrightText: 2004, 2005, 2006 Stefan Winter <swinter@kde.org>
+# SPDX-FileCopyrightText: 2005, 2007, 2008, 2009, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2006 Stephan Johach <lucardus@onlinehome.de>
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2010, 2011 Panagiotis Papadopoulos <pano_90@gmx.net>
+# SPDX-FileCopyrightText: 2017 Michael Weghorn <m.weghorn@posteo.de>
 # SPDX-FileCopyrightText: 2023, 2024 Frank Steinmetzger <dev-kde@felsenfleischer.de>
 # SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n@prly.mozmail.com>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>

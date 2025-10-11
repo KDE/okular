@@ -1,4 +1,4 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2008.
+# SPDX-FileCopyrightText: 2008 Burkhard Lück <lueck@hube-lueck.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_fax\n"

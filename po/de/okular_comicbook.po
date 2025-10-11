@@ -1,5 +1,5 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2008, 2013, 2018.
-# Panagiotis Papadopoulos <pano_90@gmx.net>, 2009.
+# SPDX-FileCopyrightText: 2008, 2013, 2018 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2009 Panagiotis Papadopoulos <pano_90@gmx.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"

@@ -1,5 +1,5 @@
-# Thomas Reitelbach <tr@erdfunkstelle.de>, 2007.
-# Burkhard Lück <lueck@hube-lueck.de>, 2007, 2008, 2009, 2013.
+# SPDX-FileCopyrightText: 2007 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013 Burkhard Lück <lueck@hube-lueck.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_ghostview\n"

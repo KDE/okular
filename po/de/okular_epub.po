@@ -1,5 +1,5 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2008, 2013.
-# Frederik Schwarzer <schwarzer@kde.org>, 2012, 2013.
+# SPDX-FileCopyrightText: 2008, 2013 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2012, 2013 Frederik Schwarzer <schwarzer@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"

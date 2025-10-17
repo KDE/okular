@@ -2,36 +2,39 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['@all']
-  'require':
-    'frameworks/kbookmarks': '@latest-kf6'
-    'frameworks/threadweaver': '@latest-kf6'
-    'frameworks/kcolorscheme': '@latest-kf6'
-    'frameworks/ki18n': '@latest-kf6'
-    'frameworks/kio': '@latest-kf6'
-    'frameworks/kitemviews': '@latest-kf6'
-    'frameworks/karchive': '@latest-kf6'
-    'frameworks/kparts': '@latest-kf6'
-    'frameworks/ktextwidgets': '@latest-kf6'
-    'frameworks/kwidgetsaddons': '@latest-kf6'
-    'frameworks/kxmlgui': '@latest-kf6'
-    'libraries/phonon': '@latest-kf6'
-    'graphics/kdegraphics-mobipocket': '@same'
+  - 'on': ['@all']
+    'require':
+      'frameworks/kbookmarks': '@latest-kf6'
+      'frameworks/threadweaver': '@latest-kf6'
+      'frameworks/kcolorscheme': '@latest-kf6'
+      'frameworks/ki18n': '@latest-kf6'
+      'frameworks/kio': '@latest-kf6'
+      'frameworks/kitemviews': '@latest-kf6'
+      'frameworks/karchive': '@latest-kf6'
+      'frameworks/kparts': '@latest-kf6'
+      'frameworks/ktextwidgets': '@latest-kf6'
+      'frameworks/kwidgetsaddons': '@latest-kf6'
+      'frameworks/kxmlgui': '@latest-kf6'
+      'libraries/phonon': '@latest-kf6'
+      'graphics/kdegraphics-mobipocket': '@same'
 
-- 'on': ['Linux', 'FreeBSD', 'Windows']
-  'require':
-    'frameworks/purpose': '@latest-kf6'
-    'frameworks/breeze-icons': '@latest-kf6'
-    'graphics/libkexiv2': '@same'
+  - 'on': ['Linux', 'FreeBSD', 'Windows']
+    'require':
+      'frameworks/purpose': '@latest-kf6'
+      'frameworks/breeze-icons': '@latest-kf6'
+      'graphics/libkexiv2': '@same'
 
-- 'on': ['Android']
-  'require':
-    'frameworks/kirigami': '@latest-kf6'
+  - 'on': ['Android']
+    'require':
+      'frameworks/kirigami': '@latest-kf6'
 
 Options:
-  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]
+  require-passing-tests-on: ['Linux', 'FreeBSD']
   per-test-timeout: 300
-  cppcheck-arguments: '--enable=warning,style,performance --library=okular-cppcheck.xml --suppress-xml=cppcheck-suppressions.xml'
+  cppcheck-arguments:
+    - '--enable=warning,style,performance'
+    - '--library=okular-cppcheck.xml'
+    - '--suppress-xml=cppcheck-suppressions.xml'
   cppcheck-ignore-files:
     - autotests
     - core/synctex/synctex_parser.c

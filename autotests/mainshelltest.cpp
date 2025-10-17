@@ -255,6 +255,12 @@ void MainShellTest::testShell()
     QFETCH(bool, externalProcessExpectPrintDialog);
     QFETCH(QString, externalProcessExpectFind);
 
+#ifdef Q_OS_WIN
+    if (useTabs) {
+        QSKIP("Tabs not yet supported on windows ");
+    }
+#endif
+
     QScopedPointer<ClosePrintDialogHelper> helper;
 
     Okular::Settings::self()->setShellOpenFileInTabs(useTabs);

@@ -286,9 +286,9 @@ void MainShellTest::testShell()
         if (useTabs) {
             Shell *s = findShell();
             QVERIFY(s);
+            QCOMPARE(s->m_tabs.count(), 2);
             Okular::Part *part = dynamic_cast<Okular::Part *>(s->m_tabs[0].part);
             Okular::Part *part2 = dynamic_cast<Okular::Part *>(s->m_tabs[1].part);
-            QCOMPARE(s->m_tabs.count(), 2);
             QCOMPARE(part->url().url(), QStringLiteral("file://%1").arg(paths[0]));
             QCOMPARE(part2->url().url(), QStringLiteral("file://%1").arg(paths[1]));
             QCOMPARE(partDocument(part)->currentPage(), expectedPage);

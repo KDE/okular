@@ -5,16 +5,16 @@
 # Arnar Leosson <leosson@frisurf.no>, 2005.
 # Arnar Leósson <leosson@frisurf.no>, 2005.
 # Björgvin Ragnarsson <nifgraup@gmail.com>, 2005.
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2011, 2014, 2016, 2017, 2018, 2022.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2014, 2016, 2017, 2018, 2022, 2025 Sveinn í Felli <sveinki@nett.is>
 # SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-01 00:43+0000\n"
-"PO-Revision-Date: 2025-04-17 14:03+0000\n"
-"Last-Translator: Gummi <gudmundure@gmail.com>\n"
-"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2025-10-16 17:09+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +44,7 @@ msgstr "Okular"
 #: aboutdata.h:21
 #, kde-format
 msgid "Okular, a universal document viewer"
-msgstr "Okular, fjölhæft skjalaskoðarforrit"
+msgstr "Okular, fjölhæft skjalaskoðunarforrit"
 
 #: aboutdata.h:23
 #, kde-format
@@ -152,10 +152,9 @@ msgid "Open external file"
 msgstr "Opna ytri skrá"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
-msgstr "Keyra '%1'..."
+msgstr "Keyra '%1'…"
 
 #: core/action.cpp:294
 #, kde-format
@@ -205,19 +204,17 @@ msgstr "Ljúka kynningu"
 #: core/action.cpp:312
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Finna…"
 
 #: core/action.cpp:314
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Fara á síðu"
+msgstr "Fara á síðu…"
 
 #: core/action.cpp:365
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
-msgstr "Spila hljóð..."
+msgstr "Spila hljóð…"
 
 #: core/action.cpp:433 core/action.cpp:549
 #, kde-format
@@ -225,10 +222,9 @@ msgid "JavaScript Script"
 msgstr "JavaScript-skrifta"
 
 #: core/action.cpp:483
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Spila myndskeið"
+msgstr "Spila myndskeið…"
 
 #: core/action.cpp:554
 #, kde-format
@@ -547,10 +543,9 @@ msgid "edit form button states"
 msgstr "breyta stöðu formhnapps"
 
 #: core/generator.cpp:790
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "Hreinn &texti..."
+msgstr "Hreinn &texti…"
 
 #: core/generator.cpp:793
 #, kde-format
@@ -1022,7 +1017,7 @@ msgstr "Óþekkt gerð"
 #: gui/signatureguiutils.cpp:120
 #, kde-format
 msgid "Digital Signature"
-msgstr "Rafræn undirskrift"
+msgstr "Rafræn undirritun"
 
 #: gui/signatureguiutils.cpp:123
 #, kde-format
@@ -1129,11 +1124,10 @@ msgstr ""
 "undirskriftirnar með tilhlýðilegum hætti."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Gerð undirskriftar: %1"
+msgstr "Frátökutákn undirritunar %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1161,51 +1155,40 @@ msgid "Location: %1"
 msgstr "Staðsetning: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "PGP Signature"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "PGP-undirskrift"
+msgstr "PGP-undirritun"
 
 #: gui/signaturemodel.cpp:187
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
 msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
 msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "ETSI CAdES"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
 msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Óþekkt"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Gildistími undirskriftar:"
+msgstr "Frátökutákn undirritunar"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -4700,10 +4683,9 @@ msgstr ""
 "innfelldur skoðari er notaður."
 
 #: part/part.cpp:2113 part/part.cpp:2131
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "Endurhleð skjalinu..."
+msgstr "Endurhleð skjalinu…"
 
 #: part/part.cpp:2288 part/toc.cpp:38
 #, kde-format
@@ -4713,7 +4695,7 @@ msgstr "Efni"
 #: part/part.cpp:2317 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
-msgstr "Undirskriftir"
+msgstr "Undirritanir"
 
 #: part/part.cpp:2344
 #, kde-format
@@ -4861,10 +4843,9 @@ msgid "Warning"
 msgstr "Viðvörun"
 
 #: part/part.cpp:2779 part/part.cpp:2801
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Vista sem Okular-skjalasafn..."
+msgstr "Vista sem Okular-skjalasafn…"
 
 #: part/part.cpp:2791
 #, kde-format
@@ -5291,10 +5272,9 @@ msgid "&Fonts"
 msgstr "&Letur"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Les upplýsingar um letur..."
+msgstr "Les upplýsingar um letur…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5680,7 +5660,7 @@ msgstr "Staða gildistíma"
 #: part/signaturepropertiesdialog.cpp:59
 #, kde-format
 msgid "Signature Validity:"
-msgstr "Gildistími undirskriftar:"
+msgstr "Gildi undirritunar:"
 
 #: part/signaturepropertiesdialog.cpp:60
 #, kde-format
@@ -5714,16 +5694,14 @@ msgid "Document Revision %1 of %2"
 msgstr "Endurskoðuð útgáfa skjals %1 af %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
-msgstr "Skoða undirritaða útgáfu..."
+msgstr "Skoða undirritaða útgáfu…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
-msgstr "Skoða vottorð..."
+msgstr "Skoða skilríki…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5782,13 +5760,12 @@ msgstr "Myndskeið eru ekki studd í þessari útgáfu af okular"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "Bæt&a við…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Breyta"
+msgstr "Br&eyta…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

@@ -350,7 +350,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     }
 
     const QList<int> numberKeys = {Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4, Qt::Key_5, Qt::Key_6, Qt::Key_7, Qt::Key_8, Qt::Key_9, Qt::Key_0};
-    const bool isFirstTimePopulated = aQuickTools->menu()->actions().count() == 0;
+    const bool isFirstTimePopulated = aQuickTools->menu()->actions().isEmpty();
 
     // to be safe and avoid undefined states of the currently selected quick annotation
     if (isQuickToolAction(agTools->checkedAction())) {

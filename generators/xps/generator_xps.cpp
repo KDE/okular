@@ -11,6 +11,7 @@
 #include <QBuffer>
 #include <QDateTime>
 #include <QFile>
+#include <QFontDatabase>
 #include <QImageReader>
 #include <QList>
 #include <QMutex>
@@ -1400,19 +1401,19 @@ QFont XpsFile::getFontByName(const QString &absoluteFileName, float size)
         return QFont();
     }
 
-    const QStringList fontFamilies = m_fontDatabase.applicationFontFamilies(index);
+    const QStringList fontFamilies = QFontDatabase::applicationFontFamilies(index);
     if (fontFamilies.isEmpty()) {
         qCWarning(OkularXpsDebug) << "The unexpected has happened. No font family for a known font:" << absoluteFileName << index;
         return QFont();
     }
     const QString &fontFamily = fontFamilies[0];
-    const QStringList fontStyles = m_fontDatabase.styles(fontFamily);
+    const QStringList fontStyles = QFontDatabase::styles(fontFamily);
     if (fontStyles.isEmpty()) {
         qCWarning(OkularXpsDebug) << "The unexpected has happened. No font style for a known font family:" << absoluteFileName << index << fontFamily;
         return QFont();
     }
     const QString &fontStyle = fontStyles[0];
-    return m_fontDatabase.font(fontFamily, fontStyle, qRound(size));
+    return QFontDatabase::font(fontFamily, fontStyle, qRound(size));
 }
 
 int XpsFile::loadFontByName(const QString &absoluteFileName)
@@ -1426,7 +1427,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
 
     QByteArray fontData = readFileOrDirectoryParts(fontFile); // once per file, according to the docs
 
-    int result = m_fontDatabase.addApplicationFontFromData(fontData);
+    int result = QFontDatabase::addApplicationFontFromData(fontData);
     if (-1 == result) {
         // Try to deobfuscate font
         // TODO Use deobfuscation depending on font content type, don't do it always when standard loading fails
@@ -1446,7 +1447,7 @@ int XpsFile::loadFontByName(const QString &absoluteFileName)
                     fontData[i] = fontData[i] ^ guid[mapping[i]];
                     fontData[i + 16] = fontData[i + 16] ^ guid[mapping[i]];
                 }
-                result = m_fontDatabase.addApplicationFontFromData(fontData);
+                result = QFontDatabase::addApplicationFontFromData(fontData);
             }
         }
     }
@@ -1780,7 +1781,7 @@ XpsFile::XpsFile()
 XpsFile::~XpsFile()
 {
     for (int fontId : std::as_const(m_fontCache)) {
-        m_fontDatabase.removeApplicationFont(fontId);
+        QFontDatabase::removeApplicationFont(fontId);
     }
 }
 

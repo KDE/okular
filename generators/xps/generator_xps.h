@@ -12,7 +12,6 @@
 
 #include <QColor>
 #include <QDomDocument>
-#include <QFontDatabase>
 #include <QImage>
 #include <QLoggingCategory>
 #include <QStack>
@@ -268,7 +267,6 @@ private:
     std::unique_ptr<KZip> m_xpsArchive;
 
     QMap<QString, int> m_fontCache;
-    QFontDatabase m_fontDatabase;
 };
 
 class XpsGenerator : public Okular::Generator

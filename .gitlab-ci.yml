@@ -1,80 +1,81 @@
+# yamllint disable rule:line-length
 variables:
-  DEBIAN_FRONTEND: "noninteractive"
+ DEBIAN_FRONTEND: "noninteractive"
 
 include:
-  - project: sysadmin/ci-utilities
-    file:
-      - /gitlab-templates/android-qt6.yml
-      - /gitlab-templates/flatpak.yml
-      - /gitlab-templates/linux-qt6.yml
-      - /gitlab-templates/linux-qt6-next.yml
-      - /gitlab-templates/freebsd-qt6.yml
-      - /gitlab-templates/windows-qt6.yml
-      - /gitlab-templates/cppcheck.yml
-      - /gitlab-templates/xml-lint.yml
-      - /gitlab-templates/craft-windows-x86-64-qt6.yml
-      - /gitlab-templates/craft-windows-appx-qt6.yml
-      - /gitlab-templates/craft-android-qt6-apks.yml
-      - /gitlab-templates/craft-macos-arm64-qt6.yml
-      - /gitlab-templates/craft-macos-x86-64-qt6.yml
+ - project: sysadmin/ci-utilities
+   file:
+    - /gitlab-templates/android-qt6.yml
+    - /gitlab-templates/flatpak.yml
+    - /gitlab-templates/linux-qt6.yml
+    - /gitlab-templates/linux-qt6-next.yml
+    - /gitlab-templates/freebsd-qt6.yml
+    - /gitlab-templates/windows-qt6.yml
+    - /gitlab-templates/cppcheck.yml
+    - /gitlab-templates/xml-lint.yml
+    - /gitlab-templates/craft-windows-x86-64-qt6.yml
+    - /gitlab-templates/craft-windows-appx-qt6.yml
+    - /gitlab-templates/craft-android-qt6-apks.yml
+    - /gitlab-templates/craft-macos-arm64-qt6.yml
+    - /gitlab-templates/craft-macos-x86-64-qt6.yml
 
 # Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
 build_ubuntu_24_10:
  stage: build
  image: ubuntu:24.10
  tags:
-   - Linux
+  - Linux
  only:
-   - merge_requests
+  - merge_requests
  before_script:
-   - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-   - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
-   - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
-   - apt-get update
-   - apt-get install --yes eatmydata
-   - eatmydata apt-get build-dep --yes --no-install-recommends okular
-   - eatmydata apt-get install --yes --no-install-recommends ninja-build
+  - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+  - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+  - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+  - apt-get update
+  - apt-get install --yes eatmydata
+  - eatmydata apt-get build-dep --yes --no-install-recommends okular
+  - eatmydata apt-get install --yes --no-install-recommends ninja-build
  script:
-   - mkdir -p build && cd build
-   - cmake -DOKULAR_UI=both -G Ninja ..
-   - ninja
+  - mkdir -p build && cd build
+  - cmake -DOKULAR_UI=both -G Ninja ..
+  - ninja
 
 build_clazy_clang_tidy:
-  extends:
-    - .ci_linux_base
-    - .suse_tumbleweed_qt6stable
-  rules:
-    # only run on merge requests
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-  variables:
-    CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
-    CXXFLAGS: -Werror -Wno-deprecated-declarations
-    CC: clang
-    CXX: clazy
-  script:
-    - git config --global --add safe.directory $CI_PROJECT_DIR
-    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --only-setup-environment
-    - mkdir -p /tmp/okular_build
-    - cd /tmp/okular_build
-    - cmake -DOKULAR_UI=both -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
-    - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
-    - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
-    - cp "$CI_PROJECT_DIR/.clang-tidy" .
-    - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h|okularplugin_qmltyperegistrations.cpp|okularkirigami_qmltyperegistrations.cpp|okularkirigami_qmlcache_loader.cpp|okularplugin_qmlcache_loader.cpp|mobile/components/.rcc/qmlcache/|mobile/app/.rcc/qmlcache" ninja -k 0
-    - run-clang-tidy
-  artifacts: null
+ extends:
+  - .ci_linux_base
+  - .suse_tumbleweed_qt6stable
+ rules:
+  # only run on merge requests
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+ variables:
+  CLAZY_CHECKS: level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch
+  CXXFLAGS: -Werror -Wno-deprecated-declarations
+  CC: clang
+  CXX: clazy
+ script:
+  - git config --global --add safe.directory $CI_PROJECT_DIR
+  - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --only-setup-environment
+  - mkdir -p /tmp/okular_build
+  - cd /tmp/okular_build
+  - cmake -DOKULAR_UI=both -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
+  - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
+  - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
+  - cp "$CI_PROJECT_DIR/.clang-tidy" .
+  - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h|okularplugin_qmltyperegistrations.cpp|okularkirigami_qmltyperegistrations.cpp|okularkirigami_qmlcache_loader.cpp|okularplugin_qmlcache_loader.cpp|mobile/components/.rcc/qmlcache/|mobile/app/.rcc/qmlcache" ninja -k 0
+  - run-clang-tidy
+ artifacts: null
 
 clang_format:
-  stage: build
-  image: debian:stable
-  tags:
-    - Linux
-  only:
-    - merge_requests
-    - master
-  before_script:
-    - apt-get update
-    - apt-get install --yes --no-install-recommends git clang-format-19
-  script:
-    - find . \( -name "*.cpp" -or -name "*.h"  -or -name "*.c"  -or -name "*.cc" \) -exec clang-format-19 -i {} \;
-    - git diff --exit-code
+ stage: build
+ image: debian:stable
+ tags:
+  - Linux
+ only:
+  - merge_requests
+  - master
+ before_script:
+  - apt-get update
+  - apt-get install --yes --no-install-recommends git clang-format-19
+ script:
+  - find . \( -name "*.cpp" -or -name "*.h"  -or -name "*.c"  -or -name "*.cc" \) -exec clang-format-19 -i {} \;
+  - git diff --exit-code

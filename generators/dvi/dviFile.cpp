@@ -266,7 +266,10 @@ dvifile::dvifile(const QString &fname, fontPool *pool)
 
     QFile file(fname);
     filename = file.fileName();
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCCritical(OkularDviDebug) << "Failed opening file";
+        return;
+    }
     size_of_file = file.size();
     dviData.resize(size_of_file);
     // Sets the end pointer for the bigEndianByteReader so that the
@@ -383,7 +386,9 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     // Get the name of a temporary file.
     // Must open the QTemporaryFile to access the name.
     QTemporaryFile tmpfile;
-    tmpfile.open();
+    if (!tmpfile.open()) {
+        return {};
+    }
     const QString convertedFileName = tmpfile.fileName();
     tmpfile.close();
 

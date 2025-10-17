@@ -119,7 +119,10 @@ LatexRenderer::Error LatexRenderer::handleLatex(QString &fileName, const QString
     KProcess dvipngProc;
 
     QTemporaryFile *tempFile = new QTemporaryFile(QDir::tempPath() + QLatin1String("/okular_kdelatex-XXXXXX.tex"));
-    tempFile->open();
+    if (!tempFile->open()) {
+        delete tempFile;
+        return LatexNotFound;
+    }
     QString tempFileName = tempFile->fileName();
     QFileInfo *tempFileInfo = new QFileInfo(tempFileName);
     QString tempFileNameNS = tempFileInfo->absolutePath() + QLatin1Char('/') + tempFileInfo->baseName();

@@ -946,7 +946,8 @@ void PartTest::testSaveAsToNonExistingPath()
     QString saveFilePath;
     {
         QTemporaryFile saveFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
-        saveFile.open();
+        bool success = saveFile.open();
+        QVERIFY(success);
         saveFilePath = saveFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
     }
@@ -965,12 +966,14 @@ void PartTest::testSaveAsToSymlink()
     part.openDocument(QStringLiteral(KDESRCDIR "data/file1.pdf"));
 
     QTemporaryFile newFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
-    newFile.open();
+    bool success = newFile.open();
+    QVERIFY(success);
 
     QString linkFilePath;
     {
         QTemporaryFile linkFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
-        linkFile.open();
+        success = linkFile.open();
+        QVERIFY(success);
         linkFilePath = linkFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
     }
@@ -995,7 +998,8 @@ void PartTest::testSaveIsSymlink()
     QString newFilePath;
     {
         QTemporaryFile newFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
-        newFile.open();
+        bool success = newFile.open();
+        QVERIFY(success);
         newFilePath = newFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
     }
@@ -1005,7 +1009,8 @@ void PartTest::testSaveIsSymlink()
     QString linkFilePath;
     {
         QTemporaryFile linkFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
-        linkFile.open();
+        bool success = linkFile.open();
+        QVERIFY(success);
         linkFilePath = linkFile.fileName();
         // QTemporaryFile is destroyed and the file it created is gone, this is a TOCTOU but who cares
     }

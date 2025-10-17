@@ -180,7 +180,10 @@ TIFFGenerator::~TIFFGenerator()
 bool TIFFGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
     QFile *qfile = new QFile(fileName);
-    qfile->open(QIODevice::ReadOnly);
+    if (!qfile->open(QIODevice::ReadOnly)) {
+        return false;
+        delete qfile;
+    }
     d->dev = qfile;
     d->data = QFile::encodeName(QFileInfo(*qfile).fileName());
     return loadTiff(pagesVector, d->data.constData());

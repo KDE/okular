@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-10-18 00:40+0000\n"
 "PO-Revision-Date: 2025-09-02 17:19+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -143,7 +143,7 @@ msgstr "Le posambulo contineva un commando a parte que FNTDEF."
 msgid "The page %1 does not start with the BOP command."
 msgstr "Le pagina %1 non initia con le commando BOP."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -171,7 +171,7 @@ msgstr ""
 "strong> ab le linea de commando pro verificar si illo functiona vermente.</"
 "p><p><b>PATH:</b> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -369,7 +369,7 @@ msgstr "vertical"
 msgid "landscape"
 msgstr "horizontal"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

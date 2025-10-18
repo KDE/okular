@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-10-18 00:40+0000\n"
 "PO-Revision-Date: 2025-04-17 13:39+0000\n"
 "Last-Translator: Gummi <gudmundure@gmail.com>\n"
 "Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
@@ -142,7 +142,7 @@ msgstr "Eftirmálinn (e. postamble) innihélt aðra skipun en FNTDEF."
 msgid "The page %1 does not start with the BOP command."
 msgstr "Síðan %1 hefst ekki á BOP-skipuninni."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -169,7 +169,7 @@ msgstr ""
 "til að athuga hvort það virki í raun og veru.</p><p><em>SLÓÐ:</em> %2</p></"
 "qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -362,7 +362,7 @@ msgstr "skammsnið"
 msgid "landscape"
 msgstr "langsnið"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-10-18 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -129,7 +129,7 @@ msgstr "后文部分包含了 FNTDEF 之外的指令。"
 msgid "The page %1 does not start with the BOP command."
 msgstr "第 %1 页未以 BOP 指令开头。"
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -153,7 +153,7 @@ msgstr ""
 "尝试在命令行中运行 <strong>pdf2ps</strong> 程序，检查它是否可以正常工作。</"
 "p><p><em>PATH：</em> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -336,7 +336,7 @@ msgstr "纵向"
 msgid "landscape"
 msgstr "横向"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

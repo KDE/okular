@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-10-18 00:40+0000\n"
 "PO-Revision-Date: 2013-06-28 02:44+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -167,7 +167,7 @@ msgstr "Файлдың аяқтау бөлімінде FNTDEF командасы
 msgid "The page %1 does not start with the BOP command."
 msgstr "%1-беті BOP командасынан басталмаған."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The external program <strong>pdf2ps</strong> could not be started. "
@@ -205,7 +205,7 @@ msgstr ""
 "үшін <strong>pdf2ps</strong> бағдарламасын команда жолынан жегіп көріңіз.</"
 "p><p><b>PATH:</b> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -419,7 +419,7 @@ msgstr "тік"
 msgid "landscape"
 msgstr "жатық"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>The version of Ghostview that is installed on this computer does not "

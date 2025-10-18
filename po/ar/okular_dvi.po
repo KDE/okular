@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-11 00:41+0000\n"
+"POT-Creation-Date: 2025-10-18 00:40+0000\n"
 "PO-Revision-Date: 2025-08-13 20:18+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -138,7 +138,7 @@ msgstr "الـ postamble حوى أمر آخر غير FNTDEF."
 msgid "The page %1 does not start with the BOP command."
 msgstr "الصفحة %1 لا تبدأ بأمر BOP."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -163,7 +163,7 @@ msgstr ""
 "تثبيت ال ghostscript  فرجاء محاولة استخدام   <strong>pdf2ps</strong>   من "
 "سطر اﻷوامر حتى تتأكد إذا كان يعمل حقا أم لا  </p><p><b>PATH:</b> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -352,7 +352,7 @@ msgstr "عمودي"
 msgid "landscape"
 msgstr "أفقي"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

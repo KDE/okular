@@ -966,7 +966,9 @@ bool KDjVu::exportAsPostScript(const QString &fileName, const QList<int> &pageLi
     }
 
     QFile f(fileName);
-    f.open(QIODevice::ReadWrite);
+    if (!f.open(QIODevice::ReadWrite)) {
+        return false;
+    }
     bool ret = exportAsPostScript(&f, pageList);
     if (ret) {
         f.close();

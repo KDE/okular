@@ -181,7 +181,10 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
     // Step 1: Write the PostScriptString to a File
     QTemporaryFile PSfile(QDir::tempPath() + QLatin1String("/okular_XXXXXX.ps"));
     PSfile.setAutoRemove(false);
-    PSfile.open();
+    if (!PSfile.open()) {
+        qCCritical(OkularDviDebug) << "failed creating temp file";
+        return;
+    }
     const QString PSfileName = PSfile.fileName();
 
     QTextStream os(&PSfile);
@@ -321,7 +324,9 @@ void ghostscript_interface::graphics(const quint16 page, double dpi, long magnif
     }
 
     QTemporaryFile gfxFile;
-    gfxFile.open();
+    if (!gfxFile.open()) {
+        return;
+    }
     const QString gfxFileName = gfxFile.fileName();
     // We are want the filename, not the file.
     gfxFile.close();

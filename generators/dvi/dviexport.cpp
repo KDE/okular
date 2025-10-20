@@ -214,7 +214,7 @@ DVIExportToPS::DVIExportToPS(dviRenderer &parent, const QString &output_name, co
         // Must open the QTemporaryFile to access the name.
         QTemporaryFile tmpfile;
         tmpfile.setAutoRemove(false);
-        tmpfile.open();
+        (void)tmpfile.open();
         tmpfile_name_ = tmpfile.fileName();
         tmpfile.close();
 

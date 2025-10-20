@@ -101,7 +101,8 @@ void SignUnsignedFieldTest::testSignUnsignedField()
     Okular::NewSignatureData data;
     data.setCertNickname(QStringLiteral("fake-okular"));
     QTemporaryFile f;
-    f.open();
+    bool success = f.open();
+    QVERIFY(success);
     auto signResult = ffs->sign(data, f.fileName());
     QCOMPARE(signResult.first, Okular::SigningResult::SigningSuccess);
 

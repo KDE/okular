@@ -3114,7 +3114,9 @@ void Part::slotPrintPreview()
     // Generate a temp filename for Print to File, then release the file so generator can write to it
     QTemporaryFile tf(tempFilePattern);
     tf.setAutoRemove(true);
-    tf.open();
+    if (!tf.open()) {
+        return;
+    }
     printer.setOutputFileName(tf.fileName());
     tf.close();
     setupPrint(printer);

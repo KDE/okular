@@ -37,7 +37,9 @@ build_ubuntu_24_10:
    - ninja
 
 build_clazy_clang_tidy:
-  extends: .suse_tumbleweed_qt6stable
+  extends:
+    - .ci_linux_base
+    - .suse_tumbleweed_qt6stable
   rules:
     # only run on merge requests
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -138,7 +138,7 @@ msgstr "डाकपत्रे FNTDEF इत्यस्मात् परं
 msgid "The page %1 does not start with the BOP command."
 msgstr "पृष्ठं %1 BOP आदेशेन न आरभ्यते ।"
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -164,7 +164,7 @@ msgstr ""
 "तर्हि आदेशपङ्क्तौ <strong>pdf2ps इत्यस्य</strong> उपयोगं कृत्वा पश्यतु यत् एतत् वास्तवतः "
 "कार्यं करोति वा इति ।</p><p> <em>पथः</em> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -355,7 +355,7 @@ msgstr "चित्रम्"
 msgid "landscape"
 msgstr "भूप्रदेश"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

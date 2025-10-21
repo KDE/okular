@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2014-05-13 17:46+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -140,7 +140,7 @@ msgstr "De Dateifoot bargt en anner Befehl as \"FNTDEF\"."
 msgid "The page %1 does not start with the BOP command."
 msgstr "Siet %1 fangt nich mit den \"BOP\"-Befehl an."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -168,7 +168,7 @@ msgstr ""
 "<strong>pdf2ps</strong> vun de Konsool utföhren lett, so dat Du pröven "
 "kannst, wat dat redig löppt.</p><p><em>PATH:</em> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -364,7 +364,7 @@ msgstr "Hoochformaat"
 msgid "landscape"
 msgstr "Dwarsformaat"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

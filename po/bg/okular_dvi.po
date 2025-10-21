@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2024-11-10 20:12+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -142,7 +142,7 @@ msgstr "Постамбюлът съдържа команда различна о
 msgid "The page %1 does not start with the BOP command."
 msgstr "Страницата %1 не започва с BOP команда."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -170,7 +170,7 @@ msgstr ""
 "<strong> pdf2ps </strong> от командния ред, за да проверите дали наистина "
 "работи.</p><p><em> PATH: </em>  %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -364,7 +364,7 @@ msgstr "портрет"
 msgid "landscape"
 msgstr "пейзаж"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

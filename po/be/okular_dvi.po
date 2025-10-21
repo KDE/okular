@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2024-08-11 21:04\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -142,7 +142,7 @@ msgstr "Заключная частка змяшчае каманду, адро�
 msgid "The page %1 does not start with the BOP command."
 msgstr "Старонка %1 не пачынаецца з каманды BOP."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -169,7 +169,7 @@ msgstr ""
 "<strong>pdf2ps</strong> у камандным радку, каб праверыць, ці сапраўды яна "
 "працуе.</p><p><em>PATH:</em> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -361,7 +361,7 @@ msgstr "кніжная"
 msgid "landscape"
 msgstr "альбомная"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

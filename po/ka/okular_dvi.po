@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-03 00:41+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2024-08-16 05:12+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -141,7 +141,7 @@ msgstr "პოსტამბულა FNTDEF-ის გარდა სხვ�
 msgid "The page %1 does not start with the BOP command."
 msgstr "გვერდი %1 BOP ბრძანებით არ იწყება."
 
-#: dviFile.cpp:351
+#: dviFile.cpp:354
 #, kde-format
 msgid ""
 "<qt><p>The external program <strong>pdf2ps</strong> could not be started. As "
@@ -167,7 +167,7 @@ msgstr ""
 "ბრძანების სტრიქონიდან გაუშვათ, რომ შეამოწმოთ, მუშაობს თუ არა ის.</"
 "p><p><em>ბილიკი:</em> %2</p></qt>"
 
-#: dviFile.cpp:410
+#: dviFile.cpp:415
 #, kde-format
 msgid ""
 "<qt><p>The PDF-file %1 could not be converted to PostScript. Some graphic "
@@ -358,7 +358,7 @@ msgstr "პორტრეტი"
 msgid "landscape"
 msgstr "ლანდშაფტი"
 
-#: psgs.cpp:283
+#: psgs.cpp:286
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

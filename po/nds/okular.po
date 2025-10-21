@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-11 02:40+0000\n"
+"POT-Creation-Date: 2025-10-21 02:32+0000\n"
 "PO-Revision-Date: 2014-08-11 13:37+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -1724,7 +1724,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Siet: %1"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3167
+#: part/annotationmodel.cpp:322 part/part.cpp:3169
 #, kde-format
 msgid "Page %1"
 msgstr "Siet: %1"
@@ -2379,7 +2379,7 @@ msgstr "Na dit Leesteken gahn"
 msgid "Rename Bookmark"
 msgstr "Leesteken ümnömen"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3173
+#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Leesteken wegdoon"
@@ -4151,7 +4151,7 @@ msgstr "Text koperen"
 msgid "Go to '%1'"
 msgstr "Na \"%1\" gahn"
 
-#: part/pageview.cpp:4062 part/part.cpp:3178
+#: part/pageview.cpp:4062 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "Na Breed topassen"
@@ -4982,7 +4982,7 @@ msgstr "Dit Leesteken ümnömen"
 msgid "Remove this Bookmark"
 msgstr "Dit Leesteken ümnömen"
 
-#: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3484
+#: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
 #: part/signaturepartutils.cpp:256
 #, fuzzy, kde-format
 #| msgctxt "mimetype information, example: \"PDF Document (application/pdf)\""
@@ -5067,7 +5067,7 @@ msgid ""
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2753 part/part.cpp:2822 part/part.cpp:2843 part/part.cpp:3499
+#: part/part.cpp:2753 part/part.cpp:2822 part/part.cpp:2843 part/part.cpp:3501
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5161,62 +5161,62 @@ msgstr ""
 "Datei lett sik nich na \"%1\" sekern. Versöök, ehr na en anner Steed to "
 "sekern."
 
-#: part/part.cpp:3156
+#: part/part.cpp:3158
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Expand whole section"
 msgstr "Presentatschoon beennen"
 
-#: part/part.cpp:3157
+#: part/part.cpp:3159
 #, kde-format
 msgid "Collapse whole section"
 msgstr ""
 
-#: part/part.cpp:3158
+#: part/part.cpp:3160
 #, kde-format
 msgid "Expand all"
 msgstr ""
 
-#: part/part.cpp:3159
+#: part/part.cpp:3161
 #, kde-format
 msgid "Collapse all"
 msgstr ""
 
-#: part/part.cpp:3170
+#: part/part.cpp:3172
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "&Vöransichten mit de Siet verlinken"
 
-#: part/part.cpp:3175
+#: part/part.cpp:3177
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Leesteken tofögen"
 
-#: part/part.cpp:3197
+#: part/part.cpp:3199
 #, kde-format
 msgid "Tools"
 msgstr "Warktüüch"
 
-#: part/part.cpp:3379
+#: part/part.cpp:3381
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Text vörlesen"
 
-#: part/part.cpp:3537
+#: part/part.cpp:3539
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3600
+#: part/part.cpp:3602
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Dat Drucken vun dit Dokment is nich verlöövt."
 
-#: part/part.cpp:3613
+#: part/part.cpp:3615
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5224,7 +5224,7 @@ msgstr ""
 "Dat Dokment lett sik nich drucken. Nich begäng Fehler. Bitte mell dat na "
 "http://bugs.kde.org"
 
-#: part/part.cpp:3615
+#: part/part.cpp:3617
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5233,17 +5233,17 @@ msgstr ""
 "Dat Dokment lett sik nich drucken. Utföhrlich Fehlermellen is \"%1\". Bitte "
 "mell dat na http://bugs.kde.org"
 
-#: part/part.cpp:3704
+#: part/part.cpp:3706
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Na de verleden Steed gahn"
 
-#: part/part.cpp:3708
+#: part/part.cpp:3710
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Na de nakamen Steed gahn"
 
-#: part/part.cpp:3733
+#: part/part.cpp:3735
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5252,7 +5252,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> De Temporeerdatei <nobr><strong>%1</"
 "strong></nobr> lett sik nich opstellen.</qt>"
 
-#: part/part.cpp:3745
+#: part/part.cpp:3747
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5261,7 +5261,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> De Datei <nobr><strong>%1</strong></nobr> "
 "lett sik nich för't Utpacken opmaken. De Datei warrt nich laadt.</qt>"
 
-#: part/part.cpp:3749
+#: part/part.cpp:3751
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5279,7 +5279,7 @@ msgstr ""
 "Du binnen den Dateipleger \"Dolphin\" mit den rechten Muusknoop op de Datei "
 "klickst un den Indrag \"Egenschappen\" bruukst.</qt>"
 
-#: part/part.cpp:3771
+#: part/part.cpp:3773
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5288,7 +5288,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> De Datei <nobr><strong>%1</strong></nobr> "
 "lett sik nich utpacken. De Datei warrt nich laadt.</qt>"
 
-#: part/part.cpp:3775
+#: part/part.cpp:3777
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5298,27 +5298,27 @@ msgstr ""
 "Du seker gahn wullt, denn versöök dat Utpacken vun Hand op de Befehlsreeg.</"
 "qt>"
 
-#: part/part.cpp:3801
+#: part/part.cpp:3803
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Keen Leestekens"
 
-#: part/part.cpp:3872
+#: part/part.cpp:3874
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3872 part/part.cpp:3878
+#: part/part.cpp:3874 part/part.cpp:3880
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3876
+#: part/part.cpp:3878
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3878
+#: part/part.cpp:3880
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

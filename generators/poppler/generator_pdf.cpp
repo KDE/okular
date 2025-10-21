@@ -2197,11 +2197,8 @@ static Okular::SigningResult fromPoppler(Poppler::PDFConverter::SigningResult re
 std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
     // We need a temporary file to pass a prepared image to poppler
-    QTemporaryFile timg(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.png"));
-    timg.setAutoRemove(true);
-    if (!timg.open()) {
-        return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
-    }
+    // and we need to keep it around until we have passed the content to poppler
+    std::unique_ptr<QTemporaryFile> timg;
 
     // save to tmp file - poppler doesn't like overwriting in-place
     QTemporaryFile tf(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.pdf"));
@@ -2231,9 +2228,15 @@ std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSi
         auto input = reader.read();
         if (!input.isNull()) {
             auto scaled = imagescaling::scaleAndFitCanvas(input, QSize(width, height));
-            bool success = scaled.save(timg.fileName(), "png");
+            timg = std::make_unique<QTemporaryFile>(QFileInfo(rFilename).absolutePath() + QLatin1String("/okular_XXXXXX.png"));
+            timg->setAutoRemove(true);
+            if (!timg->open()) {
+                tf.setAutoRemove(true);
+                return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
+            }
+            bool success = scaled.save(timg->fileName(), "png");
             if (success) {
-                pData.setImagePath(timg.fileName());
+                pData.setImagePath(timg->fileName());
                 pData.setBackgroundColor(Qt::white);
             }
         }

@@ -1,7 +1,7 @@
 # translation of kpdf.po to Romanian
 # Copyright (C) 2004 Free Software Foundation, Inc.
 # Claudiu Costin <claudiuc@kde.org>, 2003, 2004.
-# Sergiu Bivol <sergiu@cip.md>, 2008, 2009, 2020, 2021, 2022, 2024.
+# SPDX-FileCopyrightText: 2008, 2009, 2020, 2021, 2022, 2024, 2025 Sergiu Bivol <sergiu@cip.md>
 # Laurenţiu Buzdugan <lbuz@rolix.org>, 2009.
 #
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-09 14:16+0100\n"
+"PO-Revision-Date: 2025-10-20 11:01+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
 "Language: ro\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3392,10 +3392,9 @@ msgid "Appearance"
 msgstr "Aspect"
 
 #: part/editannottooldialog.cpp:93
-#, fuzzy, kde-format
-#| msgid "Next Bookmark"
+#, kde-format
 msgid "Text markup"
-msgstr "Semnul de carte următor"
+msgstr "Marcaj textual"
 
 #: part/editannottooldialog.cpp:94
 #, kde-format
@@ -3426,7 +3425,7 @@ msgstr "Lățime &peniță:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3487,18 +3486,16 @@ msgid "Modified"
 msgstr "Modificat"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Salvează ca"
+msgstr "&Salvează ca…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&Vizualizare"
+msgstr "&Vizualizare…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3569,23 +3566,20 @@ msgid "Find as you type"
 msgstr "Caută pe măsură ce scrieți"
 
 #: part/formwidgets.cpp:870
-#, fuzzy, kde-format
-#| msgid "*|All Files"
+#, kde-format
 msgid "All Files (*)"
-msgstr "*|Toate fișierele"
+msgstr "Toate fișierele (*)"
 
 #: part/formwidgets.cpp:1280
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr ""
+msgstr "Locul ștampilei (apăsați pentru a semna)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Semnează"
+msgstr "&Semnează…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3769,10 +3763,9 @@ msgid "Selection Tools"
 msgstr "Unelte de alegere"
 
 #: part/pageview.cpp:711
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "&Semnează digital..."
+msgstr "&Semnează digital…"
 
 #: part/pageview.cpp:717
 #, kde-format
@@ -3780,10 +3773,9 @@ msgid "Speak Whole Document"
 msgstr "Vorbește tot documentul"
 
 #: part/pageview.cpp:722
-#, fuzzy, kde-format
-#| msgid "Speak Current Page"
+#, kde-format
 msgid "Speak From Current Page"
-msgstr "Vorbește pagina curentă"
+msgstr "Vorbește de la pagina curentă"
 
 #: part/pageview.cpp:727
 #, kde-format
@@ -3857,22 +3849,19 @@ msgid "Speak Text"
 msgstr "Vorbește textul"
 
 #: part/pageview.cpp:2863
-#, fuzzy, kde-format
-#| msgid "Image (%1 by %2 pixels)"
+#, kde-format
 msgid "Image (%1 × %2 pixels)"
-msgstr "Imagine (%1 pe %2 pixeli)"
+msgstr "Imagine (%1 × %2 pixeli)"
 
 #: part/pageview.cpp:2865
-#, fuzzy, kde-format
-#| msgid "Save to File..."
+#, kde-format
 msgid "Save to File…"
-msgstr "Salvare în fișier..."
+msgstr "Salvează în fișier…"
 
 #: part/pageview.cpp:2885
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] copied to clipboard."
+#, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
-msgstr "Imagine [%1x%2] copiată în clipboard."
+msgstr "Imagine [%1 × %2] copiată în clipboard."
 
 #: part/pageview.cpp:2888
 #, kde-format
@@ -3890,10 +3879,9 @@ msgid "File not saved."
 msgstr "Fișier nesalvat."
 
 #: part/pageview.cpp:2901
-#, fuzzy, kde-format
-#| msgid "Image [%1x%2] saved to %3 file."
+#, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
-msgstr "Imagine [%1x%2] salvată în fișierul %3."
+msgstr "Imagine [%1 × %2] salvată în fișierul %3."
 
 #: part/pageview.cpp:3042
 #, kde-format
@@ -3935,8 +3923,7 @@ msgid "Search for '%1' with"
 msgstr "Caută „%1” cu"
 
 #: part/pageview.cpp:4404
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Configurare scurtături web…"
 
@@ -4004,18 +3991,18 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Toate certificatele dumneavoastră pentru semnare nu sunt valide. Dacă "
+"semnarea a funcționat înainte,verificați datele de valabilitate ale acestora."
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Certificate"
+msgstr "Niciun certificat valabil"
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Vezi în gestionarul de certificate"
+msgstr "Deschide gestionarul de certificate"
 
 #: part/pageview.cpp:5200
 #, kde-format
@@ -4026,10 +4013,9 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Certificate"
+msgstr "Niciun certificat găsit"
 
 #: part/pageview.cpp:5213
 #, kde-format
@@ -4073,6 +4059,9 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Semnat de: %1\n"
+"\n"
+"Dată: %2"
 
 #: part/pageviewannotator.cpp:487
 #, kde-kuit-format
@@ -4272,13 +4261,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Semnare în curs. Puteți ajusta poziția și dimensiunea semnăturii"
 
 #: part/part.cpp:490
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Termină semnarea"
 
 #: part/part.cpp:662
 #, kde-format
@@ -4358,28 +4347,24 @@ msgid "Go to the next bookmark"
 msgstr "Mergi la semnul de carte următor"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "Configurează Okular…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Configurează vizualizorul"
+msgstr "Configurează vizualizorul…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Configurează platformele vizualizorului"
+msgstr "Configurează platformele vizualizorului…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Configurează platformele"
+msgstr "Configurează platformele…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4407,9 +4392,7 @@ msgid "Page Number"
 msgstr "Număr pagină"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Configurează regimuri de culoare…"
@@ -4460,8 +4443,7 @@ msgid "Open Con&taining Folder"
 msgstr "Deschide dosarul conțină&tor"
 
 #: part/part.cpp:945
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Importă PostScript ca PDF…"
 
@@ -4476,8 +4458,7 @@ msgid "Erase Drawing"
 msgstr "Șterge desenul"
 
 #: part/part.cpp:962
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
 msgstr "Configurează adnotările…"
 
@@ -4495,10 +4476,9 @@ msgid ""
 msgstr ""
 
 #: part/part.cpp:1123
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Document can't be saved"
-msgstr "Parola documentului"
+msgstr "Documentul nu poate fi salvat"
 
 #: part/part.cpp:1152
 #, kde-format
@@ -4545,8 +4525,7 @@ msgid "PostScript files (%1)"
 msgstr "Fișiere PostScript (%1)"
 
 #: part/part.cpp:1357
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Import fișier PS ca PDF (poate dura ceva timp)…"
 
@@ -4693,8 +4672,7 @@ msgstr ""
 "funcționează în cazul folosirii vizualizorului înglobat."
 
 #: part/part.cpp:2113 part/part.cpp:2131
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
 msgstr "Se reîncarcă documentul…"
 
@@ -5052,7 +5030,7 @@ msgstr "&Vizualizare"
 #: part/part.rc:53
 #, kde-format
 msgid "&Go"
-msgstr "&Mergi"
+msgstr "Mer&gi"
 
 #. i18n: ectx: Menu (tools)
 #: part/part.rc:73
@@ -5241,10 +5219,9 @@ msgid "&Fonts"
 msgstr "&Fonturi"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
-msgstr "Citire informații despre fonturi..."
+msgstr "Se citesc informații despre fonturi…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5371,7 +5348,7 @@ msgstr "Da"
 #, kde-format
 msgctxt "Replacing missing font with another one"
 msgid "%1 (substituting with %2)"
-msgstr ""
+msgstr "%1 (substituit cu %2)"
 
 #: part/propertiesdialog.cpp:372
 #, kde-format
@@ -5478,24 +5455,22 @@ msgstr "Alege certificatul pentru semnare:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
-#, fuzzy, kde-format
-#| msgid "Allow"
+#, kde-format
 msgid "All"
-msgstr "Permite"
+msgstr "Toate"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Certificate"
+msgstr "Doar certificate QES"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Doar chei PGP"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:71
@@ -5599,7 +5574,7 @@ msgstr "Uită toate imaginile"
 #: part/signaturepartutils.cpp:224
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "Introduceți parola (dacă este) pentru deblocarea certificatului: %1"
 
 #: part/signaturepartutils.cpp:226
 #, kde-format
@@ -5617,11 +5592,7 @@ msgid "Save Signed File As"
 msgstr "Salvează fișier semnat ca"
 
 #: part/signaturepartutils.h:62
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Used when suggesting a new name for a digitally signed file. %1 is the "
-#| "old file name and %2 it's extension"
-#| msgid "%1_signed.%2"
+#, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
 "file name and %2 its extension"
@@ -5670,14 +5641,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Revizie document %1 din %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
 msgstr "Vezi versiunea semnată…"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "Vezi certificatul…"
 
@@ -5689,18 +5658,18 @@ msgstr "Vezi în gestionarul de certificate"
 #: part/signaturepropertiesdialog.cpp:101
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr ""
+msgstr "Gestionarul de certificate KDE (kleopatra) nu a fost găsit"
 
 #: part/signingcertificatelistmodel.cpp:102
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Calificat"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1015
 #, kde-format
@@ -5728,23 +5697,22 @@ msgstr "Oprește"
 #: part/videowidget.cpp:501
 #, kde-format
 msgid "Videos not supported in this okular"
-msgstr ""
+msgstr "Acest Okular nu susține videoclipuri"
 
 #: part/videowidget.cpp:505
 #, kde-format
 msgid "Videos not supported in this Okular"
-msgstr ""
+msgstr "Acest Okular nu susține videoclipuri"
 
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Adaugă…"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Editare"
+msgstr "&Modifică…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -5764,12 +5732,12 @@ msgstr "Mută în &jos"
 #: part/widgetdrawingtools.cpp:105
 #, kde-format
 msgid "Default Drawing Tool #%1"
-msgstr ""
+msgstr "Unealtă de desen implicită #%1"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr ""
+msgstr "Există deja o unealtă cu acea denumire. Se folosește una implicită"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
@@ -5804,22 +5772,22 @@ msgstr "Control „Instanță unică”"
 #: shell/main.cpp:80
 #, kde-format
 msgid "Not raise window"
-msgstr ""
+msgstr "Nu ridică fereastra"
 
 #: shell/main.cpp:81
 #, kde-format
 msgid "Find a string on the text"
-msgstr ""
+msgstr "Găsește un șir în text"
 
 #: shell/main.cpp:82
 #, kde-format
 msgid "Sets the external editor command"
-msgstr ""
+msgstr "Stabilește comanda de redactor extern"
 
 #: shell/main.cpp:83
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
-msgstr ""
+msgstr "Documente de deschis. Specificați „-” pentru a citi intrarea standard."
 
 #: shell/okular_main.cpp:64 shell/okular_main.cpp:167
 #, kde-format
@@ -5833,38 +5801,42 @@ msgstr ""
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
+"Eroare: Nu se poate deschide mai mult de un document cu opțiunea --unique"
 
 #: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
+"Eroare: Nu se poate deschide mai mult de un document cu opțiunea --"
+"presentation"
 
 #: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
+"Eroare: Nu se poate deschide mai mult de un document cu opțiunea --print"
 
 #: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
+"Eroare: Nu se poate deschide mai mult de un document cu opțiunea --page"
 
 #: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
+"Eroare: Nu se poate deschide mai mult de un document cu opțiunea --find"
 
 #: shell/shell.cpp:207
-#, fuzzy, kde-format
-#| msgid "Unable to find the Okular component."
+#, kde-format
 msgid "Unable to find the Okular component: %1"
-msgstr "Componenta Okular nu poate fi găsită."
+msgstr "Componenta Okular nu poate fi găsită: %1"
 
 #: shell/shell.cpp:250
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Sidebar"
-msgstr "&Arată bara laterală"
+msgstr "Bara laterală"
 
 #: shell/shell.cpp:286
 #, kde-format
@@ -5872,6 +5844,7 @@ msgid ""
 "There is already a unique Okular instance running. This instance won't be "
 "the unique one."
 msgstr ""
+"O instanță unică Okular rulează deja. Această instanță nu va fi cea unică."
 
 #: shell/shell.cpp:315
 #, kde-format
@@ -5896,38 +5869,34 @@ msgstr ""
 "alege un fișier recent"
 
 #: shell/shell.cpp:582
-#, fuzzy, kde-format
-#| msgid "Next Page"
+#, kde-format
 msgid "Next Tab"
-msgstr "Pagina următoare"
+msgstr "Fila următoare"
 
 #: shell/shell.cpp:588
-#, fuzzy, kde-format
-#| msgid "Previous Page"
+#, kde-format
 msgid "Previous Tab"
-msgstr "Pagina precedentă"
+msgstr "Fila precedentă"
 
 #: shell/shell.cpp:594
 #, kde-format
 msgid "Undo close tab"
-msgstr ""
+msgstr "Desfă închiderea filei"
 
 #: shell/shell.cpp:603
-#, fuzzy, kde-format
-#| msgid "Show S&idebar"
+#, kde-format
 msgid "Lock Sidebar"
-msgstr "&Arată bara laterală"
+msgstr "Blochează bara laterală"
 
 #: shell/shell.cpp:703
-#, fuzzy, kde-format
-#| msgid "*|All Files"
+#, kde-format
 msgid "All files (*)"
-msgstr "*|Toate fișierele"
+msgstr "Toate fișierele (*)"
 
 #: shell/shell.cpp:704
 #, kde-format
 msgid "All supported files (%1)"
-msgstr ""
+msgstr "Toate fișierele susținute (%1)"
 
 #: shell/shell.cpp:708
 #, kde-format
@@ -5937,86 +5906,77 @@ msgstr "Deschide documentul"
 #: shell/shell.cpp:822
 #, kde-format
 msgid "Confirm Close"
-msgstr ""
+msgstr "Confirmă închiderea"
 
 #: shell/shell.cpp:826
-#, fuzzy, kde-format
-#| msgid "Close"
+#, kde-format
 msgid "Close Tabs"
-msgstr "Închide"
+msgstr "Închide filele"
 
 #: shell/shell.cpp:833
-#, fuzzy, kde-format
-#| msgid ""
-#| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+#, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
-msgstr ""
-"Există deja un fișier cu denumirea „%1”. Sigur doriți să îl suprascrieți?"
+msgstr "Sunteți pe cale să închideți %1 file. Sigur doriți să continuați?"
 
 #: shell/shell.cpp:835
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
-msgstr ""
+msgstr "Avertizează-mă când încerc să închid mai multe file"
 
 #: shell/welcomescreen.cpp:64
-#, fuzzy, kde-format
-#| msgid "Copy Text"
+#, kde-format
 msgid "&Copy Path"
-msgstr "Copiază textul"
+msgstr "&Copiază calea"
 
 #: shell/welcomescreen.cpp:77
-#, fuzzy, kde-format
-#| msgid "Open Con&taining Folder"
+#, kde-format
 msgid "&Open Containing Folder"
-msgstr "Deschide dosarul conțină&tor"
+msgstr "Deschide d&osarul conținător"
 
 #: shell/welcomescreen.cpp:89
 #, kde-format
 msgctxt "recent items context menu"
 msgid "&Forget This Item"
-msgstr ""
+msgstr "&Uită acest element"
 
 #: shell/welcomescreen.cpp:137
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "No recent documents"
-msgstr "Numai documentul actual"
+msgstr "Nu sunt documente recente"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: shell/welcomescreen.ui:153
 #, kde-format
 msgid "Welcome to Okular"
-msgstr ""
+msgstr "Bun veni în Okular"
 
 #. i18n: ectx: property (text), widget (QPushButton, openButton)
 #: shell/welcomescreen.ui:232
-#, fuzzy, kde-format
-#| msgid "Open Document"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Deschide documentul"
+msgstr "Deschide document…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382
-#, fuzzy, kde-format
-#| msgid "Current document only"
+#, kde-format
 msgctxt "on welcome screen"
 msgid "Recent documents"
-msgstr "Numai documentul actual"
+msgstr "Documente recente"
 
 #. i18n: ectx: property (text), widget (QToolButton, forgetAllButton)
 #: shell/welcomescreen.ui:392
 #, kde-format
 msgctxt "on welcome screen (recent document list)"
 msgid "Forget All"
-msgstr ""
+msgstr "Uită tot"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, closeButton)
 #: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
-msgstr ""
+msgstr "Ascunde ecranul de bun venit"
 
 #~ msgid "Modified: %1"
 #~ msgstr "Modificat: %1"

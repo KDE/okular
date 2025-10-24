@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-18 00:40+0000\n"
-"PO-Revision-Date: 2025-10-16 17:09+0000\n"
+"PO-Revision-Date: 2025-10-23 14:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -315,7 +315,7 @@ msgstr "Finn enga viðbót sem getur unnið með skjalið sem um ræðir."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Undirritun er ekki útfært enn fyrir þessa tegund skjala"
 
 #: core/document.cpp:3557
 #, kde-format
@@ -605,11 +605,10 @@ msgstr ""
 "kalla hana fram. Villuboð %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgid "Could not sign document with location: <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Gat ekki undirritað skrá með staðsetningu: <filename>%1</filename>"
+msgstr "Gat ekki undirritað skjalið: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -622,10 +621,7 @@ msgid "Could not sign. Wrong passphrase"
 msgstr "Gat ekki undirritað. Röng lykilsetning"
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
-#| msgid ""
-#| "Could not write signed document at <filename>%1</filename>, please ensure "
-#| "you have selected a folder with write permission"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
@@ -917,42 +913,42 @@ msgstr "Ekki tókst að sannprófa undirskriftina."
 #: gui/signatureguiutils.cpp:60
 #, kde-format
 msgid "Certificate is Trusted."
-msgstr "Vottorð er traust."
+msgstr "Skilríki er treyst."
 
 #: gui/signatureguiutils.cpp:62
 #, kde-format
 msgid "Certificate issuer isn't Trusted."
-msgstr "Útgefandi vottorðs er ekki traustur."
+msgstr "Útgefandi skilríkis er ekki traustur."
 
 #: gui/signatureguiutils.cpp:64
 #, kde-format
 msgid "Certificate issuer is unknown."
-msgstr "Útgefandi vottorðs er óþekktur."
+msgstr "Útgefandi skilríkis er óþekktur."
 
 #: gui/signatureguiutils.cpp:66
 #, kde-format
 msgid "Certificate has been Revoked."
-msgstr "Vottorð hefur verið afturkallað."
+msgstr "Skilríkið hefur verið afturkallað."
 
 #: gui/signatureguiutils.cpp:68
 #, kde-format
 msgid "Certificate has Expired."
-msgstr "Vottorðið er útrunnið."
+msgstr "Skilríkið er útrunnið."
 
 #: gui/signatureguiutils.cpp:70
 #, kde-format
 msgid "Certificate has not yet been verified."
-msgstr "Vottorðið hefur ekki verið sannprófað."
+msgstr "Skilríkið hefur ekki verið sannprófað."
 
 #: gui/signatureguiutils.cpp:72
 #, kde-format
 msgid "Certificate validation in progress"
-msgstr "Sannprófun vottorðs í gangi"
+msgstr "Sannprófun skilríkis í gangi"
 
 #: gui/signatureguiutils.cpp:74
 #, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
-msgstr "Óþekkt vandamál með vottorð eða skemmd gögn."
+msgstr "Óþekkt vandamál með Skilríki eða skemmd gögn."
 
 #: gui/signatureguiutils.cpp:82
 #, kde-format
@@ -1042,7 +1038,7 @@ msgstr "Skilmálar lykils"
 #: gui/signatureguiutils.cpp:135
 #, kde-format
 msgid "Sign Certificate"
-msgstr "Undirritunarvottorð"
+msgstr "Undirrita skilríki"
 
 #: gui/signatureguiutils.cpp:138
 #, kde-format
@@ -1095,11 +1091,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Ekki tókst að ljúka sannprófun á heilleika skjalsins."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Það eru óútfylltir undirskriftarreitir í þessu skjali."
+msgstr "Það eru undirritunarreitir í þessu skjali."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1435,12 +1430,10 @@ msgid "Transparent"
 msgstr "Gagnsætt"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "Sérsniðinn litur..."
+msgstr "Sérsniðinn litur…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1686,12 +1679,10 @@ msgid "&Properties"
 msgstr "&Eiginleikar"
 
 #: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "Vi&sta '%1'..."
+msgstr "Vi&sta '%1'…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2257,10 +2248,9 @@ msgstr "Sýna fyrir öll skjöl"
 
 #: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "S&earch:"
+#, kde-format
 msgid "Search…"
-msgstr "L&eita:"
+msgstr "Leita…"
 
 #: part/bookmarklist.cpp:257
 #, kde-format
@@ -2292,13 +2282,12 @@ msgstr "Fjarlægja öll bókamerki úr núverandi skjali"
 #: part/certificateviewer.cpp:47
 #, kde-format
 msgid "Certificate Viewer"
-msgstr "Vottorðaskoðari"
+msgstr "Skilríkjaskoðari"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
-msgstr "Flytja út..."
+msgstr "Flytja út…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -2358,22 +2347,22 @@ msgstr "Nánar"
 #: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
-msgstr "Vottorðsgögn:"
+msgstr "Skilríkisgögn:"
 
 #: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
-msgstr "Hvar viltu vista þetta vottorð?"
+msgstr "Hvar viltu vista þetta skilríki?"
 
 #: part/certificateviewer.cpp:160
 #, kde-format
 msgid "Certificate File (*.cer)"
-msgstr "Vottorðsskrá (*.cer)"
+msgstr "Skilríkisskrá (*.cer)"
 
 #: part/certificateviewer.cpp:163
 #, kde-format
 msgid "Could not export the certificate"
-msgstr "Gat ekki flutt út vottorðið"
+msgstr "Gat ekki flutt út skilríkið"
 
 #: part/colormodemenu.cpp:19
 #, kde-format
@@ -2903,7 +2892,7 @@ msgstr "Bendill fer hringinn við skjábrúnir þegar færsluverkfæri er notað
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Nýleg atriði í ferilskrá:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -3462,18 +3451,16 @@ msgid "Modified"
 msgstr "Breytt"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Vista sem"
+msgstr "Vista &sem…"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "S&koða"
+msgstr "S&koða…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3549,18 +3536,15 @@ msgid "All Files (*)"
 msgstr "Allar skrár (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Óútfylltur undirskriftarreitur (smelltu til að undirrita)"
+msgstr "Óútfylltur undirritunarreitur (smelltu til að undirrita)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Undirrita"
+msgstr "&Undirrita…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3744,10 +3728,9 @@ msgid "Selection Tools"
 msgstr "Valverkfæri"
 
 #: part/pageview.cpp:711
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
-msgstr "Undirrita &rafrænt..."
+msgstr "Undirrita &stafrænt…"
 
 #: part/pageview.cpp:717
 #, kde-format
@@ -3903,10 +3886,9 @@ msgid "Search for '%1' with"
 msgstr "Leita að '%1' með"
 
 #: part/pageview.cpp:4404
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "Grunnstilla vefskammstafanir..."
+msgstr "Grunnstilla vefskammstafanir…"
 
 #: part/pageview.cpp:4430
 #, kde-format
@@ -3973,38 +3955,34 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Öll skilríki þín til undirritunar eru ógild. Hafi undirritun virkað áður, "
+"ættirðu að athuga gildistíma skilríkjanna."
 
 #: part/pageview.cpp:5188
-#, fuzzy, kde-format
-#| msgid "Only QES certificates"
+#, kde-format
 msgid "No valid certificates"
-msgstr "Einungis QES-vottorð"
+msgstr "Engin gild skilríki"
 
 #: part/pageview.cpp:5189 part/pageview.cpp:5204
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Skoða í vottorðastjóra"
+msgstr "Skoða í skilríkjastjórann"
 
 #: part/pageview.cpp:5200
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Engin undirritunarvottorð eru tiltæk.<br/>Sjá kaflann <a href=\"%1\">Adding "
-"Digital Signatures</a> (Rafrænni undirskrift bætt við) í handbókinni."
+"Engin undirritunarskilríki eru tiltæk.<br/>Ræstu skilríkjastjórann til að "
+"flytja inn eða sýsla með skilríki.<br/>Skoðaðu kaflann <a href=\"%1\">Adding "
+"Digital Signatures</a> (Bæta við rafrænum undirskriftum) í handbókinni."
 
 #: part/pageview.cpp:5203 part/pageview.cpp:5215
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Vottorð"
+msgstr "Engin skilríki fundust"
 
 #: part/pageview.cpp:5213
 #, kde-format
@@ -4013,8 +3991,9 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
-"Engin undirritunarvottorð eru tiltæk.<br/>Sjá kaflann <a href=\"%1\">Adding "
-"Digital Signatures</a> (Rafrænni undirskrift bætt við) í handbókinni."
+"Engin undirritunarskilríki eru tiltæk.<br/>Skoðaðu kaflann <a href="
+"\"%1\">Adding Digital Signatures</a> (Bæta við rafrænum undirskriftum) í "
+"handbókinni."
 
 #: part/pageview.cpp:5238
 #, kde-format
@@ -4340,28 +4319,24 @@ msgid "Go to the next bookmark"
 msgstr "Fara á næsta bókamerki"
 
 #: part/part.cpp:748
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
-msgstr "Grunnstilla Okular..."
+msgstr "Grunnstilla Okular…"
 
 #: part/part.cpp:751
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Grunnstilla skoðara"
+msgstr "Grunnstilla skoðara…"
 
 #: part/part.cpp:757
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Grunnstilla skoðunarbakenda"
+msgstr "Grunnstilla skoðunarbakenda…"
 
 #: part/part.cpp:759
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Grunnstilla bakenda"
+msgstr "Grunnstilla bakenda…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4389,12 +4364,10 @@ msgid "Page Number"
 msgstr "Blaðsíðutal"
 
 #: part/part.cpp:817
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Grunnstilla litasnið..."
+msgstr "Grunnstilla litahami…"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4442,10 +4415,9 @@ msgid "Open Con&taining Folder"
 msgstr "Opna &möppu sem skráin er í"
 
 #: part/part.cpp:945
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "&Flytja inn PostScript sem PDF..."
+msgstr "Flytja &inn PostScript sem PDF…"
 
 #: part/part.cpp:949
 #, kde-format
@@ -4458,10 +4430,9 @@ msgid "Erase Drawing"
 msgstr "Eyða teikningu"
 
 #: part/part.cpp:962
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "Grunnstilla glósur..."
+msgstr "Grunnstilla glósur…"
 
 #: part/part.cpp:967
 #, kde-format
@@ -4529,10 +4500,9 @@ msgid "PostScript files (%1)"
 msgstr "PostScript-skrár (%1)"
 
 #: part/part.cpp:1357
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "Flyt inn PS-skrá sem PDF (þetta gæti tekið tíma)..."
+msgstr "Flyt inn PS-skrá sem PDF (þetta gæti tekið nokkurn tíma)…"
 
 #: part/part.cpp:1489
 #, kde-format
@@ -5498,13 +5468,13 @@ msgstr "Valmöguleikar síu"
 #: part/selectcertificatedialog.ui:14
 #, kde-format
 msgid "Certificates"
-msgstr "Vottorð"
+msgstr "Skilríki"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: part/selectcertificatedialog.ui:20
 #, kde-format
 msgid "Select certificate to sign with:"
-msgstr "Veldu vottorð til að undirrita með:"
+msgstr "Veldu skilríki til að undirrita með:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, allCertificateOption)
 #: part/selectcertificatedialog.ui:29
@@ -5516,7 +5486,7 @@ msgstr "Allt"
 #: part/selectcertificatedialog.ui:39
 #, kde-format
 msgid "Only QES certificates"
-msgstr "Einungis QES-vottorð"
+msgstr "Einungis QES-skilríki"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
@@ -5627,12 +5597,12 @@ msgstr "Gleyma öllum myndum"
 #: part/signaturepartutils.cpp:224
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr "Sláðu inn lykilorð (ef til staðar ) til að aflæsa vottorði: %1"
+msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
 #: part/signaturepartutils.cpp:226
 #, kde-format
 msgid "Enter certificate password"
-msgstr "Sláðu inn lykilorð vottorðs"
+msgstr "Settu inn lykilorðið að skilríkinu"
 
 #: part/signaturepartutils.cpp:239
 #, kde-format
@@ -5706,18 +5676,18 @@ msgstr "Skoða skilríki…"
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
 msgid "View in Certificate Manager"
-msgstr "Skoða í vottorðastjóra"
+msgstr "Skoða í skilríkjastjóra"
 
 #: part/signaturepropertiesdialog.cpp:101
 #, kde-format
 msgid "KDE Certificate Manager (kleopatra) not found"
-msgstr "Vottorðastjóri KDE (kleopatra) fannst ekki"
+msgstr "Skilríkjastjórnun KDE (kleopatra) fannst ekki"
 
 #: part/signingcertificatelistmodel.cpp:102
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr "Fullgild (QES)"
+msgstr "Fullgilt (QES)"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format

@@ -2,16 +2,16 @@
 # Copyright (C) 2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2013, 2015.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2013, 2015, 2025 Sveinn í Felli <sveinki@nett.is>
 # SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:41+0000\n"
-"PO-Revision-Date: 2025-04-17 13:45+0000\n"
-"Last-Translator: Gummi <gudmundure@gmail.com>\n"
-"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2025-10-23 14:57+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -309,12 +309,12 @@ msgstr "Stillingar PDF-bakenda"
 #: generator_pdf.cpp:2207 generator_pdf.cpp:2235
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Villa við að skrifa bráðabirgðaskrá"
 
 #: generator_pdf.cpp:2257
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Villa við að endurnefna bráðabirgðaskrá"
 
 #: generator_pdf.cpp:2277
 #, kde-format

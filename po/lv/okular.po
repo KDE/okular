@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-18 00:40+0000\n"
+"POT-Creation-Date: 2025-10-31 00:40+0000\n"
 "PO-Revision-Date: 2025-08-21 15:39+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -707,19 +707,19 @@ msgid "Value"
 msgstr "Vērtība"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:276 part/pageviewannotator.cpp:1477
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Izlecoša piezīme"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:263 part/pageviewannotator.cpp:1493
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, kde-format
 msgid "Typewriter"
 msgstr "Rakstāmmašīna"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:258 part/pageviewannotator.cpp:1475
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Inline Note"
 msgstr "Iegulta piezīme"
@@ -730,7 +730,7 @@ msgid "Straight Line with Comment"
 msgstr "Taisna līnija ar komentāru"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1487
+#: part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Straight Line"
 msgstr "Taisna līnija"
@@ -741,7 +741,7 @@ msgid "Polygon with Comment"
 msgstr "Daudzstūris ar komentāru"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1479
+#: part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Polygon"
 msgstr "Daudzstūris"
@@ -772,7 +772,7 @@ msgid "Squiggle with Comment"
 msgstr "Vilnītis ar komentāru"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1483
+#: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Squiggle"
 msgstr "Vilnītis"
@@ -783,7 +783,7 @@ msgid "Underline with Comment"
 msgstr "Pasvītrojums ar komentāru"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1491
+#: part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Underline"
 msgstr "Pasvītrojums"
@@ -804,7 +804,7 @@ msgid "Stamp with Comment"
 msgstr "Spiedogs ar komentāru"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1485
+#: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Stamp"
 msgstr "Spiedogs"
@@ -815,7 +815,7 @@ msgid "Freehand Line with Comment"
 msgstr "Brīvas formas līnija ar komentāru"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1473
+#: part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Freehand Line"
 msgstr "Brīvas formas līnija"
@@ -2087,17 +2087,17 @@ msgstr "Figūras aizpildījums:"
 msgid "Type:"
 msgstr "Tips:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1489
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1491
 #, kde-format
 msgid "Strike out"
 msgstr "Pārsvītrots"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1481
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1483
 #, kde-format
 msgid "Rectangle"
 msgstr "Taisnstūris"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1469
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1471
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipse"
@@ -4027,17 +4027,17 @@ msgstr "Iezīmējiet četrstūri, lai ievietotu paraksta lauciņu"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Apvelciet taisnstūri ap vietu lapā, kuru vēlaties paturēt redzamu"
 
-#: part/pageviewannotator.cpp:261
+#: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "New Text Note"
 msgstr "Jauna teksta piezīme"
 
-#: part/pageviewannotator.cpp:261
+#: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "Text of the new note:"
 msgstr "Jaunās piezīmes teksts:"
 
-#: part/pageviewannotator.cpp:406
+#: part/pageviewannotator.cpp:408
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4048,7 +4048,7 @@ msgstr ""
 "\n"
 "Datums: %2"
 
-#: part/pageviewannotator.cpp:487
+#: part/pageviewannotator.cpp:489
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4060,117 +4060,117 @@ msgstr ""
 "iespējams, izlasāmāku parakstu, spiediet <interface>Sākt no sākuma</"
 "interface> un iezīmējiet lielāku četrstūri."
 
-#: part/pageviewannotator.cpp:489
+#: part/pageviewannotator.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Sākt no sākuma"
 
-#: part/pageviewannotator.cpp:490
+#: part/pageviewannotator.cpp:492
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Parakstīt"
 
-#: part/pageviewannotator.cpp:1327
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Author name"
 msgstr "Autora vārds"
 
-#: part/pageviewannotator.cpp:1327
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Autora vārds anotācijām:"
 
-#: part/pageviewannotator.cpp:1388
+#: part/pageviewannotator.cpp:1390
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Iezīmējiet elipsi (klikšķiniet un velciet)"
 
-#: part/pageviewannotator.cpp:1390
+#: part/pageviewannotator.cpp:1392
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Izcelts teksts"
 
-#: part/pageviewannotator.cpp:1392
+#: part/pageviewannotator.cpp:1394
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Zīmēt brīvas formas līniju"
 
-#: part/pageviewannotator.cpp:1394
+#: part/pageviewannotator.cpp:1396
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Iegulta teksta anotēšana (klikšķiniet un velciet)"
 
-#: part/pageviewannotator.cpp:1396
+#: part/pageviewannotator.cpp:1398
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Ievietot izlecošu piezīmi"
 
-#: part/pageviewannotator.cpp:1398
+#: part/pageviewannotator.cpp:1400
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Zīmēt daudzstūri (nospiediet uz pirmā punkta, lai to pabeigtu)"
 
-#: part/pageviewannotator.cpp:1400
+#: part/pageviewannotator.cpp:1402
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Zīmēt taisnstūri"
 
-#: part/pageviewannotator.cpp:1402
+#: part/pageviewannotator.cpp:1404
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Teksts ar vilnīti"
 
-#: part/pageviewannotator.cpp:1404
+#: part/pageviewannotator.cpp:1406
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Uzlikt spiedogu"
 
-#: part/pageviewannotator.cpp:1406
+#: part/pageviewannotator.cpp:1408
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Zīmēt taisnu līniju"
 
-#: part/pageviewannotator.cpp:1408
+#: part/pageviewannotator.cpp:1410
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Pārsvītrots teksts"
 
-#: part/pageviewannotator.cpp:1410
+#: part/pageviewannotator.cpp:1412
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Pasvītrots teksts"
 
-#: part/pageviewannotator.cpp:1412
+#: part/pageviewannotator.cpp:1414
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Rakstāmmašīnas anotēšana (klikšķiniet un velciet apgabalu)"
 
-#: part/pageviewannotator.cpp:1471
+#: part/pageviewannotator.cpp:1473
 #, kde-format
 msgid "Highlighter"
 msgstr "Izcelšanas rīks"
 
-#: part/pageviewannotator.cpp:1768
+#: part/pageviewannotator.cpp:1770
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Pievienojiet iecienītāko anotāciju"
 
-#: part/pageviewannotator.cpp:1768
+#: part/pageviewannotator.cpp:1770
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Pielāgotās anotācijas nosaukums:"

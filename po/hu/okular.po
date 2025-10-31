@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-18 00:40+0000\n"
+"POT-Creation-Date: 2025-10-31 00:40+0000\n"
 "PO-Revision-Date: 2025-07-12 21:59+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -707,19 +707,19 @@ msgid "Value"
 msgstr "Érték"
 
 #: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:276 part/pageviewannotator.cpp:1477
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Felugró megjegyzés"
 
 #: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:263 part/pageviewannotator.cpp:1493
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, kde-format
 msgid "Typewriter"
 msgstr "Írógép betű"
 
 #: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:258 part/pageviewannotator.cpp:1475
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Inline Note"
 msgstr "Beszúrt megjegyzés"
@@ -730,7 +730,7 @@ msgid "Straight Line with Comment"
 msgstr "Egyenes vonal megjegyzéssel"
 
 #: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1487
+#: part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Straight Line"
 msgstr "Egyenes vonal"
@@ -741,7 +741,7 @@ msgid "Polygon with Comment"
 msgstr "Sokszög megjegyzéssel"
 
 #: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1479
+#: part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Polygon"
 msgstr "Sokszög"
@@ -772,7 +772,7 @@ msgid "Squiggle with Comment"
 msgstr "Hurkos vonal megjegyzéssel"
 
 #: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1483
+#: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Squiggle"
 msgstr "Hurkos vonal"
@@ -783,7 +783,7 @@ msgid "Underline with Comment"
 msgstr "Aláhúzás megjegyzéssel"
 
 #: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1491
+#: part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Underline"
 msgstr "Aláhúzás"
@@ -804,7 +804,7 @@ msgid "Stamp with Comment"
 msgstr "Pecsét megjegyzéssel"
 
 #: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1485
+#: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Stamp"
 msgstr "Pecsét"
@@ -815,7 +815,7 @@ msgid "Freehand Line with Comment"
 msgstr "Szabadkézi vonal megjegyzéssel"
 
 #: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1473
+#: part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Freehand Line"
 msgstr "Szabadkézi vonal"
@@ -2089,17 +2089,17 @@ msgstr "Alakzat kitöltése:"
 msgid "Type:"
 msgstr "Típus:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1489
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1491
 #, kde-format
 msgid "Strike out"
 msgstr "Áthúzás"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1481
+#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1483
 #, kde-format
 msgid "Rectangle"
 msgstr "Téglalap"
 
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1469
+#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1471
 #, kde-format
 msgid "Ellipse"
 msgstr "Ellipszis"
@@ -4028,17 +4028,17 @@ msgstr "Rajzoljon egy téglalapot aláírásmező beszúrásához"
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Húzzon egy keretet a láthatóvá tenni kívánt oldalterület köré"
 
-#: part/pageviewannotator.cpp:261
+#: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "New Text Note"
 msgstr "Új szöveges megjegyzés"
 
-#: part/pageviewannotator.cpp:261
+#: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "Text of the new note:"
 msgstr "Az új megjegyzés szövege:"
 
-#: part/pageviewannotator.cpp:406
+#: part/pageviewannotator.cpp:408
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4049,7 +4049,7 @@ msgstr ""
 "\n"
 "Dátum: %2"
 
-#: part/pageviewannotator.cpp:487
+#: part/pageviewannotator.cpp:489
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4062,117 +4062,117 @@ msgstr ""
 "<interface>Újrakezdés</interface> gombot, és rajzoljon egy nagyobb "
 "téglalapot."
 
-#: part/pageviewannotator.cpp:489
+#: part/pageviewannotator.cpp:491
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "Újrakezdés"
 
-#: part/pageviewannotator.cpp:490
+#: part/pageviewannotator.cpp:492
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "Aláírás"
 
-#: part/pageviewannotator.cpp:1327
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Author name"
 msgstr "Szerző neve"
 
-#: part/pageviewannotator.cpp:1327
+#: part/pageviewannotator.cpp:1329
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "A jegyzet szerzőjének neve:"
 
-#: part/pageviewannotator.cpp:1388
+#: part/pageviewannotator.cpp:1390
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Ellipszis rajzolása (zóna kijelölése húzással)"
 
-#: part/pageviewannotator.cpp:1390
+#: part/pageviewannotator.cpp:1392
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Szöveg kiemelése"
 
-#: part/pageviewannotator.cpp:1392
+#: part/pageviewannotator.cpp:1394
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Szabadkézi vonal rajzolása"
 
-#: part/pageviewannotator.cpp:1394
+#: part/pageviewannotator.cpp:1396
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Közvetlen megjegyzések (zóna kijelölése húzással)"
 
-#: part/pageviewannotator.cpp:1396
+#: part/pageviewannotator.cpp:1398
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Felugró megjegyzés elhelyezése"
 
-#: part/pageviewannotator.cpp:1398
+#: part/pageviewannotator.cpp:1400
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Sokszög rajzolása (bezáráshoz kattintson az első pontra)"
 
-#: part/pageviewannotator.cpp:1400
+#: part/pageviewannotator.cpp:1402
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Téglalap rajzolása"
 
-#: part/pageviewannotator.cpp:1402
+#: part/pageviewannotator.cpp:1404
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Hurokvonalas szöveg"
 
-#: part/pageviewannotator.cpp:1404
+#: part/pageviewannotator.cpp:1406
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Pecsétszimbólum"
 
-#: part/pageviewannotator.cpp:1406
+#: part/pageviewannotator.cpp:1408
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Egyenes vonal rajzolása"
 
-#: part/pageviewannotator.cpp:1408
+#: part/pageviewannotator.cpp:1410
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Szöveg áthúzása"
 
-#: part/pageviewannotator.cpp:1410
+#: part/pageviewannotator.cpp:1412
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Szöveg aláhúzása"
 
-#: part/pageviewannotator.cpp:1412
+#: part/pageviewannotator.cpp:1414
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Gépírás jegyzet (zóna kijelölése húzással)"
 
-#: part/pageviewannotator.cpp:1471
+#: part/pageviewannotator.cpp:1473
 #, kde-format
 msgid "Highlighter"
 msgstr "Kiemelő"
 
-#: part/pageviewannotator.cpp:1768
+#: part/pageviewannotator.cpp:1770
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Kedvenc jegyzet hozzáadása"
 
-#: part/pageviewannotator.cpp:1768
+#: part/pageviewannotator.cpp:1770
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Egyéni jegyzetnév:"

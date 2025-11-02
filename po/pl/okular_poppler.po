@@ -13,15 +13,16 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-22 00:41+0000\n"
-"PO-Revision-Date: 2025-03-15 10:27+0100\n"
+"PO-Revision-Date: 2025-11-01 10:11+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
-"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language-Team: pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -309,12 +310,12 @@ msgstr "Ustawienia silnika PDF"
 #: generator_pdf.cpp:2207 generator_pdf.cpp:2235
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Nie udało się zapisać pliku tymczasowego."
 
 #: generator_pdf.cpp:2257
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
 
 #: generator_pdf.cpp:2277
 #, kde-format

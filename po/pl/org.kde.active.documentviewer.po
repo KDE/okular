@@ -1,21 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2021, 2022, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2021, 2022, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:40+0000\n"
-"PO-Revision-Date: 2024-12-21 11:18+0100\n"
+"PO-Revision-Date: 2025-11-01 10:12+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
-"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language-Team: pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -95,7 +96,7 @@ msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Otwórz…"
 
 #: ui/Main.qml:49
 msgid "About"
@@ -197,14 +198,12 @@ msgstr "Nie otwarto żadnego dokumentu"
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Ostatnie dokumenty"
 
 #: ui/WelcomeView.qml:108
-#, fuzzy
-#| msgid "Document Version"
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr "Wersja dokumentu"
+msgstr "Moje dokumenty"
 
 #~ msgid "Open..."
 #~ msgstr "Otwórz..."

@@ -24,82 +24,141 @@
 
 namespace GuiUtils
 {
-QString captionForAnnotation(const Okular::Annotation *ann)
+// TODO: iconName should match AnnotationActionHandler in part/annotationactionhandler.cpp
+AnnotationInfo getAnnotationInfo(const Okular::Annotation *ann)
 {
     Q_ASSERT(ann);
 
     const bool hasComment = !ann->contents().isEmpty();
+    AnnotationInfo info;
 
-    QString ret;
     switch (ann->subType()) {
-    case Okular::Annotation::AText:
-        if ((static_cast<const Okular::TextAnnotation *>(ann))->textType() == Okular::TextAnnotation::Linked) {
-            ret = i18n("Pop-up Note");
+    case Okular::Annotation::AText: {
+        const auto *textAnn = static_cast<const Okular::TextAnnotation *>(ann);
+        if (textAnn->textType() == Okular::TextAnnotation::Linked) {
+            info.caption = i18n("Pop-up Note");
+            info.iconName = QStringLiteral("edit-comment");
         } else {
-            if ((static_cast<const Okular::TextAnnotation *>(ann))->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
-                ret = i18n("Typewriter");
+            if (textAnn->inplaceIntent() == Okular::TextAnnotation::TypeWriter) {
+                info.caption = i18n("Typewriter");
+                info.iconName = QStringLiteral("tool-text");
             } else {
-                ret = i18n("Inline Note");
+                info.caption = i18n("Inline Note");
+                info.iconName = QStringLiteral("note");
             }
         }
         break;
-    case Okular::Annotation::ALine:
-        if ((static_cast<const Okular::LineAnnotation *>(ann))->linePoints().count() == 2) {
-            ret = hasComment ? i18n("Straight Line with Comment") : i18n("Straight Line");
+    }
+    case Okular::Annotation::ALine: {
+        const auto *lineAnn = static_cast<const Okular::LineAnnotation *>(ann);
+        if (lineAnn->linePoints().count() == 2) {
+            if (lineAnn->lineEndStyle() == Okular::LineAnnotation::OpenArrow) {
+                info.caption = hasComment ? i18n("Arrow with Comment") : i18n("Arrow");
+                info.iconName = QStringLiteral("draw-arrow");
+            } else {
+                info.caption = hasComment ? i18n("Straight Line with Comment") : i18n("Straight Line");
+                info.iconName = QStringLiteral("draw-line");
+            }
         } else {
-            ret = hasComment ? i18n("Polygon with Comment") : i18n("Polygon");
+            info.caption = hasComment ? i18n("Polygon with Comment") : i18n("Polygon");
+            info.iconName = QStringLiteral("draw-polyline");
         }
-        break;
-    case Okular::Annotation::AGeom:
-        ret = hasComment ? i18n("Geometry with Comment") : i18n("Geometry");
-        break;
-    case Okular::Annotation::AHighlight:
-        switch ((static_cast<const Okular::HighlightAnnotation *>(ann))->highlightType()) {
-        case Okular::HighlightAnnotation::Highlight:
-            ret = hasComment ? i18n("Highlight with Comment") : i18n("Highlight");
-            break;
-        case Okular::HighlightAnnotation::Squiggly:
-            ret = hasComment ? i18n("Squiggle with Comment") : i18n("Squiggle");
-            break;
-        case Okular::HighlightAnnotation::Underline:
-            ret = hasComment ? i18n("Underline with Comment") : i18n("Underline");
-            break;
-        case Okular::HighlightAnnotation::StrikeOut:
-            ret = hasComment ? i18n("Strike Out with Comment") : i18n("Strike Out");
-            break;
-        }
-        break;
-    case Okular::Annotation::AStamp:
-        ret = hasComment ? i18n("Stamp with Comment") : i18n("Stamp");
-        break;
-    case Okular::Annotation::AInk:
-        ret = hasComment ? i18n("Freehand Line with Comment") : i18n("Freehand Line");
-        break;
-    case Okular::Annotation::ACaret:
-        ret = i18n("Caret");
-        break;
-    case Okular::Annotation::AFileAttachment:
-        ret = i18n("File Attachment");
-        break;
-    case Okular::Annotation::ASound:
-        ret = i18n("Sound");
-        break;
-    case Okular::Annotation::AMovie:
-        ret = i18n("Movie");
-        break;
-    case Okular::Annotation::AScreen:
-        ret = i18nc("Caption for a screen annotation", "Screen");
-        break;
-    case Okular::Annotation::AWidget:
-        ret = i18nc("Caption for a widget annotation", "Widget");
-        break;
-    case Okular::Annotation::ARichMedia:
-        ret = i18nc("Caption for a rich media annotation", "Rich Media");
-        break;
-    case Okular::Annotation::A_BASE:
         break;
     }
-    return ret;
+    case Okular::Annotation::AGeom: {
+        const auto *geomAnn = static_cast<const Okular::GeomAnnotation *>(ann);
+        if (geomAnn->geometricalType() == Okular::GeomAnnotation::InscribedSquare) {
+            info.caption = hasComment ? i18n("Rectangle with Comment") : i18n("Rectangle");
+            info.iconName = QStringLiteral("draw-rectangle");
+        } else {
+            info.caption = hasComment ? i18n("Ellipse with Comment") : i18n("Ellipse");
+            info.iconName = QStringLiteral("draw-ellipse");
+        }
+        break;
+    }
+    case Okular::Annotation::AHighlight: {
+        const auto *highlightAnn = static_cast<const Okular::HighlightAnnotation *>(ann);
+        switch (highlightAnn->highlightType()) {
+        case Okular::HighlightAnnotation::Highlight:
+            info.caption = hasComment ? i18n("Highlight with Comment") : i18n("Highlight");
+            info.iconName = QStringLiteral("draw-highlight");
+            break;
+        case Okular::HighlightAnnotation::Squiggly:
+            info.caption = hasComment ? i18n("Squiggle with Comment") : i18n("Squiggle");
+            info.iconName = QStringLiteral("format-text-underline-squiggle");
+            break;
+        case Okular::HighlightAnnotation::Underline:
+            info.caption = hasComment ? i18n("Underline with Comment") : i18n("Underline");
+            info.iconName = QStringLiteral("format-text-underline");
+            break;
+        case Okular::HighlightAnnotation::StrikeOut:
+            info.caption = hasComment ? i18n("Strike Out with Comment") : i18n("Strike Out");
+            info.iconName = QStringLiteral("format-text-strikethrough");
+            break;
+        }
+        break;
+    }
+    case Okular::Annotation::AStamp:
+        info.caption = hasComment ? i18n("Stamp with Comment") : i18n("Stamp");
+        info.iconName = QStringLiteral("tag");
+        break;
+    case Okular::Annotation::AInk:
+        info.caption = hasComment ? i18n("Freehand Line with Comment") : i18n("Freehand Line");
+        info.iconName = QStringLiteral("draw-freehand");
+        break;
+    case Okular::Annotation::ACaret:
+        info.caption = i18n("Caret");
+        info.iconName = QStringLiteral("text-cursor");
+        break;
+    case Okular::Annotation::AFileAttachment:
+        info.caption = i18n("File Attachment");
+        info.iconName = QStringLiteral("mail-attachment");
+        break;
+    case Okular::Annotation::ASound:
+        info.caption = i18n("Sound");
+        info.iconName = QStringLiteral("audio-x-generic");
+        break;
+    case Okular::Annotation::AMovie:
+        info.caption = i18n("Movie");
+        info.iconName = QStringLiteral("video-x-generic");
+        break;
+    case Okular::Annotation::AScreen:
+        info.caption = i18nc("Caption for a screen annotation", "Screen");
+        info.iconName = QStringLiteral("video-display");
+        break;
+    case Okular::Annotation::AWidget:
+        info.caption = i18nc("Caption for a widget annotation", "Widget");
+        info.iconName = QStringLiteral("preferences-desktop");
+        break;
+    case Okular::Annotation::ARichMedia:
+        info.caption = i18nc("Caption for a rich media annotation", "Rich Media");
+        info.iconName = QStringLiteral("video-x-generic"); // same as movie
+        break;
+    case Okular::Annotation::A_BASE:
+        // Fall through to default
+        break;
+    }
+
+    // If no specific info was set, use fallback
+    if (info.caption.isEmpty()) {
+        info.caption = i18n("Annotation");
+        info.iconName = QStringLiteral("okular");
+    }
+
+    return info;
+}
+
+QString captionForAnnotation(const Okular::Annotation *ann)
+{
+    Q_ASSERT(ann);
+    return getAnnotationInfo(ann).caption;
+}
+
+QIcon iconForAnnotation(const Okular::Annotation *ann)
+{
+    Q_ASSERT(ann);
+    AnnotationInfo info = getAnnotationInfo(ann);
+    return QIcon::fromTheme(info.iconName);
 }
 
 QString authorForAnnotation(const Okular::Annotation *ann)

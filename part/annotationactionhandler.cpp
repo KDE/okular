@@ -541,6 +541,7 @@ void AnnotationActionHandlerPrivate::assertToolBarExists(KParts::MainWindow *mw,
     Q_ASSERT(itToolBar != toolbars.end());
 }
 
+// TODO: icon names should match getAnnotationInfo in gui/guiutils.cpp
 AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KActionCollection *ac)
     : QObject(parent)
     , d(new AnnotationActionHandlerPrivate(this))

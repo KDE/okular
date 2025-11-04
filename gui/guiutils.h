@@ -27,10 +27,21 @@ class ScreenAnnotation;
 
 namespace GuiUtils
 {
-/**
- * Returns the translated string with the type of the given @p annotation.
- */
+// Structure containing annotation metadata.
+struct AnnotationInfo {
+    QString caption;
+    QString iconName;
+};
+
+// Returns annotation metadata including caption and icon name.
+AnnotationInfo getAnnotationInfo(const Okular::Annotation *annotation);
+
+// Returns the translated string with the type of the given annotation.
 QString captionForAnnotation(const Okular::Annotation *annotation);
+
+// Returns the icon of the given annotation.
+QIcon iconForAnnotation(const Okular::Annotation *annotation);
+
 QString authorForAnnotation(const Okular::Annotation *annotation);
 
 QString contentsHtml(const Okular::Annotation *annotation);

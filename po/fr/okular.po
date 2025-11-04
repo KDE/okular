@@ -2774,7 +2774,7 @@ msgid ""
 "command."
 msgstr ""
 "<qt>Définit la commande d'un éditeur de texte personnalisé à lancer.<br />\n"
-"Vous pouvez aussi saisir des chaînes de remplacement :\n"
+"Vous pouvez aussi saisir des chaines de remplacement :\n"
 "<ul>\n"
 "  <li>%f - le nom de fichier</li>\n"
 "  <li>%l - la ligne du fichier à atteindre</li>\n"
@@ -2889,7 +2889,7 @@ msgstr "Recharger le document en cas de modification du fichier"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
-msgstr "Afficher la boîte de dialogue de sélection du moteur de rendu"
+msgstr "Afficher la boite de dialogue de sélection du moteur de rendu"
 
 #: part/dlggeneral.cpp:162
 #, kde-format
@@ -3242,13 +3242,13 @@ msgstr "Masquer horizontalement"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
-msgstr "Mettre en boîte"
+msgstr "Mettre en boite"
 
 #: part/dlgpresentation.cpp:106
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
-msgstr "Sortir d'une boîte"
+msgstr "Sortir d'une boite"
 
 #: part/dlgpresentation.cpp:107
 #, kde-format
@@ -5860,13 +5860,13 @@ msgstr "Démarre ce document en mode « Présentation »"
 #: shell/main.cpp:91
 #, kde-format
 msgid "Start with print dialog"
-msgstr "Commencer avec la boîte de dialogue d'impression"
+msgstr "Commencer avec la boite de dialogue d'impression"
 
 #: shell/main.cpp:92
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr ""
-"Lancer avec la boîte de dialogue d'impression et quitter après l'impression"
+"Lancer avec la boite de dialogue d'impression et quitter après l'impression"
 
 #: shell/main.cpp:93
 #, kde-format
@@ -5881,7 +5881,7 @@ msgstr "Ne pas ouvrir la fenêtre"
 #: shell/main.cpp:95
 #, kde-format
 msgid "Find a string on the text"
-msgstr "Chercher une chaîne dans le texte"
+msgstr "Chercher une chaine dans le texte"
 
 #: shell/main.cpp:96
 #, kde-format

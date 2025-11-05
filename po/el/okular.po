@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-31 00:40+0000\n"
+"POT-Creation-Date: 2025-11-05 00:42+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -723,175 +723,208 @@ msgstr "Ιδιότητα"
 msgid "Value"
 msgstr "Τιμή"
 
-#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
 #: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Αναδυόμενη σημείωση"
 
-#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
 #: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, kde-format
 msgid "Typewriter"
 msgstr "Γραφομηχανή"
 
-#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Inline Note"
 msgstr "Εμβόλιμη σημείωση"
 
-#: gui/guiutils.cpp:48
+#: gui/guiutils.cpp:56
+#, fuzzy, kde-format
+#| msgid "Polygon with Comment"
+msgid "Arrow with Comment"
+msgstr "Πολύγωνο με σχόλιο"
+
+#. i18n: tag tool attribute name
+#: gui/guiutils.cpp:56 part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr "Βέλος"
+
+#: gui/guiutils.cpp:59
 #, kde-format
 msgid "Straight Line with Comment"
 msgstr "Ευθεία γραμμή με σχόλιο"
 
-#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Straight Line"
 msgstr "Ευθεία γραμμή"
 
-#: gui/guiutils.cpp:50
+#: gui/guiutils.cpp:63
 #, kde-format
 msgid "Polygon with Comment"
 msgstr "Πολύγωνο με σχόλιο"
 
-#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Polygon"
 msgstr "Πολύγωνο"
 
-#: gui/guiutils.cpp:54
-#, kde-format
-msgid "Geometry with Comment"
-msgstr "Γεωμετρία με σχόλιο"
+#: gui/guiutils.cpp:71
+#, fuzzy, kde-format
+#| msgid "Stamp with Comment"
+msgid "Rectangle with Comment"
+msgstr "Σφραγίδα με σχόλιο"
 
-#: gui/guiutils.cpp:54
+#: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
+#: part/pageviewannotator.cpp:1483
 #, kde-format
-msgid "Geometry"
-msgstr "Γεωμετρία"
+msgid "Rectangle"
+msgstr "Ορθογώνιο"
 
-#: gui/guiutils.cpp:59
+#: gui/guiutils.cpp:74
+#, fuzzy, kde-format
+#| msgid "Underline with Comment"
+msgid "Ellipse with Comment"
+msgstr "Υπογράμμιση με σχόλιο"
+
+#: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
+#: part/pageviewannotator.cpp:1471
+#, kde-format
+msgid "Ellipse"
+msgstr "Έλλειψη"
+
+#: gui/guiutils.cpp:83
 #, kde-format
 msgid "Highlight with Comment"
 msgstr "Τονισμός με σχόλιο"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
+#: gui/guiutils.cpp:83 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "Τονισμός"
 
-#: gui/guiutils.cpp:62
+#: gui/guiutils.cpp:87
 #, kde-format
 msgid "Squiggle with Comment"
 msgstr "Μουτζούρα με σχόλιο"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
+#: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Squiggle"
 msgstr "Μουντζαλιά"
 
-#: gui/guiutils.cpp:65
+#: gui/guiutils.cpp:91
 #, kde-format
 msgid "Underline with Comment"
 msgstr "Υπογράμμιση με σχόλιο"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Underline"
 msgstr "Υπογράμμιση"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out with Comment"
 msgstr "Επιγράμμιση με σχόλιο"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out"
 msgstr "Επιγράμμιση"
 
-#: gui/guiutils.cpp:73
+#: gui/guiutils.cpp:102
 #, kde-format
 msgid "Stamp with Comment"
 msgstr "Σφραγίδα με σχόλιο"
 
-#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Stamp"
 msgstr "Σφραγίδα"
 
-#: gui/guiutils.cpp:76
+#: gui/guiutils.cpp:106
 #, kde-format
 msgid "Freehand Line with Comment"
 msgstr "Ελεύθερη γραμμή με σχόλιο"
 
-#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Freehand Line"
 msgstr "Ελεύθερη γραμμή"
 
-#: gui/guiutils.cpp:79
+#: gui/guiutils.cpp:110
 #, kde-format
 msgid "Caret"
 msgstr "Δείκτης"
 
-#: gui/guiutils.cpp:82
+#: gui/guiutils.cpp:114
 #, kde-format
 msgid "File Attachment"
 msgstr "Συνημμένο αρχείο"
 
-#: gui/guiutils.cpp:85
+#: gui/guiutils.cpp:118
 #, kde-format
 msgid "Sound"
 msgstr "Ήχος"
 
-#: gui/guiutils.cpp:88
+#: gui/guiutils.cpp:122
 #, kde-format
 msgid "Movie"
 msgstr "Ταινία"
 
-#: gui/guiutils.cpp:91
+#: gui/guiutils.cpp:126
 #, kde-format
 msgctxt "Caption for a screen annotation"
 msgid "Screen"
 msgstr "Οθόνη"
 
-#: gui/guiutils.cpp:94
+#: gui/guiutils.cpp:130
 #, kde-format
 msgctxt "Caption for a widget annotation"
 msgid "Widget"
 msgstr "Γραφικό συστατικό"
 
-#: gui/guiutils.cpp:97
+#: gui/guiutils.cpp:134
 #, kde-format
 msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr "Επαυξημένα πολυμέσα"
 
-#: gui/guiutils.cpp:109
+#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Σημείωση"
+msgstr[1] "%1 σημειώσεις"
+
+#: gui/guiutils.cpp:168
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Άγνωστο"
 
-#: gui/guiutils.cpp:126 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "Συγγραφέας: %1"
 
-#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "Θέση αποθήκευσης του %1;"
 
-#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "Αδύνατη η εγγραφή του \"%1\". Το αρχείο δεν αποθηκεύτηκε."
@@ -1274,7 +1307,7 @@ msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "Μαύρο"
 
-#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:686
+#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:687
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
@@ -1472,138 +1505,138 @@ msgctxt "@title:window"
 msgid "Select color"
 msgstr "Επιλογή χρώματος"
 
-#: part/annotationactionhandler.cpp:551
+#: part/annotationactionhandler.cpp:552
 #, kde-format
 msgid "&Annotations"
 msgstr "Σ&ημειώσεις"
 
-#: part/annotationactionhandler.cpp:552
+#: part/annotationactionhandler.cpp:553
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr "Απόκρυψη"
 
-#: part/annotationactionhandler.cpp:553
+#: part/annotationactionhandler.cpp:554
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "Εμφάνιση περισσότερων εργαλείων δημιουργίας σημειώσεων"
 
-#: part/annotationactionhandler.cpp:556
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "Τονισμός"
 
-#: part/annotationactionhandler.cpp:557
+#: part/annotationactionhandler.cpp:558
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "Υπογράμμιση"
 
-#: part/annotationactionhandler.cpp:558
+#: part/annotationactionhandler.cpp:559
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "Μουτζούρα"
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:560
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "Επιγράμμιση"
 
-#: part/annotationactionhandler.cpp:561
+#: part/annotationactionhandler.cpp:562
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Γραφομηχανή"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:563
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "Εμβόλιμη σημείωση"
 
-#: part/annotationactionhandler.cpp:563
+#: part/annotationactionhandler.cpp:564
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Αναδυόμενη σημείωση"
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:565
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "Ελεύθερη γραμμή"
 
-#: part/annotationactionhandler.cpp:566
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "Ευθεία γραμμή"
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr "Βέλος"
 
-#: part/annotationactionhandler.cpp:568
+#: part/annotationactionhandler.cpp:569
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Ορθογώνιο"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "Έλλειψη"
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:571
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "Πολύγωνο"
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:572
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr "Γεωμετρικά σχήματα"
 
-#: part/annotationactionhandler.cpp:617
+#: part/annotationactionhandler.cpp:618
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "Σφραγίδα"
 
-#: part/annotationactionhandler.cpp:637
+#: part/annotationactionhandler.cpp:638
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "Γρήγορες σημειώσεις"
 
-#: part/annotationactionhandler.cpp:640
+#: part/annotationactionhandler.cpp:641
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr "Επιλέξτε ένα εργαλείο σημειώσεων από τις γρήγορες σημειώσεις"
 
-#: part/annotationactionhandler.cpp:650
+#: part/annotationactionhandler.cpp:651
 #, kde-format
 msgid "Quick Annotation Bar"
 msgstr "Γραμμή για γρήγορες σημειώσεις"
 
-#: part/annotationactionhandler.cpp:664
+#: part/annotationactionhandler.cpp:665
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
 msgstr "Προσθήκη στις γρήγορες σημειώσεις"
 
-#: part/annotationactionhandler.cpp:667
+#: part/annotationactionhandler.cpp:668
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1611,13 +1644,13 @@ msgctxt ""
 msgid "Keep Active"
 msgstr "Να παραμείνει ενεργό"
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:669
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "Να παραμείνει ενεργό το εργαλείο δημιουργίας σημειώσεων μετά τη χρήση"
 
-#: part/annotationactionhandler.cpp:673
+#: part/annotationactionhandler.cpp:674
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1625,31 +1658,31 @@ msgctxt ""
 msgid "Constrain Ratio and Angle of Annotation Tools"
 msgstr "Να περιοριστεί η αναλογία και η γωνία των εργαλείων σημειώσεων"
 
-#: part/annotationactionhandler.cpp:679
+#: part/annotationactionhandler.cpp:680
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "Γραμματοσειρά"
 
-#: part/annotationactionhandler.cpp:680
+#: part/annotationactionhandler.cpp:681
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "Ρυθμίσεις σημειώσεων"
 
-#: part/annotationactionhandler.cpp:683
+#: part/annotationactionhandler.cpp:684
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "Πλάτος γραμμής"
 
-#: part/annotationactionhandler.cpp:692
+#: part/annotationactionhandler.cpp:693
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
-#: part/annotationactionhandler.cpp:695
+#: part/annotationactionhandler.cpp:696
 #, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
@@ -1668,19 +1701,6 @@ msgstr "Σελίδα %1"
 #, kde-format
 msgid "Page %1"
 msgstr "Σελίδα %1"
-
-#: part/annotationmodel.cpp:336
-#, kde-format
-msgctxt "Annotation type: contents"
-msgid "%1: %2"
-msgstr ""
-
-#: part/annotationpopup.cpp:83
-#, kde-format
-msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] "Σημείωση"
-msgstr[1] "%1 σημειώσεις"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -2125,16 +2145,6 @@ msgstr "Τύπος:"
 msgid "Strike out"
 msgstr "Επιγράμμιση"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1483
-#, kde-format
-msgid "Rectangle"
-msgstr "Ορθογώνιο"
-
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1471
-#, kde-format
-msgid "Ellipse"
-msgstr "Έλλειψη"
-
 #: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
@@ -2510,12 +2520,6 @@ msgstr "Μαύρο"
 #, kde-format
 msgid "White"
 msgstr "Λευκό"
-
-#. i18n: tag tool attribute name
-#: part/data/tools.xml:103
-#, kde-format
-msgid "Arrow"
-msgstr "Βέλος"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:9
@@ -6117,6 +6121,12 @@ msgstr "Να ξεχαστούν όλα"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Απόκρυψη οθόνης υποδοχής"
+
+#~ msgid "Geometry with Comment"
+#~ msgstr "Γεωμετρία με σχόλιο"
+
+#~ msgid "Geometry"
+#~ msgstr "Γεωμετρία"
 
 #~ msgid "Modified: %1"
 #~ msgstr "Τροποποιήθηκε: %1"

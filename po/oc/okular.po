@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-31 00:40+0000\n"
+"POT-Creation-Date: 2025-11-05 00:42+0000\n"
 "PO-Revision-Date: 2008-01-12 15:03+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -700,187 +700,219 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
 #: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Pop-up Note"
 msgstr ""
 
-#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
 #: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgid "Typewriter"
 msgstr "Remplaçar"
 
-#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Inline Note"
 msgstr ""
 
-#: gui/guiutils.cpp:48
+#: gui/guiutils.cpp:56
+#, fuzzy, kde-format
+#| msgid "Underline"
+msgid "Arrow with Comment"
+msgstr "Soslinhat"
+
+#. i18n: tag tool attribute name
+#: gui/guiutils.cpp:56 part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr ""
+
+#: gui/guiutils.cpp:59
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Straight Line with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Straight Line"
 msgstr ""
 
-#: gui/guiutils.cpp:50
+#: gui/guiutils.cpp:63
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Polygon with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Polygon"
 msgstr ""
 
-#: gui/guiutils.cpp:54
+#: gui/guiutils.cpp:71
 #, fuzzy, kde-format
 #| msgid "Underline"
-msgid "Geometry with Comment"
+msgid "Rectangle with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:54
+#: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
+#: part/pageviewannotator.cpp:1483
 #, kde-format
-msgid "Geometry"
-msgstr "Geometria"
+msgid "Rectangle"
+msgstr "Rectangle"
 
-#: gui/guiutils.cpp:59
+#: gui/guiutils.cpp:74
+#, fuzzy, kde-format
+#| msgid "Underline"
+msgid "Ellipse with Comment"
+msgstr "Soslinhat"
+
+#: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
+#: part/pageviewannotator.cpp:1471
+#, kde-format
+msgid "Ellipse"
+msgstr ""
+
+#: gui/guiutils.cpp:83
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Highlight with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
+#: gui/guiutils.cpp:83 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr ""
 
-#: gui/guiutils.cpp:62
+#: gui/guiutils.cpp:87
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Squiggle with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
+#: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Squiggle"
 msgstr ""
 
-#: gui/guiutils.cpp:65
+#: gui/guiutils.cpp:91
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Underline with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Underline"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Strike Out with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out"
 msgstr ""
 
-#: gui/guiutils.cpp:73
+#: gui/guiutils.cpp:102
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Stamp with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Stamp"
 msgstr ""
 
-#: gui/guiutils.cpp:76
+#: gui/guiutils.cpp:106
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgid "Freehand Line with Comment"
 msgstr "Soslinhat"
 
-#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Freehand Line"
 msgstr ""
 
-#: gui/guiutils.cpp:79
+#: gui/guiutils.cpp:110
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Caret"
 msgstr "Creator"
 
-#: gui/guiutils.cpp:82
+#: gui/guiutils.cpp:114
 #, kde-format
 msgid "File Attachment"
 msgstr ""
 
-#: gui/guiutils.cpp:85
+#: gui/guiutils.cpp:118
 #, kde-format
 msgid "Sound"
 msgstr ""
 
-#: gui/guiutils.cpp:88
+#: gui/guiutils.cpp:122
 #, fuzzy, kde-format
 #| msgid "Modified"
 msgid "Movie"
 msgstr "Modificat"
 
-#: gui/guiutils.cpp:91
+#: gui/guiutils.cpp:126
 #, kde-format
 msgctxt "Caption for a screen annotation"
 msgid "Screen"
 msgstr ""
 
-#: gui/guiutils.cpp:94
+#: gui/guiutils.cpp:130
 #, kde-format
 msgctxt "Caption for a widget annotation"
 msgid "Widget"
 msgstr ""
 
-#: gui/guiutils.cpp:97
+#: gui/guiutils.cpp:134
 #, kde-format
 msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr ""
 
-#: gui/guiutils.cpp:109
+#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] ""
+msgstr[1] ""
+
+#: gui/guiutils.cpp:168
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: gui/guiutils.cpp:126 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr ""
 
-#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr ""
 
-#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr ""
@@ -1253,7 +1285,7 @@ msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:686
+#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:687
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
@@ -1449,139 +1481,139 @@ msgctxt "@title:window"
 msgid "Select color"
 msgstr "Seleccion"
 
-#: part/annotationactionhandler.cpp:551
+#: part/annotationactionhandler.cpp:552
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "&Annotations"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:552
+#: part/annotationactionhandler.cpp:553
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:553
+#: part/annotationactionhandler.cpp:554
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:556
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:557
+#: part/annotationactionhandler.cpp:558
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "Soslinhat"
 
-#: part/annotationactionhandler.cpp:558
+#: part/annotationactionhandler.cpp:559
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:560
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:561
+#: part/annotationactionhandler.cpp:562
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Remplaçar"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:563
 #, fuzzy, kde-format
 #| msgid "Underline"
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "Soslinhat"
 
-#: part/annotationactionhandler.cpp:563
+#: part/annotationactionhandler.cpp:564
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:565
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:566
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:568
+#: part/annotationactionhandler.cpp:569
 #, fuzzy, kde-format
 #| msgid "Rectangle"
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:571
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:572
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:617
+#: part/annotationactionhandler.cpp:618
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:637
+#: part/annotationactionhandler.cpp:638
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:640
+#: part/annotationactionhandler.cpp:641
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:650
+#: part/annotationactionhandler.cpp:651
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Quick Annotation Bar"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:664
+#: part/annotationactionhandler.cpp:665
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt ""
@@ -1589,7 +1621,7 @@ msgctxt ""
 msgid "Add to Quick Annotations"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:667
+#: part/annotationactionhandler.cpp:668
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1597,14 +1629,14 @@ msgctxt ""
 msgid "Keep Active"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:669
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "Presentacion"
 
-#: part/annotationactionhandler.cpp:673
+#: part/annotationactionhandler.cpp:674
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1612,34 +1644,34 @@ msgctxt ""
 msgid "Constrain Ratio and Angle of Annotation Tools"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:679
+#: part/annotationactionhandler.cpp:680
 #, fuzzy, kde-format
 #| msgid "Font:"
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "Poliça :"
 
-#: part/annotationactionhandler.cpp:680
+#: part/annotationactionhandler.cpp:681
 #, fuzzy, kde-format
 #| msgid "Options"
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "Opcions"
 
-#: part/annotationactionhandler.cpp:683
+#: part/annotationactionhandler.cpp:684
 #, fuzzy, kde-format
 #| msgid "Line"
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "Linha"
 
-#: part/annotationactionhandler.cpp:692
+#: part/annotationactionhandler.cpp:693
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr ""
 
-#: part/annotationactionhandler.cpp:695
+#: part/annotationactionhandler.cpp:696
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -1659,19 +1691,6 @@ msgstr "Pagina&nbsp;%1"
 #, kde-format
 msgid "Page %1"
 msgstr "Pagina&nbsp;%1"
-
-#: part/annotationmodel.cpp:336
-#, kde-format
-msgctxt "Annotation type: contents"
-msgid "%1: %2"
-msgstr ""
-
-#: part/annotationpopup.cpp:83
-#, kde-format
-msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] ""
-msgstr[1] ""
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -2124,16 +2143,6 @@ msgstr "Tipe :"
 msgid "Strike out"
 msgstr ""
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1483
-#, kde-format
-msgid "Rectangle"
-msgstr "Rectangle"
-
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1471
-#, kde-format
-msgid "Ellipse"
-msgstr ""
-
 #: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
@@ -2510,12 +2519,6 @@ msgstr ""
 #: part/data/drawingtools.xml:36
 #, kde-format
 msgid "White"
-msgstr ""
-
-#. i18n: tag tool attribute name
-#: part/data/tools.xml:103
-#, kde-format
-msgid "Arrow"
 msgstr ""
 
 #. i18n: tag tool attribute name
@@ -6024,6 +6027,14 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Underline"
+#~ msgid "Geometry with Comment"
+#~ msgstr "Soslinhat"
+
+#~ msgid "Geometry"
+#~ msgstr "Geometria"
 
 #, fuzzy
 #~| msgid "Save As..."

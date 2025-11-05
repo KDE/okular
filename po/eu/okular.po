@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-31 00:40+0000\n"
+"POT-Creation-Date: 2025-11-05 00:42+0000\n"
 "PO-Revision-Date: 2025-09-02 00:23+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -705,147 +705,173 @@ msgstr "Propietatea"
 msgid "Value"
 msgstr "Balioa"
 
-#: gui/guiutils.cpp:37 part/editannottooldialog.cpp:88
+#: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
 #: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Ohar gainerakorra"
 
-#: gui/guiutils.cpp:40 part/editannottooldialog.cpp:96
+#: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
 #: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, kde-format
 msgid "Typewriter"
 msgstr "Idazmakina"
 
-#: gui/guiutils.cpp:42 part/editannottooldialog.cpp:89
+#: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
 #, kde-format
 msgid "Inline Note"
 msgstr "Lerro barruko oharra"
 
-#: gui/guiutils.cpp:48
+#: gui/guiutils.cpp:56
+#, fuzzy, kde-format
+#| msgid "Polygon with Comment"
+msgid "Arrow with Comment"
+msgstr "Poligonoa iruzkinarekin"
+
+#. i18n: tag tool attribute name
+#: gui/guiutils.cpp:56 part/data/tools.xml:103
+#, kde-format
+msgid "Arrow"
+msgstr "Gezia"
+
+#: gui/guiutils.cpp:59
 #, kde-format
 msgid "Straight Line with Comment"
 msgstr "Lerro zuzena iruzkinarekin"
 
-#: gui/guiutils.cpp:48 part/editannottooldialog.cpp:91
+#: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1489
 #, kde-format
 msgid "Straight Line"
 msgstr "Marra zuzena"
 
-#: gui/guiutils.cpp:50
+#: gui/guiutils.cpp:63
 #, kde-format
 msgid "Polygon with Comment"
 msgstr "Poligonoa iruzkinarekin"
 
-#: gui/guiutils.cpp:50 part/editannottooldialog.cpp:92
+#: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1481
 #, kde-format
 msgid "Polygon"
 msgstr "Poligonoa"
 
-#: gui/guiutils.cpp:54
-#, kde-format
-msgid "Geometry with Comment"
-msgstr "Geometria iruzkinarekin"
+#: gui/guiutils.cpp:71
+#, fuzzy, kde-format
+#| msgid "Stamp with Comment"
+msgid "Rectangle with Comment"
+msgstr "Zigilua iruzkinarekin"
 
-#: gui/guiutils.cpp:54
+#: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
+#: part/pageviewannotator.cpp:1483
 #, kde-format
-msgid "Geometry"
-msgstr "Geometria"
+msgid "Rectangle"
+msgstr "Laukizuzena"
 
-#: gui/guiutils.cpp:59
+#: gui/guiutils.cpp:74
+#, fuzzy, kde-format
+#| msgid "Underline with Comment"
+msgid "Ellipse with Comment"
+msgstr "Azpimarra iruzkinarekin"
+
+#: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
+#: part/pageviewannotator.cpp:1471
+#, kde-format
+msgid "Ellipse"
+msgstr "Elipsea"
+
+#: gui/guiutils.cpp:83
 #, kde-format
 msgid "Highlight with Comment"
 msgstr "Nabarmentzea iruzkinarekin"
 
-#: gui/guiutils.cpp:59 part/annotationwidgets.cpp:653
+#: gui/guiutils.cpp:83 part/annotationwidgets.cpp:653
 #, kde-format
 msgid "Highlight"
 msgstr "Nabarmendu"
 
-#: gui/guiutils.cpp:62
+#: gui/guiutils.cpp:87
 #, kde-format
 msgid "Squiggle with Comment"
 msgstr "Zirrimarra iruzkinarekin"
 
-#: gui/guiutils.cpp:62 part/annotationwidgets.cpp:654
+#: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1485
 #, kde-format
 msgid "Squiggle"
 msgstr "Zirrimarra"
 
-#: gui/guiutils.cpp:65
+#: gui/guiutils.cpp:91
 #, kde-format
 msgid "Underline with Comment"
 msgstr "Azpimarra iruzkinarekin"
 
-#: gui/guiutils.cpp:65 part/annotationwidgets.cpp:655
+#: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1493
 #, kde-format
 msgid "Underline"
 msgstr "Azpimarra"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out with Comment"
 msgstr "Marratua iruzkinarekin"
 
-#: gui/guiutils.cpp:68
+#: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out"
 msgstr "Marratua"
 
-#: gui/guiutils.cpp:73
+#: gui/guiutils.cpp:102
 #, kde-format
 msgid "Stamp with Comment"
 msgstr "Zigilua iruzkinarekin"
 
-#: gui/guiutils.cpp:73 part/editannottooldialog.cpp:95
+#: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1487
 #, kde-format
 msgid "Stamp"
 msgstr "Zigilua"
 
-#: gui/guiutils.cpp:76
+#: gui/guiutils.cpp:106
 #, kde-format
 msgid "Freehand Line with Comment"
 msgstr "Esku hutsezko lerroa iruzkinarekin"
 
-#: gui/guiutils.cpp:76 part/editannottooldialog.cpp:90
+#: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1475
 #, kde-format
 msgid "Freehand Line"
 msgstr "Esku hutsezko lerroa"
 
-#: gui/guiutils.cpp:79
+#: gui/guiutils.cpp:110
 #, kde-format
 msgid "Caret"
 msgstr "Kurtsorea"
 
-#: gui/guiutils.cpp:82
+#: gui/guiutils.cpp:114
 #, kde-format
 msgid "File Attachment"
 msgstr "Fitxategi eranskina"
 
-#: gui/guiutils.cpp:85
+#: gui/guiutils.cpp:118
 #, kde-format
 msgid "Sound"
 msgstr "Soinua"
 
-#: gui/guiutils.cpp:88
+#: gui/guiutils.cpp:122
 #, kde-format
 msgid "Movie"
 msgstr "Filma"
 
-#: gui/guiutils.cpp:91
+#: gui/guiutils.cpp:126
 #, kde-format
 msgctxt "Caption for a screen annotation"
 msgid "Screen"
 msgstr "Pantaila"
 
-#: gui/guiutils.cpp:94
+#: gui/guiutils.cpp:130
 #, kde-format
 msgctxt "Caption for a widget annotation"
 msgid "Widget"
@@ -855,29 +881,36 @@ msgstr "Trepeta"
 #
 # Rich media: Euskarri aberastua
 #
-#: gui/guiutils.cpp:97
+#: gui/guiutils.cpp:134
 #, kde-format
 msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr "Euskarri aberastua"
 
-#: gui/guiutils.cpp:109
+#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
+#, kde-format
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Idatzohar"
+msgstr[1] "%1 idatzohar"
+
+#: gui/guiutils.cpp:168
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: gui/guiutils.cpp:126 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "Egilea: %1"
 
-#: gui/guiutils.cpp:138 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "Non gorde nahi duzu %1?"
 
-#: gui/guiutils.cpp:150 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "Ezin izan da \"%1\" idazteko ireki. Fitxategia ez da gorde."
@@ -1249,7 +1282,7 @@ msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "Beltza"
 
-#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:686
+#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:687
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
@@ -1445,138 +1478,138 @@ msgctxt "@title:window"
 msgid "Select color"
 msgstr "Hautatu kolorea"
 
-#: part/annotationactionhandler.cpp:551
+#: part/annotationactionhandler.cpp:552
 #, kde-format
 msgid "&Annotations"
 msgstr "Id&atzoharrak"
 
-#: part/annotationactionhandler.cpp:552
+#: part/annotationactionhandler.cpp:553
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr "Ezkutatu"
 
-#: part/annotationactionhandler.cpp:553
+#: part/annotationactionhandler.cpp:554
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "Erakutsi idatzohar-tresna gehiago"
 
-#: part/annotationactionhandler.cpp:556
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "Markatzailea"
 
-#: part/annotationactionhandler.cpp:557
+#: part/annotationactionhandler.cpp:558
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "Azpimarra"
 
-#: part/annotationactionhandler.cpp:558
+#: part/annotationactionhandler.cpp:559
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "Zirrimarra"
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:560
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "Marratua"
 
-#: part/annotationactionhandler.cpp:561
+#: part/annotationactionhandler.cpp:562
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Idazmakina"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:563
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "Lerro barruko oharra"
 
-#: part/annotationactionhandler.cpp:563
+#: part/annotationactionhandler.cpp:564
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Ohar gainerakorra"
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:565
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "Esku hutsezko lerroa"
 
-#: part/annotationactionhandler.cpp:566
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "Lerro zuzena"
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr "Gezia"
 
-#: part/annotationactionhandler.cpp:568
+#: part/annotationactionhandler.cpp:569
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Laukizuzena"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "Elipsea"
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:571
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "Poligonoa"
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:572
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr "Forma geometrikoak"
 
-#: part/annotationactionhandler.cpp:617
+#: part/annotationactionhandler.cpp:618
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "Zigilua"
 
-#: part/annotationactionhandler.cpp:637
+#: part/annotationactionhandler.cpp:638
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "Idatzohar azkarrak"
 
-#: part/annotationactionhandler.cpp:640
+#: part/annotationactionhandler.cpp:641
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr "Hautatu idatzohar-tresna bat idatzohar-azkarren artetik"
 
-#: part/annotationactionhandler.cpp:650
+#: part/annotationactionhandler.cpp:651
 #, kde-format
 msgid "Quick Annotation Bar"
 msgstr "Idatzohar azkarretarako barra"
 
-#: part/annotationactionhandler.cpp:664
+#: part/annotationactionhandler.cpp:665
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
 msgstr "Gehitu idatzohar azkarretara"
 
-#: part/annotationactionhandler.cpp:667
+#: part/annotationactionhandler.cpp:668
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1584,13 +1617,13 @@ msgctxt ""
 msgid "Keep Active"
 msgstr "Mantendu aktibo"
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:669
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "Mantendu idatzohar-tresna aktibo erabili ondoren"
 
-#: part/annotationactionhandler.cpp:673
+#: part/annotationactionhandler.cpp:674
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1598,31 +1631,31 @@ msgctxt ""
 msgid "Constrain Ratio and Angle of Annotation Tools"
 msgstr "Idatzohar-tresnen proportzioaren eta angeluaren muga"
 
-#: part/annotationactionhandler.cpp:679
+#: part/annotationactionhandler.cpp:680
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "Letra-tipoa"
 
-#: part/annotationactionhandler.cpp:680
+#: part/annotationactionhandler.cpp:681
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "Idatzoharren ezarpenak"
 
-#: part/annotationactionhandler.cpp:683
+#: part/annotationactionhandler.cpp:684
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "Lerro zabalera"
 
-#: part/annotationactionhandler.cpp:692
+#: part/annotationactionhandler.cpp:693
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Opakutasuna"
 
-#: part/annotationactionhandler.cpp:695
+#: part/annotationactionhandler.cpp:696
 #, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
@@ -1640,19 +1673,6 @@ msgstr "%1 orria (%2)"
 #, kde-format
 msgid "Page %1"
 msgstr "%1 orria"
-
-#: part/annotationmodel.cpp:336
-#, kde-format
-msgctxt "Annotation type: contents"
-msgid "%1: %2"
-msgstr "%1: %2"
-
-#: part/annotationpopup.cpp:83
-#, kde-format
-msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] "Idatzohar"
-msgstr[1] "%1 idatzohar"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -2093,16 +2113,6 @@ msgstr "Mota:"
 msgid "Strike out"
 msgstr "Marratu"
 
-#: part/annotationwidgets.cpp:700 part/pageviewannotator.cpp:1483
-#, kde-format
-msgid "Rectangle"
-msgstr "Laukizuzena"
-
-#: part/annotationwidgets.cpp:701 part/pageviewannotator.cpp:1471
-#, kde-format
-msgid "Ellipse"
-msgstr "Elipsea"
-
 #: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
@@ -2476,12 +2486,6 @@ msgstr "Beltza"
 #, kde-format
 msgid "White"
 msgstr "Zuria"
-
-#. i18n: tag tool attribute name
-#: part/data/tools.xml:103
-#, kde-format
-msgid "Arrow"
-msgstr "Gezia"
 
 #. i18n: tag tool attribute name
 #: part/data/toolsQuick.xml:9
@@ -6024,6 +6028,16 @@ msgstr "Ahaztu denak"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ezkutatu ongietorri pantaila"
+
+#~ msgid "Geometry with Comment"
+#~ msgstr "Geometria iruzkinarekin"
+
+#~ msgid "Geometry"
+#~ msgstr "Geometria"
+
+#~ msgctxt "Annotation type: contents"
+#~ msgid "%1: %2"
+#~ msgstr "%1: %2"
 
 #~ msgid "Modified: %1"
 #~ msgstr "Aldatua: %1"

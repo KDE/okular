@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-05 00:42+0000\n"
+"POT-Creation-Date: 2025-11-06 17:05+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -892,14 +892,12 @@ msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr "Медыяфайл"
 
-#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
-#, kde-format
+#: gui/guiutils.cpp:144
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
 msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] "%1 анатацыя"
-msgstr[1] "%1 анатацыі"
-msgstr[2] "%1 анатацый"
-msgstr[3] "%1 анатацыі"
+msgstr "%1 анатацыя"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1687,6 +1685,18 @@ msgstr "Старонка %1 (%2)"
 #, kde-format
 msgid "Page %1"
 msgstr "Старонка %1"
+
+#: part/annotationpopup.cpp:83
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
+msgctxt "Menu title"
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "%1 анатацыя"
+msgstr[1] "%1 анатацыі"
+msgstr[2] "%1 анатацый"
+msgstr[3] "%1 анатацыі"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format

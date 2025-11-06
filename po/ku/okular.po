@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular2\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-05 00:42+0000\n"
+"POT-Creation-Date: 2025-11-06 17:05+0000\n"
 "PO-Revision-Date: 2008-11-07 17:14+0100\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@nospam.gmail.com>\n"
 "Language-Team: Kurdish <kde-i18n-doc@lists.kde.org>\n"
@@ -899,12 +899,10 @@ msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr ""
 
-#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
+#: gui/guiutils.cpp:144
 #, kde-format
 msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1707,6 +1705,15 @@ msgstr "Rûpel: %1"
 #, kde-format
 msgid "Page %1"
 msgstr ""
+
+#: part/annotationpopup.cpp:83
+#, fuzzy, kde-format
+#| msgid "Presentation"
+msgctxt "Menu title"
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "Pêşkêşî"
+msgstr[1] "Pêşkêşî"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format

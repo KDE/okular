@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-05 00:42+0000\n"
+"POT-Creation-Date: 2025-11-06 15:19+0000\n"
 "PO-Revision-Date: 2025-11-06 09:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -875,16 +875,12 @@ msgctxt "Caption for a rich media annotation"
 msgid "Rich Media"
 msgstr "وسيط غني"
 
-#: gui/guiutils.cpp:144 part/annotationpopup.cpp:83
-#, kde-format
+#: gui/guiutils.cpp:144
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
 msgid "Annotation"
-msgid_plural "%1 Annotations"
-msgstr[0] "شرح"
-msgstr[1] "شرح واحد"
-msgstr[2] "شرحين"
-msgstr[3] "%1 شروح"
-msgstr[4] "%1 شرحاً"
-msgstr[5] "%1 شرح"
+msgstr "شرح"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1655,6 +1651,20 @@ msgstr "للصفحة %1 (%2)"
 #, kde-format
 msgid "Page %1"
 msgstr "الصفحة %1"
+
+#: part/annotationpopup.cpp:83
+#, fuzzy, kde-format
+#| msgid "Annotation"
+#| msgid_plural "%1 Annotations"
+msgctxt "Menu title"
+msgid "Annotation"
+msgid_plural "%1 Annotations"
+msgstr[0] "شرح"
+msgstr[1] "شرح واحد"
+msgstr[2] "شرحين"
+msgstr[3] "%1 شروح"
+msgstr[4] "%1 شرحاً"
+msgstr[5] "%1 شرح"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format

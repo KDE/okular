@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-05 00:42+0000\n"
-"PO-Revision-Date: 2025-07-11 07:48+0200\n"
+"PO-Revision-Date: 2025-11-05 06:01+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -724,10 +724,9 @@ msgid "Inline Note"
 msgstr "Znotrajvrstična opomba"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Poligon s komentarjem"
+msgstr "Puščica s komentarjem"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -758,10 +757,9 @@ msgid "Polygon"
 msgstr "Mnogokotnik"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Žig s komentarjem"
+msgstr "Pravokotnik s komentarjem"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -770,10 +768,9 @@ msgid "Rectangle"
 msgstr "Pravokotnik"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Podčrtava s komentarjem"
+msgstr "Elipsa s komentarjem"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -4511,7 +4508,7 @@ msgstr ""
 #: part/part.cpp:1336
 #, kde-format
 msgid "ps2pdf not found"
-msgstr "Ni bilo mogoče najti ps2pdf"
+msgstr "ps2pdf ni bilo mogoče najti"
 
 #: part/part.cpp:1341
 #, kde-format

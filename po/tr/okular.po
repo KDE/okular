@@ -737,10 +737,9 @@ msgid "Inline Note"
 msgstr "İç Not"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Çokgen, Yorum ile"
+msgstr "Ok, Yorum ile"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -771,10 +770,9 @@ msgid "Polygon"
 msgstr "Çokgen"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Damga, Yorum ile"
+msgstr "Dörtgen, Yorum ile"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -783,10 +781,9 @@ msgid "Rectangle"
 msgstr "Dikdörtgen"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Altı Çizili, Yorum ile"
+msgstr "Elips, Yorum ile"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -6023,90 +6020,3 @@ msgstr "Tümünü Unut"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Karşılama ekranını gizle"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "Geometri, Yorum ile"
-
-#~ msgid "Geometry"
-#~ msgstr "Geometri"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1: %2"
-
-#~ msgid "Modified: %1"
-#~ msgstr "Değiştirildi: %1"
-
-#~ msgid "Find..."
-#~ msgstr "Ara…"
-
-#~ msgid "Go To Page..."
-#~ msgstr "Sayfaya Git…"
-
-#~ msgid "Play movie..."
-#~ msgstr "Film Oynat…"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&Save As..."
-#~ msgstr "&Farklı Kaydet…"
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&View..."
-#~ msgstr "&Görüntüle…"
-
-#~ msgid "&Sign..."
-#~ msgstr "&İmzala…"
-
-#~ msgid "Configure Viewer..."
-#~ msgstr "Görüntüleyiciyi Yapılandır…"
-
-#~ msgid "Configure Viewer Backends..."
-#~ msgstr "Görüntüleyici Arka Uçlarını Yapılandır…"
-
-#~ msgid "Configure Backends..."
-#~ msgstr "Arka Uçları Yapılandır…"
-
-#~ msgid "&Add..."
-#~ msgstr "&Ekle…"
-
-#~ msgid "&Edit..."
-#~ msgstr "Dü&zenle…"
-
-#~ msgctxt "%1 is a file path"
-#~ msgid ""
-#~ "Could not sign. Invalid certificate password or could not write to '%1'"
-#~ msgstr ""
-#~ "İmzalanamadı. Geçersiz sertifika parolası veya “%1” konumuna yazılamadı."
-
-#~| msgid ""
-#~| "All your signing certificates are either not valid yet or are past their "
-#~| "validity date."
-#~ msgid "All your signing certificates are invalid"
-#~ msgstr "Tüm imza sertifikalarınız geçersiz"
-
-#~ msgid "Unsigned Signature %1"
-#~ msgstr "Bilinmeyen İmza %1"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unknown"
-#~ msgstr "Bilinmeyen"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "Bilinmeyen imza"
-
-#~ msgctxt "Suffix for the opacity level, eg '80%'"
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#~ msgid "every "
-#~ msgstr "her "
-
-#~ msgctxt "Suffix for the pen width, eg '10 px'"
-#~ msgid " px"
-#~ msgstr " pks"
-
-#~ msgctxt "Suffix for the opacity level, eg '80 %'"
-#~ msgid " %"
-#~ msgstr " %"

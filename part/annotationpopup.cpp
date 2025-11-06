@@ -80,7 +80,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
 
         const AnnotPagePair &pair = mAnnotations.at(0);
 
-        menu->addAction(new OKMenuTitle(menu, i18np("Annotation", "%1 Annotations", mAnnotations.count())));
+        menu->addAction(new OKMenuTitle(menu, i18ncp("Menu title", "Annotation", "%1 Annotations", mAnnotations.count())));
 
         action = menu->addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
         action->setEnabled(onlyOne);

@@ -15,7 +15,9 @@
 #include "annotationpropertiesdialog.h"
 
 #include "core/annotations.h"
+#include "core/bookmarkmanager.h"
 #include "core/document.h"
+#include "core/page.h"
 #include "gui/guiutils.h"
 #include "okmenutitle.h"
 
@@ -86,6 +88,19 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
         action->setEnabled(onlyOne);
         connect(action, &QAction::triggered, menu, [this, pair] { doOpenAnnotationWindow(pair); });
 
+        Okular::DocumentViewport vp = calculateAnnotationViewport(pair);
+        bool isBookmarked = mDocument->bookmarkManager()->isBookmarked(vp);
+
+        if (isBookmarked) {
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove")), i18n("Remove Bookmark"));
+            action->setEnabled(onlyOne);
+            connect(action, &QAction::triggered, menu, [this, pair] { doRemoveAnnotationBookmark(pair); });
+        } else {
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Bookmark"));
+            action->setEnabled(onlyOne);
+            connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
+        }
+
         if (!pair.annotation->contents().isEmpty()) {
             action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text to Clipboard"));
             const bool copyAllowed = mDocument->isAllowed(Okular::AllowCopy);
@@ -130,6 +145,17 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
 
             action = menu->addAction(QIcon::fromTheme(QStringLiteral("comment")), i18n("&Open Pop-up Note"));
             connect(action, &QAction::triggered, menu, [this, pair] { doOpenAnnotationWindow(pair); });
+
+            Okular::DocumentViewport vp = calculateAnnotationViewport(pair);
+            bool isBookmarked = mDocument->bookmarkManager()->isBookmarked(vp);
+
+            if (isBookmarked) {
+                action = menu->addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove")), i18n("Remove Bookmark"));
+                connect(action, &QAction::triggered, menu, [this, pair] { doRemoveAnnotationBookmark(pair); });
+            } else {
+                action = menu->addAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Bookmark"));
+                connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
+            }
 
             if (!pair.annotation->contents().isEmpty()) {
                 action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text to Clipboard"));
@@ -195,4 +221,47 @@ void AnnotationPopup::doSaveEmbeddedFile(AnnotPagePair pair)
 {
     Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
     GuiUtils::saveEmbeddedFile(embeddedFile, mParent);
+}
+
+// This code comes from Reviews::activated in side_reviews.cpp
+Okular::DocumentViewport AnnotationPopup::calculateAnnotationViewport(AnnotPagePair pair) const
+{
+    Okular::DocumentViewport vp;
+
+    const Okular::Page *page = mDocument->page(pair.pageNumber);
+    if (!page || !pair.annotation) {
+        return vp; // Return empty viewport on error
+    }
+
+    QRect rect = Okular::AnnotationUtils::annotationGeometry(pair.annotation, page->width(), page->height());
+    Okular::NormalizedRect nr(rect, (int)page->width(), (int)page->height());
+
+    vp.pageNumber = pair.pageNumber;
+    vp.rePos.enabled = true;
+    vp.rePos.pos = Okular::DocumentViewport::Center;
+    vp.rePos.normalizedX = (nr.right + nr.left) / 2.0;
+    vp.rePos.normalizedY = (nr.bottom + nr.top) / 2.0;
+
+    return vp;
+}
+
+void AnnotationPopup::doAddAnnotationBookmark(AnnotPagePair pair)
+{
+    if (pair.pageNumber != -1) {
+        Okular::DocumentViewport vp = calculateAnnotationViewport(pair);
+        QString title = pair.annotation->contents();
+        if (title.isEmpty()) {
+            mDocument->bookmarkManager()->addBookmark(mDocument->currentDocument(), vp);
+        } else {
+            mDocument->bookmarkManager()->addBookmark(mDocument->currentDocument(), vp, title);
+        }
+    }
+}
+
+void AnnotationPopup::doRemoveAnnotationBookmark(AnnotPagePair pair)
+{
+    if (pair.pageNumber != -1) {
+        Okular::DocumentViewport vp = calculateAnnotationViewport(pair);
+        mDocument->bookmarkManager()->removeBookmark(vp);
+    }
 }

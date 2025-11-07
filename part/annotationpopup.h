@@ -18,6 +18,7 @@ namespace Okular
 {
 class Annotation;
 class Document;
+class DocumentViewport;
 }
 
 class AnnotationPopup : public QObject
@@ -69,11 +70,14 @@ public:
     };
 
 private:
+    Okular::DocumentViewport calculateAnnotationViewport(AnnotPagePair pair) const;
     void doCopyAnnotation(AnnotPagePair pair);
     void doRemovePageAnnotation(AnnotPagePair pair);
     void doOpenAnnotationWindow(AnnotPagePair pair);
     void doOpenPropertiesDialog(AnnotPagePair pair);
     void doSaveEmbeddedFile(AnnotPagePair pair);
+    void doAddAnnotationBookmark(AnnotPagePair pair);
+    void doRemoveAnnotationBookmark(AnnotPagePair pair);
 
     QWidget *mParent;
 

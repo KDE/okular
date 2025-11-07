@@ -3155,10 +3155,10 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
 
     QMenu popup;
     if (showTOCActions) {
-        popup.addAction(i18n("Expand whole section"), m_toc.data(), &TOC::expandRecursively);
-        popup.addAction(i18n("Collapse whole section"), m_toc.data(), &TOC::collapseRecursively);
-        popup.addAction(i18n("Expand all"), m_toc.data(), &TOC::expandAll);
-        popup.addAction(i18n("Collapse all"), m_toc.data(), &TOC::collapseAll);
+        popup.addAction(i18n("Expand Whole Section"), m_toc.data(), &TOC::expandRecursively);
+        popup.addAction(i18n("Collapse Whole Section"), m_toc.data(), &TOC::collapseRecursively);
+        popup.addAction(i18n("Expand All"), m_toc.data(), &TOC::expandAll);
+        popup.addAction(i18n("Collapse All"), m_toc.data(), &TOC::collapseAll);
         reallyShow = true;
     }
 

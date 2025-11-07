@@ -254,6 +254,8 @@ void BookmarkList::contextMenuForBookmarkItem(const QPoint p, BookmarkItem *bmIt
     }
 
     QMenu menu(this);
+    const QAction *expandall = menu.addAction(i18n("Expand All"));
+    const QAction *collapseall = menu.addAction(i18n("Collapse All"));
     const QAction *gotobm = menu.addAction(i18n("Go to This Bookmark"));
     const QAction *editbm = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename Bookmark"));
     const QAction *removebm = menu.addAction(QIcon::fromTheme(QStringLiteral("bookmark-remove"), QIcon::fromTheme(QStringLiteral("edit-delete-bookmark"))), i18n("Remove Bookmark"));
@@ -262,7 +264,11 @@ void BookmarkList::contextMenuForBookmarkItem(const QPoint p, BookmarkItem *bmIt
         return;
     }
 
-    if (res == gotobm) {
+    if (res == expandall) {
+        m_tree->expandAll();
+    } else if (res == collapseall) {
+        m_tree->collapseAll();
+    } else if (res == gotobm) {
         goTo(bmItem);
     } else if (res == editbm) {
         m_tree->editItem(bmItem, 0);
@@ -282,6 +288,8 @@ void BookmarkList::contextMenuForFileItem(const QPoint p, FileItem *fItem)
     const bool thisdoc = itemurl == m_document->currentDocument();
 
     QMenu menu(this);
+    const QAction *expandall = menu.addAction(i18n("Expand All"));
+    const QAction *collapseall = menu.addAction(i18n("Collapse All"));
     QAction *open = nullptr;
     if (!thisdoc) {
         open = menu.addAction(i18nc("Opens the selected document", "Open Document"));
@@ -293,7 +301,11 @@ void BookmarkList::contextMenuForFileItem(const QPoint p, FileItem *fItem)
         return;
     }
 
-    if (res == open) {
+    if (res == expandall) {
+        m_tree->expandAll();
+    } else if (res == collapseall) {
+        m_tree->collapseAll();
+    } else if (res == open) {
         Okular::GotoAction action(itemurl.toDisplayString(QUrl::PreferLocalFile), Okular::DocumentViewport());
         m_document->processAction(&action);
     } else if (res == editbm) {

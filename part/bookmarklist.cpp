@@ -20,7 +20,6 @@
 
 #include <KLocalizedString>
 #include <KTitleWidget>
-#include <KTreeWidgetSearchLine>
 
 #include <kwidgetsaddons_version.h>
 
@@ -28,7 +27,9 @@
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "gui/tocmodel.h"
+#include "ktreeviewsearchline.h"
 #include "pageitemdelegate.h"
+#include "settings.h"
 
 static const int BookmarkItemType = QTreeWidgetItem::UserType + 1;
 static const int FileItemType = QTreeWidgetItem::UserType + 2;
@@ -137,9 +138,12 @@ BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     connect(m_showForAllDocumentsCheckbox, &QCheckBox::toggled, this, &BookmarkList::slotShowAllBookmarks);
     mainlay->addWidget(m_showForAllDocumentsCheckbox);
 
-    m_searchLine = new KTreeWidgetSearchLine(this);
+    m_searchLine = new KTreeViewSearchLine(this);
     mainlay->addWidget(m_searchLine);
     m_searchLine->setPlaceholderText(i18n("Search…"));
+    m_searchLine->setCaseSensitivity(Okular::Settings::self()->contentsSearchCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    m_searchLine->setRegularExpression(Okular::Settings::self()->contentsSearchRegularExpression());
+    connect(m_searchLine, &KTreeViewSearchLine::searchOptionsChanged, this, &BookmarkList::saveSearchOptions);
 
     m_tree = new QTreeWidget(this);
     mainlay->addWidget(m_tree);
@@ -156,7 +160,7 @@ BookmarkList::BookmarkList(Okular::Document *document, QWidget *parent)
     m_tree->setEditTriggers(QAbstractItemView::EditKeyPressed);
     connect(m_tree, &QTreeWidget::itemActivated, this, &BookmarkList::slotExecuted);
     connect(m_tree, &QTreeWidget::customContextMenuRequested, this, &BookmarkList::slotContextMenu);
-    m_searchLine->addTreeWidget(m_tree);
+    m_searchLine->setTreeView(static_cast<QTreeView *>(m_tree));
 
     connect(m_document->bookmarkManager(), &Okular::BookmarkManager::bookmarksChanged, this, &BookmarkList::slotBookmarksChanged);
 
@@ -335,6 +339,13 @@ void BookmarkList::slotBookmarksChanged(const QUrl &url)
 
     QTreeWidgetItem *item = itemForUrl(url);
     selectiveUrlUpdate(url, item);
+}
+
+void BookmarkList::saveSearchOptions()
+{
+    Okular::Settings::setContentsSearchRegularExpression(m_searchLine->regularExpression());
+    Okular::Settings::setContentsSearchCaseSensitive(m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false);
+    Okular::Settings::self()->save();
 }
 
 QList<QTreeWidgetItem *> createItems(const QUrl &baseurl, const KBookmark::List &bmlist)

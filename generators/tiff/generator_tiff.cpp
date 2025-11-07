@@ -85,13 +85,12 @@ class TIFFGenerator::Private
 public:
     Private()
         : tiff(nullptr)
-        , dev(nullptr)
     {
     }
 
     TIFF *tiff;
     QByteArray data;
-    QIODevice *dev;
+    std::unique_ptr<QIODevice> dev;
 };
 
 static QDateTime convertTIFFDateTime(const char *tiffdate)
@@ -179,31 +178,29 @@ TIFFGenerator::~TIFFGenerator()
 
 bool TIFFGenerator::loadDocument(const QString &fileName, QList<Okular::Page *> &pagesVector)
 {
-    QFile *qfile = new QFile(fileName);
+    auto qfile = std::make_unique<QFile>(fileName);
     if (!qfile->open(QIODevice::ReadOnly)) {
         return false;
-        delete qfile;
     }
-    d->dev = qfile;
     d->data = QFile::encodeName(QFileInfo(*qfile).fileName());
+    d->dev = std::move(qfile);
     return loadTiff(pagesVector, d->data.constData());
 }
 
 bool TIFFGenerator::loadDocumentFromData(const QByteArray &fileData, QList<Okular::Page *> &pagesVector)
 {
     d->data = fileData;
-    QBuffer *qbuffer = new QBuffer(&d->data);
+    auto qbuffer = std::make_unique<QBuffer>(&d->data);
     qbuffer->open(QIODevice::ReadOnly);
-    d->dev = qbuffer;
+    d->dev = std::move(qbuffer);
     return loadTiff(pagesVector, "<stdin>");
 }
 
 bool TIFFGenerator::loadTiff(QList<Okular::Page *> &pagesVector, const char *name)
 {
-    d->tiff = TIFFClientOpen(name, "r", d->dev, okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc, okular_tiffCloseProc, okular_tiffSizeProc, okular_tiffMapProc, okular_tiffUnmapProc);
+    d->tiff = TIFFClientOpen(name, "r", d->dev.get(), okular_tiffReadProc, okular_tiffWriteProc, okular_tiffSeekProc, okular_tiffCloseProc, okular_tiffSizeProc, okular_tiffMapProc, okular_tiffUnmapProc);
     if (!d->tiff) {
-        delete d->dev;
-        d->dev = nullptr;
+        d->dev.reset();
         d->data.clear();
         return false;
     }
@@ -219,8 +216,7 @@ bool TIFFGenerator::doCloseDocument()
     if (d->tiff) {
         TIFFClose(d->tiff);
         d->tiff = nullptr;
-        delete d->dev;
-        d->dev = nullptr;
+        d->dev.reset();
         d->data.clear();
         m_pageMapping.clear();
     }

@@ -16,7 +16,7 @@ class QCheckBox;
 class QToolButton;
 class QTreeWidget;
 class QTreeWidgetItem;
-class KTreeWidgetSearchLine;
+class KTreeViewSearchLine;
 class QUrl;
 class BookmarkItem;
 class FileItem;
@@ -45,6 +45,7 @@ private Q_SLOTS:
     void slotChanged(QTreeWidgetItem *item);
     void slotContextMenu(const QPoint p);
     void slotBookmarksChanged(const QUrl &url);
+    void saveSearchOptions();
 
 private:
     void rebuildTree(bool showAll);
@@ -56,7 +57,7 @@ private:
 
     Okular::Document *m_document;
     QTreeWidget *m_tree;
-    KTreeWidgetSearchLine *m_searchLine;
+    KTreeViewSearchLine *m_searchLine;
     QCheckBox *m_showForAllDocumentsCheckbox;
     QTreeWidgetItem *m_currentDocumentItem;
     QToolButton *m_showAllToolButton;

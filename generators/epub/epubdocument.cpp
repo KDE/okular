@@ -99,59 +99,63 @@ QString EpubDocument::checkCSS(const QString &c)
 QVariant EpubDocument::loadResource(int type, const QUrl &name)
 {
     int size;
-    char *data;
+    char *data = nullptr;
 
     QString fileInPath = mCurrentSubDocument.resolved(name).path();
 
     // Get the data from the epub file
     size = epub_get_data(mEpub, fileInPath.toUtf8().constData(), &data);
 
+    if (data == nullptr || size <= 0) {
+        qCWarning(OkularEpuDebug) << "EPUB : error loading resource" << fileInPath << "size" << size << "type" << type;
+        free(data);
+        return QVariant();
+    }
+
     QVariant resource;
 
-    if (data) {
-        switch (type) {
-        case QTextDocument::ImageResource: {
-            QImage img = QImage::fromData(reinterpret_cast<unsigned char *>(data), size);
-            const int maxHeight = maxContentHeight();
-            const int maxWidth = maxContentWidth();
-            if (img.height() > maxHeight) {
-                img = img.scaledToHeight(maxHeight, Qt::SmoothTransformation);
-            }
-            if (img.width() > maxWidth) {
-                img = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
-            }
-            resource.setValue(img);
-            break;
+    switch (type) {
+    case QTextDocument::ImageResource: {
+        QImage img = QImage::fromData(reinterpret_cast<unsigned char *>(data), size);
+        const int maxHeight = maxContentHeight();
+        const int maxWidth = maxContentWidth();
+        if (img.height() > maxHeight) {
+            img = img.scaledToHeight(maxHeight, Qt::SmoothTransformation);
         }
-        case QTextDocument::StyleSheetResource: {
-            QString css = QString::fromUtf8(data);
-            resource.setValue(checkCSS(css));
-            break;
+        if (img.width() > maxWidth) {
+            img = img.scaledToWidth(maxWidth, Qt::SmoothTransformation);
         }
-        case EpubDocument::MovieResource: {
-            QTemporaryFile *tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()), this);
-            if (!tmp->open()) {
-                qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
-            }
-            if (tmp->write(data, size) == -1) {
-                qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
-            }
-            tmp->flush();
-            resource.setValue(tmp->fileName());
-            break;
-        }
-        case EpubDocument::AudioResource: {
-            QByteArray ba(data, size);
-            resource.setValue(ba);
-            break;
-        }
-        default:
-            resource.setValue(QString::fromUtf8(data));
-            break;
-        }
-
-        free(data);
+        resource.setValue(img);
+        break;
     }
+    case QTextDocument::StyleSheetResource: {
+        QString css = QString::fromUtf8(data);
+        resource.setValue(checkCSS(css));
+        break;
+    }
+    case EpubDocument::MovieResource: {
+        QTemporaryFile *tmp = new QTemporaryFile(QStringLiteral("%1/okrXXXXXX").arg(QDir::tempPath()), this);
+        if (!tmp->open()) {
+            qCWarning(OkularEpuDebug) << "EPUB : error creating temporary video file";
+        }
+        if (tmp->write(data, size) == -1) {
+            qCWarning(OkularEpuDebug) << "EPUB : error writing data" << tmp->errorString();
+        }
+        tmp->flush();
+        resource.setValue(tmp->fileName());
+        break;
+    }
+    case EpubDocument::AudioResource: {
+        QByteArray ba(data, size);
+        resource.setValue(ba);
+        break;
+    }
+    default:
+        resource.setValue(QString::fromUtf8(data));
+        break;
+    }
+
+    free(data);
 
     // add to cache
     addResource(type, name, resource);

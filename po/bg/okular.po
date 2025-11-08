@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-06 17:05+0000\n"
-"PO-Revision-Date: 2025-10-24 21:52+0200\n"
+"PO-Revision-Date: 2025-11-07 18:18+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -115,7 +115,7 @@ msgstr "Eugene Trounev"
 #: aboutdata.h:36
 #, kde-format
 msgid "Annotations artwork"
-msgstr "Украси за бележките"
+msgstr "Украси за анотациите"
 
 #: aboutdata.h:37
 #, kde-format
@@ -135,7 +135,7 @@ msgstr "Fabio D'Urso"
 #: aboutdata.h:38
 #, kde-format
 msgid "Annotation improvements"
-msgstr "Подобрения в бележките"
+msgstr "Подобрения на анотациите"
 
 #: core/action.cpp:137
 #, kde-format
@@ -317,7 +317,7 @@ msgstr "Подписването не е имплементирано за то�
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
-msgstr "премахване на бележките"
+msgstr "премахване на анотациите"
 
 #: core/document.cpp:4149 core/document.cpp:4155
 #, kde-format
@@ -476,25 +476,25 @@ msgstr "Размери на страницата"
 #, kde-format
 msgctxt "Add an annotation to the page"
 msgid "add annotation"
-msgstr "добавяне на бележка"
+msgstr "добавяне на анотация"
 
 #: core/documentcommands.cpp:108
 #, kde-format
 msgctxt "Remove an annotation from the page"
 msgid "remove annotation"
-msgstr "премахване на бележка"
+msgstr "премахване на анотация"
 
 #: core/documentcommands.cpp:155
 #, kde-format
 msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
 msgid "modify annotation properties"
-msgstr "настройки на бележка"
+msgstr "промяна на свойствата на анотацията"
 
 #: core/documentcommands.cpp:190
 #, kde-format
 msgctxt "Translate an annotation's position on the page"
 msgid "translate annotation"
-msgstr "превод на бележка"
+msgstr "превод на анотацията"
 
 #: core/documentcommands.cpp:263
 #, kde-format
@@ -512,7 +512,7 @@ msgstr "редактиране на текст"
 #, kde-format
 msgctxt "Edit an annotation's text contents"
 msgid "edit annotation contents"
-msgstr "редактиране съдържанието на бележка"
+msgstr "редактиране съдържанието на анотация"
 
 #: core/documentcommands.cpp:447
 #, kde-format
@@ -722,10 +722,9 @@ msgid "Inline Note"
 msgstr "Бележка между редовете"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Полигон с коментар"
+msgstr "Стрелка с коментар"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -756,10 +755,9 @@ msgid "Polygon"
 msgstr "Многоъгълник"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Печат с коментар"
+msgstr "Правоъгълник с коментар"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -768,10 +766,9 @@ msgid "Rectangle"
 msgstr "Правоъгълник"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Подчертаване с коментар"
+msgstr "Елипса с коментар"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -882,11 +879,9 @@ msgid "Rich Media"
 msgstr "Мултимедия"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "Бележка"
+msgstr "Анотация"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1291,7 +1286,7 @@ msgstr "%1%"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr "Ширина на реда за пояснения (не е избрано пояснение)"
+msgstr "Ширина на реда за анотация (не е избрана анотация)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
@@ -1368,7 +1363,7 @@ msgstr "Цвят на текста на анотацията"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "Цвят на контура на поясненията"
+msgstr "Цвят на контура на анотацията"
 
 #: part/annotationactionhandler.cpp:318
 #, kde-format
@@ -1588,7 +1583,7 @@ msgstr "Бързи анотации"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr "Изберете инструмент за пояснения от бързите пояснения"
+msgstr "Изберете инструмент за анотация от бързите анотации"
 
 #: part/annotationactionhandler.cpp:651
 #, kde-format
@@ -1600,7 +1595,7 @@ msgstr "Лента за бързи анотации"
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "Добавяне към бързи пояснения"
+msgstr "Добавяне към бързи анотации"
 
 #: part/annotationactionhandler.cpp:668
 #, kde-format
@@ -1614,7 +1609,7 @@ msgstr "Запазване активен"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "Поддържайте инструмента за анотиране активен след употреба"
+msgstr "Запазване на инструмента за анотиране активен след употреба"
 
 #: part/annotationactionhandler.cpp:674
 #, kde-format
@@ -1634,7 +1629,7 @@ msgstr "Шрифт"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "Настройки за пояснения"
+msgstr "Настройки за анотации"
 
 #: part/annotationactionhandler.cpp:684
 #, kde-format
@@ -1668,14 +1663,12 @@ msgid "Page %1"
 msgstr "Страница %1"
 
 #: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "Бележка"
-msgstr[1] "%1 бележки"
+msgstr[0] "Анотация"
+msgstr[1] "%1 анотации"
 
 #: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
 #, kde-format
@@ -1804,7 +1797,7 @@ msgstr "Информация за видео"
 #: part/annotationpropertiesdialog.cpp:149
 #, kde-format
 msgid "Annotation Properties"
-msgstr "Информация за бележка"
+msgstr "Свойства за анотация"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -3384,12 +3377,12 @@ msgstr "Геометрична форма"
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "Инструмент за създаване на бележки"
+msgstr "Инструмент за създаване на анотации"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "Инструмент за редактиране на бележки"
+msgstr "Инструмент за редактиране на анотации"
 
 #: part/editdrawingtooldialog.cpp:51
 #, kde-format
@@ -4109,7 +4102,7 @@ msgstr "Начертайте линия от ръка"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
-msgstr "Бележка между редовете (изтеглете за да маркирате област)"
+msgstr "Анотация между редовете (изтеглете за да маркирате област)"
 
 #: part/pageviewannotator.cpp:1398
 #, kde-format
@@ -4179,7 +4172,7 @@ msgstr "Добавяне на любима анотация"
 #: part/pageviewannotator.cpp:1770
 #, kde-format
 msgid "Custom annotation name:"
-msgstr "Име на персонализирано пояснение:"
+msgstr "Име на персонализирана анотация:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -4236,8 +4229,8 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
-"Този документ съдържа пояснения или данни за формуляри, които са били "
-"запазени вътрешно от предишна версия на Okular. Вътрешното хранилище <b> "
+"Този документ съдържа анотации или данни за формуляри, които са били "
+"запазени вътрешно от предишна версия на Okular. Вътрешното запазване <b> "
 "вече не се поддържа </b>. <br/> Моля, запазете във файл, за да ги "
 "преместите, ако искате продължете да редактирате документа."
 
@@ -4454,7 +4447,7 @@ msgstr "Изтриване на рисунка"
 #: part/part.cpp:962
 #, kde-format
 msgid "Configure Annotations…"
-msgstr "Настройки на бележките…"
+msgstr "Настройки на анотациите…"
 
 #: part/part.cpp:967
 #, kde-format
@@ -4821,7 +4814,7 @@ msgstr "Попълнено съдържание"
 #: part/part.cpp:2769
 #, kde-format
 msgid "User annotations"
-msgstr "Потребителски пояснения"
+msgstr "Потребителски анотации"
 
 #: part/part.cpp:2774
 #, kde-format
@@ -5146,7 +5139,7 @@ msgstr "Настройки на режима за презентация"
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr "Настройки за бележка"
+msgstr "Настройки за анотации"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5573,7 +5566,7 @@ msgid ""
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
 "<div align = center><h3> Без пояснения </h3> За да създадете нови пояснения, "
-"натиснете F6 или изберете <i> Инструменти - &gt; Бележки </i> от менюто. </"
+"натиснете F6 или изберете <i> Инструменти - &gt; Анотации </i> от менюто. </"
 "div>"
 
 #: part/side_reviews.cpp:142
@@ -5589,7 +5582,7 @@ msgstr "Групиране по автор"
 #: part/side_reviews.cpp:155
 #, kde-format
 msgid "Show annotations for current page only"
-msgstr "Показване на поясненията само за текущата страница"
+msgstr "Показване на анотации само за текущата страница"
 
 #: part/side_reviews.cpp:165
 #, kde-format

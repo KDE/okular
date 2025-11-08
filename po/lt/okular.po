@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
-"PO-Revision-Date: 2025-08-16 15:03+0300\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"PO-Revision-Date: 2025-11-07 21:03+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -723,10 +723,9 @@ msgid "Inline Note"
 msgstr "Įterpta pastaba"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Stačiakampis su komentaru"
+msgstr "Rodyklė su komentaru"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -757,10 +756,9 @@ msgid "Polygon"
 msgstr "Daugiakampis"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Antspaudas su komentaru"
+msgstr "Stačiakampis su komentaru"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -769,10 +767,9 @@ msgid "Rectangle"
 msgstr "Stačiakampis"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Pabraukimas su komentaru"
+msgstr "Elipsė su komentaru"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -883,9 +880,7 @@ msgid "Rich Media"
 msgstr "Raiškioji medija"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Anotacija"
 
@@ -1672,10 +1667,8 @@ msgstr "Puslapis %1 (%2)"
 msgid "Page %1"
 msgstr "Puslapis %1"
 
-#: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#: part/annotationpopup.cpp:85
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -1684,35 +1677,46 @@ msgstr[1] "%1 anotacijos"
 msgstr[2] "%1 anotacijų"
 msgstr[3] "%1 anotacija"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Atverti iškylančiąją pastabą"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Šalinti žymelę"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Pridėti žymelę"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Kopijuoti tekstą į iškarpinę"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM draudžia kopijavimą"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Ištrinti"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Savybės"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2285,29 +2289,36 @@ msgstr "Rodyti visiems dokumentams"
 msgid "Search…"
 msgstr "Ieškoti…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "Išskleisti viską"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "Suskleisti viską"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Eiti prie šios žymelės"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Pervadinti žymelę"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Šalinti žymelę"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Atverti dokumentą"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Šalinti visas žymeles šiam dokumentui"
@@ -4931,34 +4942,21 @@ msgstr ""
 "kitą vietą."
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "Išskleisti visą sekciją"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "Suskleisti visą sekciją"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "Išskleisti viską"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "Suskleisti viską"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinchronizuoti miniatiūrą su puslapiu"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "Pridėti žymelę"
 
 #: part/part.cpp:3199
 #, kde-format

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
-"PO-Revision-Date: 2025-07-12 17:37+0200\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"PO-Revision-Date: 2025-11-06 17:36+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -747,10 +747,9 @@ msgid "Inline Note"
 msgstr "Note intégrée"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Polygone avec commentaire"
+msgstr "Flèche avec commentaire"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -782,10 +781,9 @@ msgid "Polygon"
 msgstr "Polygone"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Tampon avec commentaire"
+msgstr "Rectangle avec commentaire"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -794,10 +792,9 @@ msgid "Rectangle"
 msgstr "Rectangle"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Souligné avec commentaire"
+msgstr "Ellipse avec commentaire"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -1703,7 +1700,7 @@ msgstr "Page %1 (%2)"
 msgid "Page %1"
 msgstr "Page %1"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1713,35 +1710,46 @@ msgid_plural "%1 Annotations"
 msgstr[0] "Annotation"
 msgstr[1] "%1 annotations"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Ouvrir une note épinglée"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Supprimer un signet"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Ajouter un signet"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Copier le texte dans le presse-papier"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Copie interdite par « DRM »"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Supprimer"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Propriétés"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2306,29 +2314,36 @@ msgstr "Afficher pour tous les documents"
 msgid "Search…"
 msgstr "Rechercher…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "Tout développer"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "Tout réduire"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Aller à ce signet"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Renommer un signet"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Supprimer un signet"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Ouvrir un document"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Supprimer tous les signets pour ce document"
@@ -4962,34 +4977,21 @@ msgstr ""
 "essayer de l'enregistrer dans un autre emplacement."
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "Développer toute la sélection"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "Réduire toute la sélection"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "Tout développer"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "Tout réduire"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Synchroniser la vignette à la page"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "Ajouter un signet"
 
 #: part/part.cpp:3199
 #, kde-format

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
-"PO-Revision-Date: 2025-11-06 15:58+0200\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"PO-Revision-Date: 2025-11-07 11:58+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -885,11 +885,9 @@ msgid "Rich Media"
 msgstr "Мультимедійна"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "%1 анотація"
+msgstr "Анотація"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1676,47 +1674,56 @@ msgstr "Сторінка %1 (%2)"
 msgid "Page %1"
 msgstr "Сторінка %1"
 
-#: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#: part/annotationpopup.cpp:85
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "%1 анотація"
 msgstr[1] "%1 анотації"
 msgstr[2] "%1 анотацій"
-msgstr[3] "Анотація"
+msgstr[3] "анотація"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "Від&крити нотатку"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Вилучити закладку"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Додати закладку"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Копіювати текст до буфера обміну"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копіювання заборонене DRM"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Вилучити"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Властивості"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2290,29 +2297,36 @@ msgstr "Показати для усіх документів"
 msgid "Search…"
 msgstr "Шукати…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "Розгорнути все"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "Згорнути все"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Перейти до цієї закладки"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Перейменувати закладку"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Вилучити закладку"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Відкрити документ"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Вилучити усі закладки у цьому документі"
@@ -4941,34 +4955,21 @@ msgstr ""
 "іншому місці."
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "Розгорнути увесь розділ"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "Згорнути увесь розділ"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "Розгорнути все"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "Згорнути все"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Синхронізувати мініатюру зі сторінкою"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "Додати закладку"
 
 #: part/part.cpp:3199
 #, kde-format

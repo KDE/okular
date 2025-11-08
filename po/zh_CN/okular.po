@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1651,7 +1651,7 @@ msgstr "页面 %1 (%2)"
 msgid "Page %1"
 msgstr "第 %1 页"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1660,35 +1660,46 @@ msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "%1 个批注"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "打开弹窗批注(&O)"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "移除书签"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "添加书签"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "复制文本到剪贴板"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "复制操作被 DRM 禁止"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "删除(&D)"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "属性(&P)"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2248,29 +2259,36 @@ msgstr "显示到所有文档中"
 msgid "Search…"
 msgstr "搜索…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "全部展开"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "全部折叠"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "跳转到此书签"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "重命名书签"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "移除书签"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "打开文档"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "移除此文档的所有书签"
@@ -4830,34 +4848,21 @@ msgid ""
 msgstr "文件无法保存到“%1”。错误：“%2”。请尝试保存到其他位置。"
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "展开整个章节"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "折叠整个章节"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "全部展开"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "全部折叠"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "同步滚动缩略图和页面"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "添加书签"
 
 #: part/part.cpp:3199
 #, kde-format

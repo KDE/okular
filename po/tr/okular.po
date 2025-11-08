@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
-"PO-Revision-Date: 2025-10-03 10:10+0300\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"PO-Revision-Date: 2025-11-07 19:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -894,9 +894,7 @@ msgid "Rich Media"
 msgstr "Zengin Ortam"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Bilgi Notu"
 
@@ -1677,45 +1675,54 @@ msgstr "Sayfa %1 (%2)"
 msgid "Page %1"
 msgstr "Sayfa %1"
 
-#: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#: part/annotationpopup.cpp:85
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "Bilgi Notu"
 msgstr[1] "%1 Bilgi Notu"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "Açılır &Not Aç"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Yer İmini Kaldır"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Yer İmi Koy"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Metni Panoya Kopyala"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Kopyalama DRM tarafından yasaklandı"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Sil"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "Ö&zellikler"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2280,29 +2287,36 @@ msgstr "Tüm belgeler için göster"
 msgid "Search…"
 msgstr "Ara…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "Tümünü Genişlet"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "Tümünü Daralt"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Bu Yer İmine Git"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Yer İmini Yeniden Adlandır"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Yer İmini Kaldır"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Belge Aç"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Bu Belgeden Tüm Yer İmlerini Kaldır"
@@ -4907,34 +4921,21 @@ msgstr ""
 "deneyin."
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "Tüm Bölümü Genişlet"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "Tüm Bölümü Daralt"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "Tümünü Genişlet"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "Tümünü Daralt"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Küçük görselleri sayfa ile eşzamanla"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "Yer İmi Koy"
 
 #: part/part.cpp:3199
 #, kde-format

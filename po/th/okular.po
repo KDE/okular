@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1778,7 +1778,7 @@ msgstr "หน้า %1"
 msgid "Page %1"
 msgstr "หน้า %1"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1787,36 +1787,47 @@ msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "หมายเหตุประกอบ %1 แห่ง"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "เ&ปิดบันทึกย่อแบบผุด"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "เอาคั่นหน้าออก"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "เพิ่มคั่นหน้า"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text to Clipboard"
 msgstr "คัดลอกไปยังคลิปบอร์ด"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "ถูกห้ามทำการคัดลอกโดย DRM"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&ลบ"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "คุณ&สมบัติ"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -2407,29 +2418,34 @@ msgstr "ส่วนท้ายของเอกสาร"
 msgid "Search…"
 msgstr "&ค้นหา:"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, kde-format
+msgid "Expand All"
+msgstr ""
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, kde-format
+msgid "Collapse All"
+msgstr ""
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "ไปยังคั่นหน้านี้"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "เปลี่ยนชื่อคั่นหน้า"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "เอาคั่นหน้าออก"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "เปิดเอกสาร"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr ""
@@ -5196,34 +5212,20 @@ msgstr "ไม่สามารถบันทึกแฟ้มไว้ใน
 #: part/part.cpp:3158
 #, fuzzy, kde-format
 #| msgid "End Presentation"
-msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "จบการนำเสนอ"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
-msgstr ""
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr ""
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "End Presentation"
+msgid "Collapse Whole Section"
+msgstr "จบการนำเสนอ"
 
 #: part/part.cpp:3172
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "เชื่อมโยงภาพตั&วอย่างเข้ากับหน้ากระดาษ"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "เพิ่มคั่นหน้า"
 
 #: part/part.cpp:3199
 #, kde-format

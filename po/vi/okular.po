@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
 "PO-Revision-Date: 2022-10-15 18:22+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -1681,7 +1681,7 @@ msgstr "Trang %1"
 msgid "Page %1"
 msgstr "Trang %1"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1690,35 +1690,46 @@ msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "%1 chú dẫn"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Mở ghi chú bật lên"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Xoá dấu nhớ"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr ""
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr ""
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr ""
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Xoá"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Thuộc tính"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -2282,29 +2293,34 @@ msgstr "Hiện cho tất cả các tài liệu"
 msgid "Search…"
 msgstr "Tìm kiếm..."
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, kde-format
+msgid "Expand All"
+msgstr ""
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, kde-format
+msgid "Collapse All"
+msgstr ""
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Đi đến dấu nhớ này"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Đổi tên dấu nhớ"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Xoá dấu nhớ"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Mở tài liệu"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Xoá tất cả các dấu nhớ của tài liệu này"
@@ -4813,33 +4829,19 @@ msgid ""
 msgstr ""
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "T&able Selection"
+msgid "Expand Whole Section"
+msgstr "Chọn &bảng"
 
 #: part/part.cpp:3159
 #, kde-format
-msgid "Collapse whole section"
-msgstr ""
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr ""
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
+msgid "Collapse Whole Section"
 msgstr ""
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr ""
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
 msgstr ""
 
 #: part/part.cpp:3199

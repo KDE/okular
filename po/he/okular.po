@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 15:19+0000\n"
-"PO-Revision-Date: 2025-11-05 08:54+0200\n"
+"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"PO-Revision-Date: 2025-11-07 08:37+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -879,9 +879,7 @@ msgid "Rich Media"
 msgstr "מדיה עשירה"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "פירוש"
 
@@ -1655,10 +1653,8 @@ msgstr "עמוד %1 (%2)"
 msgid "Page %1"
 msgstr "עמוד %1"
 
-#: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#: part/annotationpopup.cpp:85
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -1667,35 +1663,46 @@ msgstr[1] "שני פירושים"
 msgstr[2] "%1 פירושים"
 msgstr[3] "%1 פירושים"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&פתיחת הערה בחלונית"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "הסרת הסימנייה"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "הוספת סימנייה"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "העתקת טקסט ללוח הגזירים"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "ה־DRM אוסר העתקה"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "מ&חיקה"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "מ&אפיינים"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2267,29 +2274,36 @@ msgstr "הצגה לכל המסמכים"
 msgid "Search…"
 msgstr "חיפוש…"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "להרחיב הכול"
+
+#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "לצמצם הכול"
+
+#: part/bookmarklist.cpp:259
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "מעבר לסימנייה הזו"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "שינוי שם הסימנייה"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "הסרת הסימנייה"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:295
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "פתיחת מסמך"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:298
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "הסרת כל הסימניות מהמסמך הזה"
@@ -4867,34 +4881,21 @@ msgstr ""
 "לא ניתן לשמור את הקובץ ב־‚%1’. שגיאה: ‚%2’. ניתן לנסות לשמור אותו במקום אחר."
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "להרחיב את כל המקטע"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "לצמצם את כל המקטע"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "להרחיב הכול"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "לצמצם הכול"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "סנכרון תמונה ממוזערת עם העמוד"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "הוספת סימנייה"
 
 #: part/part.cpp:3199
 #, kde-format

@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular.pot\n"
-"X-Crowdin-File-ID: 48904\n"
+"X-Crowdin-File: /kf6-stable/messages/okular/okular.pot\n"
+"X-Crowdin-File-ID: 50804\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -718,10 +718,9 @@ msgid "Inline Note"
 msgstr "文本框批注"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "多边形 (有注释)"
+msgstr "箭头 (有注释)"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -752,10 +751,9 @@ msgid "Polygon"
 msgstr "多边形"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "图章 (有注释)"
+msgstr "矩形 (有注释)"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -764,10 +762,9 @@ msgid "Rectangle"
 msgstr "矩形"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "下划线 (有注释)"
+msgstr "椭圆形 (有注释)"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -878,11 +875,9 @@ msgid "Rich Media"
 msgstr "富媒体"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "%1 个批注"
+msgstr "批注"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1652,9 +1647,7 @@ msgid "Page %1"
 msgstr "第 %1 页"
 
 #: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -5937,13 +5930,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "几何图形 (有注释)"
-
-#~ msgid "Geometry"
-#~ msgstr "几何图形"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1：%2"

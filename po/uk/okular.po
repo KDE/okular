@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-08 00:40+0000\n"
-"PO-Revision-Date: 2025-11-07 11:58+0200\n"
+"PO-Revision-Date: 2025-11-08 17:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2298,14 +2298,12 @@ msgid "Search…"
 msgstr "Шукати…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Розгорнути все"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Згорнути все"
 
@@ -4955,14 +4953,12 @@ msgstr ""
 "іншому місці."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Розгорнути увесь розділ"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Згорнути увесь розділ"
 

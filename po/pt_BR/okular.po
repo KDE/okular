@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-08 00:40+0000\n"
-"PO-Revision-Date: 2025-11-07 08:25-0300\n"
-"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"PO-Revision-Date: 2025-11-08 21:10-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -162,7 +162,7 @@ msgstr "Abrir arquivo externo"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'…"
-msgstr "Executar '%1'..."
+msgstr "Executar '%1'…"
 
 #: core/action.cpp:294
 #, kde-format
@@ -217,12 +217,12 @@ msgstr "Localizar…"
 #: core/action.cpp:314
 #, kde-format
 msgid "Go To Page…"
-msgstr "Ir para a página..."
+msgstr "Ir para a página…"
 
 #: core/action.cpp:365
 #, kde-format
 msgid "Play sound…"
-msgstr "Reproduzir som..."
+msgstr "Reproduzir som…"
 
 #: core/action.cpp:433 core/action.cpp:549
 #, kde-format
@@ -232,7 +232,7 @@ msgstr "Script em JavaScript"
 #: core/action.cpp:483
 #, kde-format
 msgid "Play movie…"
-msgstr "Reproduzir filme..."
+msgstr "Reproduzir filme…"
 
 #: core/action.cpp:554
 #, kde-format
@@ -554,7 +554,7 @@ msgstr "editar os estados do botão"
 #: core/generator.cpp:790
 #, kde-format
 msgid "Plain &Text…"
-msgstr "&Texto sem formatação..."
+msgstr "&Texto sem formatação…"
 
 #: core/generator.cpp:793
 #, kde-format
@@ -1481,7 +1481,7 @@ msgstr "Transparente"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr "Cor personalizada..."
+msgstr "Cor personalizada…"
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1736,7 +1736,7 @@ msgstr "&Propriedades"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr "&Salvar '%1'..."
+msgstr "&Salvar '%1'…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2295,17 +2295,15 @@ msgstr "Mostrar para todos os documentos"
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search…"
-msgstr "Pesquisar..."
+msgstr "Pesquisar…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Expandir tudo"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Recolher tudo"
 
@@ -2339,7 +2337,7 @@ msgstr "Visualizador de certificado"
 #: part/certificateviewer.cpp:50
 #, kde-format
 msgid "Export…"
-msgstr "Exportar..."
+msgstr "Exportar…"
 
 #: part/certificateviewer.cpp:56 part/preferencesdialog.cpp:41
 #, kde-format
@@ -3503,13 +3501,13 @@ msgstr "Modificado"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "&Salvar como..."
+msgstr "&Salvar como…"
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "E&xibir..."
+msgstr "E&xibir…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3593,7 +3591,7 @@ msgstr "Campo de assinatura (clique para assinar)"
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
-msgstr "&Assinar..."
+msgstr "&Assinar…"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3779,7 +3777,7 @@ msgstr "Ferramentas de seleção"
 #: part/pageview.cpp:711
 #, kde-format
 msgid "Digitally &Sign…"
-msgstr "A&ssinar digitalmente..."
+msgstr "A&ssinar digitalmente…"
 
 #: part/pageview.cpp:717
 #, kde-format
@@ -3868,7 +3866,7 @@ msgstr "Imagem (%1 x %2 pixels)"
 #: part/pageview.cpp:2865
 #, kde-format
 msgid "Save to File…"
-msgstr "Salvar para arquivo..."
+msgstr "Salvar para arquivo…"
 
 #: part/pageview.cpp:2885
 #, kde-format
@@ -3937,7 +3935,7 @@ msgstr "Pesquisar por '%1' com"
 #: part/pageview.cpp:4404
 #, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr "Configurar os atalhos da Web..."
+msgstr "Configurar os atalhos da Web…"
 
 #: part/pageview.cpp:4430
 #, kde-format
@@ -4374,22 +4372,22 @@ msgstr "Ir para o próximo favorito"
 #: part/part.cpp:748
 #, kde-format
 msgid "Configure Okular…"
-msgstr "Configurar o Okular..."
+msgstr "Configurar o Okular…"
 
 #: part/part.cpp:751
 #, kde-format
 msgid "Configure Viewer…"
-msgstr "Configurar visualizador..."
+msgstr "Configurar visualizador…"
 
 #: part/part.cpp:757
 #, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Configurar infraestruturas do visualizador..."
+msgstr "Configurar infraestruturas do visualizador…"
 
 #: part/part.cpp:759
 #, kde-format
 msgid "Configure Backends…"
-msgstr "Configurar infraestruturas..."
+msgstr "Configurar infraestruturas…"
 
 #: part/part.cpp:795
 #, kde-format
@@ -4420,7 +4418,7 @@ msgstr "Número da página"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr "Configurar modo de cor..."
+msgstr "Configurar modo de cor…"
 
 #: part/part.cpp:858
 #, kde-format
@@ -4470,7 +4468,7 @@ msgstr "Abrir pas&ta do arquivo"
 #: part/part.cpp:945
 #, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr "&Importar PostScript como PDF..."
+msgstr "&Importar PostScript como PDF…"
 
 #: part/part.cpp:949
 #, kde-format
@@ -4485,7 +4483,7 @@ msgstr "Apagar desenho"
 #: part/part.cpp:962
 #, kde-format
 msgid "Configure Annotations…"
-msgstr "Configurar anotações..."
+msgstr "Configurar anotações…"
 
 #: part/part.cpp:967
 #, kde-format
@@ -4555,7 +4553,7 @@ msgstr "Arquivos PostScript (%1)"
 #: part/part.cpp:1357
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr "Importando arquivo PS como PDF (isto pode levar algum tempo)..."
+msgstr "Importando arquivo PS como PDF (isto pode levar algum tempo)…"
 
 #: part/part.cpp:1489
 #, kde-format
@@ -4709,7 +4707,7 @@ msgstr ""
 #: part/part.cpp:2113 part/part.cpp:2131
 #, kde-format
 msgid "Reloading the document…"
-msgstr "Recarregando o documento..."
+msgstr "Recarregando o documento…"
 
 #: part/part.cpp:2288 part/toc.cpp:38
 #, kde-format
@@ -4871,7 +4869,7 @@ msgstr "Aviso"
 #: part/part.cpp:2779 part/part.cpp:2801
 #, kde-format
 msgid "Save as Okular document archive…"
-msgstr "Salvar como arquivo de documento do Okular..."
+msgstr "Salvar como arquivo de documento do Okular…"
 
 #: part/part.cpp:2791
 #, kde-format
@@ -4936,14 +4934,12 @@ msgstr ""
 "local."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Expandir seção inteira"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Recolher seção inteira"
 
@@ -5292,7 +5288,7 @@ msgstr "&Fontes"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information…"
-msgstr "Lendo informações das fontes..."
+msgstr "Lendo informações das fontes…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5715,12 +5711,12 @@ msgstr "Revisão do documento %1 de %2"
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
 msgid "View Signed Version…"
-msgstr "Visualizar versão assinada..."
+msgstr "Visualizar versão assinada…"
 
 #: part/signaturepropertiesdialog.cpp:95
 #, kde-format
 msgid "View Certificate…"
-msgstr "Visualizar certificado..."
+msgstr "Visualizar certificado…"
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5784,7 +5780,7 @@ msgstr "&Adicionar…"
 #: part/widgetconfigurationtoolsbase.cpp:31
 #, kde-format
 msgid "&Edit…"
-msgstr "&Editar..."
+msgstr "&Editar…"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format

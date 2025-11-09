@@ -718,10 +718,9 @@ msgid "Inline Note"
 msgstr "文本框批注"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "多边形 (有注释)"
+msgstr "箭头 (有注释)"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -752,10 +751,9 @@ msgid "Polygon"
 msgstr "多边形"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "图章 (有注释)"
+msgstr "矩形 (有注释)"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -764,10 +762,9 @@ msgid "Rectangle"
 msgstr "矩形"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "下划线 (有注释)"
+msgstr "椭圆形 (有注释)"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -878,11 +875,9 @@ msgid "Rich Media"
 msgstr "富媒体"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "%1 个批注"
+msgstr "批注"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1652,9 +1647,7 @@ msgid "Page %1"
 msgstr "第 %1 页"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2260,16 +2253,14 @@ msgid "Search…"
 msgstr "搜索…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
-msgstr "全部展开"
+msgstr ""
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
-msgstr "全部折叠"
+msgstr ""
 
 #: part/bookmarklist.cpp:259
 #, kde-format
@@ -4848,16 +4839,14 @@ msgid ""
 msgstr "文件无法保存到“%1”。错误：“%2”。请尝试保存到其他位置。"
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
-msgstr "展开整个章节"
+msgstr ""
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
-msgstr "折叠整个章节"
+msgstr ""
 
 #: part/part.cpp:3172
 #, kde-format
@@ -5942,13 +5931,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "几何图形 (有注释)"
-
-#~ msgid "Geometry"
-#~ msgstr "几何图形"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1：%2"

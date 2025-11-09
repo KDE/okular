@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-08 00:40+0000\n"
-"PO-Revision-Date: 2025-11-05 11:23+0100\n"
+"PO-Revision-Date: 2025-11-08 11:15+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -892,9 +892,7 @@ msgid "Rich Media"
 msgstr "Media met extra's"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Annotatie"
 
@@ -1682,9 +1680,7 @@ msgid "Page %1"
 msgstr "Pagina %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2296,14 +2292,12 @@ msgid "Search…"
 msgstr "Zoeken…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Alles uitvouwen"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Alles invouwen"
 
@@ -4946,14 +4940,12 @@ msgstr ""
 "slaan op een andere locatie."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Gehele sectie uitvouwen"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Gehele sectie invouwen"
 

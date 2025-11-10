@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-08 00:40+0000\n"
-"PO-Revision-Date: 2025-11-07 18:18+0100\n"
+"PO-Revision-Date: 2025-11-09 14:01+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -2275,14 +2275,12 @@ msgid "Search…"
 msgstr "Търсене…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Разгъване на всички"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Свиване на всички"
 
@@ -4918,14 +4916,12 @@ msgstr ""
 "запазите на друго място."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Разгъване на целия раздел"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Свиване на целия раздел"
 
@@ -6035,67 +6031,3 @@ msgstr "Забравяне на всичко"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Скриване на приветстващия  прозорец"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "Геометрия с коментар"
-
-#~ msgid "Geometry"
-#~ msgstr "Геометрия"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1: %2"
-
-#~ msgid "Modified: %1"
-#~ msgstr "Последна промяна: %1"
-
-#~ msgid "Find..."
-#~ msgstr "Търсене..."
-
-#~ msgid "Go To Page..."
-#~ msgstr "Отиване на страница..."
-
-#~ msgid "Play movie..."
-#~ msgstr "Видео..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&Save As..."
-#~ msgstr "Запи&с като..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "&View..."
-#~ msgstr "&Преглед..."
-
-#~ msgid "&Sign..."
-#~ msgstr "&Подписване..."
-
-#~ msgid "Configure Viewer..."
-#~ msgstr "Настройки на прегледа..."
-
-#~ msgid "Configure Viewer Backends..."
-#~ msgstr "Конфигуриране на пакети за преглед..."
-
-#~ msgid "Configure Backends..."
-#~ msgstr "Настройки на бекенд"
-
-#~ msgid "&Add..."
-#~ msgstr "До&бавяне..."
-
-#~ msgid "&Edit..."
-#~ msgstr "&Редактиране..."
-
-#~ msgctxt "%1 is a file path"
-#~ msgid ""
-#~ "Could not sign. Invalid certificate password or could not write to '%1'"
-#~ msgstr ""
-#~ "Не може да бъде подписан. Невалидна парола за сертификат или не може да "
-#~ "запише на „%1“"
-
-#, fuzzy
-#~| msgid ""
-#~| "All your signing certificates are either not valid yet or are past their "
-#~| "validity date."
-#~ msgid "All your signing certificates are invalid"
-#~ msgstr ""
-#~ "Всичките ви сертификати за подписване са или невалидни все още или са "
-#~ "минали датата на валидност."

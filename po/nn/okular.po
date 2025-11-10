@@ -6068,13 +6068,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "Geometri med merknad"
-
-#~ msgid "Geometry"
-#~ msgstr "Geometri"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1: %2"

@@ -2255,12 +2255,12 @@ msgstr "搜索…"
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
 #, kde-format
 msgid "Expand All"
-msgstr ""
+msgstr "展开全部"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
 #, kde-format
 msgid "Collapse All"
-msgstr ""
+msgstr "折叠全部"
 
 #: part/bookmarklist.cpp:259
 #, kde-format
@@ -4841,12 +4841,12 @@ msgstr "文件无法保存到“%1”。错误：“%2”。请尝试保存到�
 #: part/part.cpp:3158
 #, kde-format
 msgid "Expand Whole Section"
-msgstr ""
+msgstr "展开整个章节"
 
 #: part/part.cpp:3159
 #, kde-format
 msgid "Collapse Whole Section"
-msgstr ""
+msgstr "折叠整个章节"
 
 #: part/part.cpp:3172
 #, kde-format

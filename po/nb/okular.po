@@ -5921,6 +5921,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#~ msgid "Geometry"
-#~ msgstr "Geometri"

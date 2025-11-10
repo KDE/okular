@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-06 17:05+0000\n"
-"PO-Revision-Date: 2025-07-11 13:14+0200\n"
+"PO-Revision-Date: 2025-11-09 23:36+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -728,10 +728,9 @@ msgid "Inline Note"
 msgstr "Nota in linea"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Poligono con commento"
+msgstr "Freccia con commento"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -762,10 +761,9 @@ msgid "Polygon"
 msgstr "Poligono"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Timbro con commento"
+msgstr "Rettangolo con commento"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -774,10 +772,9 @@ msgid "Rectangle"
 msgstr "Rettangolo"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Sottolineato con commento"
+msgstr "Ellisse con commento"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -888,9 +885,7 @@ msgid "Rich Media"
 msgstr "Oggetto multimediale (Rich Media)"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Annotazione"
 
@@ -1680,9 +1675,7 @@ msgid "Page %1"
 msgstr "Pagina %1"
 
 #: part/annotationpopup.cpp:83
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"

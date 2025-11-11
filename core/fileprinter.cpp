@@ -371,18 +371,32 @@ QStringList FilePrinter::optionMedia(QPrinter &printer)
 QString FilePrinter::mediaPageSize(QPrinter &printer)
 {
     switch (printer.pageLayout().pageSize().id()) {
+    case QPageSize::AnsiC:
+        return QStringLiteral("AnsiC");
+    case QPageSize::AnsiD:
+        return QStringLiteral("AnsiD");
+    case QPageSize::AnsiE:
+        return QStringLiteral("AnsiE");
     case QPageSize::A0:
         return QStringLiteral("A0");
     case QPageSize::A1:
         return QStringLiteral("A1");
+    case QPageSize::A10:
+        return QStringLiteral("A10");
     case QPageSize::A2:
         return QStringLiteral("A2");
     case QPageSize::A3:
         return QStringLiteral("A3");
+    case QPageSize::A3Extra:
+        return QStringLiteral("A3Extra");
     case QPageSize::A4:
         return QStringLiteral("A4");
+    case QPageSize::A4Extra:
+        return QStringLiteral("A4Extra");
     case QPageSize::A5:
         return QStringLiteral("A5");
+    case QPageSize::A5Extra:
+        return QStringLiteral("A5Extra");
     case QPageSize::A6:
         return QStringLiteral("A6");
     case QPageSize::A7:
@@ -391,44 +405,184 @@ QString FilePrinter::mediaPageSize(QPrinter &printer)
         return QStringLiteral("A8");
     case QPageSize::A9:
         return QStringLiteral("A9");
+    case QPageSize::ArchA:
+        return QStringLiteral("ARCHA");
+    case QPageSize::ArchB:
+        return QStringLiteral("ARCHB");
+    case QPageSize::ArchC:
+        return QStringLiteral("ARCHC");
+    case QPageSize::ArchD:
+        return QStringLiteral("ARCHD");
+    case QPageSize::ArchE:
+        return QStringLiteral("ARCHE");
     case QPageSize::B0:
         return QStringLiteral("B0");
     case QPageSize::B1:
-        return QStringLiteral("B1");
+        return QStringLiteral("ISOB1");
     case QPageSize::B10:
-        return QStringLiteral("B10");
+        return QStringLiteral("ISOB10");
     case QPageSize::B2:
-        return QStringLiteral("B2");
+        return QStringLiteral("ISOB2");
     case QPageSize::B3:
-        return QStringLiteral("B3");
+        return QStringLiteral("ISOB3");
     case QPageSize::B4:
-        return QStringLiteral("B4");
+        return QStringLiteral("ISOB4");
     case QPageSize::B5:
-        return QStringLiteral("B5");
+        return QStringLiteral("ISOB5");
+    case QPageSize::B5Extra:
+        return QStringLiteral("ISOB5Extra");
     case QPageSize::B6:
-        return QStringLiteral("B6");
+        return QStringLiteral("ISOB6");
     case QPageSize::B7:
-        return QStringLiteral("B7");
+        return QStringLiteral("ISOB7");
     case QPageSize::B8:
-        return QStringLiteral("B8");
+        return QStringLiteral("ISOB8");
     case QPageSize::B9:
-        return QStringLiteral("B9");
+        return QStringLiteral("ISOB9");
     case QPageSize::C5E:
-        return QStringLiteral("C5"); // Correct Translation?
+        return QStringLiteral("EnvC5");
     case QPageSize::Comm10E:
-        return QStringLiteral("Comm10"); // Correct Translation?
+        return QStringLiteral("Env10");
     case QPageSize::DLE:
-        return QStringLiteral("DL"); // Correct Translation?
+        return QStringLiteral("EnvDL");
+    case QPageSize::DoublePostcard:
+        return QStringLiteral("DoublePostcard");
+    case QPageSize::Envelope9:
+        return QStringLiteral("Env9");
+    case QPageSize::Envelope11:
+        return QStringLiteral("Env11");
+    case QPageSize::Envelope12:
+        return QStringLiteral("Env12");
+    case QPageSize::Envelope14:
+        return QStringLiteral("Env14");
+    case QPageSize::EnvelopeC0:
+        return QStringLiteral("EnvC0");
+    case QPageSize::EnvelopeC1:
+        return QStringLiteral("EnvC1");
+    case QPageSize::EnvelopeC2:
+        return QStringLiteral("EnvC2");
+    case QPageSize::EnvelopeC3:
+        return QStringLiteral("EnvC3");
+    case QPageSize::EnvelopeC4:
+        return QStringLiteral("EnvC4");
+    case QPageSize::EnvelopeC6:
+        return QStringLiteral("EnvC6");
+    case QPageSize::EnvelopeC65:
+        return QStringLiteral("EnvC65");
+    case QPageSize::EnvelopeC7:
+        return QStringLiteral("EnvC7");
+    case QPageSize::EnvelopeChou3:
+        return QStringLiteral("EnvChou3");
+    case QPageSize::EnvelopeChou4:
+        return QStringLiteral("EnvChou4");
+    case QPageSize::EnvelopeInvite:
+        return QStringLiteral("EnvInvite");
+    case QPageSize::EnvelopeItalian:
+        return QStringLiteral("EnvItalian");
+    case QPageSize::EnvelopeKaku2:
+        return QStringLiteral("EnvKaku2");
+    case QPageSize::EnvelopeKaku3:
+        return QStringLiteral("EnvKaku3");
+    case QPageSize::EnvelopeMonarch:
+        return QStringLiteral("EnvMonarch");
+    case QPageSize::EnvelopePersonal:
+        return QStringLiteral("EnvPersonal");
+    case QPageSize::EnvelopePrc1:
+        return QStringLiteral("EnvPRC1");
+    case QPageSize::EnvelopePrc10:
+        return QStringLiteral("EnvPRC10");
+    case QPageSize::EnvelopePrc2:
+        return QStringLiteral("EnvPRC2");
+    case QPageSize::EnvelopePrc3:
+        return QStringLiteral("EnvPRC3");
+    case QPageSize::EnvelopePrc4:
+        return QStringLiteral("EnvPRC4");
+    case QPageSize::EnvelopePrc5:
+        return QStringLiteral("EnvPRC5");
+    case QPageSize::EnvelopePrc6:
+        return QStringLiteral("EnvPRC6");
+    case QPageSize::EnvelopePrc7:
+        return QStringLiteral("EnvPRC7");
+    case QPageSize::EnvelopePrc8:
+        return QStringLiteral("EnvPRC8");
+    case QPageSize::EnvelopePrc9:
+        return QStringLiteral("EnvPRC9");
+    case QPageSize::EnvelopeYou4:
+        return QStringLiteral("EnvYou4");
     case QPageSize::Executive:
         return QStringLiteral("Executive");
+    case QPageSize::FanFoldGerman:
+        return QStringLiteral("FanFoldGerman");
+    case QPageSize::FanFoldGermanLegal:
+        return QStringLiteral("FanFoldGermanLegal");
     case QPageSize::Folio:
         return QStringLiteral("Folio");
+    case QPageSize::Imperial10x11:
+        return QStringLiteral("10x11");
+    case QPageSize::Imperial10x13:
+        return QStringLiteral("10x13");
+    case QPageSize::Imperial10x14:
+        return QStringLiteral("10x14");
+    case QPageSize::Imperial7x9:
+        return QStringLiteral("7x9");
+    case QPageSize::Imperial8x10:
+        return QStringLiteral("8x10");
+    case QPageSize::Imperial9x11:
+        return QStringLiteral("9x11");
+    case QPageSize::Imperial9x12:
+        return QStringLiteral("ARCHA");
+    case QPageSize::JisB0:
+        return QStringLiteral("B0");
+    case QPageSize::JisB1:
+        return QStringLiteral("B1");
+    case QPageSize::JisB10:
+        return QStringLiteral("B10");
+    case QPageSize::JisB2:
+        return QStringLiteral("B2");
+    case QPageSize::JisB3:
+        return QStringLiteral("B3");
+    case QPageSize::JisB4:
+        return QStringLiteral("B4");
+    case QPageSize::JisB5:
+        return QStringLiteral("B5");
+    case QPageSize::JisB6:
+        return QStringLiteral("B6");
+    case QPageSize::JisB7:
+        return QStringLiteral("B7");
+    case QPageSize::JisB8:
+        return QStringLiteral("B8");
+    case QPageSize::JisB9:
+        return QStringLiteral("B9");
     case QPageSize::Ledger:
-        return QStringLiteral("Ledger");
+        return QStringLiteral("Ledger"); // Tabloid?
     case QPageSize::Legal:
         return QStringLiteral("Legal");
+    case QPageSize::LegalExtra:
+        return QStringLiteral("LegalExtra");
     case QPageSize::Letter:
         return QStringLiteral("Letter");
+    case QPageSize::LetterExtra:
+        return QStringLiteral("LetterExtra");
+    case QPageSize::LetterPlus:
+        return QStringLiteral("LetterPlus");
+    case QPageSize::Note:
+        return QStringLiteral("Letter");
+    case QPageSize::Postcard:
+        return QStringLiteral("Postcard");
+    case QPageSize::Prc16K:
+        return QStringLiteral("PRC16K");
+    case QPageSize::Prc32K:
+        return QStringLiteral("PRC32K");
+    case QPageSize::Prc32KBig:
+        return QStringLiteral("PRC32KBig");
+    case QPageSize::Quarto:
+        return QStringLiteral("Quarto");
+    case QPageSize::Statement:
+        return QStringLiteral("Statement");
+    case QPageSize::SuperA:
+        return QStringLiteral("SuperA");
+    case QPageSize::SuperB:
+        return QStringLiteral("SuperB");
     case QPageSize::Tabloid:
         return QStringLiteral("Tabloid");
     case QPageSize::Custom:

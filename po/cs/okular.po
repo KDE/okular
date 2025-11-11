@@ -724,10 +724,9 @@ msgid "Inline Note"
 msgstr "Vložená poznámka"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Mnohoúhelník bez komentáře"
+msgstr ""
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -758,10 +757,9 @@ msgid "Polygon"
 msgstr "Mnohoúhelník"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Razítko s komentářem"
+msgstr ""
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -770,10 +768,9 @@ msgid "Rectangle"
 msgstr "Pravoúhelník"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Podtržení s komentářem"
+msgstr ""
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -884,11 +881,9 @@ msgid "Rich Media"
 msgstr "Rich Media"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "1 poznámka"
+msgstr ""
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1658,15 +1653,13 @@ msgid "Page %1"
 msgstr "Strana %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "1 poznámka"
-msgstr[1] "%1 poznámky"
-msgstr[2] "%1 poznámek"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
@@ -2277,14 +2270,12 @@ msgid "Search…"
 msgstr "Hledat…"
 
 #: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Rozvinout vše"
 
 #: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Svinout vše"
 
@@ -4857,16 +4848,14 @@ msgid ""
 msgstr ""
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
-msgstr "Rozbalit celý úsek"
+msgstr ""
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
-msgstr "Svinout celý úsek"
+msgstr ""
 
 #: part/part.cpp:3172
 #, kde-format
@@ -5957,13 +5946,3 @@ msgstr "Zapomenout všechny"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Skrýt úvodní obrazovku"
-
-#~ msgid "Geometry with Comment"
-#~ msgstr "Geometrie s komentářem"
-
-#~ msgid "Geometry"
-#~ msgstr "Geometrie"
-
-#~ msgctxt "Annotation type: contents"
-#~ msgid "%1: %2"
-#~ msgstr "%1: %2"

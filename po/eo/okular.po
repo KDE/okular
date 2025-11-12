@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"POT-Creation-Date: 2025-11-12 00:42+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -1702,7 +1702,7 @@ msgid "&Open Pop-up Note"
 msgstr "Malfermi ŝprucn&oton"
 
 #: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
-#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Forigi la legosignon"
@@ -2268,7 +2268,7 @@ msgstr "Problemo okazis dum la efektivigo de la komando 'latekso'."
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Problemo okazis dum la efektivigo de la komando 'dvipng'."
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2288,53 +2288,53 @@ msgstr[1] ""
 "\n"
 "%2 legosignoj"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "Legosignoj"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr "Montri por ĉiuj dokumentoj"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "Search..."
 msgid "Search…"
 msgstr "Serĉi..."
 
-#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "Plivastigi ĉion"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
 msgstr "Malvastigi ĉion"
 
-#: part/bookmarklist.cpp:259
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Iri al ĉi tiu legosigno"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Alinomi la legosignon"
 
-#: part/bookmarklist.cpp:295
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Malfermi Dokumenton"
 
-#: part/bookmarklist.cpp:298
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Forigi ĉiujn Legosignojn por ĉi tiu Dokumento"

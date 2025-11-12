@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"POT-Creation-Date: 2025-11-12 00:42+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1793,7 +1793,7 @@ msgid "&Open Pop-up Note"
 msgstr "เ&ปิดบันทึกย่อแบบผุด"
 
 #: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
-#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "เอาคั่นหน้าออก"
@@ -2384,7 +2384,7 @@ msgstr ""
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2400,52 +2400,52 @@ msgstr[0] ""
 "\n"
 "มีคั่นหน้า %2 แห่ง"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "ที่คั่นหน้า"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, fuzzy, kde-format
 #| msgid "End of the document"
 msgid "Show for all documents"
 msgstr "ส่วนท้ายของเอกสาร"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
 msgid "Search…"
 msgstr "&ค้นหา:"
 
-#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
 #, kde-format
 msgid "Expand All"
 msgstr ""
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
 #, kde-format
 msgid "Collapse All"
 msgstr ""
 
-#: part/bookmarklist.cpp:259
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "ไปยังคั่นหน้านี้"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "เปลี่ยนชื่อคั่นหน้า"
 
-#: part/bookmarklist.cpp:295
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "เปิดเอกสาร"
 
-#: part/bookmarklist.cpp:298
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr ""

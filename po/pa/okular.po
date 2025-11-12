@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"POT-Creation-Date: 2025-11-12 00:42+0000\n"
 "PO-Revision-Date: 2024-12-19 22:37-0600\n"
 "Last-Translator: aalam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -1691,7 +1691,7 @@ msgid "&Open Pop-up Note"
 msgstr "ਪੌਪ-ਅੱਪ ਨੋਟਿਸ ਖੋਲ੍ਹੋ(&O)"
 
 #: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
-#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਨੂੰ ਹਟਾਓ"
@@ -2254,7 +2254,7 @@ msgstr "'latex' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱ
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "'dvipng' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ।"
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2274,53 +2274,53 @@ msgstr[1] ""
 "\n"
 "%2 ਬੁੱਕਮਾਰਕ"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "ਬੁੱਕਮਾਰਕ"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr "ਸਭ ਦਸਤਾਵੇਜ਼ਾਂ ਲਈ ਵੇਖਾਓ"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
 msgid "Search…"
 msgstr "ਖੋਜ(&e):"
 
-#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "ਸਭ ਨੂੰ ਫੈਲਾਓ"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
 msgstr "ਸਭ ਸਮੇਟੋ"
 
-#: part/bookmarklist.cpp:259
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "ਇਸ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਦਾ ਨਾਂ ਬਦਲੋ"
 
-#: part/bookmarklist.cpp:295
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਖੋਲ੍ਹੋ"
 
-#: part/bookmarklist.cpp:298
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਸਭ ਬੁੱਕਮਾਰਕਾਂ ਨੂੰ ਹਟਾਓ"

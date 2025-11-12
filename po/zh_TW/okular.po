@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-08 00:40+0000\n"
+"POT-Creation-Date: 2025-11-12 00:42+0000\n"
 "PO-Revision-Date: 2025-08-29 23:20+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1670,7 +1670,7 @@ msgid "&Open Pop-up Note"
 msgstr "開啟彈出式備註(&O)"
 
 #: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
-#: part/bookmarklist.cpp:261 part/part.cpp:2265 part/part.cpp:3175
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "移除書籤"
@@ -2231,7 +2231,7 @@ msgstr "執行 'latex' 指令時發生錯誤。"
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "執行 'dvipng' 指令時發生錯誤。"
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2247,52 +2247,52 @@ msgstr[0] ""
 "\n"
 "%2 個書籤"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "書籤"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr "為所有文件顯示"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search…"
 msgstr "搜尋…"
 
-#: part/bookmarklist.cpp:257 part/bookmarklist.cpp:291 part/part.cpp:3160
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "全部展開"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:292 part/part.cpp:3161
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
 msgstr "全部收縮"
 
-#: part/bookmarklist.cpp:259
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "跳到此書籤"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:297 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "重新命名書籤"
 
-#: part/bookmarklist.cpp:295
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "開啟文件"
 
-#: part/bookmarklist.cpp:298
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "移除這個文件的所有書籤"

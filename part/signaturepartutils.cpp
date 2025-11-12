@@ -78,7 +78,12 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&certificateModel);
-    dialog.ui->list->setCurrentIndex(certificateModel.mapFromSource(certificateModelUnderlying.indexForNick(lastNick)));
+    auto current = certificateModel.mapFromSource(certificateModelUnderlying.indexForNick(lastNick));
+    if (current.isValid()) {
+        dialog.ui->list->setCurrentIndex(current);
+    } else {
+        dialog.ui->list->setCurrentIndex(dialog.ui->list->model()->index(0, 0));
+    }
     if (certificateModelUnderlying.types() == SignaturePartUtils::CertificateType::SMime) {
         // Only one type of certificates, no need to show filters
         for (int i = 0; i < dialog.ui->toggleTypes->count(); i++) {

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 17:05+0000\n"
+"POT-Creation-Date: 2025-11-13 02:37+0000\n"
 "PO-Revision-Date: 2024-03-27 23:03+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: Asturian <alministradores@softastur.org>\n"
@@ -1628,7 +1628,7 @@ msgstr ""
 msgid "Page %1"
 msgstr ""
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1636,35 +1636,46 @@ msgid_plural "%1 Annotations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr ""
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr ""
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr ""
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr ""
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr ""
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr ""
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr ""
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2189,7 +2200,7 @@ msgstr ""
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr ""
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2203,45 +2214,50 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr ""
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr ""
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, kde-format
 msgid "Search…"
 msgstr ""
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
+#, kde-format
+msgid "Expand All"
+msgstr ""
+
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
+#, kde-format
+msgid "Collapse All"
+msgstr ""
+
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr ""
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr ""
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr ""
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr ""
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr ""
@@ -4739,32 +4755,17 @@ msgstr ""
 
 #: part/part.cpp:3158
 #, kde-format
-msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr ""
 
 #: part/part.cpp:3159
 #, kde-format
-msgid "Collapse whole section"
-msgstr ""
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr ""
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
+msgid "Collapse Whole Section"
 msgstr ""
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
-msgstr ""
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
 msgstr ""
 
 #: part/part.cpp:3199

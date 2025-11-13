@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 17:05+0000\n"
+"POT-Creation-Date: 2025-11-13 02:37+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1676,7 +1676,7 @@ msgstr "पृष्ठहरू %1 (%2) ."
 msgid "Page %1"
 msgstr "पृष्ठं %1"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1686,35 +1686,46 @@ msgid_plural "%1 Annotations"
 msgstr[0] "टिप्पणी"
 msgstr[1] "%1 टिप्पणी"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Open Pop-up Note"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "बुकमार्कं निष्कासयन्तु"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "बुकमार्कं योजयतु"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "पाठं क्लिप्बोर्ड् प्रति प्रतिलिख्यताम्"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "प्रतिलिपिः DRM द्वारा निषिद्धा"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&लुप्"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&गुणाः"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -2247,7 +2258,7 @@ msgstr "'latex' आदेशस्य निष्पादनकाले स�
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "'dvipng' आदेशस्य निष्पादनकाले समस्या अभवत् ।"
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2267,46 +2278,53 @@ msgstr[1] ""
 "\n"
 "%2 पुस्तकचिह्नानि"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "बुकमार्क्स"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr "सर्वेषां दस्तावेजानां कृते दर्शयतु"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "Search..."
 msgid "Search…"
 msgstr "अन्वेषण..."
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "सर्वान् विस्तारयतु"
+
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "सर्वं ध्वस्तं कुरुत"
+
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "This Bookmark इत्यत्र गच्छन्तु"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Bookmark इत्यस्य नाम परिवर्तनं कुर्वन्तु"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "बुकमार्कं निष्कासयन्तु"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Document उद्घाटयन्तु"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "अस्य दस्तावेजस्य सर्वाणि Bookmarks निष्कासयन्तु"
@@ -4914,34 +4932,21 @@ msgstr ""
 "'%1' इत्यत्र सञ्चिका रक्षितुं न शक्यते । त्रुटिः '%2'। अन्यस्मिन् स्थाने रक्षितुं प्रयतध्वम्।"
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "सम्पूर्ण खण्ड विस्तार करें"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "सम्पूर्ण खण्ड ध्वस्त करें"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "सर्वान् विस्तारयतु"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "सर्वं ध्वस्तं कुरुत"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "पृष्ठेन सह लघुचित्रं समन्वययन्तु"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "बुकमार्कं योजयतु"
 
 #: part/part.cpp:3199
 #, kde-format

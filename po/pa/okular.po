@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 17:05+0000\n"
+"POT-Creation-Date: 2025-11-13 02:37+0000\n"
 "PO-Revision-Date: 2024-12-19 22:37-0600\n"
 "Last-Translator: aalam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -1675,7 +1675,7 @@ msgstr "ਸਫ਼ਾ %1 (%2)"
 msgid "Page %1"
 msgstr "%1 ਸਫ਼ਾ"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1685,35 +1685,46 @@ msgid_plural "%1 Annotations"
 msgstr[0] "ਵਿਆਖਿਆ"
 msgstr[1] "%1 ਵਿਆਖਿਆਵਾਂ"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "ਪੌਪ-ਅੱਪ ਨੋਟਿਸ ਖੋਲ੍ਹੋ(&O)"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਨੂੰ ਹਟਾਓ"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਜੋੜੋ"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "ਲਿਖਤ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "ਕਾਪੀ ਨੂੰ DRM ਰਾਹੀਂ ਮਨ੍ਹਾਂ ਕੀਤਾ ਹੈ"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "ਹਟਾਓ(&D)"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ(&P)"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -2243,7 +2254,7 @@ msgstr "'latex' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱ
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "'dvipng' ਕਮਾਂਡ ਚਲਾਉਣ ਦੇ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ।"
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2263,46 +2274,53 @@ msgstr[1] ""
 "\n"
 "%2 ਬੁੱਕਮਾਰਕ"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "ਬੁੱਕਮਾਰਕ"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, kde-format
 msgid "Show for all documents"
 msgstr "ਸਭ ਦਸਤਾਵੇਜ਼ਾਂ ਲਈ ਵੇਖਾਓ"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
 msgid "Search…"
 msgstr "ਖੋਜ(&e):"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
+#, fuzzy, kde-format
+#| msgid "Expand all"
+msgid "Expand All"
+msgstr "ਸਭ ਨੂੰ ਫੈਲਾਓ"
+
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
+#, fuzzy, kde-format
+#| msgid "Collapse all"
+msgid "Collapse All"
+msgstr "ਸਭ ਸਮੇਟੋ"
+
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "ਇਸ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਦਾ ਨਾਂ ਬਦਲੋ"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "ਬੁੱਕਮਾਰਕ ਨੂੰ ਹਟਾਓ"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਖੋਲ੍ਹੋ"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਸਭ ਬੁੱਕਮਾਰਕਾਂ ਨੂੰ ਹਟਾਓ"
@@ -4870,34 +4888,21 @@ msgstr ""
 "ਜੀ।"
 
 #: part/part.cpp:3158
-#, kde-format
-msgid "Expand whole section"
+#, fuzzy, kde-format
+#| msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "ਪੂਰੇ ਭਾਗ ਨੂੰ ਫੈਲਾਓ"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
+#, fuzzy, kde-format
+#| msgid "Collapse whole section"
+msgid "Collapse Whole Section"
 msgstr "ਪੂਰਾ ਭਾਗ ਸਮੇਟੋ"
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr "ਸਭ ਨੂੰ ਫੈਲਾਓ"
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr "ਸਭ ਸਮੇਟੋ"
 
 #: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "ਸਫ਼ੇ ਨਾਲ ਥੰਮਨੇਲ ਲਿੰਕ ਕਰੋ"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "ਬੁੱਕਮਾਰਕ ਜੋੜੋ"
 
 #: part/part.cpp:3199
 #, kde-format

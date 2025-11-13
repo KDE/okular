@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-06 17:05+0000\n"
+"POT-Creation-Date: 2025-11-13 02:37+0000\n"
 "PO-Revision-Date: 2013-10-30 03:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1768,7 +1768,7 @@ msgstr "%1-бет"
 msgid "Page %1"
 msgstr "%1-бет"
 
-#: part/annotationpopup.cpp:83
+#: part/annotationpopup.cpp:85
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1777,36 +1777,47 @@ msgid "Annotation"
 msgid_plural "%1 Annotations"
 msgstr[0] "%1 аңдатпа"
 
-#: part/annotationpopup.cpp:85 part/annotationpopup.cpp:131
+#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "Қалқымалы жазбаны &ашу"
 
-#: part/annotationpopup.cpp:90 part/annotationpopup.cpp:135
+#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
+#, kde-format
+msgid "Remove Bookmark"
+msgstr "Бетбелгіні өшіру"
+
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#, kde-format
+msgid "Add Bookmark"
+msgstr "Бетбелгіні қосу"
+
+#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text to Clipboard"
 msgstr "Алмасу буферіне көшіріп алу"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:139
+#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
 #: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
 #: part/pageview.cpp:3051
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Көшіруге DRM (авторлықты қорғау) тыйым салған"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:144
+#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
 #, kde-format
 msgid "&Delete"
 msgstr "&Өшіру"
 
-#: part/annotationpopup.cpp:113 part/annotationpopup.cpp:148 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "Қ&асиеттері"
 
-#: part/annotationpopup.cpp:120 part/annotationpopup.cpp:154
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -2357,7 +2368,7 @@ msgstr "'latex' командасын орындау кезінде бір мәс
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "'dvipng' командасын орындау кезінде бір мәселе орын алды."
 
-#: part/bookmarklist.cpp:115
+#: part/bookmarklist.cpp:116
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2373,47 +2384,52 @@ msgstr[0] ""
 "\n"
 "%2 бетбелгі"
 
-#: part/bookmarklist.cpp:131 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:412
 #, kde-format
 msgid "Bookmarks"
 msgstr "Бетбелгілер"
 
-#: part/bookmarklist.cpp:135
+#: part/bookmarklist.cpp:136
 #, fuzzy, kde-format
 #| msgid "End of the document"
 msgid "Show for all documents"
 msgstr "Құжаттың соңы"
 
-#: part/bookmarklist.cpp:142 part/searchwidget.cpp:38 part/side_reviews.cpp:129
+#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
 #, fuzzy, kde-format
 #| msgid "S&earch:"
 msgid "Search…"
 msgstr "&Іздейтіні:"
 
-#: part/bookmarklist.cpp:257
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
+#, kde-format
+msgid "Expand All"
+msgstr ""
+
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
+#, kde-format
+msgid "Collapse All"
+msgstr ""
+
+#: part/bookmarklist.cpp:263
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Осы бетбелгіге өту"
 
-#: part/bookmarklist.cpp:258 part/bookmarklist.cpp:289 part/part.cpp:705
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
 #: part/part.cpp:2460
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Бетбелгінің атауын өзгерту"
 
-#: part/bookmarklist.cpp:259 part/part.cpp:2265 part/part.cpp:3175
-#, kde-format
-msgid "Remove Bookmark"
-msgstr "Бетбелгіні өшіру"
-
-#: part/bookmarklist.cpp:287
+#: part/bookmarklist.cpp:299
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Құжатты ашу"
 
-#: part/bookmarklist.cpp:290
+#: part/bookmarklist.cpp:302
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr ""
@@ -5174,34 +5190,20 @@ msgstr "Файл '%1' дегенге сақталмады. Басқа орынғ
 #: part/part.cpp:3158
 #, fuzzy, kde-format
 #| msgid "End Presentation"
-msgid "Expand whole section"
+msgid "Expand Whole Section"
 msgstr "Презентацияны аяқтау"
 
 #: part/part.cpp:3159
-#, kde-format
-msgid "Collapse whole section"
-msgstr ""
-
-#: part/part.cpp:3160
-#, kde-format
-msgid "Expand all"
-msgstr ""
-
-#: part/part.cpp:3161
-#, kde-format
-msgid "Collapse all"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "End Presentation"
+msgid "Collapse Whole Section"
+msgstr "Презентацияны аяқтау"
 
 #: part/part.cpp:3172
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "&Нобайлар бетпен байланыстырылсын"
-
-#: part/part.cpp:3177
-#, kde-format
-msgid "Add Bookmark"
-msgstr "Бетбелгіні қосу"
 
 #: part/part.cpp:3199
 #, kde-format

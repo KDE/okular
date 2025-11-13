@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-12 00:42+0000\n"
-"PO-Revision-Date: 2025-11-06 09:15+0400\n"
+"PO-Revision-Date: 2025-11-12 19:55+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -876,11 +876,9 @@ msgid "Rich Media"
 msgstr "وسيط غني"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "شرح"
+msgstr "التعليق التوضيحي"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1653,9 +1651,7 @@ msgid "Page %1"
 msgstr "الصفحة %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2287,16 +2283,14 @@ msgid "Search…"
 msgstr "ابحث…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
-msgstr "وسّع الكلّ"
+msgstr "وسّع الكل"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
-msgstr "اطوِ الكلّ"
+msgstr "اطوِ الكل"
 
 #: part/bookmarklist.cpp:263
 #, kde-format
@@ -4907,14 +4901,12 @@ msgid ""
 msgstr "تعذر حفظ الملف في '%1'. الخطأ: '%2'. حاول في مكان آخر."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "وسع كامل القسم"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "اطو كامل القسم"
 

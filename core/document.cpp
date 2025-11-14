@@ -4134,30 +4134,8 @@ void Document::processAction(const Action *action)
         // Albert: the only pdf i have that has that kind of link don't define
         // an application and use the fileName as the file to open
         QUrl url = d->giveAbsoluteUrl(fileName);
-        QMimeDatabase db;
-        QMimeType mime = db.mimeTypeForUrl(url);
-        // Check executables
-        if (KIO::OpenUrlJob::isExecutableFile(url, mime.name())) {
-            // Don't have any pdf that uses this code path, just a guess on how it should work
-            if (!exe->parameters().isEmpty()) {
-                url = d->giveAbsoluteUrl(exe->parameters());
-                mime = db.mimeTypeForUrl(url);
 
-                if (KIO::OpenUrlJob::isExecutableFile(url, mime.name())) {
-                    // this case is a link pointing to an executable with a parameter
-                    // that also is an executable, possibly a hand-crafted pdf
-                    Q_EMIT error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
-                    break;
-                }
-            } else {
-                // this case is a link pointing to an executable with no parameters
-                // core developers find unacceptable executing it even after asking the user
-                Q_EMIT error(i18n("The document is trying to execute an external application and, for your safety, Okular does not allow that."), -1);
-                break;
-            }
-        }
-
-        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url, mime.name());
+        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url);
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget));
         job->start();
         connect(job, &KIO::OpenUrlJob::result, this, [this, mime](KJob *job) {

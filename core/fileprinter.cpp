@@ -395,7 +395,7 @@ QString FilePrinter::mediaPaperSource(QPrinter &printer)
     case QPrinter::LargeCapacity:
         return QStringLiteral("LargeCapacity");
     case QPrinter::LargeFormat:
-        return QStringLiteral("LargeFormat");
+        return QStringLiteral("AnyLargeFormat");
     case QPrinter::Lower:
         return QStringLiteral("Lower");
     case QPrinter::MaxPageSource:
@@ -409,7 +409,7 @@ QString FilePrinter::mediaPaperSource(QPrinter &printer)
     case QPrinter::Tractor:
         return QStringLiteral("Tractor");
     case QPrinter::SmallFormat:
-        return QStringLiteral("SmallFormat");
+        return QStringLiteral("AnySmallFormat");
     default:
         return QString();
     }

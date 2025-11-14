@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-12 00:42+0000\n"
+"POT-Creation-Date: 2025-11-14 00:40+0000\n"
 "PO-Revision-Date: 2025-10-23 14:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -4725,7 +4725,7 @@ msgid "Remove this Bookmark"
 msgstr "Fjarlægja þetta bókamerki"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5592,43 +5592,43 @@ msgstr "Fella saman allar einingar"
 msgid "Properties"
 msgstr "Eiginleikar"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Myndir (%1)"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Select background image"
 msgstr "Velja bakgrunnsmynd"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr "Gleyma mynd"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr "Gleyma öllum myndum"
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Settu inn lykilorð (ef eitthvað er) til að aflæsa skilríki: %1"
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Settu inn lykilorðið að skilríkinu"
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgid "Enter document password"
 msgstr "Sláðu inn lykilorð skjals"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Vista undirritaða skrá sem"

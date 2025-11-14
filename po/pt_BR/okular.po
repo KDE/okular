@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-12 00:42+0000\n"
+"POT-Creation-Date: 2025-11-14 00:40+0000\n"
 "PO-Revision-Date: 2025-11-08 21:10-0300\n"
 "Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -4745,7 +4745,7 @@ msgid "Remove this Bookmark"
 msgstr "Remover este favorito"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5618,43 +5618,43 @@ msgstr "Recolher todos os elementos"
 msgid "Properties"
 msgstr "Propriedades"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Imagens (%1)"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Select background image"
 msgstr "Selecionar uma imagem de fundo"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr "Esquecer imagem"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr "Esquecer todas as imagens"
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Digite a senha (se tiver) para desbloquear o certificado: %1"
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Digite a senha do certificado"
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgid "Enter document password"
 msgstr "Digite a senha do documento"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Salvar arquivo assinado como"

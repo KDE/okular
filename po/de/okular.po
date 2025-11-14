@@ -8,13 +8,13 @@
 # SPDX-FileCopyrightText: 2010, 2011 Panagiotis Papadopoulos <pano_90@gmx.net>
 # SPDX-FileCopyrightText: 2017 Michael Weghorn <m.weghorn@posteo.de>
 # SPDX-FileCopyrightText: 2023, 2024 Frank Steinmetzger <dev-kde@felsenfleischer.de>
-# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n@prly.mozmail.com>
+# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-12 00:42+0000\n"
+"POT-Creation-Date: 2025-11-14 00:40+0000\n"
 "PO-Revision-Date: 2025-07-18 15:01+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -4798,7 +4798,7 @@ msgid "Remove this Bookmark"
 msgstr "Dieses Lesezeichen entfernen"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5681,45 +5681,45 @@ msgstr "Alle Elemente einklappen"
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Bilder (%1)"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Select background image"
 msgstr "Hintergrundbild auswählen"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr "Bild vergessen"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr "Alle Bilder vergessen"
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 "Geben Sie ein Passwort, falls vorhanden, zum Entsperren des Zertifikats ein "
 "%1"
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Zertifikat-Passwort eingeben"
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgid "Enter document password"
 msgstr "Dokument-Passwort eingeben"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Signierte Datei speichern unter"

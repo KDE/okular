@@ -4136,13 +4136,14 @@ void Document::processAction(const Action *action)
         QUrl url = d->giveAbsoluteUrl(fileName);
 
         KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url);
-        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, d->m_widget));
-        job->start();
-        connect(job, &KIO::OpenUrlJob::result, this, [this, mime](KJob *job) {
-            if (job->error()) {
-                Q_EMIT error(i18n("No application found for opening file of mimetype %1.", mime.name()), -1);
+        // Auto*Warning*Handling, errors are put in a KMessageWidget by us.
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoWarningHandlingEnabled, d->m_widget));
+        connect(job, &KIO::OpenUrlJob::result, this, [this, url](KJob *job) {
+            if (job->error() && job->error() != KIO::ERR_USER_CANCELED) {
+                Q_EMIT error(job->errorString(), -1);
             }
         });
+        job->start();
     } break;
 
     case Action::DocAction: {

@@ -410,9 +410,10 @@ QString FilePrinter::mediaPaperSource(QPrinter &printer)
         return QStringLiteral("Tractor");
     case QPrinter::SmallFormat:
         return QStringLiteral("AnySmallFormat");
-    default:
+    case QPrinter::CustomSource:
         return QString();
     }
+    return QString();
 }
 
 QStringList FilePrinter::optionOrientation(QPrinter &printer, QPageLayout::Orientation documentOrientation)
@@ -444,9 +445,8 @@ QStringList FilePrinter::optionDoubleSidedPrinting(QPrinter &printer)
         return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-long-edge");
     case QPrinter::DuplexShortSide:
         return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-short-edge");
-    default:
-        return QStringList(); // Use printer default
     }
+    return QStringList(); // Use printer default
 }
 
 QStringList FilePrinter::optionPageOrder(QPrinter &printer)

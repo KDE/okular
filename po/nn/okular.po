@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-13 02:37+0000\n"
+"POT-Creation-Date: 2025-11-14 02:38+0000\n"
 "PO-Revision-Date: 2024-10-27 14:45+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -4761,7 +4761,7 @@ msgid "Remove this Bookmark"
 msgstr "Fjern dette bokmerket"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5633,43 +5633,43 @@ msgstr "Fald saman alle elementa"
 msgid "Properties"
 msgstr "Eigenskapar"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Bilete (%1)"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Select background image"
 msgstr "Vel bakgrunnsbilete"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr "Gløym biletet"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr "Gløym alle bileta"
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "Skriv inn passordet (om aktuelt) for å låsa opp sertifikatet: %1"
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr "Skriv inn sertifikatpassord"
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgid "Enter document password"
 msgstr "Skriv inn passord på dokumentet"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Lagra signert fil som"

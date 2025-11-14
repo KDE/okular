@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-13 02:37+0000\n"
+"POT-Creation-Date: 2025-11-14 02:38+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -5061,7 +5061,7 @@ msgid "Remove this Bookmark"
 msgstr "Rilomer li rmåke"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5959,46 +5959,46 @@ msgstr ""
 msgid "Properties"
 msgstr "&Prôpietés"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Pådjes: %1"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "Permete l' ahivaedje d' on &fond"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr ""
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Enter document password"
 msgstr "Documint a drovi"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""

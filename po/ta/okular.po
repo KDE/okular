@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-13 02:37+0000\n"
+"POT-Creation-Date: 2025-11-14 02:38+0000\n"
 "PO-Revision-Date: 2025-07-19 19:02+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -4728,7 +4728,7 @@ msgid "Remove this Bookmark"
 msgstr "இந்த நினைவுக்குறியை நீக்கு"
 
 #: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5597,43 +5597,43 @@ msgstr "அனைத்து உருப்படிகளையும் ச�
 msgid "Properties"
 msgstr "பண்புகள்"
 
-#: part/signaturepartutils.cpp:175
+#: part/signaturepartutils.cpp:180
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "படங்கள் (%1)"
 
-#: part/signaturepartutils.cpp:176
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgid "Select background image"
 msgstr "பின்புலப் படத்தை தேர்ந்தெடுத்தல்"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
 msgstr "படத்தை மற"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
 msgstr "அனைத்துப் படங்களையும் மற"
 
-#: part/signaturepartutils.cpp:224
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
 msgstr "%1 என்ற சான்றிதழை திறப்பதற்கான கடவுச்சொல்லை (இருந்தால்) உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:226
+#: part/signaturepartutils.cpp:231
 #, kde-format
 msgid "Enter certificate password"
 msgstr "சான்றிதழுக்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:239
+#: part/signaturepartutils.cpp:244
 #, kde-format
 msgid "Enter document password"
 msgstr "ஆவணத்திற்கான கடவுச்சொல்லை உள்ளிடுங்கள்"
 
-#: part/signaturepartutils.cpp:262
+#: part/signaturepartutils.cpp:267
 #, kde-format
 msgid "Save Signed File As"
 msgstr "கையொப்பமிட்ட கோப்பை இவ்வாறு சேமி"

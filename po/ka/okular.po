@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-14 02:38+0000\n"
-"PO-Revision-Date: 2025-11-05 05:05+0100\n"
+"PO-Revision-Date: 2025-11-14 10:02+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -879,9 +879,7 @@ msgid "Rich Media"
 msgstr "მდიდარი ტექსტი"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "ანოტაცია"
 
@@ -1665,9 +1663,7 @@ msgid "Page %1"
 msgstr "გვერდი %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2279,14 +2275,12 @@ msgid "Search…"
 msgstr "ძებნა…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "ყველას ამოკეცვა"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "ყველას ჩაკეცვა"
 
@@ -4915,16 +4909,14 @@ msgstr ""
 "შეინახოთ."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
-msgstr "მთელი მონაკვეთის ამოკეცვა"
+msgstr "მთელი სექციის ჩამოშლა"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
-msgstr "მთელი მონაკვეთის ჩაკეცვა"
+msgstr "მთელი სექციის აკეცვა"
 
 #: part/part.cpp:3172
 #, kde-format

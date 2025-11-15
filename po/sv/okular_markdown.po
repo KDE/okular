@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 00:37+0000\n"
+"POT-Creation-Date: 2025-11-15 02:36+0000\n"
 "PO-Revision-Date: 2019-03-31 18:21+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stefan.asserhall@gmail.com"
 
-#: converter.cpp:83 converter.cpp:117
+#: converter.cpp:59 converter.cpp:93
 #, kde-format
 msgid "Failed to open the document"
 msgstr "Misslyckades öppna dokumentet"
 
-#: converter.cpp:130 converter.cpp:148
+#: converter.cpp:106 converter.cpp:124
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Misslyckades kompilera Markdown-dokumentet."

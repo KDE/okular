@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-23 00:37+0000\n"
+"POT-Creation-Date: 2025-11-15 00:39+0000\n"
 "PO-Revision-Date: 2021-08-21 16:54+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "raghu@raghukamath.com"
 
-#: converter.cpp:83 converter.cpp:117
+#: converter.cpp:59 converter.cpp:93
 #, kde-format
 msgid "Failed to open the document"
 msgstr "दस्तावेज़ खोलने में असफल"
 
-#: converter.cpp:130 converter.cpp:148
+#: converter.cpp:106 converter.cpp:124
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "मार्कडाउन दस्तावेज़ को संकलित करने में विफल।"

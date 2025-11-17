@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-14 00:40+0000\n"
-"PO-Revision-Date: 2025-10-23 14:55+0000\n"
+"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"PO-Revision-Date: 2025-11-17 10:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -726,10 +726,9 @@ msgid "Inline Note"
 msgstr "Innfelldur minnismiði"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Marghyrningur með athugasemd"
+msgstr "Ör með athugasemd"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -760,10 +759,9 @@ msgid "Polygon"
 msgstr "Marghyrningur"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Stimpill með athugasemd"
+msgstr "Ferhyrningur með athugasemd"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -772,10 +770,9 @@ msgid "Rectangle"
 msgstr "Rétthyrningur"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Undirstrikun með athugasemd"
+msgstr "Sporbaugur með athugasemd"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -886,9 +883,7 @@ msgid "Rich Media"
 msgstr "Margmiðlaefni"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Glósa"
 
@@ -1671,9 +1666,7 @@ msgid "Page %1"
 msgstr "Síða %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2284,14 +2277,12 @@ msgid "Search…"
 msgstr "Leita…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
-msgstr "Víkka allt út"
+msgstr "Fella allt út"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Fella allt saman"
 
@@ -4911,14 +4902,12 @@ msgstr ""
 "annarri staðsetningu."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
-msgstr "Víkka út allan hlutann"
+msgstr "Fella út allan hlutann"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Fella saman allan hlutann"
 

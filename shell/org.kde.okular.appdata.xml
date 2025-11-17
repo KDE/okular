@@ -417,6 +417,10 @@
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
   <url type="help">https://docs.kde.org/?application=okular</url>
   <url type="donation">https://www.kde.org/community/donations/?app=okular&amp;source=appdata</url>
+  <branding>
+    <color type="primary" scheme_preference="light">#4ba2ff</color>
+    <color type="primary" scheme_preference="dark">#1363b3</color>
+  </branding>
   <project_group>KDE</project_group>
   <provides>
     <binary>okular</binary>

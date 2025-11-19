@@ -9,7 +9,6 @@ Dependencies:
       'frameworks/kcolorscheme': '@latest-kf6'
       'frameworks/ki18n': '@latest-kf6'
       'frameworks/kio': '@latest-kf6'
-      'frameworks/kitemviews': '@latest-kf6'
       'frameworks/karchive': '@latest-kf6'
       'frameworks/kparts': '@latest-kf6'
       'frameworks/ktextwidgets': '@latest-kf6'

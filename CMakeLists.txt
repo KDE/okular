@@ -160,7 +160,7 @@ if (BUILD_DESKTOP)
         set(HAVE_DBUS 1)
     endif()
 
-    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes ItemViews TextWidgets WidgetsAddons)
+    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes TextWidgets WidgetsAddons)
 
     find_package(KF6Purpose)
     set_okular_optional_package_properties(KF6Purpose PROPERTIES
@@ -594,7 +594,6 @@ target_link_libraries(okularpart okularcore
     KF6::Bookmarks
     KF6::I18n
     KF6::IconThemes
-    KF6::ItemViews
     KF6::KIOCore
     KF6::KIOWidgets
     KF6::Parts

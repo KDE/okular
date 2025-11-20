@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2025-11-20 00:41+0000\n"
 "PO-Revision-Date: 2025-09-02 17:17+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1704,8 +1704,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Copia texto in area de transferentia"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
-#: part/pageview.cpp:3051
+#: part/pageview.cpp:2554 part/pageview.cpp:2874 part/pageview.cpp:3018
+#: part/pageview.cpp:3074
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Copia prohibite per DRM"
@@ -3622,299 +3622,299 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "de"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:508
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:520
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Exeque zoom a 100%"
 
-#: part/pageview.cpp:530
+#: part/pageview.cpp:531
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Rota a &dextera"
 
-#: part/pageview.cpp:531
+#: part/pageview.cpp:532
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Dextera"
 
-#: part/pageview.cpp:535
+#: part/pageview.cpp:536
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rota a &sinistra"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:537
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Sinistra"
 
-#: part/pageview.cpp:540
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Original Orientation"
 msgstr "Orientation original"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:547
 #, kde-format
 msgid "&Trim View"
 msgstr "Vista de pu&tar"
 
-#: part/pageview.cpp:550
+#: part/pageview.cpp:551
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Tonde margines"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:558
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Putar a &Selection"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:564
 #, kde-format
 msgid "Fit &Width"
 msgstr "Adapta in &largessa"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:568
 #, kde-format
 msgid "Fit &Page"
 msgstr "Adapta al &pagina"
 
-#: part/pageview.cpp:571
+#: part/pageview.cpp:572
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Adjusta automaticamente"
 
-#: part/pageview.cpp:575
+#: part/pageview.cpp:576
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Adapta Fe&nestra a Pagina"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:583
 #, kde-format
 msgid "&View Mode"
 msgstr "Modo de &Vider"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:595
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Pagina &singule"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:596
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Paginas &flancate"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:597
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Paginas flancate (prime pagina al &centro)"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:600
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Vision de &juncto"
 
-#: part/pageview.cpp:611
+#: part/pageview.cpp:612
 #, kde-format
 msgid "&Continuous"
 msgstr "&Continue"
 
-#: part/pageview.cpp:618
+#: part/pageview.cpp:619
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Usa direction de lectura ex dextra a sinistra"
 
-#: part/pageview.cpp:627
+#: part/pageview.cpp:628
 #, kde-format
 msgid "&Browse"
 msgstr "&Naviga "
 
-#: part/pageview.cpp:635
+#: part/pageview.cpp:636
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom (aggrandir)"
 
-#: part/pageview.cpp:655
+#: part/pageview.cpp:656
 #, kde-format
 msgid "Area &Selection"
 msgstr "&Selection de Area"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:663
 #, kde-format
 msgid "&Text Selection"
 msgstr "Selection de &Texto"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:670
 #, kde-format
 msgid "T&able Selection"
 msgstr "Selection de T&abula"
 
-#: part/pageview.cpp:676
+#: part/pageview.cpp:677
 #, kde-format
 msgid "&Magnifier"
 msgstr "A&ggranditor"
 
-#: part/pageview.cpp:685
+#: part/pageview.cpp:686
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Instrumentos de selection"
 
-#: part/pageview.cpp:711
+#: part/pageview.cpp:712
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "&Signa digitalmente…"
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:718
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Pronuncia le documento complete"
 
-#: part/pageview.cpp:722
+#: part/pageview.cpp:723
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Pronuncia ex le pagina currente"
 
-#: part/pageview.cpp:727
+#: part/pageview.cpp:728
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Pronuncia le pagina currente"
 
-#: part/pageview.cpp:732
+#: part/pageview.cpp:733
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Stoppa pronunciar"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pausa/Restabili Pronunciar"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:750
 #, kde-format
 msgid "Scroll Up"
 msgstr "Rola in alto"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:756
 #, kde-format
 msgid "Scroll Down"
 msgstr "Rola a basso"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:762
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Rola pagina in alto"
 
-#: part/pageview.cpp:767
+#: part/pageview.cpp:768
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Rola pagina a basso"
 
-#: part/pageview.cpp:773
+#: part/pageview.cpp:774
 #, kde-format
 msgid "Show Forms"
 msgstr "Monstra formularios"
 
-#: part/pageview.cpp:1278
+#: part/pageview.cpp:1279
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Cargate un documento de un pagina."
 msgstr[1] " Cargate un documento de %1-paginas"
 
-#: part/pageview.cpp:2526
+#: part/pageview.cpp:2549
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Copia contentos de tabella in area de transferentia"
 
-#: part/pageview.cpp:2845
+#: part/pageview.cpp:2868
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Texto(1 character)"
 msgstr[1] "Texto(%1 characteres)"
 
-#: part/pageview.cpp:2846 part/pageview.cpp:2864
+#: part/pageview.cpp:2869 part/pageview.cpp:2887
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Copia in area de transferentia"
 
-#: part/pageview.cpp:2855 part/pageview.cpp:3046
+#: part/pageview.cpp:2878 part/pageview.cpp:3069
 #, kde-format
 msgid "Speak Text"
 msgstr "Pronuncia texto"
 
-#: part/pageview.cpp:2863
+#: part/pageview.cpp:2886
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Imagine (%1 per %2 pixeles)"
 
-#: part/pageview.cpp:2865
+#: part/pageview.cpp:2888
 #, kde-format
 msgid "Save to File…"
 msgstr "Salveguarda a File..."
 
-#: part/pageview.cpp:2885
+#: part/pageview.cpp:2908
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Imagine [%1x%2] copiate in area de transferentia."
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Save file"
 msgstr "Salveguarda file"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Images (*.png *.jpeg)"
 
-#: part/pageview.cpp:2890
+#: part/pageview.cpp:2913
 #, kde-format
 msgid "File not saved."
 msgstr "File non salveguardate."
 
-#: part/pageview.cpp:2901
+#: part/pageview.cpp:2924
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Imagine [%1x%2] salveguardate in file %3."
 
-#: part/pageview.cpp:3042
+#: part/pageview.cpp:3065
 #, kde-format
 msgid "Copy Text"
 msgstr "Copia texto"
 
-#: part/pageview.cpp:3062
+#: part/pageview.cpp:3085
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Va a  '%1'"
 
-#: part/pageview.cpp:4084 part/part.cpp:3180
+#: part/pageview.cpp:4107 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "Adapta in largessa"
 
-#: part/pageview.cpp:4084
+#: part/pageview.cpp:4107
 #, kde-format
 msgid "Fit Page"
 msgstr "Adapta al pagina"
 
-#: part/pageview.cpp:4084
+#: part/pageview.cpp:4107
 #, kde-format
 msgid "Auto Fit"
 msgstr "Adjusta automaticamente"
 
-#: part/pageview.cpp:4107
+#: part/pageview.cpp:4130
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3923,67 +3923,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4390
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Cerca de '%1' con"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4427
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Configura vias breve de Web..."
 
-#: part/pageview.cpp:4430
+#: part/pageview.cpp:4453
 #, kde-format
 msgid "Follow This Link"
 msgstr "Seque iste ligamine"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4456
 #, kde-format
 msgid "Play this Sound"
 msgstr "Reproduce iste sono..."
 
-#: part/pageview.cpp:4435
+#: part/pageview.cpp:4458
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stoppa sono"
 
-#: part/pageview.cpp:4441
+#: part/pageview.cpp:4464
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Copia adresse de ligamine"
 
-#: part/pageview.cpp:4462
+#: part/pageview.cpp:4485
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Cerca de '%1' in iste documento"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:5017
 #, kde-format
 msgid "Welcome"
 msgstr "Benvenite"
 
-#: part/pageview.cpp:5116
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Selige area de zoom. Pulsa a dextere pro aggrandir."
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Pulsa pro vider le vista aggrandite."
 
-#: part/pageview.cpp:5144
+#: part/pageview.cpp:5167
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Designa un rectangulo circa le texto/graphiches de copiar."
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5181
 #, kde-format
 msgid "Select text"
 msgstr "Selectiona texto"
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5195
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3992,7 +3992,7 @@ msgstr ""
 "Designa un rectangulo circa le tabula, post pulsa  bordos vicin pro divider; "
 "pressa Esc pro nettar."
 
-#: part/pageview.cpp:5187 part/pageview.cpp:5195
+#: part/pageview.cpp:5210 part/pageview.cpp:5218
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4001,17 +4001,17 @@ msgstr ""
 "Omne tu certificatos de signar es invalide.In casoque lesignar functionava "
 "ante pro favor tu verifica lor datas de validitate."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5211
 #, kde-format
 msgid "No valid certificates"
 msgstr "Nulle certificatos valide"
 
-#: part/pageview.cpp:5189 part/pageview.cpp:5204
+#: part/pageview.cpp:5212 part/pageview.cpp:5227
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Aperi gerente de certificat&o "
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5223
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4022,12 +4022,12 @@ msgstr ""
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
-#: part/pageview.cpp:5203 part/pageview.cpp:5215
+#: part/pageview.cpp:5226 part/pageview.cpp:5238
 #, kde-format
 msgid "No certificates found"
 msgstr "Nulle certificatos trovate"
 
-#: part/pageview.cpp:5213
+#: part/pageview.cpp:5236
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4038,19 +4038,19 @@ msgstr ""
 "favor tu vide le section re  <a href=\"%1\">Adder Signaturas Digital </a> in "
 "le manual."
 
-#: part/pageview.cpp:5238
+#: part/pageview.cpp:5261
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Tu ha modificationes non salveguardate. Pro favor tu salveguarda le "
 "documento ante signar lo."
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5284
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Designa un rectangulo per inertar le campo de signatura"
 
-#: part/pageview.cpp:5405
+#: part/pageview.cpp:5428
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

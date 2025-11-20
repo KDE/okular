@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2025-11-20 00:41+0000\n"
 "PO-Revision-Date: 2024-12-19 22:37-0600\n"
 "Last-Translator: aalam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -1707,8 +1707,8 @@ msgid "Copy Text to Clipboard"
 msgstr "ਲਿਖਤ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2531 part/pageview.cpp:2851 part/pageview.cpp:2995
-#: part/pageview.cpp:3051
+#: part/pageview.cpp:2554 part/pageview.cpp:2874 part/pageview.cpp:3018
+#: part/pageview.cpp:3074
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "ਕਾਪੀ ਨੂੰ DRM ਰਾਹੀਂ ਮਨ੍ਹਾਂ ਕੀਤਾ ਹੈ"
@@ -3619,301 +3619,301 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "ਵਿੱਚੋਂ"
 
-#: part/pageview.cpp:507
+#: part/pageview.cpp:508
 #, kde-format
 msgid "Zoom"
 msgstr "ਜ਼ੂਮ"
 
-#: part/pageview.cpp:519
+#: part/pageview.cpp:520
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100% ਜ਼ੂਮ ਕਰੋ"
 
-#: part/pageview.cpp:530
+#: part/pageview.cpp:531
 #, kde-format
 msgid "Rotate &Right"
 msgstr "ਸੱਜੇ ਘੁੰਮਾਓ(&R)"
 
-#: part/pageview.cpp:531
+#: part/pageview.cpp:532
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "ਸੱਜੇ"
 
-#: part/pageview.cpp:535
+#: part/pageview.cpp:536
 #, kde-format
 msgid "Rotate &Left"
 msgstr "ਖੱਬੇ ਘੁੰਮਾਓ(&L)"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:537
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "ਖੱਬੇ"
 
-#: part/pageview.cpp:540
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Original Orientation"
 msgstr "ਅਸਲੀ ਸਥਿਤੀ"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:547
 #, kde-format
 msgid "&Trim View"
 msgstr "ਵੇਖਣ ਲਈ ਟਰਿਮ(&T)"
 
-#: part/pageview.cpp:550
+#: part/pageview.cpp:551
 #, kde-format
 msgid "&Trim Margins"
 msgstr "ਹਾਸ਼ੀਏ ਨੂੰ ਛਾਂਗੋ(&T)"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:558
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "ਚੋਣ ਲਈ ਛਾਂਗੋ(&S)"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:564
 #, kde-format
 msgid "Fit &Width"
 msgstr "ਚੌੜਾਈ ਫਿੱਟ ਕਰੋ(&W)"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:568
 #, kde-format
 msgid "Fit &Page"
 msgstr "ਸਫ਼ੇ ਨੂੰ ਫਿੱਟ ਕਰੋ(&P)"
 
-#: part/pageview.cpp:571
+#: part/pageview.cpp:572
 #, kde-format
 msgid "&Auto Fit"
 msgstr "ਆਟੋ ਫਿੱਟ(&A)"
 
-#: part/pageview.cpp:575
+#: part/pageview.cpp:576
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "ਵਿੰਡੋ ਨੂੰ ਸਫ਼ੇ ਲਈ ਫਿੱਟ ਕਰੋ(&n)"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:583
 #, kde-format
 msgid "&View Mode"
 msgstr "ਵੇਖਣ ਢੰਗ(&V)"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:595
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "ਇੱਕਲਾ ਸਫ਼ਾ(&S)"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:596
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "ਫੇਸਿੰਗ ਸਫ਼ੇ(&F)"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:597
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "ਸਫ਼ੇ ਫੇਸਿੰਗ (ਪਹਿਲਾਂ ਸਫ਼ਾ ਸੈਂਟਰ)(&C)"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:600
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "ਸੰਖੇਪ(&O)"
 
-#: part/pageview.cpp:611
+#: part/pageview.cpp:612
 #, kde-format
 msgid "&Continuous"
 msgstr "ਇਕਸਾਰਤਾ(&C)"
 
-#: part/pageview.cpp:618
+#: part/pageview.cpp:619
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "ਸੱਜੇ ਤੋਂ ਖੱਬੇ ਪੜ੍ਹਨ ਦੀ ਦਿਸ਼ਾ ਨੂੰ ਵਰਤੋਂ"
 
-#: part/pageview.cpp:627
+#: part/pageview.cpp:628
 #, kde-format
 msgid "&Browse"
 msgstr "ਝਲਕ(&B)"
 
-#: part/pageview.cpp:635
+#: part/pageview.cpp:636
 #, kde-format
 msgid "&Zoom"
 msgstr "ਜ਼ੂਮ(&Z)"
 
-#: part/pageview.cpp:655
+#: part/pageview.cpp:656
 #, kde-format
 msgid "Area &Selection"
 msgstr "ਖੇਤਰ ਚੋਣ(&S)"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:663
 #, kde-format
 msgid "&Text Selection"
 msgstr "ਲਿਖਤ ਚੋਣ(&T)"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:670
 #, kde-format
 msgid "T&able Selection"
 msgstr "ਸਾਰਣੀ ਚੋਣ(&a)"
 
-#: part/pageview.cpp:676
+#: part/pageview.cpp:677
 #, kde-format
 msgid "&Magnifier"
 msgstr "ਵੱਡਦਰਸ਼ੀ(&M)"
 
-#: part/pageview.cpp:685
+#: part/pageview.cpp:686
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "ਚੋਣ ਕਰਨ ਵਾਲੇ ਟੂਲ"
 
-#: part/pageview.cpp:711
+#: part/pageview.cpp:712
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
 msgid "Digitally &Sign…"
 msgstr "ਡਿਜ਼ਿਟਲ ਦਸਤਖਤ(&S)..."
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:718
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "ਪੂਰਾ ਦਸਤਾਵੇਜ਼ ਬੋਲੋ"
 
-#: part/pageview.cpp:722
+#: part/pageview.cpp:723
 #, fuzzy, kde-format
 #| msgid "Speak Current Page"
 msgid "Speak From Current Page"
 msgstr "ਮੌਜੂਦਾ ਸਫ਼ਾ ਬੋਲੋ"
 
-#: part/pageview.cpp:727
+#: part/pageview.cpp:728
 #, kde-format
 msgid "Speak Current Page"
 msgstr "ਮੌਜੂਦਾ ਸਫ਼ਾ ਬੋਲੋ"
 
-#: part/pageview.cpp:732
+#: part/pageview.cpp:733
 #, kde-format
 msgid "Stop Speaking"
 msgstr "ਬੋਲਣਾ ਚੁੱਪ ਕਰੋ"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "ਬੋਲਣਾ ਰੋਕੋ/ਮੁੜ-ਸੁਣਾਓ"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:750
 #, kde-format
 msgid "Scroll Up"
 msgstr "ਉੱਤੇ ਸਰਕਾਓ"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:756
 #, kde-format
 msgid "Scroll Down"
 msgstr "ਹੇਠਾਂ ਸਰਕਾਓ"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:762
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "ਸਫ਼ੇ ਨੂੰ ਉੱਤੇ ਸਰਕਾਓ"
 
-#: part/pageview.cpp:767
+#: part/pageview.cpp:768
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "ਸਫ਼ੇ ਨੂੰ ਹੇਠਾਂ ਨੂੰ ਸਰਕਾਓ"
 
-#: part/pageview.cpp:773
+#: part/pageview.cpp:774
 #, kde-format
 msgid "Show Forms"
 msgstr "ਫਾਰਮ ਵੇਖੋ"
 
-#: part/pageview.cpp:1278
+#: part/pageview.cpp:1279
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " ਇਕਹੇਰਾ-ਸਫ਼ਾ ਦਸਤਾਵੇਜ਼ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
 msgstr[1] " %1-ਸਫ਼ਾ ਦਸਤਾਵੇਜ਼ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
 
-#: part/pageview.cpp:2526
+#: part/pageview.cpp:2549
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "ਸਾਰਣੀ ਸਮੱਗਰੀ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ"
 
-#: part/pageview.cpp:2845
+#: part/pageview.cpp:2868
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "ਲਿਖਤ (1 ਅੱਖਰ)"
 msgstr[1] "ਲਿਖਤ (%1 ਅੱਖਰ)"
 
-#: part/pageview.cpp:2846 part/pageview.cpp:2864
+#: part/pageview.cpp:2869 part/pageview.cpp:2887
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:2855 part/pageview.cpp:3046
+#: part/pageview.cpp:2878 part/pageview.cpp:3069
 #, kde-format
 msgid "Speak Text"
 msgstr "ਲਿਖਤ ਨੂੰ ਬੋਲੋ"
 
-#: part/pageview.cpp:2863
+#: part/pageview.cpp:2886
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "ਚਿੱਤਰ (%1 × %2 ਪਿਕਸਲ)"
 
-#: part/pageview.cpp:2865
+#: part/pageview.cpp:2888
 #, kde-format
 msgid "Save to File…"
 msgstr "…ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ"
 
-#: part/pageview.cpp:2885
+#: part/pageview.cpp:2908
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Save file"
 msgstr "ਫਾਇਲ ਨੂੰ ਸੰਭਾਲੋ"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2911
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "ਚਿੱਤਰ (*.png *.jpeg)"
 
-#: part/pageview.cpp:2890
+#: part/pageview.cpp:2913
 #, kde-format
 msgid "File not saved."
 msgstr "ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਗਈ ਹੈ।"
 
-#: part/pageview.cpp:2901
+#: part/pageview.cpp:2924
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਫਾਇਲ %3 ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
 
-#: part/pageview.cpp:3042
+#: part/pageview.cpp:3065
 #, kde-format
 msgid "Copy Text"
 msgstr "ਲਿਖਤ ਨੂੰ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:3062
+#: part/pageview.cpp:3085
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1' ਉੱਤੇ ਜਾਓ"
 
-#: part/pageview.cpp:4084 part/part.cpp:3180
+#: part/pageview.cpp:4107 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "ਚੌੜਾਈ ਫਿੱਟ"
 
-#: part/pageview.cpp:4084
+#: part/pageview.cpp:4107
 #, kde-format
 msgid "Fit Page"
 msgstr "ਸਫ਼ਾ ਫਿੱਟ"
 
-#: part/pageview.cpp:4084
+#: part/pageview.cpp:4107
 #, kde-format
 msgid "Auto Fit"
 msgstr "ਆਟੋ ਫਿੱਟ"
 
-#: part/pageview.cpp:4107
+#: part/pageview.cpp:4130
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3922,94 +3922,94 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4390
+#: part/pageview.cpp:4413
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' ਨਾਲ ਭਾਲ ਜਾਰੀ ਹੈ"
 
-#: part/pageview.cpp:4404
+#: part/pageview.cpp:4427
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "...ਵੈੱਬ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ"
 
-#: part/pageview.cpp:4430
+#: part/pageview.cpp:4453
 #, kde-format
 msgid "Follow This Link"
 msgstr "ਇਹ ਲਿੰਕ ਵੇਖੋ"
 
-#: part/pageview.cpp:4433
+#: part/pageview.cpp:4456
 #, kde-format
 msgid "Play this Sound"
 msgstr "ਇਹ ਸਾਊਂਡ ਚਲਾਓ"
 
-#: part/pageview.cpp:4435
+#: part/pageview.cpp:4458
 #, kde-format
 msgid "Stop Sound"
 msgstr "ਸਾਊਂਡ ਰੋਕੋ"
 
-#: part/pageview.cpp:4441
+#: part/pageview.cpp:4464
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ਲਿੰਕ ਐਡਰੈੱਸ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:4462
+#: part/pageview.cpp:4485
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ '%1' ਲੱਭੋ"
 
-#: part/pageview.cpp:4994
+#: part/pageview.cpp:5017
 #, kde-format
 msgid "Welcome"
 msgstr "ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: part/pageview.cpp:5116
+#: part/pageview.cpp:5139
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "ਜ਼ੂਮ ਕਰਨ ਖੇਤਰ ਚੁਣੋ। ਜ਼ੂਮ ਕਰਨ ਸੱਜਾ ਬਟਨ ਦਬਾਉ।"
 
-#: part/pageview.cpp:5129
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "ਵੱਡਦਰਸ਼ੀ ਝਲਕ ਵੇਖਣ ਲਈ ਕਲਿੱਕ ਕਰੋ।"
 
-#: part/pageview.cpp:5144
+#: part/pageview.cpp:5167
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ਲਿਖਤ/ਗਰਾਫਿਕਸ ਦੀ ਕਾਪੀ ਕਰਨ ਲਈ ਆਇਤ ਬਣਾਓ।"
 
-#: part/pageview.cpp:5158
+#: part/pageview.cpp:5181
 #, kde-format
 msgid "Select text"
 msgstr "ਲਿਖਤ ਚੁਣੋ"
 
-#: part/pageview.cpp:5172
+#: part/pageview.cpp:5195
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr "ਟੇਬਲ ਦੁਆਲੇ ਆਇਤ ਬਣਾਓ, ਵੰਡਣ ਲਈ ਕੋਨੇ ਦੇ ਨੇੜੇ ਕਲਿੱਕ ਕਰੋ; ਸਾਫ਼ ਕਰਨ ਲਈ Esc ਦੱਬੋ।"
 
-#: part/pageview.cpp:5187 part/pageview.cpp:5195
+#: part/pageview.cpp:5210 part/pageview.cpp:5218
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5211
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "ਸਰਟੀਫਿਕੇਟ"
 
-#: part/pageview.cpp:5189 part/pageview.cpp:5204
+#: part/pageview.cpp:5212 part/pageview.cpp:5227
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "ਸਰਟੀਫਿਕੇਟ ਮੈਨੇਜਰ ਵਿੱਚ ਵੇਖੋ"
 
-#: part/pageview.cpp:5200
+#: part/pageview.cpp:5223
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4017,13 +4017,13 @@ msgid ""
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
 
-#: part/pageview.cpp:5203 part/pageview.cpp:5215
+#: part/pageview.cpp:5226 part/pageview.cpp:5238
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "ਸਰਟੀਫਿਕੇਟ"
 
-#: part/pageview.cpp:5213
+#: part/pageview.cpp:5236
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4031,18 +4031,18 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5238
+#: part/pageview.cpp:5261
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "ਤੁਹਾਡੇ ਕੋਲ ਕੁਝ ਨਾ-ਸੰਭਾਲੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ। ਇਸ ਉੱਤੇ ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਭਾਲੋ।"
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5284
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ਦਸਤਖ਼ਤ ਖੇਤਰ ਜੋੜਨ ਲਈ ਚੌਰਸ ਖਾਨਾ ਵਾਹੋ"
 
-#: part/pageview.cpp:5405
+#: part/pageview.cpp:5428
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ਸਫ਼ੇ ਦੇ ਖੇਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਦਿਖਾਈ ਦਿੰਦਾ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਦੁਆਲੇ ਆਇਤ ਵਾਹੋ"

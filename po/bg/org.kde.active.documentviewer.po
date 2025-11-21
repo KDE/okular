@@ -204,6 +204,3 @@ msgstr "Скорошни документи"
 msgctxt "in welcome screen"
 msgid "My Documents"
 msgstr "Моите документи"
-
-#~ msgid "Open..."
-#~ msgstr "Отваряне..."

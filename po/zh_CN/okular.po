@@ -866,7 +866,7 @@ msgstr "屏幕"
 #, kde-format
 msgctxt "Caption for a widget annotation"
 msgid "Widget"
-msgstr "挂件"
+msgstr "小部件"
 
 #: gui/guiutils.cpp:134
 #, kde-format

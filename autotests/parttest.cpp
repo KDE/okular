@@ -15,6 +15,7 @@
 #include "../core/annotations.h"
 #include "../core/document_p.h"
 #include "../core/form.h"
+#include "../core/misc.h"
 #include "../core/page.h"
 #include "../part/pageview.h"
 #include "../part/part.h"
@@ -70,6 +71,10 @@ private Q_SLOTS:
     void testGeneratorPreferences();
     void testSelectText();
     void testSelectTextMultiline();
+    void testCopyTextSelectionModes();
+    void testCopyTextWithoutLineBreaksMultiline();
+    void testRemoveLineBreaks_data();
+    void testRemoveLineBreaks();
     void testClickInternalLink();
     void testScrollBarAndMouseWheel();
     void testOpenUrlArguments();
@@ -296,7 +301,7 @@ void PartTest::testSelectText()
     simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
 
     QApplication::clipboard()->clear();
-    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::AsProvided)));
 
     QCOMPARE(QApplication::clipboard()->text(), QStringLiteral("Hola que tal"));
 }
@@ -361,9 +366,144 @@ void PartTest::testSelectTextMultiline()
     events.simulate(part.m_pageView->viewport());
 
     QApplication::clipboard()->clear();
-    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection"));
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::AsProvided)));
 
     QCOMPARE(QApplication::clipboard()->text(), QStringLiteral("cks!\nOf c"));
+}
+
+void PartTest::testCopyTextSelectionModes()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+
+    part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const int mouseY = height * 0.052;
+    const int mouseStartX = width * 0.12;
+    const int mouseEndX = width * 0.7;
+
+    simulateMouseSelection(mouseStartX, mouseY, mouseEndX, mouseY, part.m_pageView->viewport());
+
+    QApplication::clipboard()->clear();
+
+    // Test AsProvided mode (default behavior)
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::AsProvided)));
+    QString rawText = QApplication::clipboard()->text();
+    QCOMPARE(rawText, QStringLiteral("Hola que tal"));
+
+    // Test WithoutLineBreaks mode
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::WithoutLineBreaks)));
+    QString cleanText = QApplication::clipboard()->text();
+
+    // Verify clean text is not changing this text, since it's single-line
+    QCOMPARE(cleanText, QStringLiteral("Hola que tal"));
+    QVERIFY(!cleanText.isEmpty());
+}
+
+void PartTest::testCopyTextWithoutLineBreaksMultiline()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+
+    part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.m_document->setViewportPage(1);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseTextSelect"));
+
+    const int startY = height * 0.052;
+    const int startX = width * 0.22;
+    const int endY = height * 0.072;
+    const int endX = width * 0.6;
+
+    simulateMouseSelection(startX, startY, endX, endY, part.m_pageView->viewport());
+
+    QApplication::clipboard()->clear();
+
+    // Test AsProvided mode - text should contain line breaks
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::AsProvided)));
+    QString rawText = QApplication::clipboard()->text();
+
+    qDebug() << "Selected text:" << rawText;
+    QVERIFY(!rawText.isEmpty());
+
+    // Clear and test WithoutLineBreaks mode
+    QApplication::clipboard()->clear();
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "copyTextSelection", Q_ARG(PageView::TextCopyMode, PageView::TextCopyMode::WithoutLineBreaks)));
+    QString cleanText = QApplication::clipboard()->text();
+
+    QVERIFY(!cleanText.isEmpty());
+
+    // If original had newlines...
+    if (rawText.contains(QLatin1Char('\n'))) {
+        int rawNewlineCount = rawText.count(QLatin1Char('\n'));
+        int cleanNewlineCount = cleanText.count(QLatin1Char('\n'));
+
+        // ...The clean version should have fewer newlines!
+        QVERIFY(cleanNewlineCount <= rawNewlineCount);
+
+        // Verify no hyphen-newline combinations remain
+        QVERIFY(!cleanText.contains(QStringLiteral("-\n")));
+        QVERIFY(!cleanText.contains(QStringLiteral("- \n")));
+    }
+
+    QCOMPARE(cleanText, QStringLiteral("cks! Of course it does"));
+}
+
+void PartTest::testRemoveLineBreaks_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("simple newline") << QStringLiteral("Hello\nWorld") << QStringLiteral("Hello World");
+
+    QTest::newRow("hyphen-newline") << QStringLiteral("hyphen-\nated") << QStringLiteral("hyphenated");
+
+    QTest::newRow("hyphen-space-newline") << QStringLiteral("hyphen- \nated") << QStringLiteral("hyphenated");
+
+    QTest::newRow("double newline preserved") << QStringLiteral("Paragraph1\n\nParagraph2") << QStringLiteral("Paragraph1\n\nParagraph2");
+
+    QTest::newRow("multiple spaces") << QStringLiteral("Hello   \n   World") << QStringLiteral("Hello World");
+
+    QTest::newRow("empty string") << QString() << QString();
+}
+
+void PartTest::testRemoveLineBreaks()
+{
+    QFETCH(QString, input);
+    QFETCH(QString, expected);
+
+    // Directly test the string-cleanup function!
+    QString result = Okular::removeLineBreaks(input);
+
+    QCOMPARE(result, expected);
 }
 
 void PartTest::testClickInternalLink()

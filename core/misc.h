@@ -46,6 +46,7 @@ private:
     std::unique_ptr<Private> d;
 };
 
+OKULARCORE_EXPORT QString removeLineBreaks(const QString &text);
 }
 
 #endif

@@ -7,6 +7,7 @@
 #include "core/misc.h"
 
 #include <QDebug>
+#include <QRegularExpression>
 
 #include "debug_p.h"
 
@@ -42,4 +43,25 @@ NormalizedPoint TextSelection::start() const
 NormalizedPoint TextSelection::end() const
 {
     return d->cur[(d->direction + 1) % 2];
+}
+
+// A function to removes line breaks and hyphens at line breaks from text.
+QString Okular::removeLineBreaks(const QString &text)
+{
+    if (text.isEmpty()) {
+        return text;
+    }
+
+    // matches Hypen-OptionalWhitespace-Newline-OptionalWhitespace before a word:
+    static const QRegularExpression reHyphen(QStringLiteral(R"(-\s*\n\s*(?=\w))"));
+    // matches A single NewLine and optional horizontal whitespace (No new line before or after):
+    static const QRegularExpression reSingleNL(QStringLiteral(R"((?<!\n)\n[ \t]*(?!\n))"));
+    // Match multiple spaces (but not newlines):
+    static const QRegularExpression reMultiSpace(QStringLiteral(R"([ \t]{2,})"));
+
+    QString result = text;
+    result.replace(reHyphen, QString());
+    result.replace(reSingleNL, QStringLiteral(" "));
+    result.replace(reMultiSpace, QStringLiteral(" "));
+    return result.trimmed();
 }

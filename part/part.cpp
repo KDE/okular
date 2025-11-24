@@ -720,6 +720,7 @@ void Part::setupViewerActions()
     connect(m_nextBookmark, &QAction::triggered, this, &Part::slotNextBookmark);
 
     m_copy = nullptr;
+    m_copyWithoutLineBreaks = nullptr;
 
     m_selectAll = nullptr;
     m_selectCurrentPage = nullptr;
@@ -849,7 +850,16 @@ void Part::setupActions()
     KActionMenu *schemeMenu = KColorSchemeMenu::createMenu(manager, this);
     ac->addAction(QStringLiteral("colorscheme_menu"), schemeMenu->menu()->menuAction());
 
-    m_copy = KStandardAction::create(KStandardAction::Copy, m_pageView, SLOT(copyTextSelection()), ac);
+    m_copy = KStandardAction::create(KStandardAction::Copy, nullptr, nullptr, ac);
+    connect(m_copy, &QAction::triggered, m_pageView, [this]() { m_pageView->copyTextSelection(PageView::TextCopyMode::AsProvided); });
+
+    // Copy-without-line-breaks action
+    m_copyWithoutLineBreaks = ac->addAction(QStringLiteral("edit_copy_without_line_breaks"));
+    m_copyWithoutLineBreaks->setText(i18n("Copy Text (Without line breaks)"));
+    ac->setDefaultShortcut(m_copyWithoutLineBreaks, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C));
+    m_copyWithoutLineBreaks->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
+    connect(m_copyWithoutLineBreaks, &QAction::triggered, this, [this]() { m_pageView->copyTextSelection(PageView::TextCopyMode::WithoutLineBreaks); });
+    m_copyWithoutLineBreaks->setEnabled(false);
 
     m_selectAll = KStandardAction::selectAll(m_pageView, SLOT(selectAll()), ac);
 
@@ -2210,6 +2220,9 @@ void Part::updateViewActions()
         if (m_copy) {
             m_copy->setEnabled(true);
         }
+        if (m_copyWithoutLineBreaks) {
+            m_copyWithoutLineBreaks->setEnabled(true);
+        }
         if (m_selectAll) {
             m_selectAll->setEnabled(true);
         }
@@ -2231,6 +2244,9 @@ void Part::updateViewActions()
         m_reload->setEnabled(false);
         if (m_copy) {
             m_copy->setEnabled(false);
+        }
+        if (m_copyWithoutLineBreaks) {
+            m_copyWithoutLineBreaks->setEnabled(false);
         }
         if (m_selectAll) {
             m_selectAll->setEnabled(false);
@@ -3336,6 +3352,7 @@ void Part::slotUpdateHamburgerMenu()
         menu->addAction(ac->action(QStringLiteral("mouse_select")));
     }
     menu->addAction(m_copy);
+    menu->addAction(m_copyWithoutLineBreaks);
     menu->addAction(m_find);
     menu->addAction(m_showLeftPanel);
     if (!visibleMainToolbar || visibleMainToolbar->actions().contains(ac->action(QStringLiteral("annotation_favorites")))) {

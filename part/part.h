@@ -412,6 +412,7 @@ private:
     QAction *m_prevBookmark;
     QAction *m_nextBookmark;
     QAction *m_copy;
+    QAction *m_copyWithoutLineBreaks;
     QAction *m_selectAll;
     QAction *m_selectCurrentPage;
     QAction *m_find;

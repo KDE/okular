@@ -1081,7 +1081,7 @@ QMimeData *PageView::getTableContents() const
     return md;
 }
 
-void PageView::copyTextSelection() const
+void PageView::copyTextSelection(TextCopyMode mode) const
 {
     switch (d->mouseMode) {
     case Okular::Settings::EnumMouseMode::Browse: {
@@ -1100,10 +1100,16 @@ void PageView::copyTextSelection() const
     } break;
 
     case Okular::Settings::EnumMouseMode::TextSelect: {
-        const QString text = d->selectedText();
+        QString text = d->selectedText();
         if (!text.isEmpty()) {
             QClipboard *cb = QApplication::clipboard();
-            cb->setText(text, QClipboard::Clipboard);
+            if (mode == TextCopyMode::WithoutLineBreaks) {
+                // copy the text without line breaks
+                cb->setText(Okular::removeLineBreaks(text), QClipboard::Clipboard);
+            } else {
+                // Copy the original text without any modifications
+                cb->setText(text, QClipboard::Clipboard);
+            }
         }
     } break;
     }
@@ -2547,6 +2553,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
         } else if (rightButton && !d->tableSelectionParts.isEmpty()) {
             QMenu menu(this);
             QAction *copyToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Table Contents to Clipboard"));
+
             const bool copyAllowed = d->document->isAllowed(Okular::AllowCopy);
 
             if (!copyAllowed) {
@@ -2556,7 +2563,7 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
             const QAction *choice = menu.exec(e->globalPosition().toPoint());
             if (choice == copyToClipboard) {
-                copyTextSelection();
+                copyTextSelection(TextCopyMode::AsProvided);
             }
         }
         break;
@@ -2859,6 +2866,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
         QMenu menu(this);
         menu.setObjectName(QStringLiteral("PopupMenu"));
         QAction *textToClipboard = nullptr;
+        QAction *textWithoutLineBreaksToClipboard = nullptr;
 #if HAVE_SPEECH
         const QAction *speakText = nullptr;
 #endif
@@ -2868,10 +2876,14 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             menu.addAction(new OKMenuTitle(&menu, i18np("Text (1 character)", "Text (%1 characters)", selectedText.length())));
             textToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy to Clipboard"));
             textToClipboard->setObjectName(QStringLiteral("CopyTextToClipboard"));
+            textWithoutLineBreaksToClipboard = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-copy-without-line-breaks")), i18n("Copy Text (Without line breaks)"));
+            textWithoutLineBreaksToClipboard->setObjectName(QStringLiteral("CopyTextWithoutLineBreaksToClipboard"));
             bool copyAllowed = d->document->isAllowed(Okular::AllowCopy);
             if (!copyAllowed) {
                 textToClipboard->setEnabled(false);
                 textToClipboard->setText(i18n("Copy forbidden by DRM"));
+                textWithoutLineBreaksToClipboard->setEnabled(false);
+                textWithoutLineBreaksToClipboard->setText(i18n("Copy forbidden by DRM"));
             }
 #if HAVE_SPEECH
             if (Okular::Settings::useTTS()) {
@@ -2928,11 +2940,18 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             // TEXT operation chosen
             else {
                 if (choice == textToClipboard) {
-                    // [1] copy text to clipboard
+                    // [1.1] copy text to clipboard
                     QClipboard *cb = QApplication::clipboard();
                     cb->setText(selectedText, QClipboard::Clipboard);
                     if (cb->supportsSelection()) {
                         cb->setText(selectedText, QClipboard::Selection);
+                    }
+                } else if (choice == textWithoutLineBreaksToClipboard) {
+                    // [1.2] copy text without line breaks to clipboard
+                    QClipboard *cb = QApplication::clipboard();
+                    cb->setText(Okular::removeLineBreaks(selectedText), QClipboard::Clipboard);
+                    if (cb->supportsSelection()) {
+                        cb->setText(Okular::removeLineBreaks(selectedText), QClipboard::Selection);
                     }
                 }
 #if HAVE_SPEECH
@@ -3051,6 +3070,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
             if (item) {
                 QAction *httpLink = nullptr;
                 QAction *textToClipboard = nullptr;
+                QAction *textWithoutLineBreaksToClipboard = nullptr;
                 QString url;
 
                 QMenu *menu = createProcessLinkMenu(item, eventPos);
@@ -3063,6 +3083,7 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                         menu = new QMenu(this);
                     }
                     textToClipboard = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text"));
+                    textWithoutLineBreaksToClipboard = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy-without-line-breaks")), i18n("Copy Text (Without line breaks)"));
 
 #if HAVE_SPEECH
                     if (Okular::Settings::useTTS()) {
@@ -3072,6 +3093,8 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     if (!d->document->isAllowed(Okular::AllowCopy)) {
                         textToClipboard->setEnabled(false);
                         textToClipboard->setText(i18n("Copy forbidden by DRM"));
+                        textWithoutLineBreaksToClipboard->setEnabled(false);
+                        textWithoutLineBreaksToClipboard->setText(i18n("Copy forbidden by DRM"));
                     } else {
                         addSearchWithinDocumentAction(menu, d->selectedText());
                         addWebShortcutsMenu(menu, d->selectedText());
@@ -3095,7 +3118,9 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     // check if the user really selected an action
                     if (choice) {
                         if (choice == textToClipboard) {
-                            copyTextSelection();
+                            copyTextSelection(TextCopyMode::AsProvided);
+                        } else if (choice == textWithoutLineBreaksToClipboard) {
+                            copyTextSelection(TextCopyMode::WithoutLineBreaks);
 #if HAVE_SPEECH
                         } else if (choice == speakText) {
                             const QString text = d->selectedText();

@@ -75,6 +75,11 @@ public:
         Cancelled,
     };
 
+    enum class TextCopyMode {
+        AsProvided,
+        WithoutLineBreaks,
+    };
+
     // inherited from QAbstractScrollArea
     void setupViewport(QWidget *viewport) override;
 
@@ -137,7 +142,7 @@ public:
     void startSigning(Okular::SignatureAnnotation *signatureAnnotation);
 
 public Q_SLOTS:
-    void copyTextSelection() const;
+    void copyTextSelection(PageView::TextCopyMode mode = TextCopyMode::AsProvided) const;
     void selectAll();
 
     void openAnnotationWindow(Okular::Annotation *annotation, int pageNumber);

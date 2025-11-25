@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-20 00:41+0000\n"
+"POT-Creation-Date: 2025-11-25 00:40+0000\n"
 "PO-Revision-Date: 2024-12-19 22:37-0600\n"
 "Last-Translator: aalam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -389,7 +389,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5493 part/part.cpp:1145
+#: core/document.cpp:5493 part/part.cpp:1155
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਫਾਇਲ ਮੌਜੂਦ ਨਹੀਂ ਹੈ"
@@ -1670,7 +1670,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "ਸਫ਼ਾ %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3169
+#: part/annotationmodel.cpp:322 part/part.cpp:3185
 #, kde-format
 msgid "Page %1"
 msgstr "%1 ਸਫ਼ਾ"
@@ -1691,12 +1691,12 @@ msgid "&Open Pop-up Note"
 msgstr "ਪੌਪ-ਅੱਪ ਨੋਟਿਸ ਖੋਲ੍ਹੋ(&O)"
 
 #: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
-#: part/bookmarklist.cpp:265 part/part.cpp:2265 part/part.cpp:3175
+#: part/bookmarklist.cpp:265 part/part.cpp:2281 part/part.cpp:3191
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਨੂੰ ਹਟਾਓ"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3177
+#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3193
 #, kde-format
 msgid "Add Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਜੋੜੋ"
@@ -1707,8 +1707,8 @@ msgid "Copy Text to Clipboard"
 msgstr "ਲਿਖਤ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2554 part/pageview.cpp:2874 part/pageview.cpp:3018
-#: part/pageview.cpp:3074
+#: part/pageview.cpp:2561 part/pageview.cpp:2884 part/pageview.cpp:2886
+#: part/pageview.cpp:3037 part/pageview.cpp:3095 part/pageview.cpp:3097
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "ਕਾਪੀ ਨੂੰ DRM ਰਾਹੀਂ ਮਨ੍ਹਾਂ ਕੀਤਾ ਹੈ"
@@ -1718,7 +1718,7 @@ msgstr "ਕਾਪੀ ਨੂੰ DRM ਰਾਹੀਂ ਮਨ੍ਹਾਂ ਕੀਤ�
 msgid "&Delete"
 msgstr "ਹਟਾਓ(&D)"
 
-#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:773
+#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:774
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2291,13 +2291,13 @@ msgstr "ਸਭ ਦਸਤਾਵੇਜ਼ਾਂ ਲਈ ਵੇਖਾਓ"
 msgid "Search…"
 msgstr "ਖੋਜ(&e):"
 
-#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "ਸਭ ਨੂੰ ਫੈਲਾਓ"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
@@ -2309,7 +2309,7 @@ msgid "Go to This Bookmark"
 msgstr "ਇਸ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
 
 #: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
-#: part/part.cpp:2460
+#: part/part.cpp:2476
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "ਬੁੱਕਮਾਰਕ ਦਾ ਨਾਂ ਬਦਲੋ"
@@ -3608,7 +3608,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "ਨਿਯਮਤ ਸਮੀਕਰਨ"
 
-#: part/layers.cpp:35 part/part.cpp:2308
+#: part/layers.cpp:35 part/part.cpp:2324
 #, kde-format
 msgid "Layers"
 msgstr "ਪਰਤਾਂ"
@@ -3824,96 +3824,102 @@ msgstr "ਸਫ਼ੇ ਨੂੰ ਹੇਠਾਂ ਨੂੰ ਸਰਕਾਓ"
 msgid "Show Forms"
 msgstr "ਫਾਰਮ ਵੇਖੋ"
 
-#: part/pageview.cpp:1279
+#: part/pageview.cpp:1285
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " ਇਕਹੇਰਾ-ਸਫ਼ਾ ਦਸਤਾਵੇਜ਼ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
 msgstr[1] " %1-ਸਫ਼ਾ ਦਸਤਾਵੇਜ਼ ਲੋਡ ਕੀਤਾ ਗਿਆ।"
 
-#: part/pageview.cpp:2549
+#: part/pageview.cpp:2555
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "ਸਾਰਣੀ ਸਮੱਗਰੀ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ"
 
-#: part/pageview.cpp:2868
+#: part/pageview.cpp:2876
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "ਲਿਖਤ (1 ਅੱਖਰ)"
 msgstr[1] "ਲਿਖਤ (%1 ਅੱਖਰ)"
 
-#: part/pageview.cpp:2869 part/pageview.cpp:2887
+#: part/pageview.cpp:2877 part/pageview.cpp:2899
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:2878 part/pageview.cpp:3069
+#: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
+#, fuzzy, kde-format
+#| msgid "Copy Text to Clipboard"
+msgid "Copy Text (Without line breaks)"
+msgstr "ਲਿਖਤ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
+
+#: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format
 msgid "Speak Text"
 msgstr "ਲਿਖਤ ਨੂੰ ਬੋਲੋ"
 
-#: part/pageview.cpp:2886
+#: part/pageview.cpp:2898
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "ਚਿੱਤਰ (%1 × %2 ਪਿਕਸਲ)"
 
-#: part/pageview.cpp:2888
+#: part/pageview.cpp:2900
 #, kde-format
 msgid "Save to File…"
 msgstr "…ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ"
 
-#: part/pageview.cpp:2908
+#: part/pageview.cpp:2920
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਵਿੱਚ ਕਾਪੀ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
-#: part/pageview.cpp:2911
+#: part/pageview.cpp:2923
 #, kde-format
 msgid "Save file"
 msgstr "ਫਾਇਲ ਨੂੰ ਸੰਭਾਲੋ"
 
-#: part/pageview.cpp:2911
+#: part/pageview.cpp:2923
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "ਚਿੱਤਰ (*.png *.jpeg)"
 
-#: part/pageview.cpp:2913
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "File not saved."
 msgstr "ਫਾਇਲ ਸੰਭਾਲੀ ਨਹੀਂ ਗਈ ਹੈ।"
 
-#: part/pageview.cpp:2924
+#: part/pageview.cpp:2936
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "ਚਿੱਤਰ [%1 x %2] ਨੂੰ ਫਾਇਲ %3 ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ ਹੈ।"
 
-#: part/pageview.cpp:3065
+#: part/pageview.cpp:3085
 #, kde-format
 msgid "Copy Text"
 msgstr "ਲਿਖਤ ਨੂੰ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:3085
+#: part/pageview.cpp:3108
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1' ਉੱਤੇ ਜਾਓ"
 
-#: part/pageview.cpp:4107 part/part.cpp:3180
+#: part/pageview.cpp:4132 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "ਚੌੜਾਈ ਫਿੱਟ"
 
-#: part/pageview.cpp:4107
+#: part/pageview.cpp:4132
 #, kde-format
 msgid "Fit Page"
 msgstr "ਸਫ਼ਾ ਫਿੱਟ"
 
-#: part/pageview.cpp:4107
+#: part/pageview.cpp:4132
 #, kde-format
 msgid "Auto Fit"
 msgstr "ਆਟੋ ਫਿੱਟ"
 
-#: part/pageview.cpp:4130
+#: part/pageview.cpp:4155
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3922,94 +3928,94 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4413
+#: part/pageview.cpp:4438
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' ਨਾਲ ਭਾਲ ਜਾਰੀ ਹੈ"
 
-#: part/pageview.cpp:4427
+#: part/pageview.cpp:4452
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "...ਵੈੱਬ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ"
 
-#: part/pageview.cpp:4453
+#: part/pageview.cpp:4478
 #, kde-format
 msgid "Follow This Link"
 msgstr "ਇਹ ਲਿੰਕ ਵੇਖੋ"
 
-#: part/pageview.cpp:4456
+#: part/pageview.cpp:4481
 #, kde-format
 msgid "Play this Sound"
 msgstr "ਇਹ ਸਾਊਂਡ ਚਲਾਓ"
 
-#: part/pageview.cpp:4458
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Stop Sound"
 msgstr "ਸਾਊਂਡ ਰੋਕੋ"
 
-#: part/pageview.cpp:4464
+#: part/pageview.cpp:4489
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ਲਿੰਕ ਐਡਰੈੱਸ ਕਾਪੀ ਕਰੋ"
 
-#: part/pageview.cpp:4485
+#: part/pageview.cpp:4510
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ '%1' ਲੱਭੋ"
 
-#: part/pageview.cpp:5017
+#: part/pageview.cpp:5042
 #, kde-format
 msgid "Welcome"
 msgstr "ਜੀ ਆਇਆਂ ਨੂੰ"
 
-#: part/pageview.cpp:5139
+#: part/pageview.cpp:5164
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "ਜ਼ੂਮ ਕਰਨ ਖੇਤਰ ਚੁਣੋ। ਜ਼ੂਮ ਕਰਨ ਸੱਜਾ ਬਟਨ ਦਬਾਉ।"
 
-#: part/pageview.cpp:5152
+#: part/pageview.cpp:5177
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "ਵੱਡਦਰਸ਼ੀ ਝਲਕ ਵੇਖਣ ਲਈ ਕਲਿੱਕ ਕਰੋ।"
 
-#: part/pageview.cpp:5167
+#: part/pageview.cpp:5192
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ਲਿਖਤ/ਗਰਾਫਿਕਸ ਦੀ ਕਾਪੀ ਕਰਨ ਲਈ ਆਇਤ ਬਣਾਓ।"
 
-#: part/pageview.cpp:5181
+#: part/pageview.cpp:5206
 #, kde-format
 msgid "Select text"
 msgstr "ਲਿਖਤ ਚੁਣੋ"
 
-#: part/pageview.cpp:5195
+#: part/pageview.cpp:5220
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr "ਟੇਬਲ ਦੁਆਲੇ ਆਇਤ ਬਣਾਓ, ਵੰਡਣ ਲਈ ਕੋਨੇ ਦੇ ਨੇੜੇ ਕਲਿੱਕ ਕਰੋ; ਸਾਫ਼ ਕਰਨ ਲਈ Esc ਦੱਬੋ।"
 
-#: part/pageview.cpp:5210 part/pageview.cpp:5218
+#: part/pageview.cpp:5235 part/pageview.cpp:5243
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5211
+#: part/pageview.cpp:5236
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "ਸਰਟੀਫਿਕੇਟ"
 
-#: part/pageview.cpp:5212 part/pageview.cpp:5227
+#: part/pageview.cpp:5237 part/pageview.cpp:5252
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "ਸਰਟੀਫਿਕੇਟ ਮੈਨੇਜਰ ਵਿੱਚ ਵੇਖੋ"
 
-#: part/pageview.cpp:5223
+#: part/pageview.cpp:5248
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4017,13 +4023,13 @@ msgid ""
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
 
-#: part/pageview.cpp:5226 part/pageview.cpp:5238
+#: part/pageview.cpp:5251 part/pageview.cpp:5263
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "ਸਰਟੀਫਿਕੇਟ"
 
-#: part/pageview.cpp:5236
+#: part/pageview.cpp:5261
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4031,18 +4037,18 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5286
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "ਤੁਹਾਡੇ ਕੋਲ ਕੁਝ ਨਾ-ਸੰਭਾਲੀਆਂ ਤਬਦੀਲੀਆਂ ਹਨ। ਇਸ ਉੱਤੇ ਦਸਤਖਤ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਭਾਲੋ।"
 
-#: part/pageview.cpp:5284
+#: part/pageview.cpp:5309
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ਦਸਤਖ਼ਤ ਖੇਤਰ ਜੋੜਨ ਲਈ ਚੌਰਸ ਖਾਨਾ ਵਾਹੋ"
 
-#: part/pageview.cpp:5428
+#: part/pageview.cpp:5453
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ਸਫ਼ੇ ਦੇ ਖੇਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਦਿਖਾਈ ਦਿੰਦਾ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ, ਦੁਆਲੇ ਆਇਤ ਵਾਹੋ"
@@ -4199,26 +4205,26 @@ msgid "&File"
 msgstr "ਫਾਇਲ(&F)"
 
 #. i18n: ectx: Menu (settings)
-#: part/part-viewermode.rc:10 part/part.rc:91
+#: part/part-viewermode.rc:10 part/part.rc:92
 #, kde-format
 msgid "&Settings"
 msgstr "ਸੈਟਿੰਗਾਂ(&S)"
 
 #. i18n: ectx: Menu (help)
-#: part/part-viewermode.rc:15 part/part.rc:98
+#: part/part-viewermode.rc:15 part/part.rc:99
 #, kde-format
 msgid "&Help"
 msgstr "ਮਦਦ(&H)"
 
 #. i18n: ectx: Menu (view_orientation)
-#: part/part-viewermode.rc:32 part/part.rc:44
+#: part/part-viewermode.rc:32 part/part.rc:45
 #, kde-format
 msgid "&Orientation"
 msgstr "ਸਥਿਤੀ(&O)"
 
 #. i18n: ectx: Menu (bookmarks)
 #. i18n: ectx: Menu (okular_bookmarks)
-#: part/part-viewermode.rc:50 part/part.rc:65
+#: part/part-viewermode.rc:50 part/part.rc:66
 #, kde-format
 msgid "&Bookmarks"
 msgstr "ਬੁੱਕਮਾਰਕ(&B)"
@@ -4346,56 +4352,56 @@ msgstr "ਅੱਗੇ ਬੁੱਕਮਾਰਕ"
 msgid "Go to the next bookmark"
 msgstr "ਅੱਗੇ ਬੁੱਕਮਾਰਕ ਉੱਤੇ ਜਾਓ"
 
-#: part/part.cpp:748
+#: part/part.cpp:749
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgid "Configure Okular…"
 msgstr "ਓਕੁਲਾਰ ਸੰਰਚਨਾ..."
 
-#: part/part.cpp:751
+#: part/part.cpp:752
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "Configure Viewer…"
 msgstr "ਦਰਸ਼ਕ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:757
+#: part/part.cpp:758
 #, fuzzy, kde-format
 #| msgid "Configure Viewer Backends"
 msgid "Configure Viewer Backends…"
 msgstr "ਦਰਸ਼ਕ ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:759
+#: part/part.cpp:760
 #, fuzzy, kde-format
 #| msgid "Configure Backends"
 msgid "Configure Backends…"
 msgstr "ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:795
+#: part/part.cpp:796
 #, kde-format
 msgid "About Backend"
 msgstr "ਬੈਕ-ਐਂਡ ਬਾਰੇ"
 
-#: part/part.cpp:800
+#: part/part.cpp:801
 #, kde-format
 msgid "Reloa&d"
 msgstr "ਮੁੜ-ਲੋਡ ਕਰੋ(&d)"
 
-#: part/part.cpp:802
+#: part/part.cpp:803
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "ਮੌਜੂਦਾ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਡਿਸਕ ਤੋਂ ਮੁੜ ਲੋਡ ਕਰੋ।"
 
-#: part/part.cpp:808
+#: part/part.cpp:809
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "ਖੋਜ ਪੱਟੀ ਬੰਦ ਕਰੋ(&F)"
 
-#: part/part.cpp:813
+#: part/part.cpp:814
 #, kde-format
 msgid "Page Number"
 msgstr "ਸਫ਼ਾ ਨੰਬਰ"
 
-#: part/part.cpp:817
+#: part/part.cpp:818
 #, fuzzy, kde-format
 #| msgctxt "@action"
 #| msgid "Configure Color Modes..."
@@ -4403,79 +4409,79 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "ਰੰਗ ਢੰਗ ਸੰਰਚਨਾ..."
 
-#: part/part.cpp:858
+#: part/part.cpp:868
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "ਮੌਜੂਦਾ ਸਫ਼ੇ ਤੋਂ ਸਾਰੀ ਲਿਖਤ ਨੂੰ ਚੁਣੋ"
 
-#: part/part.cpp:871
+#: part/part.cpp:881
 #, kde-format
 msgid "Show S&idebar"
 msgstr "ਬਾਹੀ ਵੇਖਾਓ(&i)"
 
-#: part/part.cpp:880
+#: part/part.cpp:890
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "ਸਫ਼ਾ ਪੱਟੀ ਵੱਖੋ(&P)"
 
-#: part/part.cpp:886
+#: part/part.cpp:896
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "ਦਸਤਖ਼ਤ ਪੈਨਲ ਵੇਖੋ(&S)"
 
-#: part/part.cpp:897
+#: part/part.cpp:907
 #, kde-format
 msgid "&Embedded Files"
 msgstr "ਇਮਬੈੱਡ ਕੀਤੀਆਂ ਫਾਇਲ(&E)"
 
-#: part/part.cpp:903
+#: part/part.cpp:913
 #, kde-format
 msgid "E&xport As"
 msgstr "ਇੰਝ ਐਕਸਪੋਰਟ ਕਰੋ(&x)"
 
-#: part/part.cpp:915
+#: part/part.cpp:925
 #, kde-format
 msgid "S&hare"
 msgstr "ਸਾਂਝਾ ਕਰੋ(&h)"
 
-#: part/part.cpp:924
+#: part/part.cpp:934
 #, kde-format
 msgid "P&resentation"
 msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ(&r)"
 
-#: part/part.cpp:931
+#: part/part.cpp:941
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "ਰੱਖਣ ਵਾਲਾ ਫੋਲਡਰ ਖੋਲ੍ਹੋ(&t)"
 
-#: part/part.cpp:945
+#: part/part.cpp:955
 #, fuzzy, kde-format
 #| msgid "&Import PostScript as PDF..."
 msgid "&Import PostScript as PDF…"
 msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ (ps) PDF ਵਾਂਗ ਇੰਪੋਰਟ ਕਰੋ(&I)..."
 
-#: part/part.cpp:949
+#: part/part.cpp:959
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "ਕਾਲੀ-ਸਕਰੀਨ ਮੋਡ ਸਵਿੱਚ"
 
-#: part/part.cpp:957
+#: part/part.cpp:967
 #, kde-format
 msgid "Erase Drawing"
 msgstr "ਡਰਾਇੰਗ ਮਿਟਾਓ"
 
-#: part/part.cpp:962
+#: part/part.cpp:972
 #, fuzzy, kde-format
 #| msgid "Configure Annotations..."
 msgid "Configure Annotations…"
 msgstr "...ਟਿੱਪਣੀ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:967
+#: part/part.cpp:977
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਚਲਾਓ/ਰੋਕੋ"
 
-#: part/part.cpp:1122
+#: part/part.cpp:1132
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4486,37 +4492,37 @@ msgstr ""
 "ਸਕਦਾ ਹੈ।\n"
 "ਜਦੋਂ ਵੀ ਓਕੁਲਾਰ ਬੰਦ ਹੋਵੇ ਤਾਂ ਕੋਈ ਵੀ ਕੀਤੀ ਗਈ ਸੁਧਾਈ ਖਤਮ ਹੋ ਜਾਵੇਗੀ।"
 
-#: part/part.cpp:1123
+#: part/part.cpp:1133
 #, kde-format
 msgid "Document can't be saved"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: part/part.cpp:1152
+#: part/part.cpp:1162
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1' (%2) ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
 
-#: part/part.cpp:1205
+#: part/part.cpp:1215
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 ਦੇ ਲੋਡ ਕਰਨ ਨੂੰ ਰੱਦ ਕੀਤਾ ਗਿਆ ਹੈ।"
 
-#: part/part.cpp:1221
+#: part/part.cpp:1231
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1 ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਕਾਰਨ: %2"
 
-#: part/part.cpp:1249
+#: part/part.cpp:1259
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "ਦਰਸ਼ਕ ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:1251
+#: part/part.cpp:1261
 #, kde-format
 msgid "Configure Backends"
 msgstr "ਬੈਕ-ਐਂਡ ਸੰਰਚਨਾ"
 
-#: part/part.cpp:1336
+#: part/part.cpp:1346
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4525,43 +4531,43 @@ msgstr ""
 "ਪ੍ਰੋਗਰਾਮ \"ps2pdf\" ਨਹੀਂ ਲੱਭਿਆ ਹੈ, ਇਸਕਰਕੇ ਓਕੁਲਾਰ ਇਹ ਵਰਤ ਕੇ PS ਫਾਇਲਾਂ ਇੰਪੋਰਟ ਨਹੀਂ  ਕਰ "
 "ਸਕਦਾ ਹੈ।"
 
-#: part/part.cpp:1336
+#: part/part.cpp:1346
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf ਨਹੀਂ ਮਿਲਿਆ"
 
-#: part/part.cpp:1341
+#: part/part.cpp:1351
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਫਾਇਲਾਂ (%1)"
 
-#: part/part.cpp:1357
+#: part/part.cpp:1367
 #, fuzzy, kde-format
 #| msgid "Importing PS file as PDF (this may take a while)..."
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS ਫਾਇਲ PDF ਵਾਂਗ ਲਈ ਜਾ ਰਹੀ ਹੈ (ਇਸ ਨੂੰ ਕੁਝ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ)..."
 
-#: part/part.cpp:1489
+#: part/part.cpp:1499
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਨ ਲਈ ਪਾਸਵਰਡ ਦਿਉ ਜੀ:"
 
-#: part/part.cpp:1491
+#: part/part.cpp:1501
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "ਗਲਤ ਪਾਸਵਰਡ। ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ:"
 
-#: part/part.cpp:1502
+#: part/part.cpp:1512
 #, kde-format
 msgid "Document Password"
 msgstr "ਦਸਤਾਵੇਜ਼ ਦਾ ਪਾਸਵਰਡ"
 
-#: part/part.cpp:1625
+#: part/part.cpp:1635
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "ਇਹ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ XFA ਫਾਰਮ ਹੈ, ਜੋ ਕਿ ਇਸ ਵੇਲੇ <b>ਸਹਾਇਕ ਨਹੀਂ</b> ਹਨ।"
 
-#: part/part.cpp:1632
+#: part/part.cpp:1642
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4569,7 +4575,7 @@ msgid ""
 msgstr ""
 "ਇਹ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਫਾਰਮ ਹੈ। ਇਨ੍ਹਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਬਟਨ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਵੇਖੋ -> ਫਾਰਮ ਵੇਖੋ ਵਰਤੋਂ।"
 
-#: part/part.cpp:1648
+#: part/part.cpp:1658
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4578,34 +4584,34 @@ msgstr ""
 "ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਸਾਰੇ ਸੰਪਾਦਨ ਅਤੇ ਪਰਸਪਰ ਪ੍ਰਭਾਵੀਸ਼ਲ ਫੀਚਰ ਅਸਮਰੱਥ ਹਨ। ਇਸ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸੰਪਾਦਨ "
 "ਕਰਨ ਲਈ ਪਹਿਲਾਂ ਕਾਪੀ ਸੰਭਾਲੋ ਅਤੇ ਫੇਰ ਖੋਲ੍ਹੋ।"
 
-#: part/part.cpp:1736
+#: part/part.cpp:1746
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
 
-#: part/part.cpp:1738
+#: part/part.cpp:1748
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "ਵੇਖਣ ਦੇ ਢੰਗ ਨੂੰ ਬਦਲਣ ਦੀ ਮੰਗ"
 
-#: part/part.cpp:1739
+#: part/part.cpp:1749
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "ਪਰਿਜ਼ੈੱਨਟੇਸ਼ਨ ਮੋਡ 'ਚ ਜਾਓ"
 
-#: part/part.cpp:1740
+#: part/part.cpp:1750
 #, kde-format
 msgid "Deny Request"
 msgstr "ਮੰਗ ਤੋਂ ਨਾਂਹ ਕਰੋ"
 
-#: part/part.cpp:1830
+#: part/part.cpp:1840
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1 ਨੂੰ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। %2"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1870
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4615,22 +4621,22 @@ msgid ""
 "reloading the file?"
 msgstr ""
 
-#: part/part.cpp:1864 part/part.cpp:1874
+#: part/part.cpp:1874 part/part.cpp:1884
 #, kde-format
 msgid "File Changed"
 msgstr "ਫ਼ਾਇਲ ਬਦਲੀ ਗਈ ਹੈ"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1875
 #, kde-format
 msgid "Continue Reloading"
 msgstr "ਮੁੜ-ਲੋਡ ਕਰਨਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1876
 #, kde-format
 msgid "Abort Reloading"
 msgstr "ਮੁੜ-ਲੋਡ ਕਰਨਾ ਅਧੂਰਾ ਛੱਡੋ"
 
-#: part/part.cpp:1870
+#: part/part.cpp:1880
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4640,27 +4646,27 @@ msgid ""
 "the file?"
 msgstr ""
 
-#: part/part.cpp:1875
+#: part/part.cpp:1885
 #, kde-format
 msgid "Continue Closing"
 msgstr "ਬੰਦ ਕਰਨਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: part/part.cpp:1876
+#: part/part.cpp:1886
 #, kde-format
 msgid "Abort Closing"
 msgstr "ਬੰਦ ਕਰਨਾ ਛੱਡੋ"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1893
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "ਕੀ ਤੁਸੀਂ \"%1\" ਲਈ ਆਪਣੀਆਂ ਤਬਦੀਲੀਆਂ ਸੰਭਾਲਣੀਆਂ ਚਾਹੁੰਦੇ ਹੋ ਜਾਂ ਅਣਡਿ਼ੱਠੀਆਂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1893
 #, kde-format
 msgid "Close Document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਬੰਦ ਕਰੋ"
 
-#: part/part.cpp:2015
+#: part/part.cpp:2025
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4669,7 +4675,7 @@ msgstr ""
 "ਇਹ ਲਿੰਕ ਇੱਕ ਬੰਦ ਦਸਤਾਵੇਜ਼ ਐਕਸ਼ਨ ਲਈ ਪੁਆਇੰਟ ਕਰਦਾ ਹੈ, ਜੋ ਕਿ ਇਮਬੈੱਡ ਦਰਸ਼ਕ ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ ਸਹਾਇਕ "
 "ਨਹੀਂ ਹੈ।"
 
-#: part/part.cpp:2021
+#: part/part.cpp:2031
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4678,78 +4684,78 @@ msgstr ""
 "ਇਹ ਲਿੰਕ ਇੱਕ ਐਪਲੀਕੇਸ਼ਨ ਬੰਦ ਕਰਨ ਐਕਸ਼ਨ ਲਈ ਪੁਆਇੰਟ ਕਰਦਾ ਹੈ, ਜੋ ਕਿ ਇਮਬੈੱਡ ਦਰਸ਼ਕ ਦੀ ਵਰਤੋਂ ਦੌਰਾਨ "
 "ਸਹਾਇਕ ਨਹੀਂ ਹੈ।"
 
-#: part/part.cpp:2113 part/part.cpp:2131
+#: part/part.cpp:2123 part/part.cpp:2141
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
 msgid "Reloading the document…"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਮੁੜ-ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
 
-#: part/part.cpp:2288 part/toc.cpp:38
+#: part/part.cpp:2304 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "ਸਮੱਗਰੀ"
 
-#: part/part.cpp:2317 part/signaturepanel.cpp:47
+#: part/part.cpp:2333 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "ਦਸਤਖ਼ਤ"
 
-#: part/part.cpp:2344
+#: part/part.cpp:2360
 #, kde-format
 msgid "Go to Page"
 msgstr "ਸਫ਼ੇ ਉੱਤੇ ਜਾਓ"
 
-#: part/part.cpp:2367
+#: part/part.cpp:2383
 #, kde-format
 msgid "&Page:"
 msgstr "ਸਫ਼ਾ(&P):"
 
-#: part/part.cpp:2460
+#: part/part.cpp:2476
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "ਬੁੱਕਮਾਰਕ ਦਾ ਨਵਾਂ ਨਾਂ ਦਿਉ।"
 
-#: part/part.cpp:2506
+#: part/part.cpp:2522
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਨਾਂ ਬਦਲੋ"
 
-#: part/part.cpp:2509
+#: part/part.cpp:2525
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "ਇਹ ਬੁੱਕਮਾਰਕ ਹਟਾਓ"
 
-#: part/part.cpp:2595 part/part.cpp:2596 part/part.cpp:3486
+#: part/part.cpp:2611 part/part.cpp:2612 part/part.cpp:3503
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2603 part/revisionviewer.cpp:44
+#: part/part.cpp:2619 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "ਇੰਝ ਸੰਭਾਲੋ"
 
-#: part/part.cpp:2620
+#: part/part.cpp:2636
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
 
-#: part/part.cpp:2621
+#: part/part.cpp:2637
 #, kde-format
 msgid "Unsupported extension"
 msgstr "ਗ਼ੈਰ-ਸਹਾਇਕ ਇਕਸਟੈਨਸ਼ਨਾਂ"
 
-#: part/part.cpp:2622
+#: part/part.cpp:2638
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "ਨਵਾਂ ਨਾਂ ਚੁਣੋ"
 
-#: part/part.cpp:2665
+#: part/part.cpp:2681
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4760,17 +4766,17 @@ msgstr ""
 "ਫਾਇਲ <filename>%1</filename> ਵਿੱਚ ਹੋਰ ਪਰੋਗਰਾਮ ਵਲੋਂ ਸੁਧਾਰ ਕੀਤਾ ਗਿਆ ਹੈ ਜੇ ਤੁਸੀਂ ਹੁਣੇ "
 "ਸੰਭਾਲਿਆ ਤਾਂ ਹੋਰ ਪਰੋਗਰਾਮ ਵਲੋਂ ਕੀਤੀਆਂ ਤਬਦੀਲੀਆਂ ਖਤਮ ਹੋ ਜਾਣਗੀਆਂ। ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: part/part.cpp:2668 part/part.cpp:2687 part/part.cpp:2739
+#: part/part.cpp:2684 part/part.cpp:2703 part/part.cpp:2755
 #, kde-format
 msgid "Save - Warning"
 msgstr "ਸੰਭਾਲੋ - ਸਾਵਧਾਨ"
 
-#: part/part.cpp:2670
+#: part/part.cpp:2686
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "ਕਾਪੀ ਨੂੰ ਕਿਤੇ ਹੋਰ ਸੰਭਾਲੋ"
 
-#: part/part.cpp:2686
+#: part/part.cpp:2702
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4778,12 +4784,12 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2713
+#: part/part.cpp:2729
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "ਆਰਜ਼ੀ ਫਾਇਲ ਸੰਭਾਲਣ ਲਈ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।"
 
-#: part/part.cpp:2726
+#: part/part.cpp:2742
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4793,29 +4799,29 @@ msgstr ""
 "<filename>%1</filename> ਫਾਇਲ ਸਿਰਫ਼ ਪੜ੍ਹਨ ਲਈ ਹੋਣ ਕਰਕੇ ਉਸ ਉੱਤੇ ਲਿਖਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ ਹੈ। "
 "ਹੋਰ ਟਿਕਾਣੇ ਉੱਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਫਾਇਲ ਲਈ ਇਜਾਜ਼ਤਾਂ ਨੂੰ ਬਦਲ ਕੇ ਵੇਖੋ।"
 
-#: part/part.cpp:2738
+#: part/part.cpp:2754
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2753 part/part.cpp:2822 part/part.cpp:2843 part/part.cpp:3501
+#: part/part.cpp:2769 part/part.cpp:2838 part/part.cpp:2859 part/part.cpp:3518
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "ਫਾਇਲ ਨੂੰ '%1' ਵਿੱਚ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਹੋਰ ਥਾਂ ਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰੋ ਜੀ।"
 
-#: part/part.cpp:2766
+#: part/part.cpp:2782
 #, kde-format
 msgid "Filled form contents"
 msgstr "ਭਰੀ ਹੋਈ ਫਾਰਮ ਸਮੱਗਰੀ"
 
-#: part/part.cpp:2769
+#: part/part.cpp:2785
 #, kde-format
 msgid "User annotations"
 msgstr "ਵਰਤੋਂਕਾਰ ਟਿੱਪਣੀਆਂ"
 
-#: part/part.cpp:2774
+#: part/part.cpp:2790
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4823,18 +4829,18 @@ msgid ""
 "format to preserve them."
 msgstr ""
 
-#: part/part.cpp:2778 part/part.cpp:2800
+#: part/part.cpp:2794 part/part.cpp:2816
 #, kde-format
 msgid "Warning"
 msgstr "ਸਾਵਧਾਨ"
 
-#: part/part.cpp:2779 part/part.cpp:2801
+#: part/part.cpp:2795 part/part.cpp:2817
 #, fuzzy, kde-format
 #| msgid "Save as Okular document archive..."
 msgid "Save as Okular document archive…"
 msgstr "...ਓਕੁਲਾਰ ਦਸਤਾਵੇਜ਼ ਅਕਾਇਵ ਵਜੋਂ ਸੰਭਾਲੋ"
 
-#: part/part.cpp:2791
+#: part/part.cpp:2807
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4843,7 +4849,7 @@ msgid ""
 "discard these elements."
 msgstr ""
 
-#: part/part.cpp:2794
+#: part/part.cpp:2810
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4852,22 +4858,22 @@ msgid ""
 "these elements as well as the undo/redo history."
 msgstr ""
 
-#: part/part.cpp:2796
+#: part/part.cpp:2812
 #, kde-format
 msgid "Continue"
 msgstr "ਜਾਰੀ ਰੱਖੋ"
 
-#: part/part.cpp:2796
+#: part/part.cpp:2812
 #, kde-format
 msgid "Continue losing changes"
 msgstr "ਤਬਦੀਲੀਆਂ ਗੁਆਉਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: part/part.cpp:2824
+#: part/part.cpp:2840
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "ਫਾਇਲ '%1' ਵਿੱਚ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ: %2"
 
-#: part/part.cpp:2863
+#: part/part.cpp:2879
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4878,7 +4884,7 @@ msgstr ""
 "\n"
 "ਦਸਤਾਵੇਜ਼ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
-#: part/part.cpp:2899
+#: part/part.cpp:2915
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4887,53 +4893,53 @@ msgstr ""
 "ਫਾਇਲ ਨੂੰ '%1' ਵਿੱਚ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਗਲਤੀ: '%2'। ਹੋਰ ਥਾਂ ਤੇ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ ਕਰੋ "
 "ਜੀ।"
 
-#: part/part.cpp:3158
+#: part/part.cpp:3174
 #, fuzzy, kde-format
 #| msgid "Expand whole section"
 msgid "Expand Whole Section"
 msgstr "ਪੂਰੇ ਭਾਗ ਨੂੰ ਫੈਲਾਓ"
 
-#: part/part.cpp:3159
+#: part/part.cpp:3175
 #, fuzzy, kde-format
 #| msgid "Collapse whole section"
 msgid "Collapse Whole Section"
 msgstr "ਪੂਰਾ ਭਾਗ ਸਮੇਟੋ"
 
-#: part/part.cpp:3172
+#: part/part.cpp:3188
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "ਸਫ਼ੇ ਨਾਲ ਥੰਮਨੇਲ ਲਿੰਕ ਕਰੋ"
 
-#: part/part.cpp:3199
+#: part/part.cpp:3215
 #, kde-format
 msgid "Tools"
 msgstr "ਟੂਲ"
 
-#: part/part.cpp:3381
+#: part/part.cpp:3398
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "ਬੋਲੋ"
 
-#: part/part.cpp:3539
+#: part/part.cpp:3556
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "ਛਾਪੋ"
 
-#: part/part.cpp:3602
+#: part/part.cpp:3619
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "ਇਸ ਦਸਤਾਵੇਜ਼ ਨੂੰ ਪਰਿੰਟ ਉੱਤੇ ਪਾਬੰਦੀ ਹੈ।"
 
-#: part/part.cpp:3615
+#: part/part.cpp:3632
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "ਦਸਤਾਵੇਜ਼ ਪਰਿੰਟ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਅਣਪਛਾਤੀ ਗਲਤੀ। bugs.kde.org ਤੇ ਜਾਣਕਾਰੀ ਦਿਓ ਜੀ।"
 
-#: part/part.cpp:3617
+#: part/part.cpp:3634
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4942,17 +4948,17 @@ msgstr ""
 "ਦਸਤਾਵੇਜ਼ ਪਰਿੰਟ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਵੇਰਵੇ ਸਮੇਤ ਗਲਤੀ \"%1\" ਹੈ। bugs.kde.org ਤੇ ਜਾਣਕਾਰੀ ਦਿਓ "
 "ਜੀ।"
 
-#: part/part.cpp:3706
+#: part/part.cpp:3723
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "ਆਪਣੀ ਪਿਛਲੀ ਥਾਂ ਉੱਤੇ ਜਾਓ"
 
-#: part/part.cpp:3710
+#: part/part.cpp:3727
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "ਆਪਣੀ ਅਗਲੀ ਥਾਂ ਉੱਤੇ ਜਾਓ"
 
-#: part/part.cpp:3735
+#: part/part.cpp:3752
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4961,7 +4967,7 @@ msgstr ""
 "<qt><strong>ਫਾਇਲ ਗਲਤੀ</strong> ਆਰਜ਼ੀ ਫਾਇਲ <nobr><strong>%1</strong></nobr> "
 "ਬਣਾਈ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ।</qt>"
 
-#: part/part.cpp:3747
+#: part/part.cpp:3764
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4970,7 +4976,7 @@ msgstr ""
 "<qt><strong>ਫਾਇਲ ਗਲਤੀ!</strong> ਅਣ-ਕੰਪਰੈੱਸ ਕਰਨ ਲਈ <nobr><strong>%1</strong></"
 "nobr> ਫਾਇਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ ਹੈ। ਇਹ ਫਾਇਲ ਲੋਡ ਨਹੀਂ ਹੋਵੇਗੀ।</qt>"
 
-#: part/part.cpp:3751
+#: part/part.cpp:3768
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4983,7 +4989,7 @@ msgstr ""
 "ਤਾਂ ਇਸ ਉੱਤੇ ਸੱਜੇ ਕਲਿੱਕ ਕਰੋ ਅਤੇ 'ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ' ਚੋਣ ਕਰੋ ਅਤੇ ਖੁੱਲ੍ਹੀ ਹੋਈ ਵਿੰਡੋ ਵਿੱਚ 'ਇਜਾਜ਼ਤਾਂ' ਟੈਬ ਨੂੰ ਚੁਣੋ</"
 "qt>"
 
-#: part/part.cpp:3773
+#: part/part.cpp:3790
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4992,7 +4998,7 @@ msgstr ""
 "<qt><strong>ਫਾਇਲ ਗਲਤੀ!</strong> ਫਾਇਲ <nobr><strong>%1</strong></nobr> ਅਣ-"
 "ਕੰਪਰੈੱਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ। ਇਹ ਫਾਇਲ ਲੋਡ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੇਗੀ।</qt>"
 
-#: part/part.cpp:3777
+#: part/part.cpp:3794
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5001,27 +5007,27 @@ msgstr ""
 "<qt>ਇਹ ਗਲਤੀ ਅਕਸਰ ਤਾਂ ਆਉਂਦੀ ਹੈ, ਜੇ ਫਾਇਲ ਖਰਾਬ ਹੋਵੇ। ਜੇ ਤੁਸੀਂ ਪੱਕਾ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਫਾਇਲ ਨੂੰ "
 "ਕਮਾਂਡ-ਲਾਈਨ ਟੂਲ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਡੀਕੰਪਰੈੱਸ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</qt>"
 
-#: part/part.cpp:3803
+#: part/part.cpp:3820
 #, kde-format
 msgid "No Bookmarks"
 msgstr "ਕੋਈ ਬੁੱਕਮਾਰਕ ਨਹੀਂ"
 
-#: part/part.cpp:3874
+#: part/part.cpp:3891
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "ਦਸਤਾਵੇਜ਼ ਸਾਂਝਾ ਕਰਨ ਦੌਰਾਨ ਸਮੱਸਿਆ ਆਈ ਹੈ: %1"
 
-#: part/part.cpp:3874 part/part.cpp:3880
+#: part/part.cpp:3891 part/part.cpp:3897
 #, kde-format
 msgid "Share"
 msgstr "ਸਾਂਝਾ ਕਰੋ"
 
-#: part/part.cpp:3878
+#: part/part.cpp:3895
 #, kde-format
 msgid "Document shared successfully"
 msgstr "ਦਸਤਾਵੇਜ਼ ਕਾਮਯਾਬੀ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ"
 
-#: part/part.cpp:3880
+#: part/part.cpp:3897
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "ਸਾਂਝਾ ਕੀਤਾ ਦਸਤਾਵੇਜ਼ ਤੁਸੀਂ ਇੱਥੇ ਲੱਭ ਸਕਦੇ ਹੋ: <a href=\"%1\">%1</a>"
@@ -5033,37 +5039,37 @@ msgid "&Edit"
 msgstr "ਸੋਧ(&E)"
 
 #. i18n: ectx: Menu (view)
-#: part/part.rc:32
+#: part/part.rc:33
 #, kde-format
 msgid "&View"
 msgstr "ਵੇਖੋ(&V)"
 
 #. i18n: ectx: Menu (go)
-#: part/part.rc:53
+#: part/part.rc:54
 #, kde-format
 msgid "&Go"
 msgstr "ਜਾਓ(&G)"
 
 #. i18n: ectx: Menu (tools)
-#: part/part.rc:73
+#: part/part.rc:74
 #, kde-format
 msgid "&Tools"
 msgstr "ਟੂਲ(&T)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:102 shell/shell.rc:24
+#: part/part.rc:103 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "ਮੁੱਖ ਟੂਲਬਾਰ"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:123
+#: part/part.rc:124
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "ਵਿਆਖਿਆ ਟੂਲਬਾਰ"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:147
+#: part/part.rc:148
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "ਫ਼ੌਰੀ ਵਿਆਖਿਆ ਟੂਲਬਾਰ"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-25 00:40+0000\n"
-"PO-Revision-Date: 2025-11-08 17:54+0200\n"
+"PO-Revision-Date: 2025-11-25 08:04+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3863,10 +3863,9 @@ msgid "Copy to Clipboard"
 msgstr "Скопіювати до буфера"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Копіювати текст до буфера обміну"
+msgstr "Копіювати текст (без розривів рядків)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format

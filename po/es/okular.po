@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-25 00:40+0000\n"
-"PO-Revision-Date: 2025-11-10 02:29+0100\n"
+"PO-Revision-Date: 2025-11-25 12:29+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3846,10 +3846,9 @@ msgid "Copy to Clipboard"
 msgstr "Copiar en el portapapeles"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Copiar texto en el portapapeles"
+msgstr "Copiar texto (sin saltos de línea)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format

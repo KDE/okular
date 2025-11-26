@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-25 00:40+0000\n"
-"PO-Revision-Date: 2025-11-16 02:26-0300\n"
-"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
+"PO-Revision-Date: 2025-11-25 06:18-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -3854,10 +3854,9 @@ msgid "Copy to Clipboard"
 msgstr "Copiar para a área de transferência"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Copiar texto para a área de transferência"
+msgstr "Copiar texto (sem quebras de linha)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format

@@ -3794,10 +3794,9 @@ msgid "Copy to Clipboard"
 msgstr "复制到剪贴板"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "复制文本到剪贴板"
+msgstr ""
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format

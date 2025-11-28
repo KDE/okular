@@ -414,7 +414,7 @@
     <value key="KDE::irc">#okular</value>
     <value key="KDE::mailinglist-devel">okular-devel@kde.org</value>
     <value key="KDE::forum">251</value>
-    <value key="KDE::supporters"> </value>
+    <value key="KDE::supporters">Michael</value>
   </custom>
   <launchable type="desktop-id">org.kde.okular.desktop</launchable>
   <releases>

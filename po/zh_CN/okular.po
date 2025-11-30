@@ -3796,7 +3796,7 @@ msgstr "复制到剪贴板"
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
 #, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr ""
+msgstr "复制文本 (不带换行符)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format

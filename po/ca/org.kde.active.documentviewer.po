@@ -207,6 +207,3 @@ msgstr "Documents recents"
 msgctxt "in welcome screen"
 msgid "My Documents"
 msgstr "Els meus documents"
-
-#~ msgid "Open..."
-#~ msgstr "Obre..."

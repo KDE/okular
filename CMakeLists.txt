@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+dsfasdcmake_minimum_required(VERSION 3.22)
 
 # KDE Application Version, managed by release script
 set (RELEASE_SERVICE_VERSION_MAJOR "25")

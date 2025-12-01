@@ -463,7 +463,7 @@ function AFPercent_Format( nDec, sepStyle )
     }
     else if ( sepStyle === 4 )
     {
-        ret = util.numberToString( percentValue, "f", nDec, 'de_CH');
+        ret = util.numberToString( percentValue, "f", nDec, 'de_CH').replace("'","\u2019");
     }
     ret += "%";
     event.value = ret;

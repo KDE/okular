@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2025-03-09 18:12+0530\n"
+"PO-Revision-Date: 2025-11-30 11:40+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
-"Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
+"Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -304,12 +304,12 @@ msgstr "PDF பின்நிலை அமைப்பு"
 #: generator_pdf.cpp:2207 generator_pdf.cpp:2235
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "தற்காலிக கோப்புக்கு எழுதுவது தோல்வியடைந்தது"
 
 #: generator_pdf.cpp:2257
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "தற்காலிக கோப்புக்கு மறுபெயரிடுவது தோல்வியடைந்தது"
 
 #: generator_pdf.cpp:2277
 #, kde-format

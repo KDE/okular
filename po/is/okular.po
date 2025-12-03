@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-25 00:40+0000\n"
-"PO-Revision-Date: 2025-11-17 10:00+0000\n"
+"PO-Revision-Date: 2025-12-02 13:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -2821,7 +2821,7 @@ msgstr "Birta titil skjals á titilstiku ef hann er tiltækur"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
-msgstr "Birta bara skrárheiti"
+msgstr "Birta bara skráarheiti"
 
 #: part/dlggeneral.cpp:75
 #, kde-format
@@ -4739,7 +4739,7 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
-"Þú hefur valið að vista Okular-safnskrá án þess að skrárheitið endi á '%1'. "
+"Þú hefur valið að vista Okular-safnskrá án þess að skráarheitið endi á '%1'. "
 "Það er ekki heimilt. Viltu velja nýtt heiti?"
 
 #: part/part.cpp:2637

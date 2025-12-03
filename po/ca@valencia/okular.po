@@ -2573,7 +2573,7 @@ msgstr "Convertix a blanc i negre"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "Invertix la lluminositat"
+msgstr "Invertix la claredat"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
@@ -5061,7 +5061,7 @@ msgstr "Sense punts"
 #: part/part.cpp:3874
 #, kde-format
 msgid "There was a problem sharing the document: %1"
-msgstr "S'ha produït un problema en compartir el document: %1"
+msgstr "S'ha produït un problema mentre es compartia el document: %1"
 
 #: part/part.cpp:3874 part/part.cpp:3880
 #, kde-format

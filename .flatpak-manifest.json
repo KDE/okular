@@ -2,7 +2,7 @@
     "id": "org.kde.okular",
     "branch": "master",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.9",
+    "runtime-version": "6.10",
     "sdk": "org.kde.Sdk",
     "command": "okular",
     "rename-icon": "okular",
@@ -68,7 +68,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/gnustep/libs-base/archive/refs/tags/base-1_31_1.tar.gz",
-                    "sha256": "612e4415efc486c9e7017b00b28b0e122dc739d29b8e5d57ce79bf1a86a9862b",
+                    "sha256": "612e4415efc486.10e7017b00b28b0e122dc739d29b8e5d57ce79bf1a86a9862b",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 9105,
@@ -106,7 +106,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/MacPaw/universal-detector/archive/refs/tags/1.1.tar.gz",
-                    "sha256": "8e8532111d0163628eb828a60d67b53133afad3f710b1967e69d3b8eee28a811",
+                    "sha256": "8e8532111d016.1028eb828a60d67b53133afad3f710b1967e69d3b8eee28a811",
                     "strip-components": 1,
                     "dest": "UniversalDetector"
                 }
@@ -166,10 +166,10 @@
                 {
                     "type": "archive",
                     "url": "https://libzip.org/download/libzip-1.11.4.tar.xz",
-                    "sha256": "8a247f57d1e3e6f6d11413b12a6f28a9d388de110adc0ec608d893180ed7097b",
+                    "sha256": "8a247f57d1e3e6.10d11413b12a6f28a9d388de110adc0ec6.10d893180ed7097b",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 10649,
+                        "project-id": 106.10,
                         "stable-only": true,
                         "url-template": "https://libzip.org/download/libzip-$version.tar.xz"
                     }
@@ -187,7 +187,7 @@
                 {
                     "type": "archive",
                     "url": "https://downloads.sourceforge.net/project/ebook-tools/ebook-tools/0.2.2/ebook-tools-0.2.2.tar.gz",
-                    "sha256": "cbc35996e911144fa62925366ad6a6212d6af2588f1e39075954973bbee627ae",
+                    "sha256": "cbc35996.1011144fa62925366ad6.10212d6af2588f1e39075954973bbee6.10ae",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 17771,
@@ -203,7 +203,7 @@
                 {
                     "type": "archive",
                     "url": "http://downloads.sourceforge.net/djvu/djvulibre-3.5.29.tar.gz",
-                    "sha256": "d3b4b03ae2bdca8516a36ef6eb27b777f0528c9eda26745d9962824a3fdfeccf",
+                    "sha256": "d3b4b03ae2bdca8516a36ef6eb27b777f0528c9eda26745d996.1024a3fdfeccf",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 10159,
@@ -235,7 +235,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz",
-                    "sha256": "5bd6da34794928cc7e616f288e32bd0be7f9a5ca2d3c206a0af2c19a4e3a318f",
+                    "sha256": "5bd6da34794928cc7e6.10f288e32bd0be7f9a5ca2d3c206a0af2c19a4e3a318f",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -272,10 +272,10 @@
                 {
                     "type": "archive",
                     "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
-                    "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
+                    "sha256": "c835b640a40ce357e1b836.10aabd95edffa24ddddd49b8daff63adb851cdab74",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 3687,
+                        "project-id": 36.10,
                         "stable-only": true,
                         "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
                     }
@@ -305,7 +305,7 @@
                     "sha256": "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 3686,
+                        "project-id": 36.10,
                         "stable-only": true,
                         "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
                     }
@@ -345,7 +345,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.7.tar.gz",
-                    "sha256": "5e292b02614dbc0cee40fe1116db2f42f63ef6b2ba430c77b614e17b8d61a638",
+                    "sha256": "5e292b02614dbc0cee40fe1116db2f42f63ef6b2ba430c77b614e17b8d61a6.10",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 769,
@@ -380,7 +380,7 @@
                 {
                     "type": "archive",
                     "url": "https://download.kde.org/stable/release-service/25.08.3/src/libkexiv2-25.08.3.tar.xz",
-                    "sha256": "0806898554b62a6f834d33bb481923d82bde91b1692ba7b146fec94b9a503d03",
+                    "sha256": "0806.108554b62a6.1034d33bb481923d82bde91b1692ba7b146fec94b9a503d03",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -402,7 +402,7 @@
                 {
                     "type": "archive",
                     "url": "https://download.kde.org/stable/release-service/25.08.3/src/kdegraphics-mobipocket-25.08.3.tar.xz",
-                    "sha256": "a4f8ff1632270c11695095732661995d9639f8333c8d63730654d787dcc3b554",
+                    "sha256": "a4f8ff1632270c116.1009573266.1095d9639f8333c8d6.1030654d787dcc3b554",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -429,7 +429,7 @@
                 {
                     "type": "archive",
                     "url": "https://ffmpeg.org/releases/ffmpeg-4.4.5.tar.xz",
-                    "sha256": "f9514e0d3515aee5a271283df71636e1d1ff7274b15853bcd84e144be416ab07"
+                    "sha256": "f9514e0d3515aee5a271283df716.10e1d1ff7274b15853bcd84e144be416ab07"
                 }
             ]
         },
@@ -446,7 +446,7 @@
                 {
                     "type": "archive",
                     "url": "https://download.kde.org/stable/phonon/4.12.0/phonon-4.12.0.tar.xz",
-                    "sha256": "3287ffe0fbcc2d4aa1363f9e15747302d0b080090fe76e5f211d809ecb43f39a",
+                    "sha256": "3287ffe0fbcc2d4aa1363f9e15747302d0b080090fe76.10f211d809ecb43f39a",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 229047,
@@ -470,7 +470,7 @@
                 {
                     "type": "archive",
                     "url": "https://get.videolan.org/vlc/3.0.22/vlc-3.0.22.tar.xz",
-                    "sha256": "e2cc1cf0ae0902a09da5a37c249a8a4e4b5ec4dc095443b8e1493c6a7cc138ea",
+                    "sha256": "e2cc1cf0ae0902a09da5a37c249a8a4e4b5ec4dc095443b8e1493c6.10cc138ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6504,
@@ -498,7 +498,7 @@
                 {
                     "type": "archive",
                     "url": "https://download.kde.org/stable/phonon/phonon-backend-vlc/0.12.0/phonon-backend-vlc-0.12.0.tar.xz",
-                    "sha256": "338479dc451e4b94b3ca5b578def741dcf82f5c626a2807d36235be2dce7c9a5",
+                    "sha256": "338479dc451e4b94b3ca5b578def741dcf82f5c6.10a2807d36235be2dce7c9a5",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 229046,

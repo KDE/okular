@@ -123,8 +123,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/Orc/discount/archive/v3.0.0d.tar.gz",
-                    "sha256": "0ed8cc27ac5d46dc6a8beedd5e5673ac8b466a6474bdb7d35f37c815f670385f",
+                    "url": "https://github.com/Orc/discount/archive/v3.0.1.2.tar.gz",
+                    "sha256": "4ea6cc8782c6508b3051c469ed7a1b6ca20b023c2a0c26ccd9c83bc7e61dfc16",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 12139,
@@ -234,8 +234,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.gz",
-                    "sha256": "121861b6d29b2461dec6575c9f3cab665b810bd408d4ec02c86719fa708b0a49",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz",
+                    "sha256": "5bd6da34794928cc7e616f288e32bd0be7f9a5ca2d3c206a0af2c19a4e3a318f",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -301,8 +301,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.09.0.tar.xz",
-                    "sha256": "758abfe0c77108c72d654b291dfbce54964b5315a53028e3875f07ef55ff20a3",
+                    "url": "https://poppler.freedesktop.org/poppler-25.12.0.tar.xz",
+                    "sha256": "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -323,8 +323,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r61.tar.gz",
-                    "sha256": "7caf26a2202a4ca689df3fe4175dfa74e0faa18fcca07331bba934fd0ecb8f12",
+                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r62.tar.gz",
+                    "sha256": "9c15fa751bb8093d042dae1b9f125eb45198c32c6704cd5481ccde460d4f8151",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 11600,
@@ -379,8 +379,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.08.0/src/libkexiv2-25.08.0.tar.xz",
-                    "sha256": "9bb4e5858f35d0dba813ade3c0ff6e7fe750b0930d60a7f4609b48c9563d45eb",
+                    "url": "https://download.kde.org/stable/release-service/25.08.3/src/libkexiv2-25.08.3.tar.xz",
+                    "sha256": "0806898554b62a6f834d33bb481923d82bde91b1692ba7b146fec94b9a503d03",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -401,8 +401,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.08.0/src/kdegraphics-mobipocket-25.08.0.tar.xz",
-                    "sha256": "d60c4eb4387d63036a8d734f77c5cbb75aea4c9dc8ecdfece46b227c007416fe",
+                    "url": "https://download.kde.org/stable/release-service/25.08.3/src/kdegraphics-mobipocket-25.08.3.tar.xz",
+                    "sha256": "a4f8ff1632270c11695095732661995d9639f8333c8d63730654d787dcc3b554",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -469,8 +469,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://get.videolan.org/vlc/3.0.21/vlc-3.0.21.tar.xz",
-                    "sha256": "24dbbe1d7dfaeea0994d5def0bbde200177347136dbfe573f5b6a4cee25afbb0",
+                    "url": "https://get.videolan.org/vlc/3.0.22/vlc-3.0.22.tar.xz",
+                    "sha256": "e2cc1cf0ae0902a09da5a37c249a8a4e4b5ec4dc095443b8e1493c6a7cc138ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6504,

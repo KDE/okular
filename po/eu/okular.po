@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-25 00:40+0000\n"
-"PO-Revision-Date: 2025-09-02 00:23+0200\n"
+"PO-Revision-Date: 2025-12-06 13:12+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -724,10 +724,9 @@ msgid "Inline Note"
 msgstr "Lerro barruko oharra"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Poligonoa iruzkinarekin"
+msgstr "Gezia iruzkinarekin"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -758,10 +757,9 @@ msgid "Polygon"
 msgstr "Poligonoa"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Zigilua iruzkinarekin"
+msgstr "Laukizuzena iruzkinarekin"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -770,10 +768,9 @@ msgid "Rectangle"
 msgstr "Laukizuzena"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Azpimarra iruzkinarekin"
+msgstr "Elipsea iruzkinarekin"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -888,11 +885,9 @@ msgid "Rich Media"
 msgstr "Euskarri aberastua"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "Idatzohar"
+msgstr "Idatzoharra"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1675,13 +1670,11 @@ msgid "Page %1"
 msgstr "%1 orria"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "Idatzohar"
+msgstr[0] "Idatzoharra"
 msgstr[1] "%1 idatzohar"
 
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
@@ -2289,16 +2282,14 @@ msgid "Search…"
 msgstr "Bilatu..."
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
-msgstr "Zabaldu guztiak"
+msgstr "Zabaldu dena"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
-msgstr "Tolestu guztia"
+msgstr "Tolestu dena"
 
 #: part/bookmarklist.cpp:263
 #, kde-format
@@ -3851,10 +3842,9 @@ msgid "Copy to Clipboard"
 msgstr "Kopiatu arbelera"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Kopiatu testua arbelera"
+msgstr "Kopiatu testua (Lerro jauzirik gabe)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format
@@ -4932,14 +4922,12 @@ msgstr ""
 "kokaleku batean gordetzen."
 
 #: part/part.cpp:3174
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Zabaldu atal osoa"
 
 #: part/part.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Tolestu atal osoa"
 

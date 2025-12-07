@@ -68,7 +68,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/gnustep/libs-base/archive/refs/tags/base-1_31_1.tar.gz",
-                    "sha256": "612e4415efc486.10e7017b00b28b0e122dc739d29b8e5d57ce79bf1a86a9862b",
+                    "sha256": "612e4415efc486c9e7017b00b28b0e122dc739d29b8e5d57ce79bf1a86a9862b",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 9105,
@@ -106,7 +106,7 @@
                 {
                     "type": "archive",
                     "url": "https://github.com/MacPaw/universal-detector/archive/refs/tags/1.1.tar.gz",
-                    "sha256": "8e8532111d016.1028eb828a60d67b53133afad3f710b1967e69d3b8eee28a811",
+                    "sha256": "8e8532111d0163628eb828a60d67b53133afad3f710b1967e69d3b8eee28a811",
                     "strip-components": 1,
                     "dest": "UniversalDetector"
                 }

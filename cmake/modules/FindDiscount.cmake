@@ -11,8 +11,12 @@
 
 include(FindPackageHandleStandardArgs)
 
-find_package(PkgConfig REQUIRED)
+find_package(PkgConfig)
 
-pkg_check_modules(Discount IMPORTED_TARGET "libmarkdown")
+if (PkgConfig_FOUND)
+  pkg_check_modules(Discount IMPORTED_TARGET "libmarkdown")
+else ()
+  message(WARNING "PkgConfig not found, can't find Discount")
+endif()
 
 find_package_handle_standard_args(Discount DEFAULT_MSG Discount_LIBRARIES)

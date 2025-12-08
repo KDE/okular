@@ -80,7 +80,7 @@ function AFSimple_Calculate( cFunction, cFields )
     {
         ret /= cFields.length;
     }
-    event.value = util.numberToString( ret, "g", 32, "en_US" ).replace(/,/g, "");
+    event.value = util.numberToString( ret, 0 /* default format */, 32, 1 /* sepStyle . as decimal separator     no thousand separators */ );
 }
 
 
@@ -118,31 +118,8 @@ function AFNumber_Format( nDec, sepStyle, negStyle, currStyle, strCurrency, bCur
         return;
     }
 
-    var ret;
     var localized = AFMakeNumber( event.value );
-
-    if ( sepStyle === 2 || sepStyle === 3 )
-    {
-        // Use de_DE as the locale for the dot separator format
-        ret = util.numberToString( localized, "f", nDec, 'de_DE' );
-
-        if ( sepStyle === 3 )
-        {
-            // No thousands separators. Remove all dots from the DE format.
-            ret = ret.replace( /\./g, '' );
-        }
-    }
-    else
-    {
-        // Otherwise US
-        ret = util.numberToString( localized, "f", nDec, 'en_US' );
-
-        if ( sepStyle === 1 )
-        {
-            // No thousands separators. Remove all commas from the US format.
-            ret = ret.replace( /,/g, '' );
-        }
-    }
+    var ret = util.numberToString( localized, 1 /* fixed format */, nDec, sepStyle );
 
     if ( strCurrency )
     {
@@ -437,34 +414,8 @@ function AFPercent_Format( nDec, sepStyle )
         return;
     }
 
-    var ret;
     var percentValue = AFMakeNumber( event.value ) * 100;
-    if ( sepStyle === 2 || sepStyle === 3 )
-    {
-        // Use de_DE as the locale for the dot separator format
-        ret = util.numberToString( percentValue, "f", nDec, 'de_DE' );
-
-        if ( sepStyle === 3 )
-        {
-            // No thousands separators. Remove all dots from the DE format.
-            ret = ret.replace( /\./g, '' );
-        }
-    }
-    else if ( sepStyle === 0 || sepStyle === 1 )
-    {
-        // Otherwise US
-        ret = util.numberToString( percentValue, "f", nDec, 'en_US' );
-
-        if ( sepStyle === 1 )
-        {
-            // No thousands separators. Remove all commas from the US format.
-            ret = ret.replace( /,/g, '' );
-        }
-    }
-    else if ( sepStyle === 4 )
-    {
-        ret = util.numberToString( percentValue, "f", nDec, 'de_CH');
-    }
+    var ret = util.numberToString( percentValue, 1 /* fixed format */, nDec, sepStyle );
     ret += "%";
     event.value = ret;
 }

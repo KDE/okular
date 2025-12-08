@@ -15,6 +15,7 @@
 #include <QUrl>
 
 #include <cmath>
+#include <iomanip>
 
 using namespace Okular;
 
@@ -83,28 +84,124 @@ QJSValue JSUtil::printd(const QJSValue &oFormat, const QDateTime &oDate) const
     return defaultLocale.toString(oDate, format);
 }
 
-/** Converts a Number to a String using l10n
+class Style0 : public std::numpunct<wchar_t>
+{
+protected:
+    wchar_t do_decimal_point() const override
+    {
+        return '.';
+    }
+    wchar_t do_thousands_sep() const override
+    {
+        return ',';
+    }
+    std::string do_grouping() const override
+    {
+        return "\3";
+    }
+};
+
+class Style1 : public std::numpunct<wchar_t>
+{
+protected:
+    wchar_t do_decimal_point() const override
+    {
+        return '.';
+    }
+};
+
+class Style2 : public std::numpunct<wchar_t>
+{
+protected:
+    wchar_t do_decimal_point() const override
+    {
+        return ',';
+    }
+    wchar_t do_thousands_sep() const override
+    {
+        return '.';
+    }
+    std::string do_grouping() const override
+    {
+        return "\3";
+    }
+};
+
+class Style3 : public std::numpunct<wchar_t>
+{
+protected:
+    wchar_t do_decimal_point() const override
+    {
+        return ',';
+    }
+};
+
+class Style4 : public std::numpunct<wchar_t>
+{
+protected:
+    wchar_t do_decimal_point() const override
+    {
+        return '.';
+    }
+    wchar_t do_thousands_sep() const override
+    {
+        // Note this is ’ (U+2019) not ' (U+0027)
+        return L'’';
+    }
+    std::string do_grouping() const override
+    {
+        return "\3";
+    }
+};
+
+/** Converts a Number to a String using the given separator style
  *
- * String numberToString( Number number, String format = 'g', int precision = 6,
- *                        String LocaleName = system )
+ * String numberToString( Number number, int formatStyle, int precision, int separatorStyle )
+ *
+ * formatStyle is an integer denoting format style
+ *          0 => default format style
+ *          1 => fixed format style
+ *
+ * sepStyle is an integer denoting separator style
+ *          0 => . as decimal separator   , as thousand separators => 1,234.56
+ *          1 => . as decimal separator     no thousand separators => 1234.56
+ *          2 => , as decimal separator   . as thousand separators => 1.234,56
+ *          3 => , as decimal separator     no thousand separators => 1234,56
+ *          4 => . as decimal separator     ’ as thousand separators => 1’234.56%
  */
-QString JSUtil::numberToString(double number, const QString &fmt, int precision, const QString &localeName) const
+QString JSUtil::numberToString(double number, int formatStyle, int precision, int separatorStyle) const
 {
     if (std::isnan(number)) {
         return QStringLiteral("NaN");
     }
 
-    QChar format = QLatin1Char('g');
-    if (!fmt.isEmpty()) {
-        format = fmt[0];
+    std::wostringstream oss;
+    std::numpunct<wchar_t> *customFormatter;
+    switch (separatorStyle) {
+    case 1:
+        customFormatter = new Style1();
+        break;
+    case 2:
+        customFormatter = new Style2();
+        break;
+    case 3:
+        customFormatter = new Style3();
+        break;
+    case 4:
+        customFormatter = new Style4();
+        break;
+    default:
+        customFormatter = new Style0();
+        break;
     }
+    oss.imbue(std::locale(oss.getloc(), customFormatter));
 
-    QLocale locale;
-    if (!localeName.isEmpty()) {
-        locale = QLocale(localeName);
+    if (formatStyle == 1) {
+        std::fixed(oss);
     }
+    oss << std::setprecision(precision) << number;
 
-    return locale.toString(number, format.toLatin1(), precision);
+    return QString::fromStdWString(oss.str());
 }
 
 /** Converts a String to a Number trying with the current locale first and

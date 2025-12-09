@@ -413,27 +413,6 @@
             ]
         },
         {
-            "name": "ffmpeg",
-            "config-opts": [
-                "--enable-pic",
-                "--enable-shared",
-                "--disable-doc",
-                "--disable-static",
-                "--enable-gpl",
-                "--enable-libvpx",
-                "--enable-libmp3lame",
-                "--enable-libvorbis",
-                "--enable-libopus"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://ffmpeg.org/releases/ffmpeg-4.4.5.tar.xz",
-                    "sha256": "f9514e0d3515aee5a271283df716.10e1d1ff7274b15853bcd84e144be416ab07"
-                }
-            ]
-        },
-        {
             "name": "phonon",
             "config-opts": [
                 "-DBUILD_TESTING=OFF",

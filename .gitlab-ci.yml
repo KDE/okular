@@ -19,6 +19,7 @@ include:
     - /gitlab-templates/craft-android-qt6-apks.yml
     - /gitlab-templates/craft-macos-arm64-qt6.yml
     - /gitlab-templates/craft-macos-x86-64-qt6.yml
+    - /gitlab-templates/documentation.yml
 
 # Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
 build_ubuntu_24_10:

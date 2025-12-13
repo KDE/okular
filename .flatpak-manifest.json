@@ -169,7 +169,7 @@
                     "sha256": "8a247f57d1e3e6f6d11413b12a6f28a9d388de110adc0ec608d893180ed7097b",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 106.10,
+                        "project-id": 10649,
                         "stable-only": true,
                         "url-template": "https://libzip.org/download/libzip-$version.tar.xz"
                     }
@@ -275,7 +275,7 @@
                     "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": 36.10,
+                        "project-id": 3687,
                         "stable-only": true,
                         "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
                     }

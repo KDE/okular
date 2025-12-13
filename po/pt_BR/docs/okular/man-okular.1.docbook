@@ -19,11 +19,11 @@
 >yurchor@ukr.net</email
 ></author>
 <date
->14/02/2019</date>
+>19/02/2022</date>
 <releaseinfo
->Okular 1.7</releaseinfo>
+>Okular 22.04</releaseinfo>
 <productname
->KDE Applications</productname>
+>KDE Gear</productname>
 </refentryinfo>
 
 <refmeta>
@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Abre um documento na página indicada.</para>
+>Abra uma página com um determinado número no documento.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,22 @@
 ></term>
 <listitem>
 <para
->Localiza um termo de pesquisa no texto.</para>
+>Tenta localizar e destacar um determinado texto no documento. Só funciona se apenas um documento for fornecido como argumento do comando no okular.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>texto</replaceable
+></option
+></term>
+<listitem>
+<para
+>Define o comando do editor externo. Você não pode definir o comando do editor em uma instância do Okular já em execução. Observe que <option
+>--unique</option
+> não é suportado ao definir o comando do editor na linha de comando.</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -183,9 +198,9 @@
 ><title
 >Sugestões</title>
 <para
->No IRC, irc.freenode.net #okular; através de e-mail, okular-devel@kde.org; ou na página Web, &lt;<ulink url="http://okular.kde.org/"
->http://okular.kde.org/</ulink
->&gt;</para>
+>No IRC, irc.libera.chat #okular ou por e-mail, okular-devel@kde.org ou no site, &lt;<ulink url="https://okular.kde.org/"
+>https://okular .kde.org/</ulink
+>&gt;.</para>
 </refsect1>
 
 <refsect1>
@@ -205,12 +220,12 @@
 ></userinput
 >).</member>
 <member
->kf5options(7)</member>
+>kf6options(7)</member>
 <member
->qt5options(7)</member>
+>qt6options(7)</member>
 <member
->Existem mais informações disponíveis em <ulink url="http://okular.kde.org/"
->http://okular.kde.org/</ulink
+>Existem mais informações disponíveis em <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
 ></member>
 </simplelist>
 </refsect1>
@@ -229,8 +244,8 @@
 <para
 >Direitos autorais &copy; 2006-2009, de Pino Toscano</para>
 <para
->Licença: GNU-GPL versão 2 &lt;<ulink url="http://www.gnu.org/licenses/gpl-2.0.html"
->http://www.gnu.org/licenses/gpl-2.0.html</ulink
+>Licença: GNU-GPL versão 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
 >&gt;</para>
 </refsect1>
 </refentry>

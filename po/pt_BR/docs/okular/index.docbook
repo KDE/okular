@@ -1,10 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY latex "L<superscript
->A</superscript
->T<subscript
->E</subscript
->X">
   <!ENTITY kpdf "<application
 >KPDF</application
 >">
@@ -12,9 +7,8 @@
   <!ENTITY % addindex "IGNORE">
 ]>
 <!-- TODO
-add chapter about navigation panel
-Show/Hide Contens/Thumbnails/Reviews/Bookmarks bar to save screen space
-Use Small Icons and deselect Show Text to minimize the navigation panel
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
 Describe all actions only possible in the navigation bars:
 Switching between documents using bookmarks
 Context menu actions like Rename Bookmarks etc.)
@@ -48,6 +42,20 @@ Context menu actions like Rename Bookmarks etc.)
 			</author>
 			<othercredit role="translator"
 ><firstname
+>Marcus</firstname
+><surname
+>Gama</surname
+><affiliation
+><address
+><email
+>marcus.gama@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
 >André Marcelo</firstname
 ><surname
 >Alvarenga</surname
@@ -65,9 +73,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->08/01/2020</date>
+>19/02/2022</date>
 		<releaseinfo
->1.10 (Applications 20.04)</releaseinfo>
+>22.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -91,8 +99,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >dvi</keyword>
 			<keyword
->chm</keyword>
-			<keyword
 >xps</keyword>
 			<keyword
 >comicbook</keyword>
@@ -103,8 +109,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >mobipocket</keyword>
 			<keyword
->plucker</keyword>
-			<keyword
 >anotação</keyword>
 		</keywordset>
 	</bookinfo>
@@ -114,7 +118,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<para
 >&okular; é um visualizador de documentos universal do &kde;, baseado no código do aplicativo &kpdf;. Embora seja baseado no código do &kpdf;, o &okular; tem alguns recursos exclusivos, tais como: modo visão geral, suporte à apresentação melhorado e suporte a anotações. </para>
 		<para
->O &okular; tem suporte a um conjunto de formatos diferentes, como &PDF;, &PostScript;, Tiff, CHM, DjVU, Imagens (png, jpg, &etc;) XPS, Open Document (ODT), Comic Book, Plucker, EPub, Fax e Markdown. Para todos os formatos suportados e suas respectivas funcionalidades, consulte a página <ulink url="http://okular.kde.org/formats.php"
+>O &okular; tem suporte a um conjunto de formatos diferentes, como &PDF;, &PostScript;, Tiff, DjVU, Imagens (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax e Markdown. Para todos os formatos suportados e suas respectivas funcionalidades, consulte o site <ulink url="https://okular.kde.org/formats.php"
 > Tratamento de Formatos de Documentos do &okular;</ulink
 >. </para>
 		<screenshot>
@@ -138,7 +142,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Abrindo arquivos</title>
 			<para
->Para visualizar qualquer arquivo suportado pelo &okular;, selecione <menuchoice
+>Para abrir qualquer arquivo suportado pelo &okular;, selecione <menuchoice
 ><guimenu
 >Arquivo</guimenu
 ><guimenuitem
@@ -198,15 +202,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >Esta seção descreve como você pode navegar pelo documento no &okular;.</para>
 			<para
->Existem diversas formas de rolagem da área de visualização. Uma delas é usar as teclas <keysym
->Seta para cima</keysym
-> e <keysym
->Seta para baixo</keysym
->. Você também pode usar a barra de rolagem, a roda do mouse ou as teclas <keycap
->Page Up</keycap
-> e <keycap
->Page Down</keycap
->. </para>
+>Existem diversas formas de rolagem da área de visualização. Uma delas é usar as teclas &Up; e &Down;. Você também pode usar a barra de rolagem, a roda do mouse ou as teclas &PgUp; e &PgDn;. </para>
 			<para
 >Você pode usar as teclas de navegação no estilo <application
 >vim</application
@@ -231,26 +227,18 @@ Context menu actions like Rename Bookmarks etc.)
 			  <para
 >Ao visualizar um documento no <link linkend="presentationMode"
 >modo Apresentação</link
->, use as teclas <keysym
->Seta para cima</keysym
-> e <keysym
->Seta para baixo</keysym
-> para alternar entre as páginas ou slides. O número e a posição do slide atual serão mostrados no canto superior direito da tela. </para>
+>, use as teclas &Up; e &Down; para alternar entre as páginas ou slides. O número e a posição do slide atual serão mostrados no canto superior direito da tela. </para>
 			</note>
 			<para
 >Se quiser ler um documento com várias páginas, use a funcionalidade de deslocamento automático do &okular;. Inicie o deslocamento automático com as teclas <keycombo action="simul"
->&Shift;<keysym
->Baixo</keysym
-></keycombo
+>&Shift;&Down;</keycombo
 > ou <keycombo action="simul"
->&Shift;<keysym
->Cima</keysym
-></keycombo
+>&Shift;&Up;</keycombo
 >. Depois, use essas teclas para aumentar e diminuir a velocidade de deslocamento. Você poderá iniciar ou parar o deslocamento automático temporariamente, usando a tecla &Shift;; pressione outra tecla qualquer para desativar esta funcionalidade. </para>
 			<para
 >Outra forma de navegar por um documento com diversas páginas é usar o ponteiro do mouse. Arraste a página para cima ou para baixo, continuando a arrastar até atingir a base ou o topo da tela. Assim que passar os limites de uma página, o cursor do mouse aparece no topo ou na base da tela novamente, permitindo continuar o arrastamento. </para>
 			<para
->O painel de navegação do lado esquerdo da tela habilita outras duas formas de navegação pelo documento: </para>
+>A barra lateral do lado esquerdo da tela habilita outras duas formas de navegação pelo documento: </para>
 			<itemizedlist>
 				<listitem>
 					<para
@@ -275,20 +263,14 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para
 >Se o documento tiver anotações, ative a visão das <guilabel
->Revisões</guilabel
-> e clique nas anotações ou selecione-as com as teclas <keysym
->Seta para cima</keysym
-> e <keycap
->Seta para baixo</keycap
-> e pressione <keycap
->Return</keycap
-> para acessar a página associada. </para>
+>Anotações</guilabel
+> e clique nas anotações ou selecione-as com as teclas &Up; e &Down; e pressione &Enter; para acessar a página associada. </para>
 				</listitem>
 			</itemizedlist>
 			<para
->Alguns documentos possuem links. Nesse caso, você pode clicar neles que a visualização será alterada para a página referenciada. Se o link for uma página Web ou algum outro documento, o aplicativo padrão responsável por esse formato no &kde; será executado. Por exemplo, ao clicar no link que direciona para <quote
->http://www.kde.org</quote
->, será aberta uma página Web no navegador padrão do &kde;. </para>
+>Alguns documentos possuem links. Nesse caso, você pode clicar neles que a visualização será alterada para a página referenciada. Se o link for um site ou algum outro documento, o aplicativo padrão responsável por esse formato no &kde; será executado. Por exemplo, ao clicar no link que direciona para <quote
+>https://www.kde.org</quote
+>, será aberto um site no navegador padrão do &kde;. </para>
 			<important>
 			  <para
 >Os links internos do documento funcionam somente quando for usada a <link linkend="menutools"
@@ -328,11 +310,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para
->Você pode avançar no documento usando a tecla <keycap
->Espaço</keycap
-> ou <keycap
->Page Down</keycap
->. Para ir para a próxima página, use o botão <guibutton
+>Você pode avançar no documento usando a tecla &Space; ou &PgDn;. Para ir para a próxima página, use o botão <guibutton
 >Próxima página</guibutton
 > da barra de ferramentas ou <menuchoice
 > <guimenu
@@ -344,9 +322,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 				<listitem>
 					<para
->Você pode voltar no documento usando a tecla &Backspace; ou <keycap
->Page Up</keycap
->. Para ir para a página anterior, use o botão <guibutton
+>Você pode voltar no documento usando a tecla &Backspace; ou &PgUp;. Para ir para a página anterior, use o botão <guibutton
 >Página anterior</guibutton
 > da barra de ferramentas ou <menuchoice
 > <guimenu
@@ -361,9 +337,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Você pode voltar para as posições no documento de onde veio em ordem cronológica. Considere, &eg;, ler a frase <quote
 >Como apresentado em [15], …</quote
 > e quer consultar rapidamente a referência [15]. Para isso, você pode clicar na mesma, para que o &okular; salte para a lista de referências. Se usar <keycombo
->&Alt;&Shift;<keysym
->Esquerda</keysym
-></keycombo
+>&Alt;&Shift;&Left;</keycombo
 > ou <menuchoice
 > <guimenu
 >Ir</guimenu
@@ -375,9 +349,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para
 >Você pode avançar no documento, após ter recuado, com a combinação de teclas <keycombo
->&Alt;&Shift;<keysym
->Direita</keysym
-></keycombo
+>&Alt;&Shift;&Right;</keycombo
 > ou usando a opção <menuchoice
 > <guimenu
 >Ir</guimenu
@@ -639,10 +611,56 @@ Context menu actions like Rename Bookmarks etc.)
 			</screenshot>
 			<note>
 				<para
->Esta funcionalidade só está disponível para documentos &PDF;. Você precisa instalar pelo menos a versão 0.51 do <ulink url="http://poppler.freedesktop.org/"
+>Esta funcionalidade só está disponível para documentos &PDF;. Você precisa instalar pelo menos a versão 0.51 do <ulink url="https://poppler.freedesktop.org/"
 >Poppler</ulink
 > para obter mais informações sobre a assinatura, a versão 0.68 para obter informações sobre a localização/motivo da assinatura e a 0.73 para obter informações sobre o certificado da assinatura. </para>
 			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>Adicionando assinaturas digitais</title>
+				<para
+>Você pode adicionar assinaturas digitais a documentos usando a ação correspondente no menu <menuchoice
+><guimenu
+>Ferramentas</guimenu
+></menuchoice
+>. </para>
+				<para
+>Para poder assinar um documento, você precisa ter um certificado de assinatura <acronym
+>PKCS</acronym
+> válido disponível em seu sistema. O &okular; não tem a capacidade de criar tais certificados, pois eles precisam ser emitidos por autoridades certificadoras para serem úteis para validação, &etc; </para>
+				<para
+>Usamos a biblioteca Poppler para lidar com a assinatura de documentos &PDF; e o Poppler usa a biblioteca NSS para lidar com certificados. No momento da escrita deste documento, o Poppler tentará usar um dos seguintes repositórios de certificados NSS em ordem (o primeiro que existir): </para>
+				<itemizedlist>
+					<listitem
+><para
+>O repositório de certificados de usuário atual do Firefox.</para
+></listitem>
+					<listitem
+><para
+>O repositório de certificados do sistema <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>O usuário atual <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>Se você quiser usar um repositório de certificados personalizado, poderá fazê-lo configurando-o na seção <link linkend="config-pdf-digital-signatures"
+>Configuração do backend &PDF;</link
+> da janela <link linkend="configure-backends"
+>Configurar backends...</link
+>. </para>
+				<note>
+					<para
+>Esta funcionalidade está disponível apenas para documentos &PDF;. Você precisa instalar pelo menos a versão 21.01 do <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> para poder adicionar assinaturas digitais a um documento. </para>
+				</note>
+			</sect2>
 		</sect1>
 		<sect1 id="annotations">
 			<title
@@ -669,7 +687,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Realce em amarelo</guilabel
 > e o <guilabel
 >Sublinhado em preto</guilabel
-> para os arquivos de texto como, &eg;, &PDF;.</para>
+>, podem ser usadas com arquivos contendo texto (&eg;, &PDF;).</para>
 		      <para
 >As anotações gráficas, como <guilabel
 >Nota instantânea</guilabel
@@ -691,15 +709,16 @@ Context menu actions like Rename Bookmarks etc.)
 >Elipse</guilabel
 > e <guilabel
 >Máquina de escrever</guilabel
->, para todos os formatos que o &okular; possui suporte.</para>
+>.</para>
+			  <para
+>As anotações gráficas não estão limitadas apenas para arquivos &PDF;, podendo ser usadas em qualquer formato com suporte no &okular;.</para>
 			<para
->Se usar o menu de contexto na área de <guilabel
->Revisões</guilabel
-> do painel de navegação ou na janela principal, você poderá abrir uma <guilabel
+>Usando o menu <guilabel
+>Anotações</guilabel
+>, você pode adicionar uma <guilabel
 >Nota instantânea</guilabel
-> para os vários tipos de anotações e adicionar ou editar comentários.</para>
-			<para
->As anotações não estão limitadas apenas para arquivos &PDF;, podendo ser usadas em qualquer formato com suporte no &okular;.</para>
+> ou qualquer outro tipo de anotação para adicionar ou editar comentários.</para>
+
 			<para
 >O &okular; possui um recurso chamado "arquivo de documento". Trata-se de um formato específico do &okular; para transportar o documento com os vários metadados associados a ele (atualmente, apenas as anotações). Você pode salvar um "arquivo de documento" para o documento aberto, escolhendo <menuchoice
 ><guimenu
@@ -732,21 +751,21 @@ Context menu actions like Rename Bookmarks etc.)
 > para salvá-lo como um novo arquivo. </para>
 				<note>
 					<para
->Devido a limitações do DRM - Digital Rights Management (normalmente com documentos em &PDF;), pode não ser possível a adição, edição ou remoção de propriedades e anotações. </para>
+>Observe que adicionar, editar ou remover anotações pode não ser possível em arquivos com DRM ativado. </para>
 				</note>
 				<note>
 				  <para
->Qualquer ação sobre as anotações (criação, remoção, edição das suas propriedades, mudança de posição com &Ctrl;+arrastar o mouse e edição do conteúdo de texto) podem ser <link linkend="edit-undo"
->desfeitas</link
+>É possível <link linkend="edit-undo"
+>desfazer</link
 > ou <link linkend="edit-redo"
->refeitas</link
-> com o item correspondente do menu <guimenu
+>refazer</link
+> qualquer ação de anotação usando o item correspondente no menu <guimenu
 >Editar</guimenu
->. Também é possível desfazer a ação ao pressionar <keycombo
+>. Também é possível desfazer a ação pressionando <keycombo
 >&Ctrl;<keycap
 >Z</keycap
 ></keycombo
-> e refazê-la ao pressionar <keycombo
+> e refazer uma ação desfeita anteriormente pressionando <keycombo
 >&Ctrl;&Shift;<keycap
 >Z</keycap
 ></keycombo
@@ -760,19 +779,21 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Adição de anotações</title>
 				<para
->Para adicionar anotações ao documento, você precisa ativar a barra de ferramentas de anotações. Isso é feito ao selecionar a opção <menuchoice
+>Para adicionar anotações ao documento, você pode usar o botão <guilabel
+>Anotações rápidas</guilabel
+> na barra de ferramentas principal do &okular; ou ativar a barra de ferramentas de anotação. Isso é feito selecionando <menuchoice
 ><guimenu
 >Ferramentas</guimenu
 ><guimenuitem
->Revisão</guimenuitem
+>Anotações</guimenuitem
 ></menuchoice
-> ou pressionando a tecla <keycap
+> ou pressionando <keycap
 >F6</keycap
->. Assim que a barra de ferramentas de anotações for exibida, basta pressionar um dos botões ou usar os atalhos de teclado (teclas de <keycap
+>. Assim que a barra de ferramentas de anotação for exibida, basta pressionar um dos botões ou usar os atalhos de teclado (teclas de <keycap
 >1</keycap
 > a <keycap
 >9</keycap
->) para iniciar a construção da anotação. </para>
+>) para usar essa anotação. </para>
 				<para
 >A barra de anotações ajuda-o a fazer anotações com desenhos, formas e mensagens de texto. Você pode usar a barra de anotações para marcar um documento (&eg;, adicionar linhas, elipses, polígonos, carimbos, realces, sublinhados, &etc;). A tabela abaixo descreve exatamente o que faz o conjunto de botões padrão. </para>
 				<informaltable>
@@ -793,112 +814,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-note-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Nota instantânea </para>
-					</entry>
-					<entry>
-					  <para
->Para desenhar uma nota com várias linhas. A nota poderá ser vista com um clique duplo sobre um ícone do documento. </para>
-					  <para
->Clique no botão da ferramenta e depois no local do documento onde a nota deve ser adicionada. Indique o texto da nota e depois clique no botão <guilabel
->Fechar esta nota</guilabel
-> no canto superior direito da janela. </para>
-					  <para
->É possível definir a <guilabel
->Cor</guilabel
->, a <guilabel
->Opacidade</guilabel
-> e o <guilabel
->Ícone</guilabel
-> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-note-inline-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Nota integrada </para>
-					</entry>
-					<entry>
-					  <para
->Para desenhar uma nota integrada. A nota será apresentada integrada ao documento. </para>
-					  <para
->Clique no botão da ferramenta e depois com o &LMB; para colocar o canto superior esquerdo da nota. Depois arraste para colocar o canto inferior direito. Indique o texto da nota e depois clique em <guibutton
->OK</guibutton
-> para salvar a nota, em <guibutton
->Cancelar</guibutton
-> para cancelar a introdução da nota ou em <guibutton
->Limpar</guibutton
-> para apagar o conteúdo da nota. </para>
-					  <para
->É possível definir a <guilabel
->Cor</guilabel
->, a <guilabel
->Opacidade</guilabel
->, a <guilabel
->Fonte</guilabel
->, o <guilabel
->Alinhamento</guilabel
-> e a <guilabel
->Largura da borda</guilabel
-> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-ink-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Linha livre </para>
-					</entry>
-					<entry>
-					  <para
->Para desenhar linhas à mão livre. </para>
-					  <para
->Clique no botão da ferramenta e depois clique com o &LMB; para marcar o início da linha, depois arraste para desenhar a linha. </para>
-					  <para
->É possível definir a <guilabel
->Cor</guilabel
->, a <guilabel
->Opacidade</guilabel
-> e a <guilabel
->Largura</guilabel
-> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-highlighter-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
@@ -911,7 +827,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Para realçar o texto no documento com a cor de fundo indicada. </para>
 					  <para
->Clique no botão da ferramenta e depois clique com o &LMB; para marcar o início do texto a realçar, depois arraste para fazer o realce. </para>
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e arraste para realçar um trecho de texto. </para>
 					  <para
 >É possível definir o <guilabel
 >Tipo</guilabel
@@ -937,120 +853,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-line-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Linha reta </para>
-					</entry>
-					<entry>
-					  <para
->Para marcar com uma linha. </para>
-					  <para
->Clique no botão da ferramenta e depois clique com o &LMB; para marcar o ponto inicial da linha e depois arraste para marcar o ponto final. Para finalizar, clique mais uma vez. </para>
-					  <para
->É possível definir a <guilabel
->Cor</guilabel
->, a <guilabel
->Opacidade</guilabel
->, a <guilabel
->Largura</guilabel
->, o <guilabel
->Início da linha</guilabel
->, o <guilabel
->Fim de linha</guilabel
->, o <guilabel
->Comprimento da linha principal</guilabel
-> e <guilabel
->Comprimento das extensões da linha principal</guilabel
-> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-polygon-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Polígono </para>
-					</entry>
-					<entry>
-					  <para
->Para desenhar uma figura plana fechada com três ou mais segmentos. A nota correspondente poderá ser vista com clique duplo dentro do polígono. </para>
-					  <para
->Clique no botão da ferramenta e depois com o &LMB; para marcar o primeiro vértice do polígono, depois arraste para marcar o segundo vértice. Continue até que tenha desenhado todo o polígono até ao primeiro vértice. Clique duas vezes se quiser adicionar alguma nota ao polígono. Digite o texto da nota e depois clique em <guibutton
->OK</guibutton
-> para salvar a nota, em <guibutton
->Cancelar</guibutton
-> para cancelar a introdução da nota ou em <guibutton
->Limpar</guibutton
-> para apagar o conteúdo da nota. </para>
-					  <para
->É possível definir a <guilabel
->Cor</guilabel
->, a <guilabel
->Opacidade</guilabel
->, a <guilabel
->Forma de preenchimento</guilabel
-> (e sua cor), assim com a <guilabel
->Largura</guilabel
-> do polígono. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-stamp-okular.png" format="PNG"/>
-						</imageobject>
-					      </inlinemediaobject>
-					  </para>
-					</entry>
-					<entry>
-					  <para
->Carimbo </para>
-					</entry>
-					<entry>
-					  <para
->Para marcar o texto ou imagem com alguma forma predefinida. </para>
-					  <para
->Clique no botão da ferramenta e depois no &LMB; para colocar o carimbo. </para>
-					  <para
->É necessário um único clique para colocar um carimbo quadrado (útil para ícones). Para adicionar um carimbo retangular, você poderá clicar com o &LMB; e mantê-lo pressionado para colocar o ponto superior esquerdo, arrastando depois para colocar o inferior direito. </para>
-					  <para
->É possível definir a <guilabel
->Opacidade</guilabel
-> e o <guilabel
->Símbolo do carimbo</guilabel
->. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
->Propriedades</guimenuitem
->. </para>
-					  <warning>
-					  	 <para
->Esta funcionalidade é experimental. Carimbos personalizados inseridos em documentos &PDF; serão visíveis apenas no &okular;. </para>
-					  </warning>
-					</entry>
-				      </row>
-				      <row>
-					<entry>
-					  <para>
-					      <inlinemediaobject>
-						<imageobject>
-						  <imagedata fileref="tool-underline-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
@@ -1061,9 +864,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Para sublinhar algum texto. </para>
+>Sublinha o texto com uma linha reta. </para>
 					  <para
->Clique no botão da ferramenta e depois com o &LMB; para definir o início do trecho de texto sublinhado, em seguida, arraste-o para o sublinhar. </para>
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e arraste para sublinhar um trecho de texto. </para>
 					  <para
 >É possível definir o <guilabel
 >Tipo</guilabel
@@ -1089,20 +892,316 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-ellipse-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
 					</entry>
 					<entry>
 					  <para
->Elipse </para>
+>Linha ondulada </para>
 					</entry>
 					<entry>
 					  <para
->Para desenhar uma elipse ou retângulo em torno de uma área determinada. </para>
+>Sublinha o texto com uma linha ondulada. </para>
 					  <para
->Clique no botão da ferramenta e depois com o &LMB; para definir o canto superior esquerdo do retângulo circunscrito da elipse. Depois, arraste para definir o canto inferior direito. </para>
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e arraste para sublinhar um trecho de texto com uma linha ondulada. </para>
+					  <para
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Realce</guimenuitem
+>, <guimenuitem
+>Ondulado</guimenuitem
+>, <guimenuitem
+>Linha ondulada</guimenuitem
+> ou <guimenuitem
+>Sublinhado</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+> e a <guilabel
+>Opacidade</guilabel
+> do sublinhado. Basta clicar com o botão direito do mouse sobre o texto sublinhado e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Tachado </para>
+					</entry>
+					<entry>
+					  <para
+>Tacha algum texto. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e arraste para riscar um trecho de texto com um traço ondulado. </para>
+					  <para
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Realce</guimenuitem
+>, <guimenuitem
+>Ondulado</guimenuitem
+>, <guimenuitem
+>Linha ondulada</guimenuitem
+> ou <guimenuitem
+>Sublinhado</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+> e a <guilabel
+>Opacidade</guilabel
+> do sublinhado. Basta clicar com o botão direito do mouse sobre o texto sublinhado e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Máquina de escrever </para>
+					</entry>
+					<entry>
+					  <para
+>Adiciona texto em um fundo transparente. Isso é útil para preencher formulários que não possuem campos de texto editáveis ​​integrados. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; onde deseja adicionar o canto superior esquerdo do texto e arraste para posicionar o canto inferior direito. Digite algum texto e clique em <guibutton
+>OK</guibutton
+> para salvá-lo, <guibutton
+>Limpar</guibutton
+> para apagar o texto e começar de novo ou <guibutton
+>Cancelar</guibutton
+> para cancelar. </para>
+					  <para
+>É possível definir a <guilabel
+>Fonte</guilabel
+> e a <guilabel
+>Cor do texto</guilabel
+>. Basta clicar com o botão direito do mouse no texto da máquina de escrever e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota integrada </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha uma nota integrada. A nota será apresentada integrada ao documento. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; onde deseja adicionar o canto superior esquerdo da nota e arraste para posicionar o canto inferior direito. Digite o texto da nota e clique em <guibutton
+>OK</guibutton
+> para salvar a nota, <guibutton
+>Limpar</guibutton
+> para apagar o texto da nota ou <guibutton
+>Cancelar</guibutton
+> para cancelar a criação da nota. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Fonte</guilabel
+>, o <guilabel
+>Alinhamento</guilabel
+> e a <guilabel
+>Largura da borda</guilabel
+> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Nota instantânea </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha uma nota com várias linhas. A nota poderá ser vista com um clique duplo sobre o ícone criado no documento. </para>
+					  <para
+>Clique no botão da ferramenta e depois no local do documento onde a nota deve ser adicionada. Indique o texto da nota e depois clique no botão <guilabel
+>Fechar esta nota</guilabel
+> no canto superior direito da janela. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+> e o <guilabel
+>Ícone</guilabel
+> da nota. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linha livre </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha linhas à mão livre. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e arraste para desenhar a linha. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+> e a <guilabel
+>Largura</guilabel
+> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Seta (lista suspensa) </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha uma seta entre dois pontos. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; para posicionar o ponto inicial da seta. Arraste para posicionar o ponto final da seta e clique mais uma vez. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Largura</guilabel
+>, o <guilabel
+>Início da linha</guilabel
+>, o <guilabel
+>Fim de linha</guilabel
+>, o <guilabel
+>Comprimento da linha principal</guilabel
+> e <guilabel
+>Comprimento das extensões da linha principal</guilabel
+> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Linha reta (lista suspensa) </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha uma linha entre dois pontos. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; para posicionar o ponto inicial da linha. Arraste para posicionar o ponto final da linha e clique mais uma vez. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Largura</guilabel
+>, o <guilabel
+>Início da linha</guilabel
+>, o <guilabel
+>Fim de linha</guilabel
+>, o <guilabel
+>Comprimento da linha principal</guilabel
+> e <guilabel
+>Comprimento das extensões da linha principal</guilabel
+> da linha. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Retângulo (lista suspensa) </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha um retângulo em torno de uma área determinada. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; para posicionar o canto superior esquerdo do retângulo e arraste para posicionar o canto inferior direito. </para>
 					  <para
 >É possível definir o <guilabel
 >Tipo</guilabel
@@ -1123,90 +1222,380 @@ Context menu actions like Rename Bookmarks etc.)
 >. </para>
 					</entry>
 				      </row>
-				     <row>
+				      <row>
 					<entry>
 					  <para>
 					      <inlinemediaobject>
 						<imageobject>
-						  <imagedata fileref="tool-typewriter-okular.png" format="PNG"/>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
 						</imageobject>
 					      </inlinemediaobject>
 					  </para>
 					</entry>
 					<entry>
 					  <para
->Máquina de escrever </para>
+>Elipse (lista suspensa) </para>
 					</entry>
 					<entry>
 					  <para
->A máquina de escrever possui letras opacas em fundo transparente, o que é útil para preencher formulários não interativos. </para>
+>Desenha uma elipse em torno de uma área determinada. </para>
 					  <para
->Clique no botão da ferramenta e depois com o &LMB; para colocar o canto superior esquerdo da nota. Depois arraste para colocar o canto inferior direito. Indique o texto da nota e depois clique em <guibutton
->OK</guibutton
-> para salvar a nota, em <guibutton
->Cancelar</guibutton
-> para cancelar a introdução da nota ou em <guibutton
->Limpar</guibutton
-> para apagar o conteúdo da nota. </para>
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; e mantenha pressionado para posicionar o canto superior esquerdo do retângulo circunscrito da elipse e arraste para posicionar o canto inferior direito. </para>
 					  <para
->É possível definir a <guilabel
->Fonte</guilabel
-> e a <guilabel
->Cor do texto</guilabel
->. Basta clicar com o botão direito do mouse no texto da máquina de escrever e selecionar o item de menu <guimenuitem
+>É possível definir o <guilabel
+>Tipo</guilabel
+> (<guimenuitem
+>Retângulo</guimenuitem
+> ou <guimenuitem
+>Elipse</guimenuitem
+>), a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Forma de preenchimento</guilabel
+> (e sua cor), assim com a <guilabel
+>Largura</guilabel
+> da borda. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
 >Propriedades</guimenuitem
 >. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Polígono (lista suspensa) </para>
+					</entry>
+					<entry>
+					  <para
+>Desenha uma forma fechada com três ou mais segmentos. A nota correspondente poderá ser vista com clique duplo dentro do polígono. </para>
+					  <para
+>Clique no botão da ferramenta e, em seguida, clique com o &LMB; para posicionar o primeiro vértice do polígono. Depois, arraste para o lugar do segundo vértice. Continue até desenhar todo o polígono e conectá-lo novamente ao primeiro vértice. Clique duas vezes para adicionar uma nota ao polígono. Digite o texto da nota e clique em <guibutton
+>OK</guibutton
+> para salvar a nota, <guibutton
+>Limpar</guibutton
+> para limpar a nota ou <guibutton
+>Cancelar</guibutton
+> para cancelar a entrada da nota. </para>
+					  <para
+>É possível definir a <guilabel
+>Cor</guilabel
+>, a <guilabel
+>Opacidade</guilabel
+>, a <guilabel
+>Forma de preenchimento</guilabel
+> (e sua cor), assim com a <guilabel
+>Largura</guilabel
+> do polígono. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Carimbo </para>
+					</entry>
+					<entry>
+					  <para
+>Insere uma forma predefinida no documento. </para>
+					  <para
+>Clique no botão da ferramenta para escolher o carimbo na lista suspensa e, em seguida, clique com o &LMB; para posicionar o carimbo. </para>
+					  <para
+>É necessário um único clique para colocar um carimbo quadrado (útil para ícones). Para adicionar um carimbo retangular, você poderá clicar com o &LMB; e mantê-lo pressionado para colocar o ponto superior esquerdo, arrastando depois para colocar o inferior direito. </para>
+					  <para
+>É possível definir a <guilabel
+>Opacidade</guilabel
+> e o <guilabel
+>Símbolo do carimbo</guilabel
+>. Basta clicar com o botão direito do mouse sobre o ícone da nota criada e selecionar o item de menu <guimenuitem
+>Propriedades</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>Esta funcionalidade é experimental. Carimbos personalizados inseridos em documentos &PDF; serão visíveis apenas no &okular;. </para>
+					  </warning>
 					</entry>
 				      </row>
 				      </tbody>
 				    </tgroup>
 				  </informaltable>
                                   <para
->Estas são as anotações padrão e fornecidas pelo &okular;. Ao usar a <link linkend="configannotations"
->página Anotações</link
-> da caixa de diálogo de configuração, você poderá adicionar as suas próprias anotações, como carimbos personalizados, formatação de texto com <guilabel
->Linha ondulada</guilabel
-> ou <guilabel
->Tachado</guilabel
->, ou uma forma geométrica, como um <guilabel
->Retângulo</guilabel
-> com cor interna para realçar determinadas regiões, &etc; </para>
+>Estas são as anotações padrão fornecidas pelo &okular;. Usando a <link linkend="configannotations"
+>Página de anotações</link
+> da janela de configuração, você pode adicionar suas próprias anotações, como carimbos personalizados, marcação de texto ou uma forma geométrica com cor interna para destacar regiões, &etc; </para>
                                   <note>
                                       <para
->É possível adicionar código em &latex; ao texto das anotações. Basta, adicionar <userinput
+>É possível adicionar código &latex; ao texto das anotações. Para isso, adicione <userinput
 >$$<replaceable
->código</replaceable
+>code</replaceable
 >$$</userinput
-> ao texto da anotação, onde o <replaceable
->código</replaceable
-> será qualquer equação válida em &latex;, seguindo as instruções na tela para permitir a renderização com uma distribuição de &latex; instalada no seu sistema. </para>
+> ao texto da anotação, onde <replaceable
+>code</replaceable
+> é qualquer equação &latex; válida. Siga as instruções que aparecerão na tela para renderizá-la usando uma distribuição &latex; instalada em seu sistema. </para>
                                   </note>
+				<para
+>É possível configurar a ferramenta selecionada usando a própria barra de ferramentas de anotação. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>Botão </entry>
+					<entry
+>Nome da opção </entry>
+					<entry
+>Descrição </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Largura da linha </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para escolher a largura na lista suspensa. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Cor da anotação </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para escolher a cor do texto ou da borda da sua anotação. Você pode escolher uma das cores predefinidas ou clicar no item <guimenuitem
+>Cor personalizada...</guimenuitem
+> para abrir a janela de seleção de cor. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Cor de preenchimento da anotação </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para escolher a cor de preenchimento da sua anotação. Você pode escolher uma das cores predefinidas ou clicar no item <guimenuitem
+>Cor personalizada...</guimenuitem
+> para abrir a janela de seleção de cor. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Opacidade da anotação </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para escolher a opacidade da sua anotação na lista suspensa (<guimenuitem
+>100%</guimenuitem
+> cria anotações opacas). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Fonte da anotação </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para abrir a janela de seleção de fontes. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Configurações avançadas para a ferramenta de anotação atual </para>
+					</entry>
+					<entry>
+					  <para
+>Clique neste botão para abrir a janela de configuração geral da sua anotação. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>Existem três botões de utilidade adicionais na barra de ferramentas de anotação: </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>Botão </entry>
+					<entry
+>Descrição </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Adicione a anotação atual ao <guilabel
+>Anotações rápidas</guilabel
+> menu na barra de ferramentas principal. </para>
+					  <note>
+						  <para
+>Você pode usar os atalhos padrão de <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> a <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> para selecionar as ações de anotação rápida sempre que quiser, mesmo com a barra de ferramentas de anotação oculta. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Quando selecionada, mantenha a ferramenta de anotação atual ativa após o uso. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>Oculta a barra de ferramentas de anotação. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
 				  <para
->O conteúdo da barra de anotações pode ser configurado usando a <link linkend="configannotations"
->página de Anotações da caixa de diálogo de configuração do &okular;</link
->. Essa página pode ser aberta com o &RMB; se clicar na barra de anotações e depois escolher <guimenuitem
+>Ao pressionar &Shift;, você pode restringir o ângulo das anotações de linha e polígono a incrementos de 15° e a proporção das anotações de forma (por exemplo, retângulo, elipse) a 1:1. Você também pode inserir um botão na barra de ferramentas em <ulink url="help:/fundamentals/config.html#toolbars"
+>Configurar barras de ferramentas...</ulink
+>. </para>
+				  <para
+>O conteúdo do menu <guilabel
+>Anotações rápidas</guilabel
+> pode ser configurado usando a página <link linkend="configannotations"
+>Anotações</link
+> da janela de configuração do &okular;. Esta página pode ser aberta clicando no botão <guilabel
+>Anotações rápidas</guilabel
+> e, em seguida, escolhendo <guimenuitem
 >Configurar anotações...</guimenuitem
-> no menu de contexto. </para>
-				<para
->Com um único clique do &LMB; no botão de ferramentas de anotação você pode usar uma vez a ferramenta. Por exemplo, se quiser realçar todas as partes importantes de um texto, ative essa ferramenta de forma permanente com um clique duplo sobre o botão respectivo. Pressione a tecla <keycap
->Esc</keycap
-> ou o botão da ferramenta mais uma vez para sair do modo permanente. </para>
+> no menu pop-up. </para>
 				<note>
 					<para
->A barra de ferramentas de anotações pode ser acoplada em qualquer lado da área de visualização. Para isso, basta arrastá-la para outro local. </para>
-				</note>
-				<note>
-					<para
->Se ativar a barra ferramentas de anotações, a exibição do documento será alterada para o modo de navegação. </para>
+>Ativar a barra ferramentas de anotações automaticamente alternará para o modo de navegação. </para>
 				</note>
 				<para
->Você pode parar a construção a qualquer momento, clicando novamente no botão da anotação que estiver construindo ou pressionando a tecla &Esc;. </para>
+>Você pode parar a anotação a qualquer momento pressionando novamente o botão da anotação que estiver usando ou pressionando a tecla &Esc;. </para>
 				<para
 >A anotação recém-criada terá como autor o nome definido na página <link linkend="configannotations"
 ><guilabel
 >Anotações</guilabel
 ></link
-> da caixa de diálogo de configuração do &okular;. A página <guilabel
+> da janela de configuração do &okular;. A página <guilabel
 >Anotações</guilabel
 > também pode ser usada para configurar o conteúdo da barra de anotações. </para>
 			</sect2>
@@ -1214,23 +1603,31 @@ Context menu actions like Rename Bookmarks etc.)
 				<title
 >Remoção de anotações</title>
 				<para
->Para remover uma anotação, basta clicar com o &RMB; e selecionar <guimenuitem
+>Para remover uma anotação, primeiro selecione a ferramenta Navegar (<menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Navegar</guimenuitem
+></menuchoice
+>) em seguida, basta clicar nela com o &RMB; e selecionar <guimenuitem
 >Excluir</guimenuitem
-> ou selecione uma anotação usando o &LMB; e pressione a tecla &Del;. </para>
+> ou selecionar uma anotação usando o &LMB; e pressionar a tecla &Del;. </para>
 				<para
 >Ao removê-la, a janela da anotação será fechada, caso esteja aberta. </para>
-				<note>
-					<para
->Esta opção pode estar desabilitada, se o documento não permitir a remoção de anotações. </para>
-				</note>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Edição de anotações</title>
 				<para
->Para editar uma anotação, clique nela com o &RMB; e selecione <guimenuitem
+>Para editar uma anotação, primeiro selecione a ferramenta Navegar (<menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Navegar</guimenuitem
+></menuchoice
+>) e, em seguida, clique na anotação com o &RMB; e selecione <guimenuitem
 >Propriedades</guimenuitem
->. Uma caixa de diálogo irá aparecer com as configurações gerais da anotação (cor e opacidade, autor, &etc;), assim como as configurações específicas para esse tipo de anotação. </para>
+>. Uma janela será exibida com as configurações gerais da anotação (como cor e opacidade, autor, &etc;) e as configurações específicas para aquele tipo de anotação. </para>
 				<screenshot>
 				<screeninfo
 >Janela de propriedades das anotações</screeninfo>
@@ -1249,11 +1646,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Se clicar com o &LMB; sobre uma anotação, ela fica selecionada. As alças de dimensionamento irão aparecer no retângulo de seleção. Quando o cursor passa sobre uma das 8 alças de dimensionamento nos cantos ou bordas, a forma do cursor muda para indicar o modo de dimensionamento. Clique em qualquer outro local da anotação para movê-la. Se pressionar &Esc; ou clicar em uma área fora da anotação irá cancelar a seleção. </para>
 				<para
->O dimensionamento só se aplica aos tipos de anotação Nota integrada, Máquina de escrever, Carimbo e Elipse.</para>
+>O dimensionamento só está disponível para os tipos de anotação Nota integrada, Máquina de escrever, Carimbo e Elipse.</para>
 
 				<note>
 					<para
->Dependendo das permissões do documento (normalmente com documentos em &PDF;), algumas opções podem estar desabilitadas. </para>
+>Algumas opções podem estar desativadas dependendo das permissões do documento (isso normalmente afeta apenas alguns documentos &PDF;). </para>
 				</note>
 			</sect2>
 		</sect1>
@@ -1265,8 +1662,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >Para gerenciar os favoritos no &okular;, você pode usar a área de <guilabel
 >Favoritos</guilabel
-> no <guilabel
->Painel de navegação</guilabel
+> na <guilabel
+>Barra lateral</guilabel
 >, no <link linkend="menubookmarks"
 >menu de Favoritos</link
 > ou no menu de contexto da área do documento (clique com o &RMB; para abri-lo). </para>
@@ -1276,12 +1673,12 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Para abrir a área de <guilabel
 >Favoritos</guilabel
->, clique no item <guilabel
+>, clique na aba <guilabel
 >Favoritos</guilabel
-> do <guilabel
->Painel de navegação</guilabel
->. Se o <guilabel
->Painel de navegação</guilabel
+> no topo da <guilabel
+>Barra lateral</guilabel
+>. Se a <guilabel
+>Barra lateral</guilabel
 > não estiver visível, use a opção do menu <menuchoice
 ><shortcut
 ><keycap
@@ -1290,9 +1687,9 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Configurações</guimenu
 ><guimenuitem
->Mostrar o painel de navegação</guimenuitem
+>Mostrar barra lateral</guimenuitem
 > </menuchoice
-> para o torná-lo visível. </para>
+> para o torná-la visível. </para>
 				<screenshot>
 				    <screeninfo
 >Menu de contexto da área de favoritos</screeninfo>
@@ -1307,6 +1704,10 @@ Context menu actions like Rename Bookmarks etc.)
 				    </mediaobject>
 				</screenshot>
 				<para
+>A caixa de seleção <guilabel
+>Mostrar para todos os documentos</guilabel
+> pode ser desmarcada para mostrar apenas os marcadores do documento atual. </para>
+				<para
 >A barra de filtragem no topo da área de <guilabel
 >Favoritos</guilabel
 > pode ser usada para filtrar o conteúdo da lista de favoritos de acordo com o texto no campo. </para>
@@ -1320,12 +1721,6 @@ Context menu actions like Rename Bookmarks etc.)
 > ou <guiicon
 >v</guiicon
 > próximos a ele. </para>
-				<para
->Clique no ícone <inlinemediaobject
-><imageobject
-><imagedata fileref="bookmarks.png" format="PNG"/></imageobject
-></inlinemediaobject
-> abaixo da lista para mostrar apenas os favoritos do documento atual. </para>
 				<para
 >O menu do botão direito para o item do documento pode ser usado para abrir um documento, renomeá-lo ou removê-lo da lista. Lembre-se de que a remoção de um item de documento conduz à remoção de todos os favoritos no documento correspondente. </para>
 				<para
@@ -1490,6 +1885,24 @@ Context menu actions like Rename Bookmarks etc.)
 >.</para
 ></listitem>
 				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>texto</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Define o comando do editor externo. Você não pode definir o comando do editor em uma instância do &okular; já em execução. Observe que <option
+>--unique</option
+> não é suportado ao definir o comando do editor na linha de comando.</para
+></listitem>
+				</varlistentry>
 			</variablelist>
 		    </sect2>
 		</sect1>
@@ -1503,7 +1916,7 @@ Context menu actions like Rename Bookmarks etc.)
 >&Ctrl;<keycap
 >J</keycap
 ></keycombo
-> </para>
+>. </para>
 		</sect1>
 	</chapter>
 
@@ -1761,7 +2174,13 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term>
 						<menuchoice
-><guimenu
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
 >Arquivo</guimenu
 > <guimenuitem
 >Propriedades</guimenuitem
@@ -1814,7 +2233,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Este item contém os formatos de exportação para os quais o documento atual pode ser convertido. A primeira entrada para todos os tipos de documento é sempre <guimenuitem
 >Texto sem formatação...</guimenuitem
-></para>
+>.</para>
 						<para
 >A segunda entrada é <guimenuitem
 >Arquivo de documento</guimenuitem
@@ -2090,6 +2509,28 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice
 ><shortcut
 ><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Modo de tela cheia</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Habilita o modo de tela cheia</action
+>. Observe que este modo é diferente do modo de apresentação, pois a única particularidade do modo de tela cheia é a ocultação das decorações das janelas, da barra de menu e da barra de ferramentas.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
 >&Ctrl;<keycap
 >+</keycap
 ></keycombo
@@ -2199,34 +2640,6 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice
 ><guimenu
 >Exibir</guimenu
-> <guimenuitem
->Contínuo</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
-><action
->Habilita o modo de página contínua</action
->. No modo contínuo, todas as páginas do documento são mostradas e você pode percorrê-las sem precisar usar as opções <menuchoice
-><guimenu
->Ir</guimenu
-> <guimenuitem
->Página anterior</guimenuitem
-></menuchoice
-> e <menuchoice
-><guimenu
->Ir</guimenu
-><guimenuitem
->Próxima página</guimenuitem
-></menuchoice
->.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Exibir</guimenu
 > <guisubmenu
 >Modo de exibição</guisubmenu
 > </menuchoice>
@@ -2244,6 +2657,10 @@ Context menu actions like Rename Bookmarks etc.)
 > (o número de colunas corresponde ao especificado nas <link linkend="configure"
 >configurações do &okular;</link
 >).</para>
+						<para
+>Adicionalmente, você pode habilitar o modo <guimenuitem
+>Contínuo</guimenuitem
+>. No modo contínuo, todas as páginas do documento são exibidas e você pode rolar suavemente por elas. De outra forma, apenas uma página (uou uma linha de páginas) é exibida por vez.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2268,26 +2685,6 @@ Context menu actions like Rename Bookmarks etc.)
 >Você pode selecionar a <guimenuitem
 >Orientação original</guimenuitem
 > para restaurar a orientação do documento, descartando todas as rotações aplicadas manualmente. </para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Exibir</guimenu
-> <guisubmenu
->Tamanho da página</guisubmenu
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
-><action
->Altera o tamanho das páginas</action
-> do documento. </para>
-						<note>
-							<para
->Este submenu somente está ativo se o documento atual suportar diferentes tamanhos de página. </para>
-						</note>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2439,9 +2836,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice
 ><shortcut
 ><keycombo action="simul"
->&Alt;&Shift;<keysym
->Esquerda</keysym
-></keycombo
+>&Alt;&Shift;&Left;</keycombo
 ></shortcut
 > <guimenu
 >Ir</guimenu
@@ -2461,9 +2856,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<menuchoice
 ><shortcut
 ><keycombo action="simul"
->&Alt;&Shift;<keysym
->Direita</keysym
-></keycombo
+>&Alt;&Shift;&Right;</keycombo
 ></shortcut
 > <guimenu
 >Ir</guimenu
@@ -2695,7 +3088,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Desenhe um retângulo em torno do texto para a tabela, depois use o botão &LMB; para dividir o bloco de texto em linhas e colunas. Se clicar com o &LMB; sobre uma linha existente, ela será removida e mesclada com as linhas ou colunas adjacentes.</para>
+>Desenhe um retângulo em torno do texto para a tabela, depois clique com o &LMB; para dividir o bloco de texto em linhas e colunas. Se clicar com o &LMB; sobre uma linha existente, ela será removida e mesclada com as linhas ou colunas adjacentes. Por fim, basta clicar com o &RMB; para copiar a tabela para a área de transferência. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2728,15 +3121,33 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Ferramentas</guimenu
 > <guimenuitem
->Revisão</guimenuitem
+>Anotações</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
 ><action
->Abre a barra de ferramentas de revisão</action
+>Abre a barra de ferramentas de anotação</action
 >. Essa barra permite-lhe adicionar anotações no documento que estiver lendo. Para mais informações, veja a seção <link linkend="annotations"
 >Anotações</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Assinar digitalmente...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>Inicia o fluxo de trabalho de criação de assinatura digital</action
+>. A adição de assinaturas digitais é suportada apenas para arquivos PDF neste momento. Para mais informações, consulte a seção sobre <link linkend="adding_digital_signatures"
+>Adicionando assinaturas digitais</link
 >.</para>
 					</listitem>
 				</varlistentry>
@@ -2809,14 +3220,14 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Configurações</guimenu
 > <guimenuitem
->Mostrar painel de navegação</guimenuitem
+>Mostrar barra lateral</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
 ><action
->Altera o painel de navegação</action
-> em ligado ou desligado.</para>
+>Mostra ou oculta a barra lateral.</action
+></para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2832,31 +3243,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 ><action
 >Ativa ou desativa a barra de páginas</action
-> na parte inferior do documento para poupar espaço vertical na janela do &okular;.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><shortcut
-><keycombo action="simul"
->&Ctrl;&Shift;<keycap
->F</keycap
-></keycombo
-></shortcut
-> <guimenu
->Configurações</guimenu
-> <guimenuitem
->Modo de tela inteira</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
-><action
->Habilita o modo de tela inteira</action
->. Observe que este modo é diferente do <link linkend="presentationMode"
->modo de apresentação</link
->, pois a única particularidade do modo de tela inteira é a ocultação das decorações das janelas, da barra de menu e da barra de ferramentas.</para>
+> na parte inferior do documento para poupar espaço vertical na janela do &okular;. Observe que os números de página serão exibidos na barra de ferramentas padrão de qualquer maneira.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2941,7 +3328,7 @@ Context menu actions like Rename Bookmarks etc.)
 	    <title
 >Configuração da infraestrutura &PostScript;</title>
 	    <para
->Você pode configurar a infraestrutura de renderização &PostScript; do &okular;, que é baseada no <ulink url="http://www.ghostscript.com/"
+>Você pode configurar a infraestrutura de renderização &PostScript; do &okular;, que é baseada no <ulink url="https://www.ghostscript.com/"
 >Ghostscript</ulink
 >, escolhendo a opção <guilabel
 >Ghostscript</guilabel
@@ -2965,7 +3352,7 @@ Context menu actions like Rename Bookmarks etc.)
 	    <title
 >Configuração da infraestrutura &PDF;</title>
 	    <para
->Você pode configurar a infraestrutura de renderização &PDF; do &okular;, que é baseada no <ulink url="http://poppler.freedesktop.org/"
+>Você pode configurar a infraestrutura de renderização &PDF; do &okular;, que é baseada no <ulink url="https://poppler.freedesktop.org/"
 >Poppler</ulink
 >, escolhendo a opção <guilabel
 >&PDF;</guilabel
@@ -3082,6 +3469,20 @@ Context menu actions like Rename Bookmarks etc.)
 		</varlistentry>
 	      </variablelist>
 	    </para>
+		<sect2 id="config-pdf-digital-signatures">
+			<title
+>Certificados de assinatura digital em &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Esta seção permite que você defina um banco de dados de certificados personalizado para usar ao adicionar assinaturas digitais a arquivos &PDF;. </para>
+			<para
+>Também lista os certificados disponíveis no Banco de Dados de Certificados atual (se houver). </para>
+		</sect2>
 	  </sect1>
 	</chapter>
 	<chapter id="configure">
@@ -3162,6 +3563,16 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Geral</title>
 			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>Usar rolagem suave</guilabel
+></term>
+					<listitem>
+						<para
+>Exibir ou não transições animadas ao rolar a página usando a roda do mouse e o teclado.</para>
+					</listitem>
+				</varlistentry>
 				<varlistentry>
 					<term
 ><guilabel
@@ -3190,6 +3601,16 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 >Se deve ou não mostrar algumas mensagens informativas ao iniciar, na abertura de um arquivo, &etc;</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Notificar sobre arquivos, formulários ou assinaturas incorporados</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve exibir painéis informativos sobre arquivos incorporados, formulários ou assinaturas, &etc;</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3255,6 +3676,18 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Alternar para a aba existente se o arquivo já estiver aberto</guilabel
+></term>
+					<listitem>
+						<para
+>Indica se o &okular; deve alternar para uma aba caso o arquivo já esteja aberto, em vez de abrir uma nova aba. Esta opção está ativada por padrão. Pode ser alterada somente se <guilabel
+>Abrir novos arquivos em abas</guilabel
+> estiver ativado.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Obedecer limitações do DRM</guilabel
 ></term>
 					<listitem>
@@ -3299,6 +3732,28 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Abrir no modo contínuo por padrão</guilabel
+></term>
+					<listitem>
+						<para
+>Se deve usar o modo contínuo por padrão. No modo contínuo, todas as páginas do documento são exibidas e você pode rolar suavemente por elas. De outra forma, apenas uma página (uou uma linha de páginas) é exibida por vez. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Quando usar a ferramenta de navegação, envolva o cursor nas bordas da tela</guilabel
+></term>
+					<listitem>
+						<para
+>Permite a rolagem infinita por todo o documento com a <link linkend="menutools"
+>Ferramenta de Navegação</link
+>. Se ativada, o cursor do mouse irá para a extremidade oposta da tela quando tocar nas bordas enquanto arrasta o documento. Este recurso é compatível apenas com o X11. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Colunas da visão geral</guilabel
 ></term>
 					<listitem>
@@ -3313,11 +3768,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Aqui você pode definir o percentual da área de visualização atual que deverá ficar visível após clicar nas teclas <keycap
->Page Up</keycap
->/<keycap
->Page Down</keycap
->. </para>
+>Aqui você pode definir o porcentual da área de visualização atual que deverá ficar visível após clicar nas teclas &PgUp;/&PgDn;. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3327,7 +3778,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Esta opção define o modo de zoom padrão para o arquivo que nunca foi aberto antes. Para os arquivos que já foram abertos será aplicado o modo de zoom anterior. </para>
+>Esta opção define o modo de zoom padrão para o arquivos que nunca foram abertos antes. Para os arquivos que já foram abertos será aplicado o modo de zoom anterior. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3361,67 +3812,171 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Inverter as cores</guilabel
+>Modo de cor</guilabel
 ></term>
 					<listitem>
 						<para
+><action
+>Define</action
+> o modo de alteração de cores.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>Inverter as cores</guilabel
+></term>
+							<listitem>
+								<para
 ><action
 >Inverte</action
 > as cores na exibição, &ie;, os objetos pretos serão mostrados como brancos.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
 ><guilabel
 >Alterar a cor do papel</guilabel
 ></term>
-					<listitem>
-						<para
+								<listitem>
+									<para
 ><action
 >Altera</action
 > a cor do papel, &ie;, o plano de fundo do documento.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term
+                                                                        <para
+>A cor pode ser selecionada usando a paleta de cores <guilabel
+>Cor do papel</guilabel
+> abaixo. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
 ><guilabel
 >Alterar as cores claras e escuras</guilabel
 ></term>
-					<listitem>
-						<para
+							<listitem>
+								<para
 ><action
 >Altera</action
 > a cor clara e escura de acordo com sua preferência, fazendo com que o preto não seja exibido como preto, mas como a cor escura selecionada, assim como o branco não seja exibido como branco, mas como a cor clara selecionada.</para>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
-					<term
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
 ><guilabel
 >Converter para preto e branco</guilabel
 ></term>
-					<listitem>
-						<para
+							<listitem>
+								<para
 ><action
 >Converte</action
 > o documento para preto e branco. Você pode definir o limiar e o contraste. Definindo o limiar em um valor mais alto movendo-o para a direita resultará na utilização de cinza mais escuro.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverter luminosidade</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>Inverte</action
+> a luminosidade de todas as cores. Cores claras e escuras serão trocadas, mas matiz e saturação não serão afetados. O contraste nas imagens geralmente será pior do que em <guilabel
+>Inverter luminosidade (sRGB linear)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverter luminosidade (sRGB linear)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverte</action
+> a luminosidade de todas as cores. Os tons claros e escuros serão trocados, mas a tonalidade e a saturação não serão afetadas. O contraste nas imagens é preservado melhor do que em <guilabel
+>Inverter luminosidade</guilabel
+>, mas os gráficos e a marcação de texto colorida geralmente ficam piores. Usa coeficientes de luminosidade sRGB, mas sem correção gama.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Inverter luminosidade (simétrico)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Inverte</action
+> a luminosidade de todas as cores, usando coeficientes de luminância simétricos. Os tons claros e escuros serão trocados, mas a tonalidade e a saturação não serão afetadas. Muito semelhante a <guilabel
+>Inverter luminosidade</guilabel
+>, mas o contraste é, em alguns casos, melhor.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Desvio positivo da matiz</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Desvia</action
+> a matiz ou tonalidade de todas as cores em 120 graus. Pode atenuar alguns problemas de contraste em gráficos coloridos.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>Desvio negativo da matiz</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>Desvia</action
+> a matiz ou tonalidade de todas as cores em 240 graus. Pode atenuar alguns problemas de contraste em gráficos coloridos.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>Você pode configurar atalhos de teclado e ações da barra de ferramentas para os modos de cor usando os itens de menu correspondentes no menu <guimenu
+>Configurações</guimenu
+> da janela principal do &okular;.</para
+></note>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
 					<term
 ><guilabel
->Mecanismo</guilabel
+>Mecanismo sintetizador de voz</guilabel
 ></term>
 					<listitem>
 						<para
 ><action
 >Permite-lhe escolher</action
-> o mecanismo de texto-para-fala (<abbrev
+> o mecanismo sintetizador de voz (<abbrev
 >TTS</abbrev
 >) a usar pelo &okular;. O padrão é o <abbrev
 >TTS</abbrev
 > <application
 >speechd</application
->, mas poderá usar todos os idiomas e vozes, dependendo dos sintetizadores disponíveis na sua plataforma. No &Linux;, é usado o 'speech-dispatcher' para determinar as vozes disponíveis.</para>
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Voz do sintetizador de voz</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Permite-lhe escolher</action
+> uma voz para o mecanismo sintetizador (<abbrev
+>TTS</abbrev
+>) usado pelo &okular;. Você poderá usar todos os idiomas e vozes, dependendo dos sintetizadores disponíveis na sua plataforma. No &Linux;, é usado o 'speech-dispatcher' para determinar as vozes disponíveis.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3453,7 +4008,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Renderização</guilabel
+>Opções de renderização</guilabel
 ></term>
 					<listitem>
 						<para
@@ -3461,11 +4016,11 @@ Context menu actions like Rename Bookmarks etc.)
 >Habilitar a suavização do texto</guilabel
 > e <guilabel
 >Habilitar a suavização dos gráficos</guilabel
-> podem ser usados para ativar e desativar a <ulink url="http://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+> podem ser usados para ativar e desativar a <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing"
 >suavização espacial</ulink
 > do texto e imagens no documento, de forma correspondente. O item <guilabel
 >Habilitar a sugestão de texto</guilabel
-> serve para alternar a <ulink url="http://en.wikipedia.org/wiki/Font_hinting"
+> serve para alternar a <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
 >sugestão de dimensões do texto</ulink
 >. A mudança de suavização e sugestão afeta a forma como os documentos são exibidos e podem ser ajustados de acordo com a sua preferência.</para>
 					</listitem>
@@ -3646,6 +4201,22 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Barra de anotação</guilabel
+></term>
+					<listitem>
+                                            <para
+>Permite alternar entre a <guimenuitem
+>Barra de anotação completa</guimenuitem
+>(<link linkend="annotations-add"
+>barra de ferramentas padrão</link
+> na seção superior da janela &okular;) e a <guimenuitem
+>Barra de anotação rápida</guimenuitem
+> (barra de ferramentas deslizante com suas ferramentas favoritas na parte direita do painel do documento).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Autor</guilabel
 ></term>
 					<listitem>
@@ -3740,7 +4311,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Escolha o editor que deseja executar quando o &okular; quiser abrir um arquivo-fonte. Esse é o caso de documento que possui referências para os vários pontos (normalmente o número da linha e coluna) do fonte de onde foi gerado. O formato &DVI; suporta nativamente a adição de informações sobre o fonte do documento em LaTeX, a partir de onde foi gerado. Existe um sistema semelhante para os documentos em &PDF; chamado <acronym
+>Escolha o editor que deseja executar quando o &okular; quiser abrir um arquivo-fonte. Esse é o caso de documento que possui referências para os vários pontos (normalmente o número da linha e coluna) do fonte de onde foi gerado. O formato &DVI; suporta nativamente a adição de informações sobre o fonte do documento em &latex;, a partir de onde foi gerado. Existe um sistema semelhante para os documentos em &PDF; chamado <acronym
 >pdfsync</acronym
 >, que armazena estas informações adicionais em um arquivo externo, com o nome baseado no arquivo &PDF; propriamente dito (por exemplo, <filename
 >meudocumento.pdfsync</filename
@@ -3765,9 +4336,7 @@ Context menu actions like Rename Bookmarks etc.)
 >. </para>
 						<note>
 						  <para
->Para usar a pesquisa inversa no <application
->Kile</application
->, você terá que compilar o seu arquivo &latex; com a configuração <guilabel
+>Para usar a pesquisa inversa no &kile;, você terá que compilar o seu arquivo &latex; com a configuração <guilabel
 >Modern</guilabel
 >. </para>
 						</note>

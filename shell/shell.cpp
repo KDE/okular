@@ -453,6 +453,8 @@ bool Shell::canOpenDocs(int numDocs, int desktop)
     if (winfo.desktop() != desktop) {
         return false;
     }
+#else
+    Q_UNUSED(desktop);
 #endif
 
     return true;

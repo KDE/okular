@@ -32,6 +32,7 @@
 
 #include <iostream>
 
+#if HAVE_DBUS
 static QString startupId()
 {
     QString result;
@@ -46,6 +47,7 @@ static QString startupId()
 
     return result;
 }
+#endif
 
 static bool attachUniqueInstance(const QStringList &paths, const QString &serializedOptions)
 {
@@ -74,6 +76,8 @@ static bool attachUniqueInstance(const QStringList &paths, const QString &serial
 
     return true;
 #else  // HAVE_DBUS
+    Q_UNUSED(paths);
+    Q_UNUSED(serializedOptions);
     return false;
 #endif // HAVE_DBUS
 }
@@ -173,6 +177,8 @@ static bool attachExistingInstance(const QStringList &paths, const QString &seri
 
     return true;
 #else  // HAVE_DBUS
+    Q_UNUSED(paths);
+    Q_UNUSED(serializedOptions);
     return false;
 #endif // HAVE_DBUS
 }

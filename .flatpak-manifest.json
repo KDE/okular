@@ -75,6 +75,10 @@
                         "stable-only": true,
                         "url-template": "https://github.com/gnustep/libs-base/archive/refs/tags/base-$version.tar.gz"
                     }
+                },
+                {
+                    "type": "patch",
+                    "path": "7b51c1bb4ed0b1777db2f018eadaba89f00bf0c5.patch"
                 }
             ]
         },

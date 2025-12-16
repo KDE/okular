@@ -684,6 +684,9 @@ void Page::addAnnotation(Annotation *annotation)
     annotation->d_ptr->annotationTransform(matrix);
 
     m_rects.append(rect);
+    for (auto &revision : annotation->revisions()) {
+        addAnnotation(revision.annotation());
+    }
 }
 
 bool Page::removeAnnotation(Annotation *annotation)

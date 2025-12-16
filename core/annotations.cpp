@@ -568,17 +568,7 @@ AnnotationPrivate::AnnotationPrivate()
 {
 }
 
-AnnotationPrivate::~AnnotationPrivate()
-{
-    // delete all children revisions
-    if (m_revisions.isEmpty()) {
-        return;
-    }
-
-    for (const Annotation::Revision &revision : std::as_const(m_revisions)) {
-        delete revision.annotation();
-    }
-}
+AnnotationPrivate::~AnnotationPrivate() = default;
 
 AnnotationPrivate *AnnotationPrivate::get(Annotation *a)
 {

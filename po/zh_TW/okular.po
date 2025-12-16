@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-11-29 17:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -5757,7 +5757,7 @@ msgstr "設定外部編輯器指令"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "要開啟的文件。'-' 表示從標準輸入讀取。"
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5767,27 +5767,27 @@ msgstr ""
 "您無法在一個已在執行的 Okular 實體中設定編輯器命令。請停用分頁並再試一次。請"
 "注意，「唯一實體」在從命令列設定編輯器命令時也不受支援。\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "錯誤：不能用 --unique 選項開啟多個文件"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "錯誤：不能用 --presentation 選項開啟多個文件"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "錯誤：不能用 --print 選項開啟多個文件"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "錯誤：不能用 --page 選項開啟多個文件"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "錯誤：不能用 --find 選項開啟多個文件"
@@ -5814,70 +5814,70 @@ msgstr "已經有一個唯一的 Okular 實體在執行中。此實體不會是�
 msgid "Unable to find the Okular component."
 msgstr "無法找到 okular 組件。"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 msgstr "點選以開啟檔案。 點選並按住以開啟最近的檔案。"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>點選</b>以開啟檔案，或是<b>點選並按住</b>以選擇最近開啟的檔案。"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "下一個分頁"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "前一個分頁"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "還原關閉分頁"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "鎖定側邊欄"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "所有檔案 (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "所有支援的檔案 (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "開啟文件"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "確認關閉"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "關閉分頁"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "當我嘗試關閉多個分頁時警告我"

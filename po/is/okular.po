@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-12-02 13:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -5826,7 +5826,7 @@ msgstr "Stillir skipunina fyrir ytri ritil"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Skjal sem á að opna. Tilgreindu '-' til að lesa frá stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5838,27 +5838,27 @@ msgstr ""
 "'unique' er ekki heldur studdur þegar ritilsskipunin er stillt á "
 "skipanalínunni.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Villa: Get ekki opnað fleiri en eitt skjal með rofanum --unique"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "Villa: Get ekki opnað fleiri en eitt skjal með rofanum --presentation"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Villa: Get ekki opnað fleiri en eitt skjal með rofanum --print"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Villa: Get ekki opnað fleiri en eitt skjal með rofanum --page"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Villa: Get ekki opnað fleiri en eitt skjal með rofanum --find"
@@ -5887,7 +5887,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Get ekki fundið Okular-einingu."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5896,7 +5896,7 @@ msgstr ""
 "Smelltu til að opna skrá\n"
 "Smelltu og haltu niðri til að opna nýlega skrá"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5904,58 +5904,58 @@ msgstr ""
 "<b>Smelltu</b> til að opna skrá eða <b>smelltu og haltu niðri</b> til að "
 "velja nýlega skrá"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Næsti flipi"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Fyrri flipi"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Afturkalla lokun á flipa"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Læsa hliðarstiku"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Allar skrár (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Allar studdar skrár (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Opna skjal"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Staðfesta lokun"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Loka flipum"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Þú ert að fara að loka %1 flipum. Ertu viss um að þú viljir halda áfram?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Vara við þegar ég reyni að loka mörgum flipum"

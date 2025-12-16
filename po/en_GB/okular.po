@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2024-11-01 14:04+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -5900,7 +5900,7 @@ msgstr "Sets the external editor command"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Documents to open. Specify '-' to read from stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5911,28 +5911,28 @@ msgstr ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Error: Cannot open more than one document with the --unique switch"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Error: Cannot open more than one document with the --presentation switch"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Error: Cannot open more than one document with the --print switch"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Error: Cannot open more than one document with the --page switch"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Error: Cannot open more than one document with the --find switch"
@@ -5961,7 +5961,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Unable to find the Okular component."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5970,64 +5970,64 @@ msgstr ""
 "Click to open a file\n"
 "Click and hold to open a recent file"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Next Tab"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Previous Tab"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Undo close tab"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Lock Sidebar"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "All files (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "All supported files (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Open Document"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirm Close"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Close Tabs"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "You are about to close %1 tabs. Are you sure you want to continue?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Warn me when I attempt to close multiple tabs"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-11-25 08:04+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -5883,7 +5883,7 @@ msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 "Документи, які слід відкрити. Вкажіть «-», щоб програма читала з stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5895,35 +5895,35 @@ msgstr ""
 "ласка, зауважте, що якщо редактор визначено у командному рядку, підтримку "
 "єдиного екземпляра програми також буде вимкнено.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Помилка: якщо вказано параметр --unique, не можна відкривати декілька "
 "документів"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Помилка: якщо вказано параметр --presentation, не можна відкривати декілька "
 "документів"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Помилка: якщо вказано параметр --print, не можна відкривати декілька "
 "документів"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Помилка: якщо вказано параметр --page, не можна відкривати декілька "
 "документів"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
@@ -5953,7 +5953,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Не вдається знайти компонент Okular."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5962,7 +5962,7 @@ msgstr ""
 "Клацніть, щоб відкрити файл\n"
 "Натисніть і тримайте, щоб відкрити недавній файл"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5970,57 +5970,57 @@ msgstr ""
 "<b>Клацніть</b>, щоб відкрити файл або <b>натисніть і тримайте</b>, щоб "
 "відкрити недавній файл"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Наступна вкладка"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Попередня вкладка"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Скасувати закриття вкладки"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Заблокувати бічну панель"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "усі файли (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "усі файли, що підтримуються (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Відкрити документ"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Підтвердити закриття"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрити вкладки"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Ви наказали програми закрити вкладки (%1). Ви справді цього хочете?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Попереджати, якщо відбувається спроба закрити декілька вкладок"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-11-11 19:00+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -5845,7 +5845,7 @@ msgstr "Iestata ārējā redaktora komandu"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Atveramie dokumenti. Norādiet „-“, lai lasītu no „stdin“."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5856,32 +5856,32 @@ msgstr ""
 "Izslēdziet cilnes un mēģiniet vēlreiz. Ievērojiet, ka „unique“ netiek "
 "atbalstīts arī tad, ja redaktora komandu iestatiet komandrindā.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Kļūda: Nevar atvērt vairāk par vienu dokumentu, izmantojot slēdzi „--unique“"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Kļūda: Nevar atvērt vairāk par vienu dokumentu, izmantojot slēdzi „--"
 "presentation“"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Kļūda: Nevar atvērt vairāk par vienu dokumentu, izmantojot slēdzi „--print“"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Kļūda: Nevar atvērt vairāk par vienu dokumentu, izmantojot slēdzi „--page“"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
@@ -5909,7 +5909,7 @@ msgstr "Jau ir ieslēgta unikāla „Okular“ instance. Šī instance nebūs un
 msgid "Unable to find the Okular component."
 msgstr "Neizdevās atrast „Okular“ komponentu."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5918,7 +5918,7 @@ msgstr ""
 "Nospiediet, lai atvērtu datni\n"
 "Nospiediet un paturiet, lai atvērtu nesen lietotu datni"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5926,57 +5926,57 @@ msgstr ""
 "<b>Nospiediet</b>, lai atvērtu datni, vai <b>Nospiediet un paturiet</b>, lai "
 "izvēlētos nesen lietotu datni"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Nākamā cilne"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Iepriekšējā cilne"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Atsaukt cilnes aizvēršanu"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Slēgt sānjoslu"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Visas datnes (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Visas atbalstītās datnes (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Atvērt dokumentu"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Apstiprināt aizvēršanu"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Aizvērt cilnes"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Tiks aizvērtas %1 cilnes. Vai tiešām vēlaties turpināt?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Brīdināt, kad mēģinu aizvērt vairākas cilnes"

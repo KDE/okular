@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -5862,7 +5862,7 @@ msgstr "बाह्य सम्पादक आदेशं सेट् क�
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "दस्तावेजाः उद्घाटयितुं। stdin तः पठितुं '-' निर्दिशन्तु ।"
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5873,27 +5873,27 @@ msgstr ""
 "निष्क्रियं कृत्वा पुनः प्रयासं कुर्वन्तु । कृपया ज्ञातव्यं यत्, आदेशपङ्क्तौ सम्पादक-आदेशं सेट् कुर्वन् "
 "अद्वितीयम् अपि समर्थितं नास्ति ।\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "त्रुटिः : --unique स्विच् इत्यनेन एकादशाधिकं दस्तावेजं उद्घाटयितुं न शक्यते"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "त्रुटिः : --presentation स्विच् इत्यनेन एकादशाधिकं दस्तावेजं उद्घाटयितुं न शक्यते"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "त्रुटिः : --print स्विच् इत्यनेन एकादशाधिकं दस्तावेजं उद्घाटयितुं न शक्यते"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "त्रुटिः : --page स्विच् इत्यनेन एकादशाधिकं दस्तावेजं उद्घाटयितुं न शक्यते"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "त्रुटिः : --find स्विच् इत्यनेन एकादशाधिकं दस्तावेजं उद्घाटयितुं न शक्यते"
@@ -5921,7 +5921,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Okular घटकं अन्वेष्टुं असमर्थः ।"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5930,7 +5930,7 @@ msgstr ""
 "सञ्चिकां उद्घाटयितुं क्लिक् कुर्वन्तु\n"
 "अद्यतनसञ्चिकां उद्घाटयितुं क्लिक् कृत्वा धारयन्तु"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5938,57 +5938,57 @@ msgstr ""
 "सञ्चिकां उद्घाटयितुं <b>क्लिक् कुर्वन्तु</b> अथवा अद्यतनसञ्चिकां चिन्वितुं <b>क्लिक् कृत्वा "
 "धारयन्तु</b>"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "अग्रिमः ट्याब्"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "पूर्व ट्याब्"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "पूर्ववतं कुर्वन्तु close tab"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ताला पार्श्वपट्टिका"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "सर्वाणि सञ्चिकाः (*) ."
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "सर्वाणि समर्थितसञ्चिकाः (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Document उद्घाटयन्तु"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirm Close इति"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "ट्याब्स् बन्दं कुर्वन्तु"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "भवान् %1 ट्याब्स् पिधातुं प्रवृत्तः अस्ति । किं भवन्तः निश्चयेन निरन्तरं कर्तुम् इच्छन्ति?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "यदा अहं बहुविधं ट्याब्स् पिधातुं प्रयतन्ते तदा मां चेतयन्तु"

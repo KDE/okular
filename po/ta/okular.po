@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-11-30 11:44+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -5827,7 +5827,7 @@ msgstr "வெளி உரைத்திருத்திக்கான க�
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "திறக்க வேண்டிய ஆவணங்கள். stdin-இலிருந்து படிக்க '-' என்று குறிப்பிடுங்கள்."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5838,28 +5838,28 @@ msgstr ""
 "கீற்றுகளை முடக்கி மீண்டும் முயற்சிக்கவும். கட்டளை வரியில் உரைதிருத்திக்கான கட்டளையை "
 "அமைக்கும்போது unique எனும் விருப்பத்தையும் பயன்படுத்த முடியாது.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "சிக்கல்: --unique விருப்பத்துடன் ஒன்றுக்கு மேற்பட்ட ஆவணங்களை திறக்க முடியாது"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "சிக்கல்: --presentation விருப்பத்துடன் ஒன்றுக்கு மேற்பட்ட ஆவணங்களை திறக்க முடியாது"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "சிக்கல்: --print விருப்பத்துடன் ஒன்றுக்கு மேற்பட்ட ஆவணங்களை திறக்க முடியாது"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "சிக்கல்: --page விருப்பத்துடன் ஒன்றுக்கு மேற்பட்ட ஆவணங்களை திறக்க முடியாது"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "சிக்கல்: --find விருப்பத்துடன் ஒன்றுக்கு மேற்பட்ட ஆவணங்களை திறக்க முடியாது"
@@ -5887,7 +5887,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "ஆக்குலர் கூறை கண்டுபிடிக்க முடியவில்லை."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5896,7 +5896,7 @@ msgstr ""
 "கோப்பைத் திறக்க க்ளிக் செய்யுங்கள்\n"
 "சமீப கோப்பைத் திறக்க க்ளிக் செய்து பிடித்திருங்கள்"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5904,57 +5904,57 @@ msgstr ""
 "கோப்பைத் திறக்க <b>க்ளிக்</b> செய்யுங்கள், அல்லது சமீப கோப்பைத் திறக்க <b>க்ளிக் செய்து "
 "பிடித்திருங்கள்</b>."
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "அடுத்த கீற்று"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "முந்தைய கீற்று"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "கீற்றை மூடியதை செயல்நீக்கு"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ஓரப்பட்டையைப் பூட்டு"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ஆதரிக்கப்படும் அனைத்து கோப்புகள் (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "ஆவணத்தைத் திறத்தல்"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "மூடுவதை உறுதிசெய்க"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "கீற்றுகளை மூடு"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 கீற்றுகளை மூடப் போகிறீர்கள். உறுதியாக தொடர வேண்டுமா?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "பல கீற்றுகளை மூட முயற்சிக்கும்போது என்னை எச்சரி"

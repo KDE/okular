@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-07-18 15:01+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5935,7 +5935,7 @@ msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""
 "Zu öffnende Dokumente. Mit „-“ wird aus der Standardeingabe (stdin) gelesen."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5947,35 +5947,35 @@ msgstr ""
 "Beachten Sie, dass die Option „unique“ ebenfalls nicht erlaubt ist, wenn der "
 "Editorbefehl per Kommandozeile eingestellt wird.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr ""
 "Fehler: Mit der Option „--unique“ kann nicht mehr als ein Dokument "
 "gleichzeitig geöffnet werden."
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Fehler: Mit der Option „--presentation“ kann nicht mehr als ein Dokument "
 "gleichzeitig geöffnet werden."
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr ""
 "Fehler: Mit der Option „--print“ kann nicht mehr als ein Dokument "
 "gleichzeitig geöffnet werden"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr ""
 "Fehler: Mit der Option „--page“ kann nicht mehr als ein Dokument "
 "gleichzeitig geöffnet werden"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr ""
@@ -6006,7 +6006,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Die Okular-Komponente kann nicht gefunden werden."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6015,7 +6015,7 @@ msgstr ""
 "Klicken Sie, um eine Datei zu öffnen.\n"
 "Klicken und gedrückt halten, um eine kürzlich geöffnete Datei zu öffnen."
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6023,59 +6023,59 @@ msgstr ""
 "<b>Klicken Sie</b>, um eine Datei zu öffnen, oder <b>klicken und halten Sie "
 "gedrückt</b>, um eine kürzlich geöffnete Datei zu öffnen."
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Nächstes Unterfenster"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Vorheriges Unterfenster"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Unterfenster wieder herstellen"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Seitenleiste sperren"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Alle Dateien (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Alle unterstützten Dateien (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Dokument öffnen"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Schließen bestätigen"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Unterfenster schließen"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Sie sind dabei, die %1 Unterfenster zu schließen. Möchten Sie wirklich "
 "fortfahren?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Beim Schließen mehrerer Unterfenster warnen"

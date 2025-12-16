@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -5902,7 +5902,7 @@ msgstr "Xarici redaktor əmrini təyin edir"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Açılacaq sənədlər. Standart girişdən oxumaq üçün \"-\" göstərin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5913,27 +5913,27 @@ msgstr ""
 "Lütfən vərəqi söndürün və yenidən cəhd edin. Nəzər alın ki, bu unukallıq "
 "həmçinin əmr sətrində redaktor əmri təyi edildikdə dəstəklənmir.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Xəta: \"--unique switch\" ilə birdən artıq sənəd açmaq olmur."
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr "Xəta: \" --presentation switch\" ilə birdən artıq sənəd açmaq olmur."
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Xəta: \"--print switch\" ilə birdən artıq sənəd açmaq olmur."
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Xəta: \"--page switch\" ilə birdən artıq sənəd açmaq olmur."
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Xəta: \"--find switch\" ilə birdən artıq sənəd açmaq olmur."
@@ -5960,7 +5960,7 @@ msgstr "Tək Okular nüsxəsi artıq başladılıb. Bu yeganə nüsxə olmayacaq
 msgid "Unable to find the Okular component."
 msgstr "Okular komponentlərinin tapılması mümkün olmadı."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5969,7 +5969,7 @@ msgstr ""
 "Faylı açmaq üçün klikləyin\n"
 "Sonuncu faylı açmaq üçün klikləyin və üzərində basılı saxlayın"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5977,57 +5977,57 @@ msgstr ""
 "Faylı açmaq üçün <b>Klikləyin</b> və ya sonuncu faylı seçmək üçün "
 "<b>Klikləyin və basılı saxlayın</b>"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Növbəti Vərəq"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Əvvəlki Vərəq"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Bağlanmış vərəqi qaytarmaq"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Yan paneli kilidləmək"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Bütün fayllar (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Bütün Dəstəklənən Fayllar (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Sənədi açmaq"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Çıxışı təsdiq etmək"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Vərəqləri bağlamaq"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Siz %1 vərəqi bağlamaq üzrəsiniz. Davam etmək istədiyinizə əminsiniz?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Birdən çox vərəqi bağladıqda məni xəbərdar edin"

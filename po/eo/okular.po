@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -5900,7 +5900,7 @@ msgstr "Agordas la komandon por ekstera redaktilo"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokumentoj por malfermi. Specifu '-' por legi de stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5912,28 +5912,28 @@ msgstr ""
 "tiu unika ankaŭ ne estas subtenata kiam agordas la redaktilan komandon ĉe la "
 "komandlinio.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Eraro: Ne povas malfermi pli ol unu dokumenton per la --unique ŝaltilo"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Eraro: Ne povas malfermi pli ol unu dokumenton per la --presentation-ŝaltilo"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Eraro: Ne povas malfermi pli ol unu dokumenton per la --print-ŝaltilo"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Eraro: Ne povas malfermi pli ol unu dokumenton per la --page ŝaltilo"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Eraro: Ne povas malfermi pli ol unu dokumenton per la --find-ŝaltilo"
@@ -5960,7 +5960,7 @@ msgstr "Jam funkcias unika Okular-instanco. Ĉi tiu kazo ne estos la unika."
 msgid "Unable to find the Okular component."
 msgstr "Ne eblas trovi la Okularan komponanton."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -5969,7 +5969,7 @@ msgstr ""
 "Klaki por malfermi dosieron\n"
 "Klaki kaj teni por malfermi freŝdatan dosieron"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -5977,57 +5977,57 @@ msgstr ""
 "<b>Klaki</b> por malfermi dosieron aŭ <b>klaki kaj teni</b> por elekti "
 "freŝdatan dosieron"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Sekva Tab"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Antaŭa Tab"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Malfari fermi langeton"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Ŝlosi Flankbreton"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Ĉiuj dosieroj (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Ĉiuj subtenataj dosieroj (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Malfermi Dokumenton"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Konfirmi Fermon"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Fermi Langetojn"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Vi estas fermonta %1 langetojn. Ĉu vi certas, ke vi volas daŭrigi?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Avertu min kiam mi provas fermi plurajn langetojn"

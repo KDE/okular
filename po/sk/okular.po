@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-25 00:40+0000\n"
+"POT-Creation-Date: 2025-12-16 06:49+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -5947,7 +5947,7 @@ msgstr "Nastaví príkaz externého editora"
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokument na otvorenie. Zadajte '-' pre čítanie zo stdin."
 
-#: shell/okular_main.cpp:64 shell/okular_main.cpp:167
+#: shell/okular_main.cpp:66 shell/okular_main.cpp:171
 #, kde-format
 msgid ""
 "You cannot set the editor command in an already running okular instance. "
@@ -5959,28 +5959,28 @@ msgstr ""
 "unikátna nie je tiež podporovaná pri nastavovaní príkazu editora na "
 "príkazovom riadku.\n"
 
-#: shell/okular_main.cpp:186
+#: shell/okular_main.cpp:192
 #, kde-format
 msgid "Error: Can't open more than one document with the --unique switch"
 msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --unique"
 
-#: shell/okular_main.cpp:192
+#: shell/okular_main.cpp:198
 #, kde-format
 msgid "Error: Can't open more than one document with the --presentation switch"
 msgstr ""
 "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --presentation"
 
-#: shell/okular_main.cpp:198
+#: shell/okular_main.cpp:204
 #, kde-format
 msgid "Error: Can't open more than one document with the --print switch"
 msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --print"
 
-#: shell/okular_main.cpp:204
+#: shell/okular_main.cpp:210
 #, kde-format
 msgid "Error: Can't open more than one document with the --page switch"
 msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument cez prepínač --page"
 
-#: shell/okular_main.cpp:210
+#: shell/okular_main.cpp:216
 #, kde-format
 msgid "Error: Can't open more than one document with the --find switch"
 msgstr "Chyba: Nemôžem otvoriť viac ako jeden dokument s prepínačom --print"
@@ -6007,7 +6007,7 @@ msgstr "Už beží jedinečná inštancia Okular. Táto inštancia nebude jedine
 msgid "Unable to find the Okular component."
 msgstr "Nepodarilo sa nájsť komponent Okular."
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6016,7 +6016,7 @@ msgstr ""
 "Kliknite pre otvorenie súboru\n"
 "Kliknite a podržte pre otvorenie nedávno otvoreného súboru"
 
-#: shell/shell.cpp:569
+#: shell/shell.cpp:571
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6024,57 +6024,57 @@ msgstr ""
 "<b>Kliknite</b> pre otvorenie súboru alebo <b>Kliknite a podržte </b> pre "
 "otvorenie nedávno otvoreného súboru"
 
-#: shell/shell.cpp:582
+#: shell/shell.cpp:584
 #, kde-format
 msgid "Next Tab"
 msgstr "Ďalšia karta"
 
-#: shell/shell.cpp:588
+#: shell/shell.cpp:590
 #, kde-format
 msgid "Previous Tab"
 msgstr "Predošlá karta"
 
-#: shell/shell.cpp:594
+#: shell/shell.cpp:596
 #, kde-format
 msgid "Undo close tab"
 msgstr "Vrátiť zatvorenie karty"
 
-#: shell/shell.cpp:603
+#: shell/shell.cpp:605
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Zamknúť bočný panel"
 
-#: shell/shell.cpp:703
+#: shell/shell.cpp:705
 #, kde-format
 msgid "All files (*)"
 msgstr "Všetky súbory (*)"
 
-#: shell/shell.cpp:704
+#: shell/shell.cpp:706
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Všetky podporované súbory (%1)"
 
-#: shell/shell.cpp:708
+#: shell/shell.cpp:710
 #, kde-format
 msgid "Open Document"
 msgstr "Otvoriť dokument"
 
-#: shell/shell.cpp:822
+#: shell/shell.cpp:824
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potvrdiť zatvorenie"
 
-#: shell/shell.cpp:826
+#: shell/shell.cpp:828
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zavrieť karty"
 
-#: shell/shell.cpp:833
+#: shell/shell.cpp:835
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Chystáte sa zatvoriť %1 kariet. Ste si istý, že chcete pokračovať?"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:837
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Upozorniť ma keď sa pokúsim zatvoriť naraz niekoľko kariet"

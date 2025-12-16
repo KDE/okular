@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-11-07 21:03+0200\n"
+"PO-Revision-Date: 2025-12-16 01:36+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -2290,14 +2290,12 @@ msgid "Search…"
 msgstr "Ieškoti…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Išskleisti viską"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Suskleisti viską"
 
@@ -4942,14 +4940,12 @@ msgstr ""
 "kitą vietą."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Išskleisti visą sekciją"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Suskleisti visą sekciją"
 

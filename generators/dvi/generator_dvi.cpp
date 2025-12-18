@@ -175,10 +175,19 @@ QList<Okular::ObjectRect *> DviGenerator::generateDviLinks(const dviPageInfo *pa
     return dviLinks;
 }
 
+static double resolutionFromPageInfoAndSize(const dviPageInfo &pageInfo, const SimplePageSize &s)
+{
+    if (s.isValid()) {
+        return (double)(pageInfo.width) / s.width().getLength_in_inch();
+    } else {
+        static const pageSize defaultPageSize;
+        return (double)(pageInfo.width) / defaultPageSize.width().getLength_in_inch();
+    }
+}
+
 QImage DviGenerator::image(Okular::PixmapRequest *request)
 {
     dviPageInfo *pageInfo = new dviPageInfo();
-    pageSize ps;
     QImage ret;
 
     pageInfo->width = request->width();
@@ -197,11 +206,7 @@ QImage DviGenerator::image(Okular::PixmapRequest *request)
         //   if (!useDocumentSpecifiedSize)
         //    s = userPreferredSize;
 
-        if (s.isValid()) {
-            pageInfo->resolution = (double)(pageInfo->width) / s.width().getLength_in_inch();
-        } else {
-            pageInfo->resolution = (double)(pageInfo->width) / ps.width().getLength_in_inch();
-        }
+        pageInfo->resolution = resolutionFromPageInfoAndSize(*pageInfo, s);
 
         m_dviRenderer->drawPage(pageInfo);
 
@@ -245,7 +250,7 @@ Okular::TextPage *DviGenerator::textPage(Okular::TextRequest *request)
     // get page text from m_dviRenderer
     Okular::TextPage *ktp = nullptr;
     SimplePageSize s = m_dviRenderer->sizeOfPage(pageInfo.pageNumber);
-    pageInfo.resolution = (double)(pageInfo.width) / s.width().getLength_in_inch();
+    pageInfo.resolution = resolutionFromPageInfoAndSize(pageInfo, s);
 
     m_dviRenderer->getText(&pageInfo);
     lock.unlock();

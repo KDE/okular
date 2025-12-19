@@ -42,9 +42,9 @@ static const pageSizeItem staticList[] = {
 
 pageSize::pageSize()
 {
-    currentSize = defaultPageSize();
-    pageWidth.setLength_in_mm(staticList[currentSize].width);
-    pageHeight.setLength_in_mm(staticList[currentSize].height);
+    const int sizeIndex = defaultPageSizeIndex();
+    pageWidth.setLength_in_mm(staticList[sizeIndex].width);
+    pageHeight.setLength_in_mm(staticList[sizeIndex].height);
 }
 
 bool pageSize::setPageSize(const QString &name)
@@ -53,10 +53,9 @@ bool pageSize::setPageSize(const QString &name)
     for (int i = 0; staticList[i].name != nullptr; i++) {
         QString currentName = QString::fromLocal8Bit(staticList[i].name);
         if (currentName == name) {
-            currentSize = i;
             // Set page width/height accordingly
-            pageWidth.setLength_in_mm(staticList[currentSize].width);
-            pageHeight.setLength_in_mm(staticList[currentSize].height);
+            pageWidth.setLength_in_mm(staticList[i].width);
+            pageHeight.setLength_in_mm(staticList[i].height);
             return true;
         }
     }
@@ -97,10 +96,10 @@ bool pageSize::setPageSize(const QString &name)
 
     // Last resource. Set the default, in case the string is
     // unintelligible to us.
-    currentSize = defaultPageSize();
-    pageWidth.setLength_in_mm(staticList[currentSize].width);
-    pageHeight.setLength_in_mm(staticList[currentSize].height);
-    qCCritical(OkularDviShellDebug) << "pageSize::setPageSize: could not parse '" << name << "'. Using " << staticList[currentSize].name << " as a default.";
+    const int sizeIndex = defaultPageSizeIndex();
+    pageWidth.setLength_in_mm(staticList[sizeIndex].width);
+    pageHeight.setLength_in_mm(staticList[sizeIndex].height);
+    qCCritical(OkularDviShellDebug) << "pageSize::setPageSize: could not parse '" << name << "'. Using " << staticList[sizeIndex].name << " as a default.";
     return false;
 }
 
@@ -127,23 +126,19 @@ void pageSize::reconstructCurrentSize()
 {
     for (int i = 0; staticList[i].name != nullptr; i++) {
         if ((fabs(staticList[i].width - pageWidth.getLength_in_mm()) <= 2) && (fabs(staticList[i].height - pageHeight.getLength_in_mm()) <= 2)) {
-            currentSize = i;
-            pageWidth.setLength_in_mm(staticList[currentSize].width);
-            pageHeight.setLength_in_mm(staticList[currentSize].height);
+            pageWidth.setLength_in_mm(staticList[i].width);
+            pageHeight.setLength_in_mm(staticList[i].height);
             return;
         }
         if ((fabs(staticList[i].height - pageWidth.getLength_in_mm()) <= 2) && (fabs(staticList[i].width - pageHeight.getLength_in_mm()) <= 2)) {
-            currentSize = i;
-            pageWidth.setLength_in_mm(staticList[currentSize].height);
-            pageHeight.setLength_in_mm(staticList[currentSize].width);
+            pageWidth.setLength_in_mm(staticList[i].height);
+            pageHeight.setLength_in_mm(staticList[i].width);
             return;
         }
     }
-    currentSize = -1;
-    return;
 }
 
-int pageSize::defaultPageSize()
+int pageSize::defaultPageSizeIndex()
 {
     // FIXME: static_cast<QPrinter::PageSize>(KLocale::global()->pageSize())
     //        is the proper solution here.  Then you can determine the values

@@ -95,12 +95,7 @@ private:
     /** Gives a default value for currentSize, which depends on the
         locale. In countries with metric system, this will be "DIN A4",
         in countries with the imperial system, "US Letter". */
-    int defaultPageSize();
-
-    /** Permissible range: 0--#Size_of_array staticList, or -1 to
-        indicate a "user defined setting". Other values may lead to a
-        segfault. */
-    int currentSize;
+    static int defaultPageSizeIndex();
 };
 
 #endif

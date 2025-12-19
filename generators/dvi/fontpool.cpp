@@ -103,21 +103,6 @@ fontPool::~fontPool()
 #endif
 }
 
-void fontPool::setParameters(bool _useFontHints)
-{
-    // Check if glyphs need to be cleared
-    if (_useFontHints != useFontHints) {
-        double displayResolution = displayResolution_in_dpi;
-        QList<TeXFontDefinition *>::iterator it_fontp = fontList.begin();
-        for (; it_fontp != fontList.end(); ++it_fontp) {
-            TeXFontDefinition *fontp = *it_fontp;
-            fontp->setDisplayResolution(displayResolution * fontp->enlargement);
-        }
-    }
-
-    useFontHints = _useFontHints;
-}
-
 TeXFontDefinition *fontPool::appendx(const QString &fontname, quint32 checksum, quint32 scale, double enlargement)
 {
     // Reuse font if possible: check if a font with that name and

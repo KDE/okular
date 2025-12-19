@@ -17,15 +17,7 @@
 
 class QString;
 
-#define mm_per_cm 10.0
-#define mm_per_m 1000.0
 #define mm_per_inch 25.4
-#define mm_per_TeXPoint (2540.0 / 7227.0)
-#define mm_per_bigPoint (25.4 / 72.0)
-#define mm_per_pica (25.4 / 6.0)
-#define mm_per_didot (25.4 * 0.0148)
-#define mm_per_cicero (25.4 * 0.178)
-#define mm_per_scaledPoint (25.4 / (72.27 * 65536.0))
 
 /** @short Represents a phyical length
 
@@ -57,65 +49,10 @@ public:
         length_in_mm = l;
     }
 
-    /** sets the length in centimeters */
-    void setLength_in_cm(double l)
-    {
-        length_in_mm = l * mm_per_cm;
-    }
-
-    /** sets the length in meters */
-    void setLength_in_m(double l)
-    {
-        length_in_mm = l * mm_per_m;
-    }
-
     /** sets the length in inches */
     void setLength_in_inch(double l)
     {
         length_in_mm = l * mm_per_inch;
-    }
-
-    /** sets the length in TeX points */
-    void setLength_in_TeXPoints(double l)
-    {
-        length_in_mm = l * mm_per_TeXPoint;
-    }
-
-    /** sets the length in big points (1/72 of an inch) */
-    void setLength_in_bigPoints(double l)
-    {
-        length_in_mm = l * mm_per_bigPoint;
-    }
-
-    /** sets the length in picas (1/6 of an inch) */
-    void setLength_in_pica(double l)
-    {
-        length_in_mm = l * mm_per_pica;
-    }
-
-    /** sets the length in didots (0.0148 inches) */
-    void setLength_in_didot(double l)
-    {
-        length_in_mm = l * mm_per_didot;
-    }
-
-    /** sets the length in ciceros (0.178 inches) */
-    void setLength_in_cicero(double l)
-    {
-        length_in_mm = l * mm_per_cicero;
-    }
-
-    /** sets the length in scaled points (1 scaled point = 65536 TeX points) */
-    void setLength_in_scaledPoints(double l)
-    {
-        length_in_mm = l * mm_per_scaledPoint;
-    }
-
-    /** sets the length (@param l ) in pixels. The parameter @param res is the resolution of the
-        used device in DPI. */
-    void setLength_in_pixel(int l, double res)
-    {
-        setLength_in_inch(l / res);
     }
 
     /** @returns the length in millimeters */
@@ -124,58 +61,10 @@ public:
         return length_in_mm;
     }
 
-    /** @returns the length in centimeters */
-    double getLength_in_cm() const
-    {
-        return length_in_mm / mm_per_cm;
-    }
-
-    /** @returns the length in meters */
-    double getLength_in_m() const
-    {
-        return length_in_mm / mm_per_m;
-    }
-
     /** @returns the length in inches */
     double getLength_in_inch() const
     {
         return length_in_mm / mm_per_inch;
-    }
-
-    /** @returns the length in TeX points */
-    double getLength_in_TeXPoints() const
-    {
-        return length_in_mm / mm_per_TeXPoint;
-    }
-
-    /** @returns the length in big points (1/72 of an inch) */
-    double getLength_in_bigPoints() const
-    {
-        return length_in_mm / mm_per_bigPoint;
-    }
-
-    /** @returns the length in picas (1/6 of an inch) */
-    double getLength_in_pica() const
-    {
-        return length_in_mm / mm_per_pica;
-    }
-
-    /** @returns the length in didots (0.0148 inches) */
-    double getLength_in_didot() const
-    {
-        return length_in_mm / mm_per_didot;
-    }
-
-    /** @returns the length in ciceros (0.178 inches) */
-    double getLength_in_cicero() const
-    {
-        return length_in_mm / mm_per_cicero;
-    }
-
-    /** @returns the length in scaled points (1 scaled point = 65536 TeX points) */
-    double getLength_in_scaledPoints() const
-    {
-        return length_in_mm / mm_per_scaledPoint;
     }
 
     /** @returns the length in pixel. The parameter @param res is the resolution of the
@@ -183,12 +72,6 @@ public:
     int getLength_in_pixel(double res) const
     {
         return int(getLength_in_inch() * res);
-    }
-
-    /** @returns true is lengths differ by no more than 2mm */
-    bool isNearlyEqual(const Length o) const
-    {
-        return fabs(length_in_mm - o.getLength_in_mm()) <= 2.0;
     }
 
     /** Comparison of two lengths */
@@ -293,14 +176,6 @@ private:
     double length_in_mm;
 };
 
-#undef mm_per_cm
-#undef mm_per_m
 #undef mm_per_inch
-#undef mm_per_TeXPoint
-#undef mm_per_bigPoint
-#undef mm_per_pica
-#undef mm_per_didot
-#undef mm_per_cicero
-#undef mm_per_scaledPoint
 
 #endif

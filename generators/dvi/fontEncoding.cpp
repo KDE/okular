@@ -72,12 +72,6 @@ fontEncoding::fontEncoding(const QString &encName)
 
         fileContent = fileContent.trimmed();
 
-        // Find the name of the encoding
-        encodingFullName = fileContent.section(QLatin1Char('['), 0, 0).simplified().mid(1);
-#ifdef DEBUG_FONTENC
-        qCDebug(OkularDviDebug) << "encodingFullName: " << encodingFullName;
-#endif
-
         fileContent = fileContent.section(QLatin1Char('['), 1, 1).section(QLatin1Char(']'), 0, 0).simplified();
         const QStringList glyphNameList = fileContent.split(QLatin1Char('/'), Qt::SkipEmptyParts);
 

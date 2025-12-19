@@ -94,18 +94,6 @@ private:
     dviRenderer *parent_;
 };
 
-class DVIExportToPDF : public DVIExport
-{
-    Q_OBJECT
-
-public:
-    /** @param parent is stored internally in order to inform the parent
-     *  that the external process has finished.
-     *  @param output_name is the name of the PDF file that is
-     *  to contain the exported data.   */
-    DVIExportToPDF(dviRenderer &parent, const QString &output_name);
-};
-
 class DVIExportToPS : public DVIExport
 {
     Q_OBJECT

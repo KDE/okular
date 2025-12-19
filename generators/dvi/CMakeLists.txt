@@ -32,7 +32,6 @@ set(okularGenerator_dvi_SRCS
    TeXFont_TFM.cpp
    util.cpp
    pageSize.cpp
-   simplePageSize.cpp
    length.cpp
    fontEncoding.cpp
    fontEncodingPool.cpp

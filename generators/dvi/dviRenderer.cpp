@@ -671,15 +671,6 @@ QString dviRenderer::PDFencodingToQString(const QString &_pdfstring)
     return pdfstring;
 }
 
-void dviRenderer::exportPDF()
-{
-    /*
-      QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPDF(*this, parentWidget));
-      if (exporter->started())
-        all_exports_[exporter.data()] = exporter;
-    */
-}
-
 void dviRenderer::exportPS(const QString &fname, const QStringList &options, QPrinter *printer, QPageLayout::Orientation orientation)
 {
     QExplicitlySharedDataPointer<DVIExport> exporter(new DVIExportToPS(*this, fname, options, printer, font_pool.getUseFontHints(), orientation));

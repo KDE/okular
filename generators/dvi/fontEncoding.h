@@ -65,9 +65,6 @@ public:
     // strings.
     explicit fontEncoding(const QString &encName);
 
-    // Full name of the encoding, as read from the encoding file
-    QString encodingFullName;
-
     // List of 256 glyph names. The name can be '.notdef' to indicate
     // that a certain position is left open, or empty, if the encoding
     // file did not contain 256 characters or could not be properly read

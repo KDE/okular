@@ -93,7 +93,6 @@ void TeXFontDefinition::fontNameReceiver(const QString &fname)
     filename = fname;
 #ifdef HAVE_FREETYPE
     fullFontName.clear();
-    fullEncodingName.clear();
 #endif
 
     file = fopen(QFile::encodeName(filename).constData(), "r");

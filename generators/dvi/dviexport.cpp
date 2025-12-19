@@ -105,45 +105,6 @@ void DVIExport::output_receiver()
     }
 }
 
-DVIExportToPDF::DVIExportToPDF(dviRenderer &parent, const QString &output_name)
-    : DVIExport(parent)
-{
-    // Neither of these should happen. Paranoia checks.
-    if (!parent.dviFile) {
-        return;
-    }
-    const dvifile &dvi = *(parent.dviFile);
-
-    const QFileInfo input(dvi.filename);
-    if (!input.exists() || !input.isReadable()) {
-        return;
-    }
-
-    if (QStandardPaths::findExecutable(QStringLiteral("dvipdfm")).isEmpty()) {
-        Q_EMIT error(i18n("<qt><p>Okular could not locate the program <em>dvipdfm</em> on your computer. This program is "
-                          "essential for the export function to work. You can, however, convert "
-                          "the DVI-file to PDF using the print function of Okular, but that will often "
-                          "produce documents which print okay, but are of inferior quality if viewed in "
-                          "Acrobat Reader. It may be wise to upgrade to a more recent version of your "
-                          "TeX distribution which includes the <em>dvipdfm</em> program.</p>"
-                          "<p>Hint to the perplexed system administrator: Okular uses the PATH environment variable "
-                          "when looking for programs.</p></qt>"),
-                     -1);
-        return;
-    }
-
-    if (output_name.isEmpty()) {
-        return;
-    }
-
-    start(QStringLiteral("dvipdfm"),
-          QStringList() << QStringLiteral("-o") << output_name << dvi.filename,
-          QFileInfo(dvi.filename).absolutePath(),
-          i18n("<qt>The external program 'dvipdfm', which was used to export the file, reported an error. "
-               "You might wish to look at the <strong>document info dialog</strong> which you will "
-               "find in the File-Menu for a precise error report.</qt>"));
-}
-
 DVIExportToPS::DVIExportToPS(dviRenderer &parent, const QString &output_name, const QStringList &options, QPrinter *printer, bool useFontHinting, QPageLayout::Orientation orientation)
     : DVIExport(parent)
     , printer_(printer)

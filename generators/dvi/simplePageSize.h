@@ -39,36 +39,8 @@ public:
         pageHeight.setLength_in_mm(0.0);
     }
 
-    /** Constructs a SimplePagesize with given page width and height in
-        mm. Recall that if width or height is less or equal than 1mm,
-        the page size is considered 'invalid' by the isValid()
-        method.
-
-        @param width
-        @param height
-    */
-    SimplePageSize(const Length width, const Length height)
-        : pageWidth(width)
-        , pageHeight(height)
-    {
-    }
-
     ~SimplePageSize()
     {
-    }
-
-    /** \brief Sets the page width and height
-
-    If width or height is less or equal than 1mm, the page size is
-    considered 'invalid' by the isValid() method.
-
-    @param width
-    @param height
-    */
-    void setPageSize(const Length width, const Length height)
-    {
-        pageWidth = width;
-        pageHeight = height;
     }
 
     /** \brief Returns the page width. */
@@ -83,15 +55,6 @@ public:
         return pageHeight;
     }
 
-    /** \brief Aspect ratio
-
-    @returns if the paper size is valid, this method returns the ratio
-    width/height. Returns 1.0 otherwise. */
-    double aspectRatio() const
-    {
-        return isValid() ? (pageWidth / pageHeight) : 1.0;
-    }
-
     /** \brief Converts the physical page size to a pixel size
 
     @param resolution in dots per inch
@@ -103,48 +66,6 @@ public:
         return QSize((int)(resolution * pageWidth.getLength_in_inch() + 0.5), (int)(resolution * pageHeight.getLength_in_inch() + 0.5));
     }
 
-    /** \brief Zoom value required to scale to a certain height
-
-    If the pageSize is valid, this method returns the zoom value
-    required to scale the page size down to 'height' pixels on the
-    currently used display. If the pageSize is invalid,
-    an error message is printed, and an undefined value is returned.
-
-    @param height target height in pixels
-    @param pd the widget to be printed on.
-
-    @returns the zoom value required to scale the page size down to
-    'height' pixels. If the pageSize is invalid, an undefined value is
-    returned.
-    */
-    double zoomForHeight(quint32 height, const QPaintDevice &pd) const;
-
-    /** \brief Zoom value required to scale to a certain height
-
-    If the pageSize is valid, this method returns the zoom value
-    required to scale the page size down to 'width' pixels on the
-    currently used display. If the pageSize is invalid,
-    an error message is printed, and an undefined value is returned.
-
-    @param width target width in pixels
-    @param pd the widget to be printed on.
-
-    @returns the zoom value required to scale the page size down to
-    'width' pixels. If the pageSize is invalid, an undefined value is
-    returned.
-    */
-    double zoomForWidth(quint32 width, const QPaintDevice &pd) const;
-
-    /** \brief Returns a zoom to fit into a certain page size
-
-    This method computes the largest zoom value such that *this, zoomed
-    by the computed values fits into the page size 'target'. If *this or
-    if target are invalid, or is this->isSmall() is true, an undefined
-    value is returned. If height or width of this is nearly 0.0, a
-    floating point exception may occur.
-    */
-    double zoomToFitInto(const SimplePageSize &target) const;
-
     /** \brief Validity check
 
     @returns 'True' if the page width and height are both larger than
@@ -152,46 +73,6 @@ public:
     bool isValid() const
     {
         return ((pageWidth.getLength_in_mm() > 1.0) && (pageHeight.getLength_in_mm() > 1.0));
-    }
-
-    /** \brief Validity check:
-
-    @returns 'True' if the page ares is less than 1.0 square mm
-    */
-    bool isSmall() const
-    {
-        return (pageWidth.getLength_in_mm() * pageHeight.getLength_in_mm() < 1.0);
-    }
-
-    /** \brief Approximate equality
-
-    @param size pageSize object to compare this object with
-
-    @returns 'True' if height and width of the two objects differ by at
-        most 2mm, 'false' otherwise
-    */
-    bool isNearlyEqual(const SimplePageSize &size) const
-    {
-        return (pageWidth.isNearlyEqual(size.pageWidth) && pageHeight.isNearlyEqual(size.pageHeight));
-    }
-
-    /** Test if paper size is higher than wide
-
-    @returns 'True' if the paper size is higher than wide
-     */
-    bool isPortrait() const
-    {
-        return (pageHeight >= pageWidth);
-    }
-
-    /** Rotates by 90 degrees
-
-    @returns a SimplePageSize with height and width swapped. The
-    original instance is unchanged.
-     */
-    SimplePageSize rotate90() const
-    {
-        return SimplePageSize(pageHeight, pageWidth);
     }
 
 protected:

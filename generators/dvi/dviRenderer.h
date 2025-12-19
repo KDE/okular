@@ -171,7 +171,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void exportPS(const QString &fname = QString(), const QStringList &options = QStringList(), QPrinter *printer = nullptr, QPageLayout::Orientation orientation = QPageLayout::Portrait);
-    void exportPDF();
 
     void handleSRCLink(const QString &linkText, const QPoint point, DocumentWidget *widget);
 

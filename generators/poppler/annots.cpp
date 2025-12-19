@@ -296,10 +296,62 @@ static void setSharedAnnotationPropertiesToPopplerAnnotation(const Okular::Annot
 
 static void setPopplerStampAnnotationCustomImage(const Poppler::Page *page, Poppler::StampAnnotation *pStampAnnotation, const Okular::StampAnnotation *oStampAnnotation)
 {
-    const QSize size = page->pageSize();
-    const QRect rect = Okular::AnnotationUtils::annotationGeometry(oStampAnnotation, size.width(), size.height());
+    const QString iconName = oStampAnnotation->stampIconName();
+    if (iconName.isEmpty()) {
+        return;
+    }
 
-    QImage image = Okular::AnnotationUtils::loadStamp(oStampAnnotation->stampIconName(), rect.size()).toImage();
+    QSize targetSize;
+
+    // Try to detect the native resolution of the image file
+    // Check if file exists first to avoid QImageReader searching for icon theme names on disk
+    if (QFile::exists(iconName)) {
+        QImageReader reader(iconName);
+        if (reader.canRead()) {
+            const QByteArray format = reader.format();
+            // If it is a raster image (PNG, JPG, etc.), use the native size.
+            // We strictly avoid downscaling user-provided signature scans.
+            if (format != "svg" && format != "svgz") {
+                targetSize = reader.size();
+            }
+        }
+    }
+
+    // Fallback for SVGs, named icons, or failed reads:
+    // Calculate a high-DPI size based on the PDF page geometry.
+    if (targetSize.isEmpty()) {
+        // Get the annotation rectangle in PDF user units (points).
+        const QSizeF pageSizePoints = page->pageSizeF();
+        const Okular::NormalizedRect &nRect = oStampAnnotation->boundingRectangle();
+
+        const double widthPoints = nRect.width() * pageSizePoints.width();
+        const double heightPoints = nRect.height() * pageSizePoints.height();
+
+        // Map from PDF points (72 per inch) to a target high DPI (e.g., 288 = 4x).
+        constexpr double kPdfDpi = 72.0;
+        constexpr double kStampDpi = 288.0;
+        const double scale = kStampDpi / kPdfDpi;
+
+        int pixelWidth = std::max(1, qRound(widthPoints * scale));
+        int pixelHeight = std::max(1, qRound(heightPoints * scale));
+
+        // Clamp to a reasonable max to prevent memory exhaustion on huge SVGs
+        constexpr int kMaxStampPixels = 4096;
+        if (pixelWidth > kMaxStampPixels || pixelHeight > kMaxStampPixels) {
+            const double ratio = static_cast<double>(pixelWidth) / pixelHeight;
+            if (ratio > 1.0) {
+                pixelWidth = kMaxStampPixels;
+                pixelHeight = pixelWidth / ratio;
+            } else {
+                pixelHeight = kMaxStampPixels;
+                pixelWidth = pixelHeight * ratio;
+            }
+        }
+        targetSize = QSize(pixelWidth, pixelHeight);
+    }
+
+    // Load with our calculated size
+    QImage image = Okular::AnnotationUtils::loadStamp(iconName, targetSize).toImage();
 
     if (!image.isNull()) {
         pStampAnnotation->setStampCustomImage(image);

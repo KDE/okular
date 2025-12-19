@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2025-12-19 00:42+0000\n"
 "PO-Revision-Date: 2025-07-11 12:48+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -334,12 +334,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Actualment s'està generant %1 a %2 ppp…"
 
-#: generator_dvi.cpp:288
+#: generator_dvi.cpp:293
 #, kde-format
 msgid "Generator/Date"
 msgstr "Generador/Data"
 
-#: generator_dvi.cpp:377
+#: generator_dvi.cpp:382
 #, kde-format
 msgid "Font file not found"
 msgstr "No s'ha trobat el fitxer de fonts"

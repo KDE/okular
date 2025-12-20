@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:39+0000\n"
+"POT-Creation-Date: 2025-12-20 02:35+0000\n"
 "PO-Revision-Date: 2009-05-26 10:18+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -375,12 +375,12 @@ msgstr ""
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "បច្ចុប្បន្ន​កំពុង​បង្កើត %1 នៅ %2 dpi"
 
-#: generator_dvi.cpp:288
+#: generator_dvi.cpp:293
 #, kde-format
 msgid "Generator/Date"
 msgstr "ឧបករណ៍​បង្កើត/កាលបរិច្ឆេទ"
 
-#: generator_dvi.cpp:377
+#: generator_dvi.cpp:382
 #, kde-format
 msgid "Font file not found"
 msgstr "រក​មិន​ឃើញ​ឯកសារ​​ពុម្ពអក្សរ​"

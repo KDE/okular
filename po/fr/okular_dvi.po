@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2025-07-12 17:33+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -35,43 +35,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "rpnpif@free.fr, kimael@gmail.com, peter.potrowl@gmail.com"
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"<qt><p>Okular ne peut pas trouver le programme <em>dvipdfm</em> sur votre "
-"ordinateur. Ce programme est essentiel pour le travail de la fonction "
-"« Exporter ». Vous pouvez cependant convertir le fichier « DVI » en « PDF » "
-"en utilisant la fonction « Imprimer » de Okular. Cela produira souvent des "
-"documents s'imprimant bien mais de qualité inférieure lorsque affichés par "
-"« Acrobat Reader ». Il peut être intéressant de mettre à jour votre "
-"distribution « TeX » vers une version plus récente incluant le programme "
-"<em>dvipdfm</em></p> <p>Astuce pour l'administrateur du système qui serait "
-"perplexe : Okular utilise la variable d'environnement « PATH » lors de "
-"recherche de programmes.</p></qt>"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>Le programme externe « dvipdfm », servant à l'exportation du fichier, a "
-"rapporté une erreur. Vous pourriez souhaiter regarder la <strong>boite de "
-"dialogue d'informations du document</strong> que vous trouverez dans le menu "
-"« Fichier » pour vous fournir un rapport d'erreur précis.</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -86,7 +50,7 @@ msgstr ""
 "des fichiers « PostScript ». La fonctionnalité que vous demandez est donc "
 "indisponible dans cette version de Okular.</qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -100,7 +64,7 @@ msgstr ""
 "utilise la variable d'environnement « PATH » lors de recherche de programmes."
 "</p></qt>"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -311,7 +275,7 @@ msgstr ""
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Impossible d'analyser la donnée de taille de papier « %1 »."
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -322,7 +286,7 @@ msgstr ""
 "l'affichage du fichier « DVI » actuel. Votre document peut être illisible.</"
 "p> <p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -338,7 +302,7 @@ msgstr ""
 "se trouve pas dans l'emplacement de recherche actuel.</p> <p><small><b>PATH:"
 "</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -349,7 +313,7 @@ msgstr ""
 "fermeture %1, erreur %2). En conséquence, il est probable que certaines "
 "polices soient manquantes et que votre document soit illisible.</qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Génération en cours de %1 à %2 dpi..."
@@ -363,31 +327,6 @@ msgstr "Générateur / Date"
 #, kde-format
 msgid "Font file not found"
 msgstr "Impossible de trouver un fichier de police"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr "%1 x %2"
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr "%1 × %2 mm"
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr "%1 × %2 pouces"
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "portrait"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "paysage"
 
 #: psgs.cpp:286
 #, kde-format
@@ -463,7 +402,7 @@ msgstr ""
 "Le fichier de police %1 est cassé ou il est impossible de l'ouvrir ou de le "
 "lire."
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
@@ -472,7 +411,7 @@ msgstr ""
 "de caractère pour le fichier de police %1."
 
 # unreviewed-context
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr ""
@@ -480,7 +419,7 @@ msgstr ""
 "du fichier de police %2."
 
 # unreviewed-context
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr ""
@@ -488,19 +427,19 @@ msgstr ""
 "du fichier de police %2."
 
 # unreviewed-context
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "Le glyphe n° %1 est vide."
 
 # unreviewed-context
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "Le glyphe n° %1 issu du fichier de police %2 est vide."
 
 # unreviewed-context
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
@@ -543,17 +482,17 @@ msgstr "Mauvais fichier « PK » (%1), trop de bits"
 msgid "Font has non-square aspect ratio "
 msgstr "La police a un coefficient d'aspect non carré "
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "Impossible de trouver la police %1, fichier %2."
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "Incohérence de somme de contrôle pour le fichier de police %1"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Impossible de reconnaître le format du fichier de police %1"
@@ -594,6 +533,54 @@ msgstr ""
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr ""
 "Un octet erroné de commande a été trouvé dans la liste de macro « VF » : %1"
+
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Okular ne peut pas trouver le programme <em>dvipdfm</em> sur votre "
+#~ "ordinateur. Ce programme est essentiel pour le travail de la fonction "
+#~ "« Exporter ». Vous pouvez cependant convertir le fichier « DVI » en "
+#~ "« PDF » en utilisant la fonction « Imprimer » de Okular. Cela produira "
+#~ "souvent des documents s'imprimant bien mais de qualité inférieure lorsque "
+#~ "affichés par « Acrobat Reader ». Il peut être intéressant de mettre à "
+#~ "jour votre distribution « TeX » vers une version plus récente incluant le "
+#~ "programme <em>dvipdfm</em></p> <p>Astuce pour l'administrateur du système "
+#~ "qui serait perplexe : Okular utilise la variable d'environnement « PATH » "
+#~ "lors de recherche de programmes.</p></qt>"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>Le programme externe « dvipdfm », servant à l'exportation du fichier, "
+#~ "a rapporté une erreur. Vous pourriez souhaiter regarder la <strong>boite "
+#~ "de dialogue d'informations du document</strong> que vous trouverez dans "
+#~ "le menu « Fichier » pour vous fournir un rapport d'erreur précis.</qt>"
+
+#~ msgid "%1 × %2"
+#~ msgstr "%1 x %2"
+
+#~ msgid "%1 × %2 mm"
+#~ msgstr "%1 × %2 mm"
+
+#~ msgid "%1 × %2 in"
+#~ msgstr "%1 × %2 pouces"
+
+#~ msgid "portrait"
+#~ msgstr "portrait"
+
+#~ msgid "landscape"
+#~ msgstr "paysage"
 
 #~ msgid ""
 #~ "<qt><p>The Ghostview program, which Okular uses internally to display the "

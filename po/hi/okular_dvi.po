@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2021-08-22 14:18+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -29,29 +29,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -61,7 +39,7 @@ msgid ""
 "Okular.</qt>"
 msgstr ""
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -70,7 +48,7 @@ msgid ""
 "when looking for programs.</p></qt>"
 msgstr ""
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -242,7 +220,7 @@ msgstr "पृष्ठ %1: पोस्टस्क्रिप्ट फ़ा
 msgid "The papersize data '%1' could not be parsed."
 msgstr "पेपरसाइज डाटा '%1' पार्स नहीं की जा सकी."
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -250,7 +228,7 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -260,7 +238,7 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -268,7 +246,7 @@ msgid ""
 "document might be unreadable.</qt>"
 msgstr ""
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -283,31 +261,6 @@ msgstr "जेनरेटर/तारीख़"
 #, kde-format
 msgid "Font file not found"
 msgstr "फ़ॉन्ट फ़ाइल नहीं मिला"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr ""
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr ""
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr ""
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "खड़ा"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "आड़ा"
 
 #: psgs.cpp:286
 #, kde-format
@@ -369,34 +322,34 @@ msgstr ""
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "फ़ॉन्ट फ़ाइल %1 टूटा है, या इसे खोला या पढ़ा नहीं जा सकता."
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
 "फ़ॉन्ट फ़ाइल %1 के लिए अक्षर आकार सेट करने के दौरा फ्रीटाइप ने एक त्रुटि की रपट दी."
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "फ्रीटाइप ग्लिफ #%1 को फ़ॉन्ट फ़ाइल %2 से लोड करने में अक्षम है."
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "फ्रीटाइप ग्लिफ #%1 को फ़ॉन्ट फ़ाइल %2 से रेंडर करने में अक्षम है."
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "Glyph #%1 खाली है"
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "ग्लिफ़ #%1 फ़ॉन्ट फ़ाइल %2 में खाली है."
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr "फ़ॉन्ट फ़ाइल %2 से ग्लिफ #%1 को लोड करने में फ्रीटाइप असफल रहा."
@@ -436,17 +389,17 @@ msgstr "खराब पीके फ़ाइल (%1), बहुत सार�
 msgid "Font has non-square aspect ratio "
 msgstr "फ़ॉन्ट में नॉन-स्कवेयर आस्पेक्ट रेशो है"
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "फ़ॉन्ट फ़ाइल %1 ढूंढ नहीं सका %2."
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "फ़ॉन्ट फ़ाइल %1 के लिए चेकसम मिसमैच"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "फ़ाइल %1 के लिए फ़ॉन्ट फ़ाइल प्रारूप पहचाना नहीं जा सकता"
@@ -477,6 +430,12 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "वीएफ मेक्रो सूची : %1 में गलत कमांड बाइट मिला"
+
+#~ msgid "portrait"
+#~ msgstr "खड़ा"
+
+#~ msgid "landscape"
+#~ msgstr "आड़ा"
 
 #, fuzzy
 #~| msgid "DVI File Error"

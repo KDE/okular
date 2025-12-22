@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2025-07-17 23:12+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -31,40 +31,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "tulliana@gmail.com"
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"<qt><p>Okular bilgisayarınızda <em>dvipdfm</em> programının yerini "
-"belirleyemedi. Bu program dışa aktarım işlevinin çalışması için önemlidir. "
-"Yine de, Okular’ın yazdırma işlevini kullanarak DVI dosyasını PDF biçimine "
-"dönüştürebilirsiniz. Bu genelde yazdırıldığında makul ancak Acrobat "
-"Reader’da görüntülendiğinde oldukça kalitesiz olan belgeler üretecektir. TeX "
-"dağıtımınızı <em>dvipdfm</em> programını içeren daha güncel bir sürüme "
-"güncellemeniz akıllıca olabilir.</p><p>Kafası karışık sistem yöneticisi için "
-"ip ucu: Okular, programları ararken PATH çevre değişkenini kullanır.</p></qt>"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>Dosyayı dışa aktarmak için kullanılan dış “dvipdfm” programı bir hata "
-"bildirdi. Dosya menüsünde belirli bir hata raporu bulacağınız <strong>belge "
-"bilgisi iletişim kutusuna</strong> bakmak isteyebilirsiniz.</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -79,7 +46,7 @@ msgstr ""
 "Gereksinim duyduğunuz işlevsellik bu nedenle Okular’ın bu sürümünde mevcut "
 "değildir.</qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -92,7 +59,7 @@ msgstr ""
 "p><p>Kafası karışık sistem yöneticisi için ip ucu: Okular, programları "
 "ararken PATH çevre değişkenini kullanır.</p></qt>"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -282,7 +249,7 @@ msgstr "Sayfa %1: PostScript dosyası <strong>%2</strong> bulunamadı.<br>"
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Kâğıt büyüklüğü verisi “%1” ayrıştırılamadı."
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -293,7 +260,7 @@ msgstr ""
 "dosyalarının yerini belirleyemiyor. Belgeniz okunamaz olabilir.</"
 "p><p><small><b>YOL:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -308,7 +275,7 @@ msgstr ""
 "arama yolunda olmayabilir.</p><p><small><b>YOL:</b> %1</small></p><p><small>"
 "%2</small></p></qt>"
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -319,7 +286,7 @@ msgstr ""
 "sonlandırıldı (çıkış kodu %1, hata %2). Sonuç; bazı yazıtipleri "
 "konumlandırılamadı ve belgeniz okunamaz durumda olabilir.</qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Şu anda %1 yazıtipi %2 DPI ile üretiliyor…"
@@ -333,31 +300,6 @@ msgstr "Oluşturucu/Tarih"
 #, kde-format
 msgid "Font file not found"
 msgstr "Dosya bulunamadı"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr "%1 × %2"
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr "%1 × %2 mm"
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr "%1 × %2 inç"
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "dikey"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "yatay"
 
 #: psgs.cpp:286
 #, kde-format
@@ -429,7 +371,7 @@ msgstr ""
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "%1 yazıtipi dosyası bzouk veya açılamıyor/okunamıyor."
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
@@ -437,27 +379,27 @@ msgstr ""
 "FreeType, %1 yazıtipi dosyası için karakter boyutu ayarlanırken hata "
 "belirledi."
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "FreeType, #%1 karakterini %2 yazıtipi dosyasından yükleyemedi."
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "FreeType, #%1 karakterini %2 yazıtipi dosyasından sunamadı."
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "Glyph #%1 boş."
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "%2 yazıtipi dosyasındaki %1 karakteri boş."
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
@@ -498,17 +440,17 @@ msgstr "Bozuk pk dosyası (%1), çok fazla bit"
 msgid "Font has non-square aspect ratio "
 msgstr "Yazıtipi kare bir görünüm oranına sahip değil "
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "%1 yazıtipi, %2 dosyası bulunamadı."
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "%1 yazıtipi dosyasında denetleme hatası"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Yazıtipi dosyası %1 için biçim tanınamadı"
@@ -547,3 +489,50 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "VF makro listesinde yanlış komut baytı bulundu: %1"
+
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Okular bilgisayarınızda <em>dvipdfm</em> programının yerini "
+#~ "belirleyemedi. Bu program dışa aktarım işlevinin çalışması için "
+#~ "önemlidir. Yine de, Okular’ın yazdırma işlevini kullanarak DVI dosyasını "
+#~ "PDF biçimine dönüştürebilirsiniz. Bu genelde yazdırıldığında makul ancak "
+#~ "Acrobat Reader’da görüntülendiğinde oldukça kalitesiz olan belgeler "
+#~ "üretecektir. TeX dağıtımınızı <em>dvipdfm</em> programını içeren daha "
+#~ "güncel bir sürüme güncellemeniz akıllıca olabilir.</p><p>Kafası karışık "
+#~ "sistem yöneticisi için ip ucu: Okular, programları ararken PATH çevre "
+#~ "değişkenini kullanır.</p></qt>"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>Dosyayı dışa aktarmak için kullanılan dış “dvipdfm” programı bir hata "
+#~ "bildirdi. Dosya menüsünde belirli bir hata raporu bulacağınız "
+#~ "<strong>belge bilgisi iletişim kutusuna</strong> bakmak isteyebilirsiniz."
+#~ "</qt>"
+
+#~ msgid "%1 × %2"
+#~ msgstr "%1 × %2"
+
+#~ msgid "%1 × %2 mm"
+#~ msgstr "%1 × %2 mm"
+
+#~ msgid "%1 × %2 in"
+#~ msgstr "%1 × %2 inç"
+
+#~ msgid "portrait"
+#~ msgstr "dikey"
+
+#~ msgid "landscape"
+#~ msgstr "yatay"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2025-10-05 12:01+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -28,39 +28,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-l10n-he@kde.org"
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"<qt><p>Okular לא הצליח לאתר את התוכנית <em>dvipdfm</em> במחשב שלך. התוכנית "
-"הזאת חיונית לפעילות של יכולת הייצוא. אפשרבכל זאת, להמיר את קובץ ה־DVI ל־PDF "
-"דרך יכולת ההדפסה של Okular, אך ככה נוצרים בדרך כלל קבצים שמתאימים להדפסה אך "
-"איכותם נחותה אם הם מוצגים ב־Acrobat Reader. כנראה ששווה לך לשדרג לגרסה "
-"עדכנית יותר של מערכת TeX (טך) שכוללת את התוכנית <em>dvipdfm</em>.</p><p>רמז "
-"למנהלי המערכת המתוסכלים: Okular משתמש במשתנה הסביבה PATH לטובת איתור תוכניות."
-"</p></qt>"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>התוכנית החיצונית ‚dvipdfm’, ששישמה לייצוא הקובץ, דיווחה על שגיאה. אולי "
-"כדאי לעיין ב<strong>חלונית פרטי המסמך</strong> שאותה ניתן למצוא בקובץ-תפריט "
-"לדוח מפורט על השגיאה.</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -74,7 +42,7 @@ msgstr ""
 "PostScript לא יכולה לטפל בהם. היכולת שנחוצה לך אינה זמינה בגרסה הזו של "
 "Okular.</qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -86,7 +54,7 @@ msgstr ""
 "חיונית לפעילות יכולת הייצוא.</p><p>רמז למנהלי המערכת המתוסכלים: Okular משתמש "
 "במשתנה הסביבה PATH לטובת איתור תוכניות.</p></qt>"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -271,7 +239,7 @@ msgstr "עמוד %1: לא ניתן למצוא את קובץ ה־ PostScript‏ <
 msgid "The papersize data '%1' could not be parsed."
 msgstr "לא ניתן לפענח את נתוני גודל העמוד ‚%1’."
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -282,7 +250,7 @@ msgstr ""
 "כנראה שהקובץ שלך יהיה בלתי־קריא.</p><p><small><b>PATH:</b> %1</small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -297,7 +265,7 @@ msgstr ""
 "שהיא לא נמצאת בנתיב החיפוש הנוכחי.</p><p><small><b>PATH:</b> %1</small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -308,7 +276,7 @@ msgstr ""
 "כתוצאה מכך, האיתור של חלק מקובצי הגופנים נכשל, ויכול להיות שהמסמך שלך יהיה "
 "בלתי־קריא.</qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "%1 נוצר כרגע באיכות של %2 נק׳ לאינטש…"
@@ -322,31 +290,6 @@ msgstr "יוצר/תאריך"
 #, kde-format
 msgid "Font file not found"
 msgstr "קובץ הגופן לא נמצא"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr "%1 × %2"
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr "%1 × %2 מ״מ"
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr "%1 × %2 אינ׳"
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "לאורך"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "לרוחב"
 
 #: psgs.cpp:286
 #, kde-format
@@ -416,33 +359,33 @@ msgstr "אפשר לפתוח ולקרוא את קובץ הגופן %1, אך תס�
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "קובץ הגופן %1 פגום, או שאי אפשר לפתוח או לקרוא אותו."
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr "FreeType דיווח על שגיאה בעת הגדרת גודל התווים לקובץ הגופן %1."
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "FreeType לא הצליח לטעון את גליף מס׳ %1 מקובץ הגופן %2."
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "FreeType לא הצליח לעבד את גליף מס׳ %1 מקובץ הגופן %2."
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "גליף מס׳ %1 ריק."
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "גליף מס׳ %1 מקובץ הגופן %2 ריק."
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr "FreeType לא הצליח לטעון את המדד לגליף מס׳ %1 מקובץ הגופן %2."
@@ -482,17 +425,17 @@ msgstr "קובץ pk פגום (%1), יותר מדי סיביות"
 msgid "Font has non-square aspect ratio "
 msgstr "לגופן יש יחס גובה־רוחב שאינו מרובע"
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "לא ניתן למצוא את הגופן %1, קובץ %2."
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "חוסר התאמה של סיכום הביקורת לקובץ הגופן %1"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "לא ניתן לזהות את תסדיר קובץ הגופן %1"
@@ -531,3 +474,47 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "נמצא בית פקודה שגוי ברשימת תסריטי המאקרו של הגופנים הווירטואליים: %1"
+
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Okular לא הצליח לאתר את התוכנית <em>dvipdfm</em> במחשב שלך. "
+#~ "התוכנית הזאת חיונית לפעילות של יכולת הייצוא. אפשרבכל זאת, להמיר את קובץ ה־"
+#~ "DVI ל־PDF דרך יכולת ההדפסה של Okular, אך ככה נוצרים בדרך כלל קבצים "
+#~ "שמתאימים להדפסה אך איכותם נחותה אם הם מוצגים ב־Acrobat Reader. כנראה "
+#~ "ששווה לך לשדרג לגרסה עדכנית יותר של מערכת TeX (טך) שכוללת את התוכנית "
+#~ "<em>dvipdfm</em>.</p><p>רמז למנהלי המערכת המתוסכלים: Okular משתמש במשתנה "
+#~ "הסביבה PATH לטובת איתור תוכניות.</p></qt>"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>התוכנית החיצונית ‚dvipdfm’, ששישמה לייצוא הקובץ, דיווחה על שגיאה. "
+#~ "אולי כדאי לעיין ב<strong>חלונית פרטי המסמך</strong> שאותה ניתן למצוא "
+#~ "בקובץ-תפריט לדוח מפורט על השגיאה.</qt>"
+
+#~ msgid "%1 × %2"
+#~ msgstr "%1 × %2"
+
+#~ msgid "%1 × %2 mm"
+#~ msgstr "%1 × %2 מ״מ"
+
+#~ msgid "%1 × %2 in"
+#~ msgstr "%1 × %2 אינ׳"
+
+#~ msgid "portrait"
+#~ msgstr "לאורך"
+
+#~ msgid "landscape"
+#~ msgstr "לרוחב"

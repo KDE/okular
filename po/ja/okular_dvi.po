@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2011-04-16 17:52-0700\n"
 "Last-Translator: Fumiaki Okushi <okushi@kde.gr.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -37,50 +37,7 @@ msgstr ""
 "kom@kde.gr.jp,shinobo@leo.bekkoame.ne.jp,eis-t@mue.biglobe.ne.jp,md81@bird."
 "email.ne.jp,ikuya@oooug.jp,okushi@kde.gr.jp,ybando@k6.dion.ne.jp"
 
-#: dviexport.cpp:123
-#, fuzzy, kde-format
-#| msgid ""
-#| "Okular could not locate the program 'dvipdfm' on your computer. This "
-#| "program is essential for the export function to work. You can, however, "
-#| "convert the DVI-file to PDF using the print function of Okular, but that "
-#| "will often produce documents which print okay, but are of inferior "
-#| "quality if viewed in Acrobat Reader. It may be wise to upgrade to a more "
-#| "recent version of your TeX distribution which includes the 'dvipdfm' "
-#| "program.\n"
-#| "Hint to the perplexed system administrator: Okular uses the PATH "
-#| "environment variable when looking for programs."
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"Okular はプログラム <command>dvipdfm</command> を見つけられませんでした。この"
-"プログラムはエクスポート機能に必要です。Okular の印刷機能を使って DVI ファイ"
-"ルを PDF に変換することもできますが、この方法を使うと印刷では問題なくても "
-"Acrobat Reader で開いたときに表示の質が落ちることがよくあります。"
-"<command>dvipdfm</command> が含まれているより新しい TeX ディストリビューショ"
-"ンにアップグレードする方がよいでしょう。\n"
-"当惑しているシステム管理者へのヒント: Okular はプログラムを探す際に PATH 環境"
-"変数を使います。"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>DVI ファイルのエクスポートに使用した外部プログラム <tt>dvipdfm</tt> がエ"
-"ラーを返しました。「ファイル」メニューから「文書情報」ダイアログを開いてエ"
-"ラーの詳細を確認した方がよいでしょう。</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><P>This DVI file refers to external graphic files which are not in "
@@ -106,7 +63,7 @@ msgstr ""
 "ビューアを使ってください。</p><p>この機能は、いずれ追加する予定です。</p></"
 "qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, fuzzy, kde-format
 #| msgid ""
 #| "Okular could not locate the program 'dvips' on your computer. That "
@@ -124,7 +81,7 @@ msgstr ""
 "当惑しているシステム管理者へのヒント: Okular はプログラムを探す際に PATH 環境"
 "変数を使います。"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -328,7 +285,7 @@ msgstr "<qt>ページ %1: PostScript ファイル ‘%2’ が見つかりませ
 msgid "The papersize data '%1' could not be parsed."
 msgstr "用紙サイズのデータ “%1” を解析できませんでした。"
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Okular was not able to locate all the font files which are "
@@ -342,7 +299,7 @@ msgstr ""
 "<qt><p>Okular は現在の DVI ファイルの表示に必要なすべてのフォントファイルを見"
 "つけられませんでした。文書は読めないかもしれません。</p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -352,7 +309,7 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, "
@@ -367,7 +324,7 @@ msgstr ""
 "ラー %2)。このため、フォントファイルがたらず、文書が読めないかもしれません。"
 "</p></qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -382,31 +339,6 @@ msgstr "ジェネレータ/日付"
 #, kde-format
 msgid "Font file not found"
 msgstr "フォントファイルが見つかりません"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr ""
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr ""
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr ""
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "縦長"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "横長"
 
 #: psgs.cpp:286
 #, fuzzy, kde-format
@@ -484,34 +416,34 @@ msgstr ""
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "フォントファイル ‘%1’ は読み込むことができないか、壊れています。"
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
 "FreeType はフォントファイル ‘%1’ の文字サイズを設定中にエラーを返しました。"
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "FreeType はフォントファイル ‘%2’ からグリフ #%1 を読み込めません。"
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "FreeType はフォントファイル ‘%2’ のグリフ #%1 を描画できません。"
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "グリフ #%1 が空です。"
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "フォントファイル ‘%2’ のグリフ #%1 が空です。"
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
@@ -552,17 +484,17 @@ msgstr "不正な PK ファイル (%1)、ビットが多すぎます"
 msgid "Font has non-square aspect ratio "
 msgstr "フォントのアスペクト比が正方形ではありません。"
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "フォント %1, ファイル ‘%2’ が見つかりません。"
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "フォントファイル ‘%1’ のチェックサムが合いません"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "フォントファイル ‘%1’ のフォーマットを認識できません"
@@ -601,3 +533,50 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "VF マクロリストに不正なコマンドバイトが見つかりました: %1"
+
+#, fuzzy
+#~| msgid ""
+#~| "Okular could not locate the program 'dvipdfm' on your computer. This "
+#~| "program is essential for the export function to work. You can, however, "
+#~| "convert the DVI-file to PDF using the print function of Okular, but that "
+#~| "will often produce documents which print okay, but are of inferior "
+#~| "quality if viewed in Acrobat Reader. It may be wise to upgrade to a more "
+#~| "recent version of your TeX distribution which includes the 'dvipdfm' "
+#~| "program.\n"
+#~| "Hint to the perplexed system administrator: Okular uses the PATH "
+#~| "environment variable when looking for programs."
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "Okular はプログラム <command>dvipdfm</command> を見つけられませんでした。"
+#~ "このプログラムはエクスポート機能に必要です。Okular の印刷機能を使って DVI "
+#~ "ファイルを PDF に変換することもできますが、この方法を使うと印刷では問題な"
+#~ "くても Acrobat Reader で開いたときに表示の質が落ちることがよくあります。"
+#~ "<command>dvipdfm</command> が含まれているより新しい TeX ディストリビュー"
+#~ "ションにアップグレードする方がよいでしょう。\n"
+#~ "当惑しているシステム管理者へのヒント: Okular はプログラムを探す際に PATH "
+#~ "環境変数を使います。"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>DVI ファイルのエクスポートに使用した外部プログラム <tt>dvipdfm</tt> が"
+#~ "エラーを返しました。「ファイル」メニューから「文書情報」ダイアログを開いて"
+#~ "エラーの詳細を確認した方がよいでしょう。</qt>"
+
+#~ msgid "portrait"
+#~ msgstr "縦長"
+
+#~ msgid "landscape"
+#~ msgstr "横長"

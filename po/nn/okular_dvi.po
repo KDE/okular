@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2024-08-19 20:54+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -29,42 +29,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "karl@huftis.org"
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"<qt><p>Okular finn ikkje programmet <em>dvipdfm</em> på datamaskina di. "
-"Dette programmet er viktig for at eksporteringsfunksjonen skal verka. Du kan "
-"likevel konvertera DVI-fila til PDF ved å bruka utskriftsfunksjonen i "
-"Okular, men det vil ofte laga dokument som er greie til utskrift men som er "
-"av lågare kvalitet dersom dei vert lesne i Adobe Reader. Det kan vera lurt å "
-"oppgradera til ein nyare versjon av TeX-distribusjonen din, og som har med "
-"programmet <em>dvipdfm</em>.</p><p>Hint til den forskrekka "
-"systemadministratoren: Okular brukar miljøvariabelen PATH når det leitar "
-"etter program.</p></qt>"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>Det eksterne programmet «dvipdfm» som vart brukt til å eksportera fila "
-"rapporterte ein feil. Kanskje vil du sjå på "
-"<strong>dokumentinformasjonsvindauget</strong>, som du finn i filmenyen, for "
-"å få ein nøyaktig feilrapport.</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -79,7 +44,7 @@ msgstr ""
 "Funksjonaliteten du treng om er derfor ikkje tilgjengeleg i denne versjonen "
 "av Okular.</qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -92,7 +57,7 @@ msgstr ""
 "til den forskrekka systemadministratoren: Okular brukar miljøvariabelen PATH "
 "når det leitar etter program.</p></qt>"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -282,7 +247,7 @@ msgstr "Side %1: Fann ikkje PostScript-fila <strong>%2</strong>.<br/>"
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Klarte ikkje tolka papirstorleiken «%1»."
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -293,7 +258,7 @@ msgstr ""
 "Dokumentet kan vera uleseleg.</p><p><small><b>Søkjesti (PATH):</b> %1</"
 "small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -308,7 +273,7 @@ msgstr ""
 "i den gjeldande søkjestien.</p><p><small><b>Søkjesti (PATH):</b> %1</small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -319,7 +284,7 @@ msgstr ""
 "%1, feil: %2). Som eit resultat av dette fann ikkje programmet alle "
 "skriftene, og det er ikkje sikkert at dokumentet er lesbart.</qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi..."
 msgid "Currently generating %1 at %2 dpi…"
@@ -334,31 +299,6 @@ msgstr "Generator/dato"
 #, kde-format
 msgid "Font file not found"
 msgstr "Fann ikkje skriftfil"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr "%1 × %2"
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr "%1 × %2 mm"
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr "%1 × %2 tommar"
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "ståande"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "liggjande"
 
 #: psgs.cpp:286
 #, kde-format
@@ -429,7 +369,7 @@ msgstr ""
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "Skriftfila %1 er øydelagd eller kunne ikkje opnast og lesast."
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
@@ -437,27 +377,27 @@ msgstr ""
 "FreeType rapporterte om feil ved oppsett av teiknstorleiken for "
 "skriftfila %1."
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "FreeType klarar ikkje lasta inn teikn #%1 frå skriftfila %2."
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "FreeType klarar ikkje visa teikn #%1 frå skriftfila %2."
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "Teiknet #%1 er tomt."
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "Teiknet #%1 frå skriftfila %2 er tomt."
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr "FreeType klarar ikkje lasta inn mål for teikn #%1 frå skriftfila %2."
@@ -497,17 +437,17 @@ msgstr "Øydelagd pk-fil (%1) – for mange bit"
 msgid "Font has non-square aspect ratio "
 msgstr "Skrifttypen har eit ikkje-kvadratisk høve "
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "Finn ikkje skrifta %1, fil %2."
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "Feil i sjekksum for skriftfila %1"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "Kjenner ikkje att formatet for skriftfila %1"
@@ -547,3 +487,50 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Feil kommandobyte funnen i VF-makroliste: %1"
+
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Okular finn ikkje programmet <em>dvipdfm</em> på datamaskina di. "
+#~ "Dette programmet er viktig for at eksporteringsfunksjonen skal verka. Du "
+#~ "kan likevel konvertera DVI-fila til PDF ved å bruka utskriftsfunksjonen i "
+#~ "Okular, men det vil ofte laga dokument som er greie til utskrift men som "
+#~ "er av lågare kvalitet dersom dei vert lesne i Adobe Reader. Det kan vera "
+#~ "lurt å oppgradera til ein nyare versjon av TeX-distribusjonen din, og som "
+#~ "har med programmet <em>dvipdfm</em>.</p><p>Hint til den forskrekka "
+#~ "systemadministratoren: Okular brukar miljøvariabelen PATH når det leitar "
+#~ "etter program.</p></qt>"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>Det eksterne programmet «dvipdfm» som vart brukt til å eksportera "
+#~ "fila rapporterte ein feil. Kanskje vil du sjå på "
+#~ "<strong>dokumentinformasjonsvindauget</strong>, som du finn i filmenyen, "
+#~ "for å få ein nøyaktig feilrapport.</qt>"
+
+#~ msgid "%1 × %2"
+#~ msgstr "%1 × %2"
+
+#~ msgid "%1 × %2 mm"
+#~ msgstr "%1 × %2 mm"
+
+#~ msgid "%1 × %2 in"
+#~ msgstr "%1 × %2 tommar"
+
+#~ msgid "portrait"
+#~ msgstr "ståande"
+
+#~ msgid "landscape"
+#~ msgstr "liggjande"

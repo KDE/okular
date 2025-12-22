@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-19 00:42+0000\n"
+"POT-Creation-Date: 2025-12-22 00:41+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -27,37 +27,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "i@guoyunhe.me, tds00@qq.com"
 
-#: dviexport.cpp:123
-#, kde-format
-msgid ""
-"<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-"computer. This program is essential for the export function to work. You "
-"can, however, convert the DVI-file to PDF using the print function of "
-"Okular, but that will often produce documents which print okay, but are of "
-"inferior quality if viewed in Acrobat Reader. It may be wise to upgrade to a "
-"more recent version of your TeX distribution which includes the <em>dvipdfm</"
-"em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
-"the PATH environment variable when looking for programs.</p></qt>"
-msgstr ""
-"<qt><p>Okular 无法在本机系统中找到 <em>dvipdfm</em> 程序，此程序是文档导出特"
-"性所必须的。作为替代方案，您可以通过 Okular 的打印功能将 DVI 文件转换为 PDF，"
-"只是生成的文档虽然打印效果还行，但是在 Acrobat Reader 中的显示效果不太好。我"
-"们建议您将本机系统安装的 TeX 升级到包含 <em>dvipdfm</em> 程序的最新版。</"
-"p><p>特别为系统管理员准备的温馨提示：Okular 使用 PATH 环境变量来查找程序。</"
-"p></qt>"
-
-#: dviexport.cpp:142
-#, kde-format
-msgid ""
-"<qt>The external program 'dvipdfm', which was used to export the file, "
-"reported an error. You might wish to look at the <strong>document info "
-"dialog</strong> which you will find in the File-Menu for a precise error "
-"report.</qt>"
-msgstr ""
-"<qt>用于导出文件的外部程序“dvipdfm”报告了一个错误。您可以在菜单栏的文件菜单中"
-"打开<strong>文档信息</strong>对话框，查看详细的错误报告。</qt>"
-
-#: dviexport.cpp:168
+#: dviexport.cpp:129
 #, kde-format
 msgid ""
 "<qt>This DVI file refers to external graphic files which are not in "
@@ -70,7 +40,7 @@ msgstr ""
 "支持此格式，因为 Okular 在程序内部用于打印或者导出到 PostScript 格式的 "
 "<em>dvips</em> 程序无法处理此格式。</qt>"
 
-#: dviexport.cpp:176
+#: dviexport.cpp:137
 #, kde-format
 msgid ""
 "<qt><p>Okular could not locate the program <em>dvips</em> on your computer. "
@@ -82,7 +52,7 @@ msgstr ""
 "必须的。</p><p>特别为系统管理员准备的温馨提示：Okular 使用 PATH 环境变量来查"
 "找程序。</p></qt>"
 
-#: dviexport.cpp:270
+#: dviexport.cpp:231
 #, kde-format
 msgid ""
 "<qt>The external program 'dvips', which was used to export the file, "
@@ -262,7 +232,7 @@ msgstr "第 %1 页：无法找到 PostScript 文件 <strong>%2</strong>。<br>"
 msgid "The papersize data '%1' could not be parsed."
 msgstr "无法解析纸张尺寸数据“%1”"
 
-#: fontpool.cpp:209
+#: fontpool.cpp:194
 #, kde-format
 msgid ""
 "<qt><p>Okular was not able to locate all the font files which are necessary "
@@ -272,7 +242,7 @@ msgstr ""
 "<qt><p>Okular 无法找到当前 DVI 文件所需的所有字体文件。此文档可能无法正确显"
 "示。</p><p><small><b>PATH：</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:284
+#: fontpool.cpp:269
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -286,7 +256,7 @@ msgstr ""
 "程序，或者在当前的搜索路径中找不到它。</p><p><small><b>PATH：</b> %1</"
 "small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:305
+#: fontpool.cpp:290
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -296,7 +266,7 @@ msgstr ""
 "<qt><em>kpsewhich</em> 提供的字体生成操作已被中止 (退出代码 %1，错误 %2)。某"
 "些字体文件因此无法找到。此文档可能无法正确显示。</qt>"
 
-#: fontpool.cpp:482
+#: fontpool.cpp:467
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "正在生成 %1，分辨率为 %2 dpi…"
@@ -310,31 +280,6 @@ msgstr "生成器/日期"
 #, kde-format
 msgid "Font file not found"
 msgstr "字体文件未找到"
-
-#: pageSize.cpp:298
-#, kde-format
-msgid "%1 × %2"
-msgstr "%1 × %2"
-
-#: pageSize.cpp:311
-#, kde-format
-msgid "%1 × %2 mm"
-msgstr "%1 × %2 毫米"
-
-#: pageSize.cpp:313
-#, kde-format
-msgid "%1 × %2 in"
-msgstr "%1 × %2 英寸"
-
-#: pageSize.cpp:318
-#, kde-format
-msgid "portrait"
-msgstr "纵向"
-
-#: pageSize.cpp:320
-#, kde-format
-msgid "landscape"
-msgstr "横向"
 
 #: psgs.cpp:286
 #, kde-format
@@ -402,33 +347,33 @@ msgstr "字体文件 %1 可以打开和读取，但程序不支持这种字体�
 msgid "The font file %1 is broken, or it could not be opened or read."
 msgstr "字体文件 %1 已经损坏，或者是无法打开、读取。"
 
-#: TeXFont_PFB.cpp:170
+#: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr "FreeType 在给字体文件 %1 设置字符大小时报告了一个错误。"
 
-#: TeXFont_PFB.cpp:188
+#: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
 msgstr "FreeType 无法加载字体文件 %2 中的字形 #%1。"
 
-#: TeXFont_PFB.cpp:201
+#: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
 msgstr "FreeType 无法渲染字体文件 %2 中的字形 #%1。"
 
-#: TeXFont_PFB.cpp:215
+#: TeXFont_PFB.cpp:212
 #, kde-format
 msgid "Glyph #%1 is empty."
 msgstr "字形 #%1 为空。"
 
-#: TeXFont_PFB.cpp:217
+#: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
 msgstr "字体文件 %2 中的字形 #%1 为空。"
 
-#: TeXFont_PFB.cpp:282
+#: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr "FreeType 无法加载字体文件 %2 中字形 #%1 的尺寸信息。"
@@ -468,17 +413,17 @@ msgstr "PK 文件异常 (%1)，位数过多。"
 msgid "Font has non-square aspect ratio "
 msgstr "字体的宽高比不是正方形"
 
-#: TeXFontDefinition.cpp:107
+#: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
 msgstr "无法找到字体 %1，文件 %2。"
 
-#: TeXFontDefinition.cpp:124
+#: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
 msgstr "字体文件 %1 的校验和不一致"
 
-#: TeXFontDefinition.cpp:175
+#: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
 msgstr "无法识别字体文件 %1 的格式"
@@ -517,3 +462,45 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "在 VF 宏列表中发现错误的指令字节：%1"
+
+#~ msgid ""
+#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
+#~ "computer. This program is essential for the export function to work. You "
+#~ "can, however, convert the DVI-file to PDF using the print function of "
+#~ "Okular, but that will often produce documents which print okay, but are "
+#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
+#~ "upgrade to a more recent version of your TeX distribution which includes "
+#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
+#~ "administrator: Okular uses the PATH environment variable when looking for "
+#~ "programs.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Okular 无法在本机系统中找到 <em>dvipdfm</em> 程序，此程序是文档导出"
+#~ "特性所必须的。作为替代方案，您可以通过 Okular 的打印功能将 DVI 文件转换为 "
+#~ "PDF，只是生成的文档虽然打印效果还行，但是在 Acrobat Reader 中的显示效果不"
+#~ "太好。我们建议您将本机系统安装的 TeX 升级到包含 <em>dvipdfm</em> 程序的最"
+#~ "新版。</p><p>特别为系统管理员准备的温馨提示：Okular 使用 PATH 环境变量来查"
+#~ "找程序。</p></qt>"
+
+#~ msgid ""
+#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
+#~ "reported an error. You might wish to look at the <strong>document info "
+#~ "dialog</strong> which you will find in the File-Menu for a precise error "
+#~ "report.</qt>"
+#~ msgstr ""
+#~ "<qt>用于导出文件的外部程序“dvipdfm”报告了一个错误。您可以在菜单栏的文件菜"
+#~ "单中打开<strong>文档信息</strong>对话框，查看详细的错误报告。</qt>"
+
+#~ msgid "%1 × %2"
+#~ msgstr "%1 × %2"
+
+#~ msgid "%1 × %2 mm"
+#~ msgstr "%1 × %2 毫米"
+
+#~ msgid "%1 × %2 in"
+#~ msgstr "%1 × %2 英寸"
+
+#~ msgid "portrait"
+#~ msgstr "纵向"
+
+#~ msgid "landscape"
+#~ msgstr "横向"

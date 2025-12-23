@@ -1,24 +1,25 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011.
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024 Vít Pelčák <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2025 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
+# SPDX-FileCopyrightText: 2025 Jan Papez (honyczek)
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-16 06:49+0000\n"
-"PO-Revision-Date: 2024-09-18 09:43+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
-"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2025-12-23 00:43+0100\n"
+"Last-Translator: Jan Papez (honyczek) <honyczek@centrum.cz>\n"
+"Language-Team: Czech <kde-i18n-cs@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 25.12.0\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -27,14 +28,14 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Lukáš Tinkl,Klára Cihlářová,Vít Pelčák,Marián Kyral,Tomáš Chvátal,David "
-"Kolibáč"
+"Kolibáč,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "lukas@kde.org,koty@seznam.cz,vit@pelcak.org,mkyral@email.cz,tomas."
-"chvatal@gmail.com,david@kolibac.cz"
+"chvatal@gmail.com,david@kolibac.cz,filipek.libor@protonmail.com"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
@@ -156,7 +157,7 @@ msgstr "Otevřít externí soubor"
 #: core/action.cpp:197
 #, kde-format
 msgid "Execute '%1'…"
-msgstr ""
+msgstr "Spustit '%1'…"
 
 #: core/action.cpp:294
 #, kde-format
@@ -211,12 +212,12 @@ msgstr "Najít…"
 #: core/action.cpp:314
 #, kde-format
 msgid "Go To Page…"
-msgstr ""
+msgstr "Přejít na stránku..."
 
 #: core/action.cpp:365
 #, kde-format
 msgid "Play sound…"
-msgstr ""
+msgstr "Přehrát zvuk..."
 
 #: core/action.cpp:433 core/action.cpp:549
 #, kde-format
@@ -226,7 +227,7 @@ msgstr "Skript JavaScriptu"
 #: core/action.cpp:483
 #, kde-format
 msgid "Play movie…"
-msgstr ""
+msgstr "Přehrát film..."
 
 #: core/action.cpp:554
 #, kde-format
@@ -289,7 +290,7 @@ msgstr "Na šířku %1"
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
-msgstr ""
+msgstr "%1 × %2 v (%3)"
 
 #: core/document.cpp:248
 #, kde-format
@@ -317,7 +318,7 @@ msgstr "Nebyl nalezen zásuvný modul vhodný pro zpracování zadaného dokumen
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Podepisování pro tento typ dokumentu není implementováno"
 
 #: core/document.cpp:3557
 #, kde-format
@@ -547,7 +548,7 @@ msgstr "upravit stavy tlačítek"
 #: core/generator.cpp:790
 #, kde-format
 msgid "Plain &Text…"
-msgstr ""
+msgstr "Prostý &text…"
 
 #: core/generator.cpp:793
 #, kde-format
@@ -603,22 +604,24 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Interní chyba podepisování. Nahlaste prosím chybu s postupem pro její "
+"reprodukci. Kód chyby %1"
 
 #: core/signatureutils.cpp:498
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr ""
+msgstr "Nepodařilo se podepsat dokument: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Podpis zrušen uživatelem"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Nepodařilo se podepsat. Špatné heslo."
 
 #: core/signatureutils.cpp:504
 #, kde-kuit-format
@@ -627,11 +630,13 @@ msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
+"Podepsaný dokument se nepodařilo zapsat do složky <filename>%1</filename>. "
+"Ujistěte se prosím, že jste vybrali složku s oprávněním k zápisu."
 
 #: core/signatureutils.cpp:506
 #, kde-format
 msgid "Unknown signing error"
-msgstr ""
+msgstr "Neznámá chyba při podepisování"
 
 #: core/sourcereference.cpp:103
 #, kde-format
@@ -726,7 +731,7 @@ msgstr "Vložená poznámka"
 #: gui/guiutils.cpp:56
 #, kde-format
 msgid "Arrow with Comment"
-msgstr ""
+msgstr "Šipka s komentářem"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -759,18 +764,18 @@ msgstr "Mnohoúhelník"
 #: gui/guiutils.cpp:71
 #, kde-format
 msgid "Rectangle with Comment"
-msgstr ""
+msgstr "Obdélník s komentářem"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
 #, kde-format
 msgid "Rectangle"
-msgstr "Pravoúhelník"
+msgstr "Obdélník"
 
 #: gui/guiutils.cpp:74
 #, kde-format
 msgid "Ellipse with Comment"
-msgstr ""
+msgstr "Elipsa s komentářem"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -883,7 +888,7 @@ msgstr "Rich Media"
 #: gui/guiutils.cpp:144
 #, kde-format
 msgid "Annotation"
-msgstr ""
+msgstr "Poznámka"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -919,7 +924,7 @@ msgstr "Podpis je kryptograficky neplatný."
 #: gui/signatureguiutils.cpp:46
 #, kde-format
 msgid "Digest Mismatch occurred."
-msgstr ""
+msgstr "Došlo k neshodě v digestech."
 
 #: gui/signatureguiutils.cpp:48
 #, kde-format
@@ -974,7 +979,7 @@ msgstr "Probíhá ověření certifikátu"
 #: gui/signatureguiutils.cpp:74
 #, kde-format
 msgid "Unknown issue with Certificate or corrupted data."
-msgstr ""
+msgstr "Neznámý problém s certifikátem nebo poškozená data."
 
 #: gui/signatureguiutils.cpp:82
 #, kde-format
@@ -1044,7 +1049,7 @@ msgstr "Digitální podpis"
 #: gui/signatureguiutils.cpp:123
 #, kde-format
 msgid "Non-Repudiation"
-msgstr ""
+msgstr "Nepopiratelnost"
 
 #: gui/signatureguiutils.cpp:126
 #, kde-format
@@ -1059,7 +1064,7 @@ msgstr "Dešifrovat klíče"
 #: gui/signatureguiutils.cpp:132
 #, kde-format
 msgid "Key Agreement"
-msgstr ""
+msgstr "Výměna klíče"
 
 #: gui/signatureguiutils.cpp:135
 #, kde-format
@@ -1099,6 +1104,8 @@ msgid ""
 "modified;\n"
 "however there have been subsequent changes to the document."
 msgstr ""
+"Revize dokumentu, která byla tímto podpisem pokryta, nebyla upravena;\n"
+" nicméně v dokumentu došlo k následným změnám."
 
 #: gui/signatureguiutils.cpp:172
 #, kde-format
@@ -1115,7 +1122,7 @@ msgstr "Ověření Požadovanou operaci není možné dokončit"
 #, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr ""
+msgstr "Tento dokument obsahuje zástupná pole pro podpis."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1141,7 +1148,7 @@ msgstr ""
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr ""
+msgstr "Zástupné pole podpisu %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1172,42 +1179,42 @@ msgstr "Umístění: %1"
 #, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr ""
+msgstr "PGP podpis"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámé"
 
 #: gui/signaturemodel.cpp:195
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr ""
+msgstr "Zástupné pole podpisu"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
 msgid "Signature Type: %1"
-msgstr ""
+msgstr "Typ podpisu: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1285,31 +1292,31 @@ msgstr "%1%"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr ""
+msgstr "Tloušťka čáry poznámky (není vybrána žádná poznámka)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr ""
+msgstr "Barva poznámky (není vybrána žádná poznámka)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr ""
+msgstr "Barva výplně poznámky (není vybrána žádná poznámka)"
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr ""
+msgstr "Krytí poznámky (není vybrána žádná poznámka)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr ""
+msgstr "Písmo poznámky (není vybrána žádná poznámka)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1318,6 +1325,8 @@ msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
 msgstr ""
+"Přidat současnou poznámku do nabídky rychlých poznámek (není vybrána žádná "
+"poznámka)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1326,6 +1335,8 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
 "selected)"
 msgstr ""
+"Omezit poměr tvarů na 1:1 nebo úhel čáry na kroky po 15° (není vybrána žádná "
+"poznámka)"
 
 #: part/annotationactionhandler.cpp:303
 #, kde-format
@@ -1333,6 +1344,8 @@ msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
+"Pokročilá nastavení pro aktuální nástroj pro poznámky (není vybrána žádná "
+"poznámka)"
 
 #: part/annotationactionhandler.cpp:308
 #, kde-format
@@ -1344,7 +1357,7 @@ msgstr "Tloušťka čáry poznámky"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
-msgstr ""
+msgstr "Tloušťka čáry poznámky (aktuální poznámka nemá žádnou tloušťku čáry)"
 
 #: part/annotationactionhandler.cpp:314
 #, kde-format
@@ -1374,7 +1387,7 @@ msgstr "Barva výplně poznámky"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr ""
+msgstr "Barva výplně poznámky (aktuální poznámka nemá žádnou barvu výplně)"
 
 #: part/annotationactionhandler.cpp:328
 #, kde-format
@@ -1386,19 +1399,19 @@ msgstr "Písmo poznámky"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr ""
+msgstr "Písmo poznámky (aktuální poznámka nemá žádné písmo)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
-msgstr ""
+msgstr "Omezit úhel čáry na kroky po 15°"
 
 #: part/annotationactionhandler.cpp:336
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr ""
+msgstr "Omezit poměr tvarů na 1:1"
 
 #: part/annotationactionhandler.cpp:338
 #, kde-format
@@ -1407,6 +1420,8 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
 "current annotation)"
 msgstr ""
+"Omezit poměr tvarů na 1:1 nebo úhel čáry na kroky po 15° (není podporováno "
+"aktuální poznámkou)"
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
@@ -1418,13 +1433,13 @@ msgstr "Krytí poznámky"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr ""
+msgstr "Přidat současnou poznámku do nabídky rychlých poznámek"
 
 #: part/annotationactionhandler.cpp:343
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr "Načíst nastavení pro současný nástroj pro poznámky"
+msgstr "Pokročilá nastavení pro aktuální nástroj pro poznámky"
 
 #: part/annotationactionhandler.cpp:432
 #, kde-format
@@ -1448,7 +1463,7 @@ msgstr "Průhledná"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
-msgstr ""
+msgstr "Vlastní barva..."
 
 #: part/annotationactionhandler.cpp:499
 #, kde-format
@@ -1471,7 +1486,7 @@ msgstr "Skrýt"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr ""
+msgstr "Zobrazit více nástrojů pro poznámky"
 
 #: part/annotationactionhandler.cpp:557
 #, kde-format
@@ -1573,7 +1588,7 @@ msgstr "Rychlé poznámky"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr ""
+msgstr "Vyberte nástroj pro poznámku z rychlých poznámek"
 
 #: part/annotationactionhandler.cpp:651
 #, kde-format
@@ -1607,7 +1622,7 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr ""
+msgstr "Nástroje pro konstantní poměr a úhel poznámek"
 
 #: part/annotationactionhandler.cpp:680
 #, kde-format
@@ -1657,9 +1672,9 @@ msgstr "Strana %1"
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Poznámka"
+msgstr[1] "%1 poznámky"
+msgstr[2] "%1 poznámek"
 
 #: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
 #, kde-format
@@ -1704,7 +1719,7 @@ msgstr "V&lastnosti"
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
-msgstr ""
+msgstr "&Uložit '%1'…"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -1739,7 +1754,7 @@ msgstr "Vlastnosti vyskakovacích poznámek"
 #: part/annotationpropertiesdialog.cpp:111
 #, kde-format
 msgid "Typewriter Properties"
-msgstr ""
+msgstr "Vlastnosti psacího stroje"
 
 #: part/annotationpropertiesdialog.cpp:113
 #, kde-format
@@ -1824,7 +1839,7 @@ msgstr ""
 #, kde-kuit-format
 msgctxt "@info"
 msgid "Could not load the file <filename>%1</filename>"
-msgstr ""
+msgstr "Nelze načíst soubor <filename>%1</filename>"
 
 #: part/annotationwidgets.cpp:158
 #, kde-format
@@ -1841,7 +1856,7 @@ msgstr "&Barva:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -2064,17 +2079,17 @@ msgstr "Nic"
 #: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
-msgstr ""
+msgstr "Patka"
 
 #: part/annotationwidgets.cpp:516
 #, kde-format
 msgid "Right Open Arrow"
-msgstr ""
+msgstr "Šipka doprava otevřená"
 
 #: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
-msgstr ""
+msgstr "Šipka doprava uzavřená"
 
 #: part/annotationwidgets.cpp:518
 #, kde-format
@@ -2084,12 +2099,12 @@ msgstr "Kaligrafický"
 #: part/annotationwidgets.cpp:531
 #, kde-format
 msgid "Leader line length:"
-msgstr ""
+msgstr "Délka vodicí čáry:"
 
 #: part/annotationwidgets.cpp:533
 #, kde-format
 msgid "Leader line extensions length:"
-msgstr ""
+msgstr "Délka prodloužení vodicí čáry:"
 
 #: part/annotationwidgets.cpp:547 part/annotationwidgets.cpp:691
 #, kde-format
@@ -2114,7 +2129,7 @@ msgstr "Přeškrtnuté"
 #: part/annotationwidgets.cpp:745
 #, kde-format
 msgid "File attachment symbol:"
-msgstr ""
+msgstr "Symbol přílohy souboru:"
 
 #: part/annotationwidgets.cpp:748
 #, kde-format
@@ -2170,7 +2185,7 @@ msgstr "Popis:"
 #: part/annotationwidgets.cpp:843
 #, kde-format
 msgid "Caret symbol:"
-msgstr ""
+msgstr "Symbol stříšky:"
 
 #: part/annotationwidgets.cpp:845
 #, kde-format
@@ -2272,12 +2287,12 @@ msgstr "Hledat…"
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
 #, kde-format
 msgid "Expand All"
-msgstr "Rozvinout vše"
+msgstr "Rozbalit vše"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
 #, kde-format
 msgid "Collapse All"
-msgstr "Svinout vše"
+msgstr "Sbalit vše"
 
 #: part/bookmarklist.cpp:263
 #, kde-format
@@ -2369,12 +2384,12 @@ msgstr "Podrobnosti"
 #: part/certificateviewer.cpp:107
 #, kde-format
 msgid "Certificate Data:"
-msgstr ""
+msgstr "Údaje o certifikátu:"
 
 #: part/certificateviewer.cpp:159
 #, kde-format
 msgid "Where do you want to save this certificate?"
-msgstr ""
+msgstr "Kam chcete uložit tento certifikát?"
 
 #: part/certificateviewer.cpp:160
 #, kde-format
@@ -2438,25 +2453,25 @@ msgstr "Obrátit &jas"
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
-msgstr ""
+msgstr "Invertovat j&as (sRGB lineárně)"
 
 #: part/colormodemenu.cpp:55
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
-msgstr ""
+msgstr "Invertovat jas (&symetricky)"
 
 #: part/colormodemenu.cpp:58
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
-msgstr ""
+msgstr "Posun odstínu p&ozitivní"
 
 #: part/colormodemenu.cpp:61
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
-msgstr ""
+msgstr "Posun odstínu n&egativní"
 
 #. i18n: tag tool attribute name
 #: part/data/drawingtools.xml:11
@@ -2566,25 +2581,25 @@ msgstr "Obrátit jas"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (sRGB linear)"
-msgstr ""
+msgstr "Invertovat jas (sRGB lineárně)"
 
 #: part/dlgaccessibility.cpp:66
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert luma (symmetric)"
-msgstr ""
+msgstr "Invertovat jas (symetricky)"
 
 #: part/dlgaccessibility.cpp:67
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue positive"
-msgstr ""
+msgstr "Posun odstínu pozitivní"
 
 #: part/dlgaccessibility.cpp:68
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Shift hue negative"
-msgstr ""
+msgstr "Posun odstínu negativní"
 
 #: part/dlgaccessibility.cpp:70
 #, kde-format
@@ -2773,7 +2788,7 @@ msgstr "Příkaz:"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
-msgstr ""
+msgstr "Použít plynulé rolování"
 
 #: part/dlggeneral.cpp:37
 #, kde-format
@@ -2803,7 +2818,7 @@ msgstr "Zobrazovat rady a informativní zprávy"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
-msgstr ""
+msgstr "Upozornit na vložené soubory, formuláře nebo podpisy"
 
 #: part/dlggeneral.cpp:68
 #, kde-format
@@ -2884,12 +2899,16 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
+"Na základě informací o souboru se určí, zda se soubor otevře v průběžném "
+"režimu ve výchozím nastavení."
 
 #: part/dlggeneral.cpp:178
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
+"Soubory bez informací o souboru se ve výchozím nastavení otevírají v "
+"průběžném režimu."
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -2901,13 +2920,13 @@ msgstr "Otevřít v průběžném režimu jako výchozí"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
-msgstr ""
+msgstr "Při používání nástroje procházení ohýbat kurzor na okrajích obrazovky"
 
 #: part/dlggeneral.cpp:198
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Položky v nedávné historii:"
 
 #: part/dlggeneral.cpp:213
 #, kde-format
@@ -2919,7 +2938,7 @@ msgstr "Přehledové sloupce:"
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:221
 #, kde-format
@@ -2941,37 +2960,37 @@ msgstr "Přesah Page Up/Down:"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr ""
+msgstr "%v%"
 
 #: part/dlggeneral.cpp:232
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr ""
+msgstr "100%"
 
 #: part/dlggeneral.cpp:233
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
-msgstr ""
+msgstr "Přizpůsobit šířku"
 
 #: part/dlggeneral.cpp:234
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
-msgstr ""
+msgstr "Přizpůsobit stránku"
 
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
-msgstr ""
+msgstr "Autom. přizpůsobit"
 
 #: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Vlastní"
 
 #: part/dlggeneral.cpp:237
 #, kde-format
@@ -2980,6 +2999,9 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
+"Definuje výchozí režim přiblížení pro soubory, které nebyly nikdy předtím "
+"otevřeny. Pro soubory, které byly otevřeny dříve, se použije předchozí "
+"přiblížení."
 
 #: part/dlggeneral.cpp:241
 #, kde-format
@@ -3039,7 +3061,7 @@ msgstr "Povolit antialiasing textu"
 #, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr ""
+msgstr "Možnosti vykreslení:"
 
 #: part/dlgperformance.cpp:59
 #, kde-format
@@ -3094,9 +3116,9 @@ msgstr ""
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "každou %v vteřinu"
+msgstr[1] "každé %v vteřiny"
+msgstr[2] "každých %v vteřin"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3343,7 +3365,7 @@ msgctxt ""
 "@item:inlistbox Config dialog, presentation page, preferred screen. %1 is "
 "the screen number (0, 1, ...), hopefully not 0."
 msgid "Screen %1 (disconnected)"
-msgstr ""
+msgstr "Obrazovka %1 (odpojeno)"
 
 #: part/drawingtoolactions.cpp:192
 #, kde-format
@@ -3404,7 +3426,7 @@ msgstr "Šířka &pera:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v px"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3468,13 +3490,13 @@ msgstr "Změněno"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr ""
+msgstr "&Uložit jako..."
 
 #: part/embeddedfilesdialog.cpp:155
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr ""
+msgstr "&Zobrazit..."
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3553,12 +3575,12 @@ msgstr "Všechny soubory (*)"
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr ""
+msgstr "Místo pro podpis (klikněte pro podpis)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
-msgstr ""
+msgstr "&Podepsat..."
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3703,7 +3725,7 @@ msgstr "Prů&běžně"
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
-msgstr ""
+msgstr "Použít směr čtení zprava doleva"
 
 #: part/pageview.cpp:628
 #, kde-format
@@ -3744,7 +3766,7 @@ msgstr "Nástroje výběru"
 #: part/pageview.cpp:712
 #, kde-format
 msgid "Digitally &Sign…"
-msgstr ""
+msgstr "Digatálně &podepsat..."
 
 #: part/pageview.cpp:718
 #, kde-format
@@ -3769,7 +3791,7 @@ msgstr "Zastavit čtení"
 #: part/pageview.cpp:738
 #, kde-format
 msgid "Pause/Resume Speaking"
-msgstr ""
+msgstr "Pozastavit/obnovit čtení"
 
 #: part/pageview.cpp:750
 #, kde-format
@@ -3807,7 +3829,7 @@ msgstr[2] "Načten dokument o %1 stranách."
 #: part/pageview.cpp:2555
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
-msgstr ""
+msgstr "Zkopírovat obsah tabulky do schránky"
 
 #: part/pageview.cpp:2876
 #, kde-format
@@ -3823,10 +3845,9 @@ msgid "Copy to Clipboard"
 msgstr "Zkopírovat do schránky"
 
 #: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Zkopírovat text do schránky"
+msgstr "Zkopírovat text (bez zalamování)"
 
 #: part/pageview.cpp:2890 part/pageview.cpp:3090
 #, kde-format
@@ -3910,7 +3931,7 @@ msgstr "Vyhledat '%1' pomocí"
 #: part/pageview.cpp:4452
 #, kde-format
 msgid "Configure Web Shortcuts…"
-msgstr ""
+msgstr "Nastavit webové odkazy..."
 
 #: part/pageview.cpp:4478
 #, kde-format
@@ -3935,7 +3956,7 @@ msgstr "Kopírovat adresu odkazu"
 #: part/pageview.cpp:4510
 #, kde-format
 msgid "Search for '%1' in this document"
-msgstr ""
+msgstr "Vyhledat „%1“ v tomto dokumentu"
 
 #: part/pageview.cpp:5042
 #, kde-format
@@ -3978,16 +3999,18 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Všechny vaše podpisové certifikáty jsou neplatné. Pokud podpis dříve "
+"fungoval, zkontrolujte prosím jejich platnost."
 
 #: part/pageview.cpp:5236
 #, kde-format
 msgid "No valid certificates"
-msgstr ""
+msgstr "Žádné platné certifikáty"
 
 #: part/pageview.cpp:5237 part/pageview.cpp:5252
 #, kde-format
 msgid "Open Certificate Manager"
-msgstr ""
+msgstr "Otevřít správce certifikátů"
 
 #: part/pageview.cpp:5248
 #, kde-format
@@ -3996,11 +4019,14 @@ msgid ""
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
+"Nejsou k dispozici žádné podpisové certifikáty.<br/>Spusťte správce "
+"certifikátů a importujte nebo spravujte certifikáty<br/>Další informace "
+"naleznete v části <a href=\"%1\">Přidání digitálních podpisů</a> v příručce."
 
 #: part/pageview.cpp:5251 part/pageview.cpp:5263
 #, kde-format
 msgid "No certificates found"
-msgstr ""
+msgstr "Nebyly nalezeny žádné certifikáty"
 
 #: part/pageview.cpp:5261
 #, kde-format
@@ -4009,16 +4035,18 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
+"Nejsou k dispozici žádné podpisové certifikáty.<br/>Další informace "
+"naleznete v části <a href=\"%1\">Přidání digitálních podpisů</a> v příručce."
 
 #: part/pageview.cpp:5286
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
-msgstr ""
+msgstr "Máte neuložené změny. Před podpisem dokument uložte."
 
 #: part/pageview.cpp:5309
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
-msgstr ""
+msgstr "Nakreslete obdélník pro vložení pole podpisu."
 
 #: part/pageview.cpp:5453
 #, kde-format
@@ -4055,6 +4083,9 @@ msgid ""
 "create a potentially more readable signature, press <interface>Start over</"
 "interface> and draw a bigger rectangle."
 msgstr ""
+"Podpis této velikosti může být příliš malý na to, aby byl čitelný. Pokud "
+"chcete vytvořit potenciálně čitelnější podpis, stiskněte <interface>Začít "
+"znovu</interface> a nakreslete větší obdélník."
 
 #: part/pageviewannotator.cpp:491
 #, kde-format
@@ -4154,7 +4185,7 @@ msgstr "Podtrhnout text"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr ""
+msgstr "Poznámka k psacímu stroji (přetažením vyberte oblast)"
 
 #: part/pageviewannotator.cpp:1473
 #, kde-format
@@ -4226,6 +4257,10 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
+"Tento dokument obsahuje poznámky nebo údaje z formulářů, které byly uloženy "
+"interně předchozí verzí programu Okular. Interní úložiště již <b>není "
+"podporováno</b>. <br/>Pokud chcete dokument dále upravovat, uložte jej do "
+"souboru, abyste jej mohli přesunout."
 
 #: part/part.cpp:459
 #, kde-format
@@ -4241,13 +4276,13 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
+msgstr "Probíhá podepisování. Můžete upravit polohu a velikost podpisu."
 
 #: part/part.cpp:490
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
-msgstr ""
+msgstr "Dokončit podpis"
 
 #: part/part.cpp:662
 #, kde-format
@@ -4329,22 +4364,22 @@ msgstr "Přejít na následující záložku"
 #: part/part.cpp:749
 #, kde-format
 msgid "Configure Okular…"
-msgstr ""
+msgstr "Nastavit Okular..."
 
 #: part/part.cpp:752
 #, kde-format
 msgid "Configure Viewer…"
-msgstr ""
+msgstr "Nastavit prohlížeč..."
 
 #: part/part.cpp:758
 #, kde-format
 msgid "Configure Viewer Backends…"
-msgstr ""
+msgstr "Nastavit podpůrnou vrstvu prohlížeče..."
 
 #: part/part.cpp:760
 #, kde-format
 msgid "Configure Backends…"
-msgstr ""
+msgstr "Nastavit podpůrné vrstvy..."
 
 #: part/part.cpp:796
 #, kde-format
@@ -4375,7 +4410,7 @@ msgstr "Číslo strany"
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
-msgstr ""
+msgstr "Nastavit barevný režim..."
 
 #: part/part.cpp:868
 #, kde-format
@@ -4425,7 +4460,7 @@ msgstr "Otevřít odpovídající s&ložku"
 #: part/part.cpp:955
 #, kde-format
 msgid "&Import PostScript as PDF…"
-msgstr ""
+msgstr "&Importovat PostScript jako PDF…"
 
 #: part/part.cpp:959
 #, kde-format
@@ -4440,7 +4475,7 @@ msgstr "Smazat kreslení"
 #: part/part.cpp:972
 #, kde-format
 msgid "Configure Annotations…"
-msgstr ""
+msgstr "Nastavit poznámky..."
 
 #: part/part.cpp:977
 #, kde-format
@@ -4454,6 +4489,9 @@ msgid ""
 "be saved.\n"
 "Any modification will be lost once Okular is closed."
 msgstr ""
+"Právě jste upravili otevřený dokument, ale tento typ dokumentu nelze "
+"uložit.\n"
+" Jakékoli úpravy budou po uzavření aplikace Okular ztraceny."
 
 #: part/part.cpp:1133
 #, kde-format
@@ -4507,7 +4545,7 @@ msgstr "Soubory PostScript (%1)"
 #: part/part.cpp:1367
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
-msgstr ""
+msgstr "Importování souboru PS jako PDF (může to chvíli trvat)…"
 
 #: part/part.cpp:1499
 #, kde-format
@@ -4546,6 +4584,9 @@ msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
+"Všechny funkce pro úpravy a interaktivní funkce tohoto dokumentu jsou "
+"deaktivovány. Uložte kopii a znovu otevřete, abyste mohli tento dokument "
+"upravit."
 
 #: part/part.cpp:1746
 #, kde-format
@@ -4553,16 +4594,18 @@ msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
+"Tento dokument se má zobrazit na celou obrazovku.\n"
+"Opustit normální režim a přejít do režimu prezentace?"
 
 #: part/part.cpp:1748
 #, kde-format
 msgid "Request to Change Viewing Mode"
-msgstr ""
+msgstr "Požadavek na změnu režimu zobrazení"
 
 #: part/part.cpp:1749
 #, kde-format
 msgid "Enter Presentation Mode"
-msgstr ""
+msgstr "Přepnout do režimu prezentace"
 
 #: part/part.cpp:1750
 #, kde-format
@@ -4583,6 +4626,10 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue "
 "reloading the file?"
 msgstr ""
+"Soubor <filename>%1</filename> obsahuje neuložené změny, ale byl upraven "
+"jiným programem. Jeho opětovné načtení nahradí neuložené změny změnami "
+"provedenými v jiném programu.<nl/><nl/>Chcete pokračovat v opětovném načtení "
+"souboru?"
 
 #: part/part.cpp:1874 part/part.cpp:1884
 #, kde-format
@@ -4597,7 +4644,7 @@ msgstr "P&okračovat v opakování načítání"
 #: part/part.cpp:1876
 #, kde-format
 msgid "Abort Reloading"
-msgstr ""
+msgstr "Přerušit opakované načítání"
 
 #: part/part.cpp:1880
 #, kde-kuit-format
@@ -4608,6 +4655,9 @@ msgid ""
 "changes made in the other program.<nl/><nl/>Do you want to continue closing "
 "the file?"
 msgstr ""
+"Soubor <filename>%1</filename> obsahuje neuložené změny, ale byl upraven "
+"jiným programem. Jeho zavřením dojde k nahrazení neuložených změn změnami "
+"provedenými v jiném programu.<nl/><nl/>Chcete pokračovat v zavírání souboru?"
 
 #: part/part.cpp:1885
 #, kde-format
@@ -4622,7 +4672,7 @@ msgstr "Přerušit zavření"
 #: part/part.cpp:1893
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
-msgstr ""
+msgstr "Chcete uložit změny do souboru „%1“ nebo je zahodit?"
 
 #: part/part.cpp:1893
 #, kde-format
@@ -4650,7 +4700,7 @@ msgstr ""
 #: part/part.cpp:2123 part/part.cpp:2141
 #, kde-format
 msgid "Reloading the document…"
-msgstr ""
+msgstr "Opakované načtení dokumentu..."
 
 #: part/part.cpp:2304 part/toc.cpp:38
 #, kde-format
@@ -4705,6 +4755,8 @@ msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
+"Rozhodli jste se uložit archiv Okular bez názvu souboru končícího příponou "
+"„%1“. Toto není povoleno, chcete zvolit nový název?"
 
 #: part/part.cpp:2637
 #, kde-format
@@ -4746,6 +4798,9 @@ msgid ""
 "the file needs to be reloaded. You will be asked for the password again and "
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
+"Aktuální dokument je chráněn heslem.<br />Aby bylo možné soubor uložit, je "
+"nutné jej znovu načíst. Budete znovu vyzváni k zadání hesla a vaše historie "
+"zpět/znovu se ztratí.<br />Chcete pokračovat?"
 
 #: part/part.cpp:2729
 #, kde-format
@@ -4768,6 +4823,8 @@ msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
+"Po uložení vyžaduje aktuální formát dokumentu znovu načíst soubor. Vaše "
+"historie zpět/znovu se ztratí. Chcete pokračovat?"
 
 #: part/part.cpp:2769 part/part.cpp:2838 part/part.cpp:2859 part/part.cpp:3518
 #, kde-format
@@ -4791,6 +4848,9 @@ msgid ""
 "saving the following elements. Please use the <i>Okular document archive</i> "
 "format to preserve them."
 msgstr ""
+"Chystáte se uložit změny, ale aktuální formát souboru nepodporuje uložení "
+"následujících prvků. Použijte prosím formát <i>archiv dokumentu Okular</i> , "
+"abyste je zachovali."
 
 #: part/part.cpp:2794 part/part.cpp:2816
 #, kde-format
@@ -4800,7 +4860,7 @@ msgstr "Varování"
 #: part/part.cpp:2795 part/part.cpp:2817
 #, kde-format
 msgid "Save as Okular document archive…"
-msgstr ""
+msgstr "Uložit jako archiv dokumentu Okular…"
 
 #: part/part.cpp:2807
 #, kde-format
@@ -4810,6 +4870,10 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save the document and "
 "discard these elements."
 msgstr ""
+"Chystáte se uložit změny, ale aktuální formát souboru nepodporuje uložení "
+"následujících prvků. Chcete-li je zachovat, použijte formát <i>archiv "
+"dokumentu Okular</i> . Kliknutím na <i>Pokračovat</i> dokument uložíte a "
+"tyto prvky vymažete."
 
 #: part/part.cpp:2810
 #, kde-format
@@ -4819,6 +4883,10 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save, but you will lose "
 "these elements as well as the undo/redo history."
 msgstr ""
+"Chystáte se uložit změny, ale aktuální formát souboru nepodporuje uložení "
+"následujících prvků. Chcete-li je zachovat, použijte formát <i>archiv "
+"dokumentu Okular</i> . Kliknutím na <i>Pokračovat</i> jej uložíte, ale "
+"ztratíte tyto prvky i historii zpět/znovu."
 
 #: part/part.cpp:2812
 #, kde-format
@@ -4852,16 +4920,18 @@ msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr ""
+"Soubor nelze uložit do složky „%1“. Chyba: „%2“. Zkuste jej uložit na jiné "
+"místo."
 
 #: part/part.cpp:3174
 #, kde-format
 msgid "Expand Whole Section"
-msgstr ""
+msgstr "Rozbalit celou sekci"
 
 #: part/part.cpp:3175
 #, kde-format
 msgid "Collapse Whole Section"
-msgstr ""
+msgstr "Sbalit celou sekci"
 
 #: part/part.cpp:3188
 #, kde-format
@@ -4943,6 +5013,10 @@ msgid ""
 "the file in the Dolphin file manager, then choose the 'Properties' option, "
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
+"<qt>Tato chyba se obvykle vyskytuje, pokud nemáte dostatečná oprávnění ke "
+"čtení souboru. Vlastnictví a oprávnění můžete zkontrolovat tak, že kliknete "
+"pravým tlačítkem myši na soubor ve správci souborů Dolphin, vyberete možnost "
+"„Vlastnosti“ a v otevřeném okně vyberete kartu „Oprávnění“.</qt>"
 
 #: part/part.cpp:3790
 #, kde-format
@@ -4986,7 +5060,7 @@ msgstr "Obrázek byl úspěšně sdílen"
 #: part/part.cpp:3897
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
-msgstr ""
+msgstr "Sdílený dokument najdete na adrese: <a href=\"%1\">%1</a>"
 
 #. i18n: ectx: Menu (edit)
 #: part/part.rc:19
@@ -5095,6 +5169,9 @@ msgid ""
 " %1 \n"
 "If you want to use the setting, start okular without the option --editor-cmd"
 msgstr ""
+"Editor byl nastaven příkazovým řádkem na \n"
+" %1 \n"
+"Pokud chcete toto nastavení použít, spusťte okular bez volby --editor-cmd."
 
 #: part/presentationsearchbar.cpp:77
 #, kde-format
@@ -5199,7 +5276,7 @@ msgstr "&Písma"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information…"
-msgstr ""
+msgstr "Načítání informací o písmu…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5326,7 +5403,7 @@ msgstr "Ano"
 #, kde-format
 msgctxt "Replacing missing font with another one"
 msgid "%1 (substituting with %2)"
-msgstr ""
+msgstr "%1 (nahrazuje %2)"
 
 #: part/propertiesdialog.cpp:372
 #, kde-format
@@ -5372,12 +5449,12 @@ msgstr "Velikost"
 #: part/revisionviewer.cpp:41
 #, kde-format
 msgid "Revision Preview"
-msgstr ""
+msgstr "Náhled revize"
 
 #: part/revisionviewer.cpp:53
 #, kde-format
 msgid "Where do you want to save this revision?"
-msgstr ""
+msgstr "Kam si přejete uložit tuto revizi?"
 
 #: part/revisionviewer.cpp:56
 #, kde-format
@@ -5387,7 +5464,7 @@ msgstr "Není možné uložit soubor %1."
 #: part/revisionviewer.cpp:75
 #, kde-format
 msgid "Could not view revision."
-msgstr ""
+msgstr "Revizi nelze zobrazit."
 
 #: part/searchwidget.cpp:39
 #, kde-format
@@ -5441,14 +5518,14 @@ msgstr "Vše"
 #: part/selectcertificatedialog.ui:39
 #, kde-format
 msgid "Only QES certificates"
-msgstr ""
+msgstr "Pouze certifikáty QES"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Pouze klíče PGP"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:71
@@ -5552,7 +5629,7 @@ msgstr "Zapomenout všechny obrázky"
 #: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
+msgstr "Zadejte heslo (pokud existuje) pro odemčení certifikátu: %1"
 
 #: part/signaturepartutils.cpp:231
 #, kde-format
@@ -5621,12 +5698,12 @@ msgstr "Revize dokumentu %1 z %2"
 #: part/signaturepropertiesdialog.cpp:88
 #, kde-format
 msgid "View Signed Version…"
-msgstr ""
+msgstr "Zobrazit podepsanou verzi…"
 
 #: part/signaturepropertiesdialog.cpp:95
 #, kde-format
 msgid "View Certificate…"
-msgstr ""
+msgstr "Zobrazit certifikát..."
 
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
@@ -5642,7 +5719,7 @@ msgstr "Správce certifikátů KDE (kleopatra) nebyl nalezen"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalifikovaný"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
@@ -5740,7 +5817,7 @@ msgstr "Spustit s dialogem tisku"
 #: shell/main.cpp:78
 #, kde-format
 msgid "Start with print dialog and exit after printing"
-msgstr ""
+msgstr "Spustit dialogové okno tisku a po dokončení tisku jej zavřít."
 
 #: shell/main.cpp:79
 #, kde-format
@@ -5775,6 +5852,9 @@ msgid ""
 "Please disable the tabs and try again. Please note, that unique is also not "
 "supported when setting the editor command at the commandline.\n"
 msgstr ""
+"V již spuštěné instanci programu Okular nelze nastavit příkaz editoru. "
+"Deaktivujte karty a zkuste to znovu. Upozorňujeme, že při nastavování "
+"příkazu editoru v příkazovém řádku není podporována ani funkce unique.\n"
 
 #: shell/okular_main.cpp:192
 #, kde-format

@@ -59,13 +59,13 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2022-02-19</date>
+>2022‒02‒19</date>
 		<releaseinfo
 >22.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
->&okular;, &kpdf; kodu üzerine temellendirilmiş &kde;'nin çok amaçlı belge görüntüleyicisidir.</para>
+>&okular;, &kpdf; kodu üzerine temellendirilmiş &kde;’nin çok amaçlı belge görüntüleyicisidir.</para>
 		</abstract>
 		<keywordset>
 			<keyword
@@ -85,8 +85,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >dvi</keyword>
 			<keyword
->chm</keyword>
-			<keyword
 >xps</keyword>
 			<keyword
 >comicbook</keyword>
@@ -104,21 +102,21 @@ Context menu actions like Rename Bookmarks etc.)
 		<title
 >Giriş</title>
 		<para
->&okular;, &kpdf; uygulamasının kodu üzerine temellindirilmiş, çok amaçlı bir &kde; belge görüntüleyicisidir. &kpdf;'yi temel almış olmasına rağmen; genel görünüm kipi, iyileştirilmiş sunum ve bilgi notu desteği gibi kendine has özellikleri vardır. </para>
+>&okular;, &kpdf; uygulamasının kodu üzerine temellindirilmiş, çok amaçlı bir &kde; belge görüntüleyicisidir. &kpdf;’yi temel almış olmasına rağmen; genel görünüm kipi, iyileştirilmiş sunum ve bilgi notu desteği gibi kendine has özellikleri vardır. </para>
 		<para
->&okular;; &PDF;, &PostScript;, Tiff, CHM, DjVU, Görseller (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax ve Markdown gibi birçok farklı biçimi destekler. Desteklenen tüm biçimleri ve özelliklerini görmek için <ulink url="https://okular.kde.org/formats.php"
+>&okular;; &PDF;, &PostScript;, Tiff, DjVU, Görseller (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax ve Markdown gibi birçok farklı biçimi destekler. Desteklenen tüm biçimleri ve özelliklerini görmek için <ulink url="https://okular.kde.org/formats.php"
 > &okular; Belge Biçimi İşleyicileri</ulink
 > bölümüne bakın. </para>
 		<screenshot>
 		<screeninfo
->&okular;'ın Ana Penceresi</screeninfo>
+>&okular;’ın Ana Penceresi</screeninfo>
 		<mediaobject>
 		<imageobject>
 		<imagedata fileref="mainwindow.png" format="PNG"/>
 		</imageobject>
 		<textobject>
 		<phrase
->&okular;'ın Ana Penceresi</phrase>
+>&okular;’ın Ana Penceresi</phrase>
 		</textobject>
 		</mediaobject>
 		</screenshot>
@@ -130,11 +128,11 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Belgeler Açmak</title>
 			<para
->Desteklenen herhangi bir dosyayı &okular;'da açmak için <menuchoice
+>Desteklenen herhangi bir dosyayı &okular;’da açmak için <menuchoice
 ><guimenu
 >Dosya</guimenu
 ><guimenuitem
->Aç...</guimenuitem
+>Aç…</guimenuitem
 > </menuchoice
 > yolunu izleyin, iletişim kutusunda desteklenen bir dosya seçin ve <guibutton
 >Aç</guibutton
@@ -164,7 +162,7 @@ Context menu actions like Rename Bookmarks etc.)
 > menü ögesine tıklanarak bir sekmede yeniden açılabilir. </para>
 			</important>
 			<para
->&okular;'da daha önceden dosyalar açtıysanız onlara <menuchoice
+>&okular;’da daha önceden dosyalar açtıysanız onlara <menuchoice
 ><guimenu
 >Dosya</guimenu
 ><guisubmenu
@@ -174,11 +172,11 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >&okular;, &PDF; ve &PostScript; dosyaları için öntanımlı &kde; uygulamasıdır. Bu dosyaları açmak için dosya yöneticisinde üzerilerine &LMB; ile tıklamanız yeterlidir. &okular; tarafından desteklenen herhangi başka bir dosyayı açmak için dosya yöneticisinde dosyanın bağlam menüsünden <menuchoice
 ><guimenu
->Birlikte Aç...</guimenu
+>Birlikte Aç…</guimenu
 ><guimenuitem
 >&okular;</guimenuitem
 > </menuchoice
->'ı seçebilirsiniz. </para>
+>’ı seçebilirsiniz. </para>
 			<para
 >Bir dosya açtıktan sonra büyük olasılıkla onu okumak istersiniz. Bunun üzerine daha fazla bilgi almak için <link linkend="navigating"
 >bir sonraki bölüme</link
@@ -188,7 +186,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Dolaşım</title>
 			<para
->Bu bölüm, &okular;'da bir belge içinde nasıl dolaşacağınızı açıklar.</para>
+>Bu bölüm, &okular;’da bir belge içinde nasıl dolaşacağınızı açıklar.</para>
 			<para
 >Görüntüleme alanında sarma yapmanın birçok yolu vardır. Bunlardan biri, &Up; ve &Down; düğmelerini kullanmaktır. Ayrıca; sarma çubuğunu, fare tekerleğinizi veya &PgUp; ve &PgDn; düğmelerini de kullanabilirsiniz. </para>
 			<para
@@ -215,10 +213,10 @@ Context menu actions like Rename Bookmarks etc.)
 			  <para
 >Bir belgeyi <link linkend="presentationMode"
 >Sunum Kipi</link
->'nde görüntülerken sayfalar veya slaytlar arasında geçiş yapmak için &Up; ve &Down; düğmelerini kullanın. Geçerli slaytın numarası ve konumu, ekranın sağ üst köşesindeki bir ekran üzeri görüntüde belirtilir. </para>
+>’nde görüntülerken sayfalar veya slaytlar arasında geçiş yapmak için &Up; ve &Down; düğmelerini kullanın. Geçerli slaytın numarası ve konumu, ekranın sağ üst köşesindeki bir ekran üzeri görüntüde belirtilir. </para>
 			</note>
 			<para
->Birkaç sayfadan oluşan bir belgeyi okumak istiyorsanız &okular;’ın kendiliğinden sarma özelliğini kullanın. Kendiliğinden sarma’yı <keycombo action="simul"
+>Birkaç sayfadan oluşan bir belgeyi okumak istiyorsanız &okular;’ın kendiliğinden sarma özelliğini kullanın. Kendiliğinden sarmayı <keycombo action="simul"
 >&Shift;&Down;</keycombo
 > veya <keycombo action="simul"
 >&Shift;&Up;</keycombo
@@ -380,7 +378,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Sunum Kipi</title>
 			<para
->Sunum kipi, &okular;'da belgeleri görüntülemenin başka bir yolunu temsil eder. <menuchoice
+>Sunum kipi, &okular;’da belgeleri görüntülemenin başka bir yolunu temsil eder. <menuchoice
 ><guimenu
 >Görünüm</guimenu
 ><guimenuitem
@@ -428,7 +426,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Sunum kipi, çoklu monitör yapılandırmasında birden fazla ekranı destekler. Birden fazla ekran olduğunda, üst çubukta bir ekran simgesiyle birlikte yeni bir düğme görünecektir: bu, sunumu diğer kullanılabilir ekranlardan herhangi birine taşımanıza olanak tanıyan bir açılır kutudur. </para>
 			<para
 >Sunum kipinde bazı yapılandırma seçenekleri vardır; bunların açıklamasını <link linkend="configpresentation"
->&okular;'ı Yapılandırmak</link
+>&okular;’ı Yapılandırmak</link
 > faslında bulabilirsiniz. </para>
 		</sect1>
 		<sect1 id="inverse_search">
@@ -437,7 +435,7 @@ Context menu actions like Rename Bookmarks etc.)
 >&latex; Düzenleyicileri ve &okular; Arasında Tersine Arama</title>
 
 		<para
->Tersine arama, bir &latex; belgesi yazarken çok işe yarar bir özelliktir. Her şey düzgünce ayarlanmışsa &okular;'ın penceresine &Shift; düğmesini basılı tutarken <mousebutton
+>Tersine arama, bir &latex; belgesi yazarken çok işe yarar bir özelliktir. Her şey düzgünce ayarlanmışsa &okular;’ın penceresine &Shift; düğmesini basılı tutarken <mousebutton
 >sol</mousebutton
 > fare düğmesi ile tıklayın. Sonrasında düzenleyici, &latex; kaynak dosyasını yükler ve olması gereken paragrafa atlar.</para>
 
@@ -451,7 +449,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></listitem>
 			<listitem
 ><para
->&okular;'ın hangi düzenleyiciyi kullanmak istediğinizi biliyor olması gerekir.</para
+>&okular;’ın hangi düzenleyiciyi kullanmak istediğinizi biliyor olması gerekir.</para
 ></listitem>
 			<listitem
 ><para
@@ -466,11 +464,11 @@ Context menu actions like Rename Bookmarks etc.)
 		</itemizedlist>
 
 		<para
->Bu &okular; özelliğiyle, bir &DVI; or &PDF; belgesinde &Shift; düğmesi basılı tutulurken yapılan bir sol fare tıklaması, ilgili &latex; belgesini düzenleyicide açar ve karşılık gelen satıra gider. &okular;'a kullanmak istediğiniz düzenleyiciyi söylemeyi unutmayın; bunu, &okular;'ın <menuchoice
+>Bu &okular; özelliğiyle, bir &DVI; or &PDF; belgesinde &Shift; düğmesi basılı tutulurken yapılan bir sol fare tıklaması, ilgili &latex; belgesini düzenleyicide açar ve karşılık gelen satıra gider. &okular;’a kullanmak istediğiniz düzenleyiciyi söylemeyi unutmayın; bunu, &okular;’ın <menuchoice
 ><guimenu
 >Ayarlar</guimenu
 ><guimenuitem
->Okular Uygulamasını Yapılandır...</guimenuitem
+>Okular Uygulamasını Yapılandır…</guimenuitem
 ></menuchoice
 > iletişim kutusunun <guimenuitem
 >Düzenleyici</guimenuitem
@@ -483,7 +481,7 @@ Context menu actions like Rename Bookmarks etc.)
 
 		<screenshot>
 			<screeninfo
->&okular;'ı Yapılandırmak</screeninfo>
+>&okular;’ı Yapılandırmak</screeninfo>
 			<mediaobject>
 			<imageobject>
 			<imagedata fileref="configure-editor.png" format="PNG"/>
@@ -601,7 +599,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Bu özellik yalnızca &PDF; belgeleri için kullanılabilirdir. Çoğu imza bilgisini alabilmek için <ulink url="https://poppler.freedesktop.org/"
 >Poppler</ulink
->'ın en az 0.51 sürümünü, imza konum/gerekçe bilgisini almak için 0.68 sürümünü ve imza sertifikası bilgisini almak için 0.73 sürümünü kurmanız gerekir. </para>
+>’ın en az 0.51 sürümünü, imza konum/gerekçe bilgisini almak için 0.68 sürümünü ve imza sertifikası bilgisini almak için 0.73 sürümünü kurmanız gerekir. </para>
 			</note>
 			<sect2 id="adding_digital_signatures">
 				<title
@@ -615,7 +613,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Bir belgeyi imzalayabilmek için sisteminizde doğru bir <acronym
 >PKCS</acronym
-> imzalama sertifikasının kullanılabilir olması gerekir. &okular;'ın böyle sertifikalar oluşturma yeteneği yoktur; çünkü bu tür sertifikalar doğrulama gerektirdiklerinden; ancak yetkili sertifika organları tarafından verilebilirler. </para>
+> imzalama sertifikasının kullanılabilir olması gerekir. &okular;’ın böyle sertifikalar oluşturma yeteneği yoktur; çünkü bu tür sertifikalar doğrulama gerektirdiklerinden; ancak yetkili sertifika organları tarafından verilebilirler. </para>
 				<para
 >&PDF; belgelerinin imzalanmasını işlemek için Poppler kitaplığını kullanırız. Poppler da sertifikaları işlemek için NSS kitaplığını kullanır. Bu belgenin yazıldığı tarihte, Poppler sırasıyla aşağıdaki NSS sertifikası depolarını kullanmaya çalışır (ilk var olanı): </para>
 				<itemizedlist>
@@ -638,7 +636,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</itemizedlist>
 				<para
 >Özel bir sertifika deposu kullanmak istiyorsanız bunu <link linkend="configure-backends"
->Arka Uçları Yapılandır...</link
+>Arka Uçları Yapılandır…</link
 > iletişim kutusunun <link linkend="config-pdf-digital-signatures"
 >&PDF; Arka Ucu Yapılandırması</link
 > bölümünden ayarlayabilirsiniz. </para>
@@ -657,19 +655,19 @@ Context menu actions like Rename Bookmarks etc.)
 >&okular;, belgelerinizi gözden geçirmenize ve bilgi notları eklemenize olanak tanır. </para>
 			<screenshot>
 			<screeninfo
->&okular;'ın Bilgi Notları</screeninfo>
+>&okular;’ın Bilgi Notları</screeninfo>
 			<mediaobject>
 			<imageobject>
 			<imagedata fileref="annotations.png" format="PNG"/>
 			</imageobject>
 			<textobject>
 			<phrase
->&okular;'ın Bilgi Notları</phrase>
+>&okular;’ın Bilgi Notları</phrase>
 			</textobject>
 			</mediaobject>
 			</screenshot>
 			<para
->&okular;'da iki tür bilgi notu vardır:</para>
+>&okular;’da iki tür bilgi notu vardır:</para>
 			<para
 >Metin içeren belgeler için <guilabel
 >Sarı Vurgulayıcı</guilabel
@@ -699,7 +697,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Daktilo</guilabel
 > gibi grafiksel bilgi notları.</para>
 			  <para
->Grafiksel bilgi notları &PDF; dosyalarıyla sınırlı değildirler; &okular;'ın desteklediği herhangi bir dosyada kullanılabilirler.</para>
+>Grafiksel bilgi notları &PDF; dosyalarıyla sınırlı değildirler; &okular;’ın desteklediği herhangi bir dosyada kullanılabilirler.</para>
 			<para
 ><guilabel
 >Bilgi Notları</guilabel
@@ -708,7 +706,7 @@ Context menu actions like Rename Bookmarks etc.)
 > veya başka bir tür bilgi notu ekleyebilirsiniz.</para>
 
 			<para
->&okular;'da bu "belge arşivleme" özelliği vardır. Bu, belgeyi ve belgeyle ilişkili çeşitli üst veriyi taşımak için &okular;'a özel bir biçimdir (şu anda yalnızca bilgi notlarını destekler). <menuchoice
+>&okular;’da bu “belge arşivleme” özelliği vardır. Bu, belgeyi ve belgeyle ilişkili çeşitli üst veriyi taşımak için &okular;’a özel bir biçimdir (şu anda yalnızca bilgi notlarını destekler). <menuchoice
 ><guimenu
 >Dosya</guimenu
 ><guisubmenu
@@ -718,7 +716,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Süzgeç</guilabel
 > seçicisinde belge türü olarak <guilabel
 >Okular belge arşivi</guilabel
->'ni seçtiğinizde bir "belge arşivi" kaydedebilirsiniz. Böyle kaydedilen belgeler dosya uzantısı olarak <filename
+>’ni seçtiğinizde bir “belge arşivi” kaydedebilirsiniz. Böyle kaydedilen belgeler dosya uzantısı olarak <filename
 >.okular</filename
 > alırlar. Bir &okular; belge arşivini açmak için normal bir &PDF; belgesini açarmışçasına onu &okular; ile açın. </para>
 			<para
@@ -734,7 +732,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->Farklı Kaydet...</guimenuitem
+>Farklı Kaydet…</guimenuitem
 ></menuchoice
 > ögesini kullanın. </para>
 				<note>
@@ -819,7 +817,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Vurgulayıcı <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Vurgu</guimenuitem
 >, <guimenuitem
 >Dalgalı Çizgili</guimenuitem
@@ -829,10 +827,10 @@ Context menu actions like Rename Bookmarks etc.)
 >Üzeri Çizili</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini ve <guilabel
+>’ini ve <guilabel
 >Matlık</guilabel
->'ını tanımlamak da olanaklıdır. Yalnızca vurgulanan metnin üzerine sağ tıklayın ve <guimenuitem
->Properties</guimenuitem
+>’ını tanımlamak da olanaklıdır. Yalnızca vurgulanan metnin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
 > menü ögesini kullanın. </para>
 					</entry>
 				      </row>
@@ -858,7 +856,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Altı çizili metin <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Vurgu</guimenuitem
 >, <guimenuitem
 >Dalgalı Çizgili</guimenuitem
@@ -868,10 +866,10 @@ Context menu actions like Rename Bookmarks etc.)
 >Üzeri Çizili</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini ve <guilabel
+>’ini ve <guilabel
 >Matlık</guilabel
->'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
->Properties</guimenuitem
+>’ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
 > menü ögesini kullanın. </para>
 					</entry>
 				      </row>
@@ -897,7 +895,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Altı çizili metin <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Vurgu</guimenuitem
 >, <guimenuitem
 >Dalgalı Çizgili</guimenuitem
@@ -907,10 +905,10 @@ Context menu actions like Rename Bookmarks etc.)
 >Üzeri Çizili</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini ve <guilabel
+>’ini ve <guilabel
 >Matlık</guilabel
->'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
->Properties</guimenuitem
+>’ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
 > menü ögesini kullanın. </para>
 					</entry>
 				      </row>
@@ -936,7 +934,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Altı çizili metin <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Vurgu</guimenuitem
 >, <guimenuitem
 >Dalgalı Çizgili</guimenuitem
@@ -946,10 +944,10 @@ Context menu actions like Rename Bookmarks etc.)
 >Üzeri Çizili</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini ve <guilabel
+>’ini ve <guilabel
 >Matlık</guilabel
->'ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
->Properties</guimenuitem
+>’ını tanımlamak da olanaklıdır. Yalnızca altı çizilen metnin üzerine sağ tıklayın ve <guimenuitem
+>Özellikler</guimenuitem
 > menü ögesini kullanın. </para>
 					</entry>
 				      </row>
@@ -973,17 +971,17 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Araç düğmesine tıklayın, ardından metnin sol üst köşesini eklemek istediğiniz yere &LMB; ile tıklayın, ardından sağ alt köşeyi yerleştirmek için sürükleyin. Biraz metin yazın, ardından kaydetmek için <guibutton
 >Tamam</guibutton
->'a, metni temizleyip baştan başlamak için <guibutton
+>’a, metni temizleyip baştan başlamak için <guibutton
 >Temizle</guibutton
->'ye veya iptal etmek için <guibutton
+>’ye veya iptal etmek için <guibutton
 >İptal</guibutton
->'e tıklayın. </para>
+>’e tıklayın. </para>
 					  <para
 >Metnin <guilabel
 >Yazıtipi</guilabel
->'ni ve <guilabel
+>’ni ve <guilabel
 >Metin rengi</guilabel
->'ni tanımlamak olanaklıdır. Oluşturulan metnin üzerine sağ tıklayın ve <guimenuitem
+>’ni tanımlamak olanaklıdır. Oluşturulan metnin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1008,23 +1006,23 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Araç düğmesine tıklayın, ardından notun sol üst köşesini eklemek istediğiniz yere &LMB; ile tıklayın, ardından sağ alt köşeyi yerleştirmek için sürükleyin. Notunuzu yazın, ardından kaydetmek için <guibutton
 >Tamam</guibutton
->'a, notu temizleyip baştan başlamak için <guibutton
+>’a, notu temizleyip baştan başlamak için <guibutton
 >Temizle</guibutton
->'ye veya iptal etmek için <guibutton
+>’ye veya iptal etmek için <guibutton
 >İptal</guibutton
->'e tıklayın. </para>
+>’e tıklayın. </para>
 					  <para
 >Notun <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını <guilabel
+>’ını <guilabel
 >Yazıtipi</guilabel
->'ni, <guilabel
+>’ni, <guilabel
 >Hizalama</guilabel
->'sını ve <guilabel
+>’sını ve <guilabel
 >Kenarlık genişliği</guilabel
->'ni tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
+>’ni tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1053,11 +1051,11 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Notun <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını ve <guilabel
+>’ını ve <guilabel
 >Simge</guilabel
->'sini tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
+>’sini tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1084,11 +1082,11 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Çizginin <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını ve <guilabel
+>’ını ve <guilabel
 >Genişlik</guilabel
->'ini tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>’ini tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1115,19 +1113,19 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Çizginin <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını, <guilabel
+>’ını, <guilabel
 >Genişlik</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Çizgi başı</guilabel
->'nı, <guilabel
+>’nı, <guilabel
 >Çizgi sonu</guilabel
->'nu, <guilabel
+>’nu, <guilabel
 >Lider çizgi uzunluğu</guilabel
->'nu ve <guilabel
+>’nu ve <guilabel
 >Lider çizgi uzantısı uzunluğu</guilabel
->'nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>’nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1154,19 +1152,19 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Çizginin <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını, <guilabel
+>’ını, <guilabel
 >Genişlik</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Çizgi başı</guilabel
->'nı, <guilabel
+>’nı, <guilabel
 >Çizgi sonu</guilabel
->'nu, <guilabel
+>’nu, <guilabel
 >Lider çizgi uzunluğu</guilabel
->'nu ve <guilabel
+>’nu ve <guilabel
 >Lider çizgi uzantısı uzunluğu</guilabel
->'nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
+>’nu tanımlamak olanaklıdır. Oluşturulan çizginin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1193,19 +1191,19 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Kenarlığın <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Dörtgen</guimenuitem
 > veya <guimenuitem
 >Elips</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını, <guilabel
+>’ını, <guilabel
 >Renk dolgusu</guilabel
->'nu (ve dolgunun rengini) ve <guilabel
+>’nu (ve dolgunun rengini) ve <guilabel
 >Genişlik</guilabel
->'ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
+>’ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1232,19 +1230,19 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Kenarlığın <guilabel
 >Tür</guilabel
->'ünü (<guimenuitem
+>’ünü (<guimenuitem
 >Dörtgen</guimenuitem
 > veya <guimenuitem
 >Elips</guimenuitem
 >), <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını, <guilabel
+>’ını, <guilabel
 >Renk dolgusu</guilabel
->'nu (ve dolgunun rengini) ve <guilabel
+>’nu (ve dolgunun rengini) ve <guilabel
 >Genişlik</guilabel
->'ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
+>’ini tanımlamak olanaklıdır. Yalnızca oluşturulan kenarlığın üzerinde sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1277,13 +1275,13 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Çokgenin <guilabel
 >Renk</guilabel
->'ini, <guilabel
+>’ini, <guilabel
 >Matlık</guilabel
->'ını, <guilabel
+>’ını, <guilabel
 >Şekil dolgusu</guilabel
->'nu (ve dolgu rengini) ve <guilabel
+>’nu (ve dolgu rengini) ve <guilabel
 >Genişlik</guilabel
->'ini tanımlamak olanaklıdır. Oluşturulan çokgenin üzerine sağ tıklayın ve <guimenuitem
+>’ini tanımlamak olanaklıdır. Oluşturulan çokgenin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1312,9 +1310,9 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Damganın <guilabel
 >Matlık</guilabel
->'ını ve <guilabel
+>’ını ve <guilabel
 >Damga simgesi</guilabel
->'ni tanımlamak olanaklıdır. Oluşturulan damganın üzerine sağ tıklayın ve <guimenuitem
+>’ni tanımlamak olanaklıdır. Oluşturulan damganın üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					  <warning>
@@ -1396,7 +1394,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<entry>
 					  <para
 >Bilgi notu metninin veya kenarlığının rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
->Özel Renk...</guimenuitem
+>Özel Renk…</guimenuitem
 > ögesine tıklayabilirsiniz. </para>
 					</entry>
 				      </row>
@@ -1417,7 +1415,7 @@ Context menu actions like Rename Bookmarks etc.)
 					<entry>
 					  <para
 >Bilgi notu dolgu rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
->Özel Renk...</guimenuitem
+>Özel Renk…</guimenuitem
 > ögesine tıklayabilirsiniz. </para>
 					</entry>
 				      </row>
@@ -1560,7 +1558,7 @@ Context menu actions like Rename Bookmarks etc.)
 				  </informaltable>
 				  <para
 >&Shift; düğmesini basılı tutarak, çizgi ve çokgen bilgi notu araçlarının açısını ve şekil bilgi notlarının (örneğin, Dörtgen, Elips) açısını 15° adımlara kısıtlayabilirsiniz. Ayrıca, <ulink url="help:/fundamentals/config.html#toolbars"
->Araç Çubuklarını Yapılandır...</ulink
+>Araç Çubuklarını Yapılandır…</ulink
 > ile araç çubuğu düğmeleri koyabilirsiniz. </para>
 				  <para
 ><guilabel
@@ -1570,7 +1568,7 @@ Context menu actions like Rename Bookmarks etc.)
 > kullanılarak yapılandırılabilir. Bu sayfayı açmak için <guilabel
 >Tez Bilgi Notları</guilabel
 > düğmesine basın, sonrasında açılır menüden <guimenuitem
->Bilgi Notlarını Yapılandır...</guimenuitem
+>Bilgi Notlarını Yapılandır…</guimenuitem
 > ögesini seçin. </para>
 				<note>
 					<para
@@ -1599,7 +1597,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 >), sonrasında &RMB; ile tıklayın ve <guimenuitem
 >Sil</guimenuitem
->'i seçin veya bir bilgi notunu &LMB; ile seçip klavyede &Del; düğmesine basın. </para>
+>’i seçin veya bir bilgi notunu &LMB; ile seçip klavyede &Del; düğmesine basın. </para>
 				<para
 >Bilgi notunu kaldırırken, penceresi açıksa kapatılır. </para>
 			</sect2>
@@ -1615,7 +1613,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 >), sonrasında &RMB; ile bir bilgi notunun üzerine tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
->'i seçin. Genel bilgi notu ayarlarını (renk, matlık, yazar vb.) ve o bilgi notu türüne özel ayarları içeren bir iletişim kutusu açılacaktır. </para>
+>’i seçin. Genel bilgi notu ayarlarını (renk, matlık, yazar vb.) ve o bilgi notu türüne özel ayarları içeren bir iletişim kutusu açılacaktır. </para>
 				<screenshot>
 				<screeninfo
 >Bilgi Notu Özellikleri İletişim Kutusu</screeninfo>
@@ -1648,13 +1646,13 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >&okular; çok esnek bir yer imi sistemine sahiptir. &okular;, sayfadaki konumu yer imine kaydeder ve sayfa başına birden fazla yer imi tanımlamanıza olanak tanır. </para>
 			<para
->&okular;'da yer imlerini yönetmek için <guilabel
+>&okular;’da yer imlerini yönetmek için <guilabel
 >Kenar Çubuğu</guilabel
->'ndan, <link linkend="menubookmarks"
+>’ndan, <link linkend="menubookmarks"
 >Yer İmleri Menüsü</link
->'nden veya belge görünümünün bağlam menüsünden (&RMB; ile tıklayın) <guilabel
+>’nden veya belge görünümünün bağlam menüsünden (&RMB; ile tıklayın) <guilabel
 >Yer İmleri</guilabel
->'ni kullanabilirsiniz. </para>
+>’ni kullanabilirsiniz. </para>
 			<sect2 id="bookmarks-view">
 				<title
 >Yer İmleri görünümü</title>
@@ -1729,7 +1727,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Bir Dosya Belirt</title>
 			<para
->Kullanıcı, belirli bir dosyanın yolunu ve adını belirterek, &okular;'ın bu dosyayı başlatma sırasında hemen açmasını sağlayabilir. Bu seçenek aşağıdaki gibi görünebilir: </para>
+>Kullanıcı, belirli bir dosyanın yolunu ve adını belirterek, &okular;’ın bu dosyayı başlatma sırasında hemen açmasını sağlayabilir. Bu seçenek aşağıdaki gibi görünebilir: </para>
 			<informalexample
 ><screen
 ><prompt
@@ -1930,7 +1928,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Dosya</guimenu
 > <guimenuitem
->Aç...</guimenuitem
+>Aç…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -1987,14 +1985,14 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->PostScript’i &PDF; Olarak İçe Aktar...</guimenuitem
+>PostScript’i &PDF; Olarak İçe Aktar…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
 >Bir &PostScript; dosyasını <action
 >açın</action
-> ve onu &PDF;'ye dönüştürün. </para>
+> ve onu &PDF;’ye dönüştürün. </para>
 					</listitem>
 				</varlistentry>
 
@@ -2073,7 +2071,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Dosya</guimenu
 > <guimenuitem
->Farklı Kaydet...</guimenuitem
+>Farklı Kaydet…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2121,14 +2119,14 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Dosya</guimenu
 > <guimenuitem
->Yazdır...</guimenuitem
+>Yazdır…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
 >Şu anda görüntülenen belgeyi <action
 >yazdırın</action
->. &okular;'ın &PDF; yazdırması için çeşitli seçenekler sunduğunu aklınızdan çıkarmayın; bu seçeneklere <guibutton
+>. &okular;’ın &PDF; yazdırması için çeşitli seçenekler sunduğunu aklınızdan çıkarmayın; bu seçeneklere <guibutton
 >Seçenekler 
 >
 ></guibutton
@@ -2150,7 +2148,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->Yazdırma Önizlemesi...</guimenuitem
+>Yazdırma Önizlemesi…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2197,7 +2195,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->Gömülü Dosyalar...</guimenuitem
+>Gömülü Dosyalar…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2222,12 +2220,12 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 >Bu öge, geçerli belgenin dışa aktarılabileceği biçimlerin bir listesini içerir. Her tür belge için ilk girdi her zaman <guimenuitem
->Düz Metin...</guimenuitem
+>Düz Metin…</guimenuitem
 > olarak ayarlıdır.</para>
 						<para
 >İkinci girdi ise <guimenuitem
 >Belge Arşivi</guimenuitem
->'dir. Bu biçim, belgeyi notlarınızla birlikte &okular;'a özel bir arşiv biçimine kaydetmenize olanak tanır. Böylece başka &okular; kullanıcılarıyla özgün belgeyi kolaylıkla paylaşabilir veya üzerinde birlikte çalışabilirsiniz.</para>
+>’dir. Bu biçim, belgeyi notlarınızla birlikte &okular;’a özel bir arşiv biçimine kaydetmenize olanak tanır. Böylece başka &okular; kullanıcılarıyla özgün belgeyi kolaylıkla paylaşabilir veya üzerinde birlikte çalışabilirsiniz.</para>
 					</listitem>
 				</varlistentry>
 
@@ -2263,7 +2261,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->&okular;'ı <action
+>&okular;’ı <action
 >kapatın</action
 >.</para>
 					</listitem>
@@ -2409,7 +2407,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Düzen</guimenu
 > <guimenuitem
->Bul...</guimenuitem
+>Bul…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2674,7 +2672,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Elle uygulanan tüm döndürmeleri yok sayarak belgenin yönlendirmesini geri yüklemek için <guimenuitem
 >Özgün Yönlendirme</guimenuitem
->'yi seçebilirsiniz. </para>
+>’yi seçebilirsiniz. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2698,7 +2696,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Seçime kırpma</quote
 > kipi, belgedeki <emphasis
 >tüm sayfalara</emphasis
-> uygulanacak görünür bir sınırlama kutusu tanımlamak için oluşturulan sayfanın üzerine bir seçim çizmenize olanak tanır. Küçük bir kırpma sınırlama kutusu seçmek, en küçük boyut boyutunu zorunlu kılar (toplam sayfa boyutunun yüzdesi olarak %​20). </para>
+> uygulanacak görünür bir sınırlama kutusu tanımlamak için oluşturulan sayfanın üzerine bir seçim çizmenize olanak tanır. Küçük bir kırpma sınırlama kutusu seçmek, en küçük ölçü boyutunu zorunlu kılar (toplam sayfa boyutunun yüzdesi olarak %​20). </para>
 						<para
 ><quote
 >Kenar boşluklarını kırpma</quote
@@ -2706,7 +2704,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Seçime kırpma</quote
 > kipi ise unutulur. </para>
 						<para
->&okular;'ı <quote
+>&okular;’ı <quote
 >kenar boşluklarını kırpma</quote
 > kipinden <quote
 >seçime kırpma</quote
@@ -2869,7 +2867,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Git</guimenu
 > <guimenuitem
->Sayfaya Git...</guimenuitem
+>Sayfaya Git…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -2898,7 +2896,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Yer İmleri</guimenu
 > <guimenuitem
->Yer İmi Ekle/Yer İmini Kaldır</guimenuitem
+>Yer İmi Koy/Yer İmini Kaldır</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3014,7 +3012,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Fare yakınlaştırma aracı olarak çalışacaktır. &LMB;'ne tıklayıp sürüklemek, görünümü seçilen alana yakınlaştıracaktır; &RMB;'ne tıklamak ise belgeyi önceki yakınlaştırma durumuna geri getirecektir.</para>
+>Fare yakınlaştırma aracı olarak çalışacaktır. &LMB;’ne tıklayıp sürüklemek, görünümü seçilen alana yakınlaştıracaktır; &RMB;’ne tıklamak ise belgeyi önceki yakınlaştırma durumuna geri getirecektir.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3034,7 +3032,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Fare dikdörtgen bölge seçim aracı olarak çalışacaktır. Bu kipte, &LMB;'ne tıklamak ve sürüklemek bir seçim kutusu çizer ve seçilen içeriği panoya kopyalama, seçilen metni konuşma veya seçim bölgesini bir görsele dönüştürüp bir dosyaya kaydetme seçeneğini sunar.</para>
+>Fare dikdörtgen bölge seçim aracı olarak çalışacaktır. Bu kipte, &LMB;’ne tıklamak ve sürüklemek bir seçim kutusu çizer ve seçilen içeriği panoya kopyalama, seçilen metni konuşma veya seçim bölgesini bir görsele dönüştürüp bir dosyaya kaydetme seçeneğini sunar.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3054,7 +3052,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Fare bir metin seçim aracı olarak çalışacaktır. Bu kipte &LMB;'ne tıklamak ve sürüklemek, belgenin metnini seçme seçeneğini sunar. Ardından panoya kopyalamak veya geçerli seçimi konuşmak için &RMB; ile tıklamanız yeterlidir.</para>
+>Fare bir metin seçim aracı olarak çalışacaktır. Bu kipte &LMB;’ne tıklamak ve sürüklemek, belgenin metnini seçme seçeneğini sunar. Ardından panoya kopyalamak veya geçerli seçimi konuşmak için &RMB; ile tıklamanız yeterlidir.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3094,7 +3092,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Fare işaretçisi için büyüteç kipini etkinleştirir. Büyüteç araç takımını etkinleştirmek için &LMB;'ni basılı tutun, belgede gezinmek için işaretçiyi hareket ettirin. Büyüteç, belgedeki her pikseli, büyüteç araç takımında 10 piksele ölçeklendirir.</para>
+>Fare işaretçisi için büyüteç kipini etkinleştirir. Büyüteç araç takımını etkinleştirmek için &LMB;’ni basılı tutun, belgede gezinmek için işaretçiyi hareket ettirin. Büyüteç, belgedeki her pikseli, büyüteç araç takımında 10 piksele ölçeklendirir.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3125,7 +3123,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Araçlar</guimenu
 > <guimenuitem
->Sayısal Olarak İmzala...</guimenuitem
+>Sayısal Olarak İmzala…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3172,12 +3170,12 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Bu ögeler, belgenin tamamını veya yalnızca geçerli sayfayı seslendirmenize ve sistemin konuşma hizmetini kullanarak konuşmayı bırakmanıza olanak tanır. Bu hizmet, &Linux;'taki konuşma göndericiyi ve diğer platformlardaki yerel konuşma sistemlerini kapsayan bir &Qt; kitaplığı tarafından sağlanır. Geçerli sesi &okular; <link linkend="configaccessibility"
+>Bu ögeler, belgenin tamamını veya yalnızca geçerli sayfayı seslendirmenize ve sistemin konuşma hizmetini kullanarak konuşmayı bırakmanıza olanak tanır. Bu hizmet, &Linux;’taki konuşma göndericiyi ve diğer platformlardaki yerel konuşma sistemlerini kapsayan bir &Qt; kitaplığı tarafından sağlanır. Geçerli sesi &okular; <link linkend="configaccessibility"
 >Erişilebilirlik</link
 > yapılandırma sayfasında seçebilirsiniz.</para>
 						<para
 ><guilabel
->Konuş ...</guilabel
+>Konuş …</guilabel
 > eylemleri yalnızca sisteminizde bir konuşma hizmeti kullanılabiliyorsa etkinleştirilir.</para>
 					</listitem>
 				</varlistentry>
@@ -3194,7 +3192,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Ayarlar</guimenu
 > ve <guimenu
 >Yardım</guimenu
-> menülerine ek olarak, &okular;'da aşağıdaki uygulamaya özel menü girdileri vardır:</para>
+> menülerine ek olarak, &okular;’da aşağıdaki uygulamaya özel menü girdileri vardır:</para>
 			<variablelist>
 				<varlistentry>
 					<term>
@@ -3238,7 +3236,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Ayarlar</guimenu
 > <guimenuitem
->Arka Uçları Yapılandır...</guimenuitem
+>Arka Uçları Yapılandır…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3260,7 +3258,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Ayarlar</guimenu
 > <guimenuitem
->Arka Uçları Yapılandır...</guimenuitem
+>Arka Uçları Yapılandır…</guimenuitem
 ></menuchoice
 > seçimini yaparak yapılandırabilirsiniz. Şu anda yalnızca; EPub, &PostScript;, FictionBook, Txt, OpenDocument Text ve &PDF; arka uçları için yapılandırma seçenekleri sağlanır. </para>
 	  <screenshot>
@@ -3278,7 +3276,7 @@ Context menu actions like Rename Bookmarks etc.)
 	  </screenshot>
 	  <para
 >EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazıtipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
->Seç...</guibutton
+>Seç…</guibutton
 > düğmesi, standart &kde; yazıtipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
 >&kde; Temelleri belgelendirmesine</ulink
 > başvurun. </para>
@@ -3290,7 +3288,7 @@ Context menu actions like Rename Bookmarks etc.)
 	    <para
 >Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
 >Markdown</guilabel
->'u seçip <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>’u seçip <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
 >Discount</ulink
 > tabanlı &okular; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
 	    <para>
@@ -3302,11 +3300,11 @@ Context menu actions like Rename Bookmarks etc.)
 		  </term>
 		  <listitem>
               <para
->Bu seçenek, işaretlendiğinde &okular;'ın <ulink url="https://daringfireball.net/projects/smartypants/"
+>Bu seçenek, işaretlendiğinde &okular;’ın <ulink url="https://daringfireball.net/projects/smartypants/"
 >SmartyPants</ulink
 > biçimlendirmesini işlemesine olanak tanır. Bu biçimlendirme türü teknik metinlerde sorun yaratabilir; çünkü istenmeyebilecek değişimler yapar (örneğin, <literal
 >(C)</literal
->'yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
+>’yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -3318,7 +3316,7 @@ Context menu actions like Rename Bookmarks etc.)
 	    <para
 >Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
 >Ghostscript</guilabel
->'i seçip <ulink url="https://www.ghostscript.com/"
+>’i seçip <ulink url="https://www.ghostscript.com/"
 >Ghostscript</ulink
 > tabanlı &okular; &PostScript; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
 	    <para>
@@ -3342,7 +3340,7 @@ Context menu actions like Rename Bookmarks etc.)
 	    <para
 >Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
 >&PDF;</guilabel
->'yi seçip <ulink url="https://poppler.freedesktop.org/"
+>’yi seçip <ulink url="https://poppler.freedesktop.org/"
 >Poppler</ulink
 > tabanlı &okular; &PDF; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
 	    <para>
@@ -3354,7 +3352,7 @@ Context menu actions like Rename Bookmarks etc.)
 		  </term>
 		  <listitem>
 		    <para
->&okular;'da çizgi çizmek iki adımda gerçekleştirilir: Kırpma yolunun oluşturulması ve bu kırpma yolunun doldurulması. Özgün belgedeki çizgi bir pikselden küçük olduğunda bu iki aşamalı uygulama sorunlara neden olabilir. Bu çizgiler için kırpma yolu, kırpma alanı içindeki çizgi kısmının kalınlığına bağlı olan dolgu rengiyle doldurulur. Çizginin kırpma alanı içindeki kısmı çok küçülürse şekil ile arka plan rengi arasındaki karşıtlık çizginin tanınamayacağı kadar düşük olabilir. Bu tür çizgilerin ızgaraları daha sonra çok çirkin görünürler. </para>
+>&okular;’da çizgi çizmek iki adımda gerçekleştirilir: Kırpma yolunun oluşturulması ve bu kırpma yolunun doldurulması. Özgün belgedeki çizgi bir pikselden küçük olduğunda bu iki aşamalı uygulama sorunlara neden olabilir. Bu çizgiler için kırpma yolu, kırpma alanı içindeki çizgi kısmının kalınlığına bağlı olan dolgu rengiyle doldurulur. Çizginin kırpma alanı içindeki kısmı çok küçülürse şekil ile arka plan rengi arasındaki karşıtlık çizginin tanınamayacağı kadar düşük olabilir. Bu tür çizgilerin ızgaraları daha sonra çok çirkin görünürler. </para>
 		    <informaltable>
 		      <tgroup cols="2">
 			<tbody>
@@ -3396,11 +3394,11 @@ Context menu actions like Rename Bookmarks etc.)
 		    <para
 >İlk seçenek <guimenuitem
 >Katı</guimenuitem
->'dır. Bu seçenekle &okular;, kırpma yolu ve çizgi konumunu, kırpma yolu ve çizgi aynı piksel sınırında olacak şekilde ayarlar; örneğin &okular;, ince çizgileri çıkış aygıtında bir piksele büyütür. Bu kip, <trademark class="registered"
+>’dır. Bu seçenekle &okular;, kırpma yolu ve çizgi konumunu, kırpma yolu ve çizgi aynı piksel sınırında olacak şekilde ayarlar; örneğin &okular;, ince çizgileri çıkış aygıtında bir piksele büyütür. Bu kip, <trademark class="registered"
 >Adobe</trademark
 > <trademark class="registered"
 >Reader</trademark
->'daki <guilabel
+>’daki <guilabel
 >İnce çizgileri iyileştir</guilabel
 > kipine benzerdir. Bu seçenek seçilirse ince çizgiler her zaman büyütülürler. </para>
 		    <para>
@@ -3427,7 +3425,7 @@ Context menu actions like Rename Bookmarks etc.)
 		    <para
 >İkince seçenek <guimenuitem
 >Şekil</guimenuitem
->'dir. Bu seçenekte kırpma yolu ve çizgi de piksel sınırına göre ayarlanır; ancak çizgi yoğunluğu genişliğine göre düzeltilir. </para>
+>’dir. Bu seçenekte kırpma yolu ve çizgi de piksel sınırına göre ayarlanır; ancak çizgi yoğunluğu genişliğine göre düzeltilir. </para>
 		    <para>
 		      <screenshot>
 			<mediaobject>
@@ -3475,16 +3473,16 @@ Context menu actions like Rename Bookmarks etc.)
 	</chapter>
 	<chapter id="configure">
 		<title
->&okular;'ı Yapılandırmak</title>
+>&okular;’ı Yapılandırmak</title>
 		<sect1 id="configindex">
 			<title
 >Genel yapılandırma</title>
 			<para
->&okular;'ı <menuchoice
+>&okular;’ı <menuchoice
 ><guimenu
 >Ayarlar</guimenu
 > <guimenuitem
->&okular; Uygulamasını Yapılandır...</guimenuitem
+>&okular; Uygulamasını Yapılandır…</guimenuitem
 ></menuchoice
 > seçimini yaparak yapılandırabilirsiniz. Yapılandırma iletişim kutusu altı bölüme ayrılmıştır. Bu fasıl, kullanılabilir seçenekleri ayrıntılarıyla açıklar. </para>
 			<itemizedlist>
@@ -3543,7 +3541,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Ayarlar</guimenu
 > <guimenuitem
->Arka Uçları Yapılandır...</guimenuitem
+>Arka Uçları Yapılandır…</guimenuitem
 ></menuchoice
 > menü ögesi etkin olabilir. Bu yapılandırma iletişim kutusu, yapılandırılabilir olan arka uçların yapılandırmalarını barındırır. </para>
 		</sect1>
@@ -3668,7 +3666,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Dosya zaten açıksa yeni bir sekme açmak yerine &okular;'ın var olan bir sekmeye geçip geçmeyeceği. Bu seçenek öntanımlı olarak etkindir. Yalnızca <guilabel
+>Dosya zaten açıksa yeni bir sekme açmak yerine &okular;’ın var olan bir sekmeye geçip geçmeyeceği. Bu seçenek öntanımlı olarak etkindir. Yalnızca <guilabel
 >Yeni dosyaları sekmelerde aç</guilabel
 > etkinse açılabilir/kapatılabilir.</para>
 					</listitem>
@@ -3680,9 +3678,9 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular;'ın <firstterm
+>&okular;’ın <firstterm
 >DRM</firstterm
-> (Sayısal Haklar Yönetimi) kısıtlamalarına uyması gerekip gerekmediği. DRM sınırlamaları, içeriğin panoya kopyalanması gibi &PDF; belgeleriyle belirli eylemlerin gerçekleştirilmesini olanaksızlaştırmak için kullanılır. &okular;'ın bazı yapılandırmalarında bu seçeneğin kullanılabilir olmadığını unutmayın.</para>
+> (Sayısal Haklar Yönetimi) kısıtlamalarına uyması gerekip gerekmediği. DRM sınırlamaları, içeriğin panoya kopyalanması gibi &PDF; belgeleriyle belirli eylemlerin gerçekleştirilmesini olanaksızlaştırmak için kullanılır. &okular;’ın bazı yapılandırmalarında bu seçeneğin kullanılabilir olmadığını unutmayın.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3702,7 +3700,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular;'ın geçerli dosyayı açabilen birden fazla arka uç olması durumunda kullanıcıya hangi arka ucun kullanılacağını sorması gerekip gerekmediği. İşaretlenmezse &okular;, en yüksek önceliğe sahip arka ucu kullanır.</para>
+>&okular;’ın geçerli dosyayı açabilen birden fazla arka uç olması durumunda kullanıcıya hangi arka ucun kullanılacağını sorması gerekip gerekmediği. İşaretlenmezse &okular;, en yüksek önceliğe sahip arka ucu kullanır.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3823,7 +3821,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<varlistentry>
 							<term
 ><guilabel
->Kağıt Rengini Değiştir</guilabel
+>Kâğıt Rengini Değiştir</guilabel
 ></term>
 								<listitem>
 									<para
@@ -3832,7 +3830,7 @@ Context menu actions like Rename Bookmarks etc.)
 >.</para>
                                                                         <para
 >Renk, aşağıdaki <guilabel
->Kağıt rengi</guilabel
+>Kâğıt rengi</guilabel
 > örneğini kullanarak seçilebilir. </para>
 								</listitem>
 						</varlistentry>
@@ -3851,11 +3849,11 @@ Context menu actions like Rename Bookmarks etc.)
 						<varlistentry>
 							<term
 ><guilabel
->Siyah-Beyaza Dönüştür</guilabel
+>Siyah–Beyaza Dönüştür</guilabel
 ></term>
 							<listitem>
 								<para
->Belgeyi siyah-beyaza <action
+>Belgeyi siyah–beyaza <action
 >dönüştürür</action
 >. Eşiği ve karşıtlığı ayarlayabilirsiniz. Eşiği sağa kaydırarak daha yüksek bir değere ayarlamak, daha açık grilerin kullanılmasına neden olur.</para>
 								</listitem>
@@ -3871,7 +3869,7 @@ Context menu actions like Rename Bookmarks etc.)
 >tersine çevirir</action
 >. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. Görsellerdeki karşıtlık genellikle <guilabel
 >Parlaklığı Tersine Çevir (Doğrusal sRGB)</guilabel
->'dan daha kötü olacaktır.</para>
+>’dan daha kötü olacaktır.</para>
 							</listitem>
 						</varlistentry>
 						<varlistentry>
@@ -3885,7 +3883,7 @@ Context menu actions like Rename Bookmarks etc.)
 >tersine çevirir</action
 >. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. Görsellerdeki karşıtlık, <guilabel
 >Açıklığı Tersine Çevir</guilabel
->'e göre daha iyi korunur; ancak grafikler ve renkli metin işaretlemesi genellikle daha kötü görünür. sRGB parlaklığı katsayılarını kullanır; ancak gama düzeltmesi yapılmaz.</para>
+>’e göre daha iyi korunur; ancak grafikler ve renkli metin işaretlemesi genellikle daha kötü görünür. sRGB parlaklığı katsayılarını kullanır; ancak gama düzeltmesi yapılmaz.</para>
 							</listitem>
 						</varlistentry>
 						<varlistentry>
@@ -3899,7 +3897,7 @@ Context menu actions like Rename Bookmarks etc.)
 >tersine çevirir</action
 >. Açık ve koyu yer değiştirir; ancak renk tonu ve doygunluk etkilenmez. <guilabel
 >Açıklığı Tersine Çevir</guilabel
->'e çok benzerdir; ancak bazı durumlarda karşıtlığı daha iyidir.</para>
+>’e çok benzerdir; ancak bazı durumlarda karşıtlığı daha iyidir.</para>
 								</listitem>
 						</varlistentry>
 						<varlistentry>
@@ -3929,7 +3927,7 @@ Context menu actions like Rename Bookmarks etc.)
 						</variablelist>
                                                 <note
 ><para
->&okular;'ın <guimenu
+>&okular;’ın <guimenu
 >Ayarlar</guimenu
 > menüsündeki ilgili menü ögelerini kullanarak renk kiplerini için klavye kısayollarını ve araç çubuğu eylemlerini yapılandırabilirsiniz.</para
 ></note>
@@ -3962,7 +3960,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >&okular; tarafından kullanılacak konuşma işletkesi için bir ses <action
 >seçmenize</action
-> olanak tanır. Platformunuzdaki kullanılabilir sentezleyicilere bağlı olarak tüm dilleri ve sesleri kullanabilirsiniz. &Linux;'ta, kullanılabilir sesleri belirlemek için öntanımlı olarak speech-dispatcher kullanılır.</para>
+> olanak tanır. Platformunuzdaki kullanılabilir sentezleyicilere bağlı olarak tüm dilleri ve sesleri kullanabilirsiniz. &Linux;’ta, kullanılabilir sesleri belirlemek için öntanımlı olarak speech-dispatcher kullanılır.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3998,7 +3996,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Bu seçenek grubunu kullanarak &okular;'daki metin ve görsel sunumunu iyileştirebilirsiniz. Sonuç, belgeyi görüntüleyecek aygıta bağlıdır.<guilabel
+>Bu seçenek grubunu kullanarak &okular;’daki metin ve görsel sunumunu iyileştirebilirsiniz. Sonuç, belgeyi görüntüleyecek aygıta bağlıdır.<guilabel
 >Metin kenar yumuşatmasını etkinleştir</guilabel
 > ve <guilabel
 >Grafik kenar yumuşatmasını etkinleştir</guilabel
@@ -4124,7 +4122,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Belgede belirtilmemişse sayfalar arasındaki geçiş efekti. &okular;'ın kullanılabilir efektlerden birini rastgele seçmesini sağlamak için bunu <guilabel
+>Belgede belirtilmemişse sayfalar arasındaki geçiş efekti. &okular;’ın kullanılabilir efektlerden birini rastgele seçmesini sağlamak için bunu <guilabel
 >Rastgele Geçiş</guilabel
 > olarak ayarlayın.</para>
 					</listitem>
@@ -4248,7 +4246,7 @@ Context menu actions like Rename Bookmarks etc.)
 > kalemlerini yapılandırabilirsiniz. </para>
 					  <note>
 					    <para
->&okular;'daki bilgi notu araçlarının son derece yapılandırılabilir olduğunu lütfen unutmayın. Örneğin, aynı aracın farklı renklerde iki düğmesine sahip olabilirsiniz. İş akışınıza tam olarak uyarlanmış düğme kümesini seçmeyi denemekten çekinmeyin. </para>
+>&okular;’daki bilgi notu araçlarının son derece yapılandırılabilir olduğunu lütfen unutmayın. Örneğin, aynı aracın farklı renklerde iki düğmesine sahip olabilirsiniz. İş akışınıza tam olarak uyarlanmış düğme kümesini seçmeyi denemekten çekinmeyin. </para>
 					  </note>
 					  <para
 >Liste kutusundaki bir ögeye tıklayın ve ardından ögeyi düzenlemek, kaldırmak, yukarı veya aşağı taşımak için sayfanın sağ kısmındaki ilgili düğmeye tıklayın. Aracın klavye kısayolu (<keycap
@@ -4322,7 +4320,7 @@ Context menu actions like Rename Bookmarks etc.)
 >. </para>
 						<note>
 						  <para
->&kile;'deki tersine aramayı kullanmak için &latex; dosyanızı <guilabel
+>&kile;’deki tersine aramayı kullanmak için &latex; dosyanızı <guilabel
 >Çağdaş</guilabel
 > yapılandırmayla derlemeniz gerekir. </para>
 						</note>
@@ -4341,21 +4339,21 @@ Context menu actions like Rename Bookmarks etc.)
 >Düzenleyici</guilabel
 > açılır kutusunda <guimenuitem
 >Özel Metin Düzenleyicisi</guimenuitem
->'ni seçin ve uygun komutu bulmak için favori düzenleyicinizin belgelerine bakın. </para>
+>’ni seçin ve uygun komutu bulmak için favori düzenleyicinizin belgelerine bakın. </para>
 						<para
 >Aşağıdaki yer tutucuları kullanabilirsiniz:</para>
 						<itemizedlist>
 						  <listitem>
 						    <para
->%f - dosya adı</para>
+>%f — dosya adı</para>
 						  </listitem>
 						  <listitem>
 						    <para
->%l - dosyada erişilecek satırın numarası</para>
+>%l — dosyada erişilecek satırın numarası</para>
 						  </listitem>
 						  <listitem>
 						    <para
->%c - dosyada erişilecek sütunun numarası</para>
+>%c — dosyada erişilecek sütunun numarası</para>
 						  </listitem>
 						</itemizedlist>
 						<para

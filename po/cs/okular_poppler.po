@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2013, 2014, 2017, 2019.
+# SPDX-FileCopyrightText: 2010, 2011, 2013, 2014, 2017, 2019, 2025 Vít Pelčák <vit@pelcak.org>
 # Lukáš Tinkl <lukas@kde.org>, 2012.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012.
 # Vit Pelcak <vit@pelcak.org>, 2021, 2023.
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2023-06-29 11:03+0200\n"
+"PO-Revision-Date: 2025-12-19 16:32+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 25.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,7 +34,7 @@ msgstr "lukas@kde.org,david@kolibac.cz"
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "Povolit náhled přetisku:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
@@ -136,13 +136,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Tyto podpisy mohou ověřit pouze uživatelé nového Okularu s aktivovanou "
+"podpůrnou vrstvou GnuPG"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Povolit klíče PGP pro podpisy (rozšíření Okular)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -305,12 +307,12 @@ msgstr "Nastavení podpůrné vrstvy PDF"
 #: generator_pdf.cpp:2207 generator_pdf.cpp:2235
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Zápis dočasného souboru selhal"
 
 #: generator_pdf.cpp:2257
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Přejmenování dočasného souboru selhalo"
 
 #: generator_pdf.cpp:2277
 #, kde-format
@@ -326,12 +328,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Tyto podpisy fungují pouze mezi moderními verzemi Okularu s aktivovanou "
+"podpůrnou vrstvou založeným na GnuPG."
 
 #: pdfsettingswidget.cpp:120
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr ""
+msgstr "Povolit podpisy PGP"
 
 #: pdfsettingswidget.cpp:156
 #, kde-format
@@ -363,7 +367,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "navždy"
 
 #: pdfsettingswidget.cpp:223
 #, kde-format

@@ -3465,9 +3465,9 @@ Context menu actions like Rename Bookmarks etc.)
 ><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
 ></mediaobject
 ></screenshot
-> Bu bölüm, &PDF; dosyalarına Sayısal İmzalar eklerken kullanılacak özel bir Sertifika Veritabanı ayarlamanıza olanak tanır. </para>
+> Bu bölüm, &PDF; dosyalarına Sayısal İmzalar eklerken kullanılacak özel bir Sertifika Veri Tabanı ayarlamanıza olanak tanır. </para>
 			<para
->Ayrıca geçerli Sertifika Veritabanında (varsa) bulunan sertifikaları da listeler. </para>
+>Ayrıca geçerli sertifika veri tabanında (varsa) bulunan sertifikaları da listeler. </para>
 		</sect2>
 	  </sect1>
 	</chapter>

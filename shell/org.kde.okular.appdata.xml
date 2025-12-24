@@ -106,6 +106,7 @@
     <p xml:lang="bg">Okular е универсална програма за преглед на документи, разработена от KDE. Okular работи с множество платформи, включително, но не само, Linux, Windows и Mac OS X, *BSD и др.</p>
     <p xml:lang="ca">L'Okular és un visualitzador universal de documents desenvolupat pel KDE. L'Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
     <p xml:lang="ca-valencia">Okular és un visor universal de documents desenvolupat per KDE. Okular funciona en múltiples plataformes, incloent-hi però sense limitar-se a Linux, Windows, Mac OS X, *BSD, etc.</p>
+    <p xml:lang="cs">Okular je univerzální prohlížeč dokumentů vyvinutý KDE. Okular funguje na různých platformách, včetně, ale nikoli výhradně, Linuxu, Windows, Mac OS X, *BSD atd.</p>
     <p xml:lang="de">Okular ist ein universeller Dokumentenbetrachter, der von KDE entwickelt wird. Okular ist auf verschiedenen Plattformen verfügbar, darunter auch Linux, Windows, Mac OS X, *BSD usw.</p>
     <p xml:lang="el">Το Okular είναι ένας καθολικός προβολέας εγγράφων που αναπτύχθηκε από το KDE. Το Okular λειτουργεί σε πολλές πλατφόρμες, όπως σε Linux, Windows, Mac OS X, *BSD, κλπ.</p>
     <p xml:lang="en-GB">Okular is a universal document viewer developed by KDE. Okular works on multiple platforms, including but not limited to Linux, Windows, Mac OS X, *BSD, etc.</p>
@@ -209,6 +210,7 @@
       <li xml:lang="bg">Поддържани формати: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ca">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
       <li xml:lang="ca-valencia">Formats acceptats: PDF, PS, Tiff, DjVu, imatges, DVI, XPS, Fiction Book, llibres de còmic, Plucker, EPub, Fax</li>
+      <li xml:lang="cs">Podporované formáty: PDF, PS, Tiff, DjVu, obrázky, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="de">Unterstützte Formate: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="en-GB">Supported Formats: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="eo">Subtenataj Formatoj: PDF, PS, Tiff, DjVu, Bildoj, DVI, XPS, Fikciolibro, Komiklibro, Plucker, EPub, Fakso</li>
@@ -246,6 +248,7 @@
       <li xml:lang="bg">Странична лента със съдържание, миниатюри, отзиви и отметки</li>
       <li xml:lang="ca">Barra lateral amb el contingut, miniatures, revisions i punts</li>
       <li xml:lang="ca-valencia">Barra lateral amb el contingut, miniatures, revisions i punts</li>
+      <li xml:lang="cs">Postranní panel s obsahem, miniaturami, recenzemi a záložkami</li>
       <li xml:lang="de">Seitenleiste mit Inhalten, Vorschau, Anmerkungen und Lesezeichen</li>
       <li xml:lang="el">Πλευρική γραμμή με περιεχόμενα, εικόνες προεπισκόπησης, αναλύσεις και σελιδοδείκτες</li>
       <li xml:lang="en-GB">Sidebar with contents, thumbnails, reviews and bookmarks</li>

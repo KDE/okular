@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-16 06:49+0000\n"
-"PO-Revision-Date: 2025-07-13 23:15+0300\n"
+"PO-Revision-Date: 2025-11-30 15:44+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -753,10 +753,9 @@ msgid "Inline Note"
 msgstr "Tekstinsisäinen muistiinpano"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Monikulmio huomautuksella"
+msgstr "Nuoli huomautuksella"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -787,10 +786,9 @@ msgid "Polygon"
 msgstr "Monikulmio"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Leima huomautuksella"
+msgstr "Suorakaide huomautuksella"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -799,10 +797,9 @@ msgid "Rectangle"
 msgstr "Suorakulmio"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Alleviivaus huomautuksella"
+msgstr "Soikio huomautuksella"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -913,9 +910,7 @@ msgid "Rich Media"
 msgstr "Multimediasisältö"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Merkintä"
 
@@ -1702,9 +1697,7 @@ msgid "Page %1"
 msgstr "Sivu %1"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2318,14 +2311,12 @@ msgid "Search…"
 msgstr "Etsi…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Laajenna kaikki"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Supista kaikki"
 
@@ -4955,14 +4946,12 @@ msgstr ""
 "muualle."
 
 #: part/part.cpp:3174
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Laajenna koko osio"
 
 #: part/part.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Supista koko osio"
 

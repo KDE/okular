@@ -2,22 +2,23 @@
 # Copyright (C) 2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the okular_djvu package.
 # Laurenţiu Buzdugan <lbuz@rolix.org>, 2008".
-# Sergiu Bivol <sergiu@cip.md>, 2009.
+# SPDX-FileCopyrightText: 2009, 2026 Sergiu Bivol <sergiu@cip.md>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2009-01-31 22:08+0200\n"
+"PO-Revision-Date: 2026-01-03 15:46+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
-"Language-Team: Romanian <kde-i18n-ro@lists.kde.org>\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -76,7 +77,7 @@ msgstr "O singură pagină"
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled"
-msgstr ""
+msgstr "Grupat"
 
 #: kdjvu.cpp:681
 #, kde-format
@@ -88,7 +89,7 @@ msgstr "Indirect"
 #, kde-format
 msgctxt "Type of DjVu document"
 msgid "Bundled (old)"
-msgstr ""
+msgstr "Grupat (vechi)"
 
 #: kdjvu.cpp:687
 #, kde-format

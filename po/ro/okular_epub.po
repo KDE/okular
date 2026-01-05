@@ -1,21 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Sergiu Bivol <sergiu@cip.md>, 2008.
+# SPDX-FileCopyrightText: 2008, 2026 Sergiu Bivol <sergiu@cip.md>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_epub\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2008-12-31 21:35+0200\n"
+"PO-Revision-Date: 2026-01-03 15:46+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
-"Language-Team: Romanian <kde-i18n-ro@lists.kde.org>\n"
+"Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -35,13 +36,12 @@ msgstr "Eroare la deschiderea documentului EPuB."
 #: generator_epub.cpp:30
 #, kde-format
 msgid "EPub"
-msgstr ""
+msgstr "EPub"
 
 #: generator_epub.cpp:30
-#, fuzzy, kde-format
-#| msgid "EPub Backend"
+#, kde-format
 msgid "EPub Backend Configuration"
-msgstr "Platformă EPuB"
+msgstr "Configurare platformă EPub"
 
 #~ msgid "EPub Backend"
 #~ msgstr "Platformă EPuB"

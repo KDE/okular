@@ -2,7 +2,7 @@
     "id": "org.kde.okular",
     "branch": "master",
     "runtime": "org.kde.Platform",
-    "runtime-version": "6.9",
+    "runtime-version": "6.10",
     "sdk": "org.kde.Sdk",
     "command": "okular",
     "rename-icon": "okular",
@@ -37,11 +37,6 @@
     "modules": [
         {
             "name": "gnustep-make",
-            "buildsystem": "simple",
-            "build-commands": [
-                "./configure --prefix=/app",
-                "make -j $FLATPAK_BUILDER_N_JOBS install"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -58,12 +53,6 @@
         },
         {
             "name": "gnustep",
-            "buildsystem": "simple",
-            "build-commands": [
-                "./configure --prefix=/app",
-                "make -j $FLATPAK_BUILDER_N_JOBS install",
-                "ls /app/include"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -75,6 +64,10 @@
                         "stable-only": true,
                         "url-template": "https://github.com/gnustep/libs-base/archive/refs/tags/base-$version.tar.gz"
                     }
+                },
+                {
+                    "type": "patch",
+                    "path": ".flatpak-patches/gnustep-base-fix_GCC15.patch"
                 }
             ]
         },
@@ -123,8 +116,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/Orc/discount/archive/v3.0.0d.tar.gz",
-                    "sha256": "0ed8cc27ac5d46dc6a8beedd5e5673ac8b466a6474bdb7d35f37c815f670385f",
+                    "url": "https://github.com/Orc/discount/archive/v3.0.1.2.tar.gz",
+                    "sha256": "4ea6cc8782c6508b3051c469ed7a1b6ca20b023c2a0c26ccd9c83bc7e61dfc16",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 12139,
@@ -144,8 +137,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://archives.boost.io/release/1.89.0/source/boost_1_89_0.tar.bz2",
-                    "sha256": "85a33fa22621b4f314f8e85e1a5e2a9363d22e4f4992925d4bb3bc631b5a0c7a",
+                    "url": "https://archives.boost.io/release/1.90.0/source/boost_1_90_0.tar.bz2",
+                    "sha256": "49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6845,
@@ -181,7 +174,8 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
             ],
             "sources": [
                 {
@@ -216,7 +210,8 @@
         {
             "name": "ghostscript",
             "config-opts": [
-                "--disable-cups"
+                "--disable-cups",
+                "--without-tesseract"
             ],
             "make-args": [
                 "so"
@@ -234,8 +229,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10051/ghostscript-10.05.1.tar.gz",
-                    "sha256": "121861b6d29b2461dec6575c9f3cab665b810bd408d4ec02c86719fa708b0a49",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10060/ghostscript-10.06.0.tar.gz",
+                    "sha256": "5bd6da34794928cc7e616f288e32bd0be7f9a5ca2d3c206a0af2c19a4e3a318f",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -301,8 +296,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.09.0.tar.xz",
-                    "sha256": "758abfe0c77108c72d654b291dfbce54964b5315a53028e3875f07ef55ff20a3",
+                    "url": "https://poppler.freedesktop.org/poppler-25.12.0.tar.xz",
+                    "sha256": "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -323,8 +318,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r61.tar.gz",
-                    "sha256": "7caf26a2202a4ca689df3fe4175dfa74e0faa18fcca07331bba934fd0ecb8f12",
+                    "url": "https://github.com/benhoyt/inih/archive/refs/tags/r62.tar.gz",
+                    "sha256": "9c15fa751bb8093d042dae1b9f125eb45198c32c6704cd5481ccde460d4f8151",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 11600,
@@ -366,8 +361,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.08.0/src/libkexiv2-25.08.0.tar.xz",
-                    "sha256": "9bb4e5858f35d0dba813ade3c0ff6e7fe750b0930d60a7f4609b48c9563d45eb",
+                    "url": "https://download.kde.org/stable/release-service/25.12.0/src/libkexiv2-25.12.0.tar.xz",
+                    "sha256": "1deb0fa6f270b588aa3ddd946c42b00a974f79d2fc079f1125ccc8ff0e99b996",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -388,35 +383,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.08.0/src/kdegraphics-mobipocket-25.08.0.tar.xz",
-                    "sha256": "d60c4eb4387d63036a8d734f77c5cbb75aea4c9dc8ecdfece46b227c007416fe",
+                    "url": "https://download.kde.org/stable/release-service/25.12.0/src/kdegraphics-mobipocket-25.12.0.tar.xz",
+                    "sha256": "f515f6427e253f8c58b9a8fe64fe6ea65aac9e780e4b19b5e0ce299f3292700d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
                         "stable-only": true,
                         "url-template": "https://download.kde.org/stable/release-service/$version/src/kdegraphics-mobipocket-$version.tar.xz"
                     }
-                }
-            ]
-        },
-        {
-            "name": "ffmpeg",
-            "config-opts": [
-                "--enable-pic",
-                "--enable-shared",
-                "--disable-doc",
-                "--disable-static",
-                "--enable-gpl",
-                "--enable-libvpx",
-                "--enable-libmp3lame",
-                "--enable-libvorbis",
-                "--enable-libopus"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://ffmpeg.org/releases/ffmpeg-4.4.5.tar.xz",
-                    "sha256": "f9514e0d3515aee5a271283df71636e1d1ff7274b15853bcd84e144be416ab07"
                 }
             ]
         },
@@ -456,8 +430,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://get.videolan.org/vlc/3.0.21/vlc-3.0.21.tar.xz",
-                    "sha256": "24dbbe1d7dfaeea0994d5def0bbde200177347136dbfe573f5b6a4cee25afbb0",
+                    "url": "https://get.videolan.org/vlc/3.0.22/vlc-3.0.22.tar.xz",
+                    "sha256": "e2cc1cf0ae0902a09da5a37c249a8a4e4b5ec4dc095443b8e1493c6a7cc138ea",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6504,
@@ -468,10 +442,6 @@
                 {
                     "type": "patch",
                     "path": ".flatpak-patches/vlc-ignore-time-for-cache.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": ".flatpak-patches/vlc-taglib-2.patch"
                 }
             ]
         },

@@ -2,20 +2,23 @@
 # Copyright (C) 2009 This_file_is_part_of_KDE
 # This file is distributed under the same license as the okular_dvi package.
 # Kevin Scannell <kscanne@gmail.com>, 2009.
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-20 02:35+0000\n"
-"PO-Revision-Date: 2007-04-15 19:05-0500\n"
-"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
-"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
-"Language: ga\n"
+"PO-Revision-Date: 2026-01-08 11:19+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
+"projects/okulardeux/okular/okular_DVI/>\n"
+"Language: okular_dvi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -39,6 +42,15 @@ msgid ""
 "em> program.</p><p>Hint to the perplexed system administrator: Okular uses "
 "the PATH environment variable when looking for programs.</p></qt>"
 msgstr ""
+"<qt><p>Níor aimsigh Okular an clár <em>dvipdfm</em> ar do ríomhaire. Tá an "
+"clár seo riachtanach chun go n-oibreoidh an fheidhm easpórtála. Is féidir "
+"leat, áfach, an comhad DVI a thiontú go PDF ag baint úsáide as feidhm "
+"phriontála Okular, ach is minic a tháirgfidh sé sin doiciméid a phriontálann "
+"go maith, ach a bhíonn de cháilíocht níos ísle má fhéachtar orthu in Acrobat "
+"Reader. B’fhéidir go mbeadh sé ciallmhar uasghrádú a dhéanamh chuig leagan "
+"níos déanaí de do dháileadh TeX lena n-áirítear an clár <em>dvipdfm</em>.</"
+"p><p>Leid don riarthóir córais mearbhall: Úsáideann Okular an athróg "
+"timpeallachta PATH agus cláir á lorg aige.</p></qt>"
 
 #: dviexport.cpp:142
 #, kde-format
@@ -48,6 +60,10 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
+"<qt>Thuairiscigh an clár seachtrach 'dvipdfm', a úsáideadh chun an comhad a "
+"easpórtáil, earráid. B’fhéidir gur mhaith leat breathnú ar an <strong>bhosca "
+"dialóige faisnéise doiciméad</strong> atá le fáil sa Roghchlár Comhad le "
+"haghaidh tuairisc chruinn ar earráid.</qt>"
 
 #: dviexport.cpp:168
 #, kde-format
@@ -58,6 +74,11 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
+"<qt>Tagraíonn an comhad DVI seo do chomhaid ghrafaice seachtracha nach "
+"bhfuil i bhformáid PostScript, agus ní féidir leis an gclár <em>dvips</em> a "
+"úsáideann Okular go hinmheánach chun priontáil nó chun easpórtáil chuig "
+"PostScript a láimhseáil. Dá bhrí sin, níl an fheidhmiúlacht atá uait ar fáil "
+"sa leagan seo de Okular.</qt>"
 
 #: dviexport.cpp:176
 #, kde-format
@@ -67,6 +88,10 @@ msgid ""
 "perplexed system administrator: Okular uses the PATH environment variable "
 "when looking for programs.</p></qt>"
 msgstr ""
+"<qt><p>Níorbh fhéidir le Okular an clár <em>dvips</em> a aimsiú ar do "
+"ríomhaire. Tá an clár sin riachtanach chun go n-oibreoidh an fheidhm "
+"easpórtála.</p><p>Leid don riarthóir córais atá mearbhall: Úsáideann Okular "
+"an athróg timpeallachta PATH agus cláir á lorg aige.</p></qt>"
 
 #: dviexport.cpp:270
 #, kde-format
@@ -76,11 +101,15 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
+"<qt>Thuairiscigh an clár seachtrach 'dvips', a úsáideadh chun an comhad a "
+"easpórtáil, earráid. B’fhéidir gur mhaith leat breathnú ar an <strong>dialóg "
+"faisnéise doiciméad</strong> atá le fáil sa Roghchlár Comhad le haghaidh "
+"tuairisc chruinn ar earráid.</qt>"
 
 #: dviFile.cpp:91
 #, kde-format
 msgid "The DVI file does not start with the preamble."
-msgstr ""
+msgstr "Ní thosaíonn an comhad DVI leis an réamhrá."
 
 #: dviFile.cpp:97
 #, kde-format
@@ -89,27 +118,32 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
+"Tá an leagan mícheart d'aschur DVI sa chomhad DVI don chlár seo. Leid: Má "
+"úsáideann tú an córas clóchuradóireachta Omega, caithfidh tú clár speisialta "
+"a úsáid, amhail oxdvi."
 
 #: dviFile.cpp:134
 #, kde-format
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
 msgstr ""
+"Tá an comhad DVI truaillithe go dona. Ní raibh Okular in ann an postamble a "
+"aimsiú."
 
 #: dviFile.cpp:148
 #, kde-format
 msgid "The postamble does not begin with the POST command."
-msgstr ""
+msgstr "Ní thosaíonn an postamble leis an ordú POST."
 
 #: dviFile.cpp:202
 #, kde-format
 msgid "The postamble contained a command other than FNTDEF."
-msgstr ""
+msgstr "Bhí ordú seachas FNTDEF sa phostamble."
 
 #: dviFile.cpp:240
 #, kde-format
 msgid "The page %1 does not start with the BOP command."
-msgstr ""
+msgstr "Ní thosaíonn an leathanach %1 leis an ordú BOP."
 
 #: dviFile.cpp:354
 #, kde-format
@@ -126,6 +160,18 @@ msgid ""
 "strong> from the command line to check if it really works.</p><p><em>PATH:</"
 "em> %2</p></qt>"
 msgstr ""
+"<qt><p>Níorbh fhéidir an clár seachtrach <strong>pdf2ps</strong> a thosú. "
+"Mar thoradh air sin, níorbh fhéidir an comhad PDF %1 a thiontú go "
+"PostScript. Dá bhrí sin, ní thaispeánfar roinnt eilimintí grafacha i do "
+"dhoiciméad.</p><p><b>Cúis fhéideartha:</b> B'fhéidir nach bhfuil an clár "
+"<strong>pdf2ps</strong> suiteáilte ar do chóras, nó nach féidir é a fháil sa "
+"chonair chuardaigh reatha.</p><p><b>Cad is féidir leat a dhéanamh:</b> De "
+"ghnáth bíonn an clár <strong>pdf2ps</strong> le fáil i ndáiltí an chórais "
+"léirmhíniúcháin PostScript ghostscript. Mura bhfuil ghostscript suiteáilte "
+"ar do chóras, d'fhéadfá é a shuiteáil anois. Má tá tú cinnte go bhfuil "
+"ghostscript suiteáilte, déan iarracht <strong>pdf2ps</strong> a úsáid ón "
+"líne ordaithe chun a sheiceáil an n-oibríonn sé i ndáiríre.</p><p><em>COSÁN:"
+"</em> %2</p></qt>"
 
 #: dviFile.cpp:415
 #, kde-format
@@ -136,31 +182,31 @@ msgid ""
 "This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
 "p><p><strong>%2</strong></p></qt>"
 msgstr ""
+"<qt><p>Níorbh fhéidir an comhad PDF %1 a thiontú go PostScript. Dá bhrí sin, "
+"ní thaispeánfar roinnt eilimintí grafacha i do dhoiciméad.</p><p><b>Cúis "
+"fhéideartha:</b> B’fhéidir go bhfuil an comhad %1 briste, nó nach comhad PDF "
+"é ar chor ar bith. Seo aschur an chláir <strong>pdf2ps</strong> a d’úsáid "
+"Okular:</p><p><strong>%2</strong></p></qt>"
 
 #: dviRenderer.cpp:203 dviRenderer.cpp:435
-#, fuzzy, kde-format
-#| msgid ""
-#| "File not found: \n"
-#| " %1"
+#, kde-format
 msgid "File corruption. %1"
-msgstr ""
-"Comhad gan aimsiú: \n"
-" %1"
+msgstr "Truailliú comhaid. %1"
 
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr ""
+msgstr "Níorbh fhéidir gach comhad PostScript a leabú i do dhoiciméad. %1"
 
 #: dviRenderer.cpp:329
 #, kde-format
 msgid "All external PostScript files were embedded into your document."
-msgstr ""
+msgstr "Leabhadh gach comhad seachtrach PostScript i do dhoiciméad."
 
 #: dviRenderer.cpp:419
 #, kde-format
 msgid "The specified file '%1' does not exist."
-msgstr ""
+msgstr "Níl an comhad sonraithe '%1' ann."
 
 #: dviRenderer.cpp:565
 #, kde-format
@@ -169,6 +215,9 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
+"D'iarr tú ar Okular an áit sa chomhad DVI a fhreagraíonn do líne %1 sa "
+"chomhad TeX %2 a aimsiú. Is cosúil, áfach, nach bhfuil an fhaisnéis "
+"riachtanach faoin gcomhad foinse sa chomhad DVI. "
 
 #: dviRenderer.cpp:604
 #, kde-format
@@ -176,41 +225,43 @@ msgid ""
 "Okular was not able to locate the place in the DVI file which corresponds to "
 "line %1 in the TeX-file %2."
 msgstr ""
+"Ní raibh Okular in ann an áit sa chomhad DVI a fhreagraíonn do líne %1 sa "
+"chomhad TeX %2 a aimsiú."
 
 #: dviRenderer_draw.cpp:239
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr ""
+msgstr "Shocraigh an cód DVI carachtar de chló anaithnid."
 
 #: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
-msgstr ""
+msgstr "Thagair an cód DVI do chló #%1, nár sainmhíníodh roimhe seo."
 
 #: dviRenderer_draw.cpp:349
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
-msgstr ""
+msgstr "Ní raibh an stac folamh nuair a thángthas ar an ordú EOP."
 
 #: dviRenderer_draw.cpp:361
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
-msgstr ""
+msgstr "Bhí an stac folamh nuair a thángthas ar ordú POP."
 
 #: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr ""
+msgstr "Thagair an cód DVI do chló nach raibh sainmhínithe roimhe seo."
 
 #: dviRenderer_draw.cpp:535
 #, kde-format
 msgid "An illegal command was encountered."
-msgstr ""
+msgstr "Tharla ordú mídhleathach."
 
 #: dviRenderer_draw.cpp:540
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
-msgstr ""
+msgstr "Thángthas ar an gcód oibriúcháin anaithnid %1."
 
 #: dviRenderer_prescan.cpp:87
 #, kde-format
@@ -223,17 +274,21 @@ msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
 "PostScript.<br>"
 msgstr ""
+"Leathanach %1: Níorbh fhéidir an comhad PDF <strong>%2</strong> a thiontú go "
+"PostScript.<br>"
 
 #: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr ""
+"Leathanach %1: Níorbh fhéidir an comhad PostScript <strong>%2</strong> a "
+"aimsiú.<br>"
 
 #: dviRenderer_prescan.cpp:261
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
-msgstr ""
+msgstr "Níorbh fhéidir sonraí méide páipéir '%1' a pharsáil."
 
 #: fontpool.cpp:209
 #, kde-format
@@ -242,6 +297,10 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
+"<qt><p>Ní raibh Okular in ann na comhaid clónna go léir atá riachtanach chun "
+"an comhad DVI reatha a thaispeáint a aimsiú. B’fhéidir nach féidir do "
+"dhoiciméad a léamh.</p><p><small><b>COSÁN:</b> %1</small></p><p><small>%2</"
+"small></p></qt>"
 
 #: fontpool.cpp:284
 #, kde-format
@@ -252,6 +311,12 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
+"<qt><p>Bhí fadhbanna ann agus <em>kpsewhich</em> á rith. Mar thoradh air "
+"sin, níorbh fhéidir roinnt comhad clónna a aimsiú, agus b'fhéidir nach "
+"féidir do dhoiciméad a léamh.<br/>Cúis fhéideartha: b'fhéidir nach bhfuil an "
+"clár <em>kpsewhich</em> suiteáilte ar do chóras, nó ní féidir é a fháil sa "
+"chonair chuardaigh reatha.</p><p><small><b>COSÁN:</b> %1</small></"
+"p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:305
 #, kde-format
@@ -260,11 +325,14 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
+"<qt>Cuireadh deireadh le giniúint clónna ag <em>kpsewhich</em> (cód scoir "
+"%1, earráid %2). Mar thoradh air sin, níorbh fhéidir roinnt comhad clónna a "
+"aimsiú, agus d'fhéadfadh sé nach mbeadh do dhoiciméad inléite.</qt>"
 
 #: fontpool.cpp:482
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr ""
+msgstr "Ag giniúint %1 ag %2 dpi faoi láthair…"
 
 #: generator_dvi.cpp:293
 #, kde-format
@@ -279,17 +347,17 @@ msgstr "Comhad cló gan aimsiú"
 #: pageSize.cpp:298
 #, kde-format
 msgid "%1 × %2"
-msgstr ""
+msgstr "%1 × %2"
 
 #: pageSize.cpp:311
 #, kde-format
 msgid "%1 × %2 mm"
-msgstr ""
+msgstr "%1 × %2 mm"
 
 #: pageSize.cpp:313
 #, kde-format
 msgid "%1 × %2 in"
-msgstr ""
+msgstr "%1 × %2 in"
 
 #: pageSize.cpp:318
 #, kde-format
@@ -308,11 +376,16 @@ msgid ""
 "any of the Ghostview device drivers that are known to Okular. PostScript "
 "support has therefore been turned off in Okular."
 msgstr ""
+"Níl aon cheann de na tiománaithe gléasanna Ghostview atá ar eolas ag Okular "
+"sa leagan de Ghostview atá suiteáilte ar an ríomhaire seo. Dá bhrí sin, tá "
+"tacaíocht PostScript múchta in Okular."
 
 #: special.cpp:36
 #, kde-format
 msgid "That makes 25 errors. Further error messages will not be printed."
 msgstr ""
+"Is ionann sin agus 25 earráid. Ní phriontálfar tuilleadh teachtaireachtaí "
+"earráide."
 
 #: special.cpp:232
 #, kde-format
@@ -320,6 +393,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
+"Earráid i gcomhad DVI '%1', leathanach %2. Eisíodh an t-ordú pop datha nuair "
+"a bhíonn an cruach dathanna folamh."
 
 #: special.cpp:318
 #, kde-format
@@ -327,6 +402,8 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
+"Paraiméadar mífhoirmithe san ordú speisialta epsf.\n"
+"Bhíothas ag súil le snámhphointe i ndiaidh %1 i %2"
 
 #: special.cpp:446
 #, kde-format
@@ -343,11 +420,13 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
+"Earráid i gcomhad DVI '%1', leathanach %2. Níorbh fhéidir uillinn a "
+"léirmhíniú i rothlú téacs speisialta."
 
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr ""
+msgstr "Níl an t-ordú speisialta '%1' curtha i bhfeidhm."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format
@@ -355,27 +434,31 @@ msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
 msgstr ""
+"D'fhéadfaí an comhad cló %1 a oscailt agus a léamh, ach ní thacaítear lena "
+"fhormáid cló."
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
 msgid "The font file %1 is broken, or it could not be opened or read."
-msgstr ""
+msgstr "Tá an comhad cló %1 briste, nó níorbh fhéidir é a oscailt ná a léamh."
 
 #: TeXFont_PFB.cpp:170
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
+"Thuairisc FreeType earráid agus méid na gcarachtar á shocrú don chomhad cló "
+"%1."
 
 #: TeXFont_PFB.cpp:188
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
-msgstr ""
+msgstr "Ní féidir le FreeType gliff #%1 a luchtú ón gcomhad cló %2."
 
 #: TeXFont_PFB.cpp:201
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
-msgstr ""
+msgstr "Ní féidir le FreeType gliff #%1 a rindreáil ó chomhad cló %2."
 
 #: TeXFont_PFB.cpp:215
 #, kde-format
@@ -385,12 +468,13 @@ msgstr "Is folamh í glif #%1."
 #: TeXFont_PFB.cpp:217
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr ""
+msgstr "Tá glif #%1 ó chomhad cló %2 folamh."
 
 #: TeXFont_PFB.cpp:282
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
+"Ní féidir le FreeType an mhéadracht a luchtú do glifín #%1 ón gcomhad cló %2."
 
 #: TeXFont_PK.cpp:69
 #, kde-format
@@ -400,7 +484,7 @@ msgstr "Ní féidir comhad cló %1 a oscailt."
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr ""
+msgstr "TexFont_PK::operator[]: Carachtar %1 gan sainmhíniú i gcló %2"
 
 #: TeXFont_PK.cpp:419
 #, kde-format
@@ -410,12 +494,12 @@ msgstr "%1 gan choinne i gcomhad PK %2"
 #: TeXFont_PK.cpp:485
 #, kde-format
 msgid "The character %1 is too large in file %2"
-msgstr ""
+msgstr "Tá an carachtar %1 ró-mhór sa chomhad %2"
 
 #: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr ""
+msgstr "Líon mícheart giotán stóráilte: carachtar %1, cló %2"
 
 #: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
@@ -425,7 +509,7 @@ msgstr "Droch-chomhad pk (%1), an iomarca giotáin"
 #: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr ""
+msgstr "Níl cóimheas gné cearnach ag an gcló "
 
 #: TeXFontDefinition.cpp:107
 #, kde-format
@@ -435,12 +519,12 @@ msgstr "Ní féidir cló %1, comhad %2 a aimsiú."
 #: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr ""
+msgstr "Neamhoiriúnacht suime seiceála don chomhad cló %1"
 
 #: TeXFontDefinition.cpp:175
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr ""
+msgstr "Ní féidir formáid an chomhaid cló %1 a aithint"
 
 #: util.cpp:58
 #, kde-format
@@ -463,11 +547,19 @@ msgid ""
 "found a bug, or that Okular should behave better in this situation\n"
 "please report the problem."
 msgstr ""
+"\n"
+"\n"
+"Is dócha go gciallódh sé seo gur aimsigh tú fabht in Okular,\n"
+"nó go raibh an comhad DVI, nó comhaid chúnta (amhail comhaid clónna, \n"
+"nó comhaid clónna fíorúla) briste go dona.\n"
+"Scoirfidh Okular tar éis an teachtaireacht seo. Má chreideann tú gur \n"
+"aimsigh tú fabht, nó gur cheart do Okular gníomhú níos fearr sa chás seo,\n"
+"cuir tuairisc ar an bhfadhb le do thoil."
 
 #: vf.cpp:165
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
-msgstr ""
+msgstr "Fuarthas beart ordaithe mícheart i liosta macra VF: %1"
 
 #~ msgid "Abort"
 #~ msgstr "Tobscoir"

@@ -2,20 +2,23 @@
 # Copyright (C) 2009 This_file_is_part_of_KDE
 # This file is distributed under the same license as the okular_poppler package.
 # Kevin Scannell <kscanne@gmail.com>, 2009.
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2007-04-15 19:05-0500\n"
-"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
-"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
-"Language: ga\n"
+"PO-Revision-Date: 2026-01-08 11:19+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
+"projects/okulardeux/okular/okular_POPPLER/>\n"
+"Language: okular_poppler\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,31 +34,31 @@ msgstr "kscanne@gmail.com"
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "Cumasaigh réamhamharc róphriontála:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "Choíche"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "I gcónaí"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Uathoibríoch"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
 #, kde-format
 msgid "Enhance thin lines:"
-msgstr ""
+msgstr "Feabhsaigh línte tanaí:"
 
 # boolean: optimized?
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
@@ -68,37 +71,37 @@ msgstr "Níl"
 #: conf/pdfsettingswidget.ui:78
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "Soladach"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:83
 #, kde-format
 msgid "Shape"
-msgstr ""
+msgstr "Cruth"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:108
 #, kde-format
 msgid "Default scaling mode when printing:"
-msgstr ""
+msgstr "Mód scálúcháin réamhshocraithe agus tú ag priontáil:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "Oiriúnaigh don limistéar inphriontáilte"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "Oiriúnaigh don leathanach iomlán"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "Gan aon cheann; priontáil méid bunaidh"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:149
@@ -108,6 +111,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Trí an rogha seo a chumasú, beidh Okular in ann teagmháil a dhéanamh le "
+"freastalaithe OCSP tríú páirtí chun a sheiceáil an bhfuil na deimhnithe a "
+"úsáideadh le haghaidh síniú digiteach curtha ar ceal ó cruthaíodh iad."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:152
@@ -115,12 +121,14 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Seiceáil cúlghairm teastais sínithe digiteacha ag baint úsáide as "
+"freastalaithe tríú páirtí"
 
 #. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Cúltaca sínithe:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
@@ -130,43 +138,45 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Ní féidir na sínithe seo a bhailíochtú ach ag úsáideoirí nua-aimseartha "
+"Okular a bhfuil cúltaca GnuPG gníomhachtaithe acu"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Ceadaigh eochracha PGP le haghaidh sínithe (síneadh Okular)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "Bunachar Sonraí Teastas"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "Réamhshocrú:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:226
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "Saincheaptha:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:243
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "Teastais atá ar Fáil"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:251
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "&Lódáil Sínithe"
 
 #: generator_pdf.cpp:86
 #, kde-format
@@ -216,12 +226,12 @@ msgstr ""
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "Mód scálúcháin do na leathanaigh phriontáilte"
 
 #: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "Mód scála:"
 
 #: generator_pdf.cpp:1031
 #, kde-format
@@ -267,11 +277,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Sínithe ag: %1\n"
+"\n"
+"Dáta: %2"
 
 #: generator_pdf.cpp:1721
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Ag Úsáid Poppler %1"
 
 #: generator_pdf.cpp:1723
 #, kde-format
@@ -280,27 +293,29 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Ag baint úsáide as Poppler %1\n"
+"\n"
+"Tógtha i gcoinne Poppler %2"
 
 #: generator_pdf.cpp:1758
 #, kde-format
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: generator_pdf.cpp:1758
-#, fuzzy, kde-format
-#| msgid "PDF Backend"
+#, kde-format
 msgid "PDF Backend Configuration"
-msgstr "Inneall PDF"
+msgstr "Cumraíocht Cúltaca PDF"
 
 #: generator_pdf.cpp:2207 generator_pdf.cpp:2235
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Theip ar chomhad sealadach a scríobh"
 
 #: generator_pdf.cpp:2257
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Theip ar athainmniú comhaid shealadaigh"
 
 #: generator_pdf.cpp:2277
 #, kde-format
@@ -308,6 +323,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"Fuarthas roinnt earráidí sa cháipéis, b'fhéidir nach mbeadh Okular in ann an "
+"t-ábhar a thaispeáint i gceart"
 
 #: pdfsettingswidget.cpp:119
 #, kde-format
@@ -316,29 +333,31 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Ní oibríonn na sínithe seo ach idir leaganacha nua-aimseartha de Okular leis "
+"an gcúltaca bunaithe ar GnuPG gníomhachtaithe"
 
 #: pdfsettingswidget.cpp:120
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr ""
+msgstr "Cumasaigh Sínithe PGP"
 
 #: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "Eisithe chuig"
 
 #: pdfsettingswidget.cpp:156
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "Ríomhphost"
 
 #: pdfsettingswidget.cpp:156
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "Dáta éaga"
 
 #: pdfsettingswidget.cpp:173
 #, kde-format
@@ -346,33 +365,34 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Tá leabharlann Poppler á húsáid agat atá tógtha gan tacaíocht NSS.\n"
+"Níl sé ar fáil Sínithe Digiteacha a chur leis ar an gcúis sin"
 
 #: pdfsettingswidget.cpp:197
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "go deo"
 
 #: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "Atosú ag teastáil"
 
 #: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
-msgstr ""
+msgstr "Ní mór duit Okular a atosú tar éis socruithe an eolaire NSS a athrú"
 
 #: pdfsignatureutils.cpp:239
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "Focal Faire na Cáipéise"
+msgstr "Cuir isteach Pasfhocal"
 
 #: pdfsignatureutils.cpp:239
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
+msgstr "Cuir isteach focal faire chun %1 a oscailt:"
 
 #~ msgid "PDF Backend"
 #~ msgstr "Inneall PDF"

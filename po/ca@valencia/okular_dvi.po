@@ -445,8 +445,8 @@ msgstr "El fitxer de fonts %1 està fet malbé, o no es pot obrir o llegir."
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
-"FreeType ha informat d'un error en establir la mida del caràcter per al "
-"fitxer de fonts %1."
+"FreeType ha informat d'un error mentre s'establia la mida del caràcter per "
+"al fitxer de fonts %1."
 
 #: TeXFont_PFB.cpp:188
 #, kde-format
@@ -517,7 +517,8 @@ msgstr "No s'ha trobat la lletra %1, en el fitxer %2."
 #: TeXFontDefinition.cpp:124
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr "Error a la suma de verificació del fitxer de fonts %1"
+msgstr ""
+"S'ha produït un error durant la suma de verificació del fitxer de fonts %1"
 
 #: TeXFontDefinition.cpp:175
 #, kde-format

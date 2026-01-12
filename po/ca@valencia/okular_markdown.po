@@ -33,7 +33,7 @@ msgstr "antonibella5@yahoo.com"
 #: converter.cpp:59 converter.cpp:93
 #, kde-format
 msgid "Failed to open the document"
-msgstr "No s'ha pogut obrir el document"
+msgstr "Ha fallat mentre s'obria el document"
 
 #: converter.cpp:106 converter.cpp:124
 #, kde-format

@@ -5066,7 +5066,7 @@ msgstr "Sense punts"
 #: part/part.cpp:3891
 #, kde-format
 msgid "There was a problem sharing the document: %1"
-msgstr "S'ha produït un problema en compartir el document: %1"
+msgstr "S'ha produït un problema mentre es compartia el document: %1"
 
 #: part/part.cpp:3891 part/part.cpp:3897
 #, kde-format

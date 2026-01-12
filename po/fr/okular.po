@@ -11,7 +11,7 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008, 2009.
 # Alain Rpnpif <rpnpif@free.fr>, 2008, 2009, 2010.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
-# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2012, 2013, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Xavier Besnard <xavier.besnard@kde.org>
 # Sebastien Renard <renard@kde.org>, 2014, 2015.
 # Ludovic Grossard <grossard@kde.org>, 2014.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
@@ -23,9 +23,9 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-16 06:49+0000\n"
-"PO-Revision-Date: 2025-11-26 09:23+0100\n"
+"PO-Revision-Date: 2026-01-10 20:34+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
-"Language-Team: French <French <kde-francophone@kde.org>>\n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.11.80\n"
+"X-Generator: Lokalize 25.12.1\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1144,7 +1144,7 @@ msgstr "Impossible de mener à bien la vérification d'intégrité."
 #, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Ce document possède des champs d’espace réservé pour signature."
+msgstr "Ce document possède des champs d'espace réservé pour signature."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -4051,9 +4051,9 @@ msgid ""
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Il n'y a aucun certificat disponible de signature.<br/> Veuillez lancer le "
-"gestionnaire de certificats pour importer ou gérer des certificats.Pour plus "
-"d'informations, veuillez consulter la section concernant <a href="
+"Il n'y a aucun certificat disponible de signature. <br/> Veuillez lancer le "
+"gestionnaire de certificats pour importer ou gérer des certificats. Pour "
+"plus d'informations, veuillez consulter la section concernant <a href="
 "\"%1\">l'ajout de signatures numériques</a> dans le manuel."
 
 #: part/pageview.cpp:5251 part/pageview.cpp:5263
@@ -5333,7 +5333,7 @@ msgstr "&Polices"
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information…"
-msgstr "Lecture des informations de fonte..."
+msgstr "Lecture des informations de police..."
 
 #: part/propertiesdialog.cpp:158
 #, kde-format

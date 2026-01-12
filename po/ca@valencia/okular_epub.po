@@ -34,7 +34,7 @@ msgstr "txemaq@gmail.com"
 #: converter.cpp:163
 #, kde-format
 msgid "Error while opening the EPub document."
-msgstr "S'ha produït un error en obrir el document EPub."
+msgstr "S'ha produït un error mentre s'obria el document EPub."
 
 #: generator_epub.cpp:30
 #, kde-format

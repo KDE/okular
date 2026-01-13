@@ -2291,9 +2291,9 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
     bool leftButton = (e->buttons() == Qt::LeftButton);
     bool rightButton = (e->buttons() == Qt::RightButton);
 
+    PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
     switch (d->mouseMode) {
     case Okular::Settings::EnumMouseMode::Browse: {
-        PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
         if (leftButton) {
             d->leftClickTimer.stop();
             if (d->mouseAnnotation->isActive()) {
@@ -2354,6 +2354,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
             updateSelection(eventPos);
             d->mouseOverLinkObject = nullptr;
         }
+        d->mouseAnnotation->routeMouseMoveEvent(pageItem, eventPos, leftButton);
         updateCursor();
         break;
 
@@ -2370,6 +2371,7 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
         if (!d->mouseTextSelecting && !d->mousePressPos.isNull() && d->document->supportsSearching() && ((eventPos - d->mouseSelectPos).manhattanLength() > 5)) {
             d->mouseTextSelecting = true;
         }
+        d->mouseAnnotation->routeMouseMoveEvent(pageItem, eventPos, leftButton);
         updateSelection(eventPos);
         updateCursor();
         break;

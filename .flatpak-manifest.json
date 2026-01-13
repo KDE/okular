@@ -67,7 +67,7 @@
                 },
                 {
                     "type": "patch",
-                    "path": ".flatpak-patches/gnustep-base-fix_GCC15.patch"
+                    "path": "7b51c1bb4ed0b1777db2f018eadaba89f00bf0c5.patch"
                 }
             ]
         },
@@ -174,8 +174,8 @@
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+                "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
             ],
             "sources": [
                 {
@@ -296,8 +296,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-25.12.0.tar.xz",
-                    "sha256": "c18b40eb36b1a0c5b86e29ca054bf0770304583da4f2cdd42fe86eca6a20de48",
+                    "url": "https://poppler.freedesktop.org/poppler-26.01.0.tar.xz",
+                    "sha256": "1cb944a4b88847f5fb6551683bc799db59f04990f5d8be07aba2acbf38601089",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -361,8 +361,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.12.0/src/libkexiv2-25.12.0.tar.xz",
-                    "sha256": "1deb0fa6f270b588aa3ddd946c42b00a974f79d2fc079f1125ccc8ff0e99b996",
+                    "url": "https://download.kde.org/stable/release-service/25.12.1/src/libkexiv2-25.12.1.tar.xz",
+                    "sha256": "c5bd5bc894fc7878a6112bad19c78d0978a187151bfb5ac395058ca33090e650",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -383,8 +383,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/25.12.0/src/kdegraphics-mobipocket-25.12.0.tar.xz",
-                    "sha256": "f515f6427e253f8c58b9a8fe64fe6ea65aac9e780e4b19b5e0ce299f3292700d",
+                    "url": "https://download.kde.org/stable/release-service/25.12.1/src/kdegraphics-mobipocket-25.12.1.tar.xz",
+                    "sha256": "327fae013e06b26336fad129a741b6b9f931a1348f5174ad3cc27920735dd2e3",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -430,8 +430,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://get.videolan.org/vlc/3.0.22/vlc-3.0.22.tar.xz",
-                    "sha256": "e2cc1cf0ae0902a09da5a37c249a8a4e4b5ec4dc095443b8e1493c6a7cc138ea",
+                    "url": "https://get.videolan.org/vlc/3.0.23/vlc-3.0.23.tar.xz",
+                    "sha256": "e891cae6aa3ccda69bf94173d5105cbc55c7a7d9b1d21b9b21666e69eff3e7e0",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 6504,

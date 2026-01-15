@@ -2,20 +2,22 @@
 # Copyright (C) 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the org.kde.active.documentviewer package.
 # Kevin Scannell <kscanne@gmail.com>, 2012.
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: org.kde.active.documentviewer\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2012-11-29 14:59-0500\n"
-"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
-"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
-"Language: ga\n"
+"PO-Revision-Date: 2026-01-10 13:56+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: documentviewer (generated) <http://weblate.amgelocalnet."
+"duckdns.org/projects/okular-translation/okular/documentviewer/>\n"
+"Language: documentviewer\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -23,97 +25,95 @@ msgstr "Leabharmharcanna"
 
 #: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "Amharcóir Teastas"
 
 #: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
-msgstr ""
+msgstr "Eisithe ag"
 
 #: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
-msgstr ""
+msgstr "Ainm Coitianta:"
 
 #: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
-msgstr ""
+msgstr "Ríomhphost:"
 
 #: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
-msgstr ""
+msgstr "Eagraíocht:"
 
 #: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
-msgstr ""
+msgstr "Eisithe Chuig"
 
 #: ui/CertificateViewerPage.qml:76
 msgid "Validity"
-msgstr ""
+msgstr "Bailíocht"
 
 #: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
-msgstr ""
+msgstr "Eisithe Ar:"
 
 #: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
-msgstr ""
+msgstr "Éagaíonn Ar:"
 
 #: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
-msgstr ""
+msgstr "Méarloirg"
 
 #: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
-msgstr ""
+msgstr "Méarlorg SHA-1:"
 
 #: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
-msgstr ""
+msgstr "Méarlorg SHA-256:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
 msgid "Export…"
-msgstr ""
+msgstr "Easpórtáil…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
-msgstr ""
+msgstr "Dún"
 
 #: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "Comhad Teastais (*.cer)"
 
 #: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
-msgstr ""
+msgstr "Earráid"
 
 #: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
-msgstr ""
+msgstr "Níorbh fhéidir an deimhniú a easpórtáil."
 
 #: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
-msgstr ""
+msgstr "Okular"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Oscail…"
 
 #: ui/Main.qml:49
 msgid "About"
-msgstr ""
+msgstr "Maidir"
 
 #: ui/Main.qml:99
 msgid "Password Needed"
-msgstr ""
+msgstr "Pasfhocal Riachtanach"
 
 #: ui/MainView.qml:29
 msgid "Remove bookmark"
-msgstr ""
+msgstr "Bain leabharmharc"
 
 #: ui/MainView.qml:29
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Bookmark this page"
-msgstr "Leabharmharcanna"
+msgstr "Leabharmharc an leathanach seo"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -125,68 +125,68 @@ msgstr "Clár ábhair"
 
 #: ui/OkularDrawer.qml:99
 msgid "Signatures"
-msgstr ""
+msgstr "Sínithe"
 
 #: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
-msgstr ""
+msgstr "Airíonna Sínithe"
 
 #: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
-msgstr ""
+msgstr "Stádas Bailíochta"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Bailíocht Shínithe:"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Modhnuithe ar Dhoiciméid:"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
-msgstr ""
+msgstr "Faisnéis Bhreise"
 
 #: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
-msgstr ""
+msgstr "Sínithe ag:"
 
 #: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
-msgstr ""
+msgstr "Am Sínithe:"
 
 #: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
-msgstr ""
+msgstr "Cúis:"
 
 #: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
-msgstr ""
+msgstr "Suíomh:"
 
 #: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
-msgstr ""
+msgstr "Leagan an Doiciméid"
 
 #: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "Athbhreithniú Doiciméid %1 de %2"
 
 #: ui/SignaturePropertiesPage.qml:108
 msgid "Save Signed Version…"
-msgstr ""
+msgstr "Sábháil Leagan Sínithe…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
 msgid "View Certificate…"
-msgstr ""
+msgstr "Féach ar an Teastas…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
-msgstr ""
+msgstr "Níorbh fhéidir an síniú a shábháil."
 
 #: ui/Signatures.qml:27
 msgid "Not Available"
-msgstr ""
+msgstr "Ní Fáil"
 
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
@@ -194,17 +194,17 @@ msgstr "Níor aimsíodh aon rud."
 
 #: ui/WelcomeView.qml:43
 msgid "No document open"
-msgstr ""
+msgstr "Níl aon doiciméad oscailte"
 
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Doiciméid Le Déanaí"
 
 #: ui/WelcomeView.qml:108
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr ""
+msgstr "Mo Dhoiciméid"
 
 #~ msgid "Reader"
 #~ msgstr "Léitheoir"

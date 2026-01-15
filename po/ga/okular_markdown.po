@@ -3,52 +3,51 @@
 # This file is distributed under the same license as the okular package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Irish Gaelic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2026-01-10 12:45+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
+"Language-Team: LANGUAGE <kde-i18n-doc@kde.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Aindriú Mac Giolla Eoin"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "aindriu80@gmail.com"
 
 #: converter.cpp:59 converter.cpp:93
 #, kde-format
 msgid "Failed to open the document"
-msgstr ""
+msgstr "Theip ar oscailt an cháipéise"
 
 #: converter.cpp:106 converter.cpp:124
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr ""
+msgstr "Theip ar an doiciméad Markdown a thiomsú."
 
 #: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
-msgstr ""
+msgstr "Cumasaigh formáidiú SmartyPants"
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
-msgstr ""
+msgstr "Cumraíocht Cúltaca Markdown"

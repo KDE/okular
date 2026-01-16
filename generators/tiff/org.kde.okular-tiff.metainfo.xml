@@ -22,6 +22,7 @@
   <name xml:lang="eu">Tiff</name>
   <name xml:lang="fi">TIFF</name>
   <name xml:lang="fr">TIFF</name>
+  <name xml:lang="ga">Tiff</name>
   <name xml:lang="gl">Tiff</name>
   <name xml:lang="he">Tiff</name>
   <name xml:lang="hi">टिफ़</name>
@@ -73,6 +74,7 @@
   <summary xml:lang="eu">Tiff dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää TIFF-kuvatiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents au format « TIFF »</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun doiciméid Tiff a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos Tiff</summary>
   <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי Tiff</summary>
   <summary xml:lang="hi">टिफ़ दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>

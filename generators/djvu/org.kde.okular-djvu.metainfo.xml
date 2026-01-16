@@ -21,6 +21,7 @@
   <name xml:lang="eu">DjVu dokumentuak</name>
   <name xml:lang="fi">DjVu-tiedostot</name>
   <name xml:lang="fr">Documents au format « DjVU »</name>
+  <name xml:lang="ga">Doiciméid DjVu</name>
   <name xml:lang="gl">Documentos DjVu</name>
   <name xml:lang="he">מסמכי DjVu</name>
   <name xml:lang="hi">डीजेवीयू दस्तावेज़</name>
@@ -71,6 +72,7 @@
   <summary xml:lang="eu">DjVu dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää DjVu-tiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents au format « DjVU »</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun doiciméid DjVu a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos de DjVu</summary>
   <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי DjVu</summary>
   <summary xml:lang="hi">डीजेवीयू दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>

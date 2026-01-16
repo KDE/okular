@@ -21,6 +21,7 @@
   <name xml:lang="eu">Komiki-liburuak</name>
   <name xml:lang="fi">Sarjakuvakirjat</name>
   <name xml:lang="fr">Bandes dessinées</name>
+  <name xml:lang="ga">Leabhair Ghreannáin</name>
   <name xml:lang="gl">Libros de banda deseñada</name>
   <name xml:lang="he">Comic Books</name>
   <name xml:lang="hi">कॉमिक पुस्तक</name>
@@ -71,6 +72,7 @@
   <summary xml:lang="eu">Komiki-liburuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää sarjakuvakirjojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des bandes dessinées</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun leabhair ghrinn a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros de banda deseñada</summary>
   <summary xml:lang="he">מוסיף תמיכה בספרי קומיקס (CB)</summary>
   <summary xml:lang="hi">कॉमिक पुस्तक पढ़ने के लिए समर्थन जोड़ता है</summary>

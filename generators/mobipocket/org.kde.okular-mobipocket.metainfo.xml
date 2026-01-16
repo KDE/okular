@@ -22,6 +22,7 @@
   <name xml:lang="eu">Mobipocket</name>
   <name xml:lang="fi">Mobipocket</name>
   <name xml:lang="fr">Mobipocket</name>
+  <name xml:lang="ga">Mobipocket</name>
   <name xml:lang="gl">Mobipocket</name>
   <name xml:lang="he">Mobipocket</name>
   <name xml:lang="hi">मोबिपोकेट</name>
@@ -72,6 +73,7 @@
   <summary xml:lang="eu">Mobipocket e-liburuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää MobiPocket-e-kirjojen lukutuen</summary>
   <summary xml:lang="fr">Ajouter la gestion en lecture des livres électroniques Mobipocket</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun ríomhleabhair Mobipocket a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros electrónicos Mobipocket</summary>
   <summary xml:lang="he">מוסיף תמיכה בקריאת ספרים אלקטרוניים מסוג Mobipocket</summary>
   <summary xml:lang="hi">मोबिपोकेट ई-पुस्तक पढ़ने के लिए समर्थन जोड़ता है</summary>

@@ -22,6 +22,7 @@
   <name xml:lang="eu">Fax</name>
   <name xml:lang="fi">Faksi</name>
   <name xml:lang="fr">Fax</name>
+  <name xml:lang="ga">Facs</name>
   <name xml:lang="gl">Fax</name>
   <name xml:lang="he">פקס</name>
   <name xml:lang="hi">फ़ैक्स</name>
@@ -73,6 +74,7 @@
   <summary xml:lang="eu">Fax dokumentuak irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää faksitiedostojen lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des documents Fax</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun doiciméid facs a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler documentos de fax</summary>
   <summary xml:lang="he">מוסיף תמיכה בקריאת מסמכי פקס</summary>
   <summary xml:lang="hi">फ़ैक्स दस्तावेज़ पढ़ने के लिए समर्थन जोड़ता है</summary>

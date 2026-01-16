@@ -22,6 +22,7 @@
   <name xml:lang="eu">FictionBook</name>
   <name xml:lang="fi">FictionBook</name>
   <name xml:lang="fr">FictionBook</name>
+  <name xml:lang="ga">Leabhar Ficsean</name>
   <name xml:lang="gl">FictionBook</name>
   <name xml:lang="he">FictionBook</name>
   <name xml:lang="hi">फिक्शनबुक</name>
@@ -73,6 +74,7 @@
   <summary xml:lang="eu">FictionBooks irakurtzeko euskarria gehitzen du</summary>
   <summary xml:lang="fi">Lisää FictionBook-lukutuen</summary>
   <summary xml:lang="fr">Permet la lecture des fichiers au format « FictionBooks »</summary>
+  <summary xml:lang="ga">Cuireann sé tacaíocht leis chun leabhair fhicsin a léamh</summary>
   <summary xml:lang="gl">Engade a posibilidade de ler libros FictionBook</summary>
   <summary xml:lang="he">הוספה תמיכה בקריאת FictionBooks (סיפורת)</summary>
   <summary xml:lang="hi">फिक्शनबुक पढ़ने के लिए समर्थन जोड़ता है</summary>

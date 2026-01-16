@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:49+0000\n"
+"POT-Creation-Date: 2026-01-16 00:41+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1720,8 +1720,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Скапіяваць тэкст у буфер абмену"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2561 part/pageview.cpp:2884 part/pageview.cpp:2886
-#: part/pageview.cpp:3037 part/pageview.cpp:3095 part/pageview.cpp:3097
+#: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
+#: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Капіяванне забаронена DRM"
@@ -3886,12 +3886,12 @@ msgstr[1] " Загружаны дакумент з %1 старонкамі."
 msgstr[2] " Загружаны дакумент з %1 старонкамі."
 msgstr[3] " Загружаны дакумент з %1 старонкамі."
 
-#: part/pageview.cpp:2555
+#: part/pageview.cpp:2557
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Скапіяваць змесціва табліцы ў буфер абмену"
 
-#: part/pageview.cpp:2876
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3900,83 +3900,83 @@ msgstr[1] "Тэкст (%1 знакі)"
 msgstr[2] "Тэкст (%1 знакаў)"
 msgstr[3] "Тэкст (%1 знакі)"
 
-#: part/pageview.cpp:2877 part/pageview.cpp:2899
+#: part/pageview.cpp:2879 part/pageview.cpp:2901
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Скапіяваць у буфер абмену"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
+#: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "Скапіяваць тэкст у буфер абмену"
 
-#: part/pageview.cpp:2890 part/pageview.cpp:3090
+#: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
 msgid "Speak Text"
 msgstr "Прачытаць тэкст уголас"
 
-#: part/pageview.cpp:2898
+#: part/pageview.cpp:2900
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Выява (%1 × %2 пікселяў)"
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2902
 #, kde-format
 msgid "Save to File…"
 msgstr "Захаваць у файл…"
 
-#: part/pageview.cpp:2920
+#: part/pageview.cpp:2922
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Выява [%1 × %2] скапіяваная ў буфер абмену."
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Save file"
 msgstr "Захаваць файл"
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Выявы (*.png *.jpeg)"
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "File not saved."
 msgstr "Файл не захаваны."
 
-#: part/pageview.cpp:2936
+#: part/pageview.cpp:2938
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Выява [%1 × %2] захаваная ў файл %3."
 
-#: part/pageview.cpp:3085
+#: part/pageview.cpp:3087
 #, kde-format
 msgid "Copy Text"
 msgstr "Скапіяваць тэкст"
 
-#: part/pageview.cpp:3108
+#: part/pageview.cpp:3110
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Перайсці да \"%1\""
 
-#: part/pageview.cpp:4132 part/part.cpp:3196
+#: part/pageview.cpp:4134 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "Па шырыні"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Fit Page"
 msgstr "Па памеры старонкі"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Auto Fit"
 msgstr "Аўтаматычна"
 
-#: part/pageview.cpp:4155
+#: part/pageview.cpp:4157
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3985,69 +3985,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4438
+#: part/pageview.cpp:4440
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Пошук \"%1\" з дапамогай"
 
-#: part/pageview.cpp:4452
+#: part/pageview.cpp:4454
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "Наладжванне сеціўных скаротаў..."
 
-#: part/pageview.cpp:4478
+#: part/pageview.cpp:4480
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перайсці па гэтай спасылцы"
 
-#: part/pageview.cpp:4481
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Play this Sound"
 msgstr "Прайграць гэты гук"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4485
 #, kde-format
 msgid "Stop Sound"
 msgstr "Спыніць прайграванне"
 
-#: part/pageview.cpp:4489
+#: part/pageview.cpp:4491
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Скапіяваць адрас спасылкі"
 
-#: part/pageview.cpp:4510
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Пошук \"%1\" у гэтым дакуменце"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5044
 #, kde-format
 msgid "Welcome"
 msgstr "Агульныя звесткі"
 
-#: part/pageview.cpp:5164
+#: part/pageview.cpp:5166
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Абярыце вобласць маштабавання. Пстрыкніце правай кнопкай мышы, каб паменшыць."
 
-#: part/pageview.cpp:5177
+#: part/pageview.cpp:5179
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Пстрыкніце, каб павялічыць."
 
-#: part/pageview.cpp:5192
+#: part/pageview.cpp:5194
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Намалюйце прамавугольнік вакол тэксту/графікі для капіявання."
 
-#: part/pageview.cpp:5206
+#: part/pageview.cpp:5208
 #, kde-format
 msgid "Select text"
 msgstr "Абярыце тэкст"
 
-#: part/pageview.cpp:5220
+#: part/pageview.cpp:5222
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4056,26 +4056,26 @@ msgstr ""
 "Намалюйце прамавугольнік вакол табліцы, затым пстрыкніце ля краёў, каб "
 "падзяліць; націсніце Esc, каб ачысціць."
 
-#: part/pageview.cpp:5235 part/pageview.cpp:5243
+#: part/pageview.cpp:5237 part/pageview.cpp:5245
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5236
+#: part/pageview.cpp:5238
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "Сертыфікаты"
 
-#: part/pageview.cpp:5237 part/pageview.cpp:5252
+#: part/pageview.cpp:5239 part/pageview.cpp:5254
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "Праглядзець у кіраўніку сертыфікатаў"
 
-#: part/pageview.cpp:5248
+#: part/pageview.cpp:5250
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4089,13 +4089,13 @@ msgstr ""
 "Няма даступных сертыфікатаў подпісу.<br/>Каб даведацца больш падрабязна, "
 "глядзіце раздзел даведніка <a href=\"%1\">Даданне лічбавых подпісаў</a>."
 
-#: part/pageview.cpp:5251 part/pageview.cpp:5263
+#: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "Сертыфікаты"
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5263
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4105,17 +4105,17 @@ msgstr ""
 "Няма даступных сертыфікатаў подпісу.<br/>Каб даведацца больш падрабязна, "
 "глядзіце раздзел даведніка <a href=\"%1\">Даданне лічбавых подпісаў</a>."
 
-#: part/pageview.cpp:5286
+#: part/pageview.cpp:5288
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Ёсць незахаваныя змены. Перад падпісаннем трэба захаваць дакумент."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Намалюйце прамавугольнік, каб уставіць поле подпісу"
 
-#: part/pageview.cpp:5453
+#: part/pageview.cpp:5455
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

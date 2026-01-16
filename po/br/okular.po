@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics/kpdf.pot\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:49+0000\n"
+"POT-Creation-Date: 2026-01-16 00:41+0000\n"
 "PO-Revision-Date: 2005-01-14 16:13+0100\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
 "Language-Team: br <LL@li.org>\n"
@@ -1739,8 +1739,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Eilañ d'ar golver"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2561 part/pageview.cpp:2884 part/pageview.cpp:2886
-#: part/pageview.cpp:3037 part/pageview.cpp:3095 part/pageview.cpp:3097
+#: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
+#: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr ""
@@ -3933,100 +3933,100 @@ msgid_plural " Loaded a %1-page document."
 msgstr[0] "Emaon oc'h adkargañ an teul ..."
 msgstr[1] ""
 
-#: part/pageview.cpp:2555
+#: part/pageview.cpp:2557
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "Eilañ d'ar golver"
 
-#: part/pageview.cpp:2876
+#: part/pageview.cpp:2878
 #, fuzzy, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Skrid (%1 arouezenneg)"
 msgstr[1] ""
 
-#: part/pageview.cpp:2877 part/pageview.cpp:2899
+#: part/pageview.cpp:2879 part/pageview.cpp:2901
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Eilañ d'ar golver"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
+#: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "Eilañ d'ar golver"
 
-#: part/pageview.cpp:2890 part/pageview.cpp:3090
+#: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
 msgid "Speak Text"
 msgstr "Distagañ ar skrid"
 
-#: part/pageview.cpp:2898
+#: part/pageview.cpp:2900
 #, fuzzy, kde-format
 #| msgid "Image (%1 by %2 pixels)"
 msgid "Image (%1 × %2 pixels)"
 msgstr "Skeudenn (%1 x %2 piksel)"
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2902
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
 msgstr "Enrollañ en ur restr ..."
 
-#: part/pageview.cpp:2920
+#: part/pageview.cpp:2922
 #, fuzzy, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Ar skeudenn [%1x%2] a oa enrollet er restr %3."
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save file"
 msgstr "Enrollañ en ur restr ..."
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr ""
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "File not saved."
 msgstr "N'eo ket enrollet ar restr."
 
-#: part/pageview.cpp:2936
+#: part/pageview.cpp:2938
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] saved to %3 file."
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Ar skeudenn [%1x%2] a oa enrollet er restr %3."
 
-#: part/pageview.cpp:3085
+#: part/pageview.cpp:3087
 #, kde-format
 msgid "Copy Text"
 msgstr "E&ilañ ar skrid"
 
-#: part/pageview.cpp:3108
+#: part/pageview.cpp:3110
 #, fuzzy, kde-format
 msgid "Go to '%1'"
 msgstr "Mont d'ar bajenn"
 
-#: part/pageview.cpp:4132 part/part.cpp:3196
+#: part/pageview.cpp:4134 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "Lakaat al ledander a-zoare"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Fit Page"
 msgstr "Lakaat ar bajenn a-zoare"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4155
+#: part/pageview.cpp:4157
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4036,94 +4036,94 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 :"
 
-#: part/pageview.cpp:4438
+#: part/pageview.cpp:4440
 #, fuzzy, kde-format
 #| msgid "Searching for %1"
 msgid "Search for '%1' with"
 msgstr "O klask %1"
 
-#: part/pageview.cpp:4452
+#: part/pageview.cpp:4454
 #, fuzzy, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Kefluniañ KPDF ..."
 
-#: part/pageview.cpp:4478
+#: part/pageview.cpp:4480
 #, kde-format
 msgid "Follow This Link"
 msgstr ""
 
-#: part/pageview.cpp:4481
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Play this Sound"
 msgstr ""
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4485
 #, kde-format
 msgid "Stop Sound"
 msgstr ""
 
-#: part/pageview.cpp:4489
+#: part/pageview.cpp:4491
 #, kde-format
 msgid "Copy Link Address"
 msgstr ""
 
-#: part/pageview.cpp:4510
+#: part/pageview.cpp:4512
 #, fuzzy, kde-format
 #| msgid "Searching for %1"
 msgid "Search for '%1' in this document"
 msgstr "O klask %1"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5044
 #, kde-format
 msgid "Welcome"
 msgstr "Degemer"
 
-#: part/pageview.cpp:5164
+#: part/pageview.cpp:5166
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 
-#: part/pageview.cpp:5177
+#: part/pageview.cpp:5179
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5192
+#: part/pageview.cpp:5194
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 
-#: part/pageview.cpp:5206
+#: part/pageview.cpp:5208
 #, fuzzy, kde-format
 #| msgid "Select text."
 msgid "Select text"
 msgstr "Diuzit an destenn."
 
-#: part/pageview.cpp:5220
+#: part/pageview.cpp:5222
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr ""
 
-#: part/pageview.cpp:5235 part/pageview.cpp:5243
+#: part/pageview.cpp:5237 part/pageview.cpp:5245
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5236
+#: part/pageview.cpp:5238
 #, fuzzy, kde-format
 msgid "No valid certificates"
 msgstr "Kefluniañ KPDF ..."
 
-#: part/pageview.cpp:5237 part/pageview.cpp:5252
+#: part/pageview.cpp:5239 part/pageview.cpp:5254
 #, fuzzy, kde-format
 msgid "Open Certificate Manager"
 msgstr "Kefluniañ KPDF ..."
 
-#: part/pageview.cpp:5248
+#: part/pageview.cpp:5250
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4131,12 +4131,12 @@ msgid ""
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
 
-#: part/pageview.cpp:5251 part/pageview.cpp:5263
+#: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, fuzzy, kde-format
 msgid "No certificates found"
 msgstr "Kefluniañ KPDF ..."
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5263
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4144,17 +4144,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5286
+#: part/pageview.cpp:5288
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5453
+#: part/pageview.cpp:5455
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

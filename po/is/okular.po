@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:49+0000\n"
+"POT-Creation-Date: 2026-01-16 00:41+0000\n"
 "PO-Revision-Date: 2025-12-02 13:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -1695,8 +1695,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Afrita texta á klippispjald"
 
 #: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
-#: part/pageview.cpp:2561 part/pageview.cpp:2884 part/pageview.cpp:2886
-#: part/pageview.cpp:3037 part/pageview.cpp:3095 part/pageview.cpp:3097
+#: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
+#: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Afritun bönnuð með DRM"
@@ -3812,95 +3812,95 @@ msgid_plural " Loaded a %1-page document."
 msgstr[0] " Hlóð inn skjali með einni síðu."
 msgstr[1] " Hlóð inn skjali með %1 síðum."
 
-#: part/pageview.cpp:2555
+#: part/pageview.cpp:2557
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Afrita innihald töflu á klippispjald"
 
-#: part/pageview.cpp:2876
+#: part/pageview.cpp:2878
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Texti (1 stafur)"
 msgstr[1] "Texti (%1 stafir)"
 
-#: part/pageview.cpp:2877 part/pageview.cpp:2899
+#: part/pageview.cpp:2879 part/pageview.cpp:2901
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Afrita á klippispjald"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:3086 part/part.cpp:858
+#: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "Afrita texta á klippispjald"
 
-#: part/pageview.cpp:2890 part/pageview.cpp:3090
+#: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
 msgid "Speak Text"
 msgstr "Lesa upp texta"
 
-#: part/pageview.cpp:2898
+#: part/pageview.cpp:2900
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Mynd (%1 x %2 pixlar)"
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2902
 #, kde-format
 msgid "Save to File…"
 msgstr "Vista í skrá..."
 
-#: part/pageview.cpp:2920
+#: part/pageview.cpp:2922
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Mynd [%1 × %2] afrituð á klippispjald."
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Save file"
 msgstr "Vista skrá"
 
-#: part/pageview.cpp:2923
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Myndir (*.png *.jpeg)"
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "File not saved."
 msgstr "Skrá ekki vistuð."
 
-#: part/pageview.cpp:2936
+#: part/pageview.cpp:2938
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Mynd [%1 × %2] vistuð í skrá %3."
 
-#: part/pageview.cpp:3085
+#: part/pageview.cpp:3087
 #, kde-format
 msgid "Copy Text"
 msgstr "Afrita texta"
 
-#: part/pageview.cpp:3108
+#: part/pageview.cpp:3110
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Fara á '%1'"
 
-#: part/pageview.cpp:4132 part/part.cpp:3196
+#: part/pageview.cpp:4134 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "Passa á breidd"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Fit Page"
 msgstr "Passa á síðu"
 
-#: part/pageview.cpp:4132
+#: part/pageview.cpp:4134
 #, kde-format
 msgid "Auto Fit"
 msgstr "Aðlaga sjálfvirkt"
 
-#: part/pageview.cpp:4155
+#: part/pageview.cpp:4157
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3909,67 +3909,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4438
+#: part/pageview.cpp:4440
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Leita að '%1' með"
 
-#: part/pageview.cpp:4452
+#: part/pageview.cpp:4454
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Grunnstilla vefskammstafanir…"
 
-#: part/pageview.cpp:4478
+#: part/pageview.cpp:4480
 #, kde-format
 msgid "Follow This Link"
 msgstr "Fylgja þessum tengli"
 
-#: part/pageview.cpp:4481
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Play this Sound"
 msgstr "Spila þetta hljóð"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4485
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stöðva hljóð"
 
-#: part/pageview.cpp:4489
+#: part/pageview.cpp:4491
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Afrita vistfang tengils"
 
-#: part/pageview.cpp:4510
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Leita að '%1' í þessu skjali"
 
-#: part/pageview.cpp:5042
+#: part/pageview.cpp:5044
 #, kde-format
 msgid "Welcome"
 msgstr "Velkomin"
 
-#: part/pageview.cpp:5164
+#: part/pageview.cpp:5166
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Veldu stækkunarsvæði. Hægrismelltu til að minnka aðdrátt."
 
-#: part/pageview.cpp:5177
+#: part/pageview.cpp:5179
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Smelltu til að opna stækkunarglerið."
 
-#: part/pageview.cpp:5192
+#: part/pageview.cpp:5194
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dragðu ferhyrning yfir textann/myndina sem þú vilt afrita."
 
-#: part/pageview.cpp:5206
+#: part/pageview.cpp:5208
 #, kde-format
 msgid "Select text"
 msgstr "Velja texta"
 
-#: part/pageview.cpp:5220
+#: part/pageview.cpp:5222
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3978,7 +3978,7 @@ msgstr ""
 "Dragðu ferhyrning í kringum töfluna, smelltu nálægt brúnunum til að skipta "
 "upp; ýttu á Esc til að hreinsa."
 
-#: part/pageview.cpp:5235 part/pageview.cpp:5243
+#: part/pageview.cpp:5237 part/pageview.cpp:5245
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -3987,17 +3987,17 @@ msgstr ""
 "Öll skilríki þín til undirritunar eru ógild. Hafi undirritun virkað áður, "
 "ættirðu að athuga gildistíma skilríkjanna."
 
-#: part/pageview.cpp:5236
+#: part/pageview.cpp:5238
 #, kde-format
 msgid "No valid certificates"
 msgstr "Engin gild skilríki"
 
-#: part/pageview.cpp:5237 part/pageview.cpp:5252
+#: part/pageview.cpp:5239 part/pageview.cpp:5254
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Skoða í skilríkjastjórann"
 
-#: part/pageview.cpp:5248
+#: part/pageview.cpp:5250
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4008,12 +4008,12 @@ msgstr ""
 "flytja inn eða sýsla með skilríki.<br/>Skoðaðu kaflann <a href=\"%1\">Adding "
 "Digital Signatures</a> (Bæta við rafrænum undirskriftum) í handbókinni."
 
-#: part/pageview.cpp:5251 part/pageview.cpp:5263
+#: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, kde-format
 msgid "No certificates found"
 msgstr "Engin skilríki fundust"
 
-#: part/pageview.cpp:5261
+#: part/pageview.cpp:5263
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4024,18 +4024,18 @@ msgstr ""
 "\"%1\">Adding Digital Signatures</a> (Bæta við rafrænum undirskriftum) í "
 "handbókinni."
 
-#: part/pageview.cpp:5286
+#: part/pageview.cpp:5288
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Þú ert með óvistaðar breytingar. Vistaðu skjalið áður en það er undirritað."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Dragðu ferhyrning til að setja inn undirskriftarreit"
 
-#: part/pageview.cpp:5453
+#: part/pageview.cpp:5455
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Dragðu ferhyrning yfir svæðið á síðunni sem þú vilt halda sýnilegu."

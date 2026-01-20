@@ -4,7 +4,7 @@
 # Author: Artnay
 # Author: Lliehu
 # Author: Niklas Laxström
-# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2012, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Tommi Nieminen <translator@legisign.org>
 # Teemu Rytilahti <teemu.rytilahti@kde-fi.org>, 2003.
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2004, 2005, 2006.
 # Ilpo Kantonen <ilpo@iki.fi>, 2005.

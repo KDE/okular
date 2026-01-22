@@ -151,6 +151,8 @@ private:
     bool m_goToPreviousPageOnRelease;
     bool m_goToNextPageOnRelease;
 
+    QCursor m_defaultPresentationCursor;
+
     /** TODO Qt6: Just use QWidget::screen() instead of this. */
     static inline QScreen *oldQt_screenOf(const QWidget *widget)
     {

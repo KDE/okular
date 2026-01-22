@@ -48,6 +48,12 @@ DlgPresentation::DlgPresentation(QWidget *parent)
     advanceTime->setEnabled(false);
     connect(advanceAutomatically, &QCheckBox::toggled, advanceTime, &QSpinBox::setEnabled);
 
+    // Checkbox: Laser pointer on presentation
+    QCheckBox *laserPointer = new QCheckBox(this);
+    laserPointer->setText(i18nc("@option:check Config dialog, presentation page", "Show laser pointer instead of cursor"));
+    laserPointer->setObjectName(QStringLiteral("kcfg_LaserPointer"));
+    layout->addRow(QString(), laserPointer);
+
     // Checkbox: Loop after last page
     QCheckBox *loopAfterLastPage = new QCheckBox(this);
     loopAfterLastPage->setText(i18nc("@option:check Config dialog, presentation page", "Loop after last page"));

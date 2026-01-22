@@ -5,13 +5,13 @@
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
-# SPDX-FileCopyrightText: 2025 Jan Papez (honyczek)
+# SPDX-FileCopyrightText: 2025, 2026 Jan Papez (honyczek)
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-12-23 00:43+0100\n"
+"PO-Revision-Date: 2026-01-21 21:46+0100\n"
 "Last-Translator: Jan Papez (honyczek) <honyczek@centrum.cz>\n"
 "Language-Team: Czech <kde-i18n-cs@kde.org>\n"
 "Language: cs\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.12.0\n"
+"X-Generator: Lokalize 25.12.1\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -3766,7 +3766,7 @@ msgstr "Nástroje výběru"
 #: part/pageview.cpp:711
 #, kde-format
 msgid "Digitally &Sign…"
-msgstr "Digatálně &podepsat..."
+msgstr "Digitálně &podepsat..."
 
 #: part/pageview.cpp:717
 #, kde-format

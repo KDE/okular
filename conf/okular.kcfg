@@ -265,6 +265,9 @@
     <choice name="Hidden" />
    </choices>
   </entry>
+  <entry key="LaserPointer" type="Bool" >
+   <default>false</default>
+  </entry>
   <entry key="SlidesShowProgress" type="Bool" >
    <default>true</default>
   </entry>

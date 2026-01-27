@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-16 00:41+0000\n"
-"PO-Revision-Date: 2026-01-20 16:35+0100\n"
+"PO-Revision-Date: 2026-01-26 16:23+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -721,10 +721,9 @@ msgid "Inline Note"
 msgstr "Nota in linea"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Polygono con commento"
+msgstr "Flecha con commento"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -755,10 +754,9 @@ msgid "Polygon"
 msgstr "Polygono"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Timbro con commento"
+msgstr "Rectangulo con commento"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -767,10 +765,9 @@ msgid "Rectangle"
 msgstr "Rectangulo"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Sublinea con commento"
+msgstr "Ellipse con commento"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -881,9 +878,7 @@ msgid "Rich Media"
 msgstr "Rich Media"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
 msgstr "Annotation"
 
@@ -2284,14 +2279,12 @@ msgid "Search…"
 msgstr "Cerca…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "Expande omne"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "Plica omne"
 
@@ -3848,10 +3841,9 @@ msgid "Copy to Clipboard"
 msgstr "Copia in area de transferentia"
 
 #: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Copia texto in area de transferentia"
+msgstr "Copia texto (sin rupturas de linea)"
 
 #: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
@@ -4938,14 +4930,12 @@ msgstr ""
 "salveguardar lo in un altere location."
 
 #: part/part.cpp:3174
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Expande complete section"
 
 #: part/part.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Plica section integre"
 

@@ -4002,7 +4002,7 @@ msgstr ""
 #: part/pageview.cpp:5238
 #, kde-format
 msgid "No valid certificates"
-msgstr "Geçerli sertifika yok"
+msgstr "Geçerli Sertifika Yok"
 
 #: part/pageview.cpp:5239 part/pageview.cpp:5254
 #, kde-format
@@ -4023,7 +4023,7 @@ msgstr ""
 #: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, kde-format
 msgid "No certificates found"
-msgstr "Bulunan sertifika yok"
+msgstr "Bulunan Sertifika Yok"
 
 #: part/pageview.cpp:5263
 #, kde-format

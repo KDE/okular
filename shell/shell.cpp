@@ -592,6 +592,24 @@ void Shell::setupActions()
     m_prevTabAction->setEnabled(false);
     connect(m_prevTabAction, &QAction::triggered, this, &Shell::activatePrevTab);
 
+    // add shortcuts for Shift+Alt+1 to Shift+Alt+9 to switch tabs(browser logic- Shift+Alt+9 is always going to be last tab)
+    for (int i = 1; i <= 9; ++i) {
+        QAction *action = actionCollection()->addAction(QStringLiteral("tab-switch-%1").arg(i));
+        action->setText(i18n("Switch to Tab %1", i));
+
+        // static cast to Qt::Key satisfies Qt 6 strict type checking for QKeySequence
+        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::SHIFT | Qt::ALT | static_cast<Qt::Key>(Qt::Key_0 + i)));
+        connect(action, &QAction::triggered, this, [this, i]() {
+            if (m_tabs.isEmpty()) {
+                return;
+            }
+            int index = (i == 9) ? m_tabs.size() - 1 : i - 1;
+            if (index >= 0 && index < m_tabs.size()) {
+                setActiveTab(index);
+            }
+        });
+    }
+
     m_undoCloseTab = actionCollection()->addAction(QStringLiteral("undo-close-tab"));
     m_undoCloseTab->setText(i18n("Undo close tab"));
     actionCollection()->setDefaultShortcut(m_undoCloseTab, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T));

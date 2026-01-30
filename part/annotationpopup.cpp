@@ -21,6 +21,13 @@
 #include "gui/guiutils.h"
 #include "okmenutitle.h"
 
+#include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenUrlJob>
+#include <QDir>
+#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QUrl>
+
 Q_DECLARE_METATYPE(AnnotationPopup::AnnotPagePair)
 
 namespace
@@ -132,8 +139,11 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
         if (onlyOne && annotationHasFileAttachment(pair.annotation)) {
             const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
             if (embeddedFile) {
-                const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
+                const QString openText = i18nc("%1 is the name of the file to open", "&Open '%1'…", embeddedFile->name());
+                action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), openText);
+                connect(action, &QAction::triggered, menu, [this, pair] { doOpenEmbeddedFile(pair); });
 
+                const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
                 menu->addSeparator();
                 action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
                 connect(action, &QAction::triggered, menu, [this, pair] { doSaveEmbeddedFile(pair); });
@@ -177,8 +187,11 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             if (annotationHasFileAttachment(pair.annotation)) {
                 const Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
                 if (embeddedFile) {
-                    const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
+                    const QString openText = i18nc("%1 is the name of the file to open", "&Open '%1'…", embeddedFile->name());
+                    action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-open")), openText);
+                    connect(action, &QAction::triggered, menu, [this, pair] { doOpenEmbeddedFile(pair); });
 
+                    const QString saveText = i18nc("%1 is the name of the file to save", "&Save '%1'…", embeddedFile->name());
                     menu->addSeparator();
                     action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
                     connect(action, &QAction::triggered, menu, [this, pair] { doSaveEmbeddedFile(pair); });
@@ -221,6 +234,30 @@ void AnnotationPopup::doSaveEmbeddedFile(AnnotPagePair pair)
 {
     Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
     GuiUtils::saveEmbeddedFile(embeddedFile, mParent);
+}
+
+void AnnotationPopup::doOpenEmbeddedFile(AnnotPagePair pair)
+{
+    Okular::EmbeddedFile *embeddedFile = embeddedFileFromAnnotation(pair.annotation);
+    if (!embeddedFile) {
+        return;
+    }
+    // preserve the file extension so the OS knows which app to use
+    const QString name = embeddedFile->name();
+    const QString extension = QFileInfo(name).suffix();
+    const QString templateName = QDir::tempPath() + QLatin1Char('/') + QFileInfo(name).baseName() + QStringLiteral(".XXXXXX.") + extension;
+    QTemporaryFile tempFile(templateName);
+    tempFile.setAutoRemove(false);
+
+    if (tempFile.open()) {
+        tempFile.write(embeddedFile->data());
+        tempFile.setPermissions(QFile::ReadOwner);
+        const QString fileName = tempFile.fileName();
+        tempFile.close();
+        auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(fileName));
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
+        job->start();
+    }
 }
 
 // This code comes from Reviews::activated in side_reviews.cpp

@@ -76,6 +76,7 @@ private:
     void doOpenAnnotationWindow(AnnotPagePair pair);
     void doOpenPropertiesDialog(AnnotPagePair pair);
     void doSaveEmbeddedFile(AnnotPagePair pair);
+    void doOpenEmbeddedFile(AnnotPagePair pair);
     void doAddAnnotationBookmark(AnnotPagePair pair);
     void doRemoveAnnotationBookmark(AnnotPagePair pair);
 

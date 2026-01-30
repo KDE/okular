@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:41+0000\n"
+"POT-Creation-Date: 2026-01-30 00:42+0000\n"
 "PO-Revision-Date: 2024-12-15 19:31+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -6108,48 +6108,53 @@ msgstr "अगला टैब"
 msgid "Previous Tab"
 msgstr "पिछला टैब"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:598
+#, kde-format
+msgid "Switch to Tab %1"
+msgstr ""
+
+#: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:623
 #, fuzzy, kde-format
 #| msgid "Show S&idebar"
 msgid "Lock Sidebar"
 msgstr "बाजूपट्टी दिखाएँ (&i)"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All files (*)"
 msgstr "सभी फ़ाइलें (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:728
 #, kde-format
 msgid "Open Document"
 msgstr "दस्तावेज़ खोलें"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:846
 #, kde-format
 msgid "Close Tabs"
 msgstr "टैबों को बंद करें"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:853
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "आप %1 टैबों को बंद करने वाले हैं। क्या आप वाकई जारी रखना चाहते हें?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:855
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

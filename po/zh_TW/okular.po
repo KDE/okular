@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:41+0000\n"
+"POT-Creation-Date: 2026-01-30 00:42+0000\n"
 "PO-Revision-Date: 2025-11-29 17:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -5837,47 +5837,52 @@ msgstr "下一個分頁"
 msgid "Previous Tab"
 msgstr "前一個分頁"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:598
+#, kde-format
+msgid "Switch to Tab %1"
+msgstr ""
+
+#: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
 msgstr "還原關閉分頁"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:623
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "鎖定側邊欄"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All files (*)"
 msgstr "所有檔案 (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "所有支援的檔案 (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:728
 #, kde-format
 msgid "Open Document"
 msgstr "開啟文件"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Confirm Close"
 msgstr "確認關閉"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:846
 #, kde-format
 msgid "Close Tabs"
 msgstr "關閉分頁"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:853
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:855
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "當我嘗試關閉多個分頁時警告我"

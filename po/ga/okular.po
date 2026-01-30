@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:41+0000\n"
+"POT-Creation-Date: 2026-01-30 00:42+0000\n"
 "PO-Revision-Date: 2026-01-10 12:18+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
 "projects/okulardeux/okular/okular/>\n"
-"Language: okular\n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5978,49 +5978,54 @@ msgstr "An Chluaisín Eile"
 msgid "Previous Tab"
 msgstr "Cluaisín Roimhe Seo"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:598
+#, kde-format
+msgid "Switch to Tab %1"
+msgstr ""
+
+#: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
 msgstr "Cealaigh dúnadh an chluaisín"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:623
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Glasáil Barra Taobh"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All files (*)"
 msgstr "Gach comhad (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Gach comhad a dtacaítear leis (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:728
 #, kde-format
 msgid "Open Document"
 msgstr "Oscail an Doiciméad"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Confirm Close"
 msgstr "Deimhnigh Dúnadh"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:846
 #, kde-format
 msgid "Close Tabs"
 msgstr "Dún na Cluaisíní"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:853
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Tá tú ar tí %1 cluaisín a dhúnadh. An bhfuil tú cinnte gur mian leat "
 "leanúint ar aghaidh?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:855
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Tabhair rabhadh dom nuair a dhéanaim iarracht il-chluaisíní a dhúnadh"

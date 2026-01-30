@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:41+0000\n"
+"POT-Creation-Date: 2026-01-30 00:42+0000\n"
 "PO-Revision-Date: 2025-11-28 19:50+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -5937,47 +5937,52 @@ msgstr "Следващ подпрозорец"
 msgid "Previous Tab"
 msgstr "Предишен подпрозорец"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:598
+#, kde-format
+msgid "Switch to Tab %1"
+msgstr ""
+
+#: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
 msgstr "Отмяна на затварянето на раздела"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:623
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Заключване на страничния панел"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All files (*)"
 msgstr "Всички файлове (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Всички поддържани файлове (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:728
 #, kde-format
 msgid "Open Document"
 msgstr "Отваряне на документ"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Confirm Close"
 msgstr "Потвърждаване на затварянето"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:846
 #, kde-format
 msgid "Close Tabs"
 msgstr "Затваряне на раздели"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:853
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "На път сте да затворите %1 раздела. Наистина ли искате да продължите?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:855
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Предупреждавайте ме, когато се опитвам да затворя множество раздели"

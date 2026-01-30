@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:41+0000\n"
+"POT-Creation-Date: 2026-01-30 00:42+0000\n"
 "PO-Revision-Date: 2025-11-30 11:44+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -5914,47 +5914,52 @@ msgstr "அடுத்த கீற்று"
 msgid "Previous Tab"
 msgstr "முந்தைய கீற்று"
 
-#: shell/shell.cpp:596
+#: shell/shell.cpp:598
+#, kde-format
+msgid "Switch to Tab %1"
+msgstr ""
+
+#: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
 msgstr "கீற்றை மூடியதை செயல்நீக்கு"
 
-#: shell/shell.cpp:605
+#: shell/shell.cpp:623
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ஓரப்பட்டையைப் பூட்டு"
 
-#: shell/shell.cpp:705
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: shell/shell.cpp:706
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ஆதரிக்கப்படும் அனைத்து கோப்புகள் (%1)"
 
-#: shell/shell.cpp:710
+#: shell/shell.cpp:728
 #, kde-format
 msgid "Open Document"
 msgstr "ஆவணத்தைத் திறத்தல்"
 
-#: shell/shell.cpp:824
+#: shell/shell.cpp:842
 #, kde-format
 msgid "Confirm Close"
 msgstr "மூடுவதை உறுதிசெய்க"
 
-#: shell/shell.cpp:828
+#: shell/shell.cpp:846
 #, kde-format
 msgid "Close Tabs"
 msgstr "கீற்றுகளை மூடு"
 
-#: shell/shell.cpp:835
+#: shell/shell.cpp:853
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 கீற்றுகளை மூடப் போகிறீர்கள். உறுதியாக தொடர வேண்டுமா?"
 
-#: shell/shell.cpp:837
+#: shell/shell.cpp:855
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "பல கீற்றுகளை மூட முயற்சிக்கும்போது என்னை எச்சரி"

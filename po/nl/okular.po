@@ -10,7 +10,7 @@
 # Rinse de Vries <rinsedevries@kde.nl>, 2004, 2005, 2007, 2008.
 # Bram Schoenmakers <bramschoenmakers@kde.nl>, 2005, 2006.
 # Kristof Bal <kristof.bal@gmail.com>, 2008.
-# SPDX-FileCopyrightText: 2008, 2023, 2024, 2025 Freek de Kruijf <freek@opensuse.org>
+# SPDX-FileCopyrightText: 2008, 2023, 2024, 2025, 2026 Freek de Kruijf <freek@opensuse.org>
 # Freek de Kruijf <f.de.kruijf@hetnet.nl>, 2008.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2009, 2010, 2011, 2012.
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-11-13 23:09+0100\n"
+"PO-Revision-Date: 2026-01-30 13:08+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -35,7 +35,7 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Wilbert Berendsen,Rinse de Vries,Luc Castermans - t/m 2021,Freek de Kruijf - "
-"t/m 2025"
+"t/m 2026"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-30 00:42+0000\n"
-"PO-Revision-Date: 2025-11-25 05:59+0100\n"
+"PO-Revision-Date: 2026-01-30 04:31+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5927,7 +5927,7 @@ msgstr "წინა ჩანართი"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "გადართვა ჩანართზე %1"
 
 #: shell/shell.cpp:614
 #, kde-format

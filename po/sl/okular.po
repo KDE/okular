@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-30 00:42+0000\n"
-"PO-Revision-Date: 2025-11-25 07:41+0100\n"
+"PO-Revision-Date: 2026-01-30 07:10+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -5937,7 +5937,7 @@ msgstr "Predhodni zavihek"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Preklopi na zavihek %1"
 
 #: shell/shell.cpp:614
 #, kde-format

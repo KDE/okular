@@ -4,7 +4,7 @@
 # Mohamed Aser(محمد عَصَر) <aser@arabeyes.org>,2002-10-04 11:50+0200.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Usama Akkad <uak@aya.sy>, 2008.
-# SPDX-FileCopyrightText: 2008, 2021, 2022, 2023, 2024, 2025 zayed <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2008, 2021, 2022, 2023, 2024, 2025, 2026 zayed <zayed.alsaidi@gmail.com>
 # Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
 msgid ""
 msgstr ""

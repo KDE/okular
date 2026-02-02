@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-30 00:42+0000\n"
-"PO-Revision-Date: 2026-01-10 20:34+0100\n"
+"PO-Revision-Date: 2026-01-31 09:21+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -6004,7 +6004,7 @@ msgstr "Onglet précédent"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Basculer vers l'onglet %1"
 
 #: shell/shell.cpp:614
 #, kde-format

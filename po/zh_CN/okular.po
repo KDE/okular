@@ -5840,7 +5840,7 @@ msgstr "上一个标签页"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "切换到标签页 %1"
 
 #: shell/shell.cpp:614
 #, kde-format

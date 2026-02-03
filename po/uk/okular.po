@@ -6,13 +6,13 @@
 # Andriy Rysin <rysin@kde.org>, 2003, 2006.
 # Eugene Onischenko <oneugene@ukr.net>, 2004, 2005.
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2004, 2005, 2006, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008-2021, 2022, 2023, 2024, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008-2021, 2022, 2023, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-30 00:42+0000\n"
-"PO-Revision-Date: 2025-11-25 08:04+0200\n"
+"PO-Revision-Date: 2026-02-02 17:59+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5983,7 +5983,7 @@ msgstr "Попередня вкладка"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Перемкнутися на вкладку %1"
 
 #: shell/shell.cpp:614
 #, kde-format

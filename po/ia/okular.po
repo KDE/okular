@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-30 00:42+0000\n"
-"PO-Revision-Date: 2026-01-26 16:23+0100\n"
+"PO-Revision-Date: 2026-02-02 12:26+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -5951,7 +5951,7 @@ msgstr "Previe scheda"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Passa  a scheda %1"
 
 #: shell/shell.cpp:614
 #, kde-format

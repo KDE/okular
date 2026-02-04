@@ -1,7 +1,7 @@
 # Translation of okular.po to Korean
 # Copyright (C) 2007-2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdegraphics package.
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Shinjo Park <kde@peremen.name>
 # JungHee Lee <daemul72@gmail.com>, 2019.
 #
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-07-20 01:33+0200\n"
+"PO-Revision-Date: 2026-02-03 23:47+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -717,10 +717,9 @@ msgid "Inline Note"
 msgstr "인라인 노트"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "주석이 있는 다각형"
+msgstr "주석이 있는 화살표"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -751,10 +750,9 @@ msgid "Polygon"
 msgstr "다각형"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "주석이 있는 스탬프"
+msgstr "주석이 있는 직사각형"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1483
@@ -763,10 +761,9 @@ msgid "Rectangle"
 msgstr "직사각형"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "주석이 있는 밑줄"
+msgstr "주석이 있는 타원"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1471
@@ -877,11 +874,9 @@ msgid "Rich Media"
 msgstr "리치 미디어"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "주석 %1개"
+msgstr "주석"
 
 #: gui/guiutils.cpp:168
 #, kde-format
@@ -1656,9 +1651,7 @@ msgid "Page %1"
 msgstr "%1쪽"
 
 #: part/annotationpopup.cpp:85
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
@@ -2264,14 +2257,12 @@ msgid "Search…"
 msgstr "찾기…"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3160
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
 msgstr "모두 펴기"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3161
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
 msgstr "모두 접기"
 
@@ -4866,16 +4857,14 @@ msgstr ""
 "파일을 '%1' 안에 저장할 수 없습니다. 오류: '%2'. 다른 경로에 저장해 보십시오."
 
 #: part/part.cpp:3158
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
-msgstr "전체 선택 펼치기"
+msgstr "전체 장 펼치기"
 
 #: part/part.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
-msgstr "전체 선택 접기"
+msgstr "전체 장 접기"
 
 #: part/part.cpp:3172
 #, kde-format

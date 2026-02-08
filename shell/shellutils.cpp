@@ -42,7 +42,7 @@ QUrl urlFromArg(const QString &_arg, FileExistFunc exist_func, const QString &pa
         // but something like /tmp/foo.pdf#bar is foo.pdf plus an anchor "bar"
         const QString path = url.path();
         int hashIndex = path.lastIndexOf(QLatin1Char('#'));
-        if (hashIndex != -1 && !exist_func(path)) {
+        if (hashIndex != -1 && !exist_func(url.toLocalFile())) {
             url.setPath(path.left(hashIndex));
             url.setFragment(path.mid(hashIndex + 1));
         }

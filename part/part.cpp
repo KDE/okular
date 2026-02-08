@@ -4027,7 +4027,7 @@ void Part::setEditorCmd(const QString &editorCmd)
 
 void Part::slotOpenContainingFolder()
 {
-    KIO::highlightInFileManager({QUrl(localFilePath())});
+    KIO::highlightInFileManager({QUrl::fromLocalFile(localFilePath())});
 }
 
 void Part::slotCopyAnnotation()

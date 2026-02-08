@@ -35,12 +35,6 @@ void RecentItemsModel::loadEntries(const KConfigGroup &cg)
             continue;
         }
         const QUrl url = QUrl::fromUserInput(value);
-
-        // Don't restore if file doesn't exist anymore
-        if (url.isLocalFile() && !QFile::exists(url.toLocalFile())) {
-            continue;
-        }
-
         const QString nameKey = QStringLiteral("Name%1").arg(i);
         const QString nameValue = cg.readPathEntry(nameKey, url.fileName());
         m_recentItems.append(RecentItem {nameValue, url});

@@ -42,6 +42,9 @@ QString captionForAnnotation(const Okular::Annotation *annotation);
 // Returns the icon of the given annotation.
 QIcon iconForAnnotation(const Okular::Annotation *annotation);
 
+// Returns the icon based on the pre-calculated info.
+QIcon iconForAnnotationInfo(const AnnotationInfo &info);
+
 QString authorForAnnotation(const Okular::Annotation *annotation);
 
 QString contentsHtml(const Okular::Annotation *annotation);

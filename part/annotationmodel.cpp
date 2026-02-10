@@ -20,6 +20,8 @@
 #include "core/observer.h"
 #include "core/page.h"
 #include "gui/guiutils.h"
+#include <KIconColors>
+#include <KIconLoader>
 
 struct AnnItem {
     AnnItem();
@@ -335,9 +337,18 @@ QVariant AnnotationModel::data(const QModelIndex &index, int role) const
         return contents.isEmpty() ? GuiUtils::captionForAnnotation(item->annotation) : contents;
         break;
     }
-    case Qt::DecorationRole:
-        return GuiUtils::iconForAnnotation(item->annotation);
-        break;
+    case Qt::DecorationRole: {
+        const GuiUtils::AnnotationInfo info = GuiUtils::getAnnotationInfo(item->annotation);
+        const QColor color = item->annotation->style().color();
+        if (color.isValid() && !info.iconName.isEmpty()) {
+            KIconColors colors;
+            QColor opaqueColor = color;
+            opaqueColor.setAlpha(255);
+            colors.setText(opaqueColor);
+            return KDE::icon(info.iconName, colors);
+        }
+        return GuiUtils::iconForAnnotationInfo(info);
+    } break;
     case Qt::ToolTipRole:
         return GuiUtils::prettyToolTip(item->annotation);
         break;

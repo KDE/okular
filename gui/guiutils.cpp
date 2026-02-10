@@ -154,11 +154,15 @@ QString captionForAnnotation(const Okular::Annotation *ann)
     return getAnnotationInfo(ann).caption;
 }
 
+QIcon iconForAnnotationInfo(const AnnotationInfo &info)
+{
+    return QIcon::fromTheme(info.iconName);
+}
+
 QIcon iconForAnnotation(const Okular::Annotation *ann)
 {
     Q_ASSERT(ann);
-    AnnotationInfo info = getAnnotationInfo(ann);
-    return QIcon::fromTheme(info.iconName);
+    return iconForAnnotationInfo(getAnnotationInfo(ann));
 }
 
 QString authorForAnnotation(const Okular::Annotation *ann)

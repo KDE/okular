@@ -121,6 +121,7 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     ThreadWeaver
     WindowSystem
     XmlGui
+    IconThemes
 )
 
 if (NOT WIN32 AND NOT HAIKU)

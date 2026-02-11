@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-30 00:42+0000\n"
+"POT-Creation-Date: 2026-02-11 00:43+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -943,23 +943,23 @@ msgstr ""
 msgid "Annotation"
 msgstr "एनोटेसन"
 
-#: gui/guiutils.cpp:168
+#: gui/guiutils.cpp:172
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "अग्यात"
 
-#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "लेखक: %1"
 
-#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:201 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "%1 ल आप मन कहाँ सहेजना चाहथो ?"
 
-#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:213 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "लिखे बर \"%1\" ल खोल नइ सकिस. फाइल सहेजे नइ गे हे."
@@ -1764,14 +1764,14 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/annotationmodel.cpp:320
+#: part/annotationmodel.cpp:322
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "पेज %1"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3185
+#: part/annotationmodel.cpp:324 part/part.cpp:3185
 #, kde-format
 msgid "Page %1"
 msgstr "पेज %1"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-30 00:42+0000\n"
+"POT-Creation-Date: 2026-02-11 00:43+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -939,23 +939,23 @@ msgstr ""
 msgid "Annotation"
 msgstr "%1 ចំណារពន្យល់"
 
-#: gui/guiutils.cpp:168
+#: gui/guiutils.cpp:172
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "មិន​ស្គាល់"
 
-#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "អ្នក​និពន្ធ ៖ %1"
 
-#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:201 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "តើ​អ្នក​ចង់​រក្សាទុក​ %1 នៅ​ទីណា ?"
 
-#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:213 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "មិនអាច​បើក \"%1\" ដើម្បី​សរសេរ​បានទេ ។ ឯកសារ​មិនត្រូវបានរក្សាទុក​ទេ ។"
@@ -1760,14 +1760,14 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 ៖"
 
-#: part/annotationmodel.cpp:320
+#: part/annotationmodel.cpp:322
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "ទំព័រ %1"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3185
+#: part/annotationmodel.cpp:324 part/part.cpp:3185
 #, kde-format
 msgid "Page %1"
 msgstr "ទំព័រ %1"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-30 00:42+0000\n"
+"POT-Creation-Date: 2026-02-11 00:43+0000\n"
 "PO-Revision-Date: 2026-01-30 15:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -898,23 +898,23 @@ msgstr "Zengin Ortam"
 msgid "Annotation"
 msgstr "Bilgi Notu"
 
-#: gui/guiutils.cpp:168
+#: gui/guiutils.cpp:172
 #, kde-format
 msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "Yazar: %1"
 
-#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:201 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "%1 belgesini nereye kaydetmek istiyorsunuz?"
 
-#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:213 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "“%1” yazmak için açılamadı. Dosya kaydedilmedi."
@@ -1664,13 +1664,13 @@ msgctxt ""
 msgid "%1%"
 msgstr "%%1"
 
-#: part/annotationmodel.cpp:320
+#: part/annotationmodel.cpp:322
 #, kde-format
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Sayfa %1 (%2)"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3185
+#: part/annotationmodel.cpp:324 part/part.cpp:3185
 #, kde-format
 msgid "Page %1"
 msgstr "Sayfa %1"

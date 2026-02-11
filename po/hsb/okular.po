@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-30 00:42+0000\n"
+"POT-Creation-Date: 2026-02-11 00:43+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -902,7 +902,7 @@ msgstr ""
 msgid "Annotation"
 msgstr "%1 přispomnjenje"
 
-#: gui/guiutils.cpp:168
+#: gui/guiutils.cpp:172
 #, fuzzy, kde-format
 #| msgctxt "Unknown date"
 #| msgid "Unknown"
@@ -910,17 +910,17 @@ msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Njeznaty"
 
-#: gui/guiutils.cpp:185 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
 #, kde-format
 msgid "Author: %1"
 msgstr "Awtor: %1"
 
-#: gui/guiutils.cpp:197 part/propertiesdialog.cpp:229
+#: gui/guiutils.cpp:201 part/propertiesdialog.cpp:229
 #, kde-format
 msgid "Where do you want to save %1?"
 msgstr "Hdźe chceće %1 zawěsćić?"
 
-#: gui/guiutils.cpp:209 part/propertiesdialog.cpp:240
+#: gui/guiutils.cpp:213 part/propertiesdialog.cpp:240
 #, kde-format
 msgid "Could not open \"%1\" for writing. File was not saved."
 msgstr "Njemóžach '%1' za pisanje wočinić. Dataja so njeje zawěsćiła."
@@ -1679,14 +1679,14 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationmodel.cpp:320
+#: part/annotationmodel.cpp:322
 #, fuzzy, kde-format
 #| msgid "Page %1"
 msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Strona %1"
 
-#: part/annotationmodel.cpp:322 part/part.cpp:3185
+#: part/annotationmodel.cpp:324 part/part.cpp:3185
 #, kde-format
 msgid "Page %1"
 msgstr "Strona %1"

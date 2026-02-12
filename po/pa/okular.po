@@ -2,7 +2,7 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2012, 2018, 2019, 2020, 2021, 2023, 2024 A S Alam <aalam@users.sf.net>
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2012, 2018, 2019, 2020, 2021, 2023, 2024, 2026 A S Alam <aalam@users.sf.net>
 # AP S Alam <aalam@users.sf.net>, 2007.
 # Amanpreet Singh Alam <apreet.alam@gmail.com>, 2008.
 # Amanpreet Singh <aalam@users.sf.net>, 2008, 2013, 2014, 2015.
@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-11 00:43+0000\n"
-"PO-Revision-Date: 2024-12-19 22:37-0600\n"
-"Last-Translator: aalam <aalam@punlinux.org>\n"
-"Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
+"PO-Revision-Date: 2026-02-11 18:22-0600\n"
+"Last-Translator: A S Alam <aman@punlinux.org>\n"
+"Language-Team: pa\n"
 "Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -541,10 +541,9 @@ msgid "edit form button states"
 msgstr ""
 
 #: core/generator.cpp:790
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "ਸਰਲ ਲਿਖਤ(&T)..."
+msgstr "ਸਰਲ ਲਿਖਤ(&T)…"
 
 #: core/generator.cpp:793
 #, kde-format
@@ -602,22 +601,20 @@ msgid ""
 msgstr ""
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
-#| msgctxt "@info"
-#| msgid "Could not load the file <filename>%1</filename>"
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "<filename>%1</filename> ਫਾਇਲ ਨੂੰ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
+msgstr "<filename>%1</filename>: ਦਸਤਾਵੇਜ਼ ਨੂੰ ਸਾਈਨ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
 
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "ਦਸਤਖ਼ਤਾਂ ਨੂੰ ਵਰਤੋਂਕਾਰ ਵਲੋਂ ਰੱਦ ਕੀਤਾ ਗਿਆ"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "ਦਸਤਖ਼ਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕੇ। ਵਾਕ ਗਲਤ ਹੈ"
 
 #: core/signatureutils.cpp:504
 #, fuzzy, kde-kuit-format

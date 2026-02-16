@@ -6,6 +6,7 @@
 
 #include "pdfsignatureutils.h"
 
+#include "popplerversion.h"
 #include <KLocalizedString>
 #include <QDebug>
 #include <QInputDialog>
@@ -56,7 +57,6 @@ static Okular::CertificateInfo::PublicKeyType fromPoppler(Poppler::CertificateIn
     return Okular::CertificateInfo::OtherKey;
 }
 
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(23, 8, 0)
 static Okular::CertificateInfo::KeyLocation fromPoppler(Poppler::CertificateInfo::KeyLocation location)
 {
     switch (location) {
@@ -71,7 +71,6 @@ static Okular::CertificateInfo::KeyLocation fromPoppler(Poppler::CertificateInfo
     }
     return Okular::CertificateInfo::KeyLocation::Unknown;
 }
-#endif
 
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 2, 90)
 static Okular::CertificateInfo::CertificateType fromPoppler(Poppler::CertificateInfo::CertificateType type)
@@ -110,11 +109,8 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setPublicKeyStrength(pInfo.publicKeyStrength());
     oInfo.setSelfSigned(pInfo.isSelfSigned());
     oInfo.setCertificateData(pInfo.certificateData());
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(23, 8, 0)
     oInfo.setKeyLocation(fromPoppler(pInfo.keyLocation()));
-#endif
     oInfo.setCheckPasswordFunction([pInfo](const QString &password) {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
         auto backend = Poppler::activeCryptoSignBackend();
         if (!backend) {
             return false;
@@ -123,14 +119,11 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
             // we shouldn't ask anyone about passwords. The backend will do that themselves, so just assume everything is okay.
             return true;
         }
-#endif
         return pInfo.checkPassword(password);
     });
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     if (Poppler::activeCryptoSignBackend() == Poppler::CryptoSignBackend::GPG) {
         oInfo.setBackend(Okular::CertificateInfo::Backend::Gpg);
     }
-#endif
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
     oInfo.setQualified(pInfo.isQualified());
 #endif
@@ -158,10 +151,8 @@ Okular::SignatureInfo::CertificateStatus fromPoppler(Poppler::SignatureValidatio
         return Okular::SignatureInfo::CertificateGenericError;
     case Poppler::SignatureValidationInfo::CertificateNotVerified:
         return Okular::SignatureInfo::CertificateNotVerified;
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(24, 04, 0)
     case Poppler::SignatureValidationInfo::CertificateVerificationInProgress:
         return Okular::SignatureInfo::CertificateVerificationInProgress;
-#endif
     default:
         return Okular::SignatureInfo::CertificateStatusUnknown;
     }

@@ -9,6 +9,7 @@
 
 #include "pdfsettings.h"
 #include "pdfsignatureutils.h"
+#include "popplerversion.h"
 
 #include <KLocalizedString>
 #include <KUrlRequester>
@@ -20,7 +21,6 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
 QString PDFSettingsWidget::popplerEnumToSettingString(Poppler::CryptoSignBackend backend)
 {
     switch (backend) {
@@ -55,21 +55,17 @@ std::optional<Poppler::CryptoSignBackend> PDFSettingsWidget::settingStringToPopp
     }
     return std::nullopt;
 }
-#endif
 
 PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
     : QWidget(parent)
 {
     m_pdfsw.setupUi(this);
 
-#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(23, 07, 0)
     m_pdfsw.kcfg_OverprintPreviewEnabled->hide();
-#endif
 #if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(25, 02, 90)
     m_pdfsw.kcfg_EnablePgp->hide();
 #endif
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     auto backends = Poppler::availableCryptoSignBackends();
     if (!backends.empty()) {
         // Let's try get the currently stored backend:
@@ -130,12 +126,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
         m_pdfsw.kcfg_EnablePgp->setVisible(currentBackend == Poppler::CryptoSignBackend::GPG);
 #endif
         m_pdfsw.certDBGroupBox->setVisible(currentBackend == Poppler::CryptoSignBackend::NSS);
-#else
-    if (Poppler::hasNSSSupport()) {
-        // Better hide the signature backend selection; we have not really any
-        // need for that.
-        m_pdfsw.signatureBackendContainer->hide();
-#endif
 
         m_pdfsw.loadSignaturesButton->hide();
 
@@ -214,11 +204,9 @@ bool PDFSettingsWidget::event(QEvent *e)
 void PDFSettingsWidget::warnRestartNeeded()
 {
     if (!m_warnedAboutRestart) {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
         if (PDFSettings::self()->signatureBackend() != QStringLiteral("NSS")) {
             return;
         }
-#endif
         m_warnedAboutRestart = true;
         QMessageBox::information(this, i18n("Restart needed"), i18n("You need to restart Okular after changing the NSS directory settings"));
     }

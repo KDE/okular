@@ -62,13 +62,12 @@
 #include "pdfsettingswidget.h"
 #include "pdfsignatureutils.h"
 #include "popplerembeddedfile.h"
+#include "popplerversion.h"
 
 #include <functional>
 
 Q_DECLARE_METATYPE(Poppler::Annotation *)
 Q_DECLARE_METATYPE(Poppler::FontInfo)
-
-#define POPPLER_VERSION_MACRO ((POPPLER_VERSION_MAJOR << 16) | (POPPLER_VERSION_MINOR << 8) | (POPPLER_VERSION_MICRO))
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
@@ -392,10 +391,8 @@ static std::optional<Okular::DocumentAction::DocumentActionType> popplerToOkular
         return Okular::DocumentAction::Close;
     case Poppler::LinkAction::Print:
         return Okular::DocumentAction::Print;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(22, 04, 0)
     case Poppler::LinkAction::SaveAs:
         return Okular::DocumentAction::SaveAs;
-#endif
     }
 
     qWarning() << "Unsupported Poppler::LinkAction::ActionType" << pat;
@@ -592,7 +589,6 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
         link->setNativeHandle(popplerLinkOCG);
         break;
     }
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
     case Poppler::Link::ResetForm: {
         if (!std::holds_alternative<std::unique_ptr<Poppler::Link>>(popplerLink)) {
             // See comment above in Link::Rendition
@@ -604,7 +600,6 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
         auto popplerLinkResetForm = toSharedPointer<const Poppler::LinkResetForm>(std::move(uniquePopplerLink));
         link->setNativeHandle(popplerLinkResetForm);
     } break;
-#endif
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 10, 0)
     case Poppler::Link::SubmitForm: {
         // TODO
@@ -697,7 +692,6 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     if (!PDFSettings::useDefaultCertDB()) {
         Poppler::setNSSDir(QUrl(PDFSettings::dBCertificatePath()).toLocalFile());
     }
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     auto activeBackend = PDFSettingsWidget::settingStringToPopplerEnum(PDFSettings::signatureBackend());
     if (activeBackend) {
         Poppler::setActiveCryptoSignBackend(activeBackend.value());
@@ -705,7 +699,6 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
             setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
         }
     }
-#endif
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     Poppler::setPgpSignaturesAllowed(PDFSettings::enablePgp());
 #endif
@@ -808,13 +801,12 @@ Okular::Document::OpenResult PDFGenerator::init(QList<Okular::Page *> &pagesVect
     // create annotation proxy
     annotProxy = new PopplerAnnotationProxy(pdfdoc.get(), userMutex(), &annotationsOnOpenHash);
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
     setAdditionalDocumentAction(Okular::Document::CloseDocument, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::CloseDocument)));
     setAdditionalDocumentAction(Okular::Document::SaveDocumentStart, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::SaveDocumentStart)));
     setAdditionalDocumentAction(Okular::Document::SaveDocumentFinish, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::SaveDocumentFinish)));
     setAdditionalDocumentAction(Okular::Document::PrintDocumentStart, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::PrintDocumentStart)));
     setAdditionalDocumentAction(Okular::Document::PrintDocumentFinish, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::PrintDocumentFinish)));
-#endif
+
     // the file has been loaded correctly
     return Okular::Document::OpenSuccess;
 }
@@ -1217,13 +1209,10 @@ Okular::BackendOpaqueAction::OpaqueActionResult PDFGenerator::opaqueAction(const
     if (const Poppler::LinkOCGState *ocgLink = dynamic_cast<const Poppler::LinkOCGState *>(popplerLink)) {
         pdfdoc->optionalContentModel()->applyLink(const_cast<Poppler::LinkOCGState *>(ocgLink));
         return Okular::BackendOpaqueAction::DoNothing;
-    }
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 07, 0)
-    else if (const Poppler::LinkResetForm *resetFormLink = dynamic_cast<const Poppler::LinkResetForm *>(popplerLink)) {
+    } else if (const Poppler::LinkResetForm *resetFormLink = dynamic_cast<const Poppler::LinkResetForm *>(popplerLink)) {
         pdfdoc->applyResetFormsLink(*resetFormLink);
         return Okular::BackendOpaqueAction::RefreshForms;
     }
-#endif
     return Okular::BackendOpaqueAction::DoNothing;
 }
 
@@ -1649,9 +1638,7 @@ Okular::Document::PrintError PDFGenerator::print(QPrinter &printer)
     psConverter->setForceRasterize(forceRasterize);
     psConverter->setTitle(pstitle);
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 9, 0)
     psConverter->setForceOverprintPreview(overprintPreviewEnabled);
-#endif
 
     if (!printAnnots) {
         psConverter->setPSOptions(psConverter->psOptions() | Poppler::PSConverter::HideAnnotations);
@@ -1776,25 +1763,19 @@ bool PDFGenerator::setDocumentRenderHints()
 #undef SET_HINT
     // load thin line mode
     const int thinLineMode = PDFSettings::enhanceThinLines();
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 07, 0)
     const auto overprintSetting = PDFSettings::overprintPreviewEnabled();
     const auto enableOverprintPreview = overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Always || (overprintSetting == PDFSettings::EnumOverprintPreviewEnabled::Automatic && hasVisibleOverprint);
-#endif
     const bool enableThinLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Solid;
     const bool enableShapeLineSolid = thinLineMode == PDFSettings::EnumEnhanceThinLines::Shape;
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 07, 0)
     const bool overprintPreviewWasEnabled = (oldhints & Poppler::Document::OverprintPreview) == Poppler::Document::OverprintPreview;
-#endif
     const bool thinLineSolidWasEnabled = (oldhints & Poppler::Document::ThinLineSolid) == Poppler::Document::ThinLineSolid;
     const bool thinLineShapeWasEnabled = (oldhints & Poppler::Document::ThinLineShape) == Poppler::Document::ThinLineShape;
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 07, 0)
     if (enableOverprintPreview != overprintPreviewWasEnabled) {
         pdfdoc->setRenderHint(Poppler::Document::OverprintPreview, enableOverprintPreview);
         changed = true;
     }
-#endif
     if (enableThinLineSolid != thinLineSolidWasEnabled) {
         pdfdoc->setRenderHint(Poppler::Document::ThinLineSolid, enableThinLineSolid);
         changed = true;
@@ -2162,11 +2143,7 @@ Okular::AnnotationProxy *PDFGenerator::annotationProxy() const
 
 bool PDFGenerator::canSign() const
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(23, 06, 0)
     return !Poppler::availableCryptoSignBackends().empty();
-#else
-    return Poppler::hasNSSSupport();
-#endif
 }
 
 #if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)

@@ -25,6 +25,7 @@
 #include "generator_pdf.h"
 #include "imagescaling.h"
 #include "popplerembeddedfile.h"
+#include "popplerversion.h"
 
 Q_DECLARE_METATYPE(Poppler::Annotation *)
 

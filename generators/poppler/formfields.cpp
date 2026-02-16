@@ -14,6 +14,7 @@
 #include "pdfsettings.h"
 #include "pdfsignatureutils.h"
 
+#include "popplerversion.h"
 #include <poppler-qt6.h>
 
 extern Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, std::unique_ptr<Poppler::Link>> popplerLink);
@@ -382,11 +383,7 @@ void PopplerFormFieldChoice::setEditChoice(const QString &text)
 
 void PopplerFormFieldChoice::setAppearanceChoiceText(const QString &text)
 {
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 8, 0)
     m_field->setAppearanceChoiceText(text);
-#else
-    Q_UNUSED(text);
-#endif
 }
 
 Qt::Alignment PopplerFormFieldChoice::textAlignment() const
@@ -410,7 +407,6 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
         validateOptions = validateOptions | Poppler::FormFieldSignature::ValidateWithoutOCSPRevocationCheck;
     }
 
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(24, 4, 0)
     auto result = m_field->validateAsync(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions));
     m_info = fromPoppler(result.first);
     m_asyncObject = result.second;
@@ -420,9 +416,6 @@ PopplerFormFieldSignature::PopplerFormFieldSignature(std::unique_ptr<Poppler::Fo
             callback();
         }
     });
-#else
-    m_info = fromPoppler(m_field->validate(static_cast<Poppler::FormFieldSignature::ValidateOptions>(validateOptions)));
-#endif
     SET_ACTIONS
 }
 
@@ -534,11 +527,9 @@ std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const 
 {
     Poppler::PDFConverter::NewSignatureData pData;
     PDFGenerator::okularToPoppler(oData, &pData);
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 03, 0)
     // 0 means "Chose an appropriate size"
     pData.setFontSize(0);
     pData.setLeftFontSize(0);
-#endif
     auto result = fromPoppler(m_field->sign(newPath, pData));
 #if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
     QString errorDetails = m_field->lastSigningErrorDetails().data.toString();

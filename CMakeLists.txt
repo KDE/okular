@@ -224,7 +224,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "22.02.0" COMPONENTS Qt6)
+find_package(Poppler "24.08.0" COMPONENTS Qt6)
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 

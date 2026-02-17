@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-02-17 00:41+0000\n"
 "PO-Revision-Date: 2025-07-23 00:41-0300\n"
 "Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -62,7 +62,7 @@ msgid "Enhance thin lines:"
 msgstr "Melhorar linhas finas:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1033
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1025
 #, kde-format
 msgid "No"
 msgstr "Não"
@@ -86,19 +86,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Modo de escala padrão ao imprimir:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Ajustar à área impressa"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to full page"
 msgstr "Ajustar à página completa"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
 #, kde-format
 msgid "None; print original size"
 msgstr "Nenhum; imprimir com o tamanho original"
@@ -178,22 +178,22 @@ msgstr "Certificados disponíveis"
 msgid "&Load Signatures"
 msgstr "&Carregar assinaturas"
 
-#: generator_pdf.cpp:86
+#: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
 msgstr "Opções do PDF"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:87
 #, kde-format
 msgid "Print annotations"
 msgstr "Imprimir anotações"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Incluir anotações no documento impresso"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:89
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -202,17 +202,17 @@ msgstr ""
 "Incluir anotações no documento impresso. Você pode desabilitar isto se "
 "quiser imprimir o documento original sem anotações."
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Force rasterization"
 msgstr "Forçar a rasterização"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Rasterizar numa imagem antes de imprimir"
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:93
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -223,53 +223,53 @@ msgstr ""
 "normalmente apresenta um resultado ruim, mas é útil para imprimir documentos "
 "que aparecem incorretamente impressos."
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:103
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Modo de escala para páginas impressas"
 
-#: generator_pdf.cpp:105
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scale mode:"
 msgstr "Modo de escala:"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1023
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1023
 #, kde-format
 msgid "Format"
 msgstr "Formato"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Encrypted"
 msgstr "Criptografado"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Unencrypted"
 msgstr "Não criptografado"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Security"
 msgstr "Segurança"
 
-#: generator_pdf.cpp:1033
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Yes"
 msgstr "Sim"
 
-#: generator_pdf.cpp:1033
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Optimized"
 msgstr "Otimizado"
 
-#: generator_pdf.cpp:1500
+#: generator_pdf.cpp:1489
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -280,12 +280,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1721
+#: generator_pdf.cpp:1708
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Usando o Poppler %1"
 
-#: generator_pdf.cpp:1723
+#: generator_pdf.cpp:1710
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -296,27 +296,27 @@ msgstr ""
 "\n"
 "Compilado com o Poppler %2"
 
-#: generator_pdf.cpp:1758
+#: generator_pdf.cpp:1745
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1758
+#: generator_pdf.cpp:1745
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Configuração da infraestrutura PDF"
 
-#: generator_pdf.cpp:2207 generator_pdf.cpp:2235
+#: generator_pdf.cpp:2184 generator_pdf.cpp:2212
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Falha ao gravar arquivo temporário"
 
-#: generator_pdf.cpp:2257
+#: generator_pdf.cpp:2234
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Falha ao renomear arquivo temporário"
 
-#: generator_pdf.cpp:2277
+#: generator_pdf.cpp:2254
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -325,7 +325,7 @@ msgstr ""
 "Alguns erros foram encontrados no documento. O Okular pode não ser capaz de "
 "mostrar o conteúdo corretamente"
 
-#: pdfsettingswidget.cpp:119
+#: pdfsettingswidget.cpp:115
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -335,30 +335,30 @@ msgstr ""
 "Essas assinaturas só funcionam entre versões modernas do Okular com o "
 "backend baseado em GnuPG ativado"
 
-#: pdfsettingswidget.cpp:120
+#: pdfsettingswidget.cpp:116
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Habilitar assinaturas PGP"
 
-#: pdfsettingswidget.cpp:156
+#: pdfsettingswidget.cpp:146
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Emitido para"
 
-#: pdfsettingswidget.cpp:156
+#: pdfsettingswidget.cpp:146
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:156
+#: pdfsettingswidget.cpp:146
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Data de vencimento"
 
-#: pdfsettingswidget.cpp:173
+#: pdfsettingswidget.cpp:163
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -367,29 +367,29 @@ msgstr ""
 "Você está usando uma biblioteca Poppler sem suporte a NSS.\n"
 "Adicionar assinaturas digitais não está disponível por este motivo"
 
-#: pdfsettingswidget.cpp:197
+#: pdfsettingswidget.cpp:187
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "para sempre"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:211
 #, kde-format
 msgid "Restart needed"
 msgstr "Reinício necessário"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:211
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Você precisa reiniciar o Okular após alterar as configurações da pasta NSS"
 
-#: pdfsignatureutils.cpp:239
+#: pdfsignatureutils.cpp:230
 #, kde-format
 msgid "Enter Password"
 msgstr "Digite a senha"
 
-#: pdfsignatureutils.cpp:239
+#: pdfsignatureutils.cpp:230
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Digite a senha para abrir %1:"

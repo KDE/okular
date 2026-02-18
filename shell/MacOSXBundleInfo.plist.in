@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>English</string>
+    <string>en</string>
     <key>CFBundleExecutable</key>
     <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
     <key>CFBundleIdentifier</key>
@@ -18,18 +18,14 @@
     <string>${MACOSX_BUNDLE_SHORT_VERSION_STRING}</string>
     <key>CFBundleVersion</key>
     <string>${MACOSX_BUNDLE_BUNDLE_VERSION}</string>
-    <key>CSResourcesFileMapped</key>
-    <true/>
-    <key>LSRequiresCarbon</key>
-    <true/>
     <key>NSHumanReadableCopyright</key>
     <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
     <key>NSHighResolutionCapable</key>
     <true/>
 
     <key>CFBundleIconFile</key>
-    <string>okular_SRCS</string>
-    
+    <string>${MACOSX_BUNDLE_ICON_FILE}</string>
+
     <key>CFBundleDocumentTypes</key>
     <array>
         <dict>
@@ -38,7 +34,7 @@
                 <string>pdf</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>PDF Document</string>
             <key>CFBundleTypeRole</key>
@@ -50,7 +46,7 @@
                 <string>com.adobe.pdf</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -58,7 +54,7 @@
                 <string>eps</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>PostScript Document</string>
             <key>CFBundleTypeRole</key>
@@ -71,7 +67,7 @@
                 <string>com.adobe.encapsulated-postscript</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -79,7 +75,7 @@
                 <string>djv</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>DjVu Document</string>
             <key>CFBundleTypeRole</key>
@@ -87,7 +83,7 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -95,7 +91,7 @@
                 <string>tif</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>TIFF Image</string>
             <key>CFBundleTypeRole</key>
@@ -107,14 +103,14 @@
                 <string>public.tiff</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>epub</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>EPUB Document</string>
             <key>CFBundleTypeRole</key>
@@ -126,7 +122,7 @@
                 <string>org.idpf.epub-container</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -134,7 +130,7 @@
                 <string>prc</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Mobipocket Document</string>
             <key>CFBundleTypeRole</key>
@@ -142,7 +138,7 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -152,7 +148,7 @@
                 <string>cbt</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Comic Book Archive</string>
             <key>CFBundleTypeRole</key>
@@ -160,7 +156,7 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -168,7 +164,7 @@
                 <string>markdown</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Markdown Document</string>
             <key>CFBundleTypeRole</key>
@@ -180,7 +176,7 @@
                 <string>net.daringfireball.markdown</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -188,7 +184,7 @@
                 <string>oxps</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>XPS Document</string>
             <key>CFBundleTypeRole</key>
@@ -200,14 +196,14 @@
                 <string>com.microsoft.xps</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>chm</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Compiled HTML Help</string>
             <key>CFBundleTypeRole</key>
@@ -215,14 +211,14 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>fb2</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>FictionBook Document</string>
             <key>CFBundleTypeRole</key>
@@ -230,14 +226,14 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>dvi</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>DVI Document</string>
             <key>CFBundleTypeRole</key>
@@ -245,14 +241,14 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
                 <string>odt</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>OpenDocument Text</string>
             <key>CFBundleTypeRole</key>
@@ -264,7 +260,7 @@
                 <string>org.oasis-open.opendocument.text</string>
             </array>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -272,7 +268,7 @@
                 <string>g4</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Fax Document</string>
             <key>CFBundleTypeRole</key>
@@ -280,7 +276,7 @@
             <key>LSHandlerRank</key>
             <string>Alternate</string>
         </dict>
-        
+
         <dict>
             <key>CFBundleTypeExtensions</key>
             <array>
@@ -291,7 +287,7 @@
                 <string>webp</string>
             </array>
             <key>CFBundleTypeIconFile</key>
-            <string>okular</string>
+            <string>${MACOSX_BUNDLE_ICON_FILE}</string>
             <key>CFBundleTypeName</key>
             <string>Image</string>
             <key>CFBundleTypeRole</key>
@@ -306,7 +302,6 @@
             </array>
         </dict>
     </array>
-    
 </dict>
 </plist>
 

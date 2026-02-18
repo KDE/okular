@@ -22,6 +22,8 @@
 #include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QFileOpenEvent>
+#include <QObject>
 #include <QStringList>
 #include <QTextStream>
 #include <QtGlobal>
@@ -30,6 +32,36 @@
 #if HAVE_STYLE_MANAGER
 #include <KStyleManager>
 #endif
+
+/**
+ * Event handler for macOS file opening via QFileOpenEvent.
+ * Should not do anything on Windows/Linux as QFileOpenEvent is never fired there.
+ */
+
+class FileOpenEventHandler : public QObject
+{
+    Q_OBJECT
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override
+    {
+        if (event->type() == QEvent::FileOpen) {
+            auto *foe = static_cast<QFileOpenEvent *>(event);
+            // Find existing Shell window
+            const auto widgets = QApplication::topLevelWidgets();
+            for (QWidget *widget : widgets) {
+                if (Shell *shell = qobject_cast<Shell *>(widget)) {
+                    QString serializedOptions = ShellUtils::serializeOptions(false, false, false, false, false, QString(), QString(), QString());
+                    shell->openDocument(foe->url(), serializedOptions);
+                    shell->raise();
+                    shell->activateWindow();
+                    return true;
+                }
+            }
+            return false;
+        }
+        return QObject::eventFilter(obj, event);
+    }
+};
 
 int main(int argc, char **argv)
 {
@@ -43,6 +75,13 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
 
     QApplication app(argc, argv);
+
+    /**
+     * Install event filter to handle macOS file opening.
+     * This enables double-click and "Open With" on macOS.
+     */
+    FileOpenEventHandler eventHandler;
+    app.installEventFilter(&eventHandler);
     KLocalizedString::setApplicationDomain("okular");
 
 #if HAVE_STYLE_MANAGER
@@ -108,5 +147,5 @@ int main(int argc, char **argv)
 
     return app.exec();
 }
-
+#include "main.moc"
 /* kate: replace-tabs on; indent-width 4; */

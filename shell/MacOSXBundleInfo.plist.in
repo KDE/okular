@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>${MACOSX_BUNDLE_EXECUTABLE_NAME}</string>
+    <key>CFBundleIdentifier</key>
+    <string>${MACOSX_BUNDLE_GUI_IDENTIFIER}</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>${MACOSX_BUNDLE_BUNDLE_NAME}</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>${MACOSX_BUNDLE_SHORT_VERSION_STRING}</string>
+    <key>CFBundleVersion</key>
+    <string>${MACOSX_BUNDLE_BUNDLE_VERSION}</string>
+    <key>CSResourcesFileMapped</key>
+    <true/>
+    <key>LSRequiresCarbon</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>${MACOSX_BUNDLE_COPYRIGHT}</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+
+    <key>CFBundleIconFile</key>
+    <string>okular_SRCS</string>
+    
+    <key>CFBundleDocumentTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>pdf</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>PDF Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.pdf</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>ps</string>
+                <string>eps</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>PostScript Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.adobe.postscript</string>
+                <string>com.adobe.encapsulated-postscript</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>djvu</string>
+                <string>djv</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>DjVu Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>tiff</string>
+                <string>tif</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>TIFF Image</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.tiff</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>epub</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>EPUB Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.idpf.epub-container</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>mobi</string>
+                <string>prc</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Mobipocket Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>cbz</string>
+                <string>cbr</string>
+                <string>cb7</string>
+                <string>cbt</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Comic Book Archive</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>md</string>
+                <string>markdown</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Markdown Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>net.daringfireball.markdown</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>xps</string>
+                <string>oxps</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>XPS Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>com.microsoft.xps</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>chm</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Compiled HTML Help</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>fb2</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>FictionBook Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>dvi</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>DVI Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>odt</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>OpenDocument Text</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>org.oasis-open.opendocument.text</string>
+            </array>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>g3</string>
+                <string>g4</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Fax Document</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        
+        <dict>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>jpg</string>
+                <string>jpeg</string>
+                <string>png</string>
+                <string>gif</string>
+                <string>webp</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>okular</string>
+            <key>CFBundleTypeName</key>
+            <string>Image</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+            <key>LSItemContentTypes</key>
+            <array>
+                <string>public.jpeg</string>
+                <string>public.png</string>
+                <string>com.compuserve.gif</string>
+            </array>
+        </dict>
+    </array>
+    
+</dict>
+</plist>
+

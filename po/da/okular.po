@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-11 00:43+0000\n"
+"POT-Creation-Date: 2026-02-19 00:43+0000\n"
 "PO-Revision-Date: 2020-07-27 23:20+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -5982,47 +5982,47 @@ msgstr "Der findes allerede et værktøj med det navn. Bruger et standardnavn"
 msgid "Duplicated Name"
 msgstr "Duplikeret navn"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:114
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Side af dokumentet der skal vises"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:115
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Start i præsentationstilstand"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:116
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Start med udskriftsdialog"
 
-#: shell/main.cpp:78
+#: shell/main.cpp:117
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Start med udskriftsdialog og afslut efter udskrift"
 
-#: shell/main.cpp:79
+#: shell/main.cpp:118
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Kontrol af \"unik instans\""
 
-#: shell/main.cpp:80
+#: shell/main.cpp:119
 #, kde-format
 msgid "Not raise window"
 msgstr "Hæv ikke vindue"
 
-#: shell/main.cpp:81
+#: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Find en streng i teksten"
 
-#: shell/main.cpp:82
+#: shell/main.cpp:121
 #, kde-format
 msgid "Sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:83
+#: shell/main.cpp:122
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Dokumenter der skal åbnes. Angiv \"-\" for at læse fra stdin."

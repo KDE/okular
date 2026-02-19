@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-11 00:43+0000\n"
+"POT-Creation-Date: 2026-02-19 00:43+0000\n"
 "PO-Revision-Date: 2025-10-20 11:01+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -5769,47 +5769,47 @@ msgstr "Există deja o unealtă cu acea denumire. Se folosește una implicită"
 msgid "Duplicated Name"
 msgstr "Denumire duplicată"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:114
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Pagina documentului de afișat"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:115
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Pornește documentul în regim de prezentare"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:116
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Pornește cu dialogul de imprimare"
 
-#: shell/main.cpp:78
+#: shell/main.cpp:117
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Pornește cu dialogul de imprimare și ieși după imprimare"
 
-#: shell/main.cpp:79
+#: shell/main.cpp:118
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Control „Instanță unică”"
 
-#: shell/main.cpp:80
+#: shell/main.cpp:119
 #, kde-format
 msgid "Not raise window"
 msgstr "Nu ridică fereastra"
 
-#: shell/main.cpp:81
+#: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Găsește un șir în text"
 
-#: shell/main.cpp:82
+#: shell/main.cpp:121
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Stabilește comanda de redactor extern"
 
-#: shell/main.cpp:83
+#: shell/main.cpp:122
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Documente de deschis. Specificați „-” pentru a citi intrarea standard."

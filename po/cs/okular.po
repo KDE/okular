@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-11 00:43+0000\n"
+"POT-Creation-Date: 2026-02-19 00:43+0000\n"
 "PO-Revision-Date: 2026-01-21 21:46+0100\n"
 "Last-Translator: Jan Papez (honyczek) <honyczek@centrum.cz>\n"
 "Language-Team: Czech <kde-i18n-cs@kde.org>\n"
@@ -5799,47 +5799,47 @@ msgstr "Nástroj se zadaným názvem již existuje. Bude použit výchozí."
 msgid "Duplicated Name"
 msgstr "Duplicitní název"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:114
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Stránka dokumentu, která se má zobrazit"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:115
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Spustit dokument v prezentačním režimu"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:116
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Spustit s dialogem tisku"
 
-#: shell/main.cpp:78
+#: shell/main.cpp:117
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Spustit dialogové okno tisku a po dokončení tisku jej zavřít."
 
-#: shell/main.cpp:79
+#: shell/main.cpp:118
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Kontrola \"Unikátní instance\""
 
-#: shell/main.cpp:80
+#: shell/main.cpp:119
 #, kde-format
 msgid "Not raise window"
 msgstr "Nezdvihat okno"
 
-#: shell/main.cpp:81
+#: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Najít řetězec textu"
 
-#: shell/main.cpp:82
+#: shell/main.cpp:121
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Nastaví příkaz externího editoru"
 
-#: shell/main.cpp:83
+#: shell/main.cpp:122
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""

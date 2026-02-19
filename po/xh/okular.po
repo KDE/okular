@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-11 00:43+0000\n"
+"POT-Creation-Date: 2026-02-19 00:43+0000\n"
 "PO-Revision-Date: 2002-11-14 17:05SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -5620,47 +5620,47 @@ msgstr ""
 msgid "Duplicated Name"
 msgstr ""
 
-#: shell/main.cpp:75
+#: shell/main.cpp:114
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr ""
 
-#: shell/main.cpp:76
+#: shell/main.cpp:115
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr ""
 
-#: shell/main.cpp:77
+#: shell/main.cpp:116
 #, kde-format
 msgid "Start with print dialog"
 msgstr ""
 
-#: shell/main.cpp:78
+#: shell/main.cpp:117
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr ""
 
-#: shell/main.cpp:79
+#: shell/main.cpp:118
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr ""
 
-#: shell/main.cpp:80
+#: shell/main.cpp:119
 #, kde-format
 msgid "Not raise window"
 msgstr ""
 
-#: shell/main.cpp:81
+#: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
 msgstr ""
 
-#: shell/main.cpp:82
+#: shell/main.cpp:121
 #, kde-format
 msgid "Sets the external editor command"
 msgstr ""
 
-#: shell/main.cpp:83
+#: shell/main.cpp:122
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr ""

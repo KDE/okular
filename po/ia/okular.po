@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-11 00:43+0000\n"
+"POT-Creation-Date: 2026-02-19 00:43+0000\n"
 "PO-Revision-Date: 2026-02-02 12:26+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -5809,47 +5809,47 @@ msgstr "In ha ja un instrumento con illo nomine. On usa lo que es predefinite"
 msgid "Duplicated Name"
 msgstr "Nomine duplicate"
 
-#: shell/main.cpp:75
+#: shell/main.cpp:114
 #, kde-format
 msgid "Page of the document to be shown"
 msgstr "Pagina del documento que on debe monstrar"
 
-#: shell/main.cpp:76
+#: shell/main.cpp:115
 #, kde-format
 msgid "Start the document in presentation mode"
 msgstr "Initia le documento in modo de presentation"
 
-#: shell/main.cpp:77
+#: shell/main.cpp:116
 #, kde-format
 msgid "Start with print dialog"
 msgstr "Initia con dialogo pro imprimer"
 
-#: shell/main.cpp:78
+#: shell/main.cpp:117
 #, kde-format
 msgid "Start with print dialog and exit after printing"
 msgstr "Initia con dialogo pro imprimer e abandona post imprimer"
 
-#: shell/main.cpp:79
+#: shell/main.cpp:118
 #, kde-format
 msgid "\"Unique instance\" control"
 msgstr "Controlo de \"Instantia unic\""
 
-#: shell/main.cpp:80
+#: shell/main.cpp:119
 #, kde-format
 msgid "Not raise window"
 msgstr "Non altia fenestra"
 
-#: shell/main.cpp:81
+#: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
 msgstr "Trova una catena sur le texto"
 
-#: shell/main.cpp:82
+#: shell/main.cpp:121
 #, kde-format
 msgid "Sets the external editor command"
 msgstr "Assigna le commando de editor externe"
 
-#: shell/main.cpp:83
+#: shell/main.cpp:122
 #, kde-format
 msgid "Documents to open. Specify '-' to read from stdin."
 msgstr "Documento de aperir. Specifica '-' pro leger ex stdin."

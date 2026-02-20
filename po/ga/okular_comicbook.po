@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -43,15 +43,3 @@ msgstr ""
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Formáid anaithnid ComicBook."
-
-#~ msgid "ComicBook Backend"
-#~ msgstr "Inneall ComicBook"
-
-#~ msgid "A renderer for various comic book formats"
-#~ msgstr "Ríomhchlár a rindreálann formáidí éagsúla de leabhair ghrafacha"
-
-#~ msgid "© 2007-2008 Tobias Koenig"
-#~ msgstr "© 2007-2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

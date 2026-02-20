@@ -12,12 +12,12 @@ msgstr ""
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
 "projects/okulardeux/okular/okular_KIMGIO/>\n"
-"Language: okular_kimgio\n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -42,30 +42,3 @@ msgid ""
 msgstr ""
 "Tá cuma mhífhoirmithe ar an doiciméad seo. Seo an meastachán is fearr ar an "
 "gcuma atá beartaithe don doiciméad."
-
-#~ msgid "Image Backend"
-#~ msgstr "Inneall Íomhá"
-
-#~ msgid "A simple image backend"
-#~ msgstr "Inneall simplí íomhá"
-
-#~ msgid ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-#~ msgstr ""
-#~ "© 2005, 2009 Albert Astals Cid\n"
-#~ "© 2006-2007 Pino Toscano\n"
-#~ "© 2006-2007 Tobias Koenig"
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid "Pino Toscano"
-#~ msgstr "Pino Toscano"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"
-
-#~ msgid "Main Toolbar"
-#~ msgstr "Príomhbharra Uirlisí"

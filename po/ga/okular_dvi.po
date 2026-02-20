@@ -12,12 +12,12 @@ msgstr ""
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
 "projects/okulardeux/okular/okular_DVI/>\n"
-"Language: okular_dvi\n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -499,105 +499,3 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Fuarthas beart ordaithe mícheart i liosta macra VF: %1"
-
-#~ msgid "portrait"
-#~ msgstr "portráid"
-
-#~ msgid "landscape"
-#~ msgstr "tírdhreach"
-
-#~ msgid "Abort"
-#~ msgstr "Tobscoir"
-
-#~ msgid "%v of %m"
-#~ msgstr "%v as %m"
-
-#~ msgid "Please be patient"
-#~ msgstr "Fan go fóill, le do thoil..."
-
-#~ msgid "*.pdf|Portable Document Format (*.pdf)"
-#~ msgstr "*.pdf|Formáid Doiciméad Iniompartha (*.pdf)"
-
-#~ msgid "Export File As"
-#~ msgstr "Easpórtáil Comhad Mar"
-
-#~ msgid "Overwrite File"
-#~ msgstr "Forscríobh Comhad"
-
-#~ msgid "Overwrite"
-#~ msgstr "Forscríobh"
-
-#~ msgid "Using dvipdfm to export the file to PDF"
-#~ msgstr "Ag úsáid dvipdfm chun an comhad a easpórtáil go PDF"
-
-#~ msgid "Waiting for dvipdfm to finish..."
-#~ msgstr "Ag feitheamh le dvipdfm..."
-
-#~ msgid "*.ps|PostScript (*.ps)"
-#~ msgstr "*.ps|PostScript (*.ps)"
-
-#~ msgid "Using dvips to export the file to PostScript"
-#~ msgstr "Ag úsáid dvips chun an comhad a easpórtáil go PostScript"
-
-#~ msgid "Waiting for dvips to finish..."
-#~ msgstr "Ag feitheamh le dvips..."
-
-#~ msgid "Not All Font Files Found"
-#~ msgstr "Níorbh fhéidir gach cló a aimsiú"
-
-#~ msgid "Locating fonts..."
-#~ msgstr "Clónna á lorg..."
-
-#~ msgid "Export: %1 to PDF"
-#~ msgstr "Easpórtáil: %1 go PDF"
-
-#~ msgid "Export: %1 to PostScript"
-#~ msgstr "Easpórtáil: %1 go PostScript"
-
-#~ msgid "TeX Name"
-#~ msgstr "Ainm TeX"
-
-#~ msgid "Zoom"
-#~ msgstr "Súmáil"
-
-#~ msgid "Type"
-#~ msgstr "Cineál"
-
-#~ msgid "Encoding"
-#~ msgstr "Ionchódú"
-
-#~ msgid "Comment"
-#~ msgstr "Nóta"
-
-#~ msgid "FreeType"
-#~ msgstr "FreeType"
-
-#~ msgid "Could not load the DVI-file."
-#~ msgstr "Ní féidir an comhad DVI a luchtú."
-
-#~ msgid " in font file "
-#~ msgstr " i gcomhad cló "
-
-#~ msgid "Virtual character "
-#~ msgstr "Carachtar fíorúil "
-
-#~ msgid " in font "
-#~ msgstr " i gcló "
-
-#~ msgid " ignored."
-#~ msgstr ": rinneadh neamhshuim air."
-
-#~ msgid "Fatal Error"
-#~ msgstr "Earráid Mharfach"
-
-#~ msgid "KDVI: Information"
-#~ msgstr "KDVI: Eolas"
-
-#~ msgid "Do not show this message again"
-#~ msgstr "Ná taispeáin an teachtaireacht seo arís"
-
-#~ msgid "File Error"
-#~ msgstr "Earráid Chomhaid"
-
-#~ msgid "Pages"
-#~ msgstr "Leathanaigh"

@@ -31,15 +31,3 @@ msgstr "kscanne@gmail.com"
 #, kde-format
 msgid "Unable to load document"
 msgstr "Ní féidir an cháipéis a luchtú"
-
-#~ msgid "Fax Backend"
-#~ msgstr "Inneall Facs"
-
-#~ msgid "A G3/G4 fax document backend"
-#~ msgstr "Inneall cáipéisí facs G3/G4"
-
-#~ msgid "© 2008 Tobias Koenig"
-#~ msgstr "© 2008 Tobias Koenig"
-
-#~ msgid "Tobias Koenig"
-#~ msgstr "Tobias Koenig"

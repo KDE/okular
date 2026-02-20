@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -41,15 +41,3 @@ msgstr "EPub"
 #, kde-format
 msgid "EPub Backend Configuration"
 msgstr "Cumraíocht Chúltaca EPub"
-
-#~ msgid "EPub Backend"
-#~ msgstr "Inneall EPub"
-
-#~ msgid "An EPub backend"
-#~ msgstr "Inneall EPub"
-
-#~ msgid "© 2008 Ely Levy"
-#~ msgstr "© 2008 Ely Levy"
-
-#~ msgid "Ely Levy"
-#~ msgstr "Ely Levy"

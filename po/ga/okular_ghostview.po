@@ -12,12 +12,12 @@ msgstr ""
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
 "projects/okulardeux/okular/okular_GHOSTVIEW/>\n"
-"Language: okular_ghostview\n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -76,46 +76,3 @@ msgstr "Leagan na cáipéise"
 #, kde-format
 msgid "Language Level"
 msgstr "Leibhéal Teanga"
-
-#~ msgid "PS Backend"
-#~ msgstr "Inneall PostScript"
-
-#~ msgid "A PostScript file renderer."
-#~ msgstr "Rindreálaí comhad PostScript."
-
-#~ msgid "© 2007-2008 Albert Astals Cid"
-#~ msgstr "© 2007-2008 Albert Astals Cid"
-
-#~ msgid "Based on the Spectre library."
-#~ msgstr "Bunaithe ar an leabharlann Spectre."
-
-#~ msgid "Albert Astals Cid"
-#~ msgstr "Albert Astals Cid"
-
-#~ msgid ""
-#~ "Anti-aliasing makes the result look better, but it makes the display take "
-#~ "longer"
-#~ msgstr ""
-#~ "Feabhsaíonn frithailiasáil cuma na dtorthaí, ach tógfaidh an taispeáint "
-#~ "seal níos faide"
-
-#~ msgid "&Enable anti-aliasing of fonts"
-#~ msgstr "&Cumasaigh frithailiasáil de chlónna"
-
-#~ msgid "&Enable anti-aliasing of graphics"
-#~ msgstr "&Cumasaigh frithailiasáil d'íomhánna"
-
-#~ msgid ""
-#~ "Ghostscript is the basic renderer (the program which draws the "
-#~ "picture)<br>\n"
-#~ "In case of problems you might want to see its error messages"
-#~ msgstr ""
-#~ "Is é Ghostscript an bunchlár rindreála (an clár a tharraingíonn an "
-#~ "pictiúr)<br>\n"
-#~ "Má tá fadhbanna ann, ba chóir duit na hearráidí ó Ghostscript a scrúdú"
-
-#~ msgid "&Show Ghostscript messages in a separate box"
-#~ msgstr "Tai&speáin teachtaireachtaí Ghostscript i mbosca faoi leith"
-
-#~ msgid "Ghostscript Configuration"
-#~ msgstr "Cumraíocht Ghostscript"

@@ -39,7 +39,7 @@ msgstr "Falleva compilar le documento de Markdown."
 #: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
-msgstr "Habilita formattation de SmartyPants"
+msgstr "Habilita fnormatation de SmartyPants"
 
 #: generator_md.cpp:60
 #, kde-format

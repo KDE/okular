@@ -7,7 +7,7 @@
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008, 2010, 2013.
 # Maciej Wikło <maciej.wiklo@wp.pl>, 2009, 2010.
 # Artur Chłond <eugenewolfe@o2.pl>, 2011.
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Kris <x-men@mixbox.pl>, 2013.
 # Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
 #
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-12-06 15:52+0100\n"
+"PO-Revision-Date: 2026-02-21 08:09+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -6016,7 +6016,7 @@ msgstr "Witaj w Okularze"
 #, kde-format
 msgctxt "on welcome screen"
 msgid "Open Document..."
-msgstr "Otwórz dokument..."
+msgstr "Otwórz dokument…"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: shell/welcomescreen.ui:382

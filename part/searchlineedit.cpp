@@ -215,7 +215,7 @@ void SearchLineEdit::slotReturnPressed(const QString &text)
 
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
-    if (QApplication::keyboardModifiers() == Qt::ShiftModifier) {
+    if (QApplication::keyboardModifiers() & Qt::ShiftModifier) {
         m_searchType = Okular::Document::PreviousMatch;
         findPrev();
     } else {

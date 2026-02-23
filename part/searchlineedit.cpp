@@ -213,9 +213,17 @@ void SearchLineEdit::slotReturnPressed(const QString &text)
 {
     Q_UNUSED(text);
 
+    auto activeModifiers = QApplication::keyboardModifiers();
+
+    // So far unsupported modifiers.
+    // We might want to do something with them in the future, but let's now don't
+    if (activeModifiers & Qt::ControlModifier || activeModifiers & Qt::AltModifier || activeModifiers & Qt::MetaModifier) {
+        return;
+    }
+
     m_inputDelayTimer->stop();
     prepareLineEditForSearch();
-    if (QApplication::keyboardModifiers() & Qt::ShiftModifier) {
+    if ((activeModifiers & ~Qt::KeypadModifier) == Qt::ShiftModifier) {
         m_searchType = Okular::Document::PreviousMatch;
         findPrev();
     } else {

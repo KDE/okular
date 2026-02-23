@@ -652,7 +652,7 @@ bool DocumentPrivate::loadDocumentInfo(QFile &infoFile, LoadDocumentInfoFlags lo
                 QDomElement infoElement = infoNode.toElement();
 
                 // restore viewports history
-                if (infoElement.tagName() == QLatin1String("history")) {
+                if (infoElement.tagName() == QLatin1String("history") && SettingsCore::continueFromLastViewedPage()) {
                     // clear history
                     m_viewportHistory.clear();
                     // append old viewports

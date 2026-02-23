@@ -184,6 +184,11 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     setOpenInContinuousModeByDefaultText();
     connect(useFileInfoForContinuousMode, &QCheckBox::toggled, this, setOpenInContinuousModeByDefaultText);
 
+    QCheckBox *continueFromLastViewedPage = new QCheckBox(this);
+    continueFromLastViewedPage->setText(i18nc("@option:check Config dialog, general page", "Continue from last viewed page"));
+    continueFromLastViewedPage->setObjectName(QStringLiteral("kcfg_ContinueFromLastViewedPage"));
+    layout->addRow(programFeaturesLabel(), continueFromLastViewedPage);
+
     // Under Wayland the cursor wrap feature is unavailable
     if (QGuiApplication::platformName() != QLatin1String("wayland")) {
         QCheckBox *dragBeyondScreenEdges = new QCheckBox(this);

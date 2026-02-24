@@ -302,7 +302,9 @@ Document::OpenResult TextDocumentGenerator::loadDocumentWithPassword(const QStri
         return openResult;
     }
     d->mDocument = d->mConverter->document();
-
+    if (d->mDocument) {
+        d->mDocument->setDefaultFont(d->mFont);
+    }
     d->generateTitleInfos();
     const QList<TextDocumentGeneratorPrivate::LinkInfo> linkInfos = d->generateLinkInfos();
     const QList<TextDocumentGeneratorPrivate::AnnotationInfo> annotationInfos = d->generateAnnotationInfos();
@@ -405,7 +407,6 @@ QImage TextDocumentGeneratorPrivate::image(PixmapRequest *request)
     QAbstractTextDocumentLayout::PaintContext context;
     context.palette.setColor(QPalette::Text, Qt::black);
     context.clip = rect;
-    mDocument->setDefaultFont(mFont);
     mDocument->documentLayout()->draw(&p, context);
 #ifdef OKULAR_TEXTDOCUMENT_THREADED_RENDERING
     q->userMutex()->unlock();
@@ -523,6 +524,9 @@ bool TextDocumentGenerator::reparseConfig()
 
     if (newFont != d->mFont) {
         d->mFont = newFont;
+        if (d->mDocument) {
+            d->mDocument->setDefaultFont(d->mFont);
+        }
         return true;
     }
 

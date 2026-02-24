@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-19 00:43+0000\n"
+"POT-Creation-Date: 2026-02-24 00:41+0000\n"
 "PO-Revision-Date: 2026-01-31 10:54+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -1681,7 +1681,7 @@ msgstr "Страница %1 (%2)"
 msgid "Page %1"
 msgstr "Страница %1"
 
-#: part/annotationpopup.cpp:85
+#: part/annotationpopup.cpp:92
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1691,46 +1691,54 @@ msgstr[1] "%1 комментария"
 msgstr[2] "%1 комментариев"
 msgstr[3] "Комментарий"
 
-#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
+#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:156
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Открыть заметку"
 
-#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/annotationpopup.cpp:102 part/annotationpopup.cpp:163
 #: part/bookmarklist.cpp:265 part/part.cpp:2281 part/part.cpp:3191
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Удалить закладку"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3193
+#: part/annotationpopup.cpp:106 part/annotationpopup.cpp:166 part/part.cpp:3193
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Добавить закладку"
 
-#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
+#: part/annotationpopup.cpp:112 part/annotationpopup.cpp:171
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Копировать текст в буфер обмена"
 
-#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
+#: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
 #: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
 #: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копирование запрещено DRM"
 
-#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
+#: part/annotationpopup.cpp:121 part/annotationpopup.cpp:180
 #, kde-format
 msgid "&Delete"
 msgstr "&Удалить"
 
-#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:774
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:184 part/part.cpp:774
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Свойства"
 
-#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'…"
+msgctxt "%1 is the name of the file to open"
+msgid "&Open '%1'…"
+msgstr "&Сохранить «%1»…"
+
+#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2932,32 +2940,39 @@ msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Открывать по умолчанию в режиме «рулоном»"
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:188
+#, fuzzy, kde-format
+#| msgid "Continue losing changes"
+msgctxt "@option:check Config dialog, general page"
+msgid "Continue from last viewed page"
+msgstr "Продолжить без сохранения изменений"
+
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "Переносить курсор при его выходе за край экрана в режиме перетаскивания"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:203
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Длина журнала последних файлов:"
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Столбцов в режиме обзора:"
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:225
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:221
+#: part/dlggeneral.cpp:226
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2967,49 +2982,49 @@ msgstr ""
 "Определяет, какая часть текущей видимой области будет оставаться видна при "
 "перемещении клавишами Page Up/Page Down."
 
-#: part/dlggeneral.cpp:223
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Перекрытие Page Up/Down:"
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:233
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:232
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:233
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "По ширине страницы"
 
-#: part/dlggeneral.cpp:234
+#: part/dlggeneral.cpp:239
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Страница целиком"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:240
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Автоматическая подгонка"
 
-#: part/dlggeneral.cpp:236
+#: part/dlggeneral.cpp:241
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Пользовательский"
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:242
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3020,7 +3035,7 @@ msgstr ""
 "открываемые впервые. Для уже открывавшихся файлов применяется масштаб, "
 "установленный ранее."
 
-#: part/dlggeneral.cpp:241
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

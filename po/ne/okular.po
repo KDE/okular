@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-19 00:43+0000\n"
+"POT-Creation-Date: 2026-02-24 00:41+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1730,7 +1730,7 @@ msgstr "पृष्ठ %1"
 msgid "Page %1"
 msgstr "पृष्ठ %1"
 
-#: part/annotationpopup.cpp:85
+#: part/annotationpopup.cpp:92
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "Menu title"
@@ -1739,47 +1739,54 @@ msgid_plural "%1 Annotations"
 msgstr[0] "प्रस्तुतिकरण"
 msgstr[1] "प्रस्तुतिकरण"
 
-#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
+#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:156
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr ""
 
-#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/annotationpopup.cpp:102 part/annotationpopup.cpp:163
 #: part/bookmarklist.cpp:265 part/part.cpp:2281 part/part.cpp:3191
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "पुस्तकचिनो हटाउनुहोस्"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3193
+#: part/annotationpopup.cpp:106 part/annotationpopup.cpp:166 part/part.cpp:3193
 #, kde-format
 msgid "Add Bookmark"
 msgstr "पुस्तकचिनो थप्नुहोस्"
 
-#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
+#: part/annotationpopup.cpp:112 part/annotationpopup.cpp:171
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text to Clipboard"
 msgstr "क्लिपबोर्डमा प्रतिलिपि बनाउनुहोस्"
 
-#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
+#: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
 #: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
 #: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr ""
 
-#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
+#: part/annotationpopup.cpp:121 part/annotationpopup.cpp:180
 #, kde-format
 msgid "&Delete"
 msgstr ""
 
-#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:774
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:184 part/part.cpp:774
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "गुण"
 
-#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
+#, fuzzy, kde-format
+#| msgid "Save to File..."
+msgctxt "%1 is the name of the file to open"
+msgid "&Open '%1'…"
+msgstr "फाइलमा बचत गर्नुहोस्..."
+
+#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgctxt "%1 is the name of the file to save"
@@ -3006,33 +3013,39 @@ msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr ""
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:188
+#, kde-format
+msgctxt "@option:check Config dialog, general page"
+msgid "Continue from last viewed page"
+msgstr ""
+
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:203
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr ""
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:218
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "अधिलेखन गर्नुहोस्"
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:225
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:221
+#: part/dlggeneral.cpp:226
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3040,52 +3053,52 @@ msgid ""
 "pressing the Page Up/Down keys."
 msgstr ""
 
-#: part/dlggeneral.cpp:223
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr ""
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:233
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%1:"
 
-#: part/dlggeneral.cpp:232
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr ""
 
-#: part/dlggeneral.cpp:233
+#: part/dlggeneral.cpp:238
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "चौडाइ ठीक गर्नुहोस्"
 
-#: part/dlggeneral.cpp:234
+#: part/dlggeneral.cpp:239
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "पृष्ठ ठीक पार्नुहोस्"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:240
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr ""
 
-#: part/dlggeneral.cpp:236
+#: part/dlggeneral.cpp:241
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr ""
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:242
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3093,7 +3106,7 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 
-#: part/dlggeneral.cpp:241
+#: part/dlggeneral.cpp:246
 #, fuzzy, kde-format
 #| msgid "Default transition:"
 msgctxt "label:listbox Config dialog, general page, default zoom"

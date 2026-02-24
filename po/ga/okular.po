@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-19 00:43+0000\n"
+"POT-Creation-Date: 2026-02-24 00:41+0000\n"
 "PO-Revision-Date: 2026-01-10 12:18+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
@@ -1663,7 +1663,7 @@ msgstr "Leathanach %1 (%2)"
 msgid "Page %1"
 msgstr "Leathanach %1"
 
-#: part/annotationpopup.cpp:85
+#: part/annotationpopup.cpp:92
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1674,46 +1674,54 @@ msgstr[2] "%1 Anótálacha"
 msgstr[3] "%1 Anótálacha"
 msgstr[4] "%1 Anótálacha"
 
-#: part/annotationpopup.cpp:87 part/annotationpopup.cpp:146
+#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:156
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Oscail Preabnóta"
 
-#: part/annotationpopup.cpp:95 part/annotationpopup.cpp:153
+#: part/annotationpopup.cpp:102 part/annotationpopup.cpp:163
 #: part/bookmarklist.cpp:265 part/part.cpp:2281 part/part.cpp:3191
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Bain Leabharmharc"
 
-#: part/annotationpopup.cpp:99 part/annotationpopup.cpp:156 part/part.cpp:3193
+#: part/annotationpopup.cpp:106 part/annotationpopup.cpp:166 part/part.cpp:3193
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Cuir Leabharmharc Leis"
 
-#: part/annotationpopup.cpp:105 part/annotationpopup.cpp:161
+#: part/annotationpopup.cpp:112 part/annotationpopup.cpp:171
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Cóipeáil Téacs chuig an nGearrthaisce"
 
-#: part/annotationpopup.cpp:109 part/annotationpopup.cpp:165
+#: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
 #: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
 #: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Cóipeáil faoi chosc ag DRM"
 
-#: part/annotationpopup.cpp:114 part/annotationpopup.cpp:170
+#: part/annotationpopup.cpp:121 part/annotationpopup.cpp:180
 #, kde-format
 msgid "&Delete"
 msgstr "&Scrios"
 
-#: part/annotationpopup.cpp:128 part/annotationpopup.cpp:174 part/part.cpp:774
+#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:184 part/part.cpp:774
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Airíonna"
 
-#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:180
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to save"
+#| msgid "&Save '%1'…"
+msgctxt "%1 is the name of the file to open"
+msgid "&Open '%1'…"
+msgstr "&Sábháil '%1'…"
+
+#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2925,7 +2933,14 @@ msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Oscail i mód leanúnach de réir réamhshocraithe"
 
-#: part/dlggeneral.cpp:190
+#: part/dlggeneral.cpp:188
+#, fuzzy, kde-format
+#| msgid "Continue losing changes"
+msgctxt "@option:check Config dialog, general page"
+msgid "Continue from last viewed page"
+msgstr "Lean ort ag cailleadh athruithe"
+
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
@@ -2933,25 +2948,25 @@ msgstr ""
 "Agus an Uirlis Brabhsála á húsáid agat, fillte an cúrsóir ag imill an "
 "scáileáin"
 
-#: part/dlggeneral.cpp:198
+#: part/dlggeneral.cpp:203
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Míreanna i stair le déanaí:"
 
-#: part/dlggeneral.cpp:213
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Colúin forbhreathnaithe:"
 
-#: part/dlggeneral.cpp:220
+#: part/dlggeneral.cpp:225
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:221
+#: part/dlggeneral.cpp:226
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2961,49 +2976,49 @@ msgstr ""
 "Sainmhíníonn sé seo cé mhéad den limistéar féachana reatha a bheidh le "
 "feiceáil fós nuair a bhrúnn tú na heochracha Leathanach Suas/Síos."
 
-#: part/dlggeneral.cpp:223
+#: part/dlggeneral.cpp:228
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Forluí Leathanach Suas/Síos:"
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:233
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:232
+#: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:233
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Leithead Oiriúnach"
 
-#: part/dlggeneral.cpp:234
+#: part/dlggeneral.cpp:239
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Oiriúnaigh an Leathanach"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:240
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Oiriúnú Uathoibríoch"
 
-#: part/dlggeneral.cpp:236
+#: part/dlggeneral.cpp:241
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Saincheaptha"
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:242
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3014,7 +3029,7 @@ msgstr ""
 "riamh cheana. Do chomhaid a osclaíodh sular cuireadh an súmála roimhe seo i "
 "bhfeidhm."
 
-#: part/dlggeneral.cpp:241
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:41+0000\n"
-"PO-Revision-Date: 2026-01-30 13:08+0100\n"
+"PO-Revision-Date: 2026-02-24 11:53+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1727,12 +1727,10 @@ msgid "&Properties"
 msgstr "Eigenscha&ppen"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "'%1' op&slaan…"
+msgstr "'%1' openen…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2933,11 +2931,10 @@ msgid "Open in continuous mode by default"
 msgstr "Standaard in modus continu openen"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Doorgaan en wijzigingen verliezen"
+msgstr "Doorgaan vanaf de laatst bekeken pagina"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

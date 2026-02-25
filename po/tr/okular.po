@@ -21,15 +21,15 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:41+0000\n"
-"PO-Revision-Date: 2026-01-30 15:30+0300\n"
-"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
+"PO-Revision-Date: 2026-02-24 07:59+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1723,12 +1723,10 @@ msgid "&Properties"
 msgstr "Ö&zellikler"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "&Kaydet: “%1”…"
+msgstr "&Aç: “%1”…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2925,11 +2923,10 @@ msgid "Open in continuous mode by default"
 msgstr "Öntanımlı olarak sürdürülen kipte aç"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Değişiklikleri kaybetmeyi sürdür"
+msgstr "Son görüntülenen sayfadan sürdür"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:39+0000\n"
-"PO-Revision-Date: 2025-11-12 19:55+0400\n"
+"PO-Revision-Date: 2026-02-24 22:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -271,13 +271,13 @@ msgstr "أغلب الصفحات %1"
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
-msgstr "بالطّول %1"
+msgstr "%1 طولي"
 
 #: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
-msgstr "بالعرض %1"
+msgstr "%1 عرضي"
 
 #: core/document.cpp:246
 #, kde-format

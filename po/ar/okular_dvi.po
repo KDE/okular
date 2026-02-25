@@ -4,14 +4,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # hayig2000 <hayig2000@gmail.com>, 2008.
-# SPDX-FileCopyrightText: 2008, 2021, 2024, 2025 zayed <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2008, 2021, 2024, 2025, 2026 zayed <zayed.alsaidi@gmail.com>
 # Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-20 02:35+0000\n"
-"PO-Revision-Date: 2025-08-13 20:18+0400\n"
+"PO-Revision-Date: 2026-02-24 22:50+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -345,12 +345,12 @@ msgstr "%1 × %2 بوصة"
 #: pageSize.cpp:318
 #, kde-format
 msgid "portrait"
-msgstr "عمودي"
+msgstr "طولي"
 
 #: pageSize.cpp:320
 #, kde-format
 msgid "landscape"
-msgstr "أفقي"
+msgstr "عرضي"
 
 #: psgs.cpp:286
 #, kde-format

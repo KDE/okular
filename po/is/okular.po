@@ -5,14 +5,14 @@
 # Arnar Leosson <leosson@frisurf.no>, 2005.
 # Arnar Leósson <leosson@frisurf.no>, 2005.
 # Björgvin Ragnarsson <nifgraup@gmail.com>, 2005.
-# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2014, 2016, 2017, 2018, 2022, 2025 Sveinn í Felli <sveinki@nett.is>
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2014, 2016, 2017, 2018, 2022, 2025, 2026 Sveinn í Felli <sveinki@nett.is>
 # SPDX-FileCopyrightText: 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:41+0000\n"
-"PO-Revision-Date: 2025-12-02 13:28+0000\n"
+"PO-Revision-Date: 2026-02-25 10:44+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -1713,12 +1713,10 @@ msgid "&Properties"
 msgstr "&Eiginleikar"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "Vi&sta '%1'…"
+msgstr "&Opna '%1'…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2914,11 +2912,10 @@ msgid "Open in continuous mode by default"
 msgstr "Opna sjálfgefið í samfelldu sniði"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Halda áfram og tapa breytingum"
+msgstr "Halda áfram frá síðast skoðaðri síðu"
 
 #: part/dlggeneral.cpp:195
 #, kde-format
@@ -3845,10 +3842,9 @@ msgid "Copy to Clipboard"
 msgstr "Afrita á klippispjald"
 
 #: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Afrita texta á klippispjald"
+msgstr "Afrita texta (án línuskiptinga)"
 
 #: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
@@ -5932,7 +5928,7 @@ msgstr "Fyrri flipi"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Skipta yfir á flipa %1"
 
 #: shell/shell.cpp:614
 #, kde-format

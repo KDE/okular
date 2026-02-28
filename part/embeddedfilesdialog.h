@@ -28,6 +28,7 @@ public:
 
 private Q_SLOTS:
     void saveFileFromButton();
+    void openFileFromButton();
     void attachViewContextMenu();
     void updateSaveButton();
     void viewFileFromButton();
@@ -36,11 +37,13 @@ private Q_SLOTS:
 private:
     void saveFile(Okular::EmbeddedFile *);
     void viewFile(Okular::EmbeddedFile *);
+    void openFile(Okular::EmbeddedFile *);
 
     QTreeWidget *m_tw;
 
     QPushButton *mUser1Button;
     QPushButton *mUser2Button;
+    QPushButton *mUser3Button;
     QList<QSharedPointer<QTemporaryFile>> m_openedFiles;
 };
 

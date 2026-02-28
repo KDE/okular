@@ -62,6 +62,11 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
     KGuiItem::assign(mUser2Button, KGuiItem(i18nc("@action:button", "View"), QStringLiteral("document-open")));
     mUser2Button->setEnabled(false);
 
+    mUser3Button = new QPushButton;
+    buttonBox->addButton(mUser3Button, QDialogButtonBox::ActionRole);
+    KGuiItem::assign(mUser3Button, KGuiItem(i18nc("@action:button", "Open"), QStringLiteral("document-open")));
+    mUser3Button->setEnabled(false);
+
     m_tw = new QTreeWidget(this);
     mainLayout->addWidget(m_tw);
     mainLayout->addWidget(buttonBox);
@@ -103,6 +108,7 @@ EmbeddedFilesDialog::EmbeddedFilesDialog(QWidget *parent, const Okular::Document
 
     connect(mUser1Button, &QPushButton::clicked, this, &EmbeddedFilesDialog::saveFileFromButton);
     connect(mUser2Button, &QPushButton::clicked, this, &EmbeddedFilesDialog::viewFileFromButton);
+    connect(mUser3Button, &QPushButton::clicked, this, &EmbeddedFilesDialog::openFileFromButton);
     connect(m_tw, &QWidget::customContextMenuRequested, this, &EmbeddedFilesDialog::attachViewContextMenu);
     connect(m_tw, &QTreeWidget::itemSelectionChanged, this, &EmbeddedFilesDialog::updateSaveButton);
     connect(m_tw, &QTreeWidget::itemDoubleClicked, this, &EmbeddedFilesDialog::viewFileItem);
@@ -113,6 +119,7 @@ void EmbeddedFilesDialog::updateSaveButton()
     bool enable = (m_tw->selectedItems().count() > 0);
     mUser1Button->setEnabled(enable);
     mUser2Button->setEnabled(enable);
+    mUser3Button->setEnabled(enable);
 }
 
 void EmbeddedFilesDialog::saveFileFromButton()
@@ -130,6 +137,15 @@ void EmbeddedFilesDialog::viewFileFromButton()
     for (QTreeWidgetItem *twi : selected) {
         Okular::EmbeddedFile *ef = qvariant_cast<Okular::EmbeddedFile *>(twi->data(0, EmbeddedFileRole));
         viewFile(ef);
+    }
+}
+
+void EmbeddedFilesDialog::openFileFromButton()
+{
+    const QList<QTreeWidgetItem *> selected = m_tw->selectedItems();
+    for (QTreeWidgetItem *twi : selected) {
+        Okular::EmbeddedFile *ef = qvariant_cast<Okular::EmbeddedFile *>(twi->data(0, EmbeddedFileRole));
+        openFile(ef);
     }
 }
 
@@ -153,6 +169,7 @@ void EmbeddedFilesDialog::attachViewContextMenu()
     QMenu menu(this);
     const QAction *saveAsAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18nc("@action:inmenu", "&Save As…"));
     const QAction *viewAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@action:inmenu", "&View…"));
+    const QAction *openAct = menu.addAction(QIcon::fromTheme(QStringLiteral("document-open")), i18nc("@action:inmenu", "&Open…"));
 
     const QAction *act = menu.exec(QCursor::pos());
     if (!act) {
@@ -164,6 +181,8 @@ void EmbeddedFilesDialog::attachViewContextMenu()
         saveFile(ef);
     } else if (act == viewAct) {
         viewFile(ef);
+    } else if (act == openAct) {
+        openFile(ef);
     }
 }
 
@@ -188,6 +207,25 @@ void EmbeddedFilesDialog::viewFile(Okular::EmbeddedFile *ef)
     auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()));
     job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
     job->start();
+}
+
+void EmbeddedFilesDialog::openFile(Okular::EmbeddedFile *ef)
+{
+    QFileInfo fileInfo(ef->name());
+    const QString templateName = QDir::tempPath() + QLatin1Char('/') + fileInfo.baseName() + QStringLiteral(".XXXXXX") + (fileInfo.completeSuffix().isEmpty() ? QLatin1String("") : QString(QLatin1Char('.') + fileInfo.completeSuffix()));
+
+    QTemporaryFile tmpFile(templateName);
+    tmpFile.setAutoRemove(false);
+
+    if (tmpFile.open()) {
+        GuiUtils::writeEmbeddedFile(ef, this, tmpFile);
+        tmpFile.setPermissions(QFile::ReadOwner);
+        const QString fileName = tmpFile.fileName();
+        tmpFile.close();
+        auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(fileName));
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->start();
+    }
 }
 
 void EmbeddedFilesDialog::saveFile(Okular::EmbeddedFile *ef)

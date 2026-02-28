@@ -1696,7 +1696,7 @@ msgstr "属性(&P)"
 #, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr ""
+msgstr "打开(&O)“%1”…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2886,7 +2886,7 @@ msgstr "默认使用连续翻页模式打开文档"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr ""
+msgstr "从上次查看的页面继续"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:41+0000\n"
-"PO-Revision-Date: 2026-02-12 08:14+0100\n"
+"PO-Revision-Date: 2026-02-28 23:57+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1717,12 +1717,10 @@ msgid "&Properties"
 msgstr "&Propietateak"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "&Gorde '%1'..."
+msgstr "&Ireki '%1'…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2924,11 +2922,10 @@ msgid "Open in continuous mode by default"
 msgstr "Ireki modu jarraitua era lehenetsian"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Jarraitu aldaketak galduta"
+msgstr "Jarraitu ikusitako azken orrialdetik"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

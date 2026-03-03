@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-24 00:41+0000\n"
-"PO-Revision-Date: 2026-02-28 23:57+0100\n"
+"PO-Revision-Date: 2026-03-02 22:12+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -5907,7 +5907,7 @@ msgstr "Ezin da aurkitu Okularren osagaia: %1"
 #: shell/shell.cpp:250
 #, kde-format
 msgid "Sidebar"
-msgstr "Alboko-barra"
+msgstr "Alboko barra"
 
 #: shell/shell.cpp:286
 #, kde-format

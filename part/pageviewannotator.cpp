@@ -402,6 +402,7 @@ public:
 
         // find out annotation's type
         Okular::SignatureAnnotation *ann = new Okular::SignatureAnnotation();
+        ann->setFlags(ann->flags() | Okular::Annotation::FixedRotation);
 
         const QString certSubjectCommonName = m_signingInformation->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable);
         const QString datetime = QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm:ss t"));

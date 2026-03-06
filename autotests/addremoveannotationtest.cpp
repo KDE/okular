@@ -72,7 +72,7 @@ void AddRemoveAnnotationTest::testAddAnnotations()
     // After adding annot1 we should have one annotation in the page and it should be annot1.
     m_document->addPageAnnotation(0, annot1);
     QVERIFY(m_document->page(0)->annotations().size() == 1);
-    QCOMPARE(annot1, m_document->page(0)->annotations().first());
+    QCOMPARE(annot1, m_document->page(0)->annotations().constFirst());
 
     // Record the properties and name of annot1 just after insertion for later comparisons
     QString origLine1Xml = TestingUtils::getAnnotationXml(annot1);
@@ -89,7 +89,7 @@ void AddRemoveAnnotationTest::testAddAnnotations()
     // redo addition of annot1
     m_document->redo();
     QVERIFY(m_document->page(0)->annotations().size() == 1);
-    QVERIFY(annot1 == m_document->page(0)->annotations().first());
+    QVERIFY(annot1 == m_document->page(0)->annotations().constFirst());
     QCOMPARE(TestingUtils::getAnnotationXml(annot1), origLine1Xml);
 
     // undo once more
@@ -111,7 +111,7 @@ void AddRemoveAnnotationTest::testAddAnnotations()
     QVERIFY(!annot2Name.isEmpty());
     QVERIFY(annot1Name != annot2Name);
     QVERIFY(m_document->page(0)->annotations().size() == 1);
-    QCOMPARE(annot2, m_document->page(0)->annotations().first());
+    QCOMPARE(annot2, m_document->page(0)->annotations().constFirst());
 
     // Check that adding annot2 while annot1 was in the unadded state triggered the deletion of annot1
     QVERIFY(TestingUtils::AnnotationDisposeWatcher::disposedAnnotationName() == annot1Name);

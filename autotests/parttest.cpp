@@ -1238,7 +1238,7 @@ void PartTest::testSaveAs()
         part.m_document->documentInfo();
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), 1);
-        QCOMPARE(part.m_document->page(0)->annotations().first()->uniqueName(), annotName);
+        QCOMPARE(part.m_document->page(0)->annotations().constFirst()->uniqueName(), annotName);
 
         if (!nativelySupportsAnnotations) {
             closeDialogHelper.reset(new TestingUtils::CloseDialogHelper(&part, QDialogButtonBox::No)); // this is the "you're going to lose the annotations" dialog
@@ -1265,7 +1265,7 @@ void PartTest::testSaveAs()
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), nativelySupportsAnnotations ? 1 : 0);
         if (nativelySupportsAnnotations) {
-            QCOMPARE(part.m_document->page(0)->annotations().first()->uniqueName(), annotName);
+            QCOMPARE(part.m_document->page(0)->annotations().constFirst()->uniqueName(), annotName);
         }
 
         part.closeUrl();
@@ -1279,7 +1279,7 @@ void PartTest::testSaveAs()
 
         QCOMPARE(part.m_document->page(0)->annotations().size(), nativelySupportsAnnotations ? 1 : 0);
         if (nativelySupportsAnnotations) {
-            QCOMPARE(part.m_document->page(0)->annotations().first()->uniqueName(), annotName);
+            QCOMPARE(part.m_document->page(0)->annotations().constFirst()->uniqueName(), annotName);
         }
 
         part.closeUrl();
@@ -2069,7 +2069,7 @@ void PartTest::testTypewriterAnnotTool()
 
     QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, QPoint(width * 0.5, height * 0.2));
 
-    Annotation *annot = part.m_document->page(0)->annotations().first();
+    Annotation *annot = part.m_document->page(0)->annotations().constFirst();
     TextAnnotation *ta = static_cast<TextAnnotation *>(annot);
     QVERIFY(annot);
     QVERIFY(ta);

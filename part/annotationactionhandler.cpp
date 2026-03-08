@@ -369,7 +369,7 @@ void AnnotationActionHandlerPrivate::populateQuickAnnotations()
     QList<int>::const_iterator shortcutNumber = numberKeys.begin();
     QDomElement favToolElement = annotator->quickTool(favToolId);
     int actionBarInsertPosition = 0;
-    QAction *aSeparator = aQuickTools->menu()->actions().first();
+    QAction *aSeparator = aQuickTools->menu()->actions().constFirst();
     while (!favToolElement.isNull()) {
         QString itemText = favToolElement.attribute(QStringLiteral("name"));
         if (favToolElement.attribute(QStringLiteral("default"), QStringLiteral("false")) == QLatin1String("true")) {
@@ -630,7 +630,7 @@ AnnotationActionHandler::AnnotationActionHandler(PageViewAnnotator *parent, KAct
         });
     }
     if (!d->aStamp->menu()->actions().isEmpty()) {
-        d->aStamp->setDefaultAction(d->aStamp->menu()->actions().first());
+        d->aStamp->setDefaultAction(d->aStamp->menu()->actions().constFirst());
     }
     connect(d->aStamp->menu(), &QMenu::triggered, d->aStamp, &ToggleActionMenu::setDefaultAction);
 

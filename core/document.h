@@ -1209,7 +1209,7 @@ public Q_SLOTS:
      * The lists @p formButtons and @p newButtonStates should be the same length and true values
      * in @p newButtonStates indicate that the corresponding entry in @p formButtons should be enabled.
      */
-    void editFormButtons(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates);
+    void editFormButtons(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates); // clazy:exclude=fully-qualified-moc-types https://invent.kde.org/sdk/clazy/-/issues/35
 
     /**
      * Reloads the pixmaps for whole document
@@ -1426,7 +1426,7 @@ Q_SIGNALS:
      * given @p page is changed by an undo or redo action.
      * @since 0.17 (KDE 4.11)
      */
-    void formButtonsChangedByUndoRedo(int page, const QList<Okular::FormFieldButton *> &formButtons);
+    void formButtonsChangedByUndoRedo(int page, const QList<Okular::FormFieldButton *> &formButtons); // clazy:exclude=fully-qualified-moc-types https://invent.kde.org/sdk/clazy/-/issues/35
 
     /**
      * This signal is emitted whenever a FormField was changed programmatically and the

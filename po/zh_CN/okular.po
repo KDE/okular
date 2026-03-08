@@ -504,7 +504,7 @@ msgstr "调整批注"
 #, kde-format
 msgctxt "Generic text edit command"
 msgid "edit text"
-msgstr "编辑文字"
+msgstr "编辑文本"
 
 #: core/documentcommands.cpp:398
 #, kde-format
@@ -709,7 +709,7 @@ msgstr "弹窗批注"
 #: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
 #, kde-format
 msgid "Typewriter"
-msgstr "文字批注"
+msgstr "文本批注"
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
 #: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
@@ -1495,7 +1495,7 @@ msgstr "删除线"
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
-msgstr "文字批注"
+msgstr "文本批注"
 
 #: part/annotationactionhandler.cpp:563
 #, kde-format
@@ -1737,7 +1737,7 @@ msgstr "弹窗批注属性"
 #: part/annotationpropertiesdialog.cpp:111
 #, kde-format
 msgid "Typewriter Properties"
-msgstr "文字批注属性"
+msgstr "文本批注属性"
 
 #: part/annotationpropertiesdialog.cpp:113
 #, kde-format
@@ -1762,7 +1762,7 @@ msgstr "几何形状属性"
 #: part/annotationpropertiesdialog.cpp:128
 #, kde-format
 msgid "Text Markup Properties"
-msgstr "文字标记属性"
+msgstr "文本标记属性"
 
 #: part/annotationpropertiesdialog.cpp:131
 #, kde-format
@@ -1894,7 +1894,7 @@ msgstr "字体："
 #: part/annotationwidgets.cpp:387
 #, kde-format
 msgid "Text &color:"
-msgstr "文字颜色(&C)："
+msgstr "文本颜色(&C)："
 
 #: part/annotationwidgets.cpp:394
 #, kde-format
@@ -2499,7 +2499,7 @@ msgstr "高亮 (绿色)"
 #: part/data/toolsQuick.xml:24
 #, kde-format
 msgid "Insert Text"
-msgstr "文字批注"
+msgstr "文本批注"
 
 #: part/dlgaccessibility.cpp:38
 #, kde-format
@@ -2613,13 +2613,13 @@ msgstr "对比度："
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech engine:"
-msgstr "文字转语音引擎："
+msgstr "文本转语音引擎："
 
 #: part/dlgaccessibility.cpp:165
 #, kde-format
 msgctxt "&label:listbox Config dialog, accessibility page"
 msgid "Text-to-speech voice:"
-msgstr "文字转语音声音："
+msgstr "文本转语音声音："
 
 #: part/dlgannotations.cpp:25
 #, kde-format
@@ -3360,7 +3360,7 @@ msgstr "外观"
 #: part/editannottooldialog.cpp:93
 #, kde-format
 msgid "Text markup"
-msgstr "文字标记"
+msgstr "文本标记"
 
 #: part/editannottooldialog.cpp:94
 #, kde-format
@@ -3937,12 +3937,12 @@ msgstr "点击任意位置不放，即可通过放大镜查看。"
 #: part/pageview.cpp:5194
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
-msgstr "绘制一个矩形框，即可选择框内的文字和图像。"
+msgstr "绘制一个矩形框，即可选择框内的文本和图像。"
 
 #: part/pageview.cpp:5208
 #, kde-format
 msgid "Select text"
-msgstr "选择文字"
+msgstr "选择文本"
 
 #: part/pageview.cpp:5222
 #, kde-format
@@ -4011,12 +4011,12 @@ msgstr "请在需要保留可见的页面区域之外绘制一个矩形"
 #: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "New Text Note"
-msgstr "新建文字批注"
+msgstr "新建文本批注"
 
 #: part/pageviewannotator.cpp:262
 #, kde-format
 msgid "Text of the new note:"
-msgstr "新建批注的文字："
+msgstr "新建批注的文本："
 
 #: part/pageviewannotator.cpp:408
 #, kde-format
@@ -4072,7 +4072,7 @@ msgstr "绘制一个椭圆 (拖动选择椭圆区域)"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
-msgstr "标记需要高亮的文字"
+msgstr "标记需要高亮的文本"
 
 #: part/pageviewannotator.cpp:1394
 #, kde-format
@@ -4108,7 +4108,7 @@ msgstr "绘制一个矩形"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
-msgstr "标记需要用波浪线标记的文字"
+msgstr "标记需要用波浪线标记的文本"
 
 #: part/pageviewannotator.cpp:1406
 #, kde-format
@@ -4126,19 +4126,19 @@ msgstr "绘制一条直线"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
-msgstr "标记需要用删除线标记的文字"
+msgstr "标记需要用删除线标记的文本"
 
 #: part/pageviewannotator.cpp:1412
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
-msgstr "标记需要用下划线标记的文字"
+msgstr "标记需要用下划线标记的文本"
 
 #: part/pageviewannotator.cpp:1414
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "文字批注 (拖动选择区域)"
+msgstr "文本批注 (拖动选择区域)"
 
 #: part/pageviewannotator.cpp:1473
 #, kde-format
@@ -5755,7 +5755,7 @@ msgstr "不升起窗口"
 #: shell/main.cpp:120
 #, kde-format
 msgid "Find a string on the text"
-msgstr "查找文字中的字符串"
+msgstr "查找文本中的字符串"
 
 #: shell/main.cpp:121
 #, kde-format

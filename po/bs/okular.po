@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:41+0000\n"
+"POT-Creation-Date: 2026-03-08 00:42+0000\n"
 "PO-Revision-Date: 2015-02-24 22:29+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -741,19 +741,19 @@ msgid "Value"
 msgstr ""
 
 #: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1480
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Iskočna poruku"
 
 #: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1496
 #, kde-format
 msgid "Typewriter"
 msgstr ""
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1478
 #, kde-format
 msgid "Inline Note"
 msgstr "Ugrađena bilješka"
@@ -777,7 +777,7 @@ msgid "Straight Line with Comment"
 msgstr "Osobine prave linije"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1489
+#: part/pageviewannotator.cpp:1490
 #, kde-format
 msgid "Straight Line"
 msgstr "Prava linija"
@@ -789,7 +789,7 @@ msgid "Polygon with Comment"
 msgstr "Za komentar"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1481
+#: part/pageviewannotator.cpp:1482
 #, kde-format
 msgid "Polygon"
 msgstr "Poligon"
@@ -802,7 +802,7 @@ msgid "Rectangle with Comment"
 msgstr "Precrtani tekst"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
-#: part/pageviewannotator.cpp:1483
+#: part/pageviewannotator.cpp:1484
 #, kde-format
 msgid "Rectangle"
 msgstr "Pravougaonik"
@@ -815,7 +815,7 @@ msgid "Ellipse with Comment"
 msgstr "Podvučeni tekst"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
-#: part/pageviewannotator.cpp:1471
+#: part/pageviewannotator.cpp:1472
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipsa"
@@ -840,7 +840,7 @@ msgid "Squiggle with Comment"
 msgstr "Iskrivljen tekst"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1485
+#: part/pageviewannotator.cpp:1486
 #, kde-format
 msgid "Squiggle"
 msgstr "Iskrivljeno"
@@ -853,7 +853,7 @@ msgid "Underline with Comment"
 msgstr "Podvučeni tekst"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1493
+#: part/pageviewannotator.cpp:1494
 #, kde-format
 msgid "Underline"
 msgstr "Podvučeno"
@@ -878,7 +878,7 @@ msgid "Stamp with Comment"
 msgstr "Precrtani tekst"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1487
+#: part/pageviewannotator.cpp:1488
 #, kde-format
 msgid "Stamp"
 msgstr "Pečat"
@@ -890,7 +890,7 @@ msgid "Freehand Line with Comment"
 msgstr "Osobine prostoručne linije"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1475
+#: part/pageviewannotator.cpp:1476
 #, kde-format
 msgid "Freehand Line"
 msgstr "Slobodnoručna linija"
@@ -2250,7 +2250,7 @@ msgstr "Spremi u datoteku..."
 msgid "Type:"
 msgstr "Vrsta:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1491
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1492
 #, kde-format
 msgid "Strike out"
 msgstr "Precrtano"
@@ -4379,7 +4379,7 @@ msgstr "Nova tekstualna bilješka"
 msgid "Text of the new note:"
 msgstr "Tekst nove bilješke:"
 
-#: part/pageviewannotator.cpp:408
+#: part/pageviewannotator.cpp:409
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4387,7 +4387,7 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: part/pageviewannotator.cpp:489
+#: part/pageviewannotator.cpp:490
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4396,104 +4396,104 @@ msgid ""
 "interface> and draw a bigger rectangle."
 msgstr ""
 
-#: part/pageviewannotator.cpp:491
+#: part/pageviewannotator.cpp:492
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr ""
 
-#: part/pageviewannotator.cpp:492
+#: part/pageviewannotator.cpp:493
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1329
+#: part/pageviewannotator.cpp:1330
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author name"
 msgstr "Autor"
 
-#: part/pageviewannotator.cpp:1329
+#: part/pageviewannotator.cpp:1330
 #, fuzzy, kde-format
 #| msgctxt "Add an annotation to the page"
 #| msgid "add annotation"
 msgid "Author name for the annotation:"
 msgstr "dodaj zabilješku"
 
-#: part/pageviewannotator.cpp:1390
+#: part/pageviewannotator.cpp:1391
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Ugrađena zabilješka teksta (vucite da izaberete zonu)"
 
-#: part/pageviewannotator.cpp:1392
+#: part/pageviewannotator.cpp:1393
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Istaknuti tekst"
 
-#: part/pageviewannotator.cpp:1394
+#: part/pageviewannotator.cpp:1395
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Crtaj prostoručnu liniju"
 
-#: part/pageviewannotator.cpp:1396
+#: part/pageviewannotator.cpp:1397
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Ugrađena zabilješka teksta (vucite da izaberete zonu)"
 
-#: part/pageviewannotator.cpp:1398
+#: part/pageviewannotator.cpp:1399
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Postavi iskočnu poruku"
 
-#: part/pageviewannotator.cpp:1400
+#: part/pageviewannotator.cpp:1401
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Crtaj poligon (klikni na prvu tačku da se zatvori)"
 
-#: part/pageviewannotator.cpp:1402
+#: part/pageviewannotator.cpp:1403
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Crtaj pravougaonik"
 
-#: part/pageviewannotator.cpp:1404
+#: part/pageviewannotator.cpp:1405
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Iskrivljen tekst"
 
-#: part/pageviewannotator.cpp:1406
+#: part/pageviewannotator.cpp:1407
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Stavi pečat"
 
-#: part/pageviewannotator.cpp:1408
+#: part/pageviewannotator.cpp:1409
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Crtaj pravu liniju"
 
-#: part/pageviewannotator.cpp:1410
+#: part/pageviewannotator.cpp:1411
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Precrtani tekst"
 
-#: part/pageviewannotator.cpp:1412
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Podvučeni tekst"
 
-#: part/pageviewannotator.cpp:1414
+#: part/pageviewannotator.cpp:1415
 #, fuzzy, kde-format
 #| msgctxt "Annotation tool"
 #| msgid "Inline Text Annotation (drag to select a zone)"
@@ -4501,19 +4501,19 @@ msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Ugrađena zabilješka teksta (vucite da izaberete zonu)"
 
-#: part/pageviewannotator.cpp:1473
+#: part/pageviewannotator.cpp:1474
 #, kde-format
 msgid "Highlighter"
 msgstr "Istaknuto"
 
-#: part/pageviewannotator.cpp:1770
+#: part/pageviewannotator.cpp:1771
 #, fuzzy, kde-format
 #| msgctxt "Add an annotation to the page"
 #| msgid "add annotation"
 msgid "Add favorite annotation"
 msgstr "dodaj zabilješku"
 
-#: part/pageviewannotator.cpp:1770
+#: part/pageviewannotator.cpp:1771
 #, fuzzy, kde-format
 #| msgctxt "Add an annotation to the page"
 #| msgid "add annotation"

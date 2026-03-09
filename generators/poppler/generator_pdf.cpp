@@ -651,7 +651,7 @@ static QList<Okular::ObjectRect *> generateLinks(std::vector<std::unique_ptr<Pop
  * in async thread and 2) doing the 'heavy' print operation.
  */
 
-OKULAR_EXPORT_PLUGIN(PDFGenerator, "libokularGenerator_poppler.json")
+K_PLUGIN_CLASS_WITH_JSON(PDFGenerator, "libokularGenerator_poppler.json")
 
 static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVariant &closure)
 {

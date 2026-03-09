@@ -11,7 +11,7 @@
 #include <KConfigDialog>
 #include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(MobiGenerator, "libokularGenerator_mobi.json")
+K_PLUGIN_CLASS_WITH_JSON(MobiGenerator, "libokularGenerator_mobi.json")
 
 MobiGenerator::MobiGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Mobi::Converter, QStringLiteral("okular_mobi_generator_settings"), parent, args)

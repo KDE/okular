@@ -24,7 +24,7 @@
 #include <core/fileprinter.h>
 #include <core/page.h>
 
-OKULAR_EXPORT_PLUGIN(XpsGenerator, "libokularGenerator_xps.json")
+K_PLUGIN_CLASS_WITH_JSON(XpsGenerator, "libokularGenerator_xps.json")
 
 Q_DECLARE_METATYPE(QGradient *)
 Q_DECLARE_METATYPE(XpsPathFigure *)

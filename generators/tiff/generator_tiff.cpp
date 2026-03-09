@@ -154,7 +154,7 @@ static Okular::Rotation readTiffRotation(TIFF *tiff)
     return ret;
 }
 
-OKULAR_EXPORT_PLUGIN(TIFFGenerator, "libokularGenerator_tiff.json")
+K_PLUGIN_CLASS_WITH_JSON(TIFFGenerator, "libokularGenerator_tiff.json")
 
 TIFFGenerator::TIFFGenerator(QObject *parent, const QVariantList &args)
     : Okular::Generator(parent, args)

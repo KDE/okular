@@ -197,7 +197,7 @@ The implementation of the Generator looks like this:
 
 #include "magicgenerator.h"
 
-OKULAR_EXPORT_PLUGIN(MagicGenerator, "libokularGenerator_magic.json")
+K_PLUGIN_CLASS_WITH_JSON(MagicGenerator, "libokularGenerator_magic.json")
 
 MagicGenerator::MagicGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args )
@@ -752,7 +752,7 @@ Now that you know what the methods are supposed to do, let's take a look at the 
 
 #include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(HTMLGenerator, "libokularGenerator_html.json")
+K_PLUGIN_CLASS_WITH_JSON(HTMLGenerator, "libokularGenerator_html.json")
 
 HTMLGenerator::HTMLGenerator( QObject *parent, const QVariantList &args )
     : Okular::Generator( parent, args ),

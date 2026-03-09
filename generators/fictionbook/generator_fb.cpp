@@ -12,7 +12,7 @@
 #include <KConfigDialog>
 #include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(FictionBookGenerator, "libokularGenerator_fb.json")
+K_PLUGIN_CLASS_WITH_JSON(FictionBookGenerator, "libokularGenerator_fb.json")
 
 FictionBookGenerator::FictionBookGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new FictionBook::Converter, QStringLiteral("okular_fictionbook_generator_settings"), parent, args)

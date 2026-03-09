@@ -15,7 +15,7 @@
 
 #include <QCheckBox>
 
-OKULAR_EXPORT_PLUGIN(MarkdownGenerator, "libokularGenerator_md.json")
+K_PLUGIN_CLASS_WITH_JSON(MarkdownGenerator, "libokularGenerator_md.json")
 
 MarkdownGenerator::MarkdownGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Markdown::Converter, QStringLiteral("okular_markdown_generator_settings"), parent, args)

@@ -14,7 +14,7 @@
 #include <core/document.h>
 #include <core/page.h>
 
-OKULAR_EXPORT_PLUGIN(FaxGenerator, "libokularGenerator_fax.json")
+K_PLUGIN_CLASS_WITH_JSON(FaxGenerator, "libokularGenerator_fax.json")
 
 FaxGenerator::FaxGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)

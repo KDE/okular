@@ -31,7 +31,7 @@
 
 #include <core/page.h>
 
-OKULAR_EXPORT_PLUGIN(KIMGIOGenerator, "libokularGenerator_kimgio.json")
+K_PLUGIN_CLASS_WITH_JSON(KIMGIOGenerator, "libokularGenerator_kimgio.json")
 
 KIMGIOGenerator::KIMGIOGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)

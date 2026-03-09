@@ -11,7 +11,7 @@
 #include <KConfigDialog>
 #include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(TxtGenerator, "libokularGenerator_txt.json")
+K_PLUGIN_CLASS_WITH_JSON(TxtGenerator, "libokularGenerator_txt.json")
 
 TxtGenerator::TxtGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Txt::Converter, QStringLiteral("okular_txt_generator_settings"), parent, args)

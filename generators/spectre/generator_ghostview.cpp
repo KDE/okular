@@ -34,7 +34,7 @@
 #include "rendererthread.h"
 #include "spectre_debug.h"
 
-OKULAR_EXPORT_PLUGIN(GSGenerator, "libokularGenerator_ghostview.json")
+K_PLUGIN_CLASS_WITH_JSON(GSGenerator, "libokularGenerator_ghostview.json")
 
 GSGenerator::GSGenerator(QObject *parent, const QVariantList &args)
     : Okular::Generator(parent, args)

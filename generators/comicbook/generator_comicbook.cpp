@@ -18,7 +18,7 @@
 
 #include "debug_comicbook.h"
 
-OKULAR_EXPORT_PLUGIN(ComicBookGenerator, "libokularGenerator_comicbook.json")
+K_PLUGIN_CLASS_WITH_JSON(ComicBookGenerator, "libokularGenerator_comicbook.json")
 
 ComicBookGenerator::ComicBookGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)

@@ -102,13 +102,6 @@ ecm_setup_version(${PROJECT_VERSION}
 
 find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Core Test Widgets PrintSupport Svg Xml)
 
-ecm_setup_qtplugin_macro_names(
-    JSON_ARG2
-        "OKULAR_EXPORT_PLUGIN"
-    CONFIG_CODE_VARIABLE
-        PACKAGE_SETUP_AUTOMOC_VARIABLES
-)
-
 find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks

@@ -37,7 +37,7 @@
 #include <QThread>
 #endif
 
-OKULAR_EXPORT_PLUGIN(DviGenerator, "libokularGenerator_dvi.json")
+K_PLUGIN_CLASS_WITH_JSON(DviGenerator, "libokularGenerator_dvi.json")
 
 DviGenerator::DviGenerator(QObject *parent, const QVariantList &args)
     : Okular::Generator(parent, args)

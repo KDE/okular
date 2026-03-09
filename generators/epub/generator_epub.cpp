@@ -12,7 +12,7 @@
 #include <KConfigDialog>
 #include <KLocalizedString>
 
-OKULAR_EXPORT_PLUGIN(EPubGenerator, "libokularGenerator_epub.json")
+K_PLUGIN_CLASS_WITH_JSON(EPubGenerator, "libokularGenerator_epub.json")
 
 EPubGenerator::EPubGenerator(QObject *parent, const QVariantList &args)
     : Okular::TextDocumentGenerator(new Epub::Converter, QStringLiteral("okular_epub_generator_settings"), parent, args)

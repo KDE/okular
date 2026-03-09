@@ -57,7 +57,7 @@ static void recurseCreateTOC(QDomDocument &maindoc, const QDomNode &parent, QDom
     }
 }
 
-OKULAR_EXPORT_PLUGIN(DjVuGenerator, "libokularGenerator_djvu.json")
+K_PLUGIN_CLASS_WITH_JSON(DjVuGenerator, "libokularGenerator_djvu.json")
 
 DjVuGenerator::DjVuGenerator(QObject *parent, const QVariantList &args)
     : Okular::Generator(parent, args)

@@ -620,7 +620,7 @@ msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"لم نتمكن من كتابة مستند موقّع في <filename>%1</filename>، يرجى التأكد من "
+"لم نتمكن من كتابة مستند موقع في <filename>%1</filename>، يرجى التأكد من "
 "تحديد مجلد به إذن الكتابة"
 
 #: core/signatureutils.cpp:506
@@ -1101,7 +1101,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "The document has been modified in a way not permitted by a previous signer."
-msgstr "عدلت الوثيقة بطريقة لا يسمح بها الموقّع السابق."
+msgstr "عدلت الوثيقة بطريقة لا يسمح بها الموقع السابق."
 
 #: gui/signatureguiutils.cpp:174
 #, kde-format

@@ -42,6 +42,51 @@ static void updateField(FormField *field)
     }
 }
 
+static void syncRadioGroupVisibility(FormField *field)
+{
+    if (!field || field->type() != FormField::FormButton) {
+        return;
+    }
+
+    FormFieldButton *button = static_cast<FormFieldButton *>(field);
+
+    if (button->buttonType() != FormFieldButton::Radio) {
+        return;
+    }
+
+    Page *page = g_fieldCache->value(field);
+    if (!page) {
+        return;
+    }
+
+    const QString groupName = field->name();
+    const bool visible = field->isVisible();
+    const bool printable = field->isPrintable();
+
+    const QList<FormField *> fields = page->formFields();
+
+    for (FormField *other : fields) {
+        if (other == field || other->type() != FormField::FormButton) {
+            continue;
+        }
+
+        FormFieldButton *otherButton = static_cast<FormFieldButton *>(other);
+
+        if (otherButton->buttonType() != FormFieldButton::Radio || other->name() != groupName) {
+            continue;
+        }
+
+        other->setVisible(visible);
+        other->setPrintable(printable);
+
+        g_fieldCache->insert(other, page);
+
+        updateField(other);
+    }
+
+    updateField(field);
+}
+
 // Field.doc
 QJSValue JSField::doc() const
 {
@@ -250,7 +295,7 @@ bool JSField::hidden() const
 void JSField::setHidden(bool hidden)
 {
     m_field->setVisible(!hidden);
-
+    syncRadioGroupVisibility(m_field);
     updateField(m_field);
 }
 
@@ -285,6 +330,7 @@ void JSField::setDisplay(int display)
         m_field->setPrintable(true);
         break;
     }
+    syncRadioGroupVisibility(m_field);
     updateField(m_field);
 }
 

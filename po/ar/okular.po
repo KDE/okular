@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-24 00:41+0000\n"
+"POT-Creation-Date: 2026-03-10 02:44+0000\n"
 "PO-Revision-Date: 2026-02-25 21:39+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -701,19 +701,19 @@ msgid "Value"
 msgstr "القيمة"
 
 #: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1479
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1480
 #, kde-format
 msgid "Pop-up Note"
 msgstr "ملاحظة منبثقة"
 
 #: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1495
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1496
 #, kde-format
 msgid "Typewriter"
 msgstr "كتابة"
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1477
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1478
 #, kde-format
 msgid "Inline Note"
 msgstr "ملاحظة مضمنة"
@@ -735,7 +735,7 @@ msgid "Straight Line with Comment"
 msgstr "خط مستقيم مع ملاحظة"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1489
+#: part/pageviewannotator.cpp:1490
 #, kde-format
 msgid "Straight Line"
 msgstr "خط مستقيم"
@@ -746,7 +746,7 @@ msgid "Polygon with Comment"
 msgstr "مضلع مع تعليق"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1481
+#: part/pageviewannotator.cpp:1482
 #, kde-format
 msgid "Polygon"
 msgstr "مضلّع"
@@ -757,7 +757,7 @@ msgid "Rectangle with Comment"
 msgstr "مربع مع تعليق"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
-#: part/pageviewannotator.cpp:1483
+#: part/pageviewannotator.cpp:1484
 #, kde-format
 msgid "Rectangle"
 msgstr "مستطيل"
@@ -768,7 +768,7 @@ msgid "Ellipse with Comment"
 msgstr "بيضاوي مع تعليق"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
-#: part/pageviewannotator.cpp:1471
+#: part/pageviewannotator.cpp:1472
 #, kde-format
 msgid "Ellipse"
 msgstr "بيضاوي"
@@ -789,7 +789,7 @@ msgid "Squiggle with Comment"
 msgstr "نصّ متمايِل مع تعليق"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1485
+#: part/pageviewannotator.cpp:1486
 #, kde-format
 msgid "Squiggle"
 msgstr "خط متعرج"
@@ -800,7 +800,7 @@ msgid "Underline with Comment"
 msgstr "تسطير مع تعليق"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1493
+#: part/pageviewannotator.cpp:1494
 #, kde-format
 msgid "Underline"
 msgstr "تسطير"
@@ -821,7 +821,7 @@ msgid "Stamp with Comment"
 msgstr "ختم مع تعليق"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1487
+#: part/pageviewannotator.cpp:1488
 #, kde-format
 msgid "Stamp"
 msgstr "الختم"
@@ -832,7 +832,7 @@ msgid "Freehand Line with Comment"
 msgstr "خط الرسم الحر مع تعليق"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1475
+#: part/pageviewannotator.cpp:1476
 #, kde-format
 msgid "Freehand Line"
 msgstr "خط رسم حُرّ"
@@ -2113,7 +2113,7 @@ msgstr "تعبئة الشكل:"
 msgid "Type:"
 msgstr "النوع:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1491
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1492
 #, kde-format
 msgid "Strike out"
 msgstr "شطب خارج"
@@ -4070,7 +4070,7 @@ msgstr "ملاحظة نصية جديدة"
 msgid "Text of the new note:"
 msgstr "نص الملاحظة الجديدة:"
 
-#: part/pageviewannotator.cpp:408
+#: part/pageviewannotator.cpp:409
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -4081,7 +4081,7 @@ msgstr ""
 "\n"
 "التاريخ: %2"
 
-#: part/pageviewannotator.cpp:489
+#: part/pageviewannotator.cpp:490
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4093,117 +4093,117 @@ msgstr ""
 "إنشاء توقيع يحتمل أن يكون أكثر قابلية للقراءة، فاضغط على <interface> ابدأ من "
 "جديد </interface> وارسم مستطيلاً أكبر."
 
-#: part/pageviewannotator.cpp:491
+#: part/pageviewannotator.cpp:492
 #, kde-format
 msgctxt "@action:button"
 msgid "Start Over"
 msgstr "ابدأ من جديد"
 
-#: part/pageviewannotator.cpp:492
+#: part/pageviewannotator.cpp:493
 #, kde-format
 msgctxt "@action:button"
 msgid "Sign"
 msgstr "وقّع"
 
-#: part/pageviewannotator.cpp:1329
+#: part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Author name"
 msgstr "اسم المؤلف"
 
-#: part/pageviewannotator.cpp:1329
+#: part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "أدخل اسم مؤلف الشرح:"
 
-#: part/pageviewannotator.cpp:1390
+#: part/pageviewannotator.cpp:1391
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "ارسم شكل بيضاوي (اسحب لتحديد منطقة)"
 
-#: part/pageviewannotator.cpp:1392
+#: part/pageviewannotator.cpp:1393
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "أبرِز النَّص"
 
-#: part/pageviewannotator.cpp:1394
+#: part/pageviewannotator.cpp:1395
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "ارسم خطًّا حُرًّا"
 
-#: part/pageviewannotator.cpp:1396
+#: part/pageviewannotator.cpp:1397
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "تعليق نصي مضمن (اسحب لتحديد محل)"
 
-#: part/pageviewannotator.cpp:1398
+#: part/pageviewannotator.cpp:1399
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "ضَع ملاحظة منبثقة"
 
-#: part/pageviewannotator.cpp:1400
+#: part/pageviewannotator.cpp:1401
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "رسم مضلع (انقر على النقطة الأولى لإغلاقه)"
 
-#: part/pageviewannotator.cpp:1402
+#: part/pageviewannotator.cpp:1403
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "ارسم مستطيلاً"
 
-#: part/pageviewannotator.cpp:1404
+#: part/pageviewannotator.cpp:1405
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "نصّ متمايِل"
 
-#: part/pageviewannotator.cpp:1406
+#: part/pageviewannotator.cpp:1407
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "ضع رمز ختم"
 
-#: part/pageviewannotator.cpp:1408
+#: part/pageviewannotator.cpp:1409
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "ارسم خطًّا مستقيماً"
 
-#: part/pageviewannotator.cpp:1410
+#: part/pageviewannotator.cpp:1411
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "اشطب النصّ"
 
-#: part/pageviewannotator.cpp:1412
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "تسطير نص"
 
-#: part/pageviewannotator.cpp:1414
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "شرح كتابة (اسحب لتحديد محل)"
 
-#: part/pageviewannotator.cpp:1473
+#: part/pageviewannotator.cpp:1474
 #, kde-format
 msgid "Highlighter"
 msgstr "قلم التحديد"
 
-#: part/pageviewannotator.cpp:1770
+#: part/pageviewannotator.cpp:1771
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "أضف شرح مفضل"
 
-#: part/pageviewannotator.cpp:1770
+#: part/pageviewannotator.cpp:1771
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "اسم شرح مخصّص:"

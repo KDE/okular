@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:42+0000\n"
-"PO-Revision-Date: 2026-02-24 09:45+0100\n"
+"PO-Revision-Date: 2026-03-09 11:34+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -1121,7 +1121,7 @@ msgstr "No s'ha pogut completar la verificació de la integritat del document."
 #, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Este document té camps de variable de substitució de signatura."
+msgstr "Este document té camps d'espai reservat de signatura."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1149,7 +1149,7 @@ msgstr ""
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Variable de substitució de signatura: %1"
+msgstr "Espai reservat de signatura %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1210,7 +1210,7 @@ msgstr "Desconeguda"
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Variable de substitució de signatura"
+msgstr "Espai reservat de signatura"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -3596,7 +3596,7 @@ msgstr "Tots els fitxers (*)"
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Variable de substitució de signatura (clic per a signar)"
+msgstr "Espai reservat de signatura (clic per a signar)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
 #, kde-format

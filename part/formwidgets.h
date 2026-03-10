@@ -91,7 +91,7 @@ Q_SIGNALS:
 
     void formComboChangedByUndoRedo(int pageNumber, Okular::FormFieldChoice *form, const QString &text, int cursorPos, int anchorPos);
 
-    void formButtonsChangedByWidget(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates); // clazy:exclude=fully-qualified-moc-types https://invent.kde.org/sdk/clazy/-/issues/35
+    void formButtonsChangedByWidget(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons, const QList<bool> &newButtonStates);
 
     void action(Okular::Action *action);
 
@@ -101,7 +101,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void slotButtonClicked(QAbstractButton *button);
-    void slotFormButtonsChangedByUndoRedo(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons); // clazy:exclude=fully-qualified-moc-types https://invent.kde.org/sdk/clazy/-/issues/35
+    void slotFormButtonsChangedByUndoRedo(int pageNumber, const QList<Okular::FormFieldButton *> &formButtons);
 
 private:
     friend class TextAreaEdit;

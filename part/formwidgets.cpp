@@ -79,6 +79,10 @@ void FormWidgetsController::signalAction(Okular::Action *a)
 
 void FormWidgetsController::signalMouseAction(Okular::Action *action, Okular::FormField *form, Okular::Document::MouseEventType fieldMouseEventType)
 {
+    if ((action->actionType() == Okular::Action::Script || action->actionType() == Okular::Action::BackendOpaque) && form->type() == Okular::FormField::FormSignature) {
+        qWarning() << "blocking certain actions for signature field";
+        return;
+    }
     Q_EMIT mouseAction(action, form, fieldMouseEventType);
 }
 

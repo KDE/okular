@@ -12,6 +12,9 @@
 #include <QFile>
 
 #include "debug_p.h"
+#include "document_p.h"
+#include "form.h"
+#include "page.h"
 #include "script/executor_js_p.h"
 
 using namespace Okular;
@@ -28,6 +31,7 @@ public:
     }
 
     DocumentPrivate *m_doc;
+    bool isDigitallySigned = false;
 #if HAVE_JS
     QScopedPointer<ExecutorJS> m_js;
 #endif
@@ -36,6 +40,18 @@ public:
 Scripter::Scripter(DocumentPrivate *doc)
     : d(new ScripterPrivate(doc))
 {
+    for (const auto *page : std::as_const(d->m_doc->m_pagesVector)) {
+        const QList<Okular::FormField *> formFields = page->formFields();
+        for (const Okular::FormField *f : formFields) {
+            if (f->type() == Okular::FormField::FormSignature) {
+                d->isDigitallySigned = true;
+                break;
+            }
+        }
+        if (d->isDigitallySigned) {
+            break;
+        }
+    }
 }
 
 Scripter::~Scripter()
@@ -47,6 +63,10 @@ void Scripter::execute(Event *event, ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;
 #if HAVE_JS
+    if (d->isDigitallySigned && event->eventType() == Event::DocOpen) {
+        qWarning(OkularCoreDebug) << "Not executing DocOpen script on signed document";
+        return;
+    }
     static QString builtInScript;
     if (builtInScript.isNull()) {
         QFile builtInResource(QStringLiteral(":/script/builtin.js"));

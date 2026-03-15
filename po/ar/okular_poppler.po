@@ -4,14 +4,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # hayig2000 <hayig2000@gmail.com>, 2008.
-# SPDX-FileCopyrightText: 2008, 2012, 2021, 2023, 2025 zayed <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2008, 2012, 2021, 2023, 2025, 2026 zayed <zayed.alsaidi@gmail.com>
 # Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-17 00:41+0000\n"
-"PO-Revision-Date: 2025-08-05 21:10+0400\n"
+"PO-Revision-Date: 2026-03-14 11:00+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -218,7 +218,7 @@ msgid ""
 "that appear to print incorrectly."
 msgstr ""
 "أجبر تحويل كل صفحة إلى صورة قبل الطباعة. هذا عادة يعطى نتائج أسوا ولكنه مفيد "
-"فى طباعة الملفات التى تطبع بشكل خاطئ."
+"في طباعة الملفات التي تطبع بشكل خاطئ."
 
 #: generator_pdf.cpp:103
 #, kde-format

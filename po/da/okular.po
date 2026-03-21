@@ -8,30 +8,34 @@
 # Martin Schlander <mschlander@opensuse.org>, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2016, 2017, 2018, 2019, 2020.
 # Anders Lund <anders@alweb.dk>, 2009.
 # Claus Christensen <claus_chr@webspeed.dk>, 2012.
+# SPDX-FileCopyrightText: 2025 Rasmus Rosendahl-Kaa <rasmus@rosendahl-kaa.name>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-08 00:42+0000\n"
-"PO-Revision-Date: 2020-07-27 23:20+0200\n"
-"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"PO-Revision-Date: 2025-11-07 22:13+0100\n"
+"Last-Translator: Rasmus Rosendahl-Kaa <rasmus@rosendahl-kaa.name>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Erik Kjær Pedersen,Rune Rønde Møller,Martin Schlander"
+msgstr ""
+"Erik Kjær Pedersen,Rune Rønde Møller,Martin Schlander,Rasmus Rosendahl-Kaa"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "erik@binghamton.edu,runermoeller@gmail.com,mschlander@opensuse.org"
+msgstr ""
+"erik@binghamton.edu,runermoeller@gmail.com,mschlander@opensuse.org,"
+"rasmus@rosendahl-kaa.name"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
@@ -203,7 +207,7 @@ msgstr "Afslut præsentation"
 #: core/action.cpp:312
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Find…"
 
 #: core/action.cpp:314
 #, fuzzy, kde-format
@@ -251,7 +255,7 @@ msgstr "Genoptag film"
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
-msgstr ""
+msgstr "Denne Okular er bygget uden lyd-understøttelse"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -321,7 +325,7 @@ msgstr "Kan ikke finde et plugin, der kan håndtere dokument som angives."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Signering er ikke implementeret for denne dokumenttype"
 
 #: core/document.cpp:3557
 #, kde-format
@@ -609,6 +613,8 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Intern signeringsfejl. Rapporter venligst fejlen med trinene til at "
+"reproducere den. Fejlkode %1"
 
 #: core/signatureutils.cpp:498
 #, fuzzy, kde-kuit-format
@@ -621,12 +627,12 @@ msgstr "Kunne ikke indlæse filen <filename>%1</filename>"
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Signering annulleret af brugeren"
 
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Kunne ikke signere. Forkert adgangsfrase"
 
 #: core/signatureutils.cpp:504
 #, fuzzy, kde-kuit-format
@@ -1170,7 +1176,7 @@ msgstr "Signaturer"
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
 msgid "Field: %1 on page %2"
-msgstr ""
+msgstr "Felt: %1 på side %2"
 
 #: gui/signaturemodel.cpp:152
 #, kde-format
@@ -1204,19 +1210,19 @@ msgstr "Signaturer"
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
 #, fuzzy, kde-format
@@ -1325,13 +1331,13 @@ msgstr "%1%"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr ""
+msgstr "Linjebredde for annotering (ingen annotering valgt)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr ""
+msgstr "Annoteringsfarve (ingen annotering valgt)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format

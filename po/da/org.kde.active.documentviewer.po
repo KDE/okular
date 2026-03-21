@@ -2,20 +2,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Martin Schlander <mschlander@opensuse.org>, 2012.
+# SPDX-FileCopyrightText: 2025 Rasmus Rosendahl-Kaa <rasmus@rosendahl-kaa.name>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2012-11-19 20:51+0100\n"
-"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"PO-Revision-Date: 2025-11-07 22:09+0100\n"
+"Last-Translator: Rasmus Rosendahl-Kaa <rasmus@rosendahl-kaa.name>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
@@ -23,67 +24,67 @@ msgstr "Bogmærker"
 
 #: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "Certifikatfremviser"
 
 #: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
-msgstr ""
+msgstr "Udstedt af"
 
 #: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
-msgstr ""
+msgstr "Almindeligt navn:"
 
 #: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
-msgstr ""
+msgstr "E-mail:"
 
 #: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
-msgstr ""
+msgstr "Organisation:"
 
 #: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
-msgstr ""
+msgstr "Udstedt til"
 
 #: ui/CertificateViewerPage.qml:76
 msgid "Validity"
-msgstr ""
+msgstr "Gyldighed"
 
 #: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
-msgstr ""
+msgstr "Udstedt den:"
 
 #: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
-msgstr ""
+msgstr "Udløber den:"
 
 #: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
-msgstr ""
+msgstr "Fingeraftryk"
 
 #: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
-msgstr ""
+msgstr "SHA-1-fingeraftryk:"
 
 #: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
-msgstr ""
+msgstr "SHA-256-fingeraftryk:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
 msgid "Export…"
-msgstr ""
+msgstr "Eksportér…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "Certifikatfil (*.cer)"
 
 #: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
-msgstr ""
+msgstr "Fejl"
 
 #: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."

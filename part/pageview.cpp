@@ -792,6 +792,8 @@ void PageView::setupActions(KActionCollection *ac)
             if (aMouseMode) {
                 aMouseMode->setChecked(false);
             }
+            selectionClear();
+            textSelectionClear();
         } else {
             switch (d->mouseMode) {
             case Okular::Settings::EnumMouseMode::Browse:
@@ -2136,6 +2138,7 @@ void PageView::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Escape:
         Q_EMIT escPressed();
         selectionClear(d->tableDividersGuessed ? ClearOnlyDividers : ClearAllSelection);
+        textSelectionClear();
         d->mousePressPos = QPointF();
         if (d->aPrevAction) {
             d->aPrevAction->trigger();
@@ -5146,6 +5149,8 @@ void PageView::slotUpdateReadingDirectionAction()
 
 void PageView::slotSetMouseNormal()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::Browse;
     Okular::Settings::setMouseMode(d->mouseMode);
     // hide the messageWindow
@@ -5160,6 +5165,8 @@ void PageView::slotSetMouseNormal()
 
 void PageView::slotSetMouseZoom()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::Zoom;
     Okular::Settings::setMouseMode(d->mouseMode);
     // change the text in messageWindow (and show it if hidden)
@@ -5174,6 +5181,8 @@ void PageView::slotSetMouseZoom()
 
 void PageView::slotSetMouseMagnifier()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::Magnifier;
     Okular::Settings::setMouseMode(d->mouseMode);
     d->messageWindow->display(i18n("Click to see the magnified view."), QString());
@@ -5188,6 +5197,8 @@ void PageView::slotSetMouseMagnifier()
 
 void PageView::slotSetMouseSelect()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::RectSelect;
     Okular::Settings::setMouseMode(d->mouseMode);
     // change the text in messageWindow (and show it if hidden)
@@ -5202,6 +5213,8 @@ void PageView::slotSetMouseSelect()
 
 void PageView::slotSetMouseTextSelect()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::TextSelect;
     Okular::Settings::setMouseMode(d->mouseMode);
     // change the text in messageWindow (and show it if hidden)
@@ -5216,6 +5229,8 @@ void PageView::slotSetMouseTextSelect()
 
 void PageView::slotSetMouseTableSelect()
 {
+    selectionClear();
+    textSelectionClear();
     d->mouseMode = Okular::Settings::EnumMouseMode::TableSelect;
     Okular::Settings::setMouseMode(d->mouseMode);
     // change the text in messageWindow (and show it if hidden)

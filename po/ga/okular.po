@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:42+0000\n"
+"POT-Creation-Date: 2026-03-24 00:41+0000\n"
 "PO-Revision-Date: 2026-01-10 12:18+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
@@ -1696,8 +1696,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Cóipeáil Téacs chuig an nGearrthaisce"
 
 #: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
-#: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
-#: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
+#: part/pageview.cpp:2566 part/pageview.cpp:2889 part/pageview.cpp:2891
+#: part/pageview.cpp:3042 part/pageview.cpp:3100 part/pageview.cpp:3102
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Cóipeáil faoi chosc ag DRM"
@@ -3846,7 +3846,7 @@ msgstr "Scrollaigh Leathanach Síos"
 msgid "Show Forms"
 msgstr "Taispeáin Foirmeacha"
 
-#: part/pageview.cpp:1285
+#: part/pageview.cpp:1287
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3856,12 +3856,12 @@ msgstr[2] " Luchtaíodh doiciméad %1 leathanach."
 msgstr[3] " Luchtaíodh doiciméad %1 leathanach."
 msgstr[4] " Luchtaíodh doiciméad %1 leathanach."
 
-#: part/pageview.cpp:2557
+#: part/pageview.cpp:2560
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Cóipeáil Ábhar an Tábla chuig an nGearrthaisce"
 
-#: part/pageview.cpp:2878
+#: part/pageview.cpp:2881
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3871,82 +3871,82 @@ msgstr[2] "Téacs (%1 carachtar)"
 msgstr[3] "Téacs (%1 carachtar)"
 msgstr[4] "Téacs (%1 carachtar)"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:2901
+#: part/pageview.cpp:2882 part/pageview.cpp:2904
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Cóipeáil go dtí an Ghearrthaisce"
 
-#: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
+#: part/pageview.cpp:2884 part/pageview.cpp:3091 part/part.cpp:858
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Cóipeáil Téacs (Gan sosanna líne)"
 
-#: part/pageview.cpp:2892 part/pageview.cpp:3092
+#: part/pageview.cpp:2895 part/pageview.cpp:3095
 #, kde-format
 msgid "Speak Text"
 msgstr "Léigh an Téacs"
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2903
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Íomhá (%1 × %2 picteilín)"
 
-#: part/pageview.cpp:2902
+#: part/pageview.cpp:2905
 #, kde-format
 msgid "Save to File…"
 msgstr "Sábháil chuig Comhad…"
 
-#: part/pageview.cpp:2922
+#: part/pageview.cpp:2925
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Íomhá [%1 × %2] cóipeáilte chuig an ghearrthaisce."
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2928
 #, kde-format
 msgid "Save file"
 msgstr "Sábháil comhad"
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2928
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Íomhánna (*.png *.jpeg)"
 
-#: part/pageview.cpp:2927
+#: part/pageview.cpp:2930
 #, kde-format
 msgid "File not saved."
 msgstr "Níor sábháladh an comhad."
 
-#: part/pageview.cpp:2938
+#: part/pageview.cpp:2941
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Íomhá [%1 × %2] sábháilte i gcomhad %3."
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3090
 #, kde-format
 msgid "Copy Text"
 msgstr "Cóipeáil Téacs"
 
-#: part/pageview.cpp:3110
+#: part/pageview.cpp:3113
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Téigh go '%1'"
 
-#: part/pageview.cpp:4134 part/part.cpp:3196
+#: part/pageview.cpp:4137 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "Leithead Oiriúnach"
 
-#: part/pageview.cpp:4134
+#: part/pageview.cpp:4137
 #, kde-format
 msgid "Fit Page"
 msgstr "Oiriúnaigh an Leathanach"
 
-#: part/pageview.cpp:4134
+#: part/pageview.cpp:4137
 #, kde-format
 msgid "Auto Fit"
 msgstr "Oiriúnú Uathoibríoch"
 
-#: part/pageview.cpp:4157
+#: part/pageview.cpp:4160
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3955,67 +3955,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4440
+#: part/pageview.cpp:4443
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Déan cuardach ar '%1' le"
 
-#: part/pageview.cpp:4454
+#: part/pageview.cpp:4457
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Cumraigh Aicearraí Gréasáin…"
 
-#: part/pageview.cpp:4480
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Follow This Link"
 msgstr "Lean an Nasc Seo"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4486
 #, kde-format
 msgid "Play this Sound"
 msgstr "Seinn an Fuaim seo"
 
-#: part/pageview.cpp:4485
+#: part/pageview.cpp:4488
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stop Fuaim"
 
-#: part/pageview.cpp:4491
+#: part/pageview.cpp:4494
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Cóipeáil Seoladh an Naisc"
 
-#: part/pageview.cpp:4512
+#: part/pageview.cpp:4515
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Cuardaigh '%1' sa cháipéis seo"
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5047
 #, kde-format
 msgid "Welcome"
 msgstr "Fáilte"
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5173
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Roghnaigh limistéar súmála. Deaschliceáil le súmáil amach."
 
-#: part/pageview.cpp:5179
+#: part/pageview.cpp:5188
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Cliceáil chun an radharc formhéadaithe a fheiceáil."
 
-#: part/pageview.cpp:5194
+#: part/pageview.cpp:5205
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dear dronuilleog timpeall an téacs/grafaic is mian leat cóipeáil."
 
-#: part/pageview.cpp:5208
+#: part/pageview.cpp:5221
 #, kde-format
 msgid "Select text"
 msgstr "Roghnaigh téacs"
 
-#: part/pageview.cpp:5222
+#: part/pageview.cpp:5237
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4024,7 +4024,7 @@ msgstr ""
 "Tarraing dronuilleog timpeall an tábla, ansin cliceáil in aice leis na "
 "himill chun é a roinnt; brúigh Esc chun é a ghlanadh."
 
-#: part/pageview.cpp:5237 part/pageview.cpp:5245
+#: part/pageview.cpp:5252 part/pageview.cpp:5260
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4033,17 +4033,17 @@ msgstr ""
 "Tá do theastais shínithe uile neamhbhailí. Sa chás go n-oibrigh an síniú "
 "roimhe seo, seiceáil a ndátaí bailíochta le do thoil."
 
-#: part/pageview.cpp:5238
+#: part/pageview.cpp:5253
 #, kde-format
 msgid "No valid certificates"
 msgstr "Gan aon deimhnithe bailí"
 
-#: part/pageview.cpp:5239 part/pageview.cpp:5254
+#: part/pageview.cpp:5254 part/pageview.cpp:5269
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Bainisteoir Teastas Oscailte"
 
-#: part/pageview.cpp:5250
+#: part/pageview.cpp:5265
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4055,12 +4055,12 @@ msgstr ""
 "féach ar an rannóg faoi <a href=\"%1\">Sínithe Digiteacha a Chur Leis</a> sa "
 "lámhleabhar."
 
-#: part/pageview.cpp:5253 part/pageview.cpp:5265
+#: part/pageview.cpp:5268 part/pageview.cpp:5280
 #, kde-format
 msgid "No certificates found"
 msgstr "Níor aimsíodh aon teastais"
 
-#: part/pageview.cpp:5263
+#: part/pageview.cpp:5278
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4071,18 +4071,18 @@ msgstr ""
 "ar an rannóg faoi <a href=\"%1\">Sínithe Digiteacha a Chur Leis</a> sa "
 "lámhleabhar."
 
-#: part/pageview.cpp:5288
+#: part/pageview.cpp:5303
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Tá athruithe neamhshábháilte agat. Sábháil an doiciméad sula síneoidh tú é."
 
-#: part/pageview.cpp:5311
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Tarraing dronuilleog chun an réimse sínithe a chur isteach"
 
-#: part/pageview.cpp:5455
+#: part/pageview.cpp:5470
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

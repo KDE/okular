@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-08 00:42+0000\n"
+"POT-Creation-Date: 2026-03-24 00:41+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1812,8 +1812,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopiraj u klipbord"
 
 #: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
-#: part/pageview.cpp:2563 part/pageview.cpp:2886 part/pageview.cpp:2888
-#: part/pageview.cpp:3039 part/pageview.cpp:3097 part/pageview.cpp:3099
+#: part/pageview.cpp:2566 part/pageview.cpp:2889 part/pageview.cpp:2891
+#: part/pageview.cpp:3042 part/pageview.cpp:3100 part/pageview.cpp:3102
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM brani kopiranje"
@@ -4163,7 +4163,7 @@ msgstr "Klizaj stranicu nadole"
 msgid "Show Forms"
 msgstr "Prikaži formulare"
 
-#: part/pageview.cpp:1285
+#: part/pageview.cpp:1287
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -4172,13 +4172,13 @@ msgstr[1] " Učitan je dokument sa %1 stranice."
 msgstr[2] " Učitan je dokument sa %1 stranica."
 msgstr[3] " Učitan je dokument sa jednom stranicom."
 
-#: part/pageview.cpp:2557
+#: part/pageview.cpp:2560
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiraj u klipbord"
 
-#: part/pageview.cpp:2878
+#: part/pageview.cpp:2881
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -4187,89 +4187,89 @@ msgstr[1] "Tekst (%1 znaka)"
 msgstr[2] "Tekst (%1 znakova)"
 msgstr[3] "Tekst (1 znak)"
 
-#: part/pageview.cpp:2879 part/pageview.cpp:2901
+#: part/pageview.cpp:2882 part/pageview.cpp:2904
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiraj u klipbord"
 
-#: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
+#: part/pageview.cpp:2884 part/pageview.cpp:3091 part/part.cpp:858
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopiraj u klipbord"
 
-#: part/pageview.cpp:2892 part/pageview.cpp:3092
+#: part/pageview.cpp:2895 part/pageview.cpp:3095
 #, kde-format
 msgid "Speak Text"
 msgstr "Izgovori tekst"
 
-#: part/pageview.cpp:2900
+#: part/pageview.cpp:2903
 #, fuzzy, kde-format
 #| msgid "Image (%1 by %2 pixels)"
 msgid "Image (%1 × %2 pixels)"
 msgstr "Slika (%1×%2 piksela)"
 
-#: part/pageview.cpp:2902
+#: part/pageview.cpp:2905
 #, fuzzy, kde-format
 #| msgid "Save to File..."
 msgid "Save to File…"
 msgstr "Sačuvaj u fajl..."
 
-#: part/pageview.cpp:2922
+#: part/pageview.cpp:2925
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] copied to clipboard."
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Slika [%1×%2] kopirana je u klipbord."
 
 # >> @title:window
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2928
 #, kde-format
 msgid "Save file"
 msgstr "Upisivanje fajla"
 
 # >> @item
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2928
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "slike (*.png *.jpeg)"
 
-#: part/pageview.cpp:2927
+#: part/pageview.cpp:2930
 #, kde-format
 msgid "File not saved."
 msgstr "Fajl nije sačuvan."
 
-#: part/pageview.cpp:2938
+#: part/pageview.cpp:2941
 #, fuzzy, kde-format
 #| msgid "Image [%1x%2] saved to %3 file."
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Slika [%1×%2] sačuvana je u fajl ‘%3’."
 
-#: part/pageview.cpp:3087
+#: part/pageview.cpp:3090
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiraj tekst"
 
-#: part/pageview.cpp:3110
+#: part/pageview.cpp:3113
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Idi na „%1“"
 
-#: part/pageview.cpp:4134 part/part.cpp:3196
+#: part/pageview.cpp:4137 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "uklopljena širina"
 
-#: part/pageview.cpp:4134
+#: part/pageview.cpp:4137
 #, kde-format
 msgid "Fit Page"
 msgstr "uklopljena stranica"
 
-#: part/pageview.cpp:4134
+#: part/pageview.cpp:4137
 #, kde-format
 msgid "Auto Fit"
 msgstr "uklopljeno automatski"
 
-#: part/pageview.cpp:4157
+#: part/pageview.cpp:4160
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4279,69 +4279,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4440
+#: part/pageview.cpp:4443
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Potraži „%1“ pomoću"
 
-#: part/pageview.cpp:4454
+#: part/pageview.cpp:4457
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "Podesi veb prečice..."
 
-#: part/pageview.cpp:4480
+#: part/pageview.cpp:4483
 #, kde-format
 msgid "Follow This Link"
 msgstr "Prati ovu vezu"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4486
 #, kde-format
 msgid "Play this Sound"
 msgstr "Odsviraj ovaj zvuk"
 
-#: part/pageview.cpp:4485
+#: part/pageview.cpp:4488
 #, kde-format
 msgid "Stop Sound"
 msgstr "Ugasi zvuk"
 
-#: part/pageview.cpp:4491
+#: part/pageview.cpp:4494
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiraj adresu veze"
 
-#: part/pageview.cpp:4512
+#: part/pageview.cpp:4515
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Potraži „%1“ pomoću"
 
-#: part/pageview.cpp:5044
+#: part/pageview.cpp:5047
 #, kde-format
 msgid "Welcome"
 msgstr "Dobro došli"
 
-#: part/pageview.cpp:5166
+#: part/pageview.cpp:5173
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Izaberite oblast uveličanja. Kliknite desnim za umanjenje."
 
-#: part/pageview.cpp:5179
+#: part/pageview.cpp:5188
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite za uveličan prikaz."
 
-#: part/pageview.cpp:5194
+#: part/pageview.cpp:5205
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Iscrtajte pravougaonik oko teksta/grafike za kopiranje."
 
-#: part/pageview.cpp:5208
+#: part/pageview.cpp:5221
 #, kde-format
 msgid "Select text"
 msgstr "Izaberi tekst"
 
-#: part/pageview.cpp:5222
+#: part/pageview.cpp:5237
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4350,7 +4350,7 @@ msgstr ""
 "Iscrtajte pravougaonik oko tabele, pa klikćite blizu ivica da je izdelite; "
 "pritisnite Esc da očistite."
 
-#: part/pageview.cpp:5237 part/pageview.cpp:5245
+#: part/pageview.cpp:5252 part/pageview.cpp:5260
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4358,20 +4358,20 @@ msgid ""
 msgstr ""
 
 # >> @title:window
-#: part/pageview.cpp:5238
+#: part/pageview.cpp:5253
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "No valid certificates"
 msgstr "Podešavanje prikazivača"
 
 # >> @title:window
-#: part/pageview.cpp:5239 part/pageview.cpp:5254
+#: part/pageview.cpp:5254 part/pageview.cpp:5269
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "Open Certificate Manager"
 msgstr "Podešavanje prikazivača"
 
-#: part/pageview.cpp:5250
+#: part/pageview.cpp:5265
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4380,13 +4380,13 @@ msgid ""
 msgstr ""
 
 # >> @title:window
-#: part/pageview.cpp:5253 part/pageview.cpp:5265
+#: part/pageview.cpp:5268 part/pageview.cpp:5280
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "No certificates found"
 msgstr "Podešavanje prikazivača"
 
-#: part/pageview.cpp:5263
+#: part/pageview.cpp:5278
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4394,18 +4394,18 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5288
+#: part/pageview.cpp:5303
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5311
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
 # >> @info
-#: part/pageview.cpp:5455
+#: part/pageview.cpp:5470
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Iscrtajte pravougaonik oko dela stranice koji želite da bude vidljiv."

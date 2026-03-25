@@ -1,21 +1,21 @@
 # SPDX-FileCopyrightText: 2003, 2005 Stephan Johach <hunsum@gmx.de>
-# SPDX-FileCopyrightText: 2004, 2005, 2006 Stefan Winter <swinter@kde.org>
-# SPDX-FileCopyrightText: 2005, 2007, 2008, 2009, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2004-2006 Stefan Winter <swinter@kde.org>
+# SPDX-FileCopyrightText: 2005, 2007-2010 Thomas Reitelbach <tr@erdfunkstelle.de>
 # SPDX-FileCopyrightText: 2006 Stephan Johach <lucardus@onlinehome.de>
-# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2020, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
-# SPDX-FileCopyrightText: 2010, 2011 Panagiotis Papadopoulos <pano_90@gmx.net>
+# SPDX-FileCopyrightText: 2006-2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2009-2016, 2018, 2020, 2022-2023 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2010, 2024 Johannes Obermayr <johannesobermayr@gmx.de>
+# SPDX-FileCopyrightText: 2010-2011 Panagiotis Papadopoulos <pano_90@gmx.net>
 # SPDX-FileCopyrightText: 2017 Michael Weghorn <m.weghorn@posteo.de>
-# SPDX-FileCopyrightText: 2023, 2024 Frank Steinmetzger <dev-kde@felsenfleischer.de>
+# SPDX-FileCopyrightText: 2023, 2024, 2026 Frank Steinmetzger <dev-kde@felsenfleischer.de>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
-# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
+# SPDX-FileCopyrightText: 2025-2026 Philipp Kiemle <l10n.daphipz@fastmail.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-24 00:41+0000\n"
-"PO-Revision-Date: 2025-12-10 01:03+0100\n"
+"PO-Revision-Date: 2026-03-11 23:45+0100\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -124,7 +124,7 @@ msgstr "Design für Anmerkungen"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "Jiri Baum – NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -3650,7 +3650,7 @@ msgstr "Skalierung"
 #: part/pageview.cpp:520
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Auf 100 % vergrößern"
+msgstr "Auf 100 % zurücksetzen"
 
 #: part/pageview.cpp:531
 #, kde-format
@@ -3818,7 +3818,7 @@ msgstr "Vorlesen anhalten"
 #: part/pageview.cpp:738
 #, kde-format
 msgid "Pause/Resume Speaking"
-msgstr "Vorlesen anhalten / fortsetzen"
+msgstr "Vorlesen pausieren / fortsetzen"
 
 #: part/pageview.cpp:750
 #, kde-format
@@ -4825,7 +4825,7 @@ msgstr ""
 #: part/part.cpp:2684 part/part.cpp:2703 part/part.cpp:2755
 #, kde-format
 msgid "Save - Warning"
-msgstr "Speichern - Warnung"
+msgstr "Speichern – Warnung"
 
 #: part/part.cpp:2686
 #, kde-format
@@ -4894,8 +4894,8 @@ msgid ""
 "saving the following elements. Please use the <i>Okular document archive</i> "
 "format to preserve them."
 msgstr ""
-"Sie sind dabei, Änderungen zu speichern, aber die folgenden Elemente können "
-"im aktuellen Dateiformat nicht gespeichert werden. Bitte benutzen Sie das "
+"Sie sind dabei, Änderungen zu speichern, aber das aktuelle Dateiformat "
+"unterstützt das Speichern folgender Elemente nicht. Bitte verwenden Sie das "
 "Format <i>Okular-Dokumentarchiv</i>, um diese Elemente zu behalten."
 
 #: part/part.cpp:2794 part/part.cpp:2816
@@ -4916,8 +4916,8 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save the document and "
 "discard these elements."
 msgstr ""
-"Sie sind dabei, Änderungen zu speichern, aber die folgenden Elemente können "
-"im aktuellen Dateiformat nicht gespeichert werden. Bitte benutzen Sie das "
+"Sie sind dabei, Änderungen zu speichern, aber das aktuelle Dateiformat "
+"unterstützt das Speichern folgender Elemente nicht. Bitte verwenden Sie das "
 "Format <i>Okular-Dokumentarchiv</i>, um diese Elemente zu behalten. Klicken "
 "Sie auf <i>Fortsetzen</i>, um das Dokument zu speichern und dabei diese "
 "Elemente zu verwerfen."
@@ -4930,8 +4930,8 @@ msgid ""
 "format to preserve them. Click <i>Continue</i> to save, but you will lose "
 "these elements as well as the undo/redo history."
 msgstr ""
-"Sie sind dabei, Änderungen zu speichern, aber die folgenden Elemente können "
-"im aktuellen Dateiformat nicht gespeichert werden. Bitte benutzen Sie das "
+"Sie sind dabei, Änderungen zu speichern, aber das aktuelle Dateiformat "
+"unterstützt das Speichern folgender Elemente nicht. Bitte verwenden Sie das "
 "Format <i>Okular-Dokumentarchiv</i>, um diese Elemente zu behalten. Klicken "
 "Sie auf <i>Fortsetzen</i>, um das Dokument zu speichern, aber Sie werden "
 "diese Elemente und den Verlauf von Zurücknehmen/Wiederherstellen verlieren."
@@ -6003,12 +6003,12 @@ msgstr "Vorheriges Unterfenster"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Zu Unterfenster %1 wechseln"
 
 #: shell/shell.cpp:614
 #, kde-format
 msgid "Undo close tab"
-msgstr "Unterfenster wieder herstellen"
+msgstr "Unterfenster wiederherstellen"
 
 #: shell/shell.cpp:623
 #, kde-format

@@ -3969,7 +3969,7 @@ msgstr "ابحث عن '%1' في هذا المستند"
 #: part/pageview.cpp:5044
 #, kde-format
 msgid "Welcome"
-msgstr "مرحبا"
+msgstr "مرحبًا"
 
 #: part/pageview.cpp:5166
 #, kde-format
@@ -6018,7 +6018,7 @@ msgstr "انسَ الكلّ"
 #: shell/welcomescreen.ui:460
 #, kde-format
 msgid "Hide welcome screen"
-msgstr "أخف شاشة مرحبا"
+msgstr "أخف شاشة مرحبًا"
 
 #~ msgid "Geometry with Comment"
 #~ msgstr "شكل هندسي مع تعليق"

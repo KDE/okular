@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
     KAboutData aboutData = okularAboutData();
     KAboutData::setApplicationData(aboutData);
 
+    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("okular")));
+
     QCommandLineParser parser;
     // parser.setApplicationDescription(i18n("Okular mobile"));
     aboutData.setupCommandLine(&parser);

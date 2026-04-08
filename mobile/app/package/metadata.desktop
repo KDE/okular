@@ -128,3 +128,4 @@ GenericName[zh_TW]=文件檢視器
 Type=Application
 Exec=okularkirigami
 Icon=okular
+Categories=Qt;KDE;Graphics;Office;Viewer;

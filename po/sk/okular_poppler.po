@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.11.90\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.11.90\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -32,25 +32,25 @@ msgstr "Richard.Fric@kdemail.net,misurel@gmail.com"
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "Povoliť overprint preview:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "Nikdy"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Automatické"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -78,8 +78,7 @@ msgstr "Tvar"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: conf/pdfsettingswidget.ui:108
-#, fuzzy, kde-format
-#| msgid "Scaling mode for the printed pages"
+#, kde-format
 msgid "Default scaling mode when printing:"
 msgstr "Režim škálovania pre tlačené stránky"
 
@@ -126,7 +125,7 @@ msgstr ""
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Signature backend:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
@@ -136,13 +135,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"These signatures can only be validated by modern Okular users with GnuPG "
+"backend activated"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Allow PGP keys for signatures (Okular extension)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -305,12 +306,12 @@ msgstr "Nastavenie PDF backendu"
 #: generator_pdf.cpp:2184 generator_pdf.cpp:2212
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Failed writing temporary file"
 
 #: generator_pdf.cpp:2234
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Failed renaming temporary file"
 
 #: generator_pdf.cpp:2254
 #, kde-format
@@ -328,10 +329,11 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"These signatures only work between modern versions of Okular with the GnuPG "
+"based backend activated"
 
 #: pdfsettingswidget.cpp:116
-#, fuzzy, kde-format
-#| msgid "&Load Signatures"
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Načítať podpisy"
@@ -366,7 +368,7 @@ msgstr ""
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "forever"
 
 #: pdfsettingswidget.cpp:211
 #, kde-format

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-10 02:44+0000\n"
-"PO-Revision-Date: 2026-02-21 08:09+0100\n"
+"PO-Revision-Date: 2026-04-11 07:54+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -1719,12 +1719,10 @@ msgid "&Properties"
 msgstr "&Właściwości"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "Zapi&sz '%1'…"
+msgstr "&Otwórz '%1'…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2876,7 +2874,7 @@ msgstr "Nowe pliki otwieraj w kartach"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
-msgstr "Przełącz do istniejącej karty, gdy plik jest już otwarty"
+msgstr "Gdy plik jest już otwarty, to przełącz na jego kartę"
 
 #: part/dlggeneral.cpp:139
 #, kde-format
@@ -2888,7 +2886,7 @@ msgstr "Przestrzegaj ograniczeń DRM"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
-msgstr "Wczytaj plik ponownie, gdy ulegnie zmianie"
+msgstr "Gdy plik ulegnie zmianie, to wczytaj go ponownie"
 
 #: part/dlggeneral.cpp:155
 #, kde-format
@@ -2908,30 +2906,26 @@ msgctxt "@option:check Config dialog, general page"
 msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
-msgstr ""
-"Użyj szczegółów pliku do określenia, czy domyślnie otworzyć go w trybie "
-"ciągłym"
+msgstr "Wydedukuj z opisu pliku, czy domyślnie otworzyć go w trybie ciągłym"
 
 #: part/dlggeneral.cpp:178
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
-"Dla plików, które nie zawierają o sobie szczegółów, domyślnie otwórz je w "
-"trybie ciągłym"
+"Pliki, które nie zawierają swojego opisu, domyślnie otwieraj w trybie ciągłym"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr "Domyślnie, otwórz w trybie ciągłym"
+msgstr "Domyślnie otwórz w trybie ciągłym"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Kontynuuj utratę zmian"
+msgstr "Wznów na ostatnio oglądanej stronie"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

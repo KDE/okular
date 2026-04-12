@@ -8,54 +8,55 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-17 00:41+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-04-09 10:16-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "دەستىلەپ بېسىپ ئالدىن كۆزىتىشنى قوزغىتىدۇ:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "ھەرگىز"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "ھەمىشە"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "ئاپتوماتىك"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
 #, kde-format
 msgid "Enhance thin lines:"
-msgstr ""
+msgstr "كۈچەيتىلگەن ئىنچىكە سىزىق:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1025
@@ -67,7 +68,7 @@ msgstr "ياق"
 #: conf/pdfsettingswidget.ui:78
 #, kde-format
 msgid "Solid"
-msgstr "لىق تولغان"
+msgstr "ئۇيۇل"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
 #: conf/pdfsettingswidget.ui:83
@@ -79,25 +80,25 @@ msgstr "شەكىل"
 #: conf/pdfsettingswidget.ui:108
 #, kde-format
 msgid "Default scaling mode when printing:"
-msgstr ""
+msgstr "باسقاندىكى كۆڭۈلدىكى نىسبەت ھالىتى:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "بېسىشچان رايونغا ماسلاش"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "پۈتكۈل بەتكە ماسلاش"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "يوق؛ ئەسلى چوڭلۇقىدا باسىدۇ"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:149
@@ -107,6 +108,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"بۇ تاللانما قوزغىتىلغاندىن كېيىن Okular نىڭ رەقەملىك ئىمزاغا ئىشلەتكەن "
+"گۇۋاھنامىنىڭ بىكار قىلىنغان قىلىنمىغانلىقىنى تەكشۈرۈشى ئۈچۈن ئۈچىنچى تەرەپ "
+"OCSP مۇلازىمېتىرىنى زىيارەت قىلىشىغا يول قويۇلىدۇ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:152
@@ -114,12 +118,14 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"ئۈچىنچى تەرەپ مۇلازىمېتىرى ئارقىلىق رەقەملىك ئىمزادىكى گۇۋاھنامىنىڭ بىكار "
+"قىلىنغان قىلىنمىغانلىقىنى تەكشۈرىدۇ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "ئىمزا ئارقا ئۇچ:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
@@ -129,43 +135,45 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"بۇ ئىمزا پەقەت GnuPG ئارقا ئۇچ پىروگراممىسى قوزغىتىلغان زامانىۋى Okular "
+"ئىشلەتكۈچى ئۈچۈن دەلىللەيدۇ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "PGP شىفىرلىق ئاچقۇچلۇق ئىمزاغا يول قويىدۇ (Okular كېڭەيتىلمىسى)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "گۇۋاھنامە ساندان"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "كۆڭۈلدىكى:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:226
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "ئىختىيارى:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:243
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "ئىشلىتىلىشچان گۇۋاھنامە"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:251
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "ئىمزا يۈكلە(&L)"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -175,12 +183,12 @@ msgstr "PDF تاللانما"
 #: generator_pdf.cpp:87
 #, kde-format
 msgid "Print annotations"
-msgstr ""
+msgstr "ئىزاھاتنى باس"
 
 #: generator_pdf.cpp:88
 #, kde-format
 msgid "Include annotations in the printed document"
-msgstr ""
+msgstr "بېسىلغان پۈتۈكتە ئىزاھات بار"
 
 #: generator_pdf.cpp:89
 #, kde-format
@@ -188,16 +196,18 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
+"بېسىلغان پۈتۈكتە ئىزاھات بولىدۇ. ئەگەر ئىزاھات يوق ئەسلى  پۈتۈكنى باسماقچى "
+"بولسىڭىزۇ، بۇ تاللانمىنى چەكلەڭ."
 
 #: generator_pdf.cpp:91
 #, kde-format
 msgid "Force rasterization"
-msgstr ""
+msgstr "مەجبۇرىي نۇر شادىسىغا ئايلاندۇر"
 
 #: generator_pdf.cpp:92
 #, kde-format
 msgid "Rasterize into an image before printing"
-msgstr ""
+msgstr "سۈرەتنى بېسىشتىن ئاۋۋال نۇر شادىسىغا ئايلاندۇرىدۇ"
 
 #: generator_pdf.cpp:93
 #, kde-format
@@ -206,22 +216,25 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
+"ھەر بىر بەتنى مەجبۇرىي نۇر شادىسىلاشتۇرۇلغان سۈرەتكە ئايلاندۇرۇپ ئاندىن "
+"باسىدۇ. بۇ ئادەتتە سۈرەت سۈپىتىنىڭ ئازراق تۆۋەنلىشىنى كەلتۈرۈپ چىقىرىدۇ "
+"ئەمما بەزى پۈتۈكنى بېسىشتىكى خاتالىققا تاقابىل تۇرالايدۇ."
 
 #: generator_pdf.cpp:103
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "باسىدىغان بەتنىڭ نىسبەت ھالىتى"
 
 #: generator_pdf.cpp:104
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "نىسبەت ھالىتى:"
 
 #: generator_pdf.cpp:1023
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr ""
+msgstr "PDF v. %1.%2"
 
 #: generator_pdf.cpp:1023
 #, kde-format
@@ -260,11 +273,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"ئىمزا قويغۇچى: %1\n"
+"\n"
+"چېسلا: %2"
 
 #: generator_pdf.cpp:1708
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Poppler %1 نى ئىشلىتىدۇ"
 
 #: generator_pdf.cpp:1710
 #, kde-format
@@ -273,6 +289,9 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Poppler %1 نى ئىشلىتىدۇ\n"
+"\n"
+"Poppler %2 دا قۇرۇلغان"
 
 #: generator_pdf.cpp:1745
 #, kde-format
@@ -282,17 +301,17 @@ msgstr "PDF"
 #: generator_pdf.cpp:1745
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr ""
+msgstr "PDF ئارقا ئۇچ سەپلىمىسى"
 
 #: generator_pdf.cpp:2184 generator_pdf.cpp:2212
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "ۋاقىتلىق ھۆججەت يازالمىدى"
 
 #: generator_pdf.cpp:2234
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "ۋاقىتلىق ھۆججەت ئاتىنى ئۆزگەرتەلمىدى"
 
 #: generator_pdf.cpp:2254
 #, kde-format
@@ -300,6 +319,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"پۈتۈكتە بەزى خاتالىقنى بايقىدى، Okular بەلكىم مەزمۇننى توغرا كۆرسىتەلمەسلىكى "
+"مۇمكىن"
 
 #: pdfsettingswidget.cpp:115
 #, kde-format
@@ -308,29 +329,31 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"بۇ ئىمزا پەقەت GnuPG ئاساسىدىكى ئارقا ئۇچ پىروگراممىسى قوزغىتىلغان زامانىۋى "
+"Okular ئارىسىدا ئىشلەيدۇ"
 
 #: pdfsettingswidget.cpp:116
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr ""
+msgstr "PGP ئىمزانى قوزغىتىدۇ"
 
 #: pdfsettingswidget.cpp:146
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "تارقىتىلغۇچى"
 
 #: pdfsettingswidget.cpp:146
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "ئېلخەت"
 
 #: pdfsettingswidget.cpp:146
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "ئاخىرلىشىش ۋاقتى"
 
 #: pdfsettingswidget.cpp:163
 #, kde-format
@@ -338,33 +361,36 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"پىروگرامما Poppler ئامبىرىنى ئىشلىتىپ قۇرغاندا NSS قوللاشنى قوزغاتمىغان.\n"
+"شۇ سەۋەبتىن رەقەملىك ئىمزا قوشقىلى بولمايدۇ"
 
 #: pdfsettingswidget.cpp:187
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "مەڭگۈ"
 
 #: pdfsettingswidget.cpp:211
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "قايتا قوزغىتىش كېرەك"
 
 #: pdfsettingswidget.cpp:211
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
+"سىز NSS مۇندەرىجە سەپلىمىسىنى ئۆزگەرتكەندىن كېيىن Okular نى قايتا "
+"قوزغىتىشىڭىز كېرەك"
 
 #: pdfsignatureutils.cpp:230
-#, fuzzy, kde-format
-#| msgid "Document Password"
+#, kde-format
 msgid "Enter Password"
-msgstr "پۈتۈك ئىمى"
+msgstr "ئىم كىرگۈزۈلىدۇ"
 
 #: pdfsignatureutils.cpp:230
 #, kde-format
 msgid "Enter password to open %1:"
-msgstr ""
+msgstr "%1 نى ئېچىشتا ئىم كىرگۈزۈلىدۇ:"
 
 #~ msgid "Albert Astals Cid"
 #~ msgstr "Albert Astals Cid"

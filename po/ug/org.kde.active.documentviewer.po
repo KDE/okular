@@ -8,112 +8,111 @@ msgstr ""
 "Project-Id-Version: org\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-04-09 10:16-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #: ui/Bookmarks.qml:20 ui/OkularDrawer.qml:85
 msgid "Bookmarks"
-msgstr "خەتكۈشلەر"
+msgstr "خەتكۈش"
 
 #: ui/CertificateViewerPage.qml:23
 msgid "Certificate Viewer"
-msgstr ""
+msgstr "گۇۋاھنامە كۆرگۈچ"
 
 #: ui/CertificateViewerPage.qml:26
 msgid "Issued By"
-msgstr ""
+msgstr "تارقاتقۇچى"
 
 #: ui/CertificateViewerPage.qml:31 ui/CertificateViewerPage.qml:56
 msgid "Common Name:"
-msgstr ""
+msgstr "ئورتاق ئات:"
 
 #: ui/CertificateViewerPage.qml:38 ui/CertificateViewerPage.qml:63
 msgid "EMail:"
-msgstr ""
+msgstr "ئېلخەت:"
 
 #: ui/CertificateViewerPage.qml:45 ui/CertificateViewerPage.qml:70
 msgid "Organization:"
-msgstr ""
+msgstr "تەشكىل:"
 
 #: ui/CertificateViewerPage.qml:51
 msgid "Issued To"
-msgstr ""
+msgstr "تارقىتىلغۇچى"
 
 #: ui/CertificateViewerPage.qml:76
 msgid "Validity"
-msgstr ""
+msgstr "ئۈنۈملۈكلۈكى"
 
 #: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
-msgstr ""
+msgstr "تارقاتقان ۋاقىت:"
 
 #: ui/CertificateViewerPage.qml:88
 msgid "Expires On:"
-msgstr ""
+msgstr "توشىدىغان ۋاقىت:"
 
 #: ui/CertificateViewerPage.qml:94
 msgid "Fingerprints"
-msgstr ""
+msgstr "بارماق ئىزى"
 
 #: ui/CertificateViewerPage.qml:99
 msgid "SHA-1 Fingerprint:"
-msgstr ""
+msgstr "SHA-1 بارماق ئىزى:"
 
 #: ui/CertificateViewerPage.qml:106
 msgid "SHA-256 Fingerprint:"
-msgstr ""
+msgstr "SHA-256 بارماق ئىزى:"
 
 #: ui/CertificateViewerPage.qml:118 ui/CertificateViewerPage.qml:130
 msgid "Export…"
-msgstr ""
+msgstr "چىقار…"
 
 #: ui/CertificateViewerPage.qml:137 ui/SignaturePropertiesPage.qml:148
 msgid "Close"
-msgstr ""
+msgstr "ياپ"
 
 #: ui/CertificateViewerPage.qml:146
 msgid "Certificate File (*.cer)"
-msgstr ""
+msgstr "گۇۋاھنامە ھۆججەت (*.cer)"
 
 #: ui/CertificateViewerPage.qml:161 ui/SignaturePropertiesPage.qml:169
 msgid "Error"
-msgstr ""
+msgstr "خاتالىق"
 
 #: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
-msgstr ""
+msgstr "گۇۋاھنامىنى چىقىرالمايدۇ."
 
 #: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
-msgstr ""
+msgstr "Okular پۈتۈك كۆرگۈچ"
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "ئاچ…"
 
 #: ui/Main.qml:49
 msgid "About"
-msgstr ""
+msgstr "ھەققىدە"
 
 #: ui/Main.qml:99
 msgid "Password Needed"
-msgstr ""
+msgstr "ئىم زۆرۈر"
 
 #: ui/MainView.qml:29
 msgid "Remove bookmark"
-msgstr ""
+msgstr "خەتكۈشنى چىقىرىۋەت"
 
 #: ui/MainView.qml:29
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Bookmark this page"
-msgstr "خەتكۈشلەر"
+msgstr "بۇ بەتنى خەتكۈشكە قوش"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -125,86 +124,86 @@ msgstr "مەزمۇن مۇندەرىجىسى"
 
 #: ui/OkularDrawer.qml:99
 msgid "Signatures"
-msgstr ""
+msgstr "ئىمزا"
 
 #: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
-msgstr ""
+msgstr "ئىمزا خاسلىقى"
 
 #: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
-msgstr ""
+msgstr "ئۈنۈملۈكلۈك ھالىتى"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr ""
+msgstr "ئىمزا ئۈنۈملۈكلۈكى:"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr ""
+msgstr "پۈتۈك ئۆزگەرتىش:"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
-msgstr ""
+msgstr "قوشۇمچە ئۇچۇر"
 
 #: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
-msgstr ""
+msgstr "ئىمزا قويغۇچى:"
 
 #: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
-msgstr ""
+msgstr "ئىمزا قويغان ۋاقىت:"
 
 #: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
-msgstr ""
+msgstr "سەۋەبى:"
 
 #: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
-msgstr ""
+msgstr "ئورنى:"
 
 #: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
-msgstr ""
+msgstr "پۈتۈك نەشرى"
 
 #: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "پۈتۈك تۈزىتىلمىسى %1 / %2"
 
 #: ui/SignaturePropertiesPage.qml:108
 msgid "Save Signed Version…"
-msgstr ""
+msgstr "ئىمزالىق نەشرىنى ساقلا…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
 msgid "View Certificate…"
-msgstr ""
+msgstr "گۇۋاھنامە كۆرسەت…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
-msgstr ""
+msgstr "بۇ ئىمزانى ساقلىغىلى بولمىدى."
 
 #: ui/Signatures.qml:27
 msgid "Not Available"
-msgstr ""
+msgstr "ئىشلەتكىلى بولمايدۇ"
 
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
-msgstr "نەتىجە يوق"
+msgstr "ھېچقانداق نەتىجە تېپىلمىدى."
 
 #: ui/WelcomeView.qml:43
 msgid "No document open"
-msgstr ""
+msgstr "ئېچىلغان ھۆججەت يوق"
 
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "يېقىنقى پۈتۈك"
 
 #: ui/WelcomeView.qml:108
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr ""
+msgstr "پۈتۈكلىرىم"
 
 #~ msgid "Reader"
 #~ msgstr "ئوقۇغۇ"

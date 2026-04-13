@@ -1,0 +1,25 @@
+From 7b1432e6e81c33d37986404f384a8c10057c1814 Mon Sep 17 00:00:00 2001
+From: Scarlett Moore <sgmoore@debian.org>
+Date: Fri, 2 Aug 2024 02:05:28 -0700
+Subject: [PATCH] Use valid SPDX expression in metadata.
+
+---
+ shell/org.kde.okular.appdata.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/shell/org.kde.okular.appdata.xml b/shell/org.kde.okular.appdata.xml
+index 5deae3904..768c69044 100644
+--- a/shell/org.kde.okular.appdata.xml
++++ b/shell/org.kde.okular.appdata.xml
+@@ -2,7 +2,7 @@
+ <component type="desktop">
+   <id>org.kde.okular.desktop</id>
+   <metadata_license>CC0-1.0</metadata_license>
+-  <project_license>GPL-2.0+ and GFDL-1.3</project_license>
++  <project_license>GPL-2.0+ AND GFDL-1.3</project_license>
+   <developer_name translate="no">KDE</developer_name>
+   <name>Okular</name>
+   <name xml:lang="ar">Ø§ÙˆÙƒÙ„Ø§Ø±</name>
+--
+GitLab
+

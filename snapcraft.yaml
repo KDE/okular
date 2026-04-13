@@ -1,0 +1,233 @@
+# SPDX-FileCopyrightText: 2024-2026 Scarlett Moore <sgmoore@kde.org>
+#
+# SPDX-License-Identifier: CC0-1.0
+---
+name: okular
+confinement: strict
+grade: stable
+base: core24
+adopt-info: okular
+apps:
+  okular:
+    extensions:
+      - kde-neon-6
+    common-id: org.kde.okular.desktop
+    desktop: usr/share/applications/org.kde.okular.desktop
+    command: usr/bin/okular
+    plugs:
+      - home
+      - cups-control
+      - removable-media
+      - system-packages-doc
+      - udisks2
+      - dot-pki-nssdb
+      - mount-observe
+      - gsettings
+plugs:
+  dot-pki-nssdb:
+    interface: personal-files
+    read:
+      - $HOME/.pki/nssdb
+environment:
+  LD_LIBRARY_PATH: "/snap/kf6-core24/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kf6-core24/current/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libexec/kf6:$SNAP/usr/lib:$SNAP/lib/:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pulseaudio:/usr/lib:/lib"
+  GS_LIB: $SNAP/usr/share/ghostscript/10.02.1/Resource/Init
+  GS_FONTPATH: $SNAP/usr/share/ghostscript/10.02.1/Resource/Font
+slots:
+  session-dbus-interface:
+    interface: dbus
+    name: org.kde.okular
+    bus: session
+parts:
+  launchers:
+    source: snap/local/launchers
+    plugin: dump
+    organize:
+      '*': bin/
+  libgpgmepp-qt6:
+    build-packages:
+      - libassuan-dev
+      - libgpg-error-dev
+      - rsync
+    stage-packages:
+      - libassuan0
+      - libgpg-error0
+    source: https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-1.23.2.tar.bz2
+    source-checksum: sha256/9499e8b1f33cccb6815527a1bc16049d35a6198a6c5fae0185f2bd561bce5224
+    plugin: autotools
+    autotools-configure-parameters:
+      - --disable-gpgsm-test
+      - --enable-languages=cpp,qt6
+      - --prefix=/usr
+      - --enable-fixed-path=/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+    build-environment:
+      - LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy:/snap/kf6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:/usr
+      - PKG_CONFIG_PATH: /snap/kde-qt6-core24-sdk/current/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/pkgconfig
+    override-build: |
+      craftctl default
+      rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+  poppler:
+    after:
+      - libgpgmepp-qt6
+    plugin: cmake
+    source: https://poppler.freedesktop.org/poppler-26.02.0.tar.xz
+    build-packages:
+      - cmake
+      - libfreetype6-dev
+      - libfontconfig1-dev
+      - libjpeg-dev
+      - zlib1g-dev
+      - liblcms2-dev
+      - libcurl4-gnutls-dev
+      - libopenjp2-7-dev
+      - libboost-dev
+      - libgl1-mesa-dev
+    stage-packages:
+      - libasn1-8-heimdal
+      - libbrotli1
+      - libcurl4t64
+      - libdouble-conversion3
+      - libfontconfig1
+      - libfreetype6
+      - libgraphite2-3
+      - libgssapi3-heimdal
+      - libharfbuzz0b
+      - libhcrypto5t64-heimdal
+      - libheimbase1-heimdal
+      - libheimntlm0-heimdal
+      - libhx509-5-heimdal
+      - libicu74
+      - libjbig0
+      - libjpeg-turbo8
+      - libkrb5-26-heimdal
+      - liblcms2-2
+      - libldap2
+      - libnghttp2-14
+      - libpcre2-16-0
+      - libpng16-16
+      - libpsl5
+      - libroken19-heimdal
+      - librtmp1
+      - libsasl2-2
+      - libssh-4
+      - libtiff6
+      - libwebp7
+      - libwind0-heimdal
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+      - libmd4c0
+      - libopenjpip7
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DENABLE_QT5=OFF
+      - -DENABLE_QT6=ON
+      - -DBUILD_TESTING=OFF
+      - -DENABLE_NSS3=OFF
+    override-build: |
+      craftctl default
+      rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
+  mobipocket:
+    after:
+      - poppler
+    source: https://invent.kde.org/graphics/kdegraphics-mobipocket.git
+    source-branch: release/26.04
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DBUILD_WITH_QT6=ON
+      - -DBUILD_TESTING=OFF
+  okular:
+    after:
+      - mobipocket
+      - poppler
+    parse-info:
+      - usr/share/metainfo/org.kde.okular.appdata.xml
+    plugin: cmake
+    build-packages:
+      - cmake
+      - libchm-dev
+      - libdjvulibre-dev
+      - libepub-dev
+      - libfreetype6-dev
+      - libjpeg-dev
+      - libspectre-dev
+      - libtiff-dev
+      - libxkbcommon-dev
+      - pkg-config
+      - zlib1g-dev
+      - libzip-dev
+      - libmarkdown2-dev
+      - libspeechd-dev
+      - docbook-xml
+      - docbook-xsl
+    stage-packages:
+      - cups-bsd
+      - ghostscript
+      - libchm1
+      - libdjvulibre21
+      - libepub0
+      - libspectre1
+      - libtiff6
+      - libxkbcommon0
+      - libmarkdown2
+      - libfuse3-3
+      - libspeechd2
+      - speech-dispatcher
+      - espeak
+      - libaudio2
+      - patch
+      - cups-client
+      - libnss3-tools
+    source: .
+    source-type: local
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DQT_MAJOR_VERSION=6
+      - -DBUILD_WITH_QT6=ON
+      - -DBUILD_TESTING=OFF
+    override-pull: |
+      craftctl default
+      while read -r PATCHFILE ; do
+        patch -p1 < "$CRAFT_PROJECT_DIR/snap/patches/$PATCHFILE"
+      done < $CRAFT_PROJECT_DIR/snap/patches/series
+    prime:
+      - -usr/lib/*/cmake/*
+      - -usr/include/*
+      - -usr/share/ECM/*
+      - -usr/share/man/*
+      - -usr/bin/X11
+      - -usr/lib/gcc/$CRAFT_ARCH_TRIPLET_BUILD_FOR/6.0.0
+      - -usr/lib/aspell/*
+      - -usr/share/lintian
+      - -usr/lib/libchm.so.*
+      - -usr/lib/libqgpgmeqt6.so.*
+      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libgssapi.so.*
+      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libpoppler-cpp.so.*
+      - -usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libopenjpip.so.*
+  gpu-2404:
+    after: [okular]
+    source: https://github.com/canonical/gpu-snap.git
+    plugin: dump
+    override-prime: |
+      craftctl default
+      ${CRAFT_PART_SRC}/bin/gpu-2404-cleanup mesa-2404
+    prime:
+      - bin/gpu-2404-wrapper
+  cleanup:
+    after:
+      - okular
+    plugin: nil
+    build-snaps:
+      - core24
+      - kf6-core24
+    override-prime: |
+      set -eux
+      for snap in "core24" "kf6-core24"; do
+         cd "/snap/$snap/current" && find . -type f,l -exec rm -rf "${CRAFT_PRIME}/{}" \;
+      done

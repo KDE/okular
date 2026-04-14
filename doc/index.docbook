@@ -32,8 +32,8 @@ Context menu actions like Rename Bookmarks etc.)
 			<!-- TRANS:ROLES_OF_TRANSLATORS -->
 		</authorgroup>
 		<legalnotice>&FDLNotice;</legalnotice>
-		<date>2022-02-19</date>
-		<releaseinfo>22.04</releaseinfo>
+		<date>2026-02-23</date>
+		<releaseinfo>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para>&okular; is a &kde; universal document viewer based on &kpdf; code.</para>
@@ -2636,6 +2636,14 @@ Context menu actions like Rename Bookmarks etc.)
 					</listitem>
 				</varlistentry>
 				<varlistentry>
+					<term><guilabel>Continue from last viewed page</guilabel></term>
+					<listitem>
+						<para>
+						  Whether to save and restore the last viewed page for each document with the stored page data.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
 					<term><guilabel>When using Browse Tool, wrap cursor at screen edges</guilabel></term>
 					<listitem>
 						<para>
@@ -2643,6 +2651,15 @@ Context menu actions like Rename Bookmarks etc.)
 						</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term><guilabel>Items in recent history</guilabel></term>
+					<listitem>
+						<para>
+						  Allows to configure the length of the stored history list.
+						</para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term><guilabel>Overview columns</guilabel></term>
 					<listitem>

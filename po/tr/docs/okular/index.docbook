@@ -59,9 +59,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2022‒02‒19</date>
+>2026-02-23</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -3728,6 +3728,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Continue from last viewed page</guilabel
+></term>
+					<listitem>
+						<para
+>Whether to save and restore the last viewed page for each document with the stored page data. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Göz At aracını kullanırken, ekran kenarlarında imleci kaydır</guilabel
 ></term>
 					<listitem>
@@ -3737,6 +3747,17 @@ Context menu actions like Rename Bookmarks etc.)
 > ile belgenin tamamında sonsuz sarma yapılmasına olanak tanır. Etkinleştirilirse belgeyi sürüklerken kenarlara dokunulduğunda fare imleci ekranın diğer ucuna kaydırılır. Bu özellik yalnızca X11’de desteklenir. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Items in recent history</guilabel
+></term>
+					<listitem>
+						<para
+>Allows to configure the length of the stored history list. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel

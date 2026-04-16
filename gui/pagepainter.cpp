@@ -322,6 +322,25 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
         // 4B.3. highlight rects in page
         // draw highlights that are inside the 'limits' paint region
         for (const auto &highlight : std::as_const(bufferedHighlights)) {
+            // CompositionMode_Multiply still looks good on white bg so
+            // change nothing if render colors are not changed
+            QPainter::CompositionMode compMode = QPainter::CompositionMode_Multiply;
+            QColor frameColor = highlight.first.darker(150);
+            if (Okular::SettingsCore::changeColors()) {
+                switch (Okular::SettingsCore::renderMode()) {
+                case Okular::SettingsCore::EnumRenderMode::Paper:
+                    compMode = QPainter::CompositionMode_Difference;
+                    break;
+                case Okular::SettingsCore::EnumRenderMode::Inverted: // fall through
+                case Okular::SettingsCore::EnumRenderMode::Recolor:
+                    // CompositionMode_Multiply makes highlights invisible when background
+                    // color is close to dark
+                    compMode = QPainter::CompositionMode_Difference;
+                    frameColor.setRgb((frameColor.red() - 255) * -1, (frameColor.green() - 255) * -1, (frameColor.blue() - 255) * -1);
+                    break;
+                }
+            }
+
             const Okular::NormalizedRect &r = highlight.second;
             // find out the rect to highlight on pixmap
             QRect highlightRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).intersected(limits);
@@ -329,10 +348,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
             const QColor highlightColor = highlight.first;
             QPainter painter(&backImage);
-            painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+            painter.setCompositionMode(compMode);
             painter.fillRect(highlightRect, highlightColor);
 
-            const QColor frameColor = highlightColor.darker(150);
             const QRect frameRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).translated(-limits.left(), -limits.top());
             painter.setPen(frameColor);
             painter.drawRect(frameRect);

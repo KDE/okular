@@ -87,9 +87,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2022-02-19</date>
+>2026-02-23</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -3750,6 +3750,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Continuar desde la última página vista</guilabel
+></term>
+					<listitem>
+						<para
+>Indica si se debe guardar y restaurar la última página vista de cada documento con los datos almacenados de la página. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Al usar la herramienta «Examinar», rodear el cursor en los extremos de la pantalla</guilabel
 ></term>
 					<listitem>
@@ -3759,6 +3769,17 @@ Context menu actions like Rename Bookmarks etc.)
 >. Si se activa, el cursor del ratón volverá al extremo opuesto de la pantalla cuando toque los bordes mientras se arrastra el documento. Esta funcionalidad solo está permitida en X11. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Elementos del historial reciente</guilabel
+></term>
+					<listitem>
+						<para
+>Permite configurar el tamaño de la lista de historial guardada. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel

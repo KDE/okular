@@ -59,7 +59,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2026-02-23</date>
+>2026‒02‒23</date>
 		<releaseinfo
 >26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
@@ -3728,11 +3728,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Continue from last viewed page</guilabel
+>Son görüntülenen sayfadan sürdür</guilabel
 ></term>
 					<listitem>
 						<para
->Whether to save and restore the last viewed page for each document with the stored page data. </para>
+>Depolanan sayfa bilgisini kullanarak, her bir belge için son görüntülenen sayfa bilgisinin kaydedilip bir sonraki açılışta oradan başlanıp başlanmayacağını ayarlar. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3750,11 +3750,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Items in recent history</guilabel
+>Geçmişteki ögeler</guilabel
 ></term>
 					<listitem>
 						<para
->Allows to configure the length of the stored history list. </para>
+>Depolanan geçmiş listesinin büyüklüğünü yapılandırmaya olanak tanır. </para>
 					</listitem>
 				</varlistentry>
 

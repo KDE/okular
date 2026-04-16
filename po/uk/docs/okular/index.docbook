@@ -59,9 +59,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->19 лютого 2022 року</date>
+>23 лютого 2026 року</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -3746,6 +3746,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Продовжити з останньої переглянутої сторінки</guilabel
+></term>
+					<listitem>
+						<para
+>Визначає, чи слід зберігати і відновлювати останню переглянуту сторінку для кожного документа у збережених даних сторінок. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >При використанні засобу навігації завертати вказівник на краях екрана</guilabel
 ></term>
 					<listitem>
@@ -3755,6 +3765,17 @@ Context menu actions like Rename Bookmarks etc.)
 >. Якщо позначено, вказівник миші завертатиметься до протилежного краю екрана, коли торкатиметься меж при перетягуванні вмісту документа. Підтримку цієї можливості передбачено лише при використанні графічного сервера X11. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Пунктів у журналі нещодавніх файлів</guilabel
+></term>
+					<listitem>
+						<para
+>Надає змогу налаштувати довжину збереженого списку журналу. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel

@@ -45,9 +45,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->19 de febrer de 2022</date>
+>23 de febrer de 2026</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -3692,6 +3692,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Continua des de l'última pàgina visualitzada</guilabel
+></term>
+					<listitem>
+						<para
+>Si s'ha de desar i restaurar l'última pàgina vista per a cada document amb les dades de la pàgina emmagatzemada. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >En usar l'eina Navega, el cursor continua des del final oposat en arribar a la vora de la pantalla</guilabel
 ></term>
 					<listitem>
@@ -3701,6 +3711,17 @@ Context menu actions like Rename Bookmarks etc.)
 >. Si està activat, el cursor del ratolí continuarà des del final oposat de la pantalla quan toqui les vores mentre arrossegueu el document. Aquesta característica només és compatible amb X11. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Elements a l'historial recent</guilabel
+></term>
+					<listitem>
+						<para
+>Permet configurar la llargada de la llista de l'historial emmagatzemat. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel

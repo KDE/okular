@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#Run speech-dispatcher for speech support.
+speech-dispatcher -d

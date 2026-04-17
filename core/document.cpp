@@ -4555,6 +4555,30 @@ void Document::processKVCFActions(Okular::FormField *ff)
     }
 }
 
+QList<Document::DocumentAdditionalActionType> Document::documentAdditionalActionTypes() const
+{
+    QList<DocumentAdditionalActionType> types;
+    if (!Scripter::canExecuteScripts()) {
+        return types;
+    }
+    if (d->m_generator->additionalDocumentAction(Document::CloseDocument)) {
+        types << Document::CloseDocument;
+    }
+    if (d->m_generator->additionalDocumentAction(Document::PrintDocumentStart)) {
+        types << Document::PrintDocumentStart;
+    }
+    if (d->m_generator->additionalDocumentAction(Document::PrintDocumentFinish)) {
+        types << Document::PrintDocumentFinish;
+    }
+    if (d->m_generator->additionalDocumentAction(Document::SaveDocumentStart)) {
+        types << Document::SaveDocumentFinish;
+    }
+    if (d->m_generator->additionalDocumentAction(Document::SaveDocumentFinish)) {
+        types << Document::SaveDocumentFinish;
+    }
+    return types;
+}
+
 void Document::processDocumentAction(const Action *action, DocumentAdditionalActionType type)
 {
     if (!action || action->actionType() != Action::Script) {

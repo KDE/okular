@@ -365,6 +365,7 @@ private:
     KMessageWidget *m_migrationMessage;
     KMessageWidget *m_topMessage;
     KMessageWidget *m_formsMessage;
+    KMessageWidget *m_printMightDifferMessage;
     KMessageWidget *m_infoMessage;
     KMessageWidget *m_signatureMessage;
 #if HAVE_NEW_SIGNATURE_API

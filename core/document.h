@@ -789,6 +789,12 @@ public:
     void processDocumentAction(const Action *action, DocumentAdditionalActionType type);
 
     /**
+     * Returns the list of documentAdditionalActionType available for this document
+     * @since 26.08
+     */
+    QList<DocumentAdditionalActionType> documentAdditionalActionTypes() const;
+
+    /**
      * Recalculates all the form fields in the document
      *
      * @since 24.12

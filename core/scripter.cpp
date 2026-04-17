@@ -59,6 +59,15 @@ Scripter::~Scripter()
     delete d;
 }
 
+bool Scripter::canExecuteScripts()
+{
+#if HAVE_JS
+    return true;
+#else
+    return false;
+#endif
+}
+
 void Scripter::execute(Event *event, ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;

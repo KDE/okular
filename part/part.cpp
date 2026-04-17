@@ -460,6 +460,13 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_infoTimer = new QTimer();
     m_infoTimer->setSingleShot(true);
     connect(m_infoTimer, &QTimer::timeout, m_infoMessage, &KMessageWidget::animatedHide);
+    m_printMightDifferMessage = new KMessageWidget(rightContainer);
+    m_printMightDifferMessage->setVisible(false);
+    m_printMightDifferMessage->setWordWrap(true);
+    m_printMightDifferMessage->setPosition(KMessageWidget::Position::Header);
+    m_printMightDifferMessage->setText(
+        i18nc("This is a normal pdf feature, but can be abused by hostile parties", "This document has elements that might be hidden or shown differently when printed. For important documents, please verify both."));
+    rightLayout->addWidget(m_printMightDifferMessage);
     m_signatureMessage = new KMessageWidget(rightContainer);
     m_signatureMessage->setVisible(false);
     m_signatureMessage->setWordWrap(true);
@@ -1630,6 +1637,27 @@ bool Part::openFile()
             for (Okular::FormField *f : formFields) {
                 if (f->type() == Okular::FormField::FormSignature) {
                     static_cast<Okular::FormFieldSignature *>(f)->subscribeUpdates(refreshMessage);
+                }
+            }
+        }
+
+        m_printMightDifferMessage->setVisible(false);
+
+        QList<Document::DocumentAdditionalActionType> actionTypes = m_document->documentAdditionalActionTypes();
+        if (actionTypes.contains(Document::PrintDocumentStart) || actionTypes.contains(Document::PrintDocumentFinish)) {
+            m_printMightDifferMessage->setVisible(true);
+        }
+
+        for (uint i = 0; (i < m_document->pages()) && m_printMightDifferMessage->isHidden(); i++) {
+            const auto pageAnnots = m_document->page(i)->annotations();
+            for (auto *annot : pageAnnots) {
+                if (annot->flags() & Okular::Annotation::DenyPrint && !(annot->flags() & Okular::Annotation::Hidden)) {
+                    m_printMightDifferMessage->setVisible(true);
+                    break;
+                }
+                if (!(annot->flags() & Okular::Annotation::DenyPrint) && (annot->flags() & Okular::Annotation::Hidden)) {
+                    m_printMightDifferMessage->setVisible(true);
+                    break;
                 }
             }
         }

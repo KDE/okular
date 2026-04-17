@@ -31,6 +31,8 @@ public:
 
     void execute(Event *event, ScriptType type, const QString &script);
 
+    static bool canExecuteScripts();
+
 private:
     friend class ScripterPrivate;
     ScripterPrivate *d;

@@ -345,7 +345,12 @@ bool JSApp::createPopUpMenuTree(int depth, QMenu *rootMenu, const QJSValue &argu
 
     for (int i = 0; i < nArgs; ++i) {
         const QJSValue item = arguments.property(i);
-        const QString cName = item.property(QStringLiteral("cName")).toString();
+        const QJSValue nameProperty = item.property(QStringLiteral("cName"));
+        if (nameProperty.isUndefined()) {
+            continue;
+        }
+        const QString cName = nameProperty.toString();
+
         const QJSValue cResultProperty = item.property(QStringLiteral("cResult"));
         const QJSValue oSubMenu = item.property(QStringLiteral("oSubMenu"));
 

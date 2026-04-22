@@ -34,6 +34,7 @@ ColorModeMenu::ColorModeMenu(KActionCollection *ac, QObject *parent)
     // Other color mode actions.
     auto addColorMode = [=, this](KToggleAction *a, const QString &name, Okular::SettingsCore::EnumRenderMode::type id) {
         a->setData(int(id));
+        a->setAutoRepeat(false);
         addAction(a);
         ac->addAction(name, a);
         m_colorModeActionGroup->addAction(a);

@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the okular package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-22 00:41+0000\n"
-"PO-Revision-Date: 2025-10-05 12:01+0300\n"
+"PO-Revision-Date: 2026-04-21 14:10+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -122,7 +122,7 @@ msgstr ""
 "שלך לא יוצגו.</p><p><b>סיבה אפשרית לכך:</b> כנראה שהתוכנית <strong>pdf2ps</"
 "strong> לא מותקנת במערכת שלך או שאי אפשר למצוא אותה בנתיבי החיפוש הנוכחיים.</"
 "p><p><b>מה ניתן לעשות בנדון:</b> התוכנית <strong>pdf2ps</strong> היא בדרך "
-"כלל חלק מממערכת חבילות פענוח ה־PostScript של ghostscript. אם ghostscript לא "
+"כלל חלק מממערכת חבילות פיענוח ה־PostScript של ghostscript. אם ghostscript לא "
 "מותקן במערכת שלך, אפשר להתקין אותו כעת. במקרה של ספק בנוגע להתקנת "
 "ghostscript, כדאי לנסות להשתמש ב־<strong>pdf2ps</strong> משורת הפקודות כדי "
 "לבדוק אם הוא אכן עובד.</p><p><em>PATH:</em> %2</p></qt>"

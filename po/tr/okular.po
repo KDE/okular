@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-24 00:41+0000\n"
-"PO-Revision-Date: 2026-02-24 07:59+0300\n"
+"PO-Revision-Date: 2026-04-24 16:23+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3072,7 +3072,7 @@ msgstr "Metin kenar yumuşatmasını etkinleştir"
 #, kde-format
 msgctxt "@title:group Config dialog, performance page"
 msgid "Rendering options:"
-msgstr "Sunum seçenekleri:"
+msgstr "Sunma seçenekleri:"
 
 #: part/dlgperformance.cpp:59
 #, kde-format
@@ -3084,7 +3084,7 @@ msgstr "Grafik kenar yumuşatmasını etkinleştir"
 #, kde-format
 msgctxt "@option:check Config dialog, performance page"
 msgid "Enable text hinting"
-msgstr "Metin düzgünleştirmeyi etkinleştir"
+msgstr "Metin piksel hizalamasını etkinleştir"
 
 #: part/dlgperformance.cpp:77
 #, kde-format
@@ -3092,8 +3092,7 @@ msgid ""
 "Keeps used memory as low as possible. Do not reuse anything. (For systems "
 "with low memory.)"
 msgstr ""
-"Kullanılan belleği mümkün olduğu kadar düşük tutar (Düşük bellekli sistemler "
-"için)"
+"Kullanılan belleği olabildiğince düşük tutar (Düşük bellekli sistemler için)"
 
 #: part/dlgperformance.cpp:80
 #, kde-format

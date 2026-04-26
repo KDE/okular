@@ -95,7 +95,7 @@
   <summary xml:lang="sl">Oglejte si in označite dokumente</summary>
   <summary xml:lang="sv">Visa och kommentera dokument</summary>
   <summary xml:lang="ta">ஆவணங்களைப் பாரத்து குறிப்பிடலாம்</summary>
-  <summary xml:lang="tr">Belgeleri görüntüle ve not ekle</summary>
+  <summary xml:lang="tr">Belgeler görüntüleyin ve onlara not ekleyin</summary>
   <summary xml:lang="uk">Перегляд і анотування документів</summary>
   <summary xml:lang="zh-CN">查看和批注文档</summary>
   <summary xml:lang="zh-TW">檢視或註記文件</summary>
@@ -402,7 +402,7 @@
       <caption xml:lang="sl">Branje priročnikov v Okularju</caption>
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
       <caption xml:lang="ta">ஆக்குலரில் ஓர் கையேடை படித்தல்</caption>
-      <caption xml:lang="tr">Belgelendirmeyi Okular ile oku</caption>
+      <caption xml:lang="tr">Okular ile belgelendirme okuma</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
       <caption xml:lang="zh-CN">使用 Okular 阅读产品说明书</caption>

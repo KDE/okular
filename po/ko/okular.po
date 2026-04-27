@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-10 02:44+0000\n"
-"PO-Revision-Date: 2026-02-03 23:47+0100\n"
+"PO-Revision-Date: 2026-04-26 21:18+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -1697,12 +1697,10 @@ msgid "&Properties"
 msgstr "속성(&P)"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "'%1' 저장(&S)…"
+msgstr "'%1' 열기(&O)…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2889,11 +2887,10 @@ msgid "Open in continuous mode by default"
 msgstr "기본값으로 연속 모드에서 열기"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "변경 사항을 지우고 계속"
+msgstr "마지막으로 본 쪽에서 계속"
 
 #: part/dlggeneral.cpp:195
 #, kde-format

@@ -2775,14 +2775,14 @@ msgid ""
 "If %f is not specified, then the file name is appended to the specified "
 "command."
 msgstr ""
-"<qt>Set the command of a custom text editor to be launched.<br />\n"
-"Môžete also put few placeholders:\n"
+"<qt>Nastavte príkaz vlastného textového editora, ktorý sa má spustiť.<br />\n"
+"Môžete tiež použiť niekoľko zástupcov:\n"
 "<ul>\n"
-"  <li>%f - the file name</li>\n"
-"  <li>%l - the line of the file to be reached</li>\n"
-"  <li>%c - the column of the file to be reached</li>\n"
+"  <li>%f - názov súboru</li>\n"
+"  <li>%l - riadok súboru, na ktorý sa má prejsť</li>\n"
+"  <li>%c - stĺpec súboru, na ktorý sa má prejsť</li>\n"
 "</ul>\n"
-"If %f is not specified, then the file name is appended to zadaný command."
+"Ak %f nie je zadané, názov súboru sa pripojí k zadanému príkazu."
 
 #: part/dlgeditor.cpp:63
 #, kde-format
@@ -4030,9 +4030,9 @@ msgid ""
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Existujú no available signing certificates.<br/>Launch Certificate Manager "
-"to import or manage certificates<br/>For more information, please see the "
-"section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
+"Nie sú k dispozícii žiadne podpisové certifikáty.<br/>Spustite Správcu "
+"certifikátov na import alebo správu certifikátov.<br/>Viac informácií "
+"nájdete v časti <a href=\"%1\">Pridanie digitálnych podpisov</a> v príručke."
 
 #: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, kde-format
@@ -4046,9 +4046,8 @@ msgid ""
 "please see the section about <a href=\"%1\">Adding Digital Signatures</a> in "
 "the manual."
 msgstr ""
-"Existujú no available signing certificates.<br/>For more information, please "
-"see the section about <a href=\"%1\">Adding Digital Signatures</a> in the "
-"manual."
+"Nie sú k dispozícii žiadne podpisové certifikáty.<br/>Viac informácií "
+"nájdete v časti <a href=\"%1\">Pridanie digitálnych podpisov</a> v príručke."
 
 #: part/pageview.cpp:5288
 #, kde-format
@@ -4287,8 +4286,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
-msgstr ""
-"Signing in progress. Môžete adjust the position and size of the signature"
+msgstr "Prebieha podpisovanie. Môžete upraviť polohu a veľkosť podpisu."
 
 #: part/part.cpp:490
 #, kde-format
@@ -4808,9 +4806,9 @@ msgid ""
 "the file needs to be reloaded. You will be asked for the password again and "
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
-"Aktuálny document is protected with a password.<br />Aby ste save, the file "
-"needs to be reloaded. You will be asked for the password again and your undo/"
-"redo history will be lost.<br />Do chcete to continue?"
+"Aktuálny dokument je chránený heslom.<br />Aby bolo možné uložiť, súbor je "
+"potrebné znova načítať. Budete znova požiadaní o heslo a história operácií "
+"späť/dopredu sa stratí.<br />Chcete pokračovať?"
 
 #: part/part.cpp:2729
 #, kde-format
@@ -4833,8 +4831,8 @@ msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
-"After saving, aktuálny document format requires the file to be reloaded. "
-"Your undo/redo history will be lost.<br />Do chcete to continue?"
+"Po uložení si aktuálny formát dokumentu vyžaduje opätovné načítanie súboru. "
+"História operácií späť/dopredu sa stratí.<br />Chcete pokračovať?"
 
 #: part/part.cpp:2769 part/part.cpp:2838 part/part.cpp:2859 part/part.cpp:3518
 #, kde-format

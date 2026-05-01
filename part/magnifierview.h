@@ -24,7 +24,7 @@ public:
     bool canUnloadPixmap(int page) const override;
 
     void updateView(const Okular::NormalizedPoint &p, const Okular::Page *page);
-    void move(int x, int y);
+    void doMove(int x, int y);
 
 protected:
     void paintEvent(QPaintEvent *e) override;

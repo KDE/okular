@@ -187,8 +187,8 @@ public Q_SLOTS: // dbus
 
 Q_SIGNALS:
     void enablePrintAction(bool enable);
-    void openSourceReference(const QString &absFileName, int line, int column); /* cppcheck-suppress duplInheritedMember; see viewerinterface*/
-    void viewerMenuStateChange(bool enabled);                                   /* cppcheck-suppress duplInheritedMember */
+    void openSourceReference(const QString &absFileName, int line, int column); /* NOLINT(bugprone-derived-method-shadowing-base-method) cppcheck-suppress duplInheritedMember; see viewerinterface*/
+    void viewerMenuStateChange(bool enabled);                                   /* NOLINT(bugprone-derived-method-shadowing-base-method) cppcheck-suppress duplInheritedMember */
     void enableCloseAction(bool enable);
     void mimeTypeChanged(const QMimeType &mimeType);
     void urlsDropped(const QList<QUrl> &urls);

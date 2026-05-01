@@ -4327,7 +4327,7 @@ void PageView::moveMagnifier(const QPoint p) // non scaled point
         scrollPosIntoView(contentAreaPoint(p + scroll));
     }
 
-    d->magnifierView->move(x, y);
+    d->magnifierView->doMove(x, y);
 }
 
 void PageView::updateMagnifier(const QPoint p) // scaled point

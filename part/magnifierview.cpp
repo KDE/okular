@@ -98,9 +98,9 @@ void MagnifierView::paintEvent(QPaintEvent *e)
     drawTicks(&p);
 }
 
-void MagnifierView::move(int x, int y)
+void MagnifierView::doMove(int x, int y)
 {
-    QWidget::move(x, y);
+    move(x, y);
     requestPixmap();
 }
 
@@ -159,10 +159,10 @@ void MagnifierView::drawTicks(QPainter *p)
 
     // ticks
     // TODO possibility to switch units (pt, mm, cc, in, printing dots)
-    float ps = (float)SCALE * 5; // how much pixels in widget is one pixel in document * how often
-    int tw = 10;                 // tick size in pixels
+    int ps = SCALE * 5; // how much pixels in widget is one pixel in document * how often
+    int tw = 10;        // tick size in pixels
 
-    for (float x = 0; x < width(); x += ps) {
+    for (int x = 0; x < width(); x += ps) {
         p->drawLine(x, 1, x, tw);
         p->drawLine(x, height() - 1, x, height() - tw - 1);
         p->drawLine(1, x, tw, x);

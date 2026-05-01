@@ -250,7 +250,7 @@ void Event::setSelEnd(const int selEnd)
 // static
 std::shared_ptr<Event> Event::createFormCalculateEvent(FormField *target, Page *targetPage, FormField *source, Page *sourcePage, const QString &targetName)
 {
-    std::shared_ptr<Event> ret(new Event(Event::FieldCalculate));
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldCalculate);
     ret->setSource(source);
     ret->setSourcePage(sourcePage);
     ret->setTarget(target);
@@ -264,7 +264,7 @@ std::shared_ptr<Event> Event::createFormCalculateEvent(FormField *target, Page *
 // static
 std::shared_ptr<Event> Event::createFormatEvent(FormField *target, Page *targetPage, const QString &targetName)
 {
-    std::shared_ptr<Event> ret(new Event(Event::FieldFormat));
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldFormat);
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
@@ -276,7 +276,7 @@ std::shared_ptr<Event> Event::createFormatEvent(FormField *target, Page *targetP
 // static
 std::shared_ptr<Event> Event::createKeystrokeEvent(FormField *target, Page *targetPage)
 {
-    std::shared_ptr<Event> ret(new Event(Event::FieldKeystroke));
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldKeystroke);
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
 
@@ -287,7 +287,7 @@ std::shared_ptr<Event> Event::createKeystrokeEvent(FormField *target, Page *targ
 
 std::shared_ptr<Event> Event::createFormFocusEvent(FormField *target, Page *targetPage, const QString &targetName)
 {
-    std::shared_ptr<Event> ret(new Event(Event::FieldFocus));
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldFocus);
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);
@@ -299,7 +299,7 @@ std::shared_ptr<Event> Event::createFormFocusEvent(FormField *target, Page *targ
 
 std::shared_ptr<Event> Event::createFormValidateEvent(FormField *target, Page *targetPage, const QString &targetName)
 {
-    std::shared_ptr<Event> ret(new Event(Event::FieldValidate));
+    std::shared_ptr<Event> ret = std::make_shared<Event>(Event::FieldValidate);
     ret->setTarget(target);
     ret->setTargetPage(targetPage);
     ret->setTargetName(targetName);

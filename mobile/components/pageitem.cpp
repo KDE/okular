@@ -137,7 +137,7 @@ void PageItem::refreshPage()
     m_redrawTimer->start();
 }
 
-int PageItem::implicitWidth() const
+int PageItem::customImplicitWidth() const
 {
     if (m_page) {
         return m_page->width();
@@ -145,7 +145,7 @@ int PageItem::implicitWidth() const
     return 0;
 }
 
-int PageItem::implicitHeight() const
+int PageItem::customImplicitHeight() const
 {
     if (m_page) {
         return m_page->height();

@@ -48,12 +48,12 @@ class PageItem : public QQuickItem, public Okular::View
     /**
      * "Natural" width of the page
      */
-    Q_PROPERTY(int implicitWidth READ implicitWidth NOTIFY implicitWidthChanged)
+    Q_PROPERTY(int implicitWidth READ customImplicitWidth NOTIFY implicitWidthChanged)
 
     /**
      * "Natural" height of the page
      */
-    Q_PROPERTY(int implicitHeight READ implicitHeight NOTIFY implicitHeightChanged)
+    Q_PROPERTY(int implicitHeight READ customImplicitHeight NOTIFY implicitHeightChanged)
 
     /**
      * True if the page contains at least a bookmark.
@@ -74,8 +74,8 @@ public:
     void setFlickable(QQuickItem *flickable);
     QQuickItem *flickable() const;
 
-    int implicitWidth() const;
-    int implicitHeight() const;
+    int customImplicitWidth() const;
+    int customImplicitHeight() const;
 
     DocumentItem *document() const;
     void setDocument(DocumentItem *doc);

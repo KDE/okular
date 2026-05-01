@@ -90,18 +90,6 @@ protected:
      */
     void readProperties(const KConfigGroup &) override;
 
-    /**
-     * Expose internal functions for session restore testing
-     */
-    void savePropertiesInternal(KConfig *config, int num)
-    {
-        KMainWindow::savePropertiesInternal(config, num);
-    }
-    void readPropertiesInternal(KConfig *config, int num)
-    {
-        KMainWindow::readPropertiesInternal(config, num);
-    }
-
     void readSettings();
     void writeSettings();
     void setFullScreen(bool);

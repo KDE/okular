@@ -5264,7 +5264,7 @@ ArchiveData *DocumentPrivate::unpackDocumentArchive(const QString &archivePath)
         return nullptr;
     }
 
-    std::unique_ptr<ArchiveData> archiveData(new ArchiveData());
+    std::unique_ptr<ArchiveData> archiveData = std::make_unique<ArchiveData>();
     const int dotPos = documentFileName.indexOf(QLatin1Char('.'));
     if (dotPos != -1) {
         archiveData->document.setFileTemplate(QDir::tempPath() + QLatin1String("/okular_XXXXXX") + documentFileName.mid(dotPos));

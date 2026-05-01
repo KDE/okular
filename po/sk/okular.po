@@ -609,7 +609,7 @@ msgstr ""
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Nepodarilo sa načítať súbor <filename>%1</filename>"
+msgstr "Nepodarilo sa podpísať dokument: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -628,13 +628,13 @@ msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Nemožno prepísať <filename>%1</filename>, pretože tento súbor je len na "
-"čítanie. Skúste uložiť na iné miesto alebo zmeniť oprávnenia tohto súboru."
+"Nepodarilo sa zapísať podpísaný dokument do <filename>%1</filename>, "
+"skontrolujte, či máte vybratý priečinok s oprávnením na zápis"
 
 #: core/signatureutils.cpp:506
 #, kde-format
 msgid "Unknown signing error"
-msgstr "Neznámy súbor"
+msgstr "Neznáma chyba podpisovania"
 
 #: core/sourcereference.cpp:103
 #, kde-format
@@ -729,7 +729,7 @@ msgstr "Vložená poznámka"
 #: gui/guiutils.cpp:56
 #, kde-format
 msgid "Arrow with Comment"
-msgstr "Polygon s komentárom"
+msgstr "Šípka s komentárom"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -762,7 +762,7 @@ msgstr "Mnohouholník"
 #: gui/guiutils.cpp:71
 #, kde-format
 msgid "Rectangle with Comment"
-msgstr "Pečiatka s komentárom"
+msgstr "Obdĺžnik s komentárom"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1484
@@ -773,7 +773,7 @@ msgstr "Obdĺžnik"
 #: gui/guiutils.cpp:74
 #, kde-format
 msgid "Ellipse with Comment"
-msgstr "Podčiarknutý text s komentárom"
+msgstr "Elipsa s komentárom"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1472
@@ -1181,7 +1181,7 @@ msgstr "Umiestnenie: %1"
 #, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "Podpisy"
+msgstr "Podpis PGP"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
@@ -1211,7 +1211,7 @@ msgstr "Neznámy"
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Platnosť podpisu:"
+msgstr "Zástupné miesto podpisu"
 
 #: gui/signaturemodel.cpp:201
 #, kde-format
@@ -1721,7 +1721,7 @@ msgstr "&Vlastnosti"
 #, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "&Uložiť '%1'..."
+msgstr "&Otvoriť '%1'…"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
 #, kde-format
@@ -2041,7 +2041,7 @@ msgstr "Symbol razítka:"
 #: part/annotationwidgets.cpp:777
 #, kde-format
 msgid "&Width:"
-msgstr "Šírka &pera:"
+msgstr "&Šírka:"
 
 #: part/annotationwidgets.cpp:504
 #, kde-format
@@ -2086,7 +2086,7 @@ msgstr "Žiadny"
 #: part/annotationwidgets.cpp:515
 #, kde-format
 msgid "Butt"
-msgstr "Značka"
+msgstr "Rovný"
 
 #: part/annotationwidgets.cpp:516
 #, kde-format
@@ -2911,7 +2911,8 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Predvolene otvoriť v nepretržitom režime"
+msgstr ""
+"Pre súbory bez informácií o súbore otvoriť v nepretržitom režime predvolene"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
@@ -2923,7 +2924,7 @@ msgstr "Predvolene otvoriť v nepretržitom režime"
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Pokračovať stratením zmien"
+msgstr "Pokračovať od poslednej zobrazenej strany"
 
 #: part/dlggeneral.cpp:195
 #, kde-format
@@ -3787,7 +3788,7 @@ msgstr "Prečítať celý dokument"
 #: part/pageview.cpp:723
 #, kde-format
 msgid "Speak From Current Page"
-msgstr "Prečítať aktuálnu stránku"
+msgstr "Prečítať od aktuálnej stránky"
 
 #: part/pageview.cpp:728
 #, kde-format
@@ -3858,7 +3859,7 @@ msgstr "Kopírovať do schránky"
 #: part/pageview.cpp:2884 part/pageview.cpp:3091 part/part.cpp:858
 #, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Kopírovať text do schránky"
+msgstr "Kopírovať text (bez zalomení riadkov)"
 
 #: part/pageview.cpp:2895 part/pageview.cpp:3095
 #, kde-format
@@ -4016,12 +4017,12 @@ msgstr ""
 #: part/pageview.cpp:5253
 #, kde-format
 msgid "No valid certificates"
-msgstr "Certifikáty"
+msgstr "Žiadne platné certifikáty"
 
 #: part/pageview.cpp:5254 part/pageview.cpp:5269
 #, kde-format
 msgid "Open Certificate Manager"
-msgstr "Zobraziť certifikát..."
+msgstr "Otvoriť správcu certifikátov"
 
 #: part/pageview.cpp:5265
 #, kde-format
@@ -4037,7 +4038,7 @@ msgstr ""
 #: part/pageview.cpp:5268 part/pageview.cpp:5280
 #, kde-format
 msgid "No certificates found"
-msgstr "Certifikáty"
+msgstr "Nenašli sa žiadne certifikáty"
 
 #: part/pageview.cpp:5278
 #, kde-format
@@ -4196,7 +4197,7 @@ msgstr "Podčiarknuť text"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "Text vloženej poznámky (ťahom vyberte oblasť)"
+msgstr "Anotácia písacím strojom (ťahom vyberte oblasť)"
 
 #: part/pageviewannotator.cpp:1474
 #, kde-format
@@ -5524,7 +5525,7 @@ msgstr "Všetky"
 #: part/selectcertificatedialog.ui:39
 #, kde-format
 msgid "Only QES certificates"
-msgstr "Certifikáty"
+msgstr "Iba certifikáty QES"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
@@ -5570,7 +5571,7 @@ msgstr "Vybrať..."
 #: part/selectcertificatedialog.ui:135
 #, kde-format
 msgid "Recent backgrounds:"
-msgstr "Použiť vlastnú farbu pozadia:"
+msgstr "Nedávne pozadia:"
 
 #: part/side_reviews.cpp:66
 #, kde-format
@@ -5600,12 +5601,12 @@ msgstr "Zobraziť poznámky iba pre aktuálnu stránku"
 #: part/side_reviews.cpp:165
 #, kde-format
 msgid "Expand all elements"
-msgstr "Rozbaliť všetko"
+msgstr "Rozbaliť všetky prvky"
 
 #: part/side_reviews.cpp:167
 #, kde-format
 msgid "Collapse all elements"
-msgstr "Zbaliť všetko"
+msgstr "Zbaliť všetky prvky"
 
 #: part/signaturepanel.cpp:101
 #, kde-format
@@ -5626,12 +5627,12 @@ msgstr "Vyberte obrázok pozadia"
 #: part/signaturepartutils.cpp:186
 #, kde-format
 msgid "Forget image"
-msgstr "Zabudnúť všetko"
+msgstr "Zabudnúť obrázok"
 
 #: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget all images"
-msgstr "Zabudnúť všetko"
+msgstr "Zabudnúť všetky obrázky"
 
 #: part/signaturepartutils.cpp:229
 #, kde-format
@@ -5715,7 +5716,7 @@ msgstr "Zobraziť certifikát..."
 #: part/signaturepropertiesdialog.cpp:97
 #, kde-format
 msgid "View in Certificate Manager"
-msgstr "Zobraziť certifikát..."
+msgstr "Zobraziť v správcovi certifikátov"
 
 #: part/signaturepropertiesdialog.cpp:101
 #, kde-format

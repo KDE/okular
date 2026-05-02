@@ -268,6 +268,15 @@ std::unique_ptr<RegularAreaRect> Page::wordAt(const NormalizedPoint &p) const
     return nullptr;
 }
 
+std::unique_ptr<RegularAreaRect> Page::lineAt(const NormalizedPoint &p) const
+{
+    if (d->m_text) {
+        return d->m_text->lineAt(p);
+    }
+
+    return nullptr;
+}
+
 std::unique_ptr<RegularAreaRect> Page::textArea(const TextSelection &selection) const
 {
     if (d->m_text) {

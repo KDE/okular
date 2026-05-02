@@ -232,6 +232,11 @@ public:
     // left click depress
     QTimer leftClickTimer;
 
+    // Triple-click detection for line selection
+    QElapsedTimer lastDoubleClickTime;
+    QPoint lastDoubleClickPos;
+    bool tripleClickDetectionEnabled = false;
+
     // actions
     QAction *aRotateClockwise = nullptr;
     QAction *aRotateCounterClockwise = nullptr;
@@ -2574,7 +2579,43 @@ void PageView::mousePressEvent(QMouseEvent *e)
         break;
     case Okular::Settings::EnumMouseMode::TextSelect:
         d->mouseSelectPos = eventPos;
-        if (!rightButton) {
+        if (leftButton) {
+            // Check for triple-click: single click shortly after double-click at same position
+            const bool isTripleClick = d->tripleClickDetectionEnabled && d->lastDoubleClickTime.isValid() && d->lastDoubleClickTime.elapsed() < QApplication::doubleClickInterval() &&
+                (eventPos - d->lastDoubleClickPos).manhattanLength() < QApplication::startDragDistance();
+
+            if (isTripleClick) {
+                // TRIPLE-CLICK: Select entire line
+                PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+                if (pageItem) {
+                    double nX = pageItem->absToPageX(eventPos.x());
+                    double nY = pageItem->absToPageY(eventPos.y());
+
+                    textSelectionClear();
+                    std::unique_ptr<Okular::RegularAreaRect> lineRect = pageItem->page()->lineAt(Okular::NormalizedPoint(nX, nY));
+                    if (lineRect) {
+                        d->document->setPageTextSelection(pageItem->pageNumber(), std::move(lineRect), palette().color(QPalette::Active, QPalette::Highlight));
+                        d->pagesWithTextSelection << pageItem->pageNumber();
+                        if (d->document->isAllowed(Okular::AllowCopy)) {
+                            const QString text = d->selectedText();
+                            if (!text.isEmpty()) {
+                                QClipboard *cb = QApplication::clipboard();
+                                if (cb->supportsSelection()) {
+                                    cb->setText(text, QClipboard::Selection);
+                                }
+                            }
+                        }
+                    }
+                }
+                // Update timestamp for potential 4th click detection
+                d->lastDoubleClickTime.start();
+                d->lastDoubleClickPos = eventPos;
+            } else {
+                // Regular single click - clear selection and disable triple-click detection
+                textSelectionClear();
+                d->tripleClickDetectionEnabled = false;
+            }
+        } else if (!rightButton) {
             textSelectionClear();
         }
         break;
@@ -3250,12 +3291,25 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
     if (e->button() == Qt::LeftButton) {
         const QPoint eventPos = contentAreaPoint(e->pos());
         const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+
         if (pageItem) {
             // find out normalized mouse coords inside current item
             double nX = pageItem->absToPageX(eventPos.x());
             double nY = pageItem->absToPageY(eventPos.y());
 
             if (d->mouseMode == Okular::Settings::EnumMouseMode::TextSelect) {
+                // Check for quad-click: double-click shortly after triple-click at same position
+                const bool isQuadClick = d->tripleClickDetectionEnabled && d->lastDoubleClickTime.isValid() && d->lastDoubleClickTime.elapsed() < QApplication::doubleClickInterval() &&
+                    (eventPos - d->lastDoubleClickPos).manhattanLength() < QApplication::startDragDistance();
+
+                if (isQuadClick) {
+                    // QUAD-CLICK: Clear selection and reset
+                    textSelectionClear();
+                    d->tripleClickDetectionEnabled = false;
+                    return;
+                }
+
+                // DOUBLE-CLICK: Select word
                 textSelectionClear();
 
                 std::unique_ptr<Okular::RegularAreaRect> wordRect = pageItem->page()->wordAt(Okular::NormalizedPoint(nX, nY));
@@ -3272,6 +3326,11 @@ void PageView::mouseDoubleClickEvent(QMouseEvent *e)
                             }
                         }
                     }
+
+                    // Enable triple-click detection after successful word selection
+                    d->tripleClickDetectionEnabled = true;
+                    d->lastDoubleClickTime.start();
+                    d->lastDoubleClickPos = eventPos;
                     return;
                 }
             }

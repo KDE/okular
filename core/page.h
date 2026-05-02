@@ -218,6 +218,13 @@ public:
     std::unique_ptr<RegularAreaRect> wordAt(const NormalizedPoint &p) const;
 
     /**
+     * Returns the area and text of the line at the given point
+     * Note that ownership of the returned area belongs to the caller.
+     * @see TextPage::lineAt()
+     */
+    std::unique_ptr<RegularAreaRect> lineAt(const NormalizedPoint &p) const;
+
+    /**
      * Returns the rectangular area of the given @p selection.
      */
     std::unique_ptr<RegularAreaRect> textArea(const TextSelection &selection) const;

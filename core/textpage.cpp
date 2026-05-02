@@ -16,10 +16,9 @@
 #include "page_p.h"
 #include <unordered_set>
 
-#include <cstring>
-
 #include <QVarLengthArray>
 #include <QtAlgorithms>
+#include <cstring>
 
 using namespace Okular;
 using namespace Qt::Literals::StringLiterals;
@@ -1697,7 +1696,9 @@ std::unique_ptr<RegularAreaRect> TextPage::wordAt(const NormalizedPoint &p) cons
     }
     if (posIt != itEnd) {
         if (posIt->text().simplified().isEmpty()) {
-            return nullptr;
+            auto ret = std::make_unique<RegularAreaRect>();
+            ret->appendShape(posIt->area());
+            return ret;
         }
         // Find the first TinyTextEntity of the word
         while (posIt != itBegin) {
@@ -1745,4 +1746,223 @@ std::unique_ptr<RegularAreaRect> TextPage::wordAt(const NormalizedPoint &p) cons
     } else {
         return nullptr;
     }
+}
+
+std::unique_ptr<RegularAreaRect> TextPage::lineAt(const NormalizedPoint &p) const
+{
+    TextEntity::List::ConstIterator itBegin = d->m_words.constBegin(), itEnd = d->m_words.constEnd();
+    TextEntity::List::ConstIterator it = itBegin;
+    TextEntity::List::ConstIterator posIt = itEnd;
+
+    // Find the text entity at the given point
+    for (; it != itEnd; ++it) {
+        if (it->area().contains(p.x, p.y)) {
+            posIt = it;
+            break;
+        }
+    }
+
+    if (posIt == itEnd) {
+        return nullptr;
+    }
+
+    // Get the vertical bounds of the text entity at the click point
+    const NormalizedRect &clickArea = posIt->area();
+    const double lineTop = clickArea.top;
+    const double lineBottom = clickArea.bottom;
+    const double lineHeight = lineBottom - lineTop;
+
+    // Helper lambda to check if two areas are on the same line
+    auto isOnSameLine = [lineTop, lineBottom, lineHeight](const NormalizedRect &area) {
+        const double areaTop = area.top;
+        const double areaBottom = area.bottom;
+        const double areaHeight = areaBottom - areaTop;
+
+        const double overlapTop = std::max(lineTop, areaTop);
+        const double overlapBottom = std::min(lineBottom, areaBottom);
+        const double overlap = std::max(0.0, overlapBottom - overlapTop);
+
+        const double minHeight = std::min(lineHeight, areaHeight);
+        return minHeight > 0 && (overlap / minHeight) >= 0.70;
+    };
+
+    // Find the start of the line by going backwards
+    TextEntity::List::ConstIterator lineStart = posIt;
+    while (lineStart != itBegin) {
+        TextEntity::List::ConstIterator prev = lineStart;
+        --prev;
+        if (!isOnSameLine(prev->area())) {
+            break;
+        }
+
+        if (prev->text().contains(QLatin1Char('\n'))) {
+            break;
+        }
+
+        lineStart = prev;
+    }
+
+    TextEntity::List::ConstIterator lineEnd = posIt;
+    while (lineEnd != itEnd) {
+        if (lineEnd->text().contains(QLatin1Char('\n'))) {
+            ++lineEnd;
+            break;
+        }
+
+        TextEntity::List::ConstIterator next = lineEnd;
+        ++next;
+        if (next == itEnd) {
+            ++lineEnd;
+            break;
+        }
+        if (!isOnSameLine(next->area())) {
+            ++lineEnd;
+            break;
+        }
+
+        lineEnd = next;
+    }
+
+    auto hyphenEnd = [&itEnd](TextEntity::List::ConstIterator start, TextEntity::List::ConstIterator end) -> TextEntity::List::ConstIterator {
+        TextEntity::List::ConstIterator last = end;
+        --last;
+        if (last->text() == QLatin1String("\n")) {
+            if (last == start) {
+                return itEnd;
+            }
+            --last;
+        }
+        const QString &lastText = last->text();
+        if (lastText.endsWith(QLatin1Char('-')) || lastText.endsWith(QLatin1String("-\n"))) {
+            return end;
+        }
+        return itEnd;
+    };
+
+    TextEntity::List::ConstIterator contEnd = lineStart;
+    if (lineStart != itBegin) {
+        TextEntity::List::ConstIterator checkIt = lineStart;
+        --checkIt;
+        bool prevHyphen = false;
+        const QString &prevText = checkIt->text();
+        if (prevText.endsWith(QLatin1String("-\n")) || prevText.endsWith(QLatin1Char('-'))) {
+            prevHyphen = true;
+        } else if (prevText == QLatin1String("\n") && checkIt != itBegin) {
+            --checkIt;
+            if (checkIt->text().endsWith(QLatin1Char('-'))) {
+                prevHyphen = true;
+            }
+        }
+
+        if (prevHyphen) {
+            contEnd = lineStart;
+            while (contEnd != lineEnd) {
+                const QString &cText = contEnd->text();
+                if (cText.simplified().isEmpty()) {
+                    break;
+                }
+                ++contEnd;
+            }
+        }
+    }
+
+    TextEntity::List::ConstIterator hyphenCont = itEnd;
+    if (lineEnd != itEnd && lineStart != lineEnd) {
+        hyphenCont = hyphenEnd(lineStart, lineEnd);
+    }
+
+    TextEntity::List::ConstIterator newlineEnd = lineEnd;
+    if (hyphenCont != itEnd) {
+        TextEntity::List::ConstIterator fragIt = lineEnd;
+        while (fragIt != itEnd) {
+            const QString &fText = fragIt->text();
+            if (fText.simplified().isEmpty()) {
+                break;
+            }
+            ++fragIt;
+        }
+        newlineEnd = fragIt;
+    }
+
+    if (contEnd != lineStart) {
+        bool clickCont = false;
+        for (TextEntity::List::ConstIterator ci = lineStart; ci != contEnd; ++ci) {
+            if (ci == posIt) {
+                clickCont = true;
+                break;
+            }
+        }
+        if (clickCont) {
+            TextEntity::List::ConstIterator prevEntity = lineStart;
+            --prevEntity;
+            if (prevEntity->text() == QLatin1String("\n") && prevEntity != itBegin) {
+                --prevEntity;
+            }
+            const NormalizedRect &prevArea = prevEntity->area();
+            NormalizedPoint prevPoint(prevArea.left, (prevArea.top + prevArea.bottom) / 2.0);
+            return lineAt(prevPoint);
+        }
+    }
+
+    auto ret = std::make_unique<RegularAreaRect>();
+    TextEntity::List::ConstIterator buildStart = (contEnd != lineStart) ? contEnd : lineStart;
+    TextEntity::List::ConstIterator buildEnd = newlineEnd;
+
+    // Skip bullet chars
+    TextEntity::List::ConstIterator probe = buildStart;
+    while (probe != buildEnd && probe->text().simplified().isEmpty()) {
+        ++probe;
+    }
+    if (probe != buildEnd) {
+        TextEntity::List::ConstIterator second = probe;
+        ++second;
+        while (second != buildEnd && second->text().simplified().isEmpty()) {
+            ++second;
+        }
+        if (second != buildEnd) {
+            const double gap = second->area().left - probe->area().right;
+            if (gap > 0.0) {
+                const double bulletCharW = probe->area().width() / qMax(1, probe->text().length());
+                const double secondCharW = second->area().width() / qMax(1, second->text().length());
+                if (gap > bulletCharW || gap > secondCharW) {
+                    buildStart = second;
+                }
+            }
+        }
+    }
+
+    for (TextEntity::List::ConstIterator lineIt = buildStart; lineIt != buildEnd; ++lineIt) {
+        const QString text = lineIt->text();
+        if (lineIt == buildStart && text.simplified().isEmpty()) {
+            continue;
+        }
+        ret->appendShape(lineIt->area());
+
+        if (text.contains(QLatin1Char('\n')) && lineIt != buildStart) {
+            TextEntity::List::ConstIterator afterNl = lineIt;
+            ++afterNl;
+            if (afterNl == buildEnd || afterNl == itEnd) {
+                break;
+            }
+            if (text.endsWith(QLatin1String("-\n"))) {
+                continue;
+            }
+            if (text == QLatin1String("\n")) {
+                TextEntity::List::ConstIterator beforeNl = lineIt;
+                if (beforeNl != buildStart) {
+                    --beforeNl;
+                    if (beforeNl->text().endsWith(QLatin1Char('-'))) {
+                        continue;
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    if (ret->isEmpty()) {
+        return nullptr;
+    }
+
+    return ret;
 }

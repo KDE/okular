@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-24 00:41+0000\n"
+"POT-Creation-Date: 2026-05-03 00:41+0000\n"
 "PO-Revision-Date: 2026-02-24 04:49+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1692,8 +1692,8 @@ msgid "Copy Text to Clipboard"
 msgstr "ტექსტის კოპირება გაცვლის ბუფერში"
 
 #: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
-#: part/pageview.cpp:2566 part/pageview.cpp:2889 part/pageview.cpp:2891
-#: part/pageview.cpp:3042 part/pageview.cpp:3100 part/pageview.cpp:3102
+#: part/pageview.cpp:2571 part/pageview.cpp:2930 part/pageview.cpp:2932
+#: part/pageview.cpp:3083 part/pageview.cpp:3141 part/pageview.cpp:3143
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "კოპირება აკრძალულია DRM-ის მიერ"
@@ -3619,304 +3619,304 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "დან"
 
-#: part/pageview.cpp:508
+#: part/pageview.cpp:513
 #, kde-format
 msgid "Zoom"
 msgstr "თემა"
 
-#: part/pageview.cpp:520
+#: part/pageview.cpp:525
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100%-მდე გადიდება"
 
-#: part/pageview.cpp:531
+#: part/pageview.cpp:536
 #, kde-format
 msgid "Rotate &Right"
 msgstr "მარჯვნივ &შებრუნება"
 
-#: part/pageview.cpp:532
+#: part/pageview.cpp:537
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "მარჯვენა"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Rotate &Left"
 msgstr "&მარცხნივ შებრუნება"
 
-#: part/pageview.cpp:537
+#: part/pageview.cpp:542
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "მარცხენა"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Original Orientation"
 msgstr "ორიგინალური ორიენტაცია"
 
-#: part/pageview.cpp:547
+#: part/pageview.cpp:552
 #, kde-format
 msgid "&Trim View"
 msgstr "&წაკვეთა"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&ველების წაკვეთა"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:563
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "&მონიშნულამდე წაკვეთა"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:569
 #, kde-format
 msgid "Fit &Width"
 msgstr "სიგანეში &ჩატევა"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:573
 #, kde-format
 msgid "Fit &Page"
 msgstr "&გვერდში ჩატევა"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&ავტომატური ჩატევა"
 
-#: part/pageview.cpp:576
+#: part/pageview.cpp:581
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "&ფანჯრის ჩატევა გვერდში"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, kde-format
 msgid "&View Mode"
 msgstr "&ხედის რეჟიმი"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:600
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&ერთი გვერდი"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:601
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&გადაბრუნებები"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:602
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "გადაფურცვლა (&პირველი გვერდი ცალკე)"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:605
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&გადახედვა"
 
-#: part/pageview.cpp:612
+#: part/pageview.cpp:617
 #, kde-format
 msgid "&Continuous"
 msgstr "&უწყვეტი"
 
-#: part/pageview.cpp:619
+#: part/pageview.cpp:624
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "მარჯვნიდან-მარცხნივ კითხვის მიმართულების გამოყენება"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:633
 #, kde-format
 msgid "&Browse"
 msgstr "&არჩევა"
 
-#: part/pageview.cpp:636
+#: part/pageview.cpp:641
 #, kde-format
 msgid "&Zoom"
 msgstr "&გადიდება"
 
-#: part/pageview.cpp:656
+#: part/pageview.cpp:661
 #, kde-format
 msgid "Area &Selection"
 msgstr "მონიშნული &მონაკვეთი"
 
-#: part/pageview.cpp:663
+#: part/pageview.cpp:668
 #, kde-format
 msgid "&Text Selection"
 msgstr "&მონიშნული ტექსტი"
 
-#: part/pageview.cpp:670
+#: part/pageview.cpp:675
 #, kde-format
 msgid "T&able Selection"
 msgstr "მონიშნული &ცხრილი"
 
-#: part/pageview.cpp:677
+#: part/pageview.cpp:682
 #, kde-format
 msgid "&Magnifier"
 msgstr "&გამადიდებელი"
 
-#: part/pageview.cpp:686
+#: part/pageview.cpp:691
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "მონიშვნის ხელსაწყოები"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:717
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "ციფრული &ხელმოწერა…"
 
-#: part/pageview.cpp:718
+#: part/pageview.cpp:723
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "მთელი დოკუმენტის თქმა"
 
-#: part/pageview.cpp:723
+#: part/pageview.cpp:728
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "წარმოთქმა მიმდინარე გვერდიდან"
 
-#: part/pageview.cpp:728
+#: part/pageview.cpp:733
 #, kde-format
 msgid "Speak Current Page"
 msgstr "მიმდინარე გვერდის თქმა"
 
-#: part/pageview.cpp:733
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Stop Speaking"
 msgstr "ლაპარაკის დასრულება"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "თქმის შეჩერება/გაგრძელება"
 
-#: part/pageview.cpp:750
+#: part/pageview.cpp:755
 #, kde-format
 msgid "Scroll Up"
 msgstr "მაღლა აქაჩვა"
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Scroll Down"
 msgstr "ქვემოთ ჩამოწევა"
 
-#: part/pageview.cpp:762
+#: part/pageview.cpp:767
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "გვერდის მაღლა აწევა"
 
-#: part/pageview.cpp:768
+#: part/pageview.cpp:773
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "გვერდის ქვემოთ ჩამოწერვა"
 
-#: part/pageview.cpp:774
+#: part/pageview.cpp:779
 #, kde-format
 msgid "Show Forms"
 msgstr "ფორმების ჩვენება"
 
-#: part/pageview.cpp:1287
+#: part/pageview.cpp:1292
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " ჩაიტვირთა ერთგვერდიანი დოკუმენტი."
 msgstr[1] " ჩაიტვირთა %1-გვერდიანი დოკუმენტი."
 
-#: part/pageview.cpp:2560
+#: part/pageview.cpp:2565
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "ცხრილის შემცველობის კოპირება ბუფერში"
 
-#: part/pageview.cpp:2881
+#: part/pageview.cpp:2922
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "ტექსტი (1 სიმბოლო)"
 msgstr[1] "ტექსტი (%1 სიმბოლო)"
 
-#: part/pageview.cpp:2882 part/pageview.cpp:2904
+#: part/pageview.cpp:2923 part/pageview.cpp:2945
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "გაცვლის ბუფერში კოპირება"
 
-#: part/pageview.cpp:2884 part/pageview.cpp:3091 part/part.cpp:858
+#: part/pageview.cpp:2925 part/pageview.cpp:3132 part/part.cpp:858
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "ტექსტის კოპირება (ხაზის გადატანების გარეშე)"
 
-#: part/pageview.cpp:2895 part/pageview.cpp:3095
+#: part/pageview.cpp:2936 part/pageview.cpp:3136
 #, kde-format
 msgid "Speak Text"
 msgstr "ტექსტის წაკითხვა"
 
-#: part/pageview.cpp:2903
+#: part/pageview.cpp:2944
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "გამოსახულება (%1 x %2 პიქსელი)"
 
-#: part/pageview.cpp:2905
+#: part/pageview.cpp:2946
 #, kde-format
 msgid "Save to File…"
 msgstr "ფაილში შენახვა…"
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2966
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "გამოსახულება [%1 x %2] ბუფერში დაკოპირდა."
 
-#: part/pageview.cpp:2928
+#: part/pageview.cpp:2969
 #, kde-format
 msgid "Save file"
 msgstr "ფაილის შენახვა"
 
-#: part/pageview.cpp:2928
+#: part/pageview.cpp:2969
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "გამოსახულებები (*.png *.jpeg)"
 
-#: part/pageview.cpp:2930
+#: part/pageview.cpp:2971
 #, kde-format
 msgid "File not saved."
 msgstr "ფაილი არ შენახულა."
 
-#: part/pageview.cpp:2941
+#: part/pageview.cpp:2982
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "გამოსახულება [%1 x %2] შენახულია ფაილში %3."
 
-#: part/pageview.cpp:3090
+#: part/pageview.cpp:3131
 #, kde-format
 msgid "Copy Text"
 msgstr "ტექსტის კოპირება"
 
-#: part/pageview.cpp:3113
+#: part/pageview.cpp:3154
 #, kde-format
 msgid "Go to '%1'"
 msgstr "%1-ზე გადასვლა"
 
-#: part/pageview.cpp:4137 part/part.cpp:3196
+#: part/pageview.cpp:4196 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "სიგანის ჩატევა"
 
-#: part/pageview.cpp:4137
+#: part/pageview.cpp:4196
 #, kde-format
 msgid "Fit Page"
 msgstr "გვერდის ჩატევა"
 
-#: part/pageview.cpp:4137
+#: part/pageview.cpp:4196
 #, kde-format
 msgid "Auto Fit"
 msgstr "ავტომატური ჩატევა"
 
-#: part/pageview.cpp:4160
+#: part/pageview.cpp:4219
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3925,67 +3925,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4502
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1'-ის მოძებნა მოხდება"
 
-#: part/pageview.cpp:4457
+#: part/pageview.cpp:4516
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "ვებ-მალსახმობების მორგება…"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4542
 #, kde-format
 msgid "Follow This Link"
 msgstr "ამ ბმულის მიყოლა"
 
-#: part/pageview.cpp:4486
+#: part/pageview.cpp:4545
 #, kde-format
 msgid "Play this Sound"
 msgstr "ამ ხმის დაკვრა"
 
-#: part/pageview.cpp:4488
+#: part/pageview.cpp:4547
 #, kde-format
 msgid "Stop Sound"
 msgstr "ხმის გაჩერება"
 
-#: part/pageview.cpp:4494
+#: part/pageview.cpp:4553
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ბმულის მისამართის კოპირება"
 
-#: part/pageview.cpp:4515
+#: part/pageview.cpp:4574
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "'%1'-ის მოძებნა ამ დოკუმენტში"
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5106
 #, kde-format
 msgid "Welcome"
 msgstr "კეთილი იყოს თქვენი მობრძანება"
 
-#: part/pageview.cpp:5173
+#: part/pageview.cpp:5232
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "აირჩიეთ გასადიდებელი ადგილი. მარჯვენა წკაპი დასაპატარავებლად."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "დააწკაპუნეთ გადიდებული ხედის სანახავად."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5264
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "დახატეთ მართკუთხედი ტექსტის/გრაფიკის გარშემო, მის დასაკოპირებლად."
 
-#: part/pageview.cpp:5221
+#: part/pageview.cpp:5280
 #, kde-format
 msgid "Select text"
 msgstr "ტექსტის მონიშვნა"
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5296
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3994,7 +3994,7 @@ msgstr ""
 "დახატეთ მართკუთხედი ცხრილის გარშემო, შემდეგ დააწკაპუნეთ წიბოებთან, რომ "
 "გაყოთ. დააწექით Esc-ს გასასუფთავებლად."
 
-#: part/pageview.cpp:5252 part/pageview.cpp:5260
+#: part/pageview.cpp:5311 part/pageview.cpp:5319
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4003,17 +4003,17 @@ msgstr ""
 "ყველა თქვენი ხელმოწერის სერტიფიკატი არასწორია. თუ ხელმოწერა ადრე მუშაობდა, "
 "შეამოწმეთ მათი ვარგისობის ვადა."
 
-#: part/pageview.cpp:5253
+#: part/pageview.cpp:5312
 #, kde-format
 msgid "No valid certificates"
 msgstr "სწორი სერტიფიკატების გარეშე"
 
-#: part/pageview.cpp:5254 part/pageview.cpp:5269
+#: part/pageview.cpp:5313 part/pageview.cpp:5328
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "სერტიფიკატების მმართველის გახსნა"
 
-#: part/pageview.cpp:5265
+#: part/pageview.cpp:5324
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4025,12 +4025,12 @@ msgstr ""
 "ინფორმაციისთვის სახელმძღვანელოში იხილეთ სექცია <a href=\"%1\">ციფრული "
 "ხელმოწერების დამატება</a>."
 
-#: part/pageview.cpp:5268 part/pageview.cpp:5280
+#: part/pageview.cpp:5327 part/pageview.cpp:5339
 #, kde-format
 msgid "No certificates found"
 msgstr "სერტიფიკატები აღმოჩენილი არაა"
 
-#: part/pageview.cpp:5278
+#: part/pageview.cpp:5337
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4040,18 +4040,18 @@ msgstr ""
 "ხელმოწერის სერტიფიკატები ვერ ვიპოვე.<br/>მეტი ინფორმაციისთვის იხილეთ სექცია "
 "<a href=\"%1\">ციფრული ხელმოწერების დამატებაზე</a> სახელმძღვანელოში."
 
-#: part/pageview.cpp:5303
+#: part/pageview.cpp:5362
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "გაქვთ შეუნახავი ცვლილებები. შეინახეთ დოკუმენტი, სანამ მას ხელს მოაწერთ."
 
-#: part/pageview.cpp:5326
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "დახატეთ მართკუთხედი ხელმოწერის ველის ჩასასმელად"
 
-#: part/pageview.cpp:5470
+#: part/pageview.cpp:5529
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "დახატეთ მართკუთხედი იმ გვერდის გარშემო, რომელიც გნებავთ, ხილული დარჩეს"

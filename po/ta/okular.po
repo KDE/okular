@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-24 00:41+0000\n"
+"POT-Creation-Date: 2026-05-03 00:41+0000\n"
 "PO-Revision-Date: 2026-02-01 17:45+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -1683,8 +1683,8 @@ msgid "Copy Text to Clipboard"
 msgstr "பிடிப்புப்பலகைக்கு உரையை நகல் எடு"
 
 #: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
-#: part/pageview.cpp:2566 part/pageview.cpp:2889 part/pageview.cpp:2891
-#: part/pageview.cpp:3042 part/pageview.cpp:3100 part/pageview.cpp:3102
+#: part/pageview.cpp:2571 part/pageview.cpp:2930 part/pageview.cpp:2932
+#: part/pageview.cpp:3083 part/pageview.cpp:3141 part/pageview.cpp:3143
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM-ஆல் நகலெடுத்தல் தடைசெய்யப்பட்டது"
@@ -3616,304 +3616,304 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "/"
 
-#: part/pageview.cpp:508
+#: part/pageview.cpp:513
 #, kde-format
 msgid "Zoom"
 msgstr "உருப்பெருக்கம்"
 
-#: part/pageview.cpp:520
+#: part/pageview.cpp:525
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "உருப்பெருக்கத்தை 100% ஆக்கு"
 
-#: part/pageview.cpp:531
+#: part/pageview.cpp:536
 #, kde-format
 msgid "Rotate &Right"
 msgstr "&வலதுபுறமாக திருப்பு"
 
-#: part/pageview.cpp:532
+#: part/pageview.cpp:537
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "வலது"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Rotate &Left"
 msgstr "&இடதுபுறமாக திருப்பு"
 
-#: part/pageview.cpp:537
+#: part/pageview.cpp:542
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "இடது"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Original Orientation"
 msgstr "இயல்பான நோக்குநிலை"
 
-#: part/pageview.cpp:547
+#: part/pageview.cpp:552
 #, kde-format
 msgid "&Trim View"
 msgstr "காட்சியை &வெட்டு"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:556
 #, kde-format
 msgid "&Trim Margins"
 msgstr "விளிம்புகளை &வெட்டு"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:563
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "&தேர்ந்தெடுக்காதவற்றை வெட்டு"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:569
 #, kde-format
 msgid "Fit &Width"
 msgstr "&அகலப் பொருத்தம்"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:573
 #, kde-format
 msgid "Fit &Page"
 msgstr "&பக்கப் பொருத்தம்"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&தானியக்க பொருத்தம்"
 
-#: part/pageview.cpp:576
+#: part/pageview.cpp:581
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "&சாளரத்தை பக்கத்துக்கு பொருத்து"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:588
 #, kde-format
 msgid "&View Mode"
 msgstr "&பார்வை முறை"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:600
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&ஒரு பக்கம்"
 
-#: part/pageview.cpp:596
+#: part/pageview.cpp:601
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&எதிர் பக்கங்கள்"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:602
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "எதிர் பக்கங்கள் (&முதல் பக்கத்தை நடுப்படுத்து)"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:605
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&மேலோட்டம்"
 
-#: part/pageview.cpp:612
+#: part/pageview.cpp:617
 #, kde-format
 msgid "&Continuous"
 msgstr "&தொடர்ச்சியாக"
 
-#: part/pageview.cpp:619
+#: part/pageview.cpp:624
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "வலதிலிருந்து இடதாக படிக்குமாறு அமை"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:633
 #, kde-format
 msgid "&Browse"
 msgstr "&உலாவு"
 
-#: part/pageview.cpp:636
+#: part/pageview.cpp:641
 #, kde-format
 msgid "&Zoom"
 msgstr "&உருப்பெருக்கம்"
 
-#: part/pageview.cpp:656
+#: part/pageview.cpp:661
 #, kde-format
 msgid "Area &Selection"
 msgstr "பரப்பளவைத் &தேர்ந்தெடுத்தல்"
 
-#: part/pageview.cpp:663
+#: part/pageview.cpp:668
 #, kde-format
 msgid "&Text Selection"
 msgstr "&உரையைத் தேர்ந்தெடுத்தல்"
 
-#: part/pageview.cpp:670
+#: part/pageview.cpp:675
 #, kde-format
 msgid "T&able Selection"
 msgstr "&அட்டவணையைத் தேர்ந்தெடுத்தல்"
 
-#: part/pageview.cpp:677
+#: part/pageview.cpp:682
 #, kde-format
 msgid "&Magnifier"
 msgstr "உ&ருப்பெருக்கி"
 
-#: part/pageview.cpp:686
+#: part/pageview.cpp:691
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "தேர்ந்தெடுக்கும் கருவிகள்"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:717
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "எண்மமுறையில் கையொப்பமிடு…"
 
-#: part/pageview.cpp:718
+#: part/pageview.cpp:723
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "முழு ஆவணத்தைப் பேச்சாக்கு"
 
-#: part/pageview.cpp:723
+#: part/pageview.cpp:728
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "தற்போதைய பக்கத்திலிருந்து பேச்சாக்கு"
 
-#: part/pageview.cpp:728
+#: part/pageview.cpp:733
 #, kde-format
 msgid "Speak Current Page"
 msgstr "தற்போதைய பக்கத்தைப் பேச்சாக்கு"
 
-#: part/pageview.cpp:733
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Stop Speaking"
 msgstr "பேசுவதை நிறுத்து"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "பேசுவதை இடைநிறுத்து/தொடர்"
 
-#: part/pageview.cpp:750
+#: part/pageview.cpp:755
 #, kde-format
 msgid "Scroll Up"
 msgstr "மேலே செல்"
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Scroll Down"
 msgstr "கீழே செல்"
 
-#: part/pageview.cpp:762
+#: part/pageview.cpp:767
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "ஒரு பக்க அளவு மேலே செல்"
 
-#: part/pageview.cpp:768
+#: part/pageview.cpp:773
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "ஒரு பக்க அளவு கீழே செல்"
 
-#: part/pageview.cpp:774
+#: part/pageview.cpp:779
 #, kde-format
 msgid "Show Forms"
 msgstr "படிவங்களைக் காட்டு"
 
-#: part/pageview.cpp:1287
+#: part/pageview.cpp:1292
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " ஒரு பக்கத்தைக் கொண்ட ஆவணம் ஏற்றப்பட்டது."
 msgstr[1] " %1 பக்கங்களைக் கொண்ட ஆவணம் ஏற்றப்பட்டது."
 
-#: part/pageview.cpp:2560
+#: part/pageview.cpp:2565
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "அட்டவணையின் உள்ளடக்கத்தைப் பிடிப்புப்பலகைக்கு நகலெடு"
 
-#: part/pageview.cpp:2881
+#: part/pageview.cpp:2922
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "உரை (1 எழுத்து)"
 msgstr[1] "உரை (%1 எழுத்துகள்)"
 
-#: part/pageview.cpp:2882 part/pageview.cpp:2904
+#: part/pageview.cpp:2923 part/pageview.cpp:2945
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "பிடிப்புப்பலகைக்கு நகல் எடு"
 
-#: part/pageview.cpp:2884 part/pageview.cpp:3091 part/part.cpp:858
+#: part/pageview.cpp:2925 part/pageview.cpp:3132 part/part.cpp:858
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "உரையின் நகலெடு (வரிமுடிவுகள் இல்லாமல்)"
 
-#: part/pageview.cpp:2895 part/pageview.cpp:3095
+#: part/pageview.cpp:2936 part/pageview.cpp:3136
 #, kde-format
 msgid "Speak Text"
 msgstr "உரையைப் பேச்சாக்கு"
 
-#: part/pageview.cpp:2903
+#: part/pageview.cpp:2944
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "படம் (%1 × %2 பிக்செல்கள்)"
 
-#: part/pageview.cpp:2905
+#: part/pageview.cpp:2946
 #, kde-format
 msgid "Save to File…"
 msgstr "கோப்புக்கு சேமி…"
 
-#: part/pageview.cpp:2925
+#: part/pageview.cpp:2966
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "படம் [%1 × %2] பிடிப்புப்பலகைக்கு நகலெடுக்கப்பட்டது."
 
-#: part/pageview.cpp:2928
+#: part/pageview.cpp:2969
 #, kde-format
 msgid "Save file"
 msgstr "கோப்பை சேமி"
 
-#: part/pageview.cpp:2928
+#: part/pageview.cpp:2969
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "படங்கள் (*.png *.jpeg)"
 
-#: part/pageview.cpp:2930
+#: part/pageview.cpp:2971
 #, kde-format
 msgid "File not saved."
 msgstr "கோப்பை சேமிக்கவில்லை."
 
-#: part/pageview.cpp:2941
+#: part/pageview.cpp:2982
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "படம் [%1 × %2] %3 என்ற கோப்புக்கு சேமிக்கப்பட்டது."
 
-#: part/pageview.cpp:3090
+#: part/pageview.cpp:3131
 #, kde-format
 msgid "Copy Text"
 msgstr "உரையை நகலெடு"
 
-#: part/pageview.cpp:3113
+#: part/pageview.cpp:3154
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1' என்பதற்கு செல்"
 
-#: part/pageview.cpp:4137 part/part.cpp:3196
+#: part/pageview.cpp:4196 part/part.cpp:3196
 #, kde-format
 msgid "Fit Width"
 msgstr "அகலம் படி"
 
-#: part/pageview.cpp:4137
+#: part/pageview.cpp:4196
 #, kde-format
 msgid "Fit Page"
 msgstr "பக்க அளவுபடி"
 
-#: part/pageview.cpp:4137
+#: part/pageview.cpp:4196
 #, kde-format
 msgid "Auto Fit"
 msgstr "தானியக்கம்"
 
-#: part/pageview.cpp:4160
+#: part/pageview.cpp:4219
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3922,69 +3922,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4443
+#: part/pageview.cpp:4502
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' என்பதற்கு இதைக்கொண்டு தேடு"
 
-#: part/pageview.cpp:4457
+#: part/pageview.cpp:4516
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "இணைய சுருக்குவழிகளை அமை…"
 
-#: part/pageview.cpp:4483
+#: part/pageview.cpp:4542
 #, kde-format
 msgid "Follow This Link"
 msgstr "இந்த இணைப்புக்கு செல்"
 
-#: part/pageview.cpp:4486
+#: part/pageview.cpp:4545
 #, kde-format
 msgid "Play this Sound"
 msgstr "இந்த ஒலியை இயக்கு"
 
-#: part/pageview.cpp:4488
+#: part/pageview.cpp:4547
 #, kde-format
 msgid "Stop Sound"
 msgstr "ஒலியை நிறுத்து"
 
-#: part/pageview.cpp:4494
+#: part/pageview.cpp:4553
 #, kde-format
 msgid "Copy Link Address"
 msgstr "இணைப்பின் முகவரியை நகலெடு"
 
-#: part/pageview.cpp:4515
+#: part/pageview.cpp:4574
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "'%1' என்பதற்கு இந்த ஆவணத்தில் தேடு"
 
-#: part/pageview.cpp:5047
+#: part/pageview.cpp:5106
 #, kde-format
 msgid "Welcome"
 msgstr "நல்வரவு"
 
-#: part/pageview.cpp:5173
+#: part/pageview.cpp:5232
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "பெரிதாக்க வேண்டிய பரப்பை தேர்ந்தெடுங்கள். உருப்பெருக்கத்தை ரத்து செய்ய வலது-க்ளிக் "
 "செய்யுங்கள்."
 
-#: part/pageview.cpp:5188
+#: part/pageview.cpp:5247
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "பெரிதாக்கப்பட்ட காட்சியைக் காண க்ளிக் செய்யுங்கள்."
 
-#: part/pageview.cpp:5205
+#: part/pageview.cpp:5264
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "உரை/படங்களை நகலெடுக்க, அவற்றைச் சுற்றி ஒரு செவ்வகத்தை வரையுங்கள்."
 
-#: part/pageview.cpp:5221
+#: part/pageview.cpp:5280
 #, kde-format
 msgid "Select text"
 msgstr "உரையைத் தேர்ந்தெடு"
 
-#: part/pageview.cpp:5237
+#: part/pageview.cpp:5296
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -3993,7 +3993,7 @@ msgstr ""
 "அட்டவணையைச் சுற்றி ஒரு செவ்வகத்தை வரைந்து, அதை பிரிக்க ஓரங்களில் க்ளிக் செய்யுங்கள்; "
 "நிராகரிக்க Esc விசையை அழுத்துங்கள்."
 
-#: part/pageview.cpp:5252 part/pageview.cpp:5260
+#: part/pageview.cpp:5311 part/pageview.cpp:5319
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4002,17 +4002,17 @@ msgstr ""
 "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகாதவை. இதற்கு முன்னர் நீங்கள் வெற்றிகரமாக "
 "கையொப்பமிட்டிருந்தால், உங்கள் சான்றிதழ்கள் காலாவதியாகியுள்ளனவா என பார்க்கவும்."
 
-#: part/pageview.cpp:5253
+#: part/pageview.cpp:5312
 #, kde-format
 msgid "No valid certificates"
 msgstr "செல்லுபடியாகும் சான்றிதழ்கள் இல்லை"
 
-#: part/pageview.cpp:5254 part/pageview.cpp:5269
+#: part/pageview.cpp:5313 part/pageview.cpp:5328
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "சான்றிதழ் மேலாளியைத் திற"
 
-#: part/pageview.cpp:5265
+#: part/pageview.cpp:5324
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4023,12 +4023,12 @@ msgstr ""
 "சான்றிதழ் மேலாளியைத் திறக்கவும்.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியைப் பார்க்கவும்."
 
-#: part/pageview.cpp:5268 part/pageview.cpp:5280
+#: part/pageview.cpp:5327 part/pageview.cpp:5339
 #, kde-format
 msgid "No certificates found"
 msgstr "எந்த சான்றிதழும் கண்டுபிடிக்கப்படவில்லை"
 
-#: part/pageview.cpp:5278
+#: part/pageview.cpp:5337
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4038,17 +4038,17 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5303
+#: part/pageview.cpp:5362
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "சேமிக்கப்படாத மாற்றங்கள் உள்ளன. கையொப்பம் இடுவதற்கு முன் ஆவணத்தை சேமியுங்கள்."
 
-#: part/pageview.cpp:5326
+#: part/pageview.cpp:5385
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "கையொப்பப் புலத்தை நுழைக்க ஒரு செவ்வகத்தை வரையுங்கள்"
 
-#: part/pageview.cpp:5470
+#: part/pageview.cpp:5529
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

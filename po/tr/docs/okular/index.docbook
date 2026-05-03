@@ -1886,7 +1886,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 				<listitem
 ><para
->Dış düzenleyici komutunu ayarlar. Düzenleyici komutunu halihazırda çalışan bir &okular; örneğinde ayarlayamazsınız. Komut satırında düzenleyici komutunu ayarlarken <option
+>Dış düzenleyici komutunu ayarlar. Düzenleyici komutunu hâlihazırda çalışan bir &okular; örneğinde ayarlayamazsınız. Komut satırında düzenleyici komutunu ayarlarken <option
 >--unique</option
 > seçeneğinin desteklenmediğini unutmayın.</para
 ></listitem>
@@ -1935,7 +1935,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Desteklenen bir dosyayı veya &okular; belge arşivini <action
 >açın</action
->. Halihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
+>. Hâlihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
 >Belgeler Açmak</link
 > ile ilgili bölüme bakın. </para>
 					</listitem>
@@ -1954,7 +1954,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Bir alt menüden daha önce kullanılmış bir dosyayı <action
 >açın</action
->. Halihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
+>. Hâlihazırda açık bir dosya varsa kapatılır. Daha fazla bilgi için <link linkend="opening"
 >Belgeler Açmak</link
 > ile ilgili bölüme bakın. </para>
 					</listitem>
@@ -3662,7 +3662,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Dosya halihazırda açıksa var olduğu sekmeye geç</guilabel
+>Dosya hâlihazırda açıksa var olduğu sekmeye geç</guilabel
 ></term>
 					<listitem>
 						<para

@@ -88,6 +88,10 @@ static unsigned char *getstrip(pagenode *pn, int strip)
         return nullptr;
     }
 
+    if (pn->length == 0) {
+        return nullptr;
+    }
+
     /* round size to full boundary plus t32bits */
     roundup = (pn->length + 7) & ~3;
 

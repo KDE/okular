@@ -110,7 +110,7 @@ static unsigned char *getstrip(pagenode *pn, int strip)
 
     pn->data = reinterpret_cast<t16bits *>(data);
 
-    if (pn->strips == nullptr && memcmp(data, FAXMAGIC, sizeof(FAXMAGIC) - 1) == 0) {
+    if (pn->strips == nullptr && pn->length >= 64 && memcmp(data, FAXMAGIC, sizeof(FAXMAGIC) - 1) == 0) {
         /* handle ghostscript / PC Research fax file */
         pn->length -= 64;
         pn->vres = data[29];

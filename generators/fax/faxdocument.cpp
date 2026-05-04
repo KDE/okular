@@ -106,6 +106,9 @@ static unsigned char *getstrip(pagenode *pn, int strip)
         delete[] data;
         return nullptr;
     }
+    for (size_t i = pn->length; i < roundup; ++i) {
+        data[i] = 0;
+    }
     file.close();
 
     pn->data = reinterpret_cast<t16bits *>(data);

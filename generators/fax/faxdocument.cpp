@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 
+#include <QDebug>
 #include <QFile>
 
 #include "faxexpand.h"
@@ -64,6 +65,7 @@ static bool new_image(pagenode *pn, int width, int height)
         return false;
     }
     if (alloc_size > 256 * 1024 * 1024) {
+        qWarning() << "Page memory exceeds 256M, baling out. If this is a legitimate document please file a bug at bugs.kde.org";
         return false;
     }
     pn->imageData = new uchar[alloc_size];
@@ -136,6 +138,7 @@ static unsigned char *getstrip(pagenode *pn, int strip)
     if (pn->size.height() == 0) {
         int h = G3count(pn, pn->expander == g32expand);
         if (h > 65536) {
+            qWarning() << "page size exceeds 65536 lines. If this is a legitimate document please file a bug at bugs.kde.org";
             h = 0;
         }
         pn->size.setHeight(h);
@@ -297,6 +300,7 @@ bool FaxDocument::load()
     }
     const qint64 total = static_cast<qint64>(height) * static_cast<qint64>(bytes_per_line);
     if (total > 256 * 1024 * 1024) {
+        qWarning() << "Needed memory exceeds 256M, baling out. If this is a legitimate document please file a bug at bugs.kde.org";
         return false;
     }
     QByteArray bytes(static_cast<int>(total), 0);

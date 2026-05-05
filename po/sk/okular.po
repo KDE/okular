@@ -4270,9 +4270,9 @@ msgid ""
 "edit the document."
 msgstr ""
 "Tento dokument obsahuje poznámky alebo údaje formulára, ktoré boli interne "
-"uložené predchádzajúcou verziou Okular. Interná pamäť už nie je podporovaná "
-"</b>.<br/> Ak chcete pokračovať v úprave dokumentu, uložte ho do súboru, aby "
-"ste ich mohli presunúť."
+"uložené predchádzajúcou verziou Okular. Interná pamäť <b>už nie je "
+"podporovaná</b>.<br/>Ak chcete pokračovať v úprave dokumentu, uložte ho do "
+"súboru, aby ste ich mohli presunúť."
 
 #: part/part.cpp:459
 #, kde-format

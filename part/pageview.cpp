@@ -5521,8 +5521,12 @@ void PageView::slotTrimToSelectionToggled(bool on)
     if (on) { // Turn off any other Trim modes
         updateTrimMode(d->aTrimToSelection->data().toInt());
 
+        if (!d->aPrevAction) {
+            d->aPrevAction = d->aMouseTextSelect->isChecked() ? d->aMouseTextSelect : d->aMouseNormal;
+        }
         // Change the mouse mode
         d->mouseMode = Okular::Settings::EnumMouseMode::TrimSelect;
+        d->aMouseTextSelect->setChecked(false);
         d->aMouseNormal->setChecked(false);
 
         // change the text in messageWindow (and show it if hidden)

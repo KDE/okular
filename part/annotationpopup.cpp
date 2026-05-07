@@ -9,8 +9,10 @@
 #include <KLocalizedString>
 #include <QApplication>
 #include <QClipboard>
+#include <QDomDocument>
 #include <QIcon>
 #include <QMenu>
+#include <QMimeData>
 
 #include "annotationpropertiesdialog.h"
 
@@ -48,6 +50,39 @@ Okular::EmbeddedFile *embeddedFileFromAnnotation(Okular::Annotation *annotation)
     } else {
         return nullptr;
     }
+}
+
+bool annotationSupportsCopy(const Okular::Annotation *annotation)
+{
+    if (!annotation) {
+        return false;
+    }
+
+    switch (annotation->subType()) {
+    case Okular::Annotation::AGeom:
+    case Okular::Annotation::AInk:
+    case Okular::Annotation::ALine:
+    case Okular::Annotation::AText:
+        return true;
+        break;
+
+    default:
+        return false;
+        break;
+    }
+    return false;
+}
+
+bool clipboardFormatVersionSupported(const QDomElement &root)
+{
+    const QString versionAttributeName = QStringLiteral("version");
+    if (!root.hasAttribute(versionAttributeName)) {
+        return false;
+    }
+
+    bool versionIsNumber = false;
+    const int clipboardFormatVersion = root.attribute(versionAttributeName).toInt(&versionIsNumber);
+    return versionIsNumber && clipboardFormatVersion == AnnotationPopup::annotationClipboardFormatVersion;
 }
 
 }
@@ -108,6 +143,14 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
         }
 
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy"));
+        action->setEnabled(onlyOne && annotationSupportsCopy(pair.annotation));
+        connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
+
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste"));
+        action->setEnabled(onlyOne && mDocument->isAllowed(Okular::AllowNotes) && clipboardHasAnnotations());
+        connect(action, &QAction::triggered, menu, [this, pair] { doPasteAnnotation(pair); });
+
         if (!pair.annotation->contents().isEmpty()) {
             action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text to Clipboard"));
             const bool copyAllowed = mDocument->isAllowed(Okular::AllowCopy);
@@ -115,7 +158,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
                 action->setEnabled(false);
                 action->setText(i18n("Copy forbidden by DRM"));
             }
-            connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
+            connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotationText(pair); });
         }
 
         action = menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
@@ -167,6 +210,14 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
                 connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
             }
 
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy"));
+            action->setEnabled(annotationSupportsCopy(pair.annotation));
+            connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
+
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste"));
+            action->setEnabled(mDocument->isAllowed(Okular::AllowNotes) && clipboardHasAnnotations());
+            connect(action, &QAction::triggered, menu, [this, pair] { doPasteAnnotation(pair); });
+
             if (!pair.annotation->contents().isEmpty()) {
                 action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Text to Clipboard"));
                 const bool copyAllowed = mDocument->isAllowed(Okular::AllowCopy);
@@ -174,7 +225,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
                     action->setEnabled(false);
                     action->setText(i18n("Copy forbidden by DRM"));
                 }
-                connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
+                connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotationText(pair); });
             }
 
             action = menu->addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("&Delete"));
@@ -203,11 +254,103 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
 
 void AnnotationPopup::doCopyAnnotation(AnnotPagePair pair)
 {
+    if (mAnnotations.isEmpty() || !annotationSupportsCopy(pair.annotation)) {
+        return;
+    }
+
+    QDomDocument document(QStringLiteral("okular-annotations"));
+    QDomElement root = document.createElement(QStringLiteral("annotations"));
+    root.setAttribute(QStringLiteral("version"), AnnotationPopup::annotationClipboardFormatVersion);
+    document.appendChild(root);
+
+    QDomElement annotationElement = document.createElement(QStringLiteral("annotation"));
+    Okular::AnnotationUtils::storeAnnotation(pair.annotation, annotationElement, document);
+    root.appendChild(annotationElement);
+
+    auto *mimeData = new QMimeData();
+    mimeData->setData(QLatin1String(annotationClipboardMimeType), document.toByteArray());
+    QApplication::clipboard()->setMimeData(mimeData, QClipboard::Clipboard);
+}
+
+void AnnotationPopup::doPasteAnnotation(AnnotPagePair pair)
+{
+    pasteAnnotationToPage(pair.pageNumber);
+}
+
+void AnnotationPopup::doCopyAnnotationText(AnnotPagePair pair)
+{
     const QString text = pair.annotation->contents();
     if (!text.isEmpty()) {
         QClipboard *cb = QApplication::clipboard();
         cb->setText(text, QClipboard::Clipboard);
     }
+}
+
+void AnnotationPopup::pasteAnnotationToPage(int pageNumber, const Okular::NormalizedPoint *targetPoint)
+{
+    if (pageNumber == -1 || !mDocument->isAllowed(Okular::AllowNotes)) {
+        return;
+    }
+
+    const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+    if (!mimeData || !mimeData->hasFormat(QLatin1String(annotationClipboardMimeType))) {
+        return;
+    }
+
+    QDomDocument document;
+    if (!document.setContent(mimeData->data(QLatin1String(annotationClipboardMimeType)))) {
+        return;
+    }
+
+    QDomElement root = document.documentElement();
+    if (root.tagName() != QLatin1String("annotations")) {
+        return;
+    }
+    if (!clipboardFormatVersionSupported(root)) {
+        return;
+    }
+
+    QList<Okular::Annotation *> annotations;
+    Okular::NormalizedRect unionRect;
+    bool hasUnionRect = false;
+    for (QDomElement element = root.firstChildElement(QStringLiteral("annotation")); !element.isNull(); element = element.nextSiblingElement(QStringLiteral("annotation"))) {
+        Okular::Annotation *annotation = Okular::AnnotationUtils::createAnnotation(element);
+        if (!annotation) {
+            continue;
+        }
+
+        // Avoid duplicate uniqueName collisions when pasting annotations.
+        annotation->setUniqueName(QString());
+
+        const Okular::NormalizedRect rect = annotation->boundingRectangle();
+        if (!rect.isNull()) {
+            unionRect = hasUnionRect ? (unionRect | rect) : rect;
+            hasUnionRect = true;
+        }
+        annotations.append(annotation);
+    }
+
+    if (annotations.isEmpty()) {
+        return;
+    }
+
+    Okular::NormalizedPoint offset(0.02, 0.02);
+    if (targetPoint && hasUnionRect) {
+        const double centerX = (unionRect.left + unionRect.right) / 2.0;
+        const double centerY = (unionRect.top + unionRect.bottom) / 2.0;
+        offset = Okular::NormalizedPoint(targetPoint->x - centerX, targetPoint->y - centerY);
+    }
+
+    for (Okular::Annotation *annotation : std::as_const(annotations)) {
+        annotation->translate(offset);
+        mDocument->addPageAnnotation(pageNumber, annotation);
+    }
+}
+
+bool AnnotationPopup::clipboardHasAnnotations()
+{
+    const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+    return mimeData && mimeData->hasFormat(QLatin1String(annotationClipboardMimeType));
 }
 
 void AnnotationPopup::doRemovePageAnnotation(AnnotPagePair pair)

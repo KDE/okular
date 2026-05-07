@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="55">
+<gui name="okular_part" version="56">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -22,6 +22,7 @@
     <Separator/>
     <Action name="edit_copy"/>
     <Action name="edit_copy_without_line_breaks"/>
+    <Action name="annotation_paste"/>
     <Separator/>
     <Action name="edit_select_all"/>
     <Action name="edit_select_all_current_page"/>

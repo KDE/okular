@@ -79,6 +79,13 @@ ecm_add_test(annotationstest.cpp
     LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml okularcore
 )
 
+if(BUILD_DESKTOP)
+    ecm_add_test(annotationclipboardtest.cpp
+        TEST_NAME "annotationclipboardtest"
+        LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml okularcore okularpart
+    )
+endif()
+
 ecm_add_test(urldetecttest.cpp
     TEST_NAME "urldetecttest"
     LINK_LIBRARIES Qt6::Widgets Qt6::Test Qt6::Xml KF6::CoreAddons

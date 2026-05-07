@@ -184,6 +184,9 @@ public Q_SLOTS: // dbus
     Q_SCRIPTABLE Q_NOREPLY void enableStartWithFind(const QString &text);
     Q_SCRIPTABLE Q_NOREPLY void setEditorCmd(const QString &editorCmd);
     Q_SCRIPTABLE void slotOpenContainingFolder();
+    Q_SCRIPTABLE void slotCopyAnnotation();
+    Q_SCRIPTABLE void slotCopyTextSelectionOrAnnotation();
+    Q_SCRIPTABLE void slotPasteAnnotation();
 
 Q_SIGNALS:
     void enablePrintAction(bool enable);
@@ -413,6 +416,7 @@ private:
     QAction *m_nextBookmark;
     QAction *m_copy;
     QAction *m_copyWithoutLineBreaks;
+    QAction *m_pasteAnnotation;
     QAction *m_selectAll;
     QAction *m_selectCurrentPage;
     QAction *m_find;

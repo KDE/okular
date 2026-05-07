@@ -273,6 +273,14 @@ Okular::Annotation *MouseAnnotation::annotation() const
     return nullptr;
 }
 
+int MouseAnnotation::pageNumber() const
+{
+    if (m_focusedAnnotation.isValid()) {
+        return m_focusedAnnotation.pageNumber;
+    }
+    return -1;
+}
+
 bool MouseAnnotation::isActive() const
 {
     return (m_state != StateInactive);

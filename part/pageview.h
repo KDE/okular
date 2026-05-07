@@ -32,6 +32,7 @@
 class QMenu;
 class QMimeData;
 class KActionCollection;
+class AnnotationPopup;
 
 namespace Okular
 {
@@ -63,6 +64,8 @@ class PageView : public QAbstractScrollArea, public Okular::DocumentObserver, pu
 public:
     PageView(QWidget *parent, Okular::Document *document);
     ~PageView() override;
+
+    bool mapGlobalPosToPagePoint(QPoint globalPos, int *pageNumber, Okular::NormalizedPoint *point) const;
 
     // Zoom mode ( last 4 are internally used only! )
     enum ZoomMode { ZoomFixed = 0, ZoomFitWidth = 1, ZoomFitPage = 2, ZoomFitAuto = 3, ZoomIn, ZoomOut, ZoomRefreshCurrent, ZoomActual };
@@ -124,6 +127,9 @@ public:
     QPoint contentAreaPosition() const;
     QPoint contentAreaPoint(const QPoint pos) const;
     QPointF contentAreaPoint(const QPointF pos) const;
+
+    Okular::Annotation *focusedAnnotation() const;
+    int focusedAnnotationPageNumber() const;
 
     bool areSourceLocationsShownGraphically() const;
     void setShowSourceLocationsGraphically(bool show);
@@ -250,6 +256,7 @@ private:
     void addSearchWithinDocumentAction(QMenu *menu, const QString &searchText);
     void addWebShortcutsMenu(QMenu *menu, const QString &text);
     QMenu *createProcessLinkMenu(PageViewItem *item, const QPoint eventPos);
+    bool addAnnotationActionsForPoint(AnnotationPopup &annotPopup, PageViewItem *pageItem, const QPoint eventPos, QMenu **menu);
     // used when selecting stuff, makes the view scroll as necessary to keep the mouse inside the view
     void scrollPosIntoView(const QPoint pos);
     QPoint viewportToContentArea(const Okular::DocumentViewport &vp) const;

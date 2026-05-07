@@ -12,6 +12,9 @@
 #include <QPair>
 #include <QPoint>
 
+#include "core/area.h"
+#include "okularpart_export.h"
+
 class QMenu;
 
 namespace Okular
@@ -21,11 +24,14 @@ class Document;
 class DocumentViewport;
 }
 
-class AnnotationPopup : public QObject
+class OKULARPART_EXPORT AnnotationPopup : public QObject
 {
     Q_OBJECT
 
 public:
+    static constexpr const char *annotationClipboardMimeType = "application/x-okular-annotation+xml";
+    static constexpr const int annotationClipboardFormatVersion = 1;
+
     /**
      * Describes the structure of the popup menu.
      */
@@ -42,6 +48,9 @@ public:
     void addActionsToMenu(QMenu *menu);
 
     void exec(const QPoint point = QPoint());
+    void pasteAnnotationToPage(int pageNumber, const Okular::NormalizedPoint *targetPoint = nullptr);
+
+    static bool clipboardHasAnnotations();
 
 Q_SIGNALS:
     void openAnnotationWindow(Okular::Annotation *annotation, int pageNumber);
@@ -69,9 +78,12 @@ public:
         int pageNumber;
     };
 
+    void doCopyAnnotation(AnnotPagePair pair);
+
 private:
     Okular::DocumentViewport calculateAnnotationViewport(AnnotPagePair pair) const;
-    void doCopyAnnotation(AnnotPagePair pair);
+    void doCopyAnnotationText(AnnotPagePair pair);
+    void doPasteAnnotation(AnnotPagePair pair);
     void doRemovePageAnnotation(AnnotPagePair pair);
     void doOpenAnnotationWindow(AnnotPagePair pair);
     void doOpenPropertiesDialog(AnnotPagePair pair);

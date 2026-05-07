@@ -499,6 +499,34 @@ PageView::~PageView()
     delete d;
 }
 
+Okular::Annotation *PageView::focusedAnnotation() const
+{
+    return d->mouseAnnotation ? d->mouseAnnotation->annotation() : nullptr;
+}
+
+int PageView::focusedAnnotationPageNumber() const
+{
+    return d->mouseAnnotation ? d->mouseAnnotation->pageNumber() : -1;
+}
+
+bool PageView::mapGlobalPosToPagePoint(QPoint globalPos, int *pageNumber, Okular::NormalizedPoint *point) const
+{
+    const QPoint viewportPos = viewport()->mapFromGlobal(globalPos);
+    const QPoint contentPos = contentAreaPoint(viewportPos);
+    PageViewItem *pageItem = const_cast<PageView *>(this)->pickItemOnPoint(contentPos.x(), contentPos.y());
+    if (!pageItem) {
+        return false;
+    }
+
+    if (pageNumber) {
+        *pageNumber = pageItem->pageNumber();
+    }
+    if (point) {
+        *point = Okular::NormalizedPoint(pageItem->absToPageX(contentPos.x()), pageItem->absToPageY(contentPos.y()));
+    }
+    return true;
+}
+
 void PageView::setupViewport(QWidget *viewport)
 {
     notifyAnnotationWindowsAboutViewportBoundsChange();
@@ -2715,25 +2743,9 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                 const double nX = pageItem->absToPageX(eventPos.x());
                 const double nY = pageItem->absToPageY(eventPos.y());
 
-                const QList<const Okular::ObjectRect *> annotRects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
-
                 AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
                 // Do not move annotPopup inside the if, it needs to live until menu->exec()
-                if (!annotRects.isEmpty()) {
-                    for (const Okular::ObjectRect *annotRect : annotRects) {
-                        Okular::Annotation *ann = static_cast<const Okular::AnnotationObjectRect *>(annotRect)->annotation();
-                        if (ann && (ann->subType() != Okular::Annotation::AWidget)) {
-                            annotPopup.addAnnotation(ann, pageItem->pageNumber());
-                        }
-                    }
-
-                    connect(&annotPopup, &AnnotationPopup::openAnnotationWindow, this, &PageView::openAnnotationWindow);
-
-                    if (!menu) {
-                        menu = new QMenu(this);
-                    }
-                    annotPopup.addActionsToMenu(menu);
-                }
+                addAnnotationActionsForPoint(annotPopup, pageItem, eventPos, &menu);
 
                 if (menu) {
                     menu->exec(e->globalPosition().toPoint());
@@ -2860,7 +2872,16 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
-            const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            if (pageItem) {
+                QMenu *menu = nullptr;
+                AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
+                if (addAnnotationActionsForPoint(annotPopup, pageItem, eventPos, &menu)) {
+                    menu->exec(e->globalPosition().toPoint());
+                    menu->deleteLater();
+                    break;
+                }
+            }
             Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
@@ -3027,7 +3048,16 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
         // if mouse is released and selection is null this is a rightClick
         if (rightButton && !d->mouseSelecting) {
-            const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
+            if (pageItem) {
+                QMenu *menu = nullptr;
+                AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
+                if (addAnnotationActionsForPoint(annotPopup, pageItem, eventPos, &menu)) {
+                    menu->exec(e->globalPosition().toPoint());
+                    menu->deleteLater();
+                    break;
+                }
+            }
             Q_EMIT rightClick(pageItem ? pageItem->page() : nullptr, e->globalPosition().toPoint());
             break;
         }
@@ -3121,6 +3151,9 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
 
                 QMenu *menu = createProcessLinkMenu(item, eventPos);
                 const bool mouseClickOverLink = (menu != nullptr);
+                AnnotationPopup annotPopup(d->document, AnnotationPopup::MultiAnnotationMode, this);
+                // Do not move annotPopup inside a conditional, it needs to live until menu->exec()
+                addAnnotationActionsForPoint(annotPopup, item, eventPos, &menu);
 #if HAVE_SPEECH
                 const QAction *speakText = nullptr;
 #endif
@@ -4566,6 +4599,42 @@ QMenu *PageView::createProcessLinkMenu(PageViewItem *item, const QPoint eventPos
         return menu;
     }
     return nullptr;
+}
+
+bool PageView::addAnnotationActionsForPoint(AnnotationPopup &annotPopup, PageViewItem *pageItem, const QPoint eventPos, QMenu **menu)
+{
+    if (!pageItem) {
+        return false;
+    }
+
+    const QRect &itemRect = pageItem->uncroppedGeometry();
+    const double nX = pageItem->absToPageX(eventPos.x());
+    const double nY = pageItem->absToPageY(eventPos.y());
+    const QList<const Okular::ObjectRect *> annotRects = pageItem->page()->objectRects(Okular::ObjectRect::OAnnotation, nX, nY, itemRect.width(), itemRect.height());
+    if (annotRects.isEmpty()) {
+        return false;
+    }
+
+    bool hasAnnotation = false;
+    for (const Okular::ObjectRect *annotRect : annotRects) {
+        Okular::Annotation *ann = static_cast<const Okular::AnnotationObjectRect *>(annotRect)->annotation();
+        if (ann && (ann->subType() != Okular::Annotation::AWidget)) {
+            annotPopup.addAnnotation(ann, pageItem->pageNumber());
+            hasAnnotation = true;
+        }
+    }
+
+    if (!hasAnnotation) {
+        return false;
+    }
+
+    connect(&annotPopup, &AnnotationPopup::openAnnotationWindow, this, &PageView::openAnnotationWindow);
+
+    if (!*menu) {
+        *menu = new QMenu(this);
+    }
+    annotPopup.addActionsToMenu(*menu);
+    return true;
 }
 
 void PageView::addSearchWithinDocumentAction(QMenu *menu, const QString &searchText)

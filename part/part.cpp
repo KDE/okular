@@ -26,7 +26,10 @@
 
 // qt/kde includes
 #include <QApplication>
+#include <QClipboard>
 #include <QContextMenuEvent>
+#include <QCursor>
+#include <QDomDocument>
 #if HAVE_DBUS
 #include <QDBusConnection>
 #endif // HAVE_DBUS
@@ -40,6 +43,7 @@
 #include <QLayout>
 #include <QMenu>
 #include <QMenuBar>
+#include <QMimeData>
 #include <QMimeDatabase>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
@@ -92,6 +96,7 @@
 
 // local includes
 #include "aboutdata.h"
+#include "annotationpopup.h"
 #include "bookmarklist.h"
 #include "core/action.h"
 #include "core/annotations.h"
@@ -851,7 +856,14 @@ void Part::setupActions()
     ac->addAction(QStringLiteral("colorscheme_menu"), schemeMenu->menu()->menuAction());
 
     m_copy = KStandardAction::create(KStandardAction::Copy, nullptr, nullptr, ac);
-    connect(m_copy, &QAction::triggered, m_pageView, [this]() { m_pageView->copyTextSelection(PageView::TextCopyMode::AsProvided); });
+    connect(m_copy, &QAction::triggered, this, &Part::slotCopyTextSelectionOrAnnotation);
+
+    m_pasteAnnotation = ac->addAction(QStringLiteral("annotation_paste"));
+    m_pasteAnnotation->setText(i18n("Paste Annotation"));
+    m_pasteAnnotation->setIcon(QIcon::fromTheme(QStringLiteral("edit-paste")));
+    ac->setDefaultShortcut(m_pasteAnnotation, QKeySequence(Qt::CTRL | Qt::Key_V));
+    connect(m_pasteAnnotation, &QAction::triggered, this, &Part::slotPasteAnnotation);
+    m_pasteAnnotation->setEnabled(false);
 
     // Copy-without-line-breaks action
     m_copyWithoutLineBreaks = ac->addAction(QStringLiteral("edit_copy_without_line_breaks"));
@@ -2220,6 +2232,9 @@ void Part::updateViewActions()
         if (m_copy) {
             m_copy->setEnabled(true);
         }
+        if (m_pasteAnnotation) {
+            m_pasteAnnotation->setEnabled(true);
+        }
         if (m_copyWithoutLineBreaks) {
             m_copyWithoutLineBreaks->setEnabled(true);
         }
@@ -2244,6 +2259,9 @@ void Part::updateViewActions()
         m_reload->setEnabled(false);
         if (m_copy) {
             m_copy->setEnabled(false);
+        }
+        if (m_pasteAnnotation) {
+            m_pasteAnnotation->setEnabled(false);
         }
         if (m_copyWithoutLineBreaks) {
             m_copyWithoutLineBreaks->setEnabled(false);
@@ -3181,6 +3199,9 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
     const QAction *addBookmark = nullptr;
     const QAction *removeBookmark = nullptr;
     const QAction *fitPageWidth = nullptr;
+    const QAction *pasteAnnotation = nullptr;
+    bool hasPastePoint = false;
+    Okular::NormalizedPoint pastePoint;
     if (page) {
         popup.addAction(new OKMenuTitle(&popup, i18n("Page %1", page->number() + 1)));
         if (m_thumbnailList->isVisible() && !Okular::Settings::syncThumbnailsViewport()) {
@@ -3194,6 +3215,11 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
         }
         if (m_pageView->canFitPageWidth()) {
             fitPageWidth = popup.addAction(QIcon::fromTheme(QStringLiteral("zoom-fit-best")), i18n("Fit Width"));
+        }
+        if (m_document->isAllowed(Okular::AllowNotes) && AnnotationPopup::clipboardHasAnnotations()) {
+            int targetPageNumber = -1;
+            hasPastePoint = m_pageView->mapGlobalPosToPagePoint(point, &targetPageNumber, &pastePoint) && targetPageNumber == page->number();
+            pasteAnnotation = popup.addAction(QIcon::fromTheme(QStringLiteral("edit-paste")), i18n("Paste Annotation"));
         }
         popup.addAction(m_prevBookmark);
         popup.addAction(m_nextBookmark);
@@ -3235,6 +3261,9 @@ void Part::showMenu(const Okular::Page *page, const QPoint point, const QString 
                 }
             } else if (res == fitPageWidth) {
                 m_pageView->fitPageWidth(page->number());
+            } else if (res == pasteAnnotation) {
+                AnnotationPopup annotPopup(m_document, AnnotationPopup::SingleAnnotationMode, widget());
+                annotPopup.pasteAnnotationToPage(page->number(), hasPastePoint ? &pastePoint : nullptr);
             }
         }
     }
@@ -3919,6 +3948,61 @@ void Part::setEditorCmd(const QString &editorCmd)
 void Part::slotOpenContainingFolder()
 {
     KIO::highlightInFileManager({QUrl(localFilePath())});
+}
+
+void Part::slotCopyAnnotation()
+{
+    Okular::Annotation *annotation = m_pageView->focusedAnnotation();
+    if (!annotation || annotation->subType() != Okular::Annotation::AText) {
+        return;
+    }
+
+    QDomDocument document(QStringLiteral("okular-annotations"));
+    QDomElement root = document.createElement(QStringLiteral("annotations"));
+    root.setAttribute(QStringLiteral("version"), AnnotationPopup::annotationClipboardFormatVersion);
+    document.appendChild(root);
+
+    QDomElement annotationElement = document.createElement(QStringLiteral("annotation"));
+    Okular::AnnotationUtils::storeAnnotation(annotation, annotationElement, document);
+    root.appendChild(annotationElement);
+
+    auto *mimeData = new QMimeData();
+    mimeData->setData(QLatin1String(AnnotationPopup::annotationClipboardMimeType), document.toByteArray());
+    QApplication::clipboard()->setMimeData(mimeData, QClipboard::Clipboard);
+}
+
+void Part::slotCopyTextSelectionOrAnnotation()
+{
+    Okular::Annotation *annotation = m_pageView->focusedAnnotation();
+    if (annotation && annotation->subType() == Okular::Annotation::AText) {
+        slotCopyAnnotation();
+        return;
+    }
+
+    m_pageView->copyTextSelection(PageView::TextCopyMode::AsProvided);
+}
+
+void Part::slotPasteAnnotation()
+{
+    if (!m_document->isAllowed(Okular::AllowNotes) || !AnnotationPopup::clipboardHasAnnotations()) {
+        return;
+    }
+
+    int pageNumber = -1;
+    Okular::NormalizedPoint targetPoint;
+    Okular::NormalizedPoint *targetPointPtr = nullptr;
+    if (m_pageView->mapGlobalPosToPagePoint(QCursor::pos(), &pageNumber, &targetPoint)) {
+        targetPointPtr = &targetPoint;
+    } else {
+        pageNumber = m_document->viewport().pageNumber;
+    }
+
+    if (pageNumber < 0) {
+        return;
+    }
+
+    AnnotationPopup annotPopup(m_document, AnnotationPopup::SingleAnnotationMode, widget());
+    annotPopup.pasteAnnotationToPage(pageNumber, targetPointPtr);
 }
 
 QAbstractItemModel *Part::annotationsModel() const

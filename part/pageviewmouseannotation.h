@@ -101,6 +101,7 @@ public:
     void reset();
 
     Okular::Annotation *annotation() const;
+    int pageNumber() const;
 
     /* Return true, if MouseAnnotation demands control for a mouse click on the current cursor position. */
     bool isMouseOver() const;

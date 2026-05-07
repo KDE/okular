@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-03 00:41+0000\n"
+"POT-Creation-Date: 2026-05-07 00:42+0000\n"
 "PO-Revision-Date: 2007-02-26 22:17+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -734,20 +734,20 @@ msgid "Value"
 msgstr ""
 
 #: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1480
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1488
 #, kde-format
 msgid "Pop-up Note"
 msgstr ""
 
 #: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1496
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1504
 #, fuzzy, kde-format
 #| msgid "Overwrite"
 msgid "Typewriter"
 msgstr "Запиши"
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1478
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1486
 #, kde-format
 msgid "Inline Note"
 msgstr ""
@@ -769,7 +769,7 @@ msgid "Straight Line with Comment"
 msgstr "&Својства"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1490
+#: part/pageviewannotator.cpp:1498
 #, kde-format
 msgid "Straight Line"
 msgstr ""
@@ -780,7 +780,7 @@ msgid "Polygon with Comment"
 msgstr "&Својства"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1482
+#: part/pageviewannotator.cpp:1490
 #, kde-format
 msgid "Polygon"
 msgstr ""
@@ -792,7 +792,7 @@ msgid "Rectangle with Comment"
 msgstr "Алатка за &избирање"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
-#: part/pageviewannotator.cpp:1484
+#: part/pageviewannotator.cpp:1492
 #, kde-format
 msgid "Rectangle"
 msgstr ""
@@ -804,7 +804,7 @@ msgid "Ellipse with Comment"
 msgstr "Алатка за &избирање"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
-#: part/pageviewannotator.cpp:1472
+#: part/pageviewannotator.cpp:1480
 #, kde-format
 msgid "Ellipse"
 msgstr ""
@@ -826,7 +826,7 @@ msgid "Squiggle with Comment"
 msgstr "Алатка за &избирање"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1486
+#: part/pageviewannotator.cpp:1494
 #, kde-format
 msgid "Squiggle"
 msgstr ""
@@ -838,7 +838,7 @@ msgid "Underline with Comment"
 msgstr "Алатка за &избирање"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1494
+#: part/pageviewannotator.cpp:1502
 #, kde-format
 msgid "Underline"
 msgstr ""
@@ -862,7 +862,7 @@ msgid "Stamp with Comment"
 msgstr "Алатка за &избирање"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1488
+#: part/pageviewannotator.cpp:1496
 #, kde-format
 msgid "Stamp"
 msgstr ""
@@ -873,7 +873,7 @@ msgid "Freehand Line with Comment"
 msgstr "&Својства"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1476
+#: part/pageviewannotator.cpp:1484
 #, kde-format
 msgid "Freehand Line"
 msgstr ""
@@ -2213,7 +2213,7 @@ msgstr "Зачувај во датотека..."
 msgid "Type:"
 msgstr "Тип"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1492
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1500
 #, kde-format
 msgid "Strike out"
 msgstr ""
@@ -4254,7 +4254,7 @@ msgstr ""
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5529
+#: part/pageview.cpp:5533
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"
@@ -4299,111 +4299,111 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author name"
 msgstr "Автор"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Author name for the annotation:"
 msgstr "Презентација"
 
-#: part/pageviewannotator.cpp:1391
+#: part/pageviewannotator.cpp:1399
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1393
+#: part/pageviewannotator.cpp:1401
 #, fuzzy, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "&Својства"
 
-#: part/pageviewannotator.cpp:1395
+#: part/pageviewannotator.cpp:1403
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1397
+#: part/pageviewannotator.cpp:1405
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1399
+#: part/pageviewannotator.cpp:1407
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1401
+#: part/pageviewannotator.cpp:1409
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1403
+#: part/pageviewannotator.cpp:1411
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1405
+#: part/pageviewannotator.cpp:1413
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Алатка за &избирање"
 
-#: part/pageviewannotator.cpp:1407
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1419
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Алатка за &избирање"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1421
 #, fuzzy, kde-format
 #| msgid "&Select Tool"
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Алатка за &избирање"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr ""
 
-#: part/pageviewannotator.cpp:1474
+#: part/pageviewannotator.cpp:1482
 #, fuzzy, kde-format
 msgid "Highlighter"
 msgstr "&Својства"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Add favorite annotation"
 msgstr "Презентација"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Custom annotation name:"

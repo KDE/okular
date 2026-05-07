@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-03 00:41+0000\n"
+"POT-Creation-Date: 2026-05-07 00:42+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -709,19 +709,19 @@ msgid "Value"
 msgstr "Hodnota"
 
 #: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1480
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1488
 #, kde-format
 msgid "Pop-up Note"
 msgstr "Vyskakovacia poznámka"
 
 #: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1496
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1504
 #, kde-format
 msgid "Typewriter"
 msgstr "Písací stroj"
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1478
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1486
 #, kde-format
 msgid "Inline Note"
 msgstr "Vložená poznámka"
@@ -743,7 +743,7 @@ msgid "Straight Line with Comment"
 msgstr "Rovná čiara s komentárom"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1490
+#: part/pageviewannotator.cpp:1498
 #, kde-format
 msgid "Straight Line"
 msgstr "Priamka"
@@ -754,7 +754,7 @@ msgid "Polygon with Comment"
 msgstr "Polygon s komentárom"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1482
+#: part/pageviewannotator.cpp:1490
 #, kde-format
 msgid "Polygon"
 msgstr "Mnohouholník"
@@ -765,7 +765,7 @@ msgid "Rectangle with Comment"
 msgstr "Obdĺžnik s komentárom"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
-#: part/pageviewannotator.cpp:1484
+#: part/pageviewannotator.cpp:1492
 #, kde-format
 msgid "Rectangle"
 msgstr "Obdĺžnik"
@@ -776,7 +776,7 @@ msgid "Ellipse with Comment"
 msgstr "Elipsa s komentárom"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
-#: part/pageviewannotator.cpp:1472
+#: part/pageviewannotator.cpp:1480
 #, kde-format
 msgid "Ellipse"
 msgstr "Elipsa"
@@ -797,7 +797,7 @@ msgid "Squiggle with Comment"
 msgstr "Vlnitý s komentárom"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1486
+#: part/pageviewannotator.cpp:1494
 #, kde-format
 msgid "Squiggle"
 msgstr "Vlnovka"
@@ -808,7 +808,7 @@ msgid "Underline with Comment"
 msgstr "Podčiarknutý text s komentárom"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1494
+#: part/pageviewannotator.cpp:1502
 #, kde-format
 msgid "Underline"
 msgstr "Podčiarknuté"
@@ -829,7 +829,7 @@ msgid "Stamp with Comment"
 msgstr "Pečiatka s komentárom"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1488
+#: part/pageviewannotator.cpp:1496
 #, kde-format
 msgid "Stamp"
 msgstr "Razítko"
@@ -840,7 +840,7 @@ msgid "Freehand Line with Comment"
 msgstr "Čiara voľnou rukou s komentárom"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1476
+#: part/pageviewannotator.cpp:1484
 #, kde-format
 msgid "Freehand Line"
 msgstr "Čiara voľnou rukou"
@@ -2128,7 +2128,7 @@ msgstr "Výplň tvaru:"
 msgid "Type:"
 msgstr "Typ:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1492
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1500
 #, kde-format
 msgid "Strike out"
 msgstr "Prečiarknuté"
@@ -4060,7 +4060,7 @@ msgstr "Máte neuložené zmeny. Pred podpísaním dokument uložte."
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Nakresliť obdĺžnik na vloženie pola podpisu"
 
-#: part/pageview.cpp:5529
+#: part/pageview.cpp:5533
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4111,105 +4111,105 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "Podpísať"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgid "Author name"
 msgstr "Meno autora"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "Meno autora poznámky:"
 
-#: part/pageviewannotator.cpp:1391
+#: part/pageviewannotator.cpp:1399
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "Kresliť elipsu (ťahom vyberte oblasť)"
 
-#: part/pageviewannotator.cpp:1393
+#: part/pageviewannotator.cpp:1401
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "Zvýrazniť text"
 
-#: part/pageviewannotator.cpp:1395
+#: part/pageviewannotator.cpp:1403
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "Kresliť čiaru voľnou rukou"
 
-#: part/pageviewannotator.cpp:1397
+#: part/pageviewannotator.cpp:1405
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Text vloženej poznámky (ťahom vyberte oblasť)"
 
-#: part/pageviewannotator.cpp:1399
+#: part/pageviewannotator.cpp:1407
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "Vložiť popup poznámku"
 
-#: part/pageviewannotator.cpp:1401
+#: part/pageviewannotator.cpp:1409
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "Nakreslite mnohouholník (kliknite na prvý bod pre uzavretie)"
 
-#: part/pageviewannotator.cpp:1403
+#: part/pageviewannotator.cpp:1411
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "Kresliť obdĺžnik"
 
-#: part/pageviewannotator.cpp:1405
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "Vlnitý text"
 
-#: part/pageviewannotator.cpp:1407
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "Umiestnite symbol razítka"
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "Kresliť rovnú čiaru"
 
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1419
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "Prečiarknuť text"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1421
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "Podčiarknuť text"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "Anotácia písacím strojom (ťahom vyberte oblasť)"
 
-#: part/pageviewannotator.cpp:1474
+#: part/pageviewannotator.cpp:1482
 #, kde-format
 msgid "Highlighter"
 msgstr "Zvýrazňovač"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "Pridať obľúbenú poznámku"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "Vlastný názov poznámky:"

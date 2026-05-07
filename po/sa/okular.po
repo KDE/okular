@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-03 00:41+0000\n"
+"POT-Creation-Date: 2026-05-07 00:42+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -710,19 +710,19 @@ msgid "Value"
 msgstr "मूल्यम्‌"
 
 #: gui/guiutils.cpp:39 part/editannottooldialog.cpp:88
-#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1480
+#: part/pageviewannotator.cpp:277 part/pageviewannotator.cpp:1488
 #, kde-format
 msgid "Pop-up Note"
 msgstr "पॉप-अप नोट्"
 
 #: gui/guiutils.cpp:43 part/editannottooldialog.cpp:96
-#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1496
+#: part/pageviewannotator.cpp:264 part/pageviewannotator.cpp:1504
 #, kde-format
 msgid "Typewriter"
 msgstr "टंकनयंत्रम्"
 
 #: gui/guiutils.cpp:46 part/editannottooldialog.cpp:89
-#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1478
+#: part/pageviewannotator.cpp:259 part/pageviewannotator.cpp:1486
 #, kde-format
 msgid "Inline Note"
 msgstr "Inline Note"
@@ -745,7 +745,7 @@ msgid "Straight Line with Comment"
 msgstr "टिप्पणी सहित सीधा रेखा"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
-#: part/pageviewannotator.cpp:1490
+#: part/pageviewannotator.cpp:1498
 #, kde-format
 msgid "Straight Line"
 msgstr "सीधा रेखा"
@@ -756,7 +756,7 @@ msgid "Polygon with Comment"
 msgstr "टिप्पणी सहित बहुभुज"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
-#: part/pageviewannotator.cpp:1482
+#: part/pageviewannotator.cpp:1490
 #, kde-format
 msgid "Polygon"
 msgstr "बहुभुज"
@@ -768,7 +768,7 @@ msgid "Rectangle with Comment"
 msgstr "टिप्पण्या सह मुद्रांकनम्"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
-#: part/pageviewannotator.cpp:1484
+#: part/pageviewannotator.cpp:1492
 #, kde-format
 msgid "Rectangle"
 msgstr "आयत"
@@ -780,7 +780,7 @@ msgid "Ellipse with Comment"
 msgstr "टिप्पण्या सह रेखांकयन्तु"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
-#: part/pageviewannotator.cpp:1472
+#: part/pageviewannotator.cpp:1480
 #, kde-format
 msgid "Ellipse"
 msgstr "दीर्घवृत्तम्"
@@ -801,7 +801,7 @@ msgid "Squiggle with Comment"
 msgstr "टिप्पणी सह स्क्विग्ल् कुर्वन्तु"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
-#: part/pageviewannotator.cpp:1486
+#: part/pageviewannotator.cpp:1494
 #, kde-format
 msgid "Squiggle"
 msgstr "स्क्विग्ल्"
@@ -812,7 +812,7 @@ msgid "Underline with Comment"
 msgstr "टिप्पण्या सह रेखांकयन्तु"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
-#: part/pageviewannotator.cpp:1494
+#: part/pageviewannotator.cpp:1502
 #, kde-format
 msgid "Underline"
 msgstr "रेखांकनम्"
@@ -833,7 +833,7 @@ msgid "Stamp with Comment"
 msgstr "टिप्पण्या सह मुद्रांकनम्"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
-#: part/pageviewannotator.cpp:1488
+#: part/pageviewannotator.cpp:1496
 #, kde-format
 msgid "Stamp"
 msgstr "मुद्रा"
@@ -844,7 +844,7 @@ msgid "Freehand Line with Comment"
 msgstr "टिप्पणी सहित मुक्तहस्त रेखा"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
-#: part/pageviewannotator.cpp:1476
+#: part/pageviewannotator.cpp:1484
 #, kde-format
 msgid "Freehand Line"
 msgstr "मुक्तहस्त रेखा"
@@ -2143,7 +2143,7 @@ msgstr "आकारपूरणम् :"
 msgid "Type:"
 msgstr "प्रकारः:"
 
-#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1492
+#: part/annotationwidgets.cpp:656 part/pageviewannotator.cpp:1500
 #, kde-format
 msgid "Strike out"
 msgstr "प्रहारं कुरुत"
@@ -4079,7 +4079,7 @@ msgstr "भवतः अरक्षिताः परिवर्तनाः 
 msgid "Draw a rectangle to insert the signature field"
 msgstr "हस्ताक्षरक्षेत्रं सम्मिलितुं आयतं आकर्षयन्तु"
 
-#: part/pageview.cpp:5529
+#: part/pageview.cpp:5533
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
@@ -4129,105 +4129,105 @@ msgctxt "@action:button"
 msgid "Sign"
 msgstr "चिह्नम्‌"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgid "Author name"
 msgstr "लेखक का नाम"
 
-#: part/pageviewannotator.cpp:1330
+#: part/pageviewannotator.cpp:1338
 #, kde-format
 msgid "Author name for the annotation:"
 msgstr "एनोटेशनस्य लेखकनाम :"
 
-#: part/pageviewannotator.cpp:1391
+#: part/pageviewannotator.cpp:1399
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw an ellipse (drag to select a zone)"
 msgstr "दीर्घवृत्तं आकर्षयन्तु (क्षेत्रं चयनं कर्तुं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1393
+#: part/pageviewannotator.cpp:1401
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Highlight text"
 msgstr "पाठं प्रकाशयन्तु"
 
-#: part/pageviewannotator.cpp:1395
+#: part/pageviewannotator.cpp:1403
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a freehand line"
 msgstr "मुक्तहस्तरेखां आकर्षयन्तु"
 
-#: part/pageviewannotator.cpp:1397
+#: part/pageviewannotator.cpp:1405
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
 msgstr "Inline Text Annotation (क्षेत्रं चयनं कर्तुं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1399
+#: part/pageviewannotator.cpp:1407
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a pop-up note"
 msgstr "एकं पॉप-अप-टिप्पणं स्थापयन्तु"
 
-#: part/pageviewannotator.cpp:1401
+#: part/pageviewannotator.cpp:1409
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a polygon (click on the first point to close it)"
 msgstr "बहुभुजं आकर्षयन्तु (तत् पिधातुं प्रथमबिन्दौ क्लिक् कुर्वन्तु)"
 
-#: part/pageviewannotator.cpp:1403
+#: part/pageviewannotator.cpp:1411
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
 msgstr "एकं आयतं आकर्षयतु"
 
-#: part/pageviewannotator.cpp:1405
+#: part/pageviewannotator.cpp:1413
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Squiggle text"
 msgstr "स्क्विग्ल् पाठः"
 
-#: part/pageviewannotator.cpp:1407
+#: part/pageviewannotator.cpp:1415
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Put a stamp symbol"
 msgstr "एकं मुद्राचिह्नं स्थापयतु"
 
-#: part/pageviewannotator.cpp:1409
+#: part/pageviewannotator.cpp:1417
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
 msgstr "ऋजुरेखां आकर्षयन्तु"
 
-#: part/pageviewannotator.cpp:1411
+#: part/pageviewannotator.cpp:1419
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Strike out text"
 msgstr "पाठं प्रहरतु"
 
-#: part/pageviewannotator.cpp:1413
+#: part/pageviewannotator.cpp:1421
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Underline text"
 msgstr "पाठं रेखांकयन्तु"
 
-#: part/pageviewannotator.cpp:1415
+#: part/pageviewannotator.cpp:1423
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
 msgstr "टङ्कनयन्त्रस्य टिप्पणी (क्षेत्रस्य चयनार्थं कर्षयन्तु)"
 
-#: part/pageviewannotator.cpp:1474
+#: part/pageviewannotator.cpp:1482
 #, kde-format
 msgid "Highlighter"
 msgstr "हाइलाइटर"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Add favorite annotation"
 msgstr "प्रियं टिप्पणीं योजयन्तु"
 
-#: part/pageviewannotator.cpp:1771
+#: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Custom annotation name:"
 msgstr "कस्टम एनोटेशन नाम:"

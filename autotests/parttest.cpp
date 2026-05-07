@@ -1850,7 +1850,7 @@ void PartTest::testAnnotWindow()
     // Add annot1 and annot2 to document
     part.m_document->addPageAnnotation(0, annot1);
     part.m_document->addPageAnnotation(0, annot2);
-    QVERIFY(part.m_document->page(0)->annotations().size() == 2);
+    QCOMPARE(part.m_document->page(0)->annotations().size(), 2);
 
     QTimer *delayResizeEventTimer = part.m_pageView->findChildren<QTimer *>(QStringLiteral("delayResizeEventTimer")).at(0);
     QVERIFY(delayResizeEventTimer->isActive());
@@ -1904,8 +1904,8 @@ void PartTest::testAnnotWindow()
     auto widget = win2->window()->childAt(win2->mapTo(win2->window(), QPoint(10, 10)));
     QTest::mouseMove(win2->window(), win2->mapTo(win2->window(), QPoint(10, 10)));
     QTest::mouseClick(widget, Qt::LeftButton, Qt::NoModifier, widget->mapFrom(win2, QPoint(10, 10)));
-    QVERIFY(win1->visibleRegion().rectCount() == 3);
-    QVERIFY(win2->visibleRegion().rectCount() == 4);
+    QCOMPARE(win1->visibleRegion().rectCount(), 3);
+    QCOMPARE(win2->visibleRegion().rectCount(), 4);
 }
 
 // Helper for testAdditionalActionTriggers
@@ -2159,11 +2159,11 @@ void PartTest::testForwardBackwardNavigation()
 
     // Go back to page A
     QVERIFY(QMetaObject::invokeMethod(&part, "slotHistoryBack"));
-    QVERIFY(part.m_document->viewport().pageNumber == targetPageA);
+    QCOMPARE(part.m_document->viewport().pageNumber, targetPageA);
 
     // Go back to page B
     QVERIFY(QMetaObject::invokeMethod(&part, "slotHistoryNext"));
-    QVERIFY(part.m_document->viewport().pageNumber == targetPageB);
+    QCOMPARE(part.m_document->viewport().pageNumber, targetPageB);
 }
 
 void PartTest::testTabletProximityBehavior()

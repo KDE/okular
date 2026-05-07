@@ -776,7 +776,7 @@ public:
                             newrect |= r;
                         }
                     }
-                    rect |= newrect;
+                    rect = newrect;
                     selection = std::move(newselection);
                 }
             }

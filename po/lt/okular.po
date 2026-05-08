@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-07 00:42+0000\n"
+"POT-Creation-Date: 2026-05-08 00:42+0000\n"
 "PO-Revision-Date: 2026-03-07 21:00+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -388,7 +388,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Puslapio spaudinio dydis yra neteisingas"
 
-#: core/document.cpp:5493 part/part.cpp:1155
+#: core/document.cpp:5493 part/part.cpp:1167
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepavyko atverti „%1“. Failas nėra"
@@ -1662,12 +1662,12 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Puslapis %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3185
+#: part/annotationmodel.cpp:324 part/part.cpp:3206
 #, kde-format
 msgid "Page %1"
 msgstr "Puslapis %1"
 
-#: part/annotationpopup.cpp:92
+#: part/annotationpopup.cpp:127
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1677,52 +1677,63 @@ msgstr[1] "%1 anotacijos"
 msgstr[2] "%1 anotacijų"
 msgstr[3] "%1 anotacija"
 
-#: part/annotationpopup.cpp:94 part/annotationpopup.cpp:156
+#: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Atverti iškylančiąją pastabą"
 
-#: part/annotationpopup.cpp:102 part/annotationpopup.cpp:163
-#: part/bookmarklist.cpp:265 part/part.cpp:2281 part/part.cpp:3191
+#: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
+#: part/bookmarklist.cpp:265 part/part.cpp:2299 part/part.cpp:3212
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Šalinti žymelę"
 
-#: part/annotationpopup.cpp:106 part/annotationpopup.cpp:166 part/part.cpp:3193
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3214
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Pridėti žymelę"
 
-#: part/annotationpopup.cpp:112 part/annotationpopup.cpp:171
+#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
+#, fuzzy, kde-format
+#| msgid "Copyright"
+msgid "Copy"
+msgstr "Autorių teisės"
+
+#: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
+#, kde-format
+msgid "Paste"
+msgstr ""
+
+#: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Kopijuoti tekstą į iškarpinę"
 
-#: part/annotationpopup.cpp:116 part/annotationpopup.cpp:175
-#: part/pageview.cpp:2571 part/pageview.cpp:2930 part/pageview.cpp:2932
-#: part/pageview.cpp:3083 part/pageview.cpp:3141 part/pageview.cpp:3143
+#: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
+#: part/pageview.cpp:2599 part/pageview.cpp:2951 part/pageview.cpp:2953
+#: part/pageview.cpp:3113 part/pageview.cpp:3174 part/pageview.cpp:3176
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM draudžia kopijavimą"
 
-#: part/annotationpopup.cpp:121 part/annotationpopup.cpp:180
+#: part/annotationpopup.cpp:164 part/annotationpopup.cpp:231
 #, kde-format
 msgid "&Delete"
 msgstr "&Ištrinti"
 
-#: part/annotationpopup.cpp:135 part/annotationpopup.cpp:184 part/part.cpp:774
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:779
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Savybės"
 
-#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
+#: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
 #, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
 msgstr "&Atverti „%1“…"
 
-#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
+#: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
@@ -2168,7 +2179,7 @@ msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Failas"
 
-#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:90
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:95
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
@@ -2279,7 +2290,7 @@ msgstr[3] ""
 "\n"
 "%2 žymelė"
 
-#: part/bookmarklist.cpp:132 part/part.cpp:412
+#: part/bookmarklist.cpp:132 part/part.cpp:417
 #, kde-format
 msgid "Bookmarks"
 msgstr "Žymelės"
@@ -2295,12 +2306,12 @@ msgstr "Rodyti visiems dokumentams"
 msgid "Search…"
 msgstr "Ieškoti…"
 
-#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3194
 #, kde-format
 msgid "Expand All"
 msgstr "Išskleisti viską"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3195
 #, kde-format
 msgid "Collapse All"
 msgstr "Suskleisti viską"
@@ -2310,8 +2321,8 @@ msgstr "Suskleisti viską"
 msgid "Go to This Bookmark"
 msgstr "Eiti prie šios žymelės"
 
-#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:705
-#: part/part.cpp:2476
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:710
+#: part/part.cpp:2494
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Pervadinti žymelę"
@@ -3477,47 +3488,61 @@ msgctxt "@action:button"
 msgid "View"
 msgstr "Rodyti"
 
-#: part/embeddedfilesdialog.cpp:70
+#: part/embeddedfilesdialog.cpp:67
+#, kde-format
+msgctxt "@action:button"
+msgid "Open"
+msgstr ""
+
+#: part/embeddedfilesdialog.cpp:75
 #, kde-format
 msgctxt "@title:column"
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: part/embeddedfilesdialog.cpp:71
+#: part/embeddedfilesdialog.cpp:76
 #, kde-format
 msgctxt "@title:column"
 msgid "Description"
 msgstr "Aprašas"
 
-#: part/embeddedfilesdialog.cpp:72
+#: part/embeddedfilesdialog.cpp:77
 #, kde-format
 msgctxt "@title:column"
 msgid "Size"
 msgstr "Dydis"
 
-#: part/embeddedfilesdialog.cpp:73
+#: part/embeddedfilesdialog.cpp:78
 #, kde-format
 msgctxt "@title:column"
 msgid "Created"
 msgstr "Sukurta"
 
-#: part/embeddedfilesdialog.cpp:74
+#: part/embeddedfilesdialog.cpp:79
 #, kde-format
 msgctxt "@title:column"
 msgid "Modified"
 msgstr "Modifikuota"
 
-#: part/embeddedfilesdialog.cpp:154
+#: part/embeddedfilesdialog.cpp:170
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
 msgstr "Į&rašyti kaip…"
 
-#: part/embeddedfilesdialog.cpp:155
+#: part/embeddedfilesdialog.cpp:171
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
 msgstr "&Rodinys…"
+
+#: part/embeddedfilesdialog.cpp:172
+#, fuzzy, kde-format
+#| msgctxt "%1 is the name of the file to open"
+#| msgid "&Open '%1'…"
+msgctxt "@action:inmenu"
+msgid "&Open…"
+msgstr "&Atverti „%1“…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3625,7 +3650,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Reguliarusis reiškinys"
 
-#: part/layers.cpp:35 part/part.cpp:2324
+#: part/layers.cpp:35 part/part.cpp:2342
 #, kde-format
 msgid "Layers"
 msgstr "Sluoksniai"
@@ -3636,210 +3661,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "iš"
 
-#: part/pageview.cpp:513
+#: part/pageview.cpp:541
 #, kde-format
 msgid "Zoom"
 msgstr "Mastelis"
 
-#: part/pageview.cpp:525
+#: part/pageview.cpp:553
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100% mastelis"
 
-#: part/pageview.cpp:536
+#: part/pageview.cpp:564
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Pasukti &dešinėn"
 
-#: part/pageview.cpp:537
+#: part/pageview.cpp:565
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Dešinėn"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:569
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Pasukti &kairėn"
 
-#: part/pageview.cpp:542
+#: part/pageview.cpp:570
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Kairėn"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:574
 #, kde-format
 msgid "Original Orientation"
 msgstr "Pradinė orientacija"
 
-#: part/pageview.cpp:552
+#: part/pageview.cpp:580
 #, kde-format
 msgid "&Trim View"
 msgstr "Ap&kirptas rodinys"
 
-#: part/pageview.cpp:556
+#: part/pageview.cpp:584
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Apkirpti paraštes"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:591
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Apkirpti iki ž&ymėjimo"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:597
 #, kde-format
 msgid "Fit &Width"
 msgstr "Talpinti į &plotį"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:601
 #, kde-format
 msgid "Fit &Page"
 msgstr "Talpinti į p&uslapį"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:605
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automatiškai talpinti"
 
-#: part/pageview.cpp:581
+#: part/pageview.cpp:609
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Talpinti langą į &puslapį"
 
-#: part/pageview.cpp:588
+#: part/pageview.cpp:616
 #, kde-format
 msgid "&View Mode"
 msgstr "&Rodinio veiksena"
 
-#: part/pageview.cpp:600
+#: part/pageview.cpp:628
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Vienas puslapis"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:629
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Puslapiai poromis"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:630
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Puslapiai poromis (&Centruoti pirmą puslapį)"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:633
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Apžvalga"
 
-#: part/pageview.cpp:617
+#: part/pageview.cpp:645
 #, kde-format
 msgid "&Continuous"
 msgstr "&Nuosekliai"
 
-#: part/pageview.cpp:624
+#: part/pageview.cpp:652
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Naudoti skaitymo kryptį iš dešinės į kairę"
 
-#: part/pageview.cpp:633
+#: part/pageview.cpp:661
 #, kde-format
 msgid "&Browse"
 msgstr "&Naršyti"
 
-#: part/pageview.cpp:641
+#: part/pageview.cpp:669
 #, kde-format
 msgid "&Zoom"
 msgstr "&Mastelis"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:689
 #, kde-format
 msgid "Area &Selection"
 msgstr "Srities ž&ymėjimas"
 
-#: part/pageview.cpp:668
+#: part/pageview.cpp:696
 #, kde-format
 msgid "&Text Selection"
 msgstr "&Teksto žymėjimas"
 
-#: part/pageview.cpp:675
+#: part/pageview.cpp:703
 #, kde-format
 msgid "T&able Selection"
 msgstr "&Lentelės žymėjimas"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:710
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Didinamasis stiklas"
 
-#: part/pageview.cpp:691
+#: part/pageview.cpp:719
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Žymėjimo įrankiai"
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:745
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Skaitmeniškai pa&sirašyti…"
 
-#: part/pageview.cpp:723
+#: part/pageview.cpp:751
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Skaityti balsu visą dokumentą"
 
-#: part/pageview.cpp:728
+#: part/pageview.cpp:756
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Skaityti balsu nuo dabartinio puslapio"
 
-#: part/pageview.cpp:733
+#: part/pageview.cpp:761
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Skaityti balsu dabartinį puslapį"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:766
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Baigti skaitymą balsu"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:771
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pristabdyti/Pratęsti skaitymą balsu"
 
-#: part/pageview.cpp:755
+#: part/pageview.cpp:783
 #, kde-format
 msgid "Scroll Up"
 msgstr "Slinkti aukštyn"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:789
 #, kde-format
 msgid "Scroll Down"
 msgstr "Slinkti žemyn"
 
-#: part/pageview.cpp:767
+#: part/pageview.cpp:795
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Slinkti puslapį aukštyn"
 
-#: part/pageview.cpp:773
+#: part/pageview.cpp:801
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Slinkti puslapį žemyn"
 
-#: part/pageview.cpp:779
+#: part/pageview.cpp:807
 #, kde-format
 msgid "Show Forms"
 msgstr "Rodyti formas"
 
-#: part/pageview.cpp:1292
+#: part/pageview.cpp:1320
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3848,12 +3873,12 @@ msgstr[1] " Įkeltas %1 puslapių dokumentas."
 msgstr[2] " Įkeltas %1 puslapių dokumentas."
 msgstr[3] " Įkeltas %1 puslapio dokumentas."
 
-#: part/pageview.cpp:2565
+#: part/pageview.cpp:2593
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopijuoti lentelės turinį į iškarpinę"
 
-#: part/pageview.cpp:2922
+#: part/pageview.cpp:2943
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3862,82 +3887,82 @@ msgstr[1] "Tekstas (%1 simboliai)"
 msgstr[2] "Tekstas (%1 simbolių)"
 msgstr[3] "Tekstas (%1 simbolis)"
 
-#: part/pageview.cpp:2923 part/pageview.cpp:2945
+#: part/pageview.cpp:2944 part/pageview.cpp:2966
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopijuoti į iškarpinę"
 
-#: part/pageview.cpp:2925 part/pageview.cpp:3132 part/part.cpp:858
+#: part/pageview.cpp:2946 part/pageview.cpp:3165 part/part.cpp:870
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopijuoti tekstą (be teksto laužymo)"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3136
+#: part/pageview.cpp:2957 part/pageview.cpp:3169
 #, kde-format
 msgid "Speak Text"
 msgstr "Pradėti skaitymą balsu"
 
-#: part/pageview.cpp:2944
+#: part/pageview.cpp:2965
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Paveikslas (%1 × %2 pikselių)"
 
-#: part/pageview.cpp:2946
+#: part/pageview.cpp:2967
 #, kde-format
 msgid "Save to File…"
 msgstr "Įrašyti į failą…"
 
-#: part/pageview.cpp:2966
+#: part/pageview.cpp:2987
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Paveikslas [%1 × %2] nukopijuotas į iškarpinę."
 
-#: part/pageview.cpp:2969
+#: part/pageview.cpp:2990
 #, kde-format
 msgid "Save file"
 msgstr "Įrašyti failą"
 
-#: part/pageview.cpp:2969
+#: part/pageview.cpp:2990
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Paveikslai (*.png *.jpeg)"
 
-#: part/pageview.cpp:2971
+#: part/pageview.cpp:2992
 #, kde-format
 msgid "File not saved."
 msgstr "Failas neįrašytas."
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:3003
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Paveikslas [%1 × %2] įrašytas į failą %3."
 
-#: part/pageview.cpp:3131
+#: part/pageview.cpp:3164
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopijuoti tekstą"
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3187
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Eiti į „%1“"
 
-#: part/pageview.cpp:4196 part/part.cpp:3196
+#: part/pageview.cpp:4229 part/part.cpp:3217
 #, kde-format
 msgid "Fit Width"
 msgstr "Talpinti į plotį"
 
-#: part/pageview.cpp:4196
+#: part/pageview.cpp:4229
 #, kde-format
 msgid "Fit Page"
 msgstr "Talpinti į puslapį"
 
-#: part/pageview.cpp:4196
+#: part/pageview.cpp:4229
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatiškai talpinti"
 
-#: part/pageview.cpp:4219
+#: part/pageview.cpp:4252
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3946,71 +3971,71 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4502
+#: part/pageview.cpp:4535
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Ieškoti „%1“ naudojant"
 
-#: part/pageview.cpp:4516
+#: part/pageview.cpp:4549
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Konfigūruoti saityno trumpinius…"
 
-#: part/pageview.cpp:4542
+#: part/pageview.cpp:4575
 #, kde-format
 msgid "Follow This Link"
 msgstr "Eiti šia nuoroda"
 
-#: part/pageview.cpp:4545
+#: part/pageview.cpp:4578
 #, kde-format
 msgid "Play this Sound"
 msgstr "Atkurti šį garsą"
 
-#: part/pageview.cpp:4547
+#: part/pageview.cpp:4580
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stabdyti garsą"
 
-#: part/pageview.cpp:4553
+#: part/pageview.cpp:4586
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopijuoti nuorodos adresą"
 
-#: part/pageview.cpp:4574
+#: part/pageview.cpp:4643
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Ieškoti „%1“ šiame dokumente"
 
-#: part/pageview.cpp:5106
+#: part/pageview.cpp:5175
 #, kde-format
 msgid "Welcome"
 msgstr "Sveiki"
 
-#: part/pageview.cpp:5232
+#: part/pageview.cpp:5301
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Pažymėkite didinamą sritį. Norėdami mažinti, spustelėkite dešiniuoju pelės "
 "mygtuku."
 
-#: part/pageview.cpp:5247
+#: part/pageview.cpp:5316
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Spustelėkite norėdami matyti padidintą vaizdą."
 
-#: part/pageview.cpp:5264
+#: part/pageview.cpp:5333
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 "Norėdami kopijuoti, apibrėžkite stačiakampį aplink tekstą ar grafikos "
 "objektą."
 
-#: part/pageview.cpp:5280
+#: part/pageview.cpp:5349
 #, kde-format
 msgid "Select text"
 msgstr "Žymėti tekstą"
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5365
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4019,7 +4044,7 @@ msgstr ""
 "Apibrėžkite stačiakampį aplink lentelę, tada spustelėkite šalia kraštų "
 "norėdami perskirti; paspauskite Grįžimo (Esc) klavišą norėdami išvalyti."
 
-#: part/pageview.cpp:5311 part/pageview.cpp:5319
+#: part/pageview.cpp:5380 part/pageview.cpp:5388
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4028,17 +4053,17 @@ msgstr ""
 "Visi jūsų pasirašymo liudijimai yra negaliojantys. Tuo atveju, jei "
 "pasirašymas anksčiau veikdavo, patikrinkite jų galiojimo datas."
 
-#: part/pageview.cpp:5312
+#: part/pageview.cpp:5381
 #, kde-format
 msgid "No valid certificates"
 msgstr "Nėra galiojančių liudijimų"
 
-#: part/pageview.cpp:5313 part/pageview.cpp:5328
+#: part/pageview.cpp:5382 part/pageview.cpp:5397
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Atverti liudijimų tvarkytuvę"
 
-#: part/pageview.cpp:5324
+#: part/pageview.cpp:5393
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4050,12 +4075,12 @@ msgstr ""
 "programos vadove žiūrėkite dalį apie <a href=\"%1\">Skaitmeninių parašų "
 "pridėjimą</a>."
 
-#: part/pageview.cpp:5327 part/pageview.cpp:5339
+#: part/pageview.cpp:5396 part/pageview.cpp:5408
 #, kde-format
 msgid "No certificates found"
 msgstr "Nerasta jokių liudijimų"
 
-#: part/pageview.cpp:5337
+#: part/pageview.cpp:5406
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4066,18 +4091,18 @@ msgstr ""
 "vadove žiūrėkite sekciją apie <a href=\"%1\">Skaitmeninių parašų pridėjimą</"
 "a>."
 
-#: part/pageview.cpp:5362
+#: part/pageview.cpp:5431
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Yra neįrašytų pakeitimų. Prieš pasirašydami dokumentą, įrašykite pakeitimus."
 
-#: part/pageview.cpp:5385
+#: part/pageview.cpp:5454
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Pieškite stačiakampį, norėdami įterpti parašo lauką"
 
-#: part/pageview.cpp:5533
+#: part/pageview.cpp:5602
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4240,26 +4265,26 @@ msgid "&File"
 msgstr "&Failas"
 
 #. i18n: ectx: Menu (settings)
-#: part/part-viewermode.rc:10 part/part.rc:92
+#: part/part-viewermode.rc:10 part/part.rc:93
 #, kde-format
 msgid "&Settings"
 msgstr "&Nuostatos"
 
 #. i18n: ectx: Menu (help)
-#: part/part-viewermode.rc:15 part/part.rc:99
+#: part/part-viewermode.rc:15 part/part.rc:100
 #, kde-format
 msgid "&Help"
 msgstr "&Pagalba"
 
 #. i18n: ectx: Menu (view_orientation)
-#: part/part-viewermode.rc:32 part/part.rc:45
+#: part/part-viewermode.rc:32 part/part.rc:46
 #, kde-format
 msgid "&Orientation"
 msgstr "&Orientacija"
 
 #. i18n: ectx: Menu (bookmarks)
 #. i18n: ectx: Menu (okular_bookmarks)
-#: part/part-viewermode.rc:50 part/part.rc:66
+#: part/part-viewermode.rc:50 part/part.rc:67
 #, kde-format
 msgid "&Bookmarks"
 msgstr "Žy&melės"
@@ -4270,17 +4295,17 @@ msgstr "Žy&melės"
 msgid "Viewer Toolbar"
 msgstr "Žiūryklės įrankių juosta"
 
-#: part/part.cpp:402 part/thumbnaillist.cpp:48
+#: part/part.cpp:407 part/thumbnaillist.cpp:48
 #, kde-format
 msgid "Thumbnails"
 msgstr "Miniatiūros"
 
-#: part/part.cpp:408 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
+#: part/part.cpp:413 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
 msgstr "Anotacijos"
 
-#: part/part.cpp:451
+#: part/part.cpp:456
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4293,7 +4318,7 @@ msgstr ""
 "nebepalaikoma</b>.<br/>Jei norite tęsti redaguoti šį dokumentą, įrašykite į "
 "failą, kad perkeltumėte tuos duomenis."
 
-#: part/part.cpp:459
+#: part/part.cpp:464
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4303,217 +4328,224 @@ msgstr ""
 "\">Spustelėkite čia, norėdami juos pamatyti</a> arba eikite į Failas -> "
 "Įterpti failai."
 
-#: part/part.cpp:488
+#: part/part.cpp:493
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr "Vyksta pasirašymas. Galite derinti parašo dydį ir vietą"
 
-#: part/part.cpp:490
+#: part/part.cpp:495
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Užbaigti pasirašymą"
 
-#: part/part.cpp:662
+#: part/part.cpp:667
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Ankstesnis"
 
-#: part/part.cpp:663
+#: part/part.cpp:668
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Grįžti į ankstesnį puslapį"
 
-#: part/part.cpp:664
+#: part/part.cpp:669
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Pereina į ankstesnį dokumento puslapį"
 
-#: part/part.cpp:674
+#: part/part.cpp:679
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Kitas"
 
-#: part/part.cpp:675
+#: part/part.cpp:680
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Pereiti į kitą puslapį"
 
-#: part/part.cpp:676
+#: part/part.cpp:681
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Pereina į kitą dokumento puslapį"
 
-#: part/part.cpp:687
+#: part/part.cpp:692
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Dokumento pradžia"
 
-#: part/part.cpp:688
+#: part/part.cpp:693
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Pereina į dokumento pradžią"
 
-#: part/part.cpp:692
+#: part/part.cpp:697
 #, kde-format
 msgid "End of the document"
 msgstr "Dokumento pabaiga"
 
-#: part/part.cpp:693
+#: part/part.cpp:698
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Pereina į dokumento pabaigą"
 
-#: part/part.cpp:707
+#: part/part.cpp:712
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Pervadinti esamą žymelę"
 
-#: part/part.cpp:711
+#: part/part.cpp:716
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Ankstesnė žymelė"
 
-#: part/part.cpp:713
+#: part/part.cpp:718
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Eiti į ankstesnę žymelę"
 
-#: part/part.cpp:717
+#: part/part.cpp:722
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Kita žymelė"
 
-#: part/part.cpp:719
+#: part/part.cpp:724
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Eiti į kitą žymelę"
 
-#: part/part.cpp:749
+#: part/part.cpp:754
 #, kde-format
 msgid "Configure Okular…"
 msgstr "Konfigūruoti Okular…"
 
-#: part/part.cpp:752
+#: part/part.cpp:757
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "Konfigūruoti žiūryklę…"
 
-#: part/part.cpp:758
+#: part/part.cpp:763
 #, kde-format
 msgid "Configure Viewer Backends…"
 msgstr "Konfigūruoti žiūryklės programines sąsajas…"
 
-#: part/part.cpp:760
+#: part/part.cpp:765
 #, kde-format
 msgid "Configure Backends…"
 msgstr "Konfigūruoti programines sąsajas…"
 
-#: part/part.cpp:796
+#: part/part.cpp:801
 #, kde-format
 msgid "About Backend"
 msgstr "Apie programinę sąsają"
 
-#: part/part.cpp:801
+#: part/part.cpp:806
 #, kde-format
 msgid "Reloa&d"
 msgstr "Įkelti iš &naujo"
 
-#: part/part.cpp:803
+#: part/part.cpp:808
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Pakartotinai įkelti esamą dokumentą iš disko."
 
-#: part/part.cpp:809
+#: part/part.cpp:814
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Užverti &paieškos juostą"
 
-#: part/part.cpp:814
+#: part/part.cpp:819
 #, kde-format
 msgid "Page Number"
 msgstr "Puslapio numeris"
 
-#: part/part.cpp:818
+#: part/part.cpp:823
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Konfigūruoti spalvos veiksenas…"
 
-#: part/part.cpp:868
+#: part/part.cpp:862 part/part.cpp:3222
+#, fuzzy, kde-format
+#| msgctxt "Change an annotation's size"
+#| msgid "adjust annotation"
+msgid "Paste Annotation"
+msgstr "reguliuoti anotaciją"
+
+#: part/part.cpp:880
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Pažymėti visą tekstą esamame puslapyje"
 
-#: part/part.cpp:881
+#: part/part.cpp:893
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Rodyti š&oninę juostą"
 
-#: part/part.cpp:890
+#: part/part.cpp:902
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Rodyti &puslapių juostą"
 
-#: part/part.cpp:896
+#: part/part.cpp:908
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Rodyti &parašų skydelį"
 
-#: part/part.cpp:907
+#: part/part.cpp:919
 #, kde-format
 msgid "&Embedded Files"
 msgstr "Į&terpti failai"
 
-#: part/part.cpp:913
+#: part/part.cpp:925
 #, kde-format
 msgid "E&xport As"
 msgstr "E&ksportuoti kaip"
 
-#: part/part.cpp:925
+#: part/part.cpp:937
 #, kde-format
 msgid "S&hare"
 msgstr "&Bendrinti"
 
-#: part/part.cpp:934
+#: part/part.cpp:946
 #, kde-format
 msgid "P&resentation"
 msgstr "&Pateiktis"
 
-#: part/part.cpp:941
+#: part/part.cpp:953
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Atverti &vidinį aplanką"
 
-#: part/part.cpp:955
+#: part/part.cpp:967
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Importuoti PostScript kaip PDF…"
 
-#: part/part.cpp:959
+#: part/part.cpp:971
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Perjungti juodo ekrano veikseną"
 
-#: part/part.cpp:967
+#: part/part.cpp:979
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Ištrinti piešinį"
 
-#: part/part.cpp:972
+#: part/part.cpp:984
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "Konfigūruoti anotacijas…"
 
-#: part/part.cpp:977
+#: part/part.cpp:989
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Rodyti/pristabdyti pateiktį"
 
-#: part/part.cpp:1132
+#: part/part.cpp:1144
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4524,37 +4556,37 @@ msgstr ""
 "įrašyti.\n"
 "Užvėrus Okular, bet kokie pakeitimai bus prarasti."
 
-#: part/part.cpp:1133
+#: part/part.cpp:1145
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokumentas negali būti įrašytas"
 
-#: part/part.cpp:1162
+#: part/part.cpp:1174
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Nepavyko atverti „%1“ (%2) "
 
-#: part/part.cpp:1215
+#: part/part.cpp:1227
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 įkėlimo buvo atsisakyta."
 
-#: part/part.cpp:1231
+#: part/part.cpp:1243
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Nepavyko atverti %1. Priežastis: %2"
 
-#: part/part.cpp:1259
+#: part/part.cpp:1271
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Konfigūruoti žiūryklės programines sąsajas"
 
-#: part/part.cpp:1261
+#: part/part.cpp:1273
 #, kde-format
 msgid "Configure Backends"
 msgstr "Konfigūruoti programines sąsajas"
 
-#: part/part.cpp:1346
+#: part/part.cpp:1358
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4563,43 +4595,43 @@ msgstr ""
 "Programa „ps2pdf“ nerasta, todėl jos nenaudodama programa Okular negali "
 "importuoti PS failų."
 
-#: part/part.cpp:1346
+#: part/part.cpp:1358
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "Nerasta ps2pdf"
 
-#: part/part.cpp:1351
+#: part/part.cpp:1363
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript failai (%1)"
 
-#: part/part.cpp:1367
+#: part/part.cpp:1379
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importuojamas PS failas kaip PDF (tai gali užtrukti)…"
 
-#: part/part.cpp:1499
+#: part/part.cpp:1511
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Norėdami skaityti dokumentą, įveskite slaptažodį:"
 
-#: part/part.cpp:1501
+#: part/part.cpp:1513
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Neteisingas slaptažodis. Bandykite dar kartą:"
 
-#: part/part.cpp:1512
+#: part/part.cpp:1524
 #, kde-format
 msgid "Document Password"
 msgstr "Dokumento slaptažodis"
 
-#: part/part.cpp:1635
+#: part/part.cpp:1647
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Šiame dokumente yra XFA formos, kurios šiuo metu yra <b>nepalaikomos</b>."
 
-#: part/part.cpp:1642
+#: part/part.cpp:1654
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4608,7 +4640,7 @@ msgstr ""
 "Šiame dokumente yra formos. Spauskite ant mygtuko norėdami su jomis "
 "sąveikauti arba naudokite meniu Rodinys -> Rodyti formas."
 
-#: part/part.cpp:1658
+#: part/part.cpp:1670
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4618,7 +4650,7 @@ msgstr ""
 "Įrašykite šio dokumento kopiją ir, norėdami jį redaguoti, atverkite "
 "dokumentą iš naujo."
 
-#: part/part.cpp:1746
+#: part/part.cpp:1758
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4627,27 +4659,27 @@ msgstr ""
 "Šis dokumentas nori būti rodomas visame ekrane.\n"
 "Išeiti iš normalios veiksenos ir įjungti pateikties veikseną?"
 
-#: part/part.cpp:1748
+#: part/part.cpp:1760
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Užklausa pakeisti rodinio veikseną"
 
-#: part/part.cpp:1749
+#: part/part.cpp:1761
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Įjungti pateikties veikseną"
 
-#: part/part.cpp:1750
+#: part/part.cpp:1762
 #, kde-format
 msgid "Deny Request"
 msgstr "Drausti užklausą"
 
-#: part/part.cpp:1840
+#: part/part.cpp:1852
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Nepavyko atverti %1. %2"
 
-#: part/part.cpp:1870
+#: part/part.cpp:1882
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4661,22 +4693,22 @@ msgstr ""
 "atlikote šioje programoje, dings, o atsiras pakeitimai, kuriuos atlikote "
 "kitoje programoje.<nl/><nl/>Ar norite tęsti ir įkelti failą iš naujo?"
 
-#: part/part.cpp:1874 part/part.cpp:1884
+#: part/part.cpp:1886 part/part.cpp:1896
 #, kde-format
 msgid "File Changed"
 msgstr "Failas pasikeitė"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1887
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Tęsti įkėlimą iš naujo"
 
-#: part/part.cpp:1876
+#: part/part.cpp:1888
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Nutraukti įkėlimą iš naujo"
 
-#: part/part.cpp:1880
+#: part/part.cpp:1892
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4690,27 +4722,27 @@ msgstr ""
 "šioje programoje, dings, o atsiras pakeitimai, kuriuos atlikote kitoje "
 "programoje.<nl/><nl/>Ar norite tęsti ir užverti failą?"
 
-#: part/part.cpp:1885
+#: part/part.cpp:1897
 #, kde-format
 msgid "Continue Closing"
 msgstr "Tęsti užvėrimą"
 
-#: part/part.cpp:1886
+#: part/part.cpp:1898
 #, kde-format
 msgid "Abort Closing"
 msgstr "Nutraukti užvėrimą"
 
-#: part/part.cpp:1893
+#: part/part.cpp:1905
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Ar norite įrašyti savo pakeitimus į \"%1\", ar juos atmesti?"
 
-#: part/part.cpp:1893
+#: part/part.cpp:1905
 #, kde-format
 msgid "Close Document"
 msgstr "Užverti dokumentą"
 
-#: part/part.cpp:2025
+#: part/part.cpp:2037
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4719,7 +4751,7 @@ msgstr ""
 "Ši nuoroda nurodo į dokumento užvėrimo veiksmą, kuris neveikia naudojant "
 "įtaisytąją žiūryklę."
 
-#: part/part.cpp:2031
+#: part/part.cpp:2043
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4728,59 +4760,59 @@ msgstr ""
 "Ši nuoroda nurodo į programos išjungimo veiksmą, kuris neveikia naudojant "
 "įtaisytąją žiūryklę."
 
-#: part/part.cpp:2123 part/part.cpp:2141
+#: part/part.cpp:2135 part/part.cpp:2153
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Dokumentas įkeliamas iš naujo…"
 
-#: part/part.cpp:2304 part/toc.cpp:38
+#: part/part.cpp:2322 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Turinys"
 
-#: part/part.cpp:2333 part/signaturepanel.cpp:47
+#: part/part.cpp:2351 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Parašai"
 
-#: part/part.cpp:2360
+#: part/part.cpp:2378
 #, kde-format
 msgid "Go to Page"
 msgstr "Eiti į puslapį"
 
-#: part/part.cpp:2383
+#: part/part.cpp:2401
 #, kde-format
 msgid "&Page:"
 msgstr "&Puslapis:"
 
-#: part/part.cpp:2476
+#: part/part.cpp:2494
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Įveskite naują žymelės pavadinimą:"
 
-#: part/part.cpp:2522
+#: part/part.cpp:2540
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Pervadinti šią žymelę"
 
-#: part/part.cpp:2525
+#: part/part.cpp:2543
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Šalinti šią žymelę"
 
-#: part/part.cpp:2611 part/part.cpp:2612 part/part.cpp:3503
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2619 part/revisionviewer.cpp:44
+#: part/part.cpp:2637 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Įrašyti kaip"
 
-#: part/part.cpp:2636
+#: part/part.cpp:2654
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4789,18 +4821,18 @@ msgstr ""
 "Jūs pasirinkote įrašyti Okular archyvą be failo pavadinimo galūnės su „%1“ "
 "prievardžiu. Tai neleistina, ar norite pasirinkti naują pavadinimą?"
 
-#: part/part.cpp:2637
+#: part/part.cpp:2655
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Nepalaikomas prievardis"
 
-#: part/part.cpp:2638
+#: part/part.cpp:2656
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Pasirinkti naują pavadinimą"
 
-#: part/part.cpp:2681
+#: part/part.cpp:2699
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4812,17 +4844,17 @@ msgstr ""
 "įrašysite, visi pakeitimai, atlikti kitoje programoje, bus prarasti. Ar "
 "tikrai norite tęsti?"
 
-#: part/part.cpp:2684 part/part.cpp:2703 part/part.cpp:2755
+#: part/part.cpp:2702 part/part.cpp:2721 part/part.cpp:2773
 #, kde-format
 msgid "Save - Warning"
 msgstr "Įrašyti - Įspėjimas"
 
-#: part/part.cpp:2686
+#: part/part.cpp:2704
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Įrašyti kopiją kitur"
 
-#: part/part.cpp:2702
+#: part/part.cpp:2720
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4834,12 +4866,12 @@ msgstr ""
 "dar kartą, o jūsų atšaukimo/grąžinimo istorija bus prarasta.<br />Ar norite "
 "tęsti?"
 
-#: part/part.cpp:2729
+#: part/part.cpp:2747
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Nepavyko atverti laikinojo failo įrašymui."
 
-#: part/part.cpp:2742
+#: part/part.cpp:2760
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4849,7 +4881,7 @@ msgstr ""
 "Nepavyko perrašyti <filename>%1</filename>, nes tas failas yra skirtas tik "
 "skaitymui. Pabandykite įrašyti failą į kitą vietą arba pakeisti jo leidimus."
 
-#: part/part.cpp:2754
+#: part/part.cpp:2772
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4859,22 +4891,22 @@ msgstr ""
 "įkeltas iš naujo. Jūsų atšaukimo/grąžinimo istorija bus prarasta.<br />Ar "
 "norite tęsti?"
 
-#: part/part.cpp:2769 part/part.cpp:2838 part/part.cpp:2859 part/part.cpp:3518
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Nepavyko įrašyti failo į \"%1\". Pabandykite jį įrašyti į kitą vietą."
 
-#: part/part.cpp:2782
+#: part/part.cpp:2800
 #, kde-format
 msgid "Filled form contents"
 msgstr "Užpildytų formų turinys"
 
-#: part/part.cpp:2785
+#: part/part.cpp:2803
 #, kde-format
 msgid "User annotations"
 msgstr "Naudotojo anotacijos"
 
-#: part/part.cpp:2790
+#: part/part.cpp:2808
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4885,17 +4917,17 @@ msgstr ""
 "elementų įrašymo. Norėdami juos išsaugoti, naudokite <i>Okular dokumento "
 "archyvo</i> formatą."
 
-#: part/part.cpp:2794 part/part.cpp:2816
+#: part/part.cpp:2812 part/part.cpp:2834
 #, kde-format
 msgid "Warning"
 msgstr "Įspėjimas"
 
-#: part/part.cpp:2795 part/part.cpp:2817
+#: part/part.cpp:2813 part/part.cpp:2835
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Įrašyti kaip Okular dokumento archyvą…"
 
-#: part/part.cpp:2807
+#: part/part.cpp:2825
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4908,7 +4940,7 @@ msgstr ""
 "archyvo</i> formatą. Spustelėkite <i>Tęsti</i> norėdami atmesti minėtus "
 "elementus ir įrašyti dabartinį dokumentą."
 
-#: part/part.cpp:2810
+#: part/part.cpp:2828
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4921,22 +4953,22 @@ msgstr ""
 "archyvo</i> formatą. Norėdami įrašyti, spustelėkite <i>Tęsti</i>, tačiau "
 "prarasite minėtus elementus ir atšaukimo/grąžinimo istoriją."
 
-#: part/part.cpp:2812
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue"
 msgstr "Tęsti"
 
-#: part/part.cpp:2812
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Tęsti prarandant pakeitimus"
 
-#: part/part.cpp:2840
+#: part/part.cpp:2858
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Nepavyko įrašyti failą į „%1“. %2"
 
-#: part/part.cpp:2879
+#: part/part.cpp:2897
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4947,7 +4979,7 @@ msgstr ""
 "\n"
 "Dokumento daugiau nebėra."
 
-#: part/part.cpp:2915
+#: part/part.cpp:2933
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4956,44 +4988,44 @@ msgstr ""
 "Nepavyko įrašyti failo į \"%1\". Klaida: \"%2\". Pabandykite jį įrašyti į "
 "kitą vietą."
 
-#: part/part.cpp:3174
+#: part/part.cpp:3192
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Išskleisti visą sekciją"
 
-#: part/part.cpp:3175
+#: part/part.cpp:3193
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Suskleisti visą sekciją"
 
-#: part/part.cpp:3188
+#: part/part.cpp:3209
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinchronizuoti miniatiūrą su puslapiu"
 
-#: part/part.cpp:3215
+#: part/part.cpp:3241
 #, kde-format
 msgid "Tools"
 msgstr "Įrankiai"
 
-#: part/part.cpp:3398
+#: part/part.cpp:3427
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Skaityti balsu"
 
-#: part/part.cpp:3556
+#: part/part.cpp:3585
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Spausdinti"
 
-#: part/part.cpp:3619
+#: part/part.cpp:3648
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Šio dokumento spausdinti neleidžiama."
 
-#: part/part.cpp:3632
+#: part/part.cpp:3661
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5001,7 +5033,7 @@ msgstr ""
 "Nepavyko spausdinti dokumento. Nežinoma klaida. Prašome pranešti į bugs.kde."
 "org"
 
-#: part/part.cpp:3634
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5010,17 +5042,17 @@ msgstr ""
 "Nepavyko spausdinti dokumento. Išsamesnis klaidos aprašas yra „%1“. Prašome "
 "pranešti į bugs.kde.org"
 
-#: part/part.cpp:3723
+#: part/part.cpp:3752
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Eiti į vietą, kurioje buvote anksčiau"
 
-#: part/part.cpp:3727
+#: part/part.cpp:3756
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Eiti į vietą, kurios ieškojote"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3781
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5029,7 +5061,7 @@ msgstr ""
 "<qt><strong>Failo klaida!</strong> Nepavyko sukurti laikinojo failo "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3764
+#: part/part.cpp:3793
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5038,7 +5070,7 @@ msgstr ""
 "<qt><strong>Failo klaida!</strong> Nepavyko išglaudinimui atverti failo "
 "<nobr><strong>%1</strong></nobr>. Failas nebus įkeltas.</qt>"
 
-#: part/part.cpp:3768
+#: part/part.cpp:3797
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5052,7 +5084,7 @@ msgstr ""
 "\"Savybių\" parinktį, o tuomet atsivėrusiame lange pasirinkę \"Leidimų\" "
 "kortelę.</qt>"
 
-#: part/part.cpp:3790
+#: part/part.cpp:3819
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5061,7 +5093,7 @@ msgstr ""
 "<qt><strong>Failo klaida!</strong> Nepavyko išglaudinti failo <nobr><strong>"
 "%1</strong></nobr>. Failas nebus įkeltas.</qt>"
 
-#: part/part.cpp:3794
+#: part/part.cpp:3823
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5071,27 +5103,27 @@ msgstr ""
 "įsitikinti, pabandykite rankiniu būdu išglaudinti failą naudodami komandų "
 "eilutės įrankius.</qt>"
 
-#: part/part.cpp:3820
+#: part/part.cpp:3849
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nėra žymelių"
 
-#: part/part.cpp:3891
+#: part/part.cpp:3920
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Bendrinant dokumentą atsirado problemų: %1"
 
-#: part/part.cpp:3891 part/part.cpp:3897
+#: part/part.cpp:3920 part/part.cpp:3926
 #, kde-format
 msgid "Share"
 msgstr "Bendrinti"
 
-#: part/part.cpp:3895
+#: part/part.cpp:3924
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentas sėkmingai pradėtas bendrinti"
 
-#: part/part.cpp:3897
+#: part/part.cpp:3926
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Bendrinamą dokumentą galite rasti, adresu: <a href=\"%1\">%1</a>"
@@ -5103,37 +5135,37 @@ msgid "&Edit"
 msgstr "&Taisyti"
 
 #. i18n: ectx: Menu (view)
-#: part/part.rc:33
+#: part/part.rc:34
 #, kde-format
 msgid "&View"
 msgstr "&Rodinys"
 
 #. i18n: ectx: Menu (go)
-#: part/part.rc:54
+#: part/part.rc:55
 #, kde-format
 msgid "&Go"
 msgstr "&Eiti"
 
 #. i18n: ectx: Menu (tools)
-#: part/part.rc:74
+#: part/part.rc:75
 #, kde-format
 msgid "&Tools"
 msgstr "Į&rankiai"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: part/part.rc:103 shell/shell.rc:24
+#: part/part.rc:104 shell/shell.rc:24
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Pagrindinė įrankių juosta"
 
 #. i18n: ectx: ToolBar (annotationToolBar)
-#: part/part.rc:124
+#: part/part.rc:125
 #, kde-format
 msgid "Annotation Toolbar"
 msgstr "Anotacijų įrankių juosta"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
-#: part/part.rc:148
+#: part/part.rc:149
 #, kde-format
 msgid "Quick Annotation Toolbar"
 msgstr "Sparčiųjų anotacijų įrankių juosta"

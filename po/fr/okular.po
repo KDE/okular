@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
 "PO-Revision-Date: 2026-04-03 20:22+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -2462,55 +2462,55 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "Couleurs &normales"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "&Inverser les couleurs"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Modifier la couleur du &papier"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Modifier les couleurs &sombre et claire"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Convertir en noir et &blanc"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Inverser la &luminosité"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Inverser la l&uminance (Linéaire sRGB)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Inverser la luminance (&Symétrique)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "Décaler la teinte en p&ositif"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"

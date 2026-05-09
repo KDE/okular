@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
-"PO-Revision-Date: 2026-02-24 07:21+0100\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"PO-Revision-Date: 2026-05-08 06:31+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1689,15 +1689,14 @@ msgid "Add Bookmark"
 msgstr "Dodaj zaznamek"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Avtorske pravice"
+msgstr "Kopiraj"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Prilepi"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2436,55 +2435,55 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "Normalne barve"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "Obrni barve"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Zamenjaj barvo papirja"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Zamenjaj temne za svetle barve"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Pretvori v črno-belo"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Obrni svetlost"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Obrni lumo (linearni sRGB)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Obrni lumo (simetrično)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "Pomakni pozitivni odtenek"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -3481,7 +3480,7 @@ msgstr "Pogled"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Odpri"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3526,12 +3525,10 @@ msgid "&View…"
 msgstr "Pogled…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "&Odpri '%1'…"
+msgstr "&Odpri…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4451,11 +4448,9 @@ msgid "Configure Color Modes…"
 msgstr "Nastavi barvne načine…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "prilagodi zabeležko"
+msgstr "Prilepi zabeležko"
 
 #: part/part.cpp:880
 #, kde-format

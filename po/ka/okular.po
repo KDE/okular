@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
-"PO-Revision-Date: 2026-02-24 04:49+0100\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"PO-Revision-Date: 2026-05-08 05:14+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1687,15 +1687,14 @@ msgid "Add Bookmark"
 msgstr "სანიშნის დამატება"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "საავტორო უფლებები"
+msgstr "კოპირება"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "ჩასმა"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2426,55 +2425,55 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "&ნორმალური ფერები"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "&ინვერსიული ფერები"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "&ქაღალდის ფერის შეცვლა"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "&მუქი და ღია ფერების შეცვლა"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "&შავთეთრში გადაყვანა"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "&განათების ინვერსია"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "&სიკაშკაშის ინვერსია (წრფივი sRGB)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "სიკაშკაშის &ინვერსია (სიმეტრიული)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "&ტონის დადებითი წანაცვლება"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -3475,7 +3474,7 @@ msgstr "ხედო"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "გახსნა"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3520,12 +3519,10 @@ msgid "&View…"
 msgstr "&ხედი…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "'%1'-ის გა&ხსნა…"
+msgstr "&გახსნა…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4441,11 +4438,9 @@ msgid "Configure Color Modes…"
 msgstr "ფერის რეჟიმების მორგება…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "ანოტაციის სწორება"
+msgstr "ანოტაციის ჩასმა"
 
 #: part/part.cpp:880
 #, kde-format

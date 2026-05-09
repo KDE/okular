@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
-"PO-Revision-Date: 2026-03-09 11:34+0100\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"PO-Revision-Date: 2026-05-08 11:37+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -121,7 +121,7 @@ msgstr "Gràfics de les anotacions"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "Jiri Baum – NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -1695,15 +1695,14 @@ msgid "Add Bookmark"
 msgstr "Afig un punt"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Copyright"
+msgstr "Copia"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Apega"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2434,55 +2433,55 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "Colors &normals"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "I&nvertix els colors"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Canvia el color del &paper"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Canvia els colors &foscos i els clars"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Convertix a &blanc i negre"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Invertix la c&laredat"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Invertix la l&uma (sRGB lineal)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Invertix la luma (&simètrica)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "Desplaça cap a un to p&ositiu"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -2590,7 +2589,7 @@ msgstr "Convertix a blanc i negre"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "Invertix la claredat"
+msgstr "Invertix la lluminositat"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format
@@ -2789,9 +2788,9 @@ msgstr ""
 ">\n"
 "Podeu afegir les variables següents de substitució:\n"
 "<ul>\n"
-"  <li>%f - el nom del fitxer</li>\n"
-"  <li>%l - la línia del fitxer a on anar</li>\n"
-"  <li>%c - la columna del fitxer a on anar</li>\n"
+"  <li>%f – el nom del fitxer</li>\n"
+"  <li>%l – la línia del fitxer a on anar</li>\n"
+"  <li>%c – la columna del fitxer a on anar</li>\n"
 "</ul>\n"
 "Si no s'especifica %f, llavors el nom del fitxer s'afig a l'ordre "
 "especificada."
@@ -3492,7 +3491,7 @@ msgstr "Visualitza"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Obri"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3537,12 +3536,10 @@ msgid "&View…"
 msgstr "Vi&sualitza…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "O&bri «%1»…"
+msgstr "O&bri…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4318,7 +4315,7 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "Este document té fitxers incrustats. <a href=\"okular:/embeddedfiles"
-"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer -> Fitxers "
+"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer → Fitxers "
 "incrustats»."
 
 #: part/part.cpp:493
@@ -4463,11 +4460,9 @@ msgid "Configure Color Modes…"
 msgstr "Configura els modes de color…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "Ajusta l'anotació"
+msgstr "Apega l'anotació"
 
 #: part/part.cpp:880
 #, kde-format
@@ -4633,7 +4628,7 @@ msgid ""
 "View -> Show Forms."
 msgstr ""
 "Este document té formularis. Cliqueu damunt del botó per a interactuar-hi, o "
-"utilitzeu «Visualitza -> Mostra els formularis»."
+"utilitzeu «Visualitza → Mostra els formularis»."
 
 #: part/part.cpp:1670
 #, kde-format
@@ -4843,7 +4838,7 @@ msgstr ""
 #: part/part.cpp:2702 part/part.cpp:2721 part/part.cpp:2773
 #, kde-format
 msgid "Save - Warning"
-msgstr "Guardar - Avís"
+msgstr "Guardar – Avís"
 
 #: part/part.cpp:2704
 #, kde-format

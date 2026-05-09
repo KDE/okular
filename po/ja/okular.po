@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
 "PO-Revision-Date: 2022-08-28 21:16-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2483,58 +2483,58 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr ""
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "色を反転"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, fuzzy, kde-format
 #| msgid "Change Paper Color"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "紙の色を変更"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, fuzzy, kde-format
 #| msgid "Change Dark & Light Colors"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "暗い色と明るい色を変更"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "白黒に変換(&B)"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "明るさを反転(&L)"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr ""
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr ""
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr ""
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
 "PO-Revision-Date: 2024-12-15 19:31+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -2510,62 +2510,62 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr ""
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Invert colors"
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "रंग उलटें"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, fuzzy, kde-format
 #| msgid "Change Paper Color"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "कागज़ का रंग बदलें"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, fuzzy, kde-format
 #| msgid "Change dark and light colors"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "गहरे तथा हल्के रंग बदलें"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, fuzzy, kde-format
 #| msgid "Convert to black and white"
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "श्वेत श्याम में बदलें"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, fuzzy, kde-format
 #| msgid "Invert Lightness"
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "उजालापन उलटें"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, fuzzy, kde-format
 #| msgid "Invert Luma (sRGB Linear)"
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "लूमा उलटें (एसआरजीबी लिनियर)"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, fuzzy, kde-format
 #| msgid "Invert Luma (Symmetric)"
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "लूमा उलटें (सममित)"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr ""
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"

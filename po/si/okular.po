@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -2578,60 +2578,60 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "සාමාන්‍ය අයිකන"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "නොපිට වර්ණ"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, fuzzy, kde-format
 #| msgid "Change Paper Color"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "පිටු වර්ණය වෙනස් කරන්න"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, fuzzy, kde-format
 #| msgid "Change Dark & Light Colors"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "තද හා මෘදෘ වර්ණ වෙනස් කරන්න"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, fuzzy, kde-format
 #| msgid "Convert to Black & White"
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "කළු සුදු බවට හරවන්න"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "නොපිට වර්ණ"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr ""
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr ""
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr ""
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"

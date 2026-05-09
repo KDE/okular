@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-08 00:42+0000\n"
+"POT-Creation-Date: 2026-05-09 00:41+0000\n"
 "PO-Revision-Date: 2020-10-15 14:19+0200\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -2481,63 +2481,63 @@ msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "Tavalised ikoonid"
 
-#: part/colormodemenu.cpp:41
+#: part/colormodemenu.cpp:42
 #, fuzzy, kde-format
 #| msgid "Invert Colors"
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "Värvid vahetatakse"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:43
 #, fuzzy, kde-format
 #| msgid "Change Paper Color"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Paberi värvi muutmine"
 
-#: part/colormodemenu.cpp:44
+#: part/colormodemenu.cpp:45
 #, fuzzy, kde-format
 #| msgid "Change Dark & Light Colors"
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Tumeda ja heleda värvi muutmine"
 
-#: part/colormodemenu.cpp:46
+#: part/colormodemenu.cpp:47
 #, fuzzy, kde-format
 #| msgid "Convert to Black & White"
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Teisendamine mustvalgeks"
 
-#: part/colormodemenu.cpp:49
+#: part/colormodemenu.cpp:50
 #, fuzzy, kde-format
 #| msgid "Invert Lightness"
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Heleduse inversioon"
 
-#: part/colormodemenu.cpp:52
+#: part/colormodemenu.cpp:53
 #, fuzzy, kde-format
 #| msgid "Invert Luma (sRGB Linear)"
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Luma (lineaarne sRGB) inversioon"
 
-#: part/colormodemenu.cpp:55
+#: part/colormodemenu.cpp:56
 #, fuzzy, kde-format
 #| msgid "Invert Luma (Symmetric)"
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Luma (sümmeetriline) inversioon"
 
-#: part/colormodemenu.cpp:58
+#: part/colormodemenu.cpp:59
 #, fuzzy, kde-format
 #| msgid "Shift Hue Positive"
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "Positiivne tooninihe"
 
-#: part/colormodemenu.cpp:61
+#: part/colormodemenu.cpp:62
 #, fuzzy, kde-format
 #| msgid "Shift Hue Negative"
 msgctxt "@item:inmenu color mode"

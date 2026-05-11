@@ -2,13 +2,13 @@
 # Copyright (C) 2004 Free Software Foundation, Inc.
 #
 # Ambalam <tamilpc@ambalam.com>, 2004.
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025, 2026 Kishore G <kishore96@gmail.com>
+# SPDX-FileCopyrightText: 2021-2026 Kishore G <kishore96@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-09 00:41+0000\n"
-"PO-Revision-Date: 2026-02-01 17:45+0530\n"
+"PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1678,15 +1678,14 @@ msgid "Add Bookmark"
 msgstr "நினைவுக்குறியை சேர்"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "பதிப்புரிமை"
+msgstr "நகலெடு"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "ஒட்டு"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -1712,12 +1711,10 @@ msgid "&Properties"
 msgstr "&பண்புகள்"
 
 #: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "'%1' தனை சேமி…"
+msgstr "'%1' தனை திற…"
 
 #: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
 #, kde-format
@@ -2913,11 +2910,10 @@ msgid "Open in continuous mode by default"
 msgstr "இயல்பாக தொடர்ச்சியான பயன்முறையில் திற"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "மாற்றங்களைக் கைவிட்டுத் தொடர்"
+msgstr "கடைசியாகப் பார்த்த பக்கத்திலிருந்து தொடர்"
 
 #: part/dlggeneral.cpp:195
 #, kde-format
@@ -3472,7 +3468,7 @@ msgstr "பார்"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "திற"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3517,12 +3513,10 @@ msgid "&View…"
 msgstr "காட்டு…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "'%1' தனை சேமி…"
+msgstr "திற…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4439,11 +4433,9 @@ msgid "Configure Color Modes…"
 msgstr "நிறப் பயன்முறைகளை அமை…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "குறிப்பின் அளவை மாற்று"
+msgstr "குறிப்பை ஒட்டு"
 
 #: part/part.cpp:880
 #, kde-format

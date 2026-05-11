@@ -1672,12 +1672,12 @@ msgstr "添加书签"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, kde-format
 msgid "Copy"
-msgstr ""
+msgstr "复制"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "粘贴"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -3435,7 +3435,7 @@ msgstr "查看"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "打开"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3483,7 +3483,7 @@ msgstr "视图(&V)…"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr ""
+msgstr "打开(&O)…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4387,7 +4387,7 @@ msgstr "配置颜色模式…"
 #: part/part.cpp:862 part/part.cpp:3222
 #, kde-format
 msgid "Paste Annotation"
-msgstr ""
+msgstr "粘贴批注"
 
 #: part/part.cpp:880
 #, kde-format

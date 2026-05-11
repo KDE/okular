@@ -341,7 +341,7 @@ public:
     QColor textSelectionColor() const;
 
     /**
-     * Adds a new @p annotation to the page.
+     * Adds a new @p annotation to the page with potential comments.
      */
     void addAnnotation(Annotation *annotation);
 

@@ -71,6 +71,7 @@ public:
 
     Okular::Annotation::Style m_style;
     Okular::Annotation::Window m_window;
+    Okular::Annotation *m_previousRevision = nullptr;
     QList<Okular::Annotation::Revision> m_revisions;
 
     Annotation::DisposeDataFunction m_disposeFunc;

@@ -132,6 +132,23 @@ void PagePrivate::imageRotationDone(RotationJob *job)
     }
 }
 
+void PagePrivate::addAnnotation(Annotation *annotation, bool isLastAnnotationChild)
+{
+    annotation->d_ptr->m_page = this;
+    m_page->m_annotations.append(annotation);
+
+    // Add an AnnotationObjectRect only if this is the last annotation child (or comment) to avoid to add this object at the same location many times
+    if (isLastAnnotationChild) {
+        AnnotationObjectRect *rect = new AnnotationObjectRect(annotation);
+
+        // Rotate the annotation on the page.
+        const QTransform matrix = rotationMatrix();
+        annotation->d_ptr->annotationTransform(matrix);
+
+        m_page->m_rects.append(rect);
+    }
+}
+
 QTransform PagePrivate::rotationMatrix() const
 {
     return Okular::buildRotationMatrix(m_rotation);
@@ -678,27 +695,37 @@ QColor Page::textSelectionColor() const
 
 void Page::addAnnotation(Annotation *annotation)
 {
-    // Generate uniqueName: okular-{UUID}
     if (annotation->uniqueName().isEmpty()) {
+        // Generate uniqueName: okular-{UUID}
         QString uniqueName = QStringLiteral("okular-") + QUuid::createUuid().toString();
         annotation->setUniqueName(uniqueName);
     }
-    annotation->d_ptr->m_page = d;
-    m_annotations.append(annotation);
+    int numberAnnotationChild = annotation->revisions().size();
+    d->addAnnotation(annotation, numberAnnotationChild == 0);
 
-    AnnotationObjectRect *rect = new AnnotationObjectRect(annotation);
-
-    // Rotate the annotation on the page.
-    const QTransform matrix = d->rotationMatrix();
-    annotation->d_ptr->annotationTransform(matrix);
-
-    m_rects.append(rect);
+    Annotation *parent = annotation;
+    for (auto &revision : annotation->revisions()) {
+        numberAnnotationChild--;
+        Annotation *child = revision.annotation();
+        if (child) {
+            child->setPreviousAnnotation(parent);
+            d->addAnnotation(child, numberAnnotationChild == 0);
+            parent = child;
+        }
+    }
 }
 
 bool Page::removeAnnotation(Annotation *annotation)
 {
     if (!d->m_doc->m_parent->canRemovePageAnnotation(annotation)) {
         return false;
+    }
+
+    Annotation *potentialParent = annotation->previousAnnotation();
+    for (Annotation *potentialChild : std::as_const(m_annotations)) {
+        if (potentialChild->previousAnnotation() == annotation) {
+            potentialChild->setPreviousAnnotation(potentialParent);
+        }
     }
 
     QList<Annotation *>::iterator aIt = m_annotations.begin();

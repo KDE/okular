@@ -615,6 +615,16 @@ public:
     const QList<Revision> &revisions() const;
 
     /**
+     * Sets the precedents @p annotation of the revision.
+     */
+    void setPreviousAnnotation(Annotation *annotation);
+
+    /**
+     * Returns the previous annotation if there is one.
+     */
+    Annotation *previousAnnotation();
+
+    /**
      * Sets the "native" @p id of the annotation.
      *
      * This is for use of the Generator, that can optionally store an

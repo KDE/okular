@@ -129,6 +129,11 @@ public:
      */
     void adoptGeneratedContents(PagePrivate *oldPage);
 
+    /**
+     * Adds a new @p annotation to the page. If @p isLastAnnotationChild is true, add a AnnotationObjectRect
+     */
+    void addAnnotation(Annotation *annotation, bool isLastAnnotationChild);
+
     /*
      * Tries to find an equivalent form field to oldField by looking into the rect, type and name
      */

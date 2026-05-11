@@ -17,17 +17,23 @@
 #include <QAbstractScrollArea>
 #include <QAction>
 #include <QApplication>
+#include <QBoxLayout>
 #include <QDebug>
 #include <QEvent>
 #include <QFont>
 #include <QFontInfo>
 #include <QFontMetrics>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLayout>
+#include <QList>
 #include <QMenu>
 #include <QPushButton>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QSizeGrip>
 #include <QStyle>
+#include <QTimer>
 #include <QToolButton>
 
 // local includes
@@ -60,15 +66,17 @@ class MovableTitle : public QWidget
     Q_OBJECT
 
 public:
-    explicit MovableTitle(AnnotWindow *parent)
+    explicit MovableTitle(AnnotWindow *parent, int numberPreviousAnnotation = 0)
         : QWidget(parent)
     {
+        countPreviousAnnotation = numberPreviousAnnotation;
+
+        // First zone: titleLabel + buttonClose
         QVBoxLayout *mainlay = new QVBoxLayout(this);
         mainlay->setContentsMargins(0, 0, 0, 0);
         mainlay->setSpacing(0);
         // close button row
         QHBoxLayout *buttonlay = new QHBoxLayout();
-        mainlay->addLayout(buttonlay);
         titleLabel = new QLabel(this);
         QFont f = titleLabel->font();
         f.setBold(true);
@@ -76,22 +84,57 @@ public:
         titleLabel->setCursor(Qt::SizeAllCursor);
         buttonlay->addWidget(titleLabel);
         dateLabel = new QLabel(this);
-        dateLabel->setAlignment(Qt::AlignTop | Qt::AlignRight);
-        f = dateLabel->font();
-        f.setPointSize(QFontInfo(f).pointSize() - 2);
-        dateLabel->setFont(f);
-        dateLabel->setCursor(Qt::SizeAllCursor);
         buttonlay->addWidget(dateLabel);
         CloseButton *close = new CloseButton(this);
         connect(close, &QAbstractButton::clicked, parent, &QWidget::close);
         buttonlay->addWidget(close);
-        // option button row
+
+        QScrollArea *scrollArea = new QScrollArea(this);
+        scrollArea->setWidgetResizable(true);
+        scrollArea->setFrameStyle(QFrame::NoFrame);
+        scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        QWidget *scrollContainer = new QWidget(scrollArea);
+        QVBoxLayout *scrollLayout = new QVBoxLayout(scrollContainer);
+        scrollLayout->setContentsMargins(0, 0, 0, 0);
+
+        for (qsizetype i = 0; i < numberPreviousAnnotation; i++) {
+            // For authorLabel
+            QLabel *newAuthorLabel = new QLabel(this);
+            newAuthorLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+            listPreviousAuthorAndDateLabel.append(newAuthorLabel);
+            scrollLayout->addWidget(newAuthorLabel);
+
+            // For contents
+            QLabel *newContentsLabel = new QLabel(this);
+            newContentsLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+            listPreviousContentLabel.append(newContentsLabel);
+            scrollLayout->addWidget(newContentsLabel);
+
+            // Add a horizontal black line after each comment
+            QFrame *line = new QFrame(scrollContainer);
+            line->setFrameShape(QFrame::HLine);
+            line->setFrameShadow(QFrame::Sunken);
+            line->setStyleSheet(QStringLiteral("color: rgba(0,0,0,0.1);"));
+            scrollLayout->addWidget(line);
+        }
+
+        scrollArea->setWidget(scrollContainer);
+
+        // Third zone: authorAndDateLabel (author name with date)
+        authorAndDateLabel = new QLabel(this);
+        authorAndDateLabel->setContentsMargins(0, 10, 0, 0);
+        authorAndDateLabel->setStyleSheet(QStringLiteral("font-weight: bold; color: black"));
+        authorAndDateLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        authorAndDateLabel->setCursor(Qt::SizeAllCursor);
+
+        // Last zone: Useful properties for editable text zone
+        QFrame *bottomFrame = new QFrame(this);
+        QVBoxLayout *bottomLayout = new QVBoxLayout(bottomFrame);
+        bottomLayout->setContentsMargins(0, 0, 0, 0);
+        bottomLayout->setSpacing(0);
+
         QHBoxLayout *optionlay = new QHBoxLayout();
-        mainlay->addLayout(optionlay);
-        authorLabel = new QLabel(this);
-        authorLabel->setCursor(Qt::SizeAllCursor);
-        authorLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        optionlay->addWidget(authorLabel);
+        optionlay->addWidget(authorAndDateLabel);
         optionButton = new QToolButton(this);
         QString opttext = i18n("Options");
         optionButton->setText(opttext);
@@ -115,18 +158,34 @@ public:
         latexlay->addSpacing(1);
         latexlay->addWidget(latexButton);
         latexlay->addSpacing(1);
-        mainlay->addLayout(latexlay);
         connect(latexButton, &QToolButton::clicked, parent, &AnnotWindow::renderLatex);
         connect(parent, &AnnotWindow::containsLatex, latexButton, &QWidget::setVisible);
 
+        bottomLayout->addLayout(optionlay);
+
+        // Adds all widgets and layouts with mainlay
+        // First zone
+        mainlay->addLayout(buttonlay);
+        // Second zone
+        if (numberPreviousAnnotation > 0) {
+            mainlay->addWidget(scrollArea);
+        }
+        // Third zone
+        mainlay->addWidget(authorAndDateLabel);
+        // Last zone
+        mainlay->addWidget(bottomFrame);
+        mainlay->addLayout(latexlay);
+
+        setScrollArea(scrollArea);
+
+        // Event filters
         titleLabel->installEventFilter(this);
-        dateLabel->installEventFilter(this);
-        authorLabel->installEventFilter(this);
+        authorAndDateLabel->installEventFilter(this);
     }
 
     bool eventFilter(QObject *watched, QEvent *event) override
     {
-        if (watched != titleLabel && watched != authorLabel && watched != dateLabel) {
+        if (watched != titleLabel && watched != authorAndDateLabel) {
             return false;
         }
 
@@ -156,19 +215,25 @@ public:
         return true;
     }
 
+    int numberPreviousAnnotation()
+    {
+        return countPreviousAnnotation;
+    }
+
     void setTitle(const QString &title)
     {
         titleLabel->setText(QStringLiteral(" ") + title);
     }
 
-    void setDate(const QDateTime &dt)
+    void setAuthorAndDate(const QString &author, const QDateTime &dt)
     {
-        dateLabel->setText(QLocale().toString(dt.toTimeSpec(Qt::LocalTime), QLocale::ShortFormat) + QLatin1Char(' '));
-    }
+        QString auth;
+        (author.isNull() || author.isEmpty()) ? auth = i18n("Unknown author") : auth = author;
 
-    void setAuthor(const QString &author)
-    {
-        authorLabel->setText(QStringLiteral(" ") + author);
+        QString dateTime;
+        dt.isValid() ? dateTime = QLocale().toString(dt.toTimeSpec(Qt::LocalTime), QLocale::ShortFormat) : dateTime = i18n("No date recognized");
+
+        authorAndDateLabel->setText(QStringLiteral(" %1 (%2)").arg(auth, dateTime));
     }
 
     void connectOptionButton(QObject *recv, const char *method)
@@ -181,13 +246,47 @@ public:
         latexButton->setChecked(false);
     }
 
+    void setAuthorAndDateAtList(int index, const QString &author, const QDateTime &dt)
+    {
+        if (index < listPreviousAuthorAndDateLabel.size()) {
+            QString auth;
+            (author.isNull() || author.isEmpty()) ? auth = i18n("Unknown author") : auth = author;
+
+            QString dateTime;
+            dt.isValid() ? dateTime = QLocale().toString(dt.toTimeSpec(Qt::LocalTime), QLocale::ShortFormat) : dateTime = i18n("No date recognized");
+
+            listPreviousAuthorAndDateLabel[index]->setText(QStringLiteral(" > %1 (%2)").arg(auth, dateTime));
+        }
+    }
+
+    void setContentAtList(int index, const QString &content)
+    {
+        if (index < listPreviousContentLabel.size()) {
+            listPreviousContentLabel[index]->setText(content);
+        }
+    }
+
+    void setScrollArea(QScrollArea *scrollArea)
+    {
+        scrollAr = scrollArea;
+    }
+
+    QScrollArea *scrollArea()
+    {
+        return scrollAr;
+    }
+
 private:
     QLabel *titleLabel;
+    int countPreviousAnnotation = 0;
+    QList<QLabel *> listPreviousAuthorAndDateLabel;
+    QList<QLabel *> listPreviousContentLabel;
     QLabel *dateLabel;
-    QLabel *authorLabel;
+    QLabel *authorAndDateLabel;
     QPoint mousePressPos;
     QToolButton *optionButton;
     QToolButton *latexButton;
+    QScrollArea *scrollAr = nullptr;
 };
 
 // Qt::SubWindow is needed to make QSizeGrip work
@@ -204,6 +303,19 @@ AnnotWindow::AnnotWindow(QWidget *parent, QRect initialViewportBounds, Okular::A
     setObjectName(QStringLiteral("AnnotWindow"));
 
     const bool canEditAnnotation = m_document->canModifyPageAnnotation(annot);
+
+    int countNumberPreviousAnnotation = 0;
+
+    Okular::Annotation *currentAnnot = annot;
+    while (currentAnnot) {
+        Okular::Annotation *child = currentAnnot->previousAnnotation();
+        if (child) {
+            countNumberPreviousAnnotation++;
+            currentAnnot = child;
+        } else {
+            break;
+        }
+    }
 
     textEdit = new KTextEdit(this);
     textEdit->setAcceptRichText(false);
@@ -226,7 +338,7 @@ AnnotWindow::AnnotWindow(QWidget *parent, QRect initialViewportBounds, Okular::A
     QVBoxLayout *mainlay = new QVBoxLayout(this);
     mainlay->setContentsMargins(2, 2, 2, 2);
     mainlay->setSpacing(0);
-    m_title = new MovableTitle(this);
+    m_title = new MovableTitle(this, countNumberPreviousAnnotation);
     mainlay->addWidget(m_title);
     mainlay->addWidget(textEdit);
     QHBoxLayout *lowerlay = new QHBoxLayout();
@@ -249,6 +361,21 @@ AnnotWindow::AnnotWindow(QWidget *parent, QRect initialViewportBounds, Okular::A
     setGeometry(QRect(initialPosition, defaultSize));
 
     reloadInfo();
+
+    QScrollArea *scrollArea = m_title->scrollArea();
+    if (scrollArea) {
+        // Adapt the size of the scrollArea between 5 and 125px that depends of the content height size.
+        if (scrollArea->widget() && scrollArea->widget()->layout()) {
+            int contentHeight = scrollArea->widget()->layout()->sizeHint().height();
+            int finalHeight = qBound(5, contentHeight + 5, 135);
+            scrollArea->setFixedHeight(finalHeight);
+        }
+
+        // Put the scrollbar at the lowest position (to show firstly the most recent comments)
+        if (scrollArea->verticalScrollBar()) {
+            QTimer::singleShot(20, this, [scrollArea]() { scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->maximum()); });
+        }
+    }
 }
 
 AnnotWindow::~AnnotWindow()
@@ -286,8 +413,25 @@ void AnnotWindow::reloadInfo()
         pl.setColor(QPalette::Base, m_color);
         textEdit->setPalette(pl);
     }
-    m_title->setAuthor(m_annot->author());
-    m_title->setDate(m_annot->modificationDate());
+
+    Okular::Annotation *parent = m_annot;
+    Okular::Annotation *child = nullptr;
+    int count = m_title->numberPreviousAnnotation() - 1;
+
+    while (parent) {
+        child = parent->previousAnnotation();
+        if (child) {
+            m_title->setAuthorAndDateAtList(count, child->author(), child->modificationDate());
+            m_title->setContentAtList(count, child->contents());
+            parent = child;
+        } else {
+            break;
+        }
+
+        count--;
+    }
+
+    m_title->setAuthorAndDate(m_annot->author(), m_annot->modificationDate());
 }
 
 int AnnotWindow::pageNumber() const

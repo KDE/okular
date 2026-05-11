@@ -1904,8 +1904,10 @@ void PartTest::testAnnotWindow()
     auto widget = win2->window()->childAt(win2->mapTo(win2->window(), QPoint(10, 10)));
     QTest::mouseMove(win2->window(), win2->mapTo(win2->window(), QPoint(10, 10)));
     QTest::mouseClick(widget, Qt::LeftButton, Qt::NoModifier, widget->mapFrom(win2, QPoint(10, 10)));
-    QCOMPARE(win1->visibleRegion().rectCount(), 3);
-    QCOMPARE(win2->visibleRegion().rectCount(), 4);
+    QCOMPARE(win1->visibleRegion().boundingRect().size().width(), 300);
+    QCOMPARE(win1->visibleRegion().boundingRect().size().height(), 50);
+    QCOMPARE(win2->visibleRegion().boundingRect().size().width(), 300);
+    QCOMPARE(win2->visibleRegion().boundingRect().size().height(), 300);
 }
 
 // Helper for testAdditionalActionTriggers

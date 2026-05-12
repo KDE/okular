@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"POT-Creation-Date: 2026-05-12 00:42+0000\n"
 "PO-Revision-Date: 2026-03-20 18:28+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
@@ -2215,17 +2215,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:53
+#: part/annotwindow.cpp:59
 #, kde-format
 msgid "Close this note"
 msgstr "Dún an nóta seo"
 
-#: part/annotwindow.cpp:96 part/findbar.cpp:63
+#: part/annotwindow.cpp:139 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Roghanna"
 
-#: part/annotwindow.cpp:107
+#: part/annotwindow.cpp:150
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2234,28 +2234,39 @@ msgstr ""
 "D’fhéadfadh cód LaTeX a bheith sa nóta seo.\n"
 "Cliceáil anseo chun é a rindreáil."
 
-#: part/annotwindow.cpp:439
+#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#, fuzzy, kde-format
+#| msgid "Unknown font"
+msgid "Unknown author"
+msgstr "Cló anaithnid"
+
+#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#, kde-format
+msgid "No date recognized"
+msgstr ""
+
+#: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Ní féidir an comhad inrite LaTeX a aimsiú."
 
-#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Theip ar rindreáil LaTeX"
 
-#: part/annotwindow.cpp:444
+#: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Ní féidir an comhad inrite dvipng a aimsiú."
 
-#: part/annotwindow.cpp:449
+#: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Tharla fadhb agus an t-ordú 'latex' á fhorghníomhú."
 
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Tharla fadhb le linn fhorghníomhú an ordaithe 'dvipng'."

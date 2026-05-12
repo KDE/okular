@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"POT-Creation-Date: 2026-05-12 00:42+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -2244,17 +2244,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:53
+#: part/annotwindow.cpp:59
 #, kde-format
 msgid "Close this note"
 msgstr "Закрыць гэтую нататку"
 
-#: part/annotwindow.cpp:96 part/findbar.cpp:63
+#: part/annotwindow.cpp:139 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Параметры"
 
-#: part/annotwindow.cpp:107
+#: part/annotwindow.cpp:150
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2263,28 +2263,39 @@ msgstr ""
 "Гэтая анатацыя можа змяшчаць код LaTeX.\n"
 "Пстрыкніце, каб апрацаваць."
 
-#: part/annotwindow.cpp:439
+#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#, fuzzy, kde-format
+#| msgid "Unknown font"
+msgid "Unknown author"
+msgstr "Невядомы шрыфт"
+
+#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#, kde-format
+msgid "No date recognized"
+msgstr ""
+
+#: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Не ўдалося знайсці выканальны файл latex."
 
-#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Не ўдалося апрацаваць з дапамогай LaTeX"
 
-#: part/annotwindow.cpp:444
+#: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Не ўдалося знайсці выканальны файл dvipng."
 
-#: part/annotwindow.cpp:449
+#: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Падчас выканання каманды \"latex\" паўстала праблема."
 
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Падчас выканання каманды \"dvipng\" паўстала праблема."

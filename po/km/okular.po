@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"POT-Creation-Date: 2026-05-12 00:42+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -2354,17 +2354,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:53
+#: part/annotwindow.cpp:59
 #, kde-format
 msgid "Close this note"
 msgstr "បិទ​ចំណាំ​នេះ"
 
-#: part/annotwindow.cpp:96 part/findbar.cpp:63
+#: part/annotwindow.cpp:139 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "ជម្រើស"
 
-#: part/annotwindow.cpp:107
+#: part/annotwindow.cpp:150
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2373,28 +2373,39 @@ msgstr ""
 "ការ​ពន្យល់​នេះ​អាច​មាន​កូដ​ LaTeX ។\n"
 "ចុច​ទីនេះ ដើម្បី​បង្ហាញ ។"
 
-#: part/annotwindow.cpp:439
+#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#, fuzzy, kde-format
+#| msgid "Unknown font"
+msgid "Unknown author"
+msgstr "មិន​ស្គាល់​ពុម្ពអក្សរ"
+
+#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#, kde-format
+msgid "No date recognized"
+msgstr ""
+
+#: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "រក​មិន​ឃើញ latex ដែល​អាច​ប្រតិបត្តិ​បាន​ទេ ។"
 
-#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "បាន​បរាជ័យ​ក្នុងកា​របង្ហាញ LaTeX"
 
-#: part/annotwindow.cpp:444
+#: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "រក​មិន​ឃើញ​ dvipng ដែល​អាច​ប្រតិបត្តិ​បាន ។"
 
-#: part/annotwindow.cpp:449
+#: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "បញ្ហា​មួយ​បានកើត​ឡើង​ក្នុង​អំឡុង​ពេល​ប្រតិបត្តិ​ពាក្យ​បញ្ជា 'latex' ។"
 
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "បញ្ហា​មួយ​បានកើត​ឡើង​ក្នុង​អំឡុង​ពេល​ប្រតិបត្តិ​ពាក្យ​បញ្ជា 'dvipng' ។"

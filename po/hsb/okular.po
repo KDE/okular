@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"POT-Creation-Date: 2026-05-12 00:42+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -2248,17 +2248,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr ""
 
-#: part/annotwindow.cpp:53
+#: part/annotwindow.cpp:59
 #, kde-format
 msgid "Close this note"
 msgstr "Tute přispomnjenje začinić"
 
-#: part/annotwindow.cpp:96 part/findbar.cpp:63
+#: part/annotwindow.cpp:139 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Opcije"
 
-#: part/annotwindow.cpp:107
+#: part/annotwindow.cpp:150
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2267,28 +2267,40 @@ msgstr ""
 "Tute přispomnjenje snano LaTeX-kod wobsahuje.\n"
 "Klikńće tu za kompilowanje."
 
-#: part/annotwindow.cpp:439
+#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#, fuzzy, kde-format
+#| msgctxt "Unknown date"
+#| msgid "Unknown"
+msgid "Unknown author"
+msgstr "Njeznaty"
+
+#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#, kde-format
+msgid "No date recognized"
+msgstr ""
+
+#: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Njemóžu LaTeX-program namakać."
 
-#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Kompilowanje z LaTeXom zwrěšćene."
 
-#: part/annotwindow.cpp:444
+#: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Njemóžu dvipng-program namakać."
 
-#: part/annotwindow.cpp:449
+#: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Problem je so stał při wuwjedźenju přikaza 'latex'."
 
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Problem je so stał při wuwjedźenju přikaza 'dvipng'."

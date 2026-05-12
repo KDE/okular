@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-09 00:41+0000\n"
+"POT-Creation-Date: 2026-05-12 00:42+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -2242,17 +2242,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:53
+#: part/annotwindow.cpp:59
 #, kde-format
 msgid "Close this note"
 msgstr "Fermi ĉi noton"
 
-#: part/annotwindow.cpp:96 part/findbar.cpp:63
+#: part/annotwindow.cpp:139 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Elektebloj"
 
-#: part/annotwindow.cpp:107
+#: part/annotwindow.cpp:150
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2261,28 +2261,39 @@ msgstr ""
 "Ĉi tiu komentario povas enhavi LaTeX-kodon.\n"
 "Alklaku ĉi tie por bildigi."
 
-#: part/annotwindow.cpp:439
+#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#, fuzzy, kde-format
+#| msgid "Unknown font"
+msgid "Unknown author"
+msgstr "Nekonata tiparo"
+
+#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#, kde-format
+msgid "No date recognized"
+msgstr ""
+
+#: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Ne povas trovi lateksan plenumeblan."
 
-#: part/annotwindow.cpp:439 part/annotwindow.cpp:444 part/annotwindow.cpp:449
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX-bildado malsukcesis"
 
-#: part/annotwindow.cpp:444
+#: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Ne povas trovi dvipng ruleblan."
 
-#: part/annotwindow.cpp:449
+#: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Problemo okazis dum la efektivigo de la komando 'latekso'."
 
-#: part/annotwindow.cpp:454
+#: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Problemo okazis dum la efektivigo de la komando 'dvipng'."

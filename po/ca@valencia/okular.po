@@ -121,7 +121,7 @@ msgstr "Gràfics de les anotacions"
 #: aboutdata.h:37
 #, kde-format
 msgid "Jiri Baum - NICTA"
-msgstr "Jiri Baum - NICTA"
+msgstr "Jiri Baum – NICTA"
 
 #: aboutdata.h:37
 #, kde-format
@@ -2778,9 +2778,9 @@ msgstr ""
 ">\n"
 "Podeu afegir les variables següents de substitució:\n"
 "<ul>\n"
-"  <li>%f - el nom del fitxer</li>\n"
-"  <li>%l - la línia del fitxer a on anar</li>\n"
-"  <li>%c - la columna del fitxer a on anar</li>\n"
+"  <li>%f – el nom del fitxer</li>\n"
+"  <li>%l – la línia del fitxer a on anar</li>\n"
+"  <li>%c – la columna del fitxer a on anar</li>\n"
 "</ul>\n"
 "Si no s'especifica %f, llavors el nom del fitxer s'afig a l'ordre "
 "especificada."
@@ -4293,7 +4293,7 @@ msgid ""
 "here to see them</a> or go to File -> Embedded Files."
 msgstr ""
 "Este document té fitxers incrustats. <a href=\"okular:/embeddedfiles"
-"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer -> Fitxers "
+"\">Cliqueu ací per a veure'ls</a> o aneu fins a «Fitxer → Fitxers "
 "incrustats»."
 
 #: part/part.cpp:488
@@ -4601,7 +4601,7 @@ msgid ""
 "View -> Show Forms."
 msgstr ""
 "Este document té formularis. Cliqueu damunt del botó per a interactuar-hi, o "
-"utilitzeu «Visualitza -> Mostra els formularis»."
+"utilitzeu «Visualitza → Mostra els formularis»."
 
 #: part/part.cpp:1658
 #, kde-format
@@ -4811,7 +4811,7 @@ msgstr ""
 #: part/part.cpp:2684 part/part.cpp:2703 part/part.cpp:2755
 #, kde-format
 msgid "Save - Warning"
-msgstr "Guardar - Avís"
+msgstr "Guardar – Avís"
 
 #: part/part.cpp:2686
 #, kde-format

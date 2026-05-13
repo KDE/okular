@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-05-08 11:37+0200\n"
+"PO-Revision-Date: 2026-05-12 08:33+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2237,15 +2237,14 @@ msgstr ""
 "Cliqueu ací per a renderitzar."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Lletra desconeguda"
+msgstr "Autoria desconeguda"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "No s'ha reconegut la data"
 
 #: part/annotwindow.cpp:583
 #, kde-format
@@ -2600,7 +2599,7 @@ msgstr "Convertix a blanc i negre"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, accessibility page"
 msgid "Invert lightness"
-msgstr "Invertix la lluminositat"
+msgstr "Invertix la claredat"
 
 #: part/dlgaccessibility.cpp:65
 #, kde-format

@@ -2211,10 +2211,9 @@ msgstr ""
 "点击此处渲染。"
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "未知字体"
+msgstr ""
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format

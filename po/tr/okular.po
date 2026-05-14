@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-05-08 13:15+0300\n"
+"PO-Revision-Date: 2026-05-13 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -35,7 +35,7 @@ msgstr ""
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Serdar SOYTETİR, Görkem ÇETİN, Kaya Oğuz, Ayhan Yalçınsoy, Volkan GEZER, "
+"Serdar SOYTETİR, Görkem ÇETİN, Kaya OĞUZ, Ayhan YALÇINSOY, Volkan GEZER, "
 "Emir SARI"
 
 #, kde-format
@@ -2242,15 +2242,14 @@ msgstr ""
 "Sunmak için buraya tıklayın."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Bilinmeyen yazıtipi"
+msgstr "Bilinmeyen yazar"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Tanımlanabilen tarih yok"
 
 #: part/annotwindow.cpp:583
 #, kde-format

@@ -9,6 +9,4 @@ find_dependency(KF6CoreAddons @KF6_REQUIRED_VERSION@)
 find_dependency(KF6Config @KF6_REQUIRED_VERSION@)
 find_dependency(KF6XmlGui @KF6_REQUIRED_VERSION@)
 
-@PACKAGE_SETUP_AUTOMOC_VARIABLES@
-
 include("${CMAKE_CURRENT_LIST_DIR}/Okular6Targets.cmake")

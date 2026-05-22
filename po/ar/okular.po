@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-03-24 10:58+0400\n"
+"PO-Revision-Date: 2026-05-21 11:36+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1679,15 +1679,14 @@ msgid "Add Bookmark"
 msgstr "أضف علامة"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "حقوق النسخ"
+msgstr "انسخ"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "ألصق"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2222,15 +2221,14 @@ msgstr ""
 "اضغط هنا لتصييرها."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "خط مجهول"
+msgstr "مؤلف مجهول"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "لم يتعرف على التاريخ"
 
 #: part/annotwindow.cpp:583
 #, kde-format
@@ -3484,7 +3482,7 @@ msgstr "اعرض"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "افتح"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3529,12 +3527,10 @@ msgid "&View…"
 msgstr "ا&عرض…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "ا&فتح '%1'…"
+msgstr "ا&فتح…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4453,11 +4449,9 @@ msgid "Configure Color Modes…"
 msgstr "اضبط أنماط الألوان…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "عدل شرح"
+msgstr "ألصق التعليق التوضيحي"
 
 #: part/part.cpp:880
 #, kde-format

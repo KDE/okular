@@ -469,9 +469,6 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
 
     connect(document, &Okular::Document::processMovieAction, this, &PageView::slotProcessMovieAction);
     connect(document, &Okular::Document::processRenditionAction, this, &PageView::slotProcessRenditionAction);
-
-    // schedule the welcome message
-    QMetaObject::invokeMethod(this, "slotShowWelcome", Qt::QueuedConnection);
 }
 
 PageView::~PageView()
@@ -1313,11 +1310,6 @@ void PageView::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
         resizeContentArea(QSize(0, 0));
         viewport()->update(); // when there is no change to the scrollbars, no repaint would
                               // be done and the old document would still be shown
-    }
-
-    // OSD (Message balloons) to display pages
-    if (documentChanged && pageSet.count() > 0) {
-        d->messageWindow->display(i18np(" Loaded a one-page document.", " Loaded a %1-page document.", pageSet.count()), QString(), PageViewMessage::Info, 4000);
     }
 
     updateActionState(haspages, hasformwidgets);
@@ -2984,23 +2976,13 @@ void PageView::mouseReleaseEvent(QMouseEvent *e)
                     if (cb->supportsSelection()) {
                         cb->setPixmap(copyPix, QClipboard::Selection);
                     }
-                    d->messageWindow->display(i18n("Image [%1 × %2] copied to clipboard.", copyPix.width(), copyPix.height()));
                 } else if (choice == imageToFile) {
                     // [3] save pixmap to file
                     QString fileName = QFileDialog::getSaveFileName(this, i18n("Save file"), QString(), i18n("Images (*.png *.jpeg)"));
                     if (fileName.isEmpty()) {
                         d->messageWindow->display(i18n("File not saved."), QString(), PageViewMessage::Warning);
                     } else {
-                        QMimeDatabase db;
-                        QMimeType mime = db.mimeTypeForUrl(QUrl::fromLocalFile(fileName));
-                        QString type;
-                        if (!mime.isDefault()) {
-                            type = QStringLiteral("PNG");
-                        } else {
-                            type = mime.name().section(QLatin1Char('/'), -1).toUpper();
-                        }
-                        copyPix.save(fileName, qPrintable(type));
-                        d->messageWindow->display(i18n("Image [%1 × %2] saved to %3 file.", copyPix.width(), copyPix.height(), type));
+                        copyPix.save(fileName);
                     }
                 }
             }
@@ -5167,12 +5149,6 @@ void PageView::slotDragScroll()
     scrollTo(horizontalScrollBar()->value() + d->dragScrollVector.x(), verticalScrollBar()->value() + d->dragScrollVector.y());
     QPoint p = contentAreaPosition() + viewport()->mapFromGlobal(QCursor::pos());
     updateSelection(p);
-}
-
-void PageView::slotShowWelcome()
-{
-    // show initial welcome text
-    d->messageWindow->display(i18n("Welcome"), QString(), PageViewMessage::Info, 2000);
 }
 
 void PageView::slotShowSizeAllCursor()

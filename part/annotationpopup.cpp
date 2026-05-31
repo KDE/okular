@@ -445,3 +445,5 @@ void AnnotationPopup::doRemoveAnnotationBookmark(AnnotPagePair pair)
         mDocument->bookmarkManager()->removeBookmark(vp);
     }
 }
+
+#include "moc_annotationpopup.cpp"

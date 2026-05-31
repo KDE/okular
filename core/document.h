@@ -11,7 +11,9 @@
 #ifndef _OKULAR_DOCUMENT_H_
 #define _OKULAR_DOCUMENT_H_
 
+#include "action.h"
 #include "area.h"
+#include "fontinfo.h"
 #include "global.h"
 #include "okularcore_export.h"
 #include "pagesize.h"
@@ -45,14 +47,12 @@ class DocumentSynopsis;
 class DocumentViewport;
 class EmbeddedFile;
 class ExportFormat;
-class FontInfo;
 class FormField;
 class FormFieldText;
 class FormFieldButton;
 class FormFieldChoice;
 class Generator;
 class Action;
-class MovieAction;
 class Page;
 class PixmapRequest;
 class RenditionAction;

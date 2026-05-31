@@ -12,6 +12,7 @@
 #include <QPair>
 #include <QPoint>
 
+#include "core/annotations.h"
 #include "core/area.h"
 #include "okularpart_export.h"
 
@@ -19,7 +20,6 @@ class QMenu;
 
 namespace Okular
 {
-class Annotation;
 class Document;
 class DocumentViewport;
 }

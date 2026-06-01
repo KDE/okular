@@ -108,6 +108,12 @@ QString CertificateInfo::issuerInfo(EntityInfoKey key, EmptyString empty) const
         return handleEmpty(d->issuerInfo.emailAddress, empty);
     case EntityInfoKey::Organization:
         return handleEmpty(d->issuerInfo.organization, empty);
+    case EntityInfoKey::CommonNameOrEmail:
+        if (d->issuerInfo.commonName.isEmpty()) {
+            return handleEmpty(d->issuerInfo.emailAddress, empty);
+        }
+        return d->issuerInfo.commonName;
+
     }
     return QString();
 }
@@ -127,6 +133,8 @@ void CertificateInfo::setIssuerInfo(EntityInfoKey key, const QString &value)
     case EntityInfoKey::Organization:
         d->issuerInfo.organization = value;
         return;
+    case EntityInfoKey::CommonNameOrEmail:
+        return;
     }
 }
 
@@ -141,6 +149,11 @@ QString CertificateInfo::subjectInfo(EntityInfoKey key, EmptyString empty) const
         return handleEmpty(d->subjectInfo.emailAddress, empty);
     case EntityInfoKey::Organization:
         return handleEmpty(d->subjectInfo.organization, empty);
+    case EntityInfoKey::CommonNameOrEmail:
+        if (d->subjectInfo.commonName.isEmpty()) {
+            return handleEmpty(d->subjectInfo.emailAddress, empty);
+        }
+        return d->subjectInfo.commonName;
     }
     return QString();
 }
@@ -159,6 +172,8 @@ void CertificateInfo::setSubjectInfo(EntityInfoKey key, const QString &value)
         return;
     case EntityInfoKey::Organization:
         d->subjectInfo.organization = value;
+        return;
+    case EntityInfoKey::CommonNameOrEmail:
         return;
     }
 }

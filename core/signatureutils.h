@@ -65,6 +65,8 @@ public:
         DistinguishedName,
         EmailAddress,
         Organization,
+        /// fallback helper to give CommonName if exists, and otherwise Email \since 26.08
+        CommonNameOrEmail
     };
     /**
      * How should certain empty strings be treated

@@ -5743,7 +5743,7 @@ PageView::FinishSigningResult PageView::finishSigning()
 
     Okular::NewSignatureData data;
     data.setCertNickname(d->signingInfo.certificate->nickName());
-    data.setCertSubjectCommonName(d->signingInfo.certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
+    data.setCertSubjectCommonName(d->signingInfo.certificate->subjectInfo(Okular::CertificateInfo::CommonNameOrEmail, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
     data.setPassword(d->signingInfo.certificatePassword);
     data.setDocumentPassword(d->signingInfo.documentPassword);
     data.setReason(d->signingInfo.reason);

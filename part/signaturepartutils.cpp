@@ -277,7 +277,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
 
     Okular::NewSignatureData data;
     data.setCertNickname(signingInfo->certificate->nickName());
-    data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
+    data.setCertSubjectCommonName(signingInfo->certificate->subjectInfo(Okular::CertificateInfo::CommonNameOrEmail, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
     data.setPassword(signingInfo->certificatePassword);
     data.setDocumentPassword(signingInfo->documentPassword);
     data.setReason(signingInfo->reason);

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-04-09 10:19-0400\n"
+"PO-Revision-Date: 2026-06-01 16:30-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
@@ -61,7 +61,7 @@ msgstr "Pino Toscano"
 #: aboutdata.h:31
 #, kde-format
 msgid "Former maintainer"
-msgstr "سابىق مەسئۇل كىشى"
+msgstr "سابىق ئاسرىغۇچى"
 
 #: aboutdata.h:32
 #, kde-format
@@ -256,7 +256,7 @@ msgid ""
 "<qt>More than one backend found for the MIME type:<br /><b>%1</b> (%2).<br /"
 "><br />Please select which one to use:</qt>"
 msgstr ""
-"نۆۋەتتە كۆپ خىل <qt>MIME تىپىنى قوللايدىغان:<br /><b>%1</b> (%2) مەۋجۇت.<br /"
+"نۆۋەتتە كۆپ خىل <qt>mime تۈرىنى قوللايدىغان:<br /><b>%1</b> (%2) مەۋجۇت.<br /"
 "><br />قايسىسىنى ئىشلىتىدىغانلىقىڭىزنى تاللاڭ:</qt>"
 
 #: core/document.cpp:200
@@ -388,7 +388,7 @@ msgstr "بەتنىڭ بېسىش چوڭلۇقى ئىناۋەتسىز"
 #: core/document.cpp:5493 part/part.cpp:1167
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
-msgstr "‹%1› نى ئاچالمىدى. ھۆججەت مەۋجۇت ئەمەس"
+msgstr "«%1» نى ئاچالمىدى. ھۆججەت مەۋجۇت ئەمەس"
 
 #: core/document.cpp:6002
 #, kde-format
@@ -398,7 +398,7 @@ msgstr "ماۋزۇ"
 #: core/document.cpp:6005
 #, kde-format
 msgid "Subject"
-msgstr "تېما"
+msgstr "ماۋزۇ"
 
 #: core/document.cpp:6008
 #, kde-format
@@ -428,7 +428,7 @@ msgstr "نەشر ھوقۇقى"
 #: core/document.cpp:6023
 #, kde-format
 msgid "Pages"
-msgstr "بەتلەر"
+msgstr "بەت"
 
 #: core/document.cpp:6026
 #, kde-format
@@ -453,7 +453,7 @@ msgstr "كاتېگورىيە"
 #: core/document.cpp:6038
 #, kde-format
 msgid "Keywords"
-msgstr "ھالقىلىق سۆزلەر"
+msgstr "ئاچقۇچلۇق سۆز"
 
 #: core/document.cpp:6041
 #, kde-format
@@ -669,7 +669,7 @@ msgstr "توشىدىغان ۋاقىت"
 #, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
-msgstr "تېما"
+msgstr "ماۋزۇ"
 
 #: gui/certificatemodel.cpp:51
 #, kde-format
@@ -1680,15 +1680,14 @@ msgid "Add Bookmark"
 msgstr "خەتكۈش قوش"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "نەشر ھوقۇقى"
+msgstr "كۆچۈر"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "چاپلا"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -1956,7 +1955,7 @@ msgstr "ئەسلى پېتى"
 #: part/annotationwidgets.cpp:416
 #, kde-format
 msgid "Confidential"
-msgstr "مەخپىي"
+msgstr "قەتئىي مەخپىي"
 
 #: part/annotationwidgets.cpp:417
 #, kde-format
@@ -2223,10 +2222,9 @@ msgstr ""
 "بۇ جاي چېكىلسە شەكىللەندۈرىدۇ."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "يوچۇن خەت نۇسخا"
+msgstr "نامەلۇم يازغۇچى"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
@@ -2299,7 +2297,7 @@ msgstr "ھەممىنى ياي"
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3195
 #, kde-format
 msgid "Collapse All"
-msgstr "ھەممىنى قاتلا"
+msgstr "ھەممىنى يىغ"
 
 #: part/bookmarklist.cpp:263
 #, kde-format
@@ -3263,7 +3261,7 @@ msgstr "ئېرىت"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Fade"
-msgstr "ئاقارت"
+msgstr "سۇسلاشتۇر"
 
 #: part/dlgpresentation.cpp:109
 #, kde-format
@@ -3473,7 +3471,7 @@ msgstr "كۆرۈنۈش"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "ئاچ"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3518,12 +3516,10 @@ msgid "&View…"
 msgstr "كۆرۈنۈش(&V)…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "«%1» نى ئاچ…"
+msgstr "ئاچ(&O)…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3650,7 +3646,7 @@ msgstr "نىسبەت"
 #: part/pageview.cpp:553
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "100% كە چوڭايت"
+msgstr "100% كە توغرىلا"
 
 #: part/pageview.cpp:564
 #, kde-format
@@ -4437,11 +4433,9 @@ msgid "Configure Color Modes…"
 msgstr "رەڭ ھالىتىنى سەپلە…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "ئىزاھاتنى تەڭشە"
+msgstr ""
 
 #: part/part.cpp:880
 #, kde-format
@@ -5070,7 +5064,7 @@ msgstr "خەتكۈش يوق"
 #: part/part.cpp:3920
 #, kde-format
 msgid "There was a problem sharing the document: %1"
-msgstr "پۈتۈكنى ھەمبەھىرلەشتە مەسىلىسى كۆرۈلگەن: %1"
+msgstr "پۈتۈكنى ھەمبەھىرلەشتە مەسىلە كۆرۈلگەن: %1"
 
 #: part/part.cpp:3920 part/part.cpp:3926
 #, kde-format

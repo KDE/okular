@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-02-25 10:44+0000\n"
+"PO-Revision-Date: 2026-06-01 16:46+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -1690,15 +1690,14 @@ msgid "Add Bookmark"
 msgstr "Setja bókamerki"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Höfundarréttur"
+msgstr "Afrita"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Líma"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2232,15 +2231,14 @@ msgstr ""
 "Smelltu hér til að myndgera."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Óþekkt letur"
+msgstr "Óþekktur höfundur"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Engin gögn þekktust"
 
 #: part/annotwindow.cpp:583
 #, kde-format
@@ -3481,7 +3479,7 @@ msgstr "Skoða"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Opna"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3526,12 +3524,10 @@ msgid "&View…"
 msgstr "S&koða…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "&Opna '%1'…"
+msgstr "&Opna…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4446,11 +4442,9 @@ msgid "Configure Color Modes…"
 msgstr "Grunnstilla litahami…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "laga glósu"
+msgstr "Líma glósu"
 
 #: part/part.cpp:880
 #, kde-format

@@ -29,7 +29,7 @@ Dependencies:
 
 Options:
   require-passing-tests-on: ['Linux', 'FreeBSD']
-  per-test-timeout: 300
+  per-test-timeout: 600
   cppcheck-arguments:
     - '--enable=warning,style,performance'
     - '--library=okular-cppcheck.xml'

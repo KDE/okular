@@ -19,7 +19,6 @@ class Document;
 }
 
 class MiniBar;
-class HoverButton;
 class QIntValidator;
 class QLabel;
 class QToolBar;
@@ -140,9 +139,9 @@ private:
     PageNumberEdit *m_pageNumberEdit;
     PageLabelEdit *m_pageLabelEdit;
     QLabel *m_pageNumberLabel;
-    HoverButton *m_prevButton;
-    HoverButton *m_pagesButton;
-    HoverButton *m_nextButton;
+    QToolButton *m_prevButton;
+    QToolButton *m_pagesButton;
+    QToolButton *m_nextButton;
     QToolBar *m_oldToolbarParent;
 };
 

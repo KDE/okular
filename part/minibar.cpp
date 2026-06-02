@@ -28,13 +28,15 @@
 #include "core/document.h"
 #include "core/page.h"
 
-// [private widget] a flat qpushbutton that enlights on hover
-class HoverButton : public QToolButton
+QToolButton* createHoverButton(QWidget* parent)
 {
-    Q_OBJECT
-public:
-    explicit HoverButton(QWidget *parent);
-};
+    auto button = new QToolButton(parent);
+    button->setAutoRaise(true);
+    button->setFocusPolicy(Qt::NoFocus);
+    button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    KAcceleratorManager::setNoAccel(button);
+    return button;
+}
 
 MiniBarLogic::MiniBarLogic(QObject *parent, Okular::Document *document)
     : QObject(parent)
@@ -169,7 +171,7 @@ MiniBar::MiniBar(QWidget *parent, MiniBarLogic *miniBarLogic)
 
     QSize buttonSize(KIconLoader::SizeSmallMedium, KIconLoader::SizeSmallMedium);
     // bottom: left prev_page button
-    m_prevButton = new HoverButton(this);
+    m_prevButton = createHoverButton(this);
     m_prevButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
     m_prevButton->setIconSize(buttonSize);
     horLayout->addWidget(m_prevButton);
@@ -189,10 +191,10 @@ MiniBar::MiniBar(QWidget *parent, MiniBarLogic *miniBarLogic)
     horLayout->addSpacing(5);
     horLayout->addWidget(new QLabel(i18nc("Layouted like: '5 [pages] of 10'", "of"), this));
     // bottom: right button
-    m_pagesButton = new HoverButton(this);
+    m_pagesButton = createHoverButton(this);
     horLayout->addWidget(m_pagesButton);
     // bottom: right next_page button
-    m_nextButton = new HoverButton(this);
+    m_nextButton = createHoverButton(this);
     m_nextButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
     m_nextButton->setIconSize(buttonSize);
     horLayout->addWidget(m_nextButton);
@@ -469,18 +471,5 @@ void PagesEdit::wheelEvent(QWheelEvent *e)
         m_miniBar->slotEmitPrevPage();
     }
 }
-
-/** HoverButton **/
-
-HoverButton::HoverButton(QWidget *parent)
-    : QToolButton(parent)
-{
-    setAutoRaise(true);
-    setFocusPolicy(Qt::NoFocus);
-    setToolButtonStyle(Qt::ToolButtonIconOnly);
-    KAcceleratorManager::setNoAccel(this);
-}
-
-#include "minibar.moc"
 
 /* kate: replace-tabs on; indent-width 4; */

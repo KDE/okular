@@ -420,25 +420,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signaturePanel = new SignaturePanel(m_document, nullptr);
     connect(m_signaturePanel.data(), &SignaturePanel::documentHasSignatures, this, &Part::enableSidebarSignaturesItem);
 
-    // widgets: [../miniBarContainer] | []
-#ifdef OKULAR_ENABLE_MINIBAR
-    QWidget *miniBarContainer = new QWidget(0);
-    m_sidebar->setBottomWidget(miniBarContainer);
-    QVBoxLayout *miniBarLayout = new QVBoxLayout(miniBarContainer);
-    miniBarLayout->setContentsMargins(0, 0, 0, 0);
-    // widgets: [../[spacer/..]] | []
-    miniBarLayout->addItem(new QSpacerItem(6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed));
-    // widgets: [../[../MiniBar]] | []
-    QFrame *bevelContainer = new QFrame(miniBarContainer);
-    bevelContainer->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    QVBoxLayout *bevelContainerLayout = new QVBoxLayout(bevelContainer);
-    bevelContainerLayout->setContentsMargins(4, 4, 4, 4);
-    m_progressWidget = new ProgressWidget(bevelContainer, m_document);
-    bevelContainerLayout->addWidget(m_progressWidget);
-    miniBarLayout->addWidget(bevelContainer);
-    miniBarLayout->addItem(new QSpacerItem(6, 6, QSizePolicy::Fixed, QSizePolicy::Fixed));
-#endif
-
     // widgets: [] | [right 'pageView']
     QWidget *rightContainer = new QWidget(nullptr);
     m_sidebar->setMainWidget(rightContainer);
@@ -549,9 +530,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_document->registerView(m_pageView);
     m_document->addObserver(m_toc);
     m_document->addObserver(m_miniBarLogic);
-#ifdef OKULAR_ENABLE_MINIBAR
-    m_document->addObserver(m_progressWidget);
-#endif
     m_document->addObserver(m_reviewsWidget);
     m_document->addObserver(m_pageSizeLabel);
     m_document->addObserver(m_bookmarkList);
@@ -671,9 +649,6 @@ void Part::setupViewerActions()
     // dirty way to activate prev page when pressing miniBar's button
     connect(m_miniBar.data(), &MiniBar::prevPage, m_prevPage, &QAction::trigger);
     connect(m_pageNumberTool.data(), &MiniBar::prevPage, m_prevPage, &QAction::trigger);
-#ifdef OKULAR_ENABLE_MINIBAR
-    connect(m_progressWidget, SIGNAL(prevPage()), m_prevPage, SLOT(trigger()));
-#endif
 
     m_nextPage = KStandardAction::next(this, SLOT(slotNextPage()), ac);
     m_nextPage->setIconText(i18nc("Next page", "Next"));
@@ -683,9 +658,6 @@ void Part::setupViewerActions()
     // dirty way to activate next page when pressing miniBar's button
     connect(m_miniBar.data(), &MiniBar::nextPage, m_nextPage, &QAction::trigger);
     connect(m_pageNumberTool.data(), &MiniBar::nextPage, m_nextPage, &QAction::trigger);
-#ifdef OKULAR_ENABLE_MINIBAR
-    connect(m_progressWidget, SIGNAL(nextPage()), m_nextPage, SLOT(trigger()));
-#endif
 
     m_beginningOfDocument = KStandardAction::firstPage(this, SLOT(slotGotoFirst()), ac);
     ac->addAction(QStringLiteral("first_page"), m_beginningOfDocument);
@@ -1011,9 +983,6 @@ Part::~Part()
     delete m_pageNumberTool;
     delete m_miniBarLogic;
     delete m_bottomBar;
-#ifdef OKULAR_ENABLE_MINIBAR
-    delete m_progressWidget;
-#endif
     delete m_pageSizeLabel;
     delete m_reviewsWidget;
     delete m_bookmarkList;

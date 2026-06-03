@@ -9,6 +9,7 @@
 
 /** PRIORITIES for requests. Globally defined here. **/
 #define PAGEVIEW_PRIO 1
+#define PAGEVIEW_LINK_PREVIEW_PRIO 2
 #define PAGEVIEW_PRELOAD_PRIO 4
 #define THUMBNAILS_PRIO 2
 #define THUMBNAILS_PRELOAD_PRIO 5

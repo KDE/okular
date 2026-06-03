@@ -36,6 +36,8 @@
 #include <QClipboard>
 #include <QDesktopServices>
 #include <QGraphicsView>
+#include <QFrame>
+#include <QImage>
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
@@ -81,6 +83,8 @@ private Q_SLOTS:
     void testRemoveLineBreaks();
     void testClickInternalLink();
     void testClickOnStoppedVideo();
+    void testHoverInternalLinkShowsPreview();
+    void testExternalLinkDoesNotShowPreview();
     void testScrollBarAndMouseWheel();
     void testOpenUrlArguments();
     void test388288();
@@ -637,6 +641,77 @@ void PartTest::testClickOnStoppedVideo()
     QMouseEvent lateDoubleClick(QEvent::MouseButtonDblClick, QPointF(center), globalCenter, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     QCoreApplication::sendEvent(videoView->viewport(), &lateDoubleClick);
     QVERIFY(stopAction->isEnabled());
+}
+
+void PartTest::testHoverInternalLinkShowsPreview()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file2.pdf")));
+    part.widget()->resize(600, 400);
+    part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+    part.m_document->setViewportPage(0);
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+    const QPoint linkPoint(width * 0.17, height * 0.05);
+
+    QCOMPARE(part.m_document->currentPage(), 0u);
+    QTest::mouseMove(part.m_pageView->viewport(), linkPoint);
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::PointingHandCursor);
+
+    QFrame *preview = part.m_pageView->findChild<QFrame *>(QStringLiteral("OkularInternalLinkPreview"));
+    QVERIFY(preview);
+    QTRY_VERIFY_WITH_TIMEOUT(preview->isVisible(), 2000);
+    QCOMPARE(part.m_document->currentPage(), 0u);
+    const QImage previewImage = preview->grab().toImage();
+    QVERIFY(!previewImage.isNull());
+    QVERIFY(previewImage.pixelColor(previewImage.width() / 2, 1).lightness() < 80);
+
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.1, height * 0.1));
+    QTRY_VERIFY(!preview->isVisible());
+
+    QTest::mouseMove(part.m_pageView->viewport(), linkPoint);
+    QTRY_VERIFY_WITH_TIMEOUT(preview->isVisible(), 2000);
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, linkPoint);
+    QTRY_VERIFY(!preview->isVisible());
+}
+
+
+void PartTest::testExternalLinkDoesNotShowPreview()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/pdf_with_links.pdf")));
+    part.widget()->resize(800, 600);
+    part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+    part.m_document->setViewportPage(0);
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
+
+    const int width = part.m_pageView->horizontalScrollBar()->maximum() + part.m_pageView->viewport()->width();
+    const int height = part.m_pageView->verticalScrollBar()->maximum() + part.m_pageView->viewport()->height();
+    QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.250, height * 0.127));
+    QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::PointingHandCursor);
+
+    QFrame *preview = part.m_pageView->findChild<QFrame *>(QStringLiteral("OkularInternalLinkPreview"));
+    QVERIFY(preview);
+    QTest::qWait(500);
+    QVERIFY(!preview->isVisible());
 }
 
 // Test for bug 421159, which is: When scrolling down with the scroll bar

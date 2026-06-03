@@ -26,6 +26,7 @@
 #include <QDesktopServices>
 #include <QElapsedTimer>
 #include <QEvent>
+#include <QFrame>
 #include <QGestureEvent>
 #include <QImage>
 #include <QInputDialog>
@@ -116,6 +117,9 @@ static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLi
 
 static const std::array<float, 16> kZoomValues {0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00, 25.00, 50.00, 100.00};
 
+static const int linkPreviewDelayMs = 300;
+static const int linkPreviewBorderWidth = 2;
+
 // This is the length of the text that will be shown when the user is searching for a specific piece of text.
 static const int searchTextPreviewLength = 21;
 
@@ -141,6 +145,171 @@ TableSelectionPart::TableSelectionPart(PageViewItem *item_p, const Okular::Norma
     , rectInSelection(rectInSelection_p)
 {
 }
+
+class LinkPreviewWidget : public QFrame, public Okular::DocumentObserver
+{
+    Q_OBJECT
+
+public:
+    LinkPreviewWidget(Okular::Document *document, QWidget *parent)
+        : QFrame(parent)
+        , m_document(document)
+    {
+        setObjectName(QStringLiteral("OkularInternalLinkPreview"));
+        setFrameStyle(QFrame::NoFrame);
+        setContentsMargins(linkPreviewBorderWidth, linkPreviewBorderWidth, linkPreviewBorderWidth, linkPreviewBorderWidth);
+        setAutoFillBackground(true);
+        setAttribute(Qt::WA_TransparentForMouseEvents);
+        hide();
+
+        m_document->addObserver(this);
+    }
+
+    ~LinkPreviewWidget() override
+    {
+        m_document->removeObserver(this);
+    }
+
+    void preview(const Okular::Page *page, const Okular::DocumentViewport &viewport, QSize fullPageSize, QSize previewSize, QPoint previewPos)
+    {
+        m_page = page;
+        m_viewport = viewport;
+        m_fullPageSize = fullPageSize;
+        m_requestedSize = previewSize;
+        m_requestedPosition = previewPos;
+        m_crop = cropForPreview();
+
+        resize(previewSize);
+        move(previewPos);
+
+        requestPixmap();
+        if (page->hasPixmap(this, m_fullPageSize.width(), m_fullPageSize.height(), m_crop)) {
+            show();
+            update();
+        } else {
+            hide();
+        }
+    }
+
+    void cancel()
+    {
+        hide();
+        m_page = nullptr;
+        m_viewport = Okular::DocumentViewport();
+        m_crop = Okular::NormalizedRect();
+    }
+
+    void notifySetup(const QList<Okular::Page *> &, int setupFlags) override
+    {
+        if (setupFlags & Okular::DocumentObserver::DocumentChanged) {
+            cancel();
+        }
+    }
+
+    void notifyPageChanged(int pageNumber, int changedFlags) override
+    {
+        if (!m_page || pageNumber != (int)m_page->number()) {
+            return;
+        }
+
+        if (changedFlags & Okular::DocumentObserver::Pixmap) {
+            if (m_page->hasPixmap(this, m_fullPageSize.width(), m_fullPageSize.height(), m_crop)) {
+                resize(m_requestedSize);
+                move(m_requestedPosition);
+                show();
+                update();
+            }
+        }
+    }
+
+    void notifyContentsCleared(int changedFlags) override
+    {
+        if (changedFlags & Okular::DocumentObserver::Pixmap) {
+            cancel();
+        }
+    }
+
+    bool canUnloadPixmap(int pageNumber) const override
+    {
+        return !m_page || pageNumber != (int)m_page->number() || !isVisible();
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) override
+    {
+        Q_UNUSED(event);
+
+        QPainter p(this);
+        p.fillRect(rect(), palette().color(QPalette::Base));
+
+        if (!m_page) {
+            drawBorder(&p);
+            return;
+        }
+
+        const QRect contents = contentsRect();
+        p.setClipRect(contents);
+        p.translate(contents.topLeft());
+        PagePainter::paintCroppedPageOnPainter(&p, m_page, this, pageflags, m_fullPageSize.width(), m_fullPageSize.height(), QRect(QPoint(0, 0), contents.size()), m_crop, nullptr);
+        p.translate(-contents.topLeft());
+        p.setClipping(false);
+        drawBorder(&p);
+    }
+
+private:
+    void drawBorder(QPainter *p)
+    {
+        p->setPen(QPen(palette().color(QPalette::Shadow), linkPreviewBorderWidth));
+        p->drawRect(rect().adjusted(linkPreviewBorderWidth / 2, linkPreviewBorderWidth / 2, -linkPreviewBorderWidth / 2, -linkPreviewBorderWidth / 2));
+    }
+
+    Okular::NormalizedRect cropForPreview() const
+    {
+        const QSize contentsSize = contentsRect().size();
+        if (!m_page || m_fullPageSize.isEmpty() || contentsSize.isEmpty()) {
+            return Okular::NormalizedRect();
+        }
+
+        const double targetX = m_viewport.rePos.enabled ? normClamp(m_viewport.rePos.normalizedX, 0.5) : 0.5;
+        const double targetY = m_viewport.rePos.enabled ? normClamp(m_viewport.rePos.normalizedY, 0.0) : 0.0;
+        const double cropWidth = qMin(1.0, (double)contentsSize.width() / (double)m_fullPageSize.width());
+        const double cropHeight = qMin(1.0, (double)contentsSize.height() / (double)m_fullPageSize.height());
+
+        double left = targetX - cropWidth * 0.5;
+        double top = targetY - cropHeight * 0.3;
+        left = qBound(0.0, left, 1.0 - cropWidth);
+        top = qBound(0.0, top, 1.0 - cropHeight);
+
+        return Okular::NormalizedRect(left, top, left + cropWidth, top + cropHeight);
+    }
+
+    void requestPixmap()
+    {
+        if (!m_page || m_fullPageSize.isEmpty()) {
+            return;
+        }
+
+        if (m_page->hasPixmap(this, m_fullPageSize.width(), m_fullPageSize.height(), m_crop)) {
+            return;
+        }
+
+        auto *request = new Okular::PixmapRequest(this, m_page->number(), m_fullPageSize.width(), m_fullPageSize.height(), devicePixelRatioF(), PAGEVIEW_LINK_PREVIEW_PRIO, Okular::PixmapRequest::Asynchronous);
+        request->setNormalizedRect(m_crop);
+        if (m_page->hasTilesManager(this)) {
+            request->setTile(true);
+        }
+
+        m_document->requestPixmaps({request});
+    }
+
+    Okular::Document *m_document = nullptr;
+    const Okular::Page *m_page = nullptr;
+    Okular::DocumentViewport m_viewport;
+    QSize m_fullPageSize;
+    QSize m_requestedSize;
+    QPoint m_requestedPosition;
+    Okular::NormalizedRect m_crop;
+};
 
 // structure used internally by PageView for data storage
 class PageViewPrivate
@@ -278,6 +447,9 @@ public:
 
     // Keep track of mouse over link object
     const Okular::ObjectRect *mouseOverLinkObject = nullptr;
+    const Okular::ObjectRect *linkPreviewObject = nullptr;
+    LinkPreviewWidget *linkPreviewWidget = nullptr;
+    QTimer linkPreviewTimer;
 
     QScroller *scroller = nullptr;
 
@@ -345,6 +517,44 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
     d->messageWindow = new PageViewMessage(this);
     d->setting_viewCols = Okular::Settings::viewColumns();
     d->rtl_Mode = Okular::Settings::rtlReadingDirection();
+    d->linkPreviewWidget = new LinkPreviewWidget(document, viewport());
+    d->linkPreviewTimer.setSingleShot(true);
+    connect(&d->linkPreviewTimer, &QTimer::timeout, this, [this]() {
+        if (!d->linkPreviewObject) {
+            return;
+        }
+
+        const Okular::Action *action = static_cast<const Okular::Action *>(d->linkPreviewObject->object());
+        Okular::DocumentViewport destViewport;
+        if (!previewViewportForLink(action, &destViewport)) {
+            hideLinkPreview();
+            return;
+        }
+
+        const PageViewItem *destItem = d->items.value(destViewport.pageNumber);
+        if (!destItem || !d->linkPreviewWidget) {
+            hideLinkPreview();
+            return;
+        }
+
+        const int margin = 8;
+        const int viewportWidth = viewport()->width();
+        const int viewportHeight = viewport()->height();
+        const int availableWidth = qMax(1, viewportWidth - 2 * margin);
+        const int availableHeight = qMax(1, viewportHeight - 2 * margin);
+        const QSize previewSize(availableWidth, qMin(qMax(80, viewportHeight / 3), availableHeight));
+
+        const QPoint cursorPos = viewport()->mapFromGlobal(QCursor::pos());
+        int x = cursorPos.x() - previewSize.width() / 2;
+        int y = cursorPos.y() + 18;
+        x = qBound(margin, x, qMax(margin, viewportWidth - previewSize.width() - margin));
+        if (y + previewSize.height() + margin > viewportHeight) {
+            y = cursorPos.y() - previewSize.height() - 18;
+        }
+        y = qBound(margin, y, qMax(margin, viewportHeight - previewSize.height() - margin));
+
+        d->linkPreviewWidget->preview(destItem->page(), destViewport, QSize(destItem->uncroppedWidth(), destItem->uncroppedHeight()), previewSize, QPoint(x, y));
+    });
 
     d->trimBoundingBox = Okular::NormalizedRect(); // Null box
 
@@ -486,6 +696,7 @@ PageView::~PageView()
     qDeleteAll(annowindows);
 
     // delete all widgets
+    delete d->linkPreviewWidget;
     qDeleteAll(d->items);
     delete d->formsWidgetController;
     d->document->removeObserver(this);
@@ -1176,6 +1387,8 @@ void PageView::createAnnotationsVideoWidgets(PageViewItem *item, const QList<Oku
 // BEGIN DocumentObserver inherited methods
 void PageView::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
 {
+    hideLinkPreview();
+
     bool documentChanged = setupFlags & Okular::DocumentObserver::DocumentChanged;
     const bool allowfillforms = d->document->isAllowed(Okular::AllowFillForms);
 
@@ -1442,6 +1655,8 @@ void PageView::notifyViewportChanged(bool smoothMove)
 
 void PageView::slotRealNotifyViewportChanged(bool smoothMove)
 {
+    hideLinkPreview();
+
     // if we are the one changing viewport, skip this notify
     if (d->blockViewport) {
         return;
@@ -1559,6 +1774,8 @@ void PageView::notifyPageChanged(int pageNumber, int changedFlags)
 
 void PageView::notifyContentsCleared(int changedFlags)
 {
+    hideLinkPreview();
+
     // if pixmaps were cleared, re-ask them
     if (changedFlags & DocumentObserver::Pixmap) {
         QMetaObject::invokeMethod(this, "slotRequestVisiblePixmaps", Qt::QueuedConnection);
@@ -2064,6 +2281,8 @@ void PageView::drawTableDividers(QPainter *screenPainter)
 
 void PageView::resizeEvent(QResizeEvent *e)
 {
+    hideLinkPreview();
+
     if (d->items.isEmpty()) {
         resizeContentArea(e->size());
         return;
@@ -2282,6 +2501,8 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
     // if holding mouse mid button, perform zoom
     if (e->buttons() & Qt::MiddleButton) {
+        hideLinkPreview();
+
         int deltaY = d->mouseMidLastY - e->globalPosition().y();
         d->mouseMidLastY = e->globalPosition().y();
 
@@ -2402,6 +2623,8 @@ void PageView::mouseMoveEvent(QMouseEvent *e)
 
 void PageView::mousePressEvent(QMouseEvent *e)
 {
+    hideLinkPreview();
+
     // don't perform any mouse action when no document is shown
     if (d->items.isEmpty()) {
         return;
@@ -2638,6 +2861,8 @@ void PageView::mousePressEvent(QMouseEvent *e)
 
 void PageView::mouseReleaseEvent(QMouseEvent *e)
 {
+    hideLinkPreview();
+
     // stop the drag scrolling
     d->dragScrollTimer.stop();
 
@@ -3464,6 +3689,10 @@ void PageView::wheelEvent(QWheelEvent *e)
 
 bool PageView::viewportEvent(QEvent *e)
 {
+    if (e->type() == QEvent::Leave) {
+        hideLinkPreview();
+    }
+
     if (e->type() == QEvent::ToolTip
         // Show tool tips only for those modes that change the cursor
         // to a hand when hovering over the link.
@@ -3487,6 +3716,12 @@ bool PageView::viewportEvent(QEvent *e)
             }
 
             if (link) {
+                Okular::DocumentViewport destViewport;
+                if (previewViewportForLink(link, &destViewport)) {
+                    e->accept();
+                    return true;
+                }
+
                 QRect r = rect->boundingRect(pageItem->uncroppedWidth(), pageItem->uncroppedHeight());
                 r.translate(pageItem->uncroppedGeometry().topLeft());
                 r.translate(-contentAreaPosition());
@@ -3506,6 +3741,8 @@ bool PageView::viewportEvent(QEvent *e)
 
 void PageView::scrollContentsBy(int dx, int dy)
 {
+    hideLinkPreview();
+
     const QRect r = viewport()->rect();
     viewport()->scroll(dx, dy, r);
     // HACK manually repaint the damaged regions, as it seems some updates are missed
@@ -4263,6 +4500,66 @@ void PageView::updateViewMode(const int nr)
     }
 }
 
+bool PageView::previewViewportForLink(const Okular::Action *link, Okular::DocumentViewport *viewport) const
+{
+    if (!link || link->actionType() != Okular::Action::Goto) {
+        return false;
+    }
+
+    const auto *gotoAction = static_cast<const Okular::GotoAction *>(link);
+    if (gotoAction->isExternal()) {
+        return false;
+    }
+
+    Okular::DocumentViewport destViewport = gotoAction->destViewport();
+    if (!destViewport.isValid() && !gotoAction->destinationName().isEmpty()) {
+        destViewport = Okular::DocumentViewport(d->document->metaData(QStringLiteral("NamedViewport"), gotoAction->destinationName()).toString());
+    }
+
+    if (!destViewport.isValid() || destViewport.pageNumber < 0 || destViewport.pageNumber >= d->items.size()) {
+        return false;
+    }
+
+    *viewport = destViewport;
+    return true;
+}
+
+void PageView::updateLinkPreview(const Okular::ObjectRect *linkObject, const QPoint eventPos)
+{
+    Q_UNUSED(eventPos);
+
+    if (!linkObject) {
+        hideLinkPreview();
+        return;
+    }
+
+    const Okular::Action *action = static_cast<const Okular::Action *>(linkObject->object());
+    Okular::DocumentViewport destViewport;
+    if (!previewViewportForLink(action, &destViewport)) {
+        hideLinkPreview();
+        return;
+    }
+
+    if (d->linkPreviewObject == linkObject && (d->linkPreviewTimer.isActive() || (d->linkPreviewWidget && d->linkPreviewWidget->isVisible()))) {
+        return;
+    }
+
+    if (d->linkPreviewWidget) {
+        d->linkPreviewWidget->cancel();
+    }
+    d->linkPreviewObject = linkObject;
+    d->linkPreviewTimer.start(linkPreviewDelayMs);
+}
+
+void PageView::hideLinkPreview()
+{
+    d->linkPreviewTimer.stop();
+    d->linkPreviewObject = nullptr;
+    if (d->linkPreviewWidget) {
+        d->linkPreviewWidget->cancel();
+    }
+}
+
 void PageView::updateCursor()
 {
     const QPoint p = contentAreaPosition() + viewport()->mapFromGlobal(QCursor::pos());
@@ -4279,12 +4576,14 @@ void PageView::updateCursor(const QPoint p)
     QScroller::State scrollerState = d->scroller->state();
 
     if (d->annotator && d->annotator->active()) {
+        hideLinkPreview();
         if (pageItem || d->annotator->annotating()) {
             setCursor(d->annotator->cursor());
         } else {
             setCursor(Qt::ForbiddenCursor);
         }
     } else if (scrollerState == QScroller::Pressed || scrollerState == QScroller::Dragging) {
+        hideLinkPreview();
         setCursor(Qt::ClosedHandCursor);
     } else if (pageItem) {
         double nX = pageItem->absToPageX(p.x());
@@ -4295,17 +4594,20 @@ void PageView::updateCursor(const QPoint p)
         switch (d->mouseMode) {
         case Okular::Settings::EnumMouseMode::TextSelect:
             if (d->mouseTextSelecting) {
+                hideLinkPreview();
                 setCursor(Qt::IBeamCursor);
                 return;
             }
             cursorShapeFallback = Qt::IBeamCursor;
             break;
         case Okular::Settings::EnumMouseMode::Magnifier:
+            hideLinkPreview();
             setCursor(Qt::CrossCursor);
             return;
         case Okular::Settings::EnumMouseMode::RectSelect:
         case Okular::Settings::EnumMouseMode::TrimSelect:
             if (d->mouseSelecting) {
+                hideLinkPreview();
                 setCursor(Qt::CrossCursor);
                 return;
             }
@@ -4314,6 +4616,7 @@ void PageView::updateCursor(const QPoint p)
         case Okular::Settings::EnumMouseMode::Browse:
             d->mouseOnRect = false;
             if (d->mouseAnnotation->isMouseOver()) {
+                hideLinkPreview();
                 d->mouseOnRect = true;
                 setCursor(d->mouseAnnotation->cursor());
                 return;
@@ -4322,6 +4625,7 @@ void PageView::updateCursor(const QPoint p)
             }
             break;
         default:
+            hideLinkPreview();
             setCursor(Qt::ArrowCursor);
             return;
         }
@@ -4331,13 +4635,16 @@ void PageView::updateCursor(const QPoint p)
             d->mouseOverLinkObject = linkobj;
             d->mouseOnRect = true;
             setCursor(Qt::PointingHandCursor);
+            updateLinkPreview(linkobj, p);
         } else {
+            hideLinkPreview();
             setCursor(cursorShapeFallback);
         }
     } else {
         // if there's no page over the cursor and we were showing the pointingHandCursor
         // go back to the normal one
         d->mouseOnRect = false;
+        hideLinkPreview();
         setCursor(Qt::ArrowCursor);
     }
 }
@@ -5898,3 +6205,5 @@ void PageView::highlightSignatureFormWidget(const Okular::FormFieldSignature *fo
 // END private SLOTS
 
 #include "moc_pageview.cpp"
+
+#include "pageview.moc"

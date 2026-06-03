@@ -227,6 +227,9 @@ private:
     void updateZoomActionsEnabledStatus();
     // update view mode (single, facing...)
     void updateViewMode(const int nr);
+    bool previewViewportForLink(const Okular::Action *link, Okular::DocumentViewport *viewport) const;
+    void updateLinkPreview(const Okular::ObjectRect *linkObject, const QPoint eventPos);
+    void hideLinkPreview();
     void textSelectionClear();
     // updates cursor
     void updateCursor(const QPoint p);

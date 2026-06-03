@@ -97,6 +97,7 @@
   <summary xml:lang="sv">Dokumentvisare</summary>
   <summary xml:lang="ta">ஆவணங் காட்டி</summary>
   <summary xml:lang="tr">Belge Görüntüleyicisi</summary>
+  <summary xml:lang="ug">پۈتۈك كۆرگۈچ</summary>
   <summary xml:lang="uk">Перегляд документів</summary>
   <summary xml:lang="vi">Trình xem tài liệu</summary>
   <summary xml:lang="zh-CN">文档查看器</summary>
@@ -202,6 +203,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="vi">Tính năng:</p>
     <p xml:lang="zh-CN">功能特性：</p>

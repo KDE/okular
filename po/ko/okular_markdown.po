@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Shinjo Park <kde@peremen.name>, 2017, 2018, 2019.
+# SPDX-FileCopyrightText: 2017, 2018, 2019, 2026 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2019-04-12 00:46+0100\n"
+"PO-Revision-Date: 2026-05-26 21:35+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -35,7 +35,7 @@ msgstr "문서를 열 수 없음"
 #: converter.cpp:106 converter.cpp:124
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr "Markdown 문서를 컴파일할 수 없습니다."
+msgstr "마크다운 문서를 컴파일할 수 없습니다."
 
 #: generator_md.cpp:58
 #, kde-format
@@ -45,9 +45,9 @@ msgstr "SmartyPants 형식 사용"
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
-msgstr "Markdown"
+msgstr "마크다운"
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
-msgstr "Markdown 백엔드 설정"
+msgstr "마크다운 백엔드 설정"

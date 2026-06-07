@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-04-26 21:18+0200\n"
+"PO-Revision-Date: 2026-05-26 21:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1674,15 +1674,14 @@ msgid "Add Bookmark"
 msgstr "책갈피에 추가"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "저작권자"
+msgstr "복사"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "붙여넣기"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2216,15 +2215,14 @@ msgstr ""
 "클릭하면 수식을 표시합니다."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "알 수 없는 글꼴"
+msgstr "알 수 없는 작성자"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "인식할 수 있는 날짜 없음"
 
 #: part/annotwindow.cpp:583
 #, kde-format
@@ -3453,7 +3451,7 @@ msgstr "보기"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "열기"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3498,12 +3496,10 @@ msgid "&View…"
 msgstr "보기(&V)…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "'%1' 열기(&O)…"
+msgstr "열기(&O)…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4411,11 +4407,9 @@ msgid "Configure Color Modes…"
 msgstr "색상 모드 설정…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "주석 조정"
+msgstr "주석 붙여넣기"
 
 #: part/part.cpp:880
 #, kde-format

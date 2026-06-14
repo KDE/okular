@@ -7,7 +7,7 @@
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008, 2010, 2013.
 # Maciej Wikło <maciej.wiklo@wp.pl>, 2009, 2010.
 # Artur Chłond <eugenewolfe@o2.pl>, 2011.
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011-2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Kris <x-men@mixbox.pl>, 2013.
 # Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
 #
@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-12 00:42+0000\n"
-"PO-Revision-Date: 2026-04-11 07:54+0200\n"
+"PO-Revision-Date: 2026-06-13 17:20+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1696,15 +1696,14 @@ msgid "Add Bookmark"
 msgstr "Dodaj zakładkę"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Prawa autorskie"
+msgstr "Skopiuj"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Wklej"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2238,15 +2237,14 @@ msgstr ""
 "Naciśnij tutaj, aby go wyświetlić."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Nieznana czcionka"
+msgstr "Nieznany autor"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Nie rozpoznano daty"
 
 #: part/annotwindow.cpp:583
 #, kde-format
@@ -3494,7 +3492,7 @@ msgstr "Obejrzyj"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Otwórz"
 
 #: part/embeddedfilesdialog.cpp:75
 #, kde-format
@@ -3539,12 +3537,10 @@ msgid "&View…"
 msgstr "&Widok…"
 
 #: part/embeddedfilesdialog.cpp:172
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "&Otwórz '%1'…"
+msgstr "&Otwórz…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4463,11 +4459,9 @@ msgid "Configure Color Modes…"
 msgstr "Ustawienia trybu barw…"
 
 #: part/part.cpp:862 part/part.cpp:3222
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "dostosuj opis"
+msgstr "Wklej przypis"
 
 #: part/part.cpp:880
 #, kde-format

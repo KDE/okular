@@ -3315,6 +3315,8 @@ void Part::slotShowPresentation()
 {
     if (!m_presentationWidget) {
         m_presentationWidget = new PresentationWidget(widget(), m_document, m_presentationDrawingActions, actionCollection());
+    } else {
+        m_presentationWidget->activateWindow();
     }
 }
 

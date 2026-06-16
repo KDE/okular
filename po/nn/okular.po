@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2026-04-18 16:12+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -4824,7 +4824,7 @@ msgstr "Endra namn på bokmerke"
 msgid "Remove this Bookmark"
 msgstr "Fjern dette bokmerket"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4914,7 +4914,7 @@ msgstr ""
 "nytt. Loggen med «angra / gjer om»-handlingar går tapt.<br />Vil du halda "
 "fram?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Klarte ikkje lagra fila i «%1». Prøv å lagra ho ein annan stad."
@@ -5033,24 +5033,24 @@ msgstr "Synkroniser miniatyrbilete med side"
 msgid "Tools"
 msgstr "Verktøy"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Les opp"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Skriv ut"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Det er ikkje lov å skriva ut dette dokumentet."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5058,7 +5058,7 @@ msgstr ""
 "Klarte ikkje skriva ut dokumentet. Ukjend feil. Meld gjerne frå om feilen på "
 "bugs.kde.org."
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5067,17 +5067,17 @@ msgstr ""
 "Klarte ikkje skriva ut dokumentet. Den detaljerte feilmeldinga er «%1». Meld "
 "gjerne frå om feilen på bugs.kde.org."
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Gå til der du var før"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Gå til der du var etter"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5086,7 +5086,7 @@ msgstr ""
 "<qt><strong>Filfeil:</strong> Klarte ikkje laga den mellombelse fila "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5095,7 +5095,7 @@ msgstr ""
 "<qt><strong>Filfeil:</strong> Klarte ikkje opna fila <nobr><strong>%1</"
 "strong></nobr> for dekomprimering. Fila vert ikkje lesen inn.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5108,7 +5108,7 @@ msgstr ""
 "å høgreklikka på fila i filhandsamaren, velja «Eigenskapar» i menyen og så "
 "velja fana «Løyve».</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5117,7 +5117,7 @@ msgstr ""
 "<qt><strong>Filfeil:</strong> Klarte ikkje dekomprimera fila <nobr><strong>"
 "%1</strong></nobr>. Fila vert ikkje lesen inn.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5127,27 +5127,27 @@ msgstr ""
 "sikker, kan du prøva å dekomprimera fila manuelt med verktøy på "
 "kommandolinja.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Ingen bokmerke"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Det oppstod ein feil ved deling av dokumentet: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "Del"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentet er no delt"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Du finn det delte dokumentet på: <a href=\"%1\">%1</a>"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -4811,7 +4811,7 @@ msgstr "अस्य Bookmark इत्यस्य नाम परिवर्
 msgid "Remove this Bookmark"
 msgstr "एतत् Bookmark निष्कासयन्तु"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4900,7 +4900,7 @@ msgstr ""
 "रक्षणानन्तरं वर्तमानदस्तावेजस्वरूपे सञ्चिकां पुनः लोड् करणीयम् । भवतः पूर्ववत/पुनः करणस्य "
 "इतिहासः नष्टः भविष्यति।<br /> किं त्वं निरन्तरं कर्तुम् इच्छसि ?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "'%1' इत्यत्र सञ्चिका रक्षितुं न शक्यते । अन्यस्मिन् स्थाने रक्षितुं प्रयतध्वम्।"
@@ -5017,31 +5017,31 @@ msgstr "पृष्ठेन सह लघुचित्रं समन्व
 msgid "Tools"
 msgstr "उपकरणाः"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "वदतिब्रू"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "मुद्रणम्"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "अस्य दस्तावेजस्य मुद्रणं न अनुमतम् ।"
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "दस्तावेजं मुद्रयितुं न शक्तवान्। अज्ञातदोषः । कृपया bugs.kde.org इत्यत्र प्रतिवेदनं कुर्वन्तु"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5050,17 +5050,17 @@ msgstr ""
 "दस्तावेजं मुद्रयितुं न शक्तवान्। विस्तृतदोषः \"%1\" अस्ति । कृपया bugs.kde.org इत्यत्र "
 "प्रतिवेदनं कुर्वन्तु"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "पूर्वं यत्र आसीत् तत्र गच्छतु"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "यत्र त्वं पश्चात् आसीः तत्र गच्छतु"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5069,7 +5069,7 @@ msgstr ""
 "<qt><strong>सञ्चिकादोषः !</strong> अस्थायी सञ्चिका <nobr><strong>%1</strong></"
 "nobr> निर्मातुं न शक्यते ।</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5078,7 +5078,7 @@ msgstr ""
 "<qt><strong>सञ्चिकादोषः !</strong> असंपीडनार्थं <nobr><strong>%1</strong></nobr> "
 "सञ्चिकां उद्घाटयितुं न शक्तम् । सञ्चिका न लोड् भविष्यति।</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5091,7 +5091,7 @@ msgstr ""
 "'Properties' विकल्पं चिनोति, उद्घाटितविण्डो मध्ये 'Permissions' ट्याब् चिनोति चेत् "
 "भवान् स्वामित्वं अनुमतिं च परीक्षितुं शक्नोति ।</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5100,7 +5100,7 @@ msgstr ""
 "<qt><strong>सञ्चिकादोषः !</strong> <nobr><strong>%1</strong></nobr> सञ्चिकां "
 "विसंपीडयितुं न शक्यते । सञ्चिका न लोड् भविष्यति।</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5109,27 +5109,27 @@ msgstr ""
 "<qt>सञ्चिका दूषिता चेत् सामान्यतया एषा त्रुटिः भवति । यदि भवान् निश्चयं कर्तुम् इच्छति "
 "तर्हि आदेशपङ्क्तिसाधनानाम् उपयोगेन सञ्चिकां स्वहस्तेन विसंपीडयितुं प्रयतस्व ।</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "न बुकमार्क्स्"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "दस्तावेजस्य साझेदारीयां समस्या आसीत्: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "संविभागः"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "दस्तावेजं सफलतया साझां कृतम्"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "साझादस्तावेजं भवान् अत्र द्रष्टुं शक्नोति: <a href=\"%1\">%1</a>"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -4818,7 +4818,7 @@ msgstr "Könyvjelző átnevezése"
 msgid "Remove this Bookmark"
 msgstr "Könyvjelző eltávolítása"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4907,7 +4907,7 @@ msgstr ""
 "Mentés után a jelenlegi dokumentumformátum a fájl újratöltését igényli. A "
 "visszavonás/újra előzmények elvesznek.<br />Szeretné folytatni?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Nem sikerült elmenteni a fájlt ide: „%1”. Próbálja máshová menteni."
@@ -5028,24 +5028,24 @@ msgstr "Bélyegképek szinkronizálása az oldallal"
 msgid "Tools"
 msgstr "Eszközök"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Felolvasás"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "A dokumentum nyomtatása nincs engedélyezve."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5053,7 +5053,7 @@ msgstr ""
 "Ismeretlen hiba miatt nem sikerült kinyomtatni a dokumentumot. Kérjük "
 "jelentse be a hibát itt: bugs.kde.org"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5062,17 +5062,17 @@ msgstr ""
 "A következő hiba miatt nem sikerült kinyomtatni a dokumentumot: „%1”. Kérjük "
 "jelentse be a hibát itt: bugs.kde.org"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ugrás az előző pozícióra"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ugrás a következő pozícióra"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5081,7 +5081,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült létrehozni ezt az ideiglenes "
 "fájlt: <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5091,7 +5091,7 @@ msgstr ""
 "kitömörítésre: <nobr><strong>%1</strong></nobr>. A fájlt nem sikerült "
 "betölteni.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5104,7 +5104,7 @@ msgstr ""
 "kiválasztja a „Tulajdonságok” opciót, és a „Jogosultsáok” fület a megnyitott "
 "ablakban.</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5113,7 +5113,7 @@ msgstr ""
 "<qt><strong>Fájlhiba</strong> Nem sikerült kitömöríteni a fájlt "
 "<nobr><strong>%1</strong></nobr>. A fájlt nem sikerült betölteni.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5122,27 +5122,27 @@ msgstr ""
 "<qt>Ez a hiba általában akkor jelentkezik, ha a fájl megsérült. A fájl "
 "integritásának ellenőrzéséhez tömörítse ki azt parancssoros eszközökkel.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nincs könyvjelző"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Hiba történt a dokumentum megosztásakor: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "Megosztás"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentum sikeresen megosztva"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "A megosztott dokumentumot itt találhatja meg: <a href=\"%1\">%1</a>"

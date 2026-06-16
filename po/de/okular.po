@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2026-04-14 22:48+0200\n"
 "Last-Translator: Alexander Becker <alex-at-kde-l10n-de@freenet.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -4818,7 +4818,7 @@ msgstr "Diese Lesezeichen umbenennen"
 msgid "Remove this Bookmark"
 msgstr "Dieses Lesezeichen entfernen"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4911,7 +4911,7 @@ msgstr ""
 "geladen werden. Der Verlauf von Zurücknehmen/Wiederherstellen geht verloren."
 "<br />Möchten Sie fortfahren?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5032,24 +5032,24 @@ msgstr "Vorschaubilder mit der Seite abgleichen"
 msgid "Tools"
 msgstr "Extras"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Vorlesen"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Drucken"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Es ist nicht erlaubt, dieses Dokument zu drucken."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5057,7 +5057,7 @@ msgstr ""
 "Das Dokument kann aufgrund eines unbekannten Fehlers nicht gedruckt werden. "
 "Bitte melden Sie das Problem unter http://bugs.kde.org"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5066,17 +5066,17 @@ msgstr ""
 "Das Dokument kann nicht gedruckt werden. Die genaue Fehlermeldung lautet: "
 "„%1“. Bitte melden Sie das Problem unter http://bugs.kde.org"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Geht zurück zur vorher angezeigten Stelle im Dokument"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Geht vor zur nächsten angezeigten Stelle im Dokument"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5085,7 +5085,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> Die temporäre Datei <nobr><strong>%1</"
 "strong></nobr> kann nicht angelegt werden.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5095,7 +5095,7 @@ msgstr ""
 "strong></nobr> kann nicht zum Dekomprimieren geöffnet werden. Die Datei wird "
 "nicht geladen.</qt> "
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5109,7 +5109,7 @@ msgstr ""
 "Maustaste auf die Datei klicken und dann „Eigenschaften“ im Kontextmenü "
 "aufrufen und zur Karteikarte „Berechtigungen“ im Dialog gehen.</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5118,7 +5118,7 @@ msgstr ""
 "<qt><strong>Dateifehler!</strong> Die Datei <nobr><strong>%1</strong></nobr> "
 "kann nicht dekomprimiert werden. Sie wird nicht geladen.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5128,27 +5128,27 @@ msgstr ""
 "Wenn Sie sicher sein möchten, versuchen Sie, die Datei mit Hilfe von "
 "Befehlszeilen-Werkzeugen selbst zu dekomprimieren.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Keine Lesezeichen"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Beim Veröffentlichen des Dokuments ist ein Fehler aufgetreten: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "Veröffentlichen"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument erfolgreich veröffentlicht"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Sie finden das veröffentlichte Dokument unter: <a href=\"%1\">%1</a>"

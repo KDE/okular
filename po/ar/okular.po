@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2026-05-21 11:36+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4773,7 +4773,7 @@ msgstr "أعد تسمية هذه العلامة"
 msgid "Remove this Bookmark"
 msgstr "أزل هذه العلامة"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4861,7 +4861,7 @@ msgstr ""
 "بعد الحفظ، يتطلب تنسيق المستند الحالي إعادة تحميل الملف.ستفقد سجل التراجع / "
 "الإعادة الخاص بك. <br /> هل تريد المتابعة؟"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "تعذر حفظ الملف في '%1'. حاول حفظه في مكان آخر."
@@ -4974,30 +4974,30 @@ msgstr "زامن المصغرات بالصفحة"
 msgid "Tools"
 msgstr "أدوات"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "انطق"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "اطبع"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "لا يسمح بطباعة هذا المستند."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr "تعذرت طباعة المستند. خطأ غير معروف. يُرجى التبليغ عنه إلى bugs.kde.org"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5005,17 +5005,17 @@ msgid ""
 msgstr ""
 "تعذرت طباعة المستند. الخطأ بالتفصيل هو \"%1\". يُرجى التبليغ إلى bugs.kde.org"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "اذهب إلى حيث كنت"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "اذهب إلى حيث كنت بعده"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5024,7 +5024,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر إنشاء ملف مؤقّت <nobr><strong>%1</strong></"
 "nobr>.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5033,7 +5033,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فتح الملف <nobr><strong>%1</strong></"
 "nobr> لفك الضغط. لن يُحمل الملف.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5045,7 +5045,7 @@ msgstr ""
 "الملكية والصلاحيات إذا ضغطت بالزر الأيمن على الملف في مدير الملفات دولفين ثم "
 "اختر لسان `الأذونات`</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5054,7 +5054,7 @@ msgstr ""
 "<qt><strong>خطأ ملف!</strong> تعذّر فك ضغط الملف <nobr><strong>%1</strong></"
 "nobr>. لن يُحمل الملف.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5063,27 +5063,27 @@ msgstr ""
 "<qt>يحدث هذا الخطأ عادة إذا كان الملف معطوباً. إذا أردت أن تتأكد ،ا فحاول فك "
 "ضغط الملف يدياً باستخدام أدوات سطر الأوام.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "لا علامات مواقع"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "حدثت مشكلة في مشاركة المستند: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "شارك"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "شُورك المستند بنجاح"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "ستجد المستند المشارك به في: <a href=\"%1\">%1</a>"

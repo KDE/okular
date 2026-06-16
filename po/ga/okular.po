@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2026-03-20 18:28+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
@@ -4820,7 +4820,7 @@ msgstr "Athainmnigh an Leabharmharc seo"
 msgid "Remove this Bookmark"
 msgstr "Bain an Leabharmharc seo"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4911,7 +4911,7 @@ msgstr ""
 "an doiciméid. Caillfear do stair chealaithe/athdhéanta.<br />Ar mhaith leat "
 "leanúint ar aghaidh?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5031,24 +5031,24 @@ msgstr "Sioncrónaigh Mionsamhail leis an Leathanach"
 msgid "Tools"
 msgstr "Uirlisí"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Labhair"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Priontáil"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Níl cead agat an cháipéis seo a phriontáil."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5056,7 +5056,7 @@ msgstr ""
 "Níorbh fhéidir an doiciméad a phriontáil. Earráid anaithnid. Tuairiscigh "
 "chuig bugs.kde.org le do thoil"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5065,17 +5065,17 @@ msgstr ""
 "Níorbh fhéidir an doiciméad a phriontáil. Is é \"%1\" an earráid "
 "mhionsonraithe. Tuairiscigh chuig bugs.kde.org le do thoil"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Téigh go dtí an áit a raibh tú roimhe seo"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Téigh go dtí an áit a raibh tú ag iarraidh"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5084,7 +5084,7 @@ msgstr ""
 "<qt><strong>Earráid Chomhaid!</strong> Níorbh fhéidir comhad sealadach "
 "<nobr><strong>%1</strong></nobr> a chruthú.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5094,7 +5094,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> a oscailt le haghaidh dí-chomhbhrú. Ní "
 "luchtófar an comhad.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5108,7 +5108,7 @@ msgstr ""
 "ansin roghnaigh an rogha 'Airíonna', agus roghnaigh an cluaisín 'Ceadanna' "
 "sa fhuinneog a osclaítear.</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5118,7 +5118,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> a dhí-chomhbhrú. Ní luchtófar an comhad.</"
 "qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5128,27 +5128,27 @@ msgstr ""
 "mian leat a bheith cinnte, déan iarracht an comhad a dhí-chomhbhrú de láimh "
 "ag baint úsáide as uirlisí líne ordaithe.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Gan Leabharmharcanna"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Bhí fadhb ann an doiciméad a roinnt: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "Comhroinn"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "D'éirigh le roinnt an doiciméid"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

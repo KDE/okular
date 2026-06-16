@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-12 00:42+0000\n"
+"POT-Creation-Date: 2026-06-16 00:42+0000\n"
 "PO-Revision-Date: 2026-06-01 16:30-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -4758,7 +4758,7 @@ msgstr "بۇ خەتكۈش ئاتىنى ئۆزگەرتىدۇ"
 msgid "Remove this Bookmark"
 msgstr "بۇ خەتكۈشنى چىقىرىۋېتىدۇ"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3532
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4847,7 +4847,7 @@ msgstr ""
 "ساقلىغاندىن كېيىن، نۆۋەتتىكى پۈتۈكنىڭ پىچىمى ھۆججەتنى قايتا يەكلەشنى تەلەپ "
 "قىلىدۇ. يېنىۋال/قايتىلا تارىخ خاتىرىڭىز يوقىلىدۇ.<br />داۋاملاشتۇرامسىز؟"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3547
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "ھۆججەت «%1» غا ساقلانمىدى. ئۇنى باشقا ئورۇنغا ساقلاشنى سىناڭ."
@@ -4963,31 +4963,31 @@ msgstr "كىچىك سۈرەتنى بەت بىلەن قەدەمداشلا"
 msgid "Tools"
 msgstr "قورال"
 
-#: part/part.cpp:3427
+#: part/part.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "ئوقۇ"
 
-#: part/part.cpp:3585
+#: part/part.cpp:3587
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "باس"
 
-#: part/part.cpp:3648
+#: part/part.cpp:3650
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "بۇ پۈتۈكنى بېسىشقا يول قويۇلمايدۇ."
 
-#: part/part.cpp:3661
+#: part/part.cpp:3663
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "پۈتۈكنى باسالمايدۇ. يوچۇن خاتالىق. bugs.kde.org غا كەمتۈك دوكلاتى يوللاڭ"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3665
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4996,17 +4996,17 @@ msgstr ""
 "پۈتۈكنى باسالمايدۇ. خاتالىق تەپسىلاتى «%1». bugs.kde.org غا كەمتۈك دوكلاتى "
 "يوللاڭ"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3754
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "ئالدىنقى ئورنىڭىزغا يۆتكىلىدۇ"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "كېيىنكى ئورنىڭىزغا يۆتكىلىدۇ"
 
-#: part/part.cpp:3781
+#: part/part.cpp:3783
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5015,7 +5015,7 @@ msgstr ""
 "<qt><strong>ھۆججەت خاتالىقى!</strong>ۋاقىتلىق ھۆججەت <nobr><strong>%1</"
 "strong></nobr> نى قۇرالمايدۇ.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5024,7 +5024,7 @@ msgstr ""
 "<qt><strong>ھۆججەت خاتالىقى!</strong>ھۆججەت <nobr><strong>%1</strong></nobr> "
 "نى قىسىشتىن يېشىپ ئاچالمايدۇ. بۇ ھۆججەت يۈكلەنمەيدۇ.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5037,7 +5037,7 @@ msgstr ""
 "«خاسلىق» تاللانمىسىدىكى «ئىجازەت» بەتكۈچنى تاللاپ ئېچىلغان كۆزنەكتە "
 "ھۆججەتنىڭ ئىگىدارلىق ۋە ئىجازىتىنى تەكشۈرەلەيسىز.</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3821
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5046,7 +5046,7 @@ msgstr ""
 "<qt><strong>ھۆججەت خاتالىقى!</strong>ھۆججەت <nobr><strong>%1</strong></nobr> "
 "نى قىسىشتىن يېشەلمەيدۇ. بۇ ھۆججەت يۈكلەنمەيدۇ.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5056,27 +5056,27 @@ msgstr ""
 "ياكى بۇزۇلمىغانلىقىنى جەزملەش ئۈچۈن ئۇ ھۆججەتنى بۇيرۇق قۇرى قورالىدا قولدا "
 "يېشىپ سىناپ بېقىڭ.</qt>"
 
-#: part/part.cpp:3849
+#: part/part.cpp:3851
 #, kde-format
 msgid "No Bookmarks"
 msgstr "خەتكۈش يوق"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3922
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "پۈتۈكنى ھەمبەھىرلەشتە مەسىلە كۆرۈلگەن: %1"
 
-#: part/part.cpp:3920 part/part.cpp:3926
+#: part/part.cpp:3922 part/part.cpp:3928
 #, kde-format
 msgid "Share"
 msgstr "ھەمبەھىر"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "Document shared successfully"
 msgstr "پۈتۈك مۇۋەپپەقىيەتلىك ھەمبەھىرلەندى"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3928
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "ھەمبەھىرلەنگەن پۈتۈكنى تېپىش ئورنى: <a href=\"%1\">%1</a>"

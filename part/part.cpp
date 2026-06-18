@@ -1659,22 +1659,33 @@ bool Part::openFile()
     }
 
     if (ok) {
-        KMessageWidget::MessageType messageType;
-        QString message;
+        auto refreshMessage = [this]() {
+            KMessageWidget::MessageType messageType;
+            QString message;
 
-        std::tie(messageType, message) = SignatureGuiUtils::documentSignatureMessageWidgetText(m_document);
+            std::tie(messageType, message) = SignatureGuiUtils::documentSignatureMessageWidgetText(m_document);
 
-        if (!message.isEmpty()) {
-            if (m_embedMode == PrintPreviewMode) {
-                if (Okular::Settings::showEmbeddedContentMessages()) {
-                    m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
-                    m_signatureMessage->setVisible(true);
+            if (!message.isEmpty()) {
+                if (m_embedMode == PrintPreviewMode) {
+                    if (Okular::Settings::showEmbeddedContentMessages()) {
+                        m_signatureMessage->setText(i18n("All editing and interactive features for this document are disabled. Please save a copy and reopen to edit this document."));
+                        m_signatureMessage->setVisible(true);
+                    }
+                } else {
+                    if (Okular::Settings::showEmbeddedContentMessages() || messageType > KMessageWidget::Information) {
+                        m_signatureMessage->setMessageType(messageType);
+                        m_signatureMessage->setText(message);
+                        m_signatureMessage->setVisible(true);
+                    }
                 }
-            } else {
-                if (Okular::Settings::showEmbeddedContentMessages() || messageType > KMessageWidget::Information) {
-                    m_signatureMessage->setMessageType(messageType);
-                    m_signatureMessage->setText(message);
-                    m_signatureMessage->setVisible(true);
+            }
+        };
+        refreshMessage();
+        for (uint i = 0; i < m_document->pages(); i++) {
+            const QList<Okular::FormField *> formFields = m_document->page(i)->formFields();
+            for (Okular::FormField *f : formFields) {
+                if (f->type() == Okular::FormField::FormSignature) {
+                    static_cast<Okular::FormFieldSignature *>(f)->subscribeUpdates(refreshMessage);
                 }
             }
         }

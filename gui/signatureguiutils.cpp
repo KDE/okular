@@ -193,13 +193,17 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
         const QList<const Okular::FormFieldSignature *> signatureFormFields = SignatureGuiUtils::getSignatureFormFields(doc);
         bool allSignaturesValid = true;
         bool anySignatureUnsigned = false;
+        bool somePending = false;
         for (const Okular::FormFieldSignature *signature : signatureFormFields) {
             if (signature->signatureType() == Okular::FormFieldSignature::UnsignedSignature) {
                 anySignatureUnsigned = true;
             } else {
                 const Okular::SignatureInfo &info = signature->signatureInfo();
-                if (info.signatureStatus() != Okular::SignatureInfo::SignatureValid) {
+                if (info.signatureStatus() != Okular::SignatureInfo::SignatureValid || info.certificateStatus() != Okular::SignatureInfo::CertificateTrusted) {
                     allSignaturesValid = false;
+                }
+                if (info.certificateStatus() == Okular::SignatureInfo::CertificateVerificationInProgress) {
+                    somePending = true;
                 }
             }
         }
@@ -213,7 +217,7 @@ std::pair<KMessageWidget::MessageType, QString> documentSignatureMessageWidgetTe
                 return {KMessageWidget::Warning, i18n("This document is digitally signed. There have been changes since last signed.")};
             }
         } else {
-            return {KMessageWidget::Warning, i18n("This document is digitally signed. Some of the signatures could not be validated properly.")};
+            return {somePending ? KMessageWidget::Information : KMessageWidget::Warning, i18n("This document is digitally signed. Some of the signatures could not be validated properly.")};
         }
     }
 

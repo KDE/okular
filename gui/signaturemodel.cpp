@@ -260,12 +260,35 @@ QVariant SignatureModel::data(const QModelIndex &index, int role) const
     case Qt::DecorationRole:
         if (item->type == SignatureItem::RevisionInfo) {
             const Okular::SignatureInfo::SignatureStatus signatureStatus = form->signatureInfo().signatureStatus();
+            auto certificateStatus = form->signatureInfo().certificateStatus();
             switch (signatureStatus) {
             case Okular::SignatureInfo::SignatureValid:
-                return QIcon::fromTheme(QStringLiteral("dialog-ok"));
+                switch (certificateStatus) {
+                case Okular::SignatureInfo::CertificateTrusted:
+                    return QIcon::fromTheme(QStringLiteral("dialog-ok"));
+                case Okular::SignatureInfo::CertificateUntrustedIssuer:
+                    return QIcon::fromTheme(QStringLiteral("dialog-error"));
+                case Okular::SignatureInfo::CertificateExpired:
+                    return QIcon::fromTheme(QStringLiteral("dialog-warning"));
+                default:
+                    return QIcon::fromTheme(QStringLiteral("dialog-question"));
+                }
             case Okular::SignatureInfo::SignatureInvalid:
                 return QIcon::fromTheme(QStringLiteral("dialog-close"));
             case Okular::SignatureInfo::SignatureDigestMismatch:
+                return QIcon::fromTheme(QStringLiteral("dialog-warning"));
+            default:
+                return QIcon::fromTheme(QStringLiteral("dialog-question"));
+            }
+        }
+        if (item->type == SignatureItem::CertificateStatus) {
+            auto certificateStatus = form->signatureInfo().certificateStatus();
+            switch (certificateStatus) {
+            case Okular::SignatureInfo::CertificateTrusted:
+                return QIcon {};
+            case Okular::SignatureInfo::CertificateUntrustedIssuer:
+                return QIcon::fromTheme(QStringLiteral("dialog-error"));
+            case Okular::SignatureInfo::CertificateExpired:
                 return QIcon::fromTheme(QStringLiteral("dialog-warning"));
             default:
                 return QIcon::fromTheme(QStringLiteral("dialog-question"));

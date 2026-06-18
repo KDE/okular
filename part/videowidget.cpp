@@ -16,6 +16,11 @@
 #include <qcoreapplication.h>
 #include <qdir.h>
 #include <qevent.h>
+#if HAVE_MULTIMEDIA
+#include <qgraphicsscene.h>
+#include <qgraphicsvideoitem.h>
+#include <qgraphicsview.h>
+#endif
 #include <qlabel.h>
 #include <qlayout.h>
 #if HAVE_MULTIMEDIA
@@ -26,9 +31,6 @@
 #include <qstyleoption.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
-#if HAVE_MULTIMEDIA
-#include <qvideowidget.h>
-#endif
 #include <qwidgetaction.h>
 
 #include <KLocalizedString>
@@ -125,7 +127,9 @@ public:
     Okular::Document *document;
     Okular::NormalizedRect geom;
     QMediaPlayer *player = nullptr;
-    QVideoWidget *videoWidget = nullptr;
+    QGraphicsView *graphicsView = nullptr;
+    QGraphicsScene *graphicsScene = nullptr;
+    QGraphicsVideoItem *videoItem = nullptr;
     SeekSlider *seekSlider = nullptr;
     QToolBar *controlBar = nullptr;
     QAction *playPauseAction = nullptr;
@@ -181,7 +185,7 @@ void VideoWidget::Private::setupPlayPauseAction(PlayPauseMode mode)
 
 void VideoWidget::Private::takeSnapshot()
 {
-    QPixmap pixmap = videoWidget->grab();
+    QPixmap pixmap = graphicsView->grab();
     QImage image = pixmap.toImage();
     setPosterImage(image);
 }
@@ -274,9 +278,28 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
 
     d->player = new QMediaPlayer();
     d->player->setAudioOutput(new QAudioOutput());
-    d->videoWidget = new QVideoWidget(playerPage);
-    d->player->setVideoOutput(d->videoWidget);
-    mainlay->addWidget(d->videoWidget);
+
+    d->graphicsView = new QGraphicsView(this);
+    d->graphicsScene = new QGraphicsScene(d->graphicsView);
+    d->graphicsView->setScene(d->graphicsScene);
+    d->graphicsView->setFrameShape(QFrame::NoFrame);
+    d->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    d->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    d->videoItem = new QGraphicsVideoItem();
+    d->videoItem->setAspectRatioMode(Qt::IgnoreAspectRatio);
+    d->graphicsScene->addItem(d->videoItem);
+    d->player->setVideoOutput(d->videoItem);
+
+    connect(d->videoItem, &QGraphicsVideoItem::nativeSizeChanged, this, [this]() {
+        // Post a fake resize event to manually trigger sizing method. Otherwise the will be video super small
+        if (this->isVisible()) {
+            QResizeEvent fakeEvent(this->size(), this->size());
+            this->resizeEvent(&fakeEvent);
+        }
+    });
+
+    mainlay->addWidget(d->graphicsView);
 
     d->controlBar = new QToolBar(playerPage);
     d->controlBar->setIconSize(QSize(16, 16));
@@ -447,6 +470,20 @@ bool VideoWidget::event(QEvent *event)
 
     return QWidget::event(event);
 }
+
+void VideoWidget::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+
+    if (d->graphicsView && d->graphicsScene && d->videoItem) {
+        const QSize viewSize = d->graphicsView->viewport()->size();
+
+        d->graphicsScene->setSceneRect(0, 0, viewSize.width(), viewSize.height());
+        d->videoItem->setSize(viewSize);
+        d->videoItem->setPos(0, 0);
+    }
+}
+
 #else
 
 class VideoWidget::Private
@@ -463,6 +500,11 @@ bool VideoWidget::event(QEvent *event)
 bool VideoWidget::eventFilter(QObject *object, QEvent *event)
 {
     return QWidget::eventFilter(object, event);
+}
+
+void VideoWidget::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
 }
 
 bool VideoWidget::isPlaying() const

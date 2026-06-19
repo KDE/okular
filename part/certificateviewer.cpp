@@ -157,7 +157,16 @@ void CertificateViewer::updateText(const QModelIndex &index)
 void CertificateViewer::exportCertificate()
 {
     const QString caption = i18n("Where do you want to save this certificate?");
-    const QString path = QFileDialog::getSaveFileName(this, caption, QStringLiteral("Certificate.cer"), i18n("Certificate File (*.cer)"));
+    QString fileTypes;
+    QString fileName;
+    if (m_certificateInfo.certificateType() == Okular::CertificateInfo::PGP) {
+        fileTypes = i18n("Certificate File (*.asc)");
+        fileName = QStringLiteral("%1_public.asc").arg(m_certificateInfo.nickName());
+    } else {
+        fileTypes = i18n("Certificate File (*.cer)");
+        fileName = QStringLiteral("Certificate.cer");
+    }
+    const QString path = QFileDialog::getSaveFileName(this, caption, fileName, fileTypes);
     if (!path.isEmpty()) {
         if (!m_certificateModel->exportCertificateTo(path)) {
             KMessageBox::error(this, i18n("Could not export the certificate"));

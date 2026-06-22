@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-16 00:42+0000\n"
+"POT-Creation-Date: 2026-06-22 00:41+0000\n"
 "PO-Revision-Date: 2025-11-11 19:00+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -390,7 +390,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Nederīgs lapas drukas izmērs"
 
-#: core/document.cpp:5493 part/part.cpp:1167
+#: core/document.cpp:5493 part/part.cpp:1136
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Neizdevās atvērt „%1“. Datne nepastāv"
@@ -593,7 +593,7 @@ msgstr "Turpmāk vairs nerādīt šo paziņojumu"
 msgid "Not Available"
 msgstr "Nav pieejams"
 
-#: core/signatureutils.cpp:496
+#: core/signatureutils.cpp:510
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -603,23 +603,23 @@ msgstr ""
 "Iekšējā parakstīšanas kļūda. Lūdzu, informējiet par šo kļūdu un soļiem, kā "
 "to atkārtot. Kļūdas kods %1"
 
-#: core/signatureutils.cpp:498
+#: core/signatureutils.cpp:512
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Neizdevās parakstīt dokumentu: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:500
+#: core/signatureutils.cpp:514
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Lietotājs atcēla parakstīšanu"
 
-#: core/signatureutils.cpp:502
+#: core/signatureutils.cpp:516
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
 msgstr "Neizdevās parakstīt. Nepareiza parole"
 
-#: core/signatureutils.cpp:504
+#: core/signatureutils.cpp:518
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -629,7 +629,7 @@ msgstr ""
 "Neizdevās <filename>%1</filename> datnē rakstīt parakstītu dokumentu. "
 "Pārliecinieties, ka norādītajā mapē jums ir rakstīšanas atļaujas."
 
-#: core/signatureutils.cpp:506
+#: core/signatureutils.cpp:520
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Nezināma parakstīšanas kļūda"
@@ -660,12 +660,12 @@ msgstr "Sērijas numurs"
 msgid "Issuer"
 msgstr "Izdevējs"
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:75
+#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:88
 #, kde-format
 msgid "Issued On"
 msgstr "Izdots"
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:76
+#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:89
 #, kde-format
 msgid "Expires On"
 msgstr "Derīgs līdz"
@@ -1662,7 +1662,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1. lapa (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3206
+#: part/annotationmodel.cpp:324 part/part.cpp:3175
 #, kde-format
 msgid "Page %1"
 msgstr "%1. lapa"
@@ -1682,12 +1682,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Atvērt izlecošo piezīmi"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:265 part/part.cpp:2299 part/part.cpp:3212
+#: part/bookmarklist.cpp:265 part/part.cpp:2268 part/part.cpp:3181
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Aizvākt grāmatzīmi"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3214
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3183
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Pievienot grāmatzīmi"
@@ -1720,7 +1720,7 @@ msgstr "Kopēšana ir aizliegta ar DRM"
 msgid "&Delete"
 msgstr "&Dzēst"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:779
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:751
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2314,12 +2314,12 @@ msgstr "Parādīt visiem dokumentiem"
 msgid "Search…"
 msgstr "Meklēt…"
 
-#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3194
+#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3163
 #, kde-format
 msgid "Expand All"
 msgstr "Izvērst visu"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3195
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3164
 #, kde-format
 msgid "Collapse All"
 msgstr "Sakļaut visu"
@@ -2329,8 +2329,8 @@ msgstr "Sakļaut visu"
 msgid "Go to This Bookmark"
 msgstr "Iet uz šo grāmatzīmi"
 
-#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:710
-#: part/part.cpp:2494
+#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:682
+#: part/part.cpp:2463
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Pārdēvēt grāmatzīmi"
@@ -2361,72 +2361,93 @@ msgstr "Eksportēt…"
 msgid "General"
 msgstr "Pamata"
 
-#: part/certificateviewer.cpp:58
+#: part/certificateviewer.cpp:63
 #, kde-format
 msgid "Issued By"
 msgstr "Izdevējs"
 
-#: part/certificateviewer.cpp:61 part/certificateviewer.cpp:68
+#: part/certificateviewer.cpp:66 part/certificateviewer.cpp:76
 #, kde-format
 msgid "Common Name(CN)"
 msgstr "Vispārīgs nosaukums(CN)"
 
-#: part/certificateviewer.cpp:62 part/certificateviewer.cpp:69
+#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:77
 #, kde-format
 msgid "EMail"
 msgstr "E-pasts"
 
-#: part/certificateviewer.cpp:63 part/certificateviewer.cpp:70
+#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:80
 #, kde-format
 msgid "Organization(O)"
 msgstr "Organizācija(O)"
 
-#: part/certificateviewer.cpp:65
+#: part/certificateviewer.cpp:73
 #, kde-format
 msgid "Issued To"
 msgstr "Izdots priekš"
 
-#: part/certificateviewer.cpp:72
+#: part/certificateviewer.cpp:85
 #, kde-format
 msgid "Validity"
 msgstr "Derīgums"
 
-#: part/certificateviewer.cpp:78
+#: part/certificateviewer.cpp:89
+#, fuzzy, kde-format
+#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
+#| msgid "every "
+msgctxt "certificate that never expires"
+msgid "Never"
+msgstr "ik pēc "
+
+#: part/certificateviewer.cpp:93
 #, kde-format
 msgid "Fingerprints"
 msgstr "Digitālnospiedumi"
 
-#: part/certificateviewer.cpp:87
+#: part/certificateviewer.cpp:103
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "SHA-1 digitālnospiedums"
 
-#: part/certificateviewer.cpp:88
+#: part/certificateviewer.cpp:104
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 digitālnospiedums"
 
 #: part/certificateviewer.cpp:106
+#, fuzzy, kde-format
+#| msgid "Fingerprints"
+msgctxt "certificate key"
+msgid "Fingerprint"
+msgstr "Digitālnospiedumi"
+
+#: part/certificateviewer.cpp:115
 #, kde-format
 msgid "Details"
 msgstr "Papildinformācija"
 
-#: part/certificateviewer.cpp:107
+#: part/certificateviewer.cpp:116
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Sertifikāta dati:"
 
-#: part/certificateviewer.cpp:159
+#: part/certificateviewer.cpp:168
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Kur vēlaties saglabāt šo sertifikātu?"
 
-#: part/certificateviewer.cpp:160
+#: part/certificateviewer.cpp:172
+#, fuzzy, kde-format
+#| msgid "Certificate File (*.cer)"
+msgid "Certificate File (*.asc)"
+msgstr "Sertifikāta datne (*.cer)"
+
+#: part/certificateviewer.cpp:175
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Sertifikāta datne (*.cer)"
 
-#: part/certificateviewer.cpp:163
+#: part/certificateviewer.cpp:181
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Sertifikāta eksports neizdevās"
@@ -3654,12 +3675,12 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Regulārā izteiksme"
 
-#: part/layers.cpp:35 part/part.cpp:2342
+#: part/layers.cpp:35 part/part.cpp:2311
 #, kde-format
 msgid "Layers"
 msgstr "Slāņi"
 
-#: part/minibar.cpp:190
+#: part/minibar.cpp:192
 #, kde-format
 msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
@@ -3894,7 +3915,7 @@ msgstr[2] "Teksts (%1 rakstzīmju)"
 msgid "Copy to Clipboard"
 msgstr "Kopēt uz starpliktuvi"
 
-#: part/pageview.cpp:2946 part/pageview.cpp:3165 part/part.cpp:870
+#: part/pageview.cpp:2946 part/pageview.cpp:3165 part/part.cpp:842
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
@@ -3950,7 +3971,7 @@ msgstr "Kopēt tekstu"
 msgid "Go to '%1'"
 msgstr "Iet uz „%1“"
 
-#: part/pageview.cpp:4229 part/part.cpp:3217
+#: part/pageview.cpp:4229 part/part.cpp:3186
 #, kde-format
 msgid "Fit Width"
 msgstr "Pilnā platumā"
@@ -4302,7 +4323,7 @@ msgstr "Sīktēli"
 msgid "Annotations"
 msgstr "Anotācijas"
 
-#: part/part.cpp:456
+#: part/part.cpp:437
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4315,7 +4336,7 @@ msgstr ""
 "atbalstīta</b>.<br/>Ja vēlaties turpināt rediģēt šo dokumentu, saglabājiet "
 "to datnē, lai šo informāciju pārvietotu."
 
-#: part/part.cpp:464
+#: part/part.cpp:445
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4325,224 +4346,224 @@ msgstr ""
 "\">Nospiediet šeit, lai tās apskatītu</a> vai ejiet uz Datne -> Iegultās "
 "datnes."
 
-#: part/part.cpp:493
+#: part/part.cpp:474
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr "Notiek parakstīšana. Varat pielāgot paraksta novietojumu un izmēru"
 
-#: part/part.cpp:495
+#: part/part.cpp:476
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Pabeigt parakstīšanu"
 
-#: part/part.cpp:667
+#: part/part.cpp:645
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Iepriekšējā"
 
-#: part/part.cpp:668
+#: part/part.cpp:646
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Iet atpakaļ uz iepriekšējo lapu"
 
-#: part/part.cpp:669
+#: part/part.cpp:647
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Doties uz iepriekšējo dokumenta lapu"
 
-#: part/part.cpp:679
+#: part/part.cpp:654
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Nākamā"
 
-#: part/part.cpp:680
+#: part/part.cpp:655
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Iet uz nākamo lapu"
 
-#: part/part.cpp:681
+#: part/part.cpp:656
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Doties uz nākamo dokumenta lapu"
 
-#: part/part.cpp:692
+#: part/part.cpp:664
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Dokumenta sākums"
 
-#: part/part.cpp:693
+#: part/part.cpp:665
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Doties uz dokumenta sākumu"
 
-#: part/part.cpp:697
+#: part/part.cpp:669
 #, kde-format
 msgid "End of the document"
 msgstr "Dokumenta beigas"
 
-#: part/part.cpp:698
+#: part/part.cpp:670
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Doties uz dokumenta beigām"
 
-#: part/part.cpp:712
+#: part/part.cpp:684
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Pārdēvēt pašreizējo grāmatzīmi"
 
-#: part/part.cpp:716
+#: part/part.cpp:688
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Iepriekšējā grāmatzīme"
 
-#: part/part.cpp:718
+#: part/part.cpp:690
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Iet uz iepriekšējo grāmatzīmi"
 
-#: part/part.cpp:722
+#: part/part.cpp:694
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Nākamā grāmatzīme"
 
-#: part/part.cpp:724
+#: part/part.cpp:696
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Iet uz nākamo grāmatzīmi"
 
-#: part/part.cpp:754
+#: part/part.cpp:726
 #, kde-format
 msgid "Configure Okular…"
 msgstr "Konfigurēt „Okular“…"
 
-#: part/part.cpp:757
+#: part/part.cpp:729
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "Konfigurēt skatītāju…"
 
-#: part/part.cpp:763
+#: part/part.cpp:735
 #, kde-format
 msgid "Configure Viewer Backends…"
 msgstr "Konfigurēt skatītāja aizmugursistēmas…"
 
-#: part/part.cpp:765
+#: part/part.cpp:737
 #, kde-format
 msgid "Configure Backends…"
 msgstr "Pārvaldīt aizmugursistēmas…"
 
-#: part/part.cpp:801
+#: part/part.cpp:773
 #, kde-format
 msgid "About Backend"
 msgstr "Par aizmugursistēmu"
 
-#: part/part.cpp:806
+#: part/part.cpp:778
 #, kde-format
 msgid "Reloa&d"
 msgstr "Pārlā&dēt"
 
-#: part/part.cpp:808
+#: part/part.cpp:780
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Pārlādēt aktīvo dokumentu no diska."
 
-#: part/part.cpp:814
+#: part/part.cpp:786
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Aizvērt &meklēšanas joslu"
 
-#: part/part.cpp:819
+#: part/part.cpp:791
 #, kde-format
 msgid "Page Number"
 msgstr "Lapas numurs"
 
-#: part/part.cpp:823
+#: part/part.cpp:795
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Pārvaldīt krāsu režīmus…"
 
-#: part/part.cpp:862 part/part.cpp:3222
+#: part/part.cpp:834 part/part.cpp:3191
 #, fuzzy, kde-format
 #| msgctxt "Change an annotation's size"
 #| msgid "adjust annotation"
 msgid "Paste Annotation"
 msgstr "pielāgot anotāciju"
 
-#: part/part.cpp:880
+#: part/part.cpp:852
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Iezīmēt visu tekstu šajā lapā"
 
-#: part/part.cpp:893
+#: part/part.cpp:865
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Rādīt &sānjoslu"
 
-#: part/part.cpp:902
+#: part/part.cpp:874
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Rādīt la&pas joslu"
 
-#: part/part.cpp:908
+#: part/part.cpp:880
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Rādīt &parakstu paneli"
 
-#: part/part.cpp:919
+#: part/part.cpp:891
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&Iegultās datnes"
 
-#: part/part.cpp:925
+#: part/part.cpp:897
 #, kde-format
 msgid "E&xport As"
 msgstr "&Eksportēt kā"
 
-#: part/part.cpp:937
+#: part/part.cpp:909
 #, kde-format
 msgid "S&hare"
 msgstr "&Kopīgot"
 
-#: part/part.cpp:946
+#: part/part.cpp:918
 #, kde-format
 msgid "P&resentation"
 msgstr "P&rezentācija"
 
-#: part/part.cpp:953
+#: part/part.cpp:925
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Atvērt &saturošo mapi"
 
-#: part/part.cpp:967
+#: part/part.cpp:939
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Importēt „PostScript“ kā PDF…"
 
-#: part/part.cpp:971
+#: part/part.cpp:943
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Pārslēgt melnā ekrāna režīmu"
 
-#: part/part.cpp:979
+#: part/part.cpp:951
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Dzēst zīmējumu"
 
-#: part/part.cpp:984
+#: part/part.cpp:956
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "Pārvaldīt anotācijas…"
 
-#: part/part.cpp:989
+#: part/part.cpp:961
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Atskaņot/pauzēt prezentāciju"
 
-#: part/part.cpp:1144
+#: part/part.cpp:1113
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4553,37 +4574,37 @@ msgstr ""
 "saglabāt.\n"
 "Visas veiktās modifikācijas pazudīs pēc „Okular“ aizvēršanas."
 
-#: part/part.cpp:1145
+#: part/part.cpp:1114
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokumentu nevar saglabāt"
 
-#: part/part.cpp:1174
+#: part/part.cpp:1143
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Neizdevās atvērt „%1“ (%2) "
 
-#: part/part.cpp:1227
+#: part/part.cpp:1196
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 ielāde ir atcelta."
 
-#: part/part.cpp:1243
+#: part/part.cpp:1212
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Neizdevās atvērt %1. Iemesls: %2"
 
-#: part/part.cpp:1271
+#: part/part.cpp:1240
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Pārvaldīt skatītāja aizmugursistēmas"
 
-#: part/part.cpp:1273
+#: part/part.cpp:1242
 #, kde-format
 msgid "Configure Backends"
 msgstr "Pārvaldīt aizmugursistēmas"
 
-#: part/part.cpp:1358
+#: part/part.cpp:1327
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4591,42 +4612,42 @@ msgid ""
 msgstr ""
 "Nav atrasta programma „ps2pdf“, kas „Okular“ ir vajadzīga PS datņu importam."
 
-#: part/part.cpp:1358
+#: part/part.cpp:1327
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "neizdevās atrast ps2pdf"
 
-#: part/part.cpp:1363
+#: part/part.cpp:1332
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "„PostScript“ datnes (%1)"
 
-#: part/part.cpp:1379
+#: part/part.cpp:1348
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importē PS datni kā PDF (tas var prasīt kādu laiku)…"
 
-#: part/part.cpp:1511
+#: part/part.cpp:1480
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Ievadiet paroli, lai atvērtu šo dokumentu:"
 
-#: part/part.cpp:1513
+#: part/part.cpp:1482
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Parole nav pareiza. Mēģiniet vēlreiz:"
 
-#: part/part.cpp:1524
+#: part/part.cpp:1493
 #, kde-format
 msgid "Document Password"
 msgstr "Dokumenta parole"
 
-#: part/part.cpp:1647
+#: part/part.cpp:1616
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "Šim dokumentam ir XFA formas lauki, kas šobrīd <b>nav atbalstītas</b>."
 
-#: part/part.cpp:1654
+#: part/part.cpp:1623
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4635,7 +4656,7 @@ msgstr ""
 "Šis dokuments satur formas. Lai ar tām darbotos, nospiediet uz pogas vai "
 "izmantojiet „Skats —> Rādīt formas“."
 
-#: part/part.cpp:1670
+#: part/part.cpp:1639
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4644,7 +4665,7 @@ msgstr ""
 "Šim dokumentam ir izslēgtas visas rediģēšanas un interaktīvās iespējas. Lai "
 "dokumentu rediģētu, saglabājiet tā kopiju un atveriet to no jauna."
 
-#: part/part.cpp:1758
+#: part/part.cpp:1727
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4653,27 +4674,27 @@ msgstr ""
 "Šis dokuments pieprasa, lai tiktu parādīts pilnekrāna režīmā.\n"
 "Vai tiešām vēlaties atstāt normālo režīmu un ieslēgt prezentācijas režīmu?"
 
-#: part/part.cpp:1760
+#: part/part.cpp:1729
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Pieprasījuma mainīt skata režīmu"
 
-#: part/part.cpp:1761
+#: part/part.cpp:1730
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Ieiet prezentācijas režīmā"
 
-#: part/part.cpp:1762
+#: part/part.cpp:1731
 #, kde-format
 msgid "Deny Request"
 msgstr "Noraidīt pieprasījumu"
 
-#: part/part.cpp:1852
+#: part/part.cpp:1821
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Neizdevās atvērt %1. %2"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1851
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4687,22 +4708,22 @@ msgstr ""
 "tām, ko ir veikusi cita programma.<nl/><nl/>Vai vēlaties turpināt pārlādēt "
 "datni?"
 
-#: part/part.cpp:1886 part/part.cpp:1896
+#: part/part.cpp:1855 part/part.cpp:1865
 #, kde-format
 msgid "File Changed"
 msgstr "Datne ir mainīta"
 
-#: part/part.cpp:1887
+#: part/part.cpp:1856
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Turpināt pārlādēšanu"
 
-#: part/part.cpp:1888
+#: part/part.cpp:1857
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Atcelt pārlādēšanu"
 
-#: part/part.cpp:1892
+#: part/part.cpp:1861
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4716,27 +4737,27 @@ msgstr ""
 "tām, ko ir veikusi cita programma.<nl/><nl/>Vai vēlaties turpināt pārlādēt "
 "datni?"
 
-#: part/part.cpp:1897
+#: part/part.cpp:1866
 #, kde-format
 msgid "Continue Closing"
 msgstr "Turpināt aizvēršanu"
 
-#: part/part.cpp:1898
+#: part/part.cpp:1867
 #, kde-format
 msgid "Abort Closing"
 msgstr "Atcelt aizvēršanu"
 
-#: part/part.cpp:1905
+#: part/part.cpp:1874
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Vai vēlaties saglabāt vai noraidīt veiktās izmaiņas datnē „%1“?"
 
-#: part/part.cpp:1905
+#: part/part.cpp:1874
 #, kde-format
 msgid "Close Document"
 msgstr "Aizvērt dokumentu"
 
-#: part/part.cpp:2037
+#: part/part.cpp:2006
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4745,7 +4766,7 @@ msgstr ""
 "Šī saite rāda uz dokumenta aizvēršanas darbību un tas nestrādā, izmantojot "
 "iegulto skatītāju."
 
-#: part/part.cpp:2043
+#: part/part.cpp:2012
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4754,59 +4775,59 @@ msgstr ""
 "Šī saite rāda uz programmas aizvēršanas darbību un tas nestrādā, izmantojot "
 "iegulto skatītāju."
 
-#: part/part.cpp:2135 part/part.cpp:2153
+#: part/part.cpp:2104 part/part.cpp:2122
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Pārlādē dokumentu…"
 
-#: part/part.cpp:2322 part/toc.cpp:38
+#: part/part.cpp:2291 part/toc.cpp:38
 #, kde-format
 msgid "Contents"
 msgstr "Saturs"
 
-#: part/part.cpp:2351 part/signaturepanel.cpp:47
+#: part/part.cpp:2320 part/signaturepanel.cpp:47
 #, kde-format
 msgid "Signatures"
 msgstr "Paraksti"
 
-#: part/part.cpp:2378
+#: part/part.cpp:2347
 #, kde-format
 msgid "Go to Page"
 msgstr "Iet uz lapu"
 
-#: part/part.cpp:2401
+#: part/part.cpp:2370
 #, kde-format
 msgid "&Page:"
 msgstr "&Lapa:"
 
-#: part/part.cpp:2494
+#: part/part.cpp:2463
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Ievadiet grāmatzīmes jauno nosaukumu:"
 
-#: part/part.cpp:2540
+#: part/part.cpp:2509
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Pārdēvēt šo grāmatzīmi"
 
-#: part/part.cpp:2543
+#: part/part.cpp:2512
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Noņemt šo grāmatzīmi"
 
-#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3534
+#: part/part.cpp:2598 part/part.cpp:2599 part/part.cpp:3503
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2637 part/revisionviewer.cpp:44
+#: part/part.cpp:2606 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Saglabāt kā"
 
-#: part/part.cpp:2654
+#: part/part.cpp:2623
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4816,18 +4837,18 @@ msgstr ""
 "ar paplašinājumu „%1“. Tas nav atļauts, vai vēlaties izvēlēties jaunu "
 "nosaukumu?"
 
-#: part/part.cpp:2655
+#: part/part.cpp:2624
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Neatbalstīts pagarinājums"
 
-#: part/part.cpp:2656
+#: part/part.cpp:2625
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Izvēlieties jaunu nosaukumu"
 
-#: part/part.cpp:2699
+#: part/part.cpp:2668
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4839,17 +4860,17 @@ msgstr ""
 "saglabāsiet, tad šīs citas programmas veiktās izmaiņas būs zudušas. Vai "
 "tiešām vēlaties turpināt?"
 
-#: part/part.cpp:2702 part/part.cpp:2721 part/part.cpp:2773
+#: part/part.cpp:2671 part/part.cpp:2690 part/part.cpp:2742
 #, kde-format
 msgid "Save - Warning"
 msgstr "Saglabāt — brīdinājums"
 
-#: part/part.cpp:2704
+#: part/part.cpp:2673
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Saglabāt kopiju citur"
 
-#: part/part.cpp:2720
+#: part/part.cpp:2689
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4860,12 +4881,12 @@ msgstr ""
 "tiks lūgts vēlreiz ievadīt paroli, kā arī būs zudusi atsaukšanas vēsture.<br/"
 ">Vai vēlaties turpināt?"
 
-#: part/part.cpp:2747
+#: part/part.cpp:2716
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Neizdevās atvērt pagaidu datni saglabāšanai."
 
-#: part/part.cpp:2760
+#: part/part.cpp:2729
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4875,7 +4896,7 @@ msgstr ""
 "Neizdevās pārrakstīt <filename>%1</filename>, jo šī datne ir tikai lasāma. "
 "Mēģiniet saglabāt citā vietā vai mainīt šīs datnes atļaujas."
 
-#: part/part.cpp:2772
+#: part/part.cpp:2741
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4884,22 +4905,22 @@ msgstr ""
 "Pašreizējais dokumenta formāts pieprasa datni pēc saglabāšanas pārlādēt. "
 "Jūsu atsaukšanas vēsture pazudīs.<br/>Vai vēlaties turpināt?"
 
-#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3549
+#: part/part.cpp:2756 part/part.cpp:2825 part/part.cpp:2846 part/part.cpp:3518
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Neizdevās saglabāt datni mapē „%1“. Mēģiniet saglabāt citā vietā."
 
-#: part/part.cpp:2800
+#: part/part.cpp:2769
 #, kde-format
 msgid "Filled form contents"
 msgstr "Aizpildīto veidņu saturs"
 
-#: part/part.cpp:2803
+#: part/part.cpp:2772
 #, kde-format
 msgid "User annotations"
 msgstr "Lietotāja anotācijas"
 
-#: part/part.cpp:2808
+#: part/part.cpp:2777
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4910,17 +4931,17 @@ msgstr ""
 "neatbalsta šo elementu saglabāšanu. Izmantojiet <i>„Okular“ dokumentu "
 "arhīva</i> formātu, lai tos saglabātu."
 
-#: part/part.cpp:2812 part/part.cpp:2834
+#: part/part.cpp:2781 part/part.cpp:2803
 #, kde-format
 msgid "Warning"
 msgstr "Brīdinājums"
 
-#: part/part.cpp:2813 part/part.cpp:2835
+#: part/part.cpp:2782 part/part.cpp:2804
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Saglabāt kā „Okular“ dokumentu arhīvu…"
 
-#: part/part.cpp:2825
+#: part/part.cpp:2794
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4933,7 +4954,7 @@ msgstr ""
 "formātu, lai tos saglabātu. Vai klikšķiniet <i>Turpināt</i>, lai saglabātu "
 "dokumentu un izmestu šos elementus."
 
-#: part/part.cpp:2828
+#: part/part.cpp:2797
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4947,22 +4968,22 @@ msgstr ""
 "dokumentu saglabātu, tomēr tādējādi zaudēsiet šos elementus, kā arī "
 "atsaukšanas darbību vēsturi."
 
-#: part/part.cpp:2830
+#: part/part.cpp:2799
 #, kde-format
 msgid "Continue"
 msgstr "Turpināt"
 
-#: part/part.cpp:2830
+#: part/part.cpp:2799
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Turpināt zaudēt izmaiņas"
 
-#: part/part.cpp:2858
+#: part/part.cpp:2827
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Datni neizdevās saglabāt mapē „%1“. %2"
 
-#: part/part.cpp:2897
+#: part/part.cpp:2866
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4973,7 +4994,7 @@ msgstr ""
 "\n"
 "Dokuments vairs nepastāv."
 
-#: part/part.cpp:2933
+#: part/part.cpp:2902
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4982,44 +5003,44 @@ msgstr ""
 "Datni neizdevās saglabāt mapē „%1“. Kļūda: „%2“. Mēģiniet saglabāt citā "
 "vietā."
 
-#: part/part.cpp:3192
+#: part/part.cpp:3161
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Izvērst visu sadaļu"
 
-#: part/part.cpp:3193
+#: part/part.cpp:3162
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Sakļaut visu sadaļu"
 
-#: part/part.cpp:3209
+#: part/part.cpp:3178
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinhronizēt sīktēlu ar lapu"
 
-#: part/part.cpp:3241
+#: part/part.cpp:3210
 #, kde-format
 msgid "Tools"
 msgstr "Rīki"
 
-#: part/part.cpp:3429
+#: part/part.cpp:3398
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Izrunāt"
 
-#: part/part.cpp:3587
+#: part/part.cpp:3556
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Drukāt"
 
-#: part/part.cpp:3650
+#: part/part.cpp:3619
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Šī dokumenta drukāšana nav atļauta."
 
-#: part/part.cpp:3663
+#: part/part.cpp:3632
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5027,7 +5048,7 @@ msgstr ""
 "Neizdevās izdrukāt dokumentu. Nezināma kļūda. Ziņojiet par to lapā bugs.kde."
 "org"
 
-#: part/part.cpp:3665
+#: part/part.cpp:3634
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5036,17 +5057,17 @@ msgstr ""
 "Neizdevās izdrukāt dokumentu. Sīkāka kļūda ir „%1“. Ziņojiet par to lapā "
 "bugs.kde.org"
 
-#: part/part.cpp:3754
+#: part/part.cpp:3723
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Iet uz vietu, kur bijāt iepriekš"
 
-#: part/part.cpp:3758
+#: part/part.cpp:3727
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Iet uz vietu, kur bijāt vēlāk"
 
-#: part/part.cpp:3783
+#: part/part.cpp:3752
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5055,7 +5076,7 @@ msgstr ""
 "<qt><strong>Datnes kļūda!</strong> Neizdevās izveidot pagaidu datni "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3795
+#: part/part.cpp:3764
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5064,7 +5085,7 @@ msgstr ""
 "<qt><strong>Datnes kļūda!</strong> Neizdevās atvērt datni <nobr><strong>%1</"
 "strong></nobr> atspiešanai. Datne netiks ielādēta.</qt>"
 
-#: part/part.cpp:3799
+#: part/part.cpp:3768
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5077,7 +5098,7 @@ msgstr ""
 "klikšķinot peles labo pogu uz datnes un izvēloties „Īpašības“, bet pēc tam "
 "ejot uz cilni „Atļaujas“.</qt>"
 
-#: part/part.cpp:3821
+#: part/part.cpp:3790
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5086,7 +5107,7 @@ msgstr ""
 "<qt><strong>Datnes kļūda!</strong> Neizdevās atspiest datni <nobr><strong>"
 "%1</strong></nobr>. Datne netiks ielādēta.</qt>"
 
-#: part/part.cpp:3825
+#: part/part.cpp:3794
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5095,27 +5116,27 @@ msgstr ""
 "<qt>Šī kļūda parasti gadās ja datne ir bojāta. Ja vēlaties pārliecināties, "
 "mēģiniet datni atspiest, izmantojot komandrindas rīkus.</qt>"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3820
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nav grāmatzīmju"
 
-#: part/part.cpp:3922
+#: part/part.cpp:3891
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Radās kļūme, mēģinot kopīgot dokumentu: %1"
 
-#: part/part.cpp:3922 part/part.cpp:3928
+#: part/part.cpp:3891 part/part.cpp:3897
 #, kde-format
 msgid "Share"
 msgstr "Kopīgot"
 
-#: part/part.cpp:3926
+#: part/part.cpp:3895
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumenta kopīgošana veikta sekmīgi"
 
-#: part/part.cpp:3928
+#: part/part.cpp:3897
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Dokumentu, kuru kopīgojāt, varat atrast: <a href=\"%1\">%1</a>"
@@ -6180,10 +6201,6 @@ msgstr "Paslēpt sveiciena ekrānu"
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"
 #~ msgstr "%"
-
-#~ msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#~ msgid "every "
-#~ msgstr "ik pēc "
 
 #~ msgctxt "Suffix for the pen width, eg '10 px'"
 #~ msgid " px"

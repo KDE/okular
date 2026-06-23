@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 06:20+0200\n"
+"PO-Revision-Date: 2026-06-22 03:43+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2378,12 +2378,10 @@ msgid "Validity"
 msgstr "სისწორე"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "ყოველ "
+msgstr "არასდროს"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2401,11 +2399,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 ანაბეჭდი"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "ანაბეჭდები"
+msgstr "თითის ანაბეჭდი"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2423,10 +2420,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "სად გნებავთ ამ სერტიფიკატის შენახვა?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "სერტიფიკატის ფაილი (* .cer)"
+msgstr "სერტიფიკატის ფაილი (* .asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

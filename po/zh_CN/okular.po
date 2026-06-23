@@ -2377,11 +2377,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 指纹"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "指纹"
+msgstr ""
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2399,10 +2398,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "你想要将此证书保存到哪个位置？"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "证书文件 (*.cer)"
+msgstr ""
 
 #: part/certificateviewer.cpp:175
 #, kde-format

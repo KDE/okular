@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 08:33+0200\n"
+"PO-Revision-Date: 2026-06-22 12:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -2389,7 +2389,7 @@ msgstr "Validesa"
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2407,11 +2407,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Empremta digital SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Empremtes digitals"
+msgstr "Empremta digital"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2429,10 +2428,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "A on voleu desar aquest certificat?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Fitxer de certificat (*.cer)"
+msgstr "Fitxer de certificat (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-28 22:13+0200\n"
+"PO-Revision-Date: 2026-06-22 11:38+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,74,-1,-1,-1\n"
-"X-Generator: Lokalize 26.04.1\n"
+"X-Generator: Lokalize 26.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2381,7 +2381,7 @@ msgstr "Валидност"
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr ""
+msgstr "Никога"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2399,11 +2399,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Отпечатък SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Отпечатъци"
+msgstr "Отпечатък"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2421,10 +2420,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Къде искате да запазите този сертификат?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Сертификатен файл (* .cer)"
+msgstr "Сертификатен файл (* .asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 08:28+0300\n"
+"PO-Revision-Date: 2026-06-22 16:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2401,12 +2401,10 @@ msgid "Validity"
 msgstr "Чинність"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "кожні"
+msgstr "Ніколи"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2424,11 +2422,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Відбиток SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Відбитки"
+msgstr "Відбиток"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2446,10 +2443,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Де ви хочете зберегти цей сертифікат?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "файл сертифіката (*.cer)"
+msgstr "файл сертифіката (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

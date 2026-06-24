@@ -692,12 +692,13 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     if (!PDFSettings::useDefaultCertDB()) {
         Poppler::setNSSDir(QUrl(PDFSettings::dBCertificatePath()).toLocalFile());
     }
-    auto activeBackend = PDFSettingsWidget::settingStringToPopplerEnum(PDFSettings::signatureBackend());
-    if (activeBackend) {
-        Poppler::setActiveCryptoSignBackend(activeBackend.value());
-        if (activeBackend == Poppler::CryptoSignBackend::GPG) {
-            setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
-        }
+    auto configuredBackend = PDFSettingsWidget::settingStringToPopplerEnum(PDFSettings::signatureBackend());
+    if (configuredBackend) {
+        Poppler::setActiveCryptoSignBackend(configuredBackend.value());
+    }
+    auto activeBackend = Poppler::activeCryptoSignBackend();
+    if (activeBackend == Poppler::CryptoSignBackend::GPG) {
+        setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
     }
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     Poppler::setPgpSignaturesAllowed(PDFSettings::enablePgp());

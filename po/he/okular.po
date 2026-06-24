@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 08:26+0300\n"
+"PO-Revision-Date: 2026-06-23 08:38+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 26.04.0\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2378,12 +2378,10 @@ msgid "Validity"
 msgstr "תוקף"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "כל "
+msgstr "אף פעם לא"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2401,11 +2399,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "טביעת אצבע SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "טביעות אצבע"
+msgstr "טביעת אצבע"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2423,10 +2420,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "איפה לשמור את האישור הזה?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "קובץ אישור (‎*.cer)"
+msgstr "קובץ אישור (‎*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

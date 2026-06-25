@@ -668,7 +668,6 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     , docEmbeddedFilesDirty(true)
     , nextFontPage(0)
     , annotProxy(nullptr)
-    , certStore(nullptr)
 {
     setFeature(Threaded);
     setFeature(TextExtraction);
@@ -708,7 +707,6 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
 PDFGenerator::~PDFGenerator()
 {
     delete pdfOptionsPage;
-    delete certStore;
     for (auto it = m_additionalDocumentActions.begin(); it != m_additionalDocumentActions.end(); it++) {
         delete it.value();
     }
@@ -2241,10 +2239,10 @@ std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSi
 Okular::CertificateStore *PDFGenerator::certificateStore() const
 {
     if (!certStore) {
-        certStore = new PopplerCertificateStore();
+        certStore = std::make_unique<PopplerCertificateStore>();
     }
 
-    return certStore;
+    return certStore.get();
 }
 
 void PDFGenerator::xrefReconstructionHandler()

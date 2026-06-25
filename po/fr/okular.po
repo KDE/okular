@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-14 21:29+0200\n"
+"PO-Revision-Date: 2026-06-23 18:22+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -2414,12 +2414,10 @@ msgid "Validity"
 msgstr "Validité"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "toutes les "
+msgstr "Jamais"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2437,11 +2435,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Empreinte SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Empreintes numériques"
+msgstr "Empreinte numérique"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2459,10 +2456,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Où voulez-vous enregistrer ce certificat ?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Fichier de certificat (*.cer)"
+msgstr "Fichier de certificat (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

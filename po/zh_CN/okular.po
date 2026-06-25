@@ -2359,7 +2359,7 @@ msgstr "有效期"
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr ""
+msgstr "永不过期"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2380,7 +2380,7 @@ msgstr "SHA-256 指纹"
 #, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr ""
+msgstr "指纹"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2400,7 +2400,7 @@ msgstr "你想要将此证书保存到哪个位置？"
 #: part/certificateviewer.cpp:172
 #, kde-format
 msgid "Certificate File (*.asc)"
-msgstr ""
+msgstr "证书文件 (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

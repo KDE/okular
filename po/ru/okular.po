@@ -1,5 +1,5 @@
 # translation of okular.po to Russian
-# SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2023, 2024, 2025, 2026 Alexander Yavorsky <kekcuha@gmail.com>
+# SPDX-FileCopyrightText: 2018-2021, 2023-2026 Alexander Yavorsky <kekcuha@gmail.com>
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025, 2026 Olesya Gerasimenko <translation-team@basealt.ru>
 # Nick Shaforostoff <shaforostoff@kde.ru>, 2004, 2007, 2008, 2009.
 # Oleg Batalov <olegbatalov@mail.ru>, 2004.
@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-06-16 08:36+0300\n"
-"Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
-"Language-Team: Basealt Translation Team\n"
+"PO-Revision-Date: 2026-06-24 23:53+0200\n"
+"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 26.04.2\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -2406,12 +2406,10 @@ msgid "Validity"
 msgstr "Срок действия"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "через "
+msgstr "Никогда"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2429,11 +2427,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Отпечаток SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Отпечатки"
+msgstr "Отпечаток"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2451,10 +2448,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Выбор расположения для сохранения сертификата"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Файл сертификата (*.cer)"
+msgstr "Файл сертификата (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

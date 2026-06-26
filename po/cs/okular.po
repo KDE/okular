@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 11:37+0200\n"
+"PO-Revision-Date: 2026-06-25 12:16+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 26.04.1\n"
+"X-Generator: Lokalize 26.04.2\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -2392,7 +2392,7 @@ msgstr "Platnost"
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr ""
+msgstr "Nikdy"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2410,11 +2410,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Otisk SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Otisky"
+msgstr "Otisk"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2432,10 +2431,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Kam chcete uložit tento certifikát?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Soubor s certifikátem (*.cer)"
+msgstr "Soubor s certifikátem (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

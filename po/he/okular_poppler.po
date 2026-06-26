@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-25 00:42+0000\n"
+"POT-Creation-Date: 2026-06-26 00:43+0000\n"
 "PO-Revision-Date: 2025-07-11 10:02+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -59,7 +59,7 @@ msgid "Enhance thin lines:"
 msgstr "חידוד קווים דקים:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1024
 #, kde-format
 msgid "No"
 msgstr "ללא"
@@ -225,43 +225,43 @@ msgstr "מצב קנה־מידה לעמודים המודפסים"
 msgid "Scale mode:"
 msgstr "מצב קנה־מידה:"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1022
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF בגרסה %1.%2"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1022
 #, kde-format
 msgid "Format"
 msgstr "תסדיר"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1023
 #, kde-format
 msgid "Encrypted"
 msgstr "מוצפן"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1023
 #, kde-format
 msgid "Unencrypted"
 msgstr "גלוי"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1023
 #, kde-format
 msgid "Security"
 msgstr "אבטחה"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Yes"
 msgstr "כן"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Optimized"
 msgstr "ממוטבת"
 
-#: generator_pdf.cpp:1490
+#: generator_pdf.cpp:1488
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -272,12 +272,12 @@ msgstr ""
 "\n"
 "תאריך: %2"
 
-#: generator_pdf.cpp:1709
+#: generator_pdf.cpp:1707
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "נעשה שימוש ב־Poppler %1"
 
-#: generator_pdf.cpp:1711
+#: generator_pdf.cpp:1709
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -288,27 +288,27 @@ msgstr ""
 "\n"
 "נבנה כנגד Poppler %2"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1744
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1744
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "הגדרות מנגנון PDF"
 
-#: generator_pdf.cpp:2185 generator_pdf.cpp:2213
+#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "הכתיבה לקובץ הזמני נכשלה"
 
-#: generator_pdf.cpp:2235
+#: generator_pdf.cpp:2233
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "שינוי שם הקובץ הזמני נכשל"
 
-#: generator_pdf.cpp:2255
+#: generator_pdf.cpp:2253
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

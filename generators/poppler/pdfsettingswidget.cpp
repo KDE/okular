@@ -67,9 +67,9 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 #endif
 
     auto backends = Poppler::availableCryptoSignBackends();
+    auto currentBackend = settingStringToPopplerEnum(PDFSettings::self()->signatureBackend());
     if (!backends.empty()) {
         // Let's try get the currently stored backend:
-        auto currentBackend = settingStringToPopplerEnum(PDFSettings::self()->signatureBackend());
         if (!currentBackend) {
             currentBackend = Poppler::activeCryptoSignBackend();
         }
@@ -105,6 +105,8 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             m_pdfsw.kcfg_EnablePgp->setVisible(backendEnum == Poppler::CryptoSignBackend::GPG);
 #endif
             m_certificatesAsked = false;
+            m_listCertsButton->setVisible(backendEnum == Poppler::CryptoSignBackend::NSS);
+            m_tree->setVisible(backendEnum != Poppler::CryptoSignBackend::NSS);
             update();
         });
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
@@ -148,6 +150,16 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 
         m_pdfsw.certificatesPlaceholder->addWidget(m_tree);
 
+        m_listCertsButton = new QPushButton(i18nc("@button", "List certificates"));
+        m_pdfsw.certificatesPlaceholder->addWidget(m_listCertsButton);
+        connect(m_listCertsButton, &QPushButton::clicked, this, [this]() {
+            m_listCertsButton->hide();
+            m_tree->show();
+        });
+
+        m_listCertsButton->setVisible(currentBackend == Poppler::CryptoSignBackend::NSS);
+        m_tree->setVisible(currentBackend != Poppler::CryptoSignBackend::NSS);
+
         connect(PDFSettings::self(), &PDFSettings::useDefaultDBChanged, this, &PDFSettingsWidget::warnRestartNeeded);
         connect(PDFSettings::self(), &PDFSettings::dBCertificatePathChanged, this, [this] {
             if (!PDFSettings::useDefaultCertDB()) {
@@ -168,7 +180,7 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 
 bool PDFSettingsWidget::event(QEvent *e)
 {
-    if (m_tree && e->type() == QEvent::Paint && !m_certificatesAsked) {
+    if (m_tree && m_tree->isVisible() && e->type() == QEvent::Paint && !m_certificatesAsked) {
         m_certificatesAsked = true;
         m_tree->clear();
 

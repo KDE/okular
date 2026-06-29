@@ -167,7 +167,7 @@ public Q_SLOTS: // dbus
     Q_SCRIPTABLE uint currentPage();
     Q_SCRIPTABLE QString currentDocument();
     Q_SCRIPTABLE QString documentMetaData(const QString &metaData) const;
-    Q_SCRIPTABLE void slotPreferences();
+    Q_SCRIPTABLE KConfigDialog *slotPreferences();
     Q_SCRIPTABLE void slotFind();
     Q_SCRIPTABLE void slotPrintPreview();
     Q_SCRIPTABLE void slotPreviousPage();
@@ -278,7 +278,6 @@ public Q_SLOTS:
     void slotFileDirty(const QString &);
     bool slotAttemptReload(bool oneShot = false, const QUrl &newUrl = QUrl());
     void psTransformEnded(int, QProcess::ExitStatus);
-    KConfigDialog *slotGeneratorPreferences();
 
     void errorMessage(const QString &message, int duration = 0);
     void warningMessage(const QString &message, int duration = -1);

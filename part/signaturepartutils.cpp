@@ -264,7 +264,21 @@ QString getFileNameForNewSignedFile(PageView *pageView, Okular::Document *doc)
     const QString localFilePathIfAny = currentFileUrl.isLocalFile() ? QFileInfo(currentFileUrl.toLocalFile()).canonicalPath() + QLatin1Char('/') : QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     const QString newFileName = localFilePathIfAny + getSuggestedFileNameForSignedFile(currentFileUrl.fileName(), mimeType.preferredSuffix());
 
-    return QFileDialog::getSaveFileName(pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
+    for (int retries = 0; retries < 3; retries++) {
+        // On windows, saving to the current open document does not work because
+        // poppler keeps the file open and replacing open files on windows
+        // is not possible
+        auto fileName = QFileDialog::getSaveFileName(pageView, i18n("Save Signed File As"), newFileName, mimeTypeFilter);
+        if (QUrl::fromLocalFile(fileName) == doc->currentDocument()) {
+            KMessageBox::error(pageView, i18nc("Error message", "The original file cannot be overwritten. Please choose a different filename"));
+            if (retries == 2) {
+                return QString {};
+            }
+            continue;
+        }
+        return fileName;
+    }
+    return QString {};
 }
 
 void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pageView, Okular::Document *doc)

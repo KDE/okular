@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-10 02:44+0000\n"
-"PO-Revision-Date: 2026-04-18 16:12+0200\n"
+"PO-Revision-Date: 2026-06-28 12:09+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -148,8 +148,7 @@ msgid "Open external file"
 msgstr "Opna ekstern fil"
 
 #: core/action.cpp:197
-#, fuzzy, kde-format
-#| msgid "Execute '%1'..."
+#, kde-format
 msgid "Execute '%1'…"
 msgstr "Køyr «%1» …"
 
@@ -201,17 +200,15 @@ msgstr "Avslutt presentasjon"
 #: core/action.cpp:312
 #, kde-format
 msgid "Find…"
-msgstr ""
+msgstr "Finn …"
 
 #: core/action.cpp:314
-#, fuzzy, kde-format
-#| msgid "Go to Page"
+#, kde-format
 msgid "Go To Page…"
-msgstr "Gå til side"
+msgstr "Gå til side …"
 
 #: core/action.cpp:365
-#, fuzzy, kde-format
-#| msgid "Play sound..."
+#, kde-format
 msgid "Play sound…"
 msgstr "Spel lyd …"
 
@@ -221,10 +218,9 @@ msgid "JavaScript Script"
 msgstr "Java-skript"
 
 #: core/action.cpp:483
-#, fuzzy, kde-format
-#| msgid "Play movie"
+#, kde-format
 msgid "Play movie…"
-msgstr "Spel film"
+msgstr "Spel film …"
 
 #: core/action.cpp:554
 #, kde-format
@@ -315,7 +311,7 @@ msgstr "Fann ikkje noko programtillegg for å handtera dokumentet."
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
-msgstr ""
+msgstr "Signering er ikkje implementert for denne dokumenttypen"
 
 #: core/document.cpp:3557
 #, kde-format
@@ -544,10 +540,9 @@ msgid "edit form button states"
 msgstr "rediger tilstandard for skjemaknappar"
 
 #: core/generator.cpp:790
-#, fuzzy, kde-format
-#| msgid "Plain &Text..."
+#, kde-format
 msgid "Plain &Text…"
-msgstr "Rein&tekst …"
+msgstr "&Reintekst …"
 
 #: core/generator.cpp:793
 #, kde-format
@@ -613,7 +608,7 @@ msgstr "Klarte ikkje opna fila  <filename>%1</filename>"
 #: core/signatureutils.cpp:500
 #, kde-format
 msgid "Signing cancelled by user"
-msgstr ""
+msgstr "Signering avbroten av brukar"
 
 #: core/signatureutils.cpp:502
 #, kde-format
@@ -727,10 +722,9 @@ msgid "Inline Note"
 msgstr "Notatrute"
 
 #: gui/guiutils.cpp:56
-#, fuzzy, kde-format
-#| msgid "Polygon with Comment"
+#, kde-format
 msgid "Arrow with Comment"
-msgstr "Polygon med merknad"
+msgstr "Pil med merknad"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -761,10 +755,9 @@ msgid "Polygon"
 msgstr "Mangekant"
 
 #: gui/guiutils.cpp:71
-#, fuzzy, kde-format
-#| msgid "Stamp with Comment"
+#, kde-format
 msgid "Rectangle with Comment"
-msgstr "Stempel med merknad"
+msgstr "Rektangel med merknad"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1484
@@ -773,10 +766,9 @@ msgid "Rectangle"
 msgstr "Rektangel"
 
 #: gui/guiutils.cpp:74
-#, fuzzy, kde-format
-#| msgid "Underline with Comment"
+#, kde-format
 msgid "Ellipse with Comment"
-msgstr "Understreking med merknad"
+msgstr "Ellipse med merknad"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1472
@@ -1185,48 +1177,45 @@ msgid "Location: %1"
 msgstr "Stad: %1"
 
 #: gui/signaturemodel.cpp:185
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Digital signature type"
 msgid "PGP Signature"
-msgstr "Signaturar"
+msgstr "PGP-signatur"
 
 #: gui/signaturemodel.cpp:187
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7"
-msgstr ""
+msgstr "Adobe PKCS7"
 
 #: gui/signaturemodel.cpp:189
 #, kde-format
 msgctxt "Digital signature type"
 msgid "Adobe PKCS7 Sha1"
-msgstr ""
+msgstr "Adobe PKCS7 Sha1"
 
 #: gui/signaturemodel.cpp:191
 #, kde-format
 msgctxt "Digital signature type"
 msgid "ETSI CAdES"
-msgstr ""
+msgstr "ETSI CAdES"
 
 #: gui/signaturemodel.cpp:193
-#, fuzzy, kde-format
-#| msgctxt "Unknown author"
-#| msgid "Unknown"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Unknown"
 msgstr "Ukjend"
 
 #: gui/signaturemodel.cpp:195
-#, fuzzy, kde-format
-#| msgid "Signature Validity:"
+#, kde-format
 msgctxt "Digital signature type"
 msgid "Signature placeholder"
-msgstr "Signaturvaliditet:"
+msgstr "Signatur-plasshaldar"
 
 #: gui/signaturemodel.cpp:201
-#, fuzzy, kde-format
+#, kde-format
 msgid "Signature Type: %1"
-msgstr "Signaturvaliditet:"
+msgstr "Signaturtype: %1"
 
 #: part/annotationactionhandler.cpp:148
 #, kde-format
@@ -1470,9 +1459,7 @@ msgid "Transparent"
 msgstr "Gjennomsiktig"
 
 #: part/annotationactionhandler.cpp:445
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox"
-#| msgid "Custom Color..."
+#, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
 msgstr "Sjølvvald farge …"
@@ -1729,17 +1716,13 @@ msgid "&Properties"
 msgstr "&Eigenskapar"
 
 #: part/annotationpopup.cpp:142 part/annotationpopup.cpp:190
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "&Lagra «%1» …"
+msgstr "&Opna «%1» …"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:194
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'..."
+#, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Lagra «%1» …"
@@ -1876,10 +1859,10 @@ msgid "&Color:"
 msgstr "&Farge:"
 
 #: part/annotationwidgets.cpp:274 part/editdrawingtooldialog.cpp:74
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -2298,22 +2281,19 @@ msgstr "Vis for alle dokument"
 
 #: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
 #: part/toc.cpp:43
-#, fuzzy, kde-format
-#| msgid "Search..."
+#, kde-format
 msgid "Search…"
 msgstr "Søk …"
 
 #: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3176
-#, fuzzy, kde-format
-#| msgid "Expand all"
+#, kde-format
 msgid "Expand All"
-msgstr "Fald ut alt"
+msgstr "Fald ut alle"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Collapse all"
+#, kde-format
 msgid "Collapse All"
-msgstr "Fald saman alt"
+msgstr "Fald saman alle"
 
 #: part/bookmarklist.cpp:263
 #, kde-format
@@ -2343,8 +2323,7 @@ msgid "Certificate Viewer"
 msgstr "Sertifikatvisar"
 
 #: part/certificateviewer.cpp:50
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export…"
 msgstr "Eksporter …"
 
@@ -2960,10 +2939,10 @@ msgid "Overview columns:"
 msgstr "Oversiktsspalter:"
 
 #: part/dlggeneral.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:226
 #, kde-format
@@ -2982,31 +2961,31 @@ msgid "Page Up/Down overlap:"
 msgstr "«Page Up/Down»-overlapp:"
 
 #: part/dlggeneral.cpp:233
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%1 %"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100 %"
 
 #: part/dlggeneral.cpp:238
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Tilpass til breidda"
 
 #: part/dlggeneral.cpp:239
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Tilpass til sida"
 
 #: part/dlggeneral.cpp:240
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Autotilpassa"
@@ -3015,10 +2994,10 @@ msgstr "Autotilpassa"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
-msgstr ""
+msgstr "Sjølvvalt"
 
 #: part/dlggeneral.cpp:242
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
@@ -3135,14 +3114,13 @@ msgstr ""
 "Laster inn og held alt i minnet. Førehandslastar alle sidene. (Dette brukar "
 "opptil 50% av alt minnet eller alt fritt minne, etter kva som er størst.)"
 
-# Punktumet er for å gjera om til rekkjetal. I brukargrensesnittet ser det for eksempel slik ut: «Skift kvart: 10. sekund.»
 #: part/dlgpresentation.cpp:38
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:spinbox Advance automatically: Every n second"
 msgid "every %v second"
 msgid_plural "every %v seconds"
-msgstr[0] ". sekund"
-msgstr[1] ". sekund"
+msgstr[0] "kvart %v. sekund"
+msgstr[1] "kvart %v. sekund"
 
 #: part/dlgpresentation.cpp:45
 #, kde-format
@@ -3451,7 +3429,7 @@ msgstr "&Pennebreidd:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the pen width, e.g. '10 px'"
 msgid "%v px"
-msgstr ""
+msgstr "%v pikslar"
 
 #: part/editdrawingtooldialog.cpp:79
 #, kde-format
@@ -3512,18 +3490,16 @@ msgid "Modified"
 msgstr "Endra"
 
 #: part/embeddedfilesdialog.cpp:154
-#, fuzzy, kde-format
-#| msgid "Save As"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
-msgstr "Lagra som"
+msgstr "Lagra &som …"
 
 #: part/embeddedfilesdialog.cpp:155
-#, fuzzy, kde-format
-#| msgid "&View"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
-msgstr "&Vis"
+msgstr "&Vis …"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3599,18 +3575,15 @@ msgid "All Files (*)"
 msgstr "Alle filer (*)"
 
 #: part/formwidgets.cpp:1280
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature Field (Click to Sign)"
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
-msgstr "Usignert signaturfelt (trykk for å signera)"
+msgstr "Signatur-plasshaldar (trykk for å signera)"
 
 #: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Sign"
+#, kde-format
 msgid "&Sign…"
-msgstr "Signer"
+msgstr "&Signer …"
 
 #: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
 #, kde-format
@@ -3794,8 +3767,7 @@ msgid "Selection Tools"
 msgstr "Merkjeverktøy"
 
 #: part/pageview.cpp:712
-#, fuzzy, kde-format
-#| msgid "Digitally &Sign..."
+#, kde-format
 msgid "Digitally &Sign…"
 msgstr "&Signer digitalt …"
 
@@ -3874,10 +3846,9 @@ msgid "Copy to Clipboard"
 msgstr "Kopier til utklippstavla"
 
 #: part/pageview.cpp:2881 part/pageview.cpp:3088 part/part.cpp:858
-#, fuzzy, kde-format
-#| msgid "Copy Text to Clipboard"
+#, kde-format
 msgid "Copy Text (Without line breaks)"
-msgstr "Kopier til utklippstavla"
+msgstr "Kopier tekst (utan linjeskift)"
 
 #: part/pageview.cpp:2892 part/pageview.cpp:3092
 #, kde-format
@@ -3960,8 +3931,7 @@ msgid "Search for '%1' with"
 msgstr "Søk etter «%1» med"
 
 #: part/pageview.cpp:4454
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Set opp vevsnarvegar …"
 
@@ -4032,15 +4002,14 @@ msgid ""
 msgstr ""
 
 #: part/pageview.cpp:5238
-#, fuzzy, kde-format
+#, kde-format
 msgid "No valid certificates"
-msgstr "Sertifikat"
+msgstr "Ingen gyldige sertifikat"
 
 #: part/pageview.cpp:5239 part/pageview.cpp:5254
-#, fuzzy, kde-format
-#| msgid "View in Certificate Manager"
+#, kde-format
 msgid "Open Certificate Manager"
-msgstr "Vis i sertifikathandsamar"
+msgstr "Opna sertifikathandsamar"
 
 #: part/pageview.cpp:5250
 #, fuzzy, kde-format
@@ -4058,10 +4027,9 @@ msgstr ""
 "brukarhandboka."
 
 #: part/pageview.cpp:5253 part/pageview.cpp:5265
-#, fuzzy, kde-format
-#| msgid "Certificates"
+#, kde-format
 msgid "No certificates found"
-msgstr "Sertifikat"
+msgstr "Fann ingen sertifikat"
 
 #: part/pageview.cpp:5263
 #, kde-format
@@ -4397,28 +4365,24 @@ msgid "Go to the next bookmark"
 msgstr "Gå til neste bokmerke"
 
 #: part/part.cpp:749
-#, fuzzy, kde-format
-#| msgid "Configure Okular..."
+#, kde-format
 msgid "Configure Okular…"
 msgstr "Set opp Okular …"
 
 #: part/part.cpp:752
-#, fuzzy, kde-format
-#| msgid "Configure Viewer"
+#, kde-format
 msgid "Configure Viewer…"
-msgstr "Set opp visar"
+msgstr "Set opp visar …"
 
 #: part/part.cpp:758
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
+#, kde-format
 msgid "Configure Viewer Backends…"
-msgstr "Set opp visingsmotorar"
+msgstr "Set opp visingsmotorar …"
 
 #: part/part.cpp:760
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
+#, kde-format
 msgid "Configure Backends…"
-msgstr "Set opp visingsmotorar"
+msgstr "Set opp motorar …"
 
 #: part/part.cpp:796
 #, kde-format
@@ -4446,9 +4410,7 @@ msgid "Page Number"
 msgstr "Sidetal"
 
 #: part/part.cpp:818
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Configure Color Modes..."
+#, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Set opp fargemodusar …"
@@ -4500,8 +4462,7 @@ msgid "Open Con&taining Folder"
 msgstr "Opna &foreldermappa"
 
 #: part/part.cpp:955
-#, fuzzy, kde-format
-#| msgid "&Import PostScript as PDF..."
+#, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Importer PostScript som PDF …"
 
@@ -4586,8 +4547,7 @@ msgid "PostScript files (%1)"
 msgstr "PostScript-filer (%1)"
 
 #: part/part.cpp:1367
-#, fuzzy, kde-format
-#| msgid "Importing PS file as PDF (this may take a while)..."
+#, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importerer PS-fil som PDF (dette kan ta ei stund) …"
 
@@ -4741,10 +4701,9 @@ msgstr ""
 "ikkje i den innebygde framvisaren."
 
 #: part/part.cpp:2123 part/part.cpp:2141
-#, fuzzy, kde-format
-#| msgid "Reloading the document..."
+#, kde-format
 msgid "Reloading the document…"
-msgstr "Lastar dokumentet på nytt …"
+msgstr "Lastar om att dokumentet …"
 
 #: part/part.cpp:2304 part/toc.cpp:38
 #, kde-format
@@ -5322,8 +5281,7 @@ msgid "&Fonts"
 msgstr "&Skrifter"
 
 #: part/propertiesdialog.cpp:145
-#, fuzzy, kde-format
-#| msgid "Reading font information..."
+#, kde-format
 msgid "Reading font information…"
 msgstr "Les skriftinformasjon …"
 
@@ -5561,20 +5519,20 @@ msgstr "Vel sertifikat å signera med:"
 #: part/selectcertificatedialog.ui:29
 #, kde-format
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #. i18n: ectx: property (text), widget (QRadioButton, qesCertificates)
 #: part/selectcertificatedialog.ui:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "Only QES certificates"
-msgstr "Sertifikat"
+msgstr "Berre QES-sertifikat"
 
 #. i18n: ectx: property (text), widget (QRadioButton, pgpOption)
 #: part/selectcertificatedialog.ui:46
 #, kde-format
 msgctxt "@option:radio"
 msgid "Only PGP keys"
-msgstr ""
+msgstr "Berre GPG-nøklar"
 
 #. i18n: ectx: property (text), widget (QLabel, reasonLabel)
 #: part/selectcertificatedialog.ui:70 part/signaturepropertiesdialog.cpp:71
@@ -5745,14 +5703,12 @@ msgid "Document Revision %1 of %2"
 msgstr "Dokumentrevisjon %1 av %2"
 
 #: part/signaturepropertiesdialog.cpp:88
-#, fuzzy, kde-format
-#| msgid "View Signed Version..."
+#, kde-format
 msgid "View Signed Version…"
 msgstr "Vis signert versjon …"
 
 #: part/signaturepropertiesdialog.cpp:95
-#, fuzzy, kde-format
-#| msgid "View Certificate..."
+#, kde-format
 msgid "View Certificate…"
 msgstr "Vis sertifikat …"
 
@@ -5770,12 +5726,12 @@ msgstr "Fann ikkje sertifikathandsamaren (Kleopatra)"
 #, kde-format
 msgctxt "Qualified electronic signature, see wikipedia"
 msgid "Qualified"
-msgstr ""
+msgstr "Kvalifisert"
 
 #: part/signingcertificatelistmodel.cpp:105
 #, kde-format
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: part/thumbnaillist.cpp:1015
 #, kde-format
@@ -5813,13 +5769,12 @@ msgstr "Videoar er ikkje støtta i denne Okular-versjonen"
 #: part/widgetconfigurationtoolsbase.cpp:28
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Legg til …"
 
 #: part/widgetconfigurationtoolsbase.cpp:31
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "&Edit…"
-msgstr "&Rediger"
+msgstr "&Rediger …"
 
 #: part/widgetconfigurationtoolsbase.cpp:35
 #, kde-format
@@ -5993,7 +5948,7 @@ msgstr "Førre fane"
 #: shell/shell.cpp:598
 #, kde-format
 msgid "Switch to Tab %1"
-msgstr ""
+msgstr "Byt til fane %1"
 
 #: shell/shell.cpp:614
 #, kde-format

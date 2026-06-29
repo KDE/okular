@@ -151,7 +151,6 @@ public:
     bool openRelativeFile(const QString &fileName);
     Generator *loadGeneratorLibrary(const KPluginMetaData &service);
     void loadServiceList(const QList<KPluginMetaData> &offers);
-    void unloadGenerator(GeneratorInfo &info);
     void cacheExportFormats();
     void setRotationInternal(int r, bool notify);
     ConfigInterface *generatorConfig(GeneratorInfo &info);

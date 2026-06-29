@@ -862,12 +862,6 @@ void DocumentPrivate::loadServiceList(const QList<KPluginMetaData> &offers)
     }
 }
 
-void DocumentPrivate::unloadGenerator(GeneratorInfo &info)
-{
-    delete info.generator;
-    info.generator = nullptr;
-}
-
 void DocumentPrivate::cacheExportFormats()
 {
     if (m_exportCached) {
@@ -2229,7 +2223,7 @@ Document::~Document()
 
     // delete the loaded generators
     for (auto &generator : d->m_loadedGenerators) {
-        d->unloadGenerator(generator);
+        delete generator.generator;
     }
     d->m_loadedGenerators.clear();
 

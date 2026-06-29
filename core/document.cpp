@@ -842,17 +842,6 @@ Generator *DocumentPrivate::loadGeneratorLibrary(const KPluginMetaData &service)
     return result.plugin;
 }
 
-void DocumentPrivate::loadAllGeneratorLibraries()
-{
-    if (m_generatorsLoaded) {
-        return;
-    }
-
-    loadServiceList(availableGenerators());
-
-    m_generatorsLoaded = true;
-}
-
 void DocumentPrivate::loadServiceList(const QList<KPluginMetaData> &offers)
 {
     int count = offers.count();

@@ -105,7 +105,6 @@ public:
         , m_saveBookmarksTimer(nullptr)
         , m_generator(nullptr)
         , m_walletGenerator(nullptr)
-        , m_generatorsLoaded(false)
         , m_pageController(nullptr)
         , m_closingLoop(nullptr)
         , m_scripter(nullptr)
@@ -145,7 +144,6 @@ public:
     QUrl giveAbsoluteUrl(const QString &fileName) const;
     bool openRelativeFile(const QString &fileName);
     Generator *loadGeneratorLibrary(const KPluginMetaData &service);
-    void loadAllGeneratorLibraries();
     void loadServiceList(const QList<KPluginMetaData> &offers);
     void unloadGenerator(GeneratorInfo &info);
     void cacheExportFormats();
@@ -298,7 +296,6 @@ public:
     Generator *m_generator;
     QString m_generatorName;
     Generator *m_walletGenerator;
-    bool m_generatorsLoaded;
     QList<Page *> m_pagesVector;
     QList<VisiblePageRect *> m_pageRects;
 

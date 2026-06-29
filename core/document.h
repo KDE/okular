@@ -887,7 +887,7 @@ public:
     /**
      * Returns the number of generators that have a configuration widget.
      */
-    int configurableGenerators() const;
+    OKULARCORE_DEPRECATED int configurableGenerators() const;
 
     /**
      * Returns the list with the supported MIME types.

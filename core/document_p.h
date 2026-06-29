@@ -342,7 +342,6 @@ public:
 
     // generator selection
     static QList<KPluginMetaData> availableGenerators();
-    static QList<KPluginMetaData> configurableGenerators();
     static KPluginMetaData generatorForMimeType(const QMimeType &type, QWidget *widget, const QList<KPluginMetaData> &triedOffers = QList<KPluginMetaData>());
 
     // overrides the editor command (for example with a command from the command line)

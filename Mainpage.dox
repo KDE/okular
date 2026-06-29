@@ -314,8 +314,7 @@ where libokularGenerator_magic.json has the following content something like thi
         "Version": "0.1.0"
     },
     "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
-    "X-KDE-okularHasInternalSettings": true
+    "X-KDE-okularAPIVersion": 1
 }
 \endverbatim
 
@@ -324,7 +323,6 @@ The last five fields has the special meaning to Okular
   \li <b>MimeType</b> The mimetype or list of mimetypes of the supported document format(s)
   \li <b>X-KDE-Priority</b> When multiple Generators for the same mimetype exists, the one with the highest priority is used
   \li <b>X-KDE-okularAPIVersion</b> The version of the Generator Plugin API ('1' currently)
-  \li <b>X-KDE-okularHasInternalSettings</b> Is 'true' when the Generator provides configuration dialogs
 
 The first .desktop file has the following content:
 

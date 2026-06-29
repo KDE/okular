@@ -737,7 +737,6 @@ void Part::setupViewerActions()
         genPrefs->setText(i18n("Configure Backends…"));
     }
     genPrefs->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
-    genPrefs->setEnabled(m_document->configurableGenerators() > 0);
     connect(genPrefs, &QAction::triggered, this, &Part::slotGeneratorPreferences);
 
     m_printPreview = KStandardAction::printPreview(this, SLOT(slotPrintPreview()), ac);

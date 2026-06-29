@@ -517,9 +517,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(m_pageView.data(), &PageView::escPressed, m_findBar, &FindBar::resetSearch);
     connect(m_pageNumberTool, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
     connect(m_pageView.data(), &PageView::requestOpenNewlySignedFile, this, &Part::requestOpenNewlySignedFile);
-#if HAVE_NEW_SIGNATURE_API
-    connect(m_pageView.data(), &PageView::signingStarted, this, [this] { m_signatureInProgressMessage->setVisible(true); });
-#endif
 
     connect(m_reviewsWidget.data(), &Reviews::openAnnotationWindow, m_pageView.data(), &PageView::openAnnotationWindow);
 
@@ -538,6 +535,13 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(m_document->bookmarkManager(), &BookmarkManager::saved, this, &Part::slotRebuildBookmarkMenu);
 
     setupViewerActions();
+#if HAVE_NEW_SIGNATURE_API
+    connect(m_pageView.data(), &PageView::signingStarted, this, [this] {
+        m_signatureInProgressMessage->setVisible(true);
+        m_saveAs->setEnabled(false);
+        m_save->setEnabled(false);
+    });
+#endif
 
     if (m_embedMode != ViewerWidgetMode) {
         setupActions();
@@ -3706,6 +3710,8 @@ void Part::finishSigning()
 {
     if (m_pageView->finishSigning() != PageView::FinishSigningResult::Cancelled) {
         m_signatureInProgressMessage->setVisible(false);
+        m_saveAs->setEnabled(true);
+        m_save->setEnabled(true);
     }
 }
 #endif

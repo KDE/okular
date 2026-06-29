@@ -30,6 +30,7 @@ private:
     void warnRestartNeeded();
 
     QTreeWidget *m_tree = nullptr;
+    QPushButton *m_listCertsButton = nullptr;
     bool m_certificatesAsked = false;
     bool m_warnedAboutRestart = false;
     Ui_PDFSettingsWidgetBase m_pdfsw;

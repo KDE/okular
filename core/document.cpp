@@ -4813,7 +4813,7 @@ void Document::fillConfigDialog(KConfigDialog *dialog)
     }
 
     // ensure that we have all the generators with settings loaded
-    QList<KPluginMetaData> offers = DocumentPrivate::configurableGenerators();
+    QList<KPluginMetaData> offers = DocumentPrivate::availableGenerators();
     d->loadServiceList(offers);
 
     // We want the generators to be sorted by name so let's fill in a QMap
@@ -4837,18 +4837,6 @@ void Document::fillConfigDialog(KConfigDialog *dialog)
     }
 }
 
-QList<KPluginMetaData> DocumentPrivate::configurableGenerators()
-{
-    const QList<KPluginMetaData> available = availableGenerators();
-    QList<KPluginMetaData> result;
-    for (const KPluginMetaData &md : available) {
-        if (md.rawData().value(QStringLiteral("X-KDE-okularHasInternalSettings")).toBool()) {
-            result << md;
-        }
-    }
-    return result;
-}
-
 KPluginMetaData Document::generatorInfo() const
 {
     if (!d->m_generator) {
@@ -4862,7 +4850,13 @@ KPluginMetaData Document::generatorInfo() const
 
 int Document::configurableGenerators() const
 {
-    return DocumentPrivate::configurableGenerators().size();
+    int configurableGenerators = 0;
+    for (auto generator : std::as_const(d->m_loadedGenerators)) {
+        if (d->generatorConfig(generator)) {
+            configurableGenerators++;
+        }
+    }
+    return configurableGenerators;
 }
 
 QStringList Document::supportedMimeTypes() const

@@ -218,6 +218,5 @@
         "Version": "0.1.1"
     },
     "X-KDE-Priority": 1,
-    "X-KDE-okularAPIVersion": 1,
-    "X-KDE-okularHasInternalSettings": false
+    "X-KDE-okularAPIVersion": 1
 }

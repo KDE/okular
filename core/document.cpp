@@ -887,24 +887,12 @@ void DocumentPrivate::cacheExportFormats()
 
 ConfigInterface *DocumentPrivate::generatorConfig(GeneratorInfo &info)
 {
-    if (info.configChecked) {
-        return info.config;
-    }
-
-    info.config = qobject_cast<Okular::ConfigInterface *>(info.generator);
-    info.configChecked = true;
-    return info.config;
+    return qobject_cast<Okular::ConfigInterface *>(info.generator);
 }
 
 SaveInterface *DocumentPrivate::generatorSave(GeneratorInfo &info)
 {
-    if (info.saveChecked) {
-        return info.save;
-    }
-
-    info.save = qobject_cast<Okular::SaveInterface *>(info.generator);
-    info.saveChecked = true;
-    return info.save;
+    return qobject_cast<Okular::SaveInterface *>(info.generator);
 }
 
 Document::OpenResult DocumentPrivate::openDocumentInternal(const KPluginMetaData &offer, bool isstdin, const QString &docFile, const QByteArray &filedata, const QString &password)

@@ -52,19 +52,11 @@ struct GeneratorInfo {
     explicit GeneratorInfo(Okular::Generator *g, const KPluginMetaData &data)
         : generator(g)
         , metadata(data)
-        , config(nullptr)
-        , save(nullptr)
-        , configChecked(false)
-        , saveChecked(false)
     {
     }
 
     Okular::Generator *generator;
     KPluginMetaData metadata;
-    Okular::ConfigInterface *config;
-    Okular::SaveInterface *save;
-    bool configChecked : 1;
-    bool saveChecked : 1;
 };
 
 namespace Okular

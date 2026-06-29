@@ -732,17 +732,6 @@ void Part::setupViewerActions()
         prefs->setText(i18n("Configure Viewer…"));
     }
 
-    QAction *genPrefs = new QAction(ac);
-    ac->addAction(QStringLiteral("options_configure_generators"), genPrefs);
-    if (m_embedMode == ViewerWidgetMode) {
-        genPrefs->setText(i18n("Configure Viewer Backends…"));
-    } else {
-        genPrefs->setText(i18n("Configure Backends…"));
-    }
-    genPrefs->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
-    genPrefs->setEnabled(m_document->configurableGenerators() > 0);
-    connect(genPrefs, &QAction::triggered, this, &Part::slotGeneratorPreferences);
-
     m_printPreview = KStandardAction::printPreview(this, SLOT(slotPrintPreview()), ac);
     m_printPreview->setEnabled(false);
 
@@ -1231,27 +1220,6 @@ void Part::setWindowTitleFromDocument()
     }
 
     Q_EMIT setWindowCaption(title);
-}
-
-KConfigDialog *Part::slotGeneratorPreferences()
-{
-    // Create dialog
-    KConfigDialog *dialog = new Okular::BackendConfigDialog(m_pageView, QStringLiteral("generator_prefs"), Okular::Settings::self());
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-
-    if (m_embedMode == ViewerWidgetMode) {
-        dialog->setWindowTitle(i18n("Configure Viewer Backends"));
-    } else {
-        dialog->setWindowTitle(i18n("Configure Backends"));
-    }
-
-    m_document->fillConfigDialog(dialog);
-
-    // Show it
-    dialog->setWindowModality(Qt::ApplicationModal);
-    dialog->show();
-
-    return dialog;
 }
 
 void Part::notifySetup(const QList<Okular::Page *> & /*pages*/, int setupFlags)
@@ -3025,14 +2993,17 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
     *out_wontSaveAnnotations = wontSaveAnnotations;
 }
 
-void Part::slotPreferences()
+KConfigDialog *Part::slotPreferences()
 {
     // Create dialog
     PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
+    m_document->fillConfigDialog(dialog);
+
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it
     dialog->show();
+    return dialog;
 }
 
 void Part::slotToggleChangeColors()
@@ -3050,6 +3021,8 @@ void Part::slotAccessibilityPreferences()
 {
     // Create dialog
     PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
+    m_document->fillConfigDialog(dialog);
+
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it
@@ -3061,6 +3034,8 @@ void Part::slotAnnotationPreferences()
 {
     // Create dialog
     PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());
+    m_document->fillConfigDialog(dialog);
+
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
     // Show it

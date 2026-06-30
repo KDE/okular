@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-12 13:38+0300\n"
+"PO-Revision-Date: 2026-06-29 15:47+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2393,12 +2393,10 @@ msgid "Validity"
 msgstr "Galiojimas"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "kas "
+msgstr "Niekada"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2416,11 +2414,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 kontrolinis kodas"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Kontroliniai kodai"
+msgstr "Kontrolinis kodas"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2438,10 +2435,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Kur norite įrašyti šį liudijimą?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Liudijimo failas (*.cer)"
+msgstr "Liudijimo failas (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

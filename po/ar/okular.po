@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-21 11:36+0400\n"
+"PO-Revision-Date: 2026-06-30 21:31+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2386,12 +2386,10 @@ msgid "Validity"
 msgstr "الصّلاحية"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "كلّ "
+msgstr "البتة"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2409,11 +2407,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "بصمة SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "البصمات"
+msgstr "البصمة"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2431,10 +2428,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "أين تريد حفظ هذه الشهادة؟"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "ملف شهادة (*.cer)"
+msgstr "ملف شهادة (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

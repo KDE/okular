@@ -109,16 +109,20 @@ void ColorModeMenu::slotConfigChanged()
     // Check the current color mode action, and update the toolbar button default action
     const int rm = Okular::SettingsCore::renderMode();
     const QList<QAction *> colorModeActions = m_colorModeActionGroup->actions();
+    bool modeFound = false;
     for (QAction *a : colorModeActions) {
         if (a != m_aNormal && a->data().toInt() == rm) {
             a->setChecked(true);
             setDefaultAction(a);
+            modeFound = true;
             break;
         }
     }
 
-    // If Change Colors is disabled, check Normal Colors instead
-    if (!Okular::SettingsCore::changeColors()) {
+    // If Change Colors is disabled, or the current render mode is not one of this menu's
+    // own modes (e.g. it is controlled by another feature such as Dark Reader),
+    // check Normal Colors instead.
+    if (!Okular::SettingsCore::changeColors() || !modeFound) {
         m_aNormal->setChecked(true);
     }
 

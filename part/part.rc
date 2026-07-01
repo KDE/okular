@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="okular_part" version="56">
+<gui name="okular_part" version="57">
 <MenuBar>
   <Menu name="file"><text>&amp;File</text>
     <Action name="get_new_stuff" group="file_open"/>
@@ -100,6 +100,7 @@
   <Menu name="help"><text>&amp;Help</text>
     <Action name="help_about_backend" group="about_merge"/>
   </Menu>
+  <Action name="dark_reader_mode"/>
 </MenuBar>
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
   <Action name="show_leftpanel"/>

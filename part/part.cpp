@@ -50,6 +50,7 @@
 #include <QPrinter>
 #include <QScopedValueRollback>
 #include <QScrollBar>
+#include <QSignalBlocker>
 #include <QSlider>
 #include <QSpinBox>
 #include <QStandardPaths>
@@ -746,6 +747,7 @@ void Part::setupViewerActions()
     m_showLeftPanel = nullptr;
     m_showBottomBar = nullptr;
     m_showSignaturePanel = nullptr;
+    m_darkReaderAction = nullptr;
 
     m_showProperties = ac->addAction(QStringLiteral("properties"));
     m_showProperties->setText(i18n("&Properties"));
@@ -961,6 +963,18 @@ void Part::setupActions()
     QAction *playPauseAction = new QAction(i18n("Play/Pause Presentation"), ac);
     ac->addAction(QStringLiteral("presentation_play_pause"), playPauseAction);
     playPauseAction->setEnabled(false);
+
+    // Dark Reader: inverts text and background colors (using a dark gray/off-white palette
+    // instead of pure black/white) while leaving images untouched. Currently only supported
+    // for PDF documents; see updateViewActions().
+    m_darkReaderAction = ac->add<KToggleAction>(QStringLiteral("dark_reader_mode"));
+    m_darkReaderAction->setText(i18nc("@action:inmenu, toggles the dark color scheme for the document", "Dark Reader"));
+    m_darkReaderAction->setIcon(QIcon::fromTheme(QStringLiteral("view-dark-mode"), QIcon::fromTheme(QStringLiteral("weather-clear-night"))));
+    m_darkReaderAction->setWhatsThis(i18n("Toggles a dark color scheme for the document: text is drawn light on a dark background, while images are left unaffected."));
+    connect(m_darkReaderAction, &QAction::toggled, this, &Part::slotToggleDarkReader);
+    connect(Okular::SettingsCore::self(), &Okular::SettingsCore::colorModesChanged, this, &Part::slotUpdateDarkReaderAction);
+    m_darkReaderAction->setEnabled(false);
+    slotUpdateDarkReaderAction();
 }
 
 Part::~Part()
@@ -2030,6 +2044,29 @@ void Part::slotShowBottomBar()
     m_bottomBar->setVisible(showBottom);
 }
 
+void Part::slotToggleDarkReader()
+{
+    const bool enabled = m_darkReaderAction->isChecked();
+    if (enabled) {
+        Okular::SettingsCore::setRenderMode(Okular::SettingsCore::EnumRenderMode::DarkReader);
+    }
+    Okular::SettingsCore::setChangeColors(enabled);
+    Okular::SettingsCore::self()->save();
+}
+
+void Part::slotUpdateDarkReaderAction()
+{
+    if (!m_darkReaderAction) {
+        return;
+    }
+
+    const bool enabled = Okular::SettingsCore::changeColors() && Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::DarkReader;
+    if (m_darkReaderAction->isChecked() != enabled) {
+        QSignalBlocker blocker(m_darkReaderAction);
+        m_darkReaderAction->setChecked(enabled);
+    }
+}
+
 void Part::slotFileDirty(const QString &path)
 {
     // The beauty of this is that each start cancels the previous one.
@@ -2255,6 +2292,16 @@ void Part::updateViewActions()
         }
     }
     Q_EMIT viewerMenuStateChange(opened);
+
+    if (m_darkReaderAction) {
+        // Dark Reader is currently only supported for PDF documents.
+        const QString mimeTypeName = opened ? m_document->documentInfo().get(DocumentInfo::MimeType) : QString();
+        const bool isPdf = mimeTypeName == QLatin1String("application/pdf");
+        m_darkReaderAction->setEnabled(opened && isPdf);
+        if (!isPdf && m_darkReaderAction->isChecked()) {
+            m_darkReaderAction->setChecked(false);
+        }
+    }
 
     updateBookmarksActions();
 }

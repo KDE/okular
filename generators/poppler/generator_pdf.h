@@ -29,6 +29,10 @@
 
 #include <unordered_map>
 
+#if HAVE_POPPLER_CORE_OUTPUTDEV
+#include "darkreaderoutputdev.h"
+#endif
+
 class PDFOptionsPage;
 class PopplerAnnotationProxy;
 
@@ -171,6 +175,47 @@ private:
     bool documentHasPassword = false;
     QHash<int, Okular::Action *> m_additionalDocumentActions;
     void setAdditionalDocumentAction(Okular::Document::DocumentAdditionalActionType type, Okular::Action *action);
+
+#if HAVE_POPPLER_CORE_OUTPUTDEV
+    // BEGIN Dark Reader exact image mask
+    // Renders a page via a custom Poppler core OutputDev that additionally
+    // records exactly which pixels belong to embedded raster images, so
+    // that PagePainter's Dark Reader recoloring can leave them untouched.
+    // Only attempted for PDFs opened from a local file path, with no
+    // password (see darkreaderoutputdev.h for why). Returns false if the
+    // mask-aware render could not be produced for any reason; callers must
+    // fall back to the normal renderToImage() path in that case.
+    bool renderWithDarkReaderMask(Okular::PixmapRequest *request, double dpiX, double dpiY, QImage *outImage);
+
+    // Makes sure m_darkReaderMaskCache has a valid mask for @p page at the
+    // given resolution, generating one via DarkReaderRenderer if needed —
+    // regardless of whether the pixmap request that triggered this call is
+    // itself eligible to reuse the accompanying bitmap (tile/partial requests
+    // are not, but should still be able to prime the mask cache). No-op if a
+    // matching mask is already cached.
+    void ensureDarkReaderMask(const Okular::Page *page, double dpiX, double dpiY);
+
+    // Secondary, independent PDFDoc used only to drive Dark Reader's
+    // mask-generating renders (see darkreaderoutputdev.h for why a second
+    // document is needed at all). Created lazily on first use and kept
+    // around for as long as it keeps succeeding; reset whenever it fails so
+    // the next attempt can retry from scratch (e.g. if the file was briefly
+    // unavailable).
+    std::unique_ptr<DarkReaderRenderer> m_darkReaderRenderer;
+
+    // Most recently generated "exclude from recoloring" mask per page
+    // number, in the same (unrotated) orientation as the page bitmap. Reset
+    // whenever the document is closed. Deliberately not resized/rotated
+    // proactively: PagePainter adapts it to the current view geometry when
+    // it is consumed, the same way it already adapts the cached pixmap.
+    struct DarkReaderMaskEntry {
+        QImage mask;
+        double dpiX = 0;
+        double dpiY = 0;
+    };
+    QHash<int, DarkReaderMaskEntry> m_darkReaderMaskCache;
+    // END Dark Reader exact image mask
+#endif
 };
 
 #endif

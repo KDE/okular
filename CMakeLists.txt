@@ -217,9 +217,21 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "24.08.0" COMPONENTS Qt6)
+find_package(Poppler "24.08.0" COMPONENTS Qt6 OPTIONAL_COMPONENTS Core)
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
+
+# The Poppler::Core component (i.e. libpoppler itself, as opposed to the
+# poppler-qt6 wrapper) is optional: it is only used by the PDF generator to
+# implement the exact, provenance-based image mask for the Dark Reader
+# feature (see generators/poppler/darkreaderoutputdev.h). When unavailable,
+# Dark Reader still works, but falls back to recoloring embedded images along
+# with text/background instead of excluding them.
+if (TARGET Poppler::Core)
+    add_definitions(-DHAVE_POPPLER_CORE_OUTPUTDEV=1)
+else()
+    add_definitions(-DHAVE_POPPLER_CORE_OUTPUTDEV=0)
+endif()
 
 find_package(Freetype)
 set_okular_optional_package_properties(Freetype PROPERTIES

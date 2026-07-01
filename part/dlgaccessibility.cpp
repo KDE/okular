@@ -66,6 +66,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Invert luma (symmetric)"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Shift hue positive"));
     colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Shift hue negative"));
+    colorMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Dark Reader"));
     colorMode->setObjectName(QStringLiteral("kcfg_RenderMode"));
     layout->addRow(i18nc("@label:listbox Config dialog, accessibility page", "Color mode:"), colorMode);
 

@@ -23,6 +23,8 @@
 
 // local includes
 #include "core/annotations.h"
+#include "core/document.h"
+#include "core/document_p.h"
 #include "core/observer.h"
 #include "core/page.h"
 #include "core/page_p.h"
@@ -43,6 +45,62 @@ inline QPen buildPen(const Okular::Annotation *ann, double width, const QColor &
     c.setAlphaF(ann->style().opacity());
     QPen p(QBrush(c), width, ann->style().lineStyle() == Okular::Annotation::Dashed ? Qt::DashLine : Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin);
     return p;
+}
+
+/**
+ * Fetches the "exclude from recoloring" mask a generator may have produced
+ * for @p page (currently: the PDF generator's Dark Reader render path; see
+ * PDFGenerator::metaData()'s "NoRecolorMask" key), and adapts it to line up
+ * pixel-for-pixel with the region about to be painted.
+ *
+ * @p fullPageDeviceSize is the size, in device pixels, of the full
+ * (uncropped) page at the current zoom level; @p deviceRectInFullPage is the
+ * sub-rectangle of that full page, also in device pixels, that is actually
+ * being painted right now (i.e. what \c backImage covers). Both mirror
+ * exactly how the page pixmap itself is scaled and cropped a few lines below.
+ *
+ * Returns a null QImage if no mask is available, e.g. because the document
+ * is not a PDF, Dark Reader has not rendered this page yet, or Okular was
+ * built without Poppler's core library headers. Callers must treat a null
+ * mask as "nothing is excluded", not as an error.
+ */
+static QImage fetchNoRecolorMask(const Okular::Page *page, const QSize &fullPageDeviceSize, const QRect &deviceRectInFullPage)
+{
+    if (!page || fullPageDeviceSize.isEmpty() || deviceRectInFullPage.isEmpty()) {
+        return QImage();
+    }
+
+    Okular::PagePrivate *pageP = Okular::PagePrivate::get(const_cast<Okular::Page *>(page));
+    if (!pageP || !pageP->m_doc || !pageP->m_doc->m_parent) {
+        return QImage();
+    }
+
+    const QVariant maskVariant = pageP->m_doc->m_parent->metaData(QStringLiteral("NoRecolorMask"), page->number());
+    if (!maskVariant.canConvert<QImage>()) {
+        return QImage();
+    }
+
+    QImage mask = maskVariant.value<QImage>();
+    if (mask.isNull()) {
+        return QImage();
+    }
+
+    // The mask was generated at the same nominal resolution as the pixmap
+    // request that produced it, which will not always exactly match the
+    // page's current on-screen size (e.g. a cached pixmap from a slightly
+    // different zoom level being reused momentarily). Scale and crop it
+    // exactly like the page pixmap itself is scaled and cropped, so it lines
+    // up with the image being recolored.
+    if (mask.size() != fullPageDeviceSize) {
+        mask = mask.scaled(fullPageDeviceSize);
+    }
+
+    const QRect clampedRect = deviceRectInFullPage.intersected(QRect(QPoint(0, 0), fullPageDeviceSize));
+    if (clampedRect.isEmpty()) {
+        return QImage();
+    }
+
+    return mask.copy(clampedRect);
 }
 
 void PagePainter::paintPageOnPainter(QPainter *destPainter, const Okular::Page *page, Okular::DocumentObserver *observer, int flags, int scaledWidth, int scaledHeight, const QRect limits)
@@ -92,6 +150,9 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             break;
         case Okular::SettingsCore::EnumRenderMode::Recolor:
             backgroundColor = Okular::Settings::recolorBackground();
+            break;
+        case Okular::SettingsCore::EnumRenderMode::DarkReader:
+            backgroundColor = QColor(0x31, 0x36, 0x3b);
             break;
         default:;
         }
@@ -316,6 +377,15 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             case Okular::SettingsCore::EnumRenderMode::HueShiftNegative:
                 hueShiftNegative(&backImage);
                 break;
+            case Okular::SettingsCore::EnumRenderMode::DarkReader: {
+                // Text color #eff0f1, background color #31363b. Embedded raster
+                // images are left untouched, using an exact per-pixel mask
+                // provided by the generator when available (currently: PDF
+                // only), falling back to recoloring the whole page otherwise.
+                const QImage noRecolorMask = fetchNoRecolorMask(page, QSize(dScaledWidth, dScaledHeight), dLimitsInPixmap);
+                recolorExcludingMask(&backImage, QColor(0xef, 0xf0, 0xf1), QColor(0x31, 0x36, 0x3b), noRecolorMask);
+                break;
+            }
             }
         }
 
@@ -332,7 +402,8 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     compMode = QPainter::CompositionMode_Difference;
                     break;
                 case Okular::SettingsCore::EnumRenderMode::Inverted: // fall through
-                case Okular::SettingsCore::EnumRenderMode::Recolor:
+                case Okular::SettingsCore::EnumRenderMode::Recolor:  // fall through
+                case Okular::SettingsCore::EnumRenderMode::DarkReader:
                     // CompositionMode_Multiply makes highlights invisible when background
                     // color is close to dark
                     compMode = QPainter::CompositionMode_Difference;
@@ -693,6 +764,51 @@ void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor 
 
         const unsigned a = qAlpha(data[i]);
         data[i] = qRgba(r, g, b, a);
+    }
+}
+
+void PagePainter::recolorExcludingMask(QImage *image, const QColor &foreground, const QColor &background, const QImage &noRecolorMask)
+{
+    if (noRecolorMask.isNull()) {
+        recolor(image, foreground, background);
+        return;
+    }
+
+    if (image->format() != QImage::Format_ARGB32_Premultiplied) {
+        qCWarning(OkularUiDebug) << "Wrong image format! Converting...";
+        *image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    }
+
+    Q_ASSERT(image->format() == QImage::Format_ARGB32_Premultiplied);
+
+    if (noRecolorMask.size() != image->size()) {
+        // Geometry mismatch: whoever produced the mask did not adapt it to
+        // match this image (see fetchNoRecolorMask()). Rather than recolor
+        // the wrong pixels, fall back to plain recolor() for this frame.
+        qCWarning(OkularUiDebug) << "noRecolorMask size does not match image size, ignoring it";
+        recolor(image, foreground, background);
+        return;
+    }
+
+    // Keep a copy of the original (pre-recolor) pixels so they can be
+    // restored under the mask below. QImage's implicit sharing makes this
+    // cheap: no actual pixel data is copied unless/until 'image' is modified.
+    const QImage original = *image;
+
+    recolor(image, foreground, background);
+
+    const QImage mask = noRecolorMask.format() == QImage::Format_Grayscale8 ? noRecolorMask : noRecolorMask.convertToFormat(QImage::Format_Grayscale8);
+
+    QRgb *data = reinterpret_cast<QRgb *>(image->bits());
+    const QRgb *originalData = reinterpret_cast<const QRgb *>(original.constBits());
+
+    for (int y = 0, i = 0; y < image->height(); ++y) {
+        const uchar *maskRow = mask.constScanLine(y);
+        for (int x = 0; x < image->width(); ++x, ++i) {
+            if (maskRow[x] >= 128) {
+                data[i] = originalData[i];
+            }
+        }
     }
 }
 

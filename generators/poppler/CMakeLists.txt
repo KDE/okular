@@ -30,6 +30,12 @@ okular_add_generator(okularGenerator_poppler ${okularGenerator_poppler_PART_SRCS
 
 target_link_libraries(okularGenerator_poppler okularcore KF6::I18n KF6::Completion KF6::KIOWidgets Poppler::Qt6 Qt6::Xml)
 
+# See the HAVE_POPPLER_CORE_OUTPUTDEV definition in the top-level CMakeLists.txt.
+if (TARGET Poppler::Core)
+    target_sources(okularGenerator_poppler PRIVATE darkreaderoutputdev.cpp)
+    target_link_libraries(okularGenerator_poppler Poppler::Core)
+endif()
+
 ########### autotests ###############
 
 if(BUILD_TESTING)

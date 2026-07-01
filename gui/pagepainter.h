@@ -102,6 +102,23 @@ private:
      * Shifts hue of each pixel by 240 degrees, by simply swapping channels.
      */
     static void hueShiftNegative(QImage *image);
+    /**
+     * Applies recolor() to @p image (mapping black to @p foreground and white
+     * to @p background), then restores the original pixel value wherever
+     * @p noRecolorMask says the pixel should be excluded from recoloring.
+     *
+     * @p noRecolorMask is a Format_Grayscale8 image the same size as @p image,
+     * where 255 means "leave this pixel untouched" and 0 means "recolor it
+     * normally"; if it is null, this behaves exactly like recolor().
+     *
+     * Used by Dark Reader mode to recolor page text/background while leaving
+     * embedded raster images untouched. Unlike a heuristic based on the
+     * rendered pixels' own colors, @p noRecolorMask is expected to come from
+     * exact per-pixel provenance information recorded while rendering (see
+     * the PDF generator's use of its custom Poppler OutputDev), so it is not
+     * fooled by grayscale or muted-color photos.
+     */
+    static void recolorExcludingMask(QImage *image, const QColor &foreground, const QColor &background, const QImage &noRecolorMask);
     // END Change Colors feature
 
     // my pretty dear raster function

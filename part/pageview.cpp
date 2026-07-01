@@ -59,8 +59,6 @@
 #include <QAction>
 #include <QDebug>
 #include <QIcon>
-#include <kio_version.h>
-#include <kwidgetsaddons_version.h>
 
 // system includes
 #include <array>

@@ -17,8 +17,6 @@
 #include <KLocalizedString>
 #include <KTitleWidget>
 
-#include <kwidgetsaddons_version.h>
-
 // local includes
 #include "core/action.h"
 #include "gui/tocmodel.h"

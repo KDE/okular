@@ -23,7 +23,6 @@
 #include <KParts/MainWindow>
 #include <KSelectAction>
 #include <KToolBar>
-#include <kwidgetsaddons_version.h>
 
 // local includes
 #include "actionbar.h"

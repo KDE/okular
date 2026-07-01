@@ -12,7 +12,6 @@
 
 #include <KLineEdit>
 
-#include <kwidgetsaddons_version.h>
 class KBusyIndicatorWidget;
 class QTimer;
 

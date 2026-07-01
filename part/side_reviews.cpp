@@ -23,8 +23,6 @@
 #include <KTitleWidget>
 #include <KViewStateSerializer>
 
-#include <kwidgetsaddons_version.h>
-
 // local includes
 #include "annotationmodel.h"
 #include "annotationpopup.h"

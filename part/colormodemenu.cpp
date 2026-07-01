@@ -10,7 +10,6 @@
 
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <kwidgetsaddons_version.h> // TODO KF6: Remove, this was needed for KActionMenu::setPopupMode().
 
 #include "gui/guiutils.h"
 #include "settings.h"

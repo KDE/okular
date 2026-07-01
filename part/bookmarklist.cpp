@@ -21,8 +21,6 @@
 #include <KLocalizedString>
 #include <KTitleWidget>
 
-#include <kwidgetsaddons_version.h>
-
 #include "core/action.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"

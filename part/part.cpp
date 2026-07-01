@@ -91,7 +91,6 @@
 #if HAVE_PURPOSE
 #include <Purpose/AlternativesModel>
 #include <Purpose/Menu>
-#include <purpose_version.h>
 #endif
 
 // local includes

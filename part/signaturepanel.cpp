@@ -12,8 +12,6 @@
 #include "signaturepartutils.h"
 #include "signaturepropertiesdialog.h"
 
-#include <kwidgetsaddons_version.h>
-
 #include <KLocalizedString>
 #include <KTitleWidget>
 

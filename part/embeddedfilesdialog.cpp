@@ -28,7 +28,6 @@
 #include <QMimeType>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <kio_version.h>
 
 #include "core/document.h"
 #include "gui/guiutils.h"

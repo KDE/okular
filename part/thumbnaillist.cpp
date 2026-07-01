@@ -22,8 +22,6 @@
 #include <KLocalizedString>
 #include <KTitleWidget>
 
-#include <kwidgetsaddons_version.h>
-
 // local includes
 #include "core/area.h"
 #include "core/bookmarkmanager.h"

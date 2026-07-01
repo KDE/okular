@@ -61,7 +61,6 @@
 #include <KPluginMetaData>
 #include <KProcess>
 #include <KShell>
-#include <kio_version.h>
 #include <kzip.h>
 
 // local includes

@@ -54,9 +54,6 @@
 #include <QTabWidget>
 #include <QTimer>
 
-#include <kio_version.h>
-#include <kxmlgui_version.h>
-
 // local includes
 #include "../interfaces/viewerinterface.h"
 #include "kdocumentviewer.h"

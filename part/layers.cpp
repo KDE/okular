@@ -14,8 +14,6 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-#include <kwidgetsaddons_version.h>
-
 // local includes
 #include "core/document.h"
 #include "ktreeviewsearchline.h"

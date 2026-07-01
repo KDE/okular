@@ -69,20 +69,6 @@ struct GeneratorInfo {
 
 namespace Okular
 {
-class OKULARCORE_EXPORT BackendConfigDialog : public KConfigDialog
-{
-    Q_OBJECT
-public:
-    BackendConfigDialog(QWidget *parent, const QString &name, KCoreConfigSkeleton *config)
-        : KConfigDialog(parent, name, config)
-    {
-    }
-
-    KPageWidget *thePageWidget()
-    {
-        return pageWidget();
-    }
-};
 
 class FontExtractionThread;
 

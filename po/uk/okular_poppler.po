@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-26 00:43+0000\n"
+"POT-Creation-Date: 2026-07-02 00:42+0000\n"
 "PO-Revision-Date: 2025-07-10 16:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -387,12 +387,12 @@ msgstr ""
 "Для набуття чинності внесеними змінами до параметрів каталогу NSS вам слід "
 "перезапустити Okular"
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter Password"
 msgstr "Введіть пароль"
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Введіть пароль для відкриття %1:"

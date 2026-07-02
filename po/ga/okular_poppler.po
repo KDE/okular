@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-26 00:43+0000\n"
+"POT-Creation-Date: 2026-07-02 00:42+0000\n"
 "PO-Revision-Date: 2026-01-08 11:19+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
@@ -383,12 +383,12 @@ msgstr "Atosú ag teastáil"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Ní mór duit Okular a atosú tar éis socruithe an eolaire NSS a athrú"
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter Password"
 msgstr "Cuir isteach Pasfhocal"
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Cuir isteach focal faire chun %1 a oscailt:"

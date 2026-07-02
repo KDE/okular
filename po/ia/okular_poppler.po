@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-26 00:43+0000\n"
+"POT-Creation-Date: 2026-07-02 00:42+0000\n"
 "PO-Revision-Date: 2025-09-02 17:18+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -381,12 +381,12 @@ msgstr ""
 "Tu necessita reinitiar Okular postea modificar le preferentias de directorio "
 "NSS."
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter Password"
 msgstr "Inserta contrasigno"
 
-#: pdfsignatureutils.cpp:230
+#: pdfsignatureutils.cpp:234
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Inserta contrasigno per aperir %1:"

@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-22 00:41+0000\n"
-"PO-Revision-Date: 2026-05-25 17:32+0200\n"
+"PO-Revision-Date: 2026-07-01 16:11+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
-"Language-Team: Interlingua <kde-i18n-it@kde.org>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2382,12 +2382,10 @@ msgid "Validity"
 msgstr "Validitate"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "cata "
+msgstr "Jammais"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2405,11 +2403,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Impression digital SHA-256"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Impressiones digital"
+msgstr "Impression digital"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2427,10 +2424,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Ubi tu vole salveguardar iste certificato?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "File de Certificato (*.cer)"
+msgstr "File de Certificato (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format

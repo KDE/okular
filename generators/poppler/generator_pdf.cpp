@@ -799,7 +799,11 @@ Okular::Document::OpenResult PDFGenerator::init(QList<Okular::Page *> &pagesVect
     reparseConfig();
 
     // create annotation proxy
-    annotProxy = new PopplerAnnotationProxy(pdfdoc.get(), userMutex(), &annotationsOnOpenHash);
+#if HAVE_POPPLER_CORE_OUTPUTDEV
+    annotProxy = new PopplerAnnotationProxy(pdfdoc.get(), userMutex(), &annotationsOnOpenHash, &m_pagesWithUnsavedAnnotations);
+#else
+    annotProxy = new PopplerAnnotationProxy(pdfdoc.get(), userMutex(), &annotationsOnOpenHash, nullptr);
+#endif
 
     setAdditionalDocumentAction(Okular::Document::CloseDocument, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::CloseDocument)));
     setAdditionalDocumentAction(Okular::Document::SaveDocumentStart, createLinkFromPopplerLink(pdfdoc->additionalAction(Poppler::Document::SaveDocumentStart)));
@@ -875,6 +879,7 @@ bool PDFGenerator::doCloseDocument()
 #if HAVE_POPPLER_CORE_OUTPUTDEV
     m_darkReaderRenderer.reset();
     m_darkReaderMaskCache.clear();
+    m_pagesWithUnsavedAnnotations.clear();
 #endif
 
     return true;
@@ -1427,6 +1432,10 @@ bool PDFGenerator::renderWithDarkReaderMask(Okular::PixmapRequest *request, doub
     }
 
     if (documentHasPassword || documentFilePath.isEmpty()) {
+        return false;
+    }
+
+    if (m_pagesWithUnsavedAnnotations.contains(request->page()->number())) {
         return false;
     }
 
@@ -2240,6 +2249,10 @@ bool PDFGenerator::save(const QString &fileName, SaveOptions options, QString *e
             // the default text message is good for this case
             break;
         }
+    } else {
+#if HAVE_POPPLER_CORE_OUTPUTDEV
+        m_pagesWithUnsavedAnnotations.clear();
+#endif
     }
     return success;
 }

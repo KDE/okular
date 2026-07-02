@@ -15,6 +15,7 @@
 #include <poppler-version.h>
 
 #include <QMutex>
+#include <QSet>
 
 #include <unordered_map>
 
@@ -25,7 +26,7 @@ extern Okular::Annotation *createAnnotationFromPopplerAnnotation(Poppler::Annota
 class PopplerAnnotationProxy : public Okular::AnnotationProxy
 {
 public:
-    PopplerAnnotationProxy(Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation *, Poppler::Annotation *> *annotsOnOpenHash);
+    PopplerAnnotationProxy(Poppler::Document *doc, QMutex *userMutex, QHash<Okular::Annotation *, Poppler::Annotation *> *annotsOnOpenHash, QSet<int> *pagesWithUnsavedAnnotations = nullptr);
     ~PopplerAnnotationProxy() override;
 
     bool supports(Capability capability) const override;
@@ -37,6 +38,7 @@ private:
     Poppler::Document *ppl_doc;
     QMutex *mutex;
     QHash<Okular::Annotation *, Poppler::Annotation *> *annotationsOnOpenHash;
+    QSet<int> *m_pagesWithUnsavedAnnotations;
     std::unordered_map<Okular::StampAnnotation *, std::unique_ptr<Poppler::AnnotationAppearance>> deletedStampsAnnotationAppearance;
 };
 

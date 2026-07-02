@@ -490,7 +490,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                     switch (hlType) {
                     // highlight the whole rect
                     case Okular::HighlightAnnotation::Highlight:
-                        drawShapeOnImage(backImage, path, true, Qt::NoPen, acolor, pageScale, Multiply);
+                        drawShapeOnImage(backImage, path, true, Qt::NoPen, acolor, pageScale, Okular::SettingsCore::changeColors() ? Normal : Multiply);
                         break;
                     // highlight the bottom part of the rect
                     case Okular::HighlightAnnotation::Squiggly:
@@ -498,7 +498,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                         path[3].y = (path[0].y + path[3].y) / 2.0;
                         path[2].x = (path[1].x + path[2].x) / 2.0;
                         path[2].y = (path[1].y + path[2].y) / 2.0;
-                        drawShapeOnImage(backImage, path, true, Qt::NoPen, acolor, pageScale, Multiply);
+                        drawShapeOnImage(backImage, path, true, Qt::NoPen, acolor, pageScale, Okular::SettingsCore::changeColors() ? Normal : Multiply);
                         break;
                     // make a line at 3/4 of the height
                     case Okular::HighlightAnnotation::Underline:
@@ -768,15 +768,40 @@ void PagePainter::recolor(QImage *image, const QColor &foreground, const QColor 
     QRgb *data = reinterpret_cast<QRgb *>(image->bits());
     const int pixels = image->width() * image->height();
 
+    const bool isDarkMode = qGray(background.rgb()) < qGray(foreground.rgb());
+
     for (int i = 0; i < pixels; ++i) {
-        const int lightness = qGray(data[i]);
+        const uchar r_orig = qRed(data[i]);
+        const uchar g_orig = qGreen(data[i]);
+        const uchar b_orig = qBlue(data[i]);
 
-        const float r = scaleRed * lightness + foreground_red;
-        const float g = scaleGreen * lightness + foreground_green;
-        const float b = scaleBlue * lightness + foreground_blue;
+        const int max_val = qMax(r_orig, qMax(g_orig, b_orig));
+        const int min_val = qMin(r_orig, qMin(g_orig, b_orig));
 
-        const unsigned a = qAlpha(data[i]);
-        data[i] = qRgba(r, g, b, a);
+        if (max_val - min_val > 20) {
+            // Colored pixel (e.g. highlight, underline, links)
+            const unsigned a = qAlpha(data[i]);
+            if (isDarkMode) {
+                uchar R = r_orig;
+                uchar G = g_orig;
+                uchar B = b_orig;
+                invertLumaPixel(R, G, B, 0.2126, 0.7152, 0.0722); // sRGB luma coefficients
+                data[i] = qRgba(R, G, B, a);
+            } else {
+                // Keep original color in light modes
+                data[i] = qRgba(r_orig, g_orig, b_orig, a);
+            }
+        } else {
+            // Neutral pixel (text, background, grayscale)
+            const int lightness = qGray(data[i]);
+
+            const float r = scaleRed * lightness + foreground_red;
+            const float g = scaleGreen * lightness + foreground_green;
+            const float b = scaleBlue * lightness + foreground_blue;
+
+            const unsigned a = qAlpha(data[i]);
+            data[i] = qRgba(r, g, b, a);
+        }
     }
 }
 

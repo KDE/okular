@@ -18,6 +18,7 @@
 
 #include <QBitArray>
 #include <QPointer>
+#include <QSet>
 
 #include <core/annotations.h>
 #include <core/document.h>
@@ -214,6 +215,7 @@ private:
         double dpiY = 0;
     };
     QHash<int, DarkReaderMaskEntry> m_darkReaderMaskCache;
+    QSet<int> m_pagesWithUnsavedAnnotations;
     // END Dark Reader exact image mask
 #endif
 };

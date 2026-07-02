@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-17 00:41+0000\n"
-"PO-Revision-Date: 2026-06-28 12:09+0200\n"
+"PO-Revision-Date: 2026-07-01 20:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -135,13 +135,15 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Desse signaturane kan berre validerast av brukarar med nyare Okular-utgåver "
+"og GnuPG-motoren påslått"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Tillat PGP-nøklar for signering (Okular-utviding)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -304,12 +306,12 @@ msgstr "Oppsett av PDF-motoren"
 #: generator_pdf.cpp:2184 generator_pdf.cpp:2212
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Klarte ikkje lagra mellombels fil"
 
 #: generator_pdf.cpp:2234
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Klarte ikkje endra namn på mellombels fil"
 
 #: generator_pdf.cpp:2254
 #, kde-format
@@ -327,12 +329,14 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Desse signaturane verkar berre i nyare utgåver av Okular med GnuPG-motoren "
+"påslått"
 
 #: pdfsettingswidget.cpp:116
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "&Last inn signaturar"
+msgstr "Bruk PGP-signaturar"
 
 #: pdfsettingswidget.cpp:146
 #, kde-format

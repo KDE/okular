@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-10 02:44+0000\n"
-"PO-Revision-Date: 2026-06-28 12:09+0200\n"
+"PO-Revision-Date: 2026-07-01 20:33+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -115,7 +115,7 @@ msgstr "Eugene Trounev"
 #: aboutdata.h:36
 #, kde-format
 msgid "Annotations artwork"
-msgstr "Bilete for merknadar"
+msgstr "Bilete for påteikningar"
 
 #: aboutdata.h:37
 #, kde-format
@@ -135,7 +135,7 @@ msgstr "Fabio D’Urso"
 #: aboutdata.h:38
 #, kde-format
 msgid "Annotation improvements"
-msgstr "Forbetringar i merknadar"
+msgstr "Forbetringar i påteikningar"
 
 #: core/action.cpp:137
 #, kde-format
@@ -317,7 +317,7 @@ msgstr "Signering er ikkje implementert for denne dokumenttypen"
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
-msgstr "fjern merknadar"
+msgstr "fjern påteikningar"
 
 #: core/document.cpp:4149 core/document.cpp:4155
 #, kde-format
@@ -477,31 +477,31 @@ msgstr "Sidestorleik"
 #, kde-format
 msgctxt "Add an annotation to the page"
 msgid "add annotation"
-msgstr "legg til merknad"
+msgstr "legg til påteikning"
 
 #: core/documentcommands.cpp:108
 #, kde-format
 msgctxt "Remove an annotation from the page"
 msgid "remove annotation"
-msgstr "fjern merknad"
+msgstr "fjern påteikning"
 
 #: core/documentcommands.cpp:155
 #, kde-format
 msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
 msgid "modify annotation properties"
-msgstr "endra merknadseigenskapar"
+msgstr "endra påteikningseigenskapar"
 
 #: core/documentcommands.cpp:190
 #, kde-format
 msgctxt "Translate an annotation's position on the page"
 msgid "translate annotation"
-msgstr "set om merknad"
+msgstr "set om påteikning"
 
 #: core/documentcommands.cpp:263
 #, kde-format
 msgctxt "Change an annotation's size"
 msgid "adjust annotation"
-msgstr "juster merknad"
+msgstr "juster påteikning"
 
 #: core/documentcommands.cpp:333
 #, kde-format
@@ -513,7 +513,7 @@ msgstr "rediger tekst"
 #, kde-format
 msgctxt "Edit an annotation's text contents"
 msgid "edit annotation contents"
-msgstr "rediger merknadsinnhald"
+msgstr "rediger påteikningsinnhald"
 
 #: core/documentcommands.cpp:447
 #, kde-format
@@ -598,12 +598,14 @@ msgid ""
 "Internal signing error. Please report a bug with the steps to reproduce it. "
 "Error code %1"
 msgstr ""
+"Intern signeringsfeil. Meld frå om feilen og korleis ein kan gjenskapa han. "
+"Feilkode %1"
 
 #: core/signatureutils.cpp:498
-#, fuzzy, kde-kuit-format
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
-msgstr "Klarte ikkje opna fila  <filename>%1</filename>"
+msgstr "Klarte ikkje signera dokumentet: <filename>%1</filename>"
 
 #: core/signatureutils.cpp:500
 #, kde-format
@@ -613,22 +615,22 @@ msgstr "Signering avbroten av brukar"
 #: core/signatureutils.cpp:502
 #, kde-format
 msgid "Could not sign. Wrong passphrase"
-msgstr ""
+msgstr "Klarte ikkje signera. Feil passfrase."
 
 #: core/signatureutils.cpp:504
-#, fuzzy, kde-kuit-format
+#, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
 "Could not write the signed document to <filename>%1</filename>, please "
 "ensure you have selected a folder with write permission"
 msgstr ""
-"Klarte ikkje overskriva <filename>%1</filename>. Fila er skriveverna. Du kan "
-"lagra ho i ei anna mappe eller endra løyvet på fila."
+"Klarte ikkje lagra det signerte dokumentet til <filename>%1</filename>. Sjå "
+"til at du har valt ei mappe der du har skriveløyve."
 
 #: core/signatureutils.cpp:506
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unknown signing error"
-msgstr "Ukjend fil"
+msgstr "Ukjend signeringsfeil"
 
 #: core/sourcereference.cpp:103
 #, kde-format
@@ -724,7 +726,7 @@ msgstr "Notatrute"
 #: gui/guiutils.cpp:56
 #, kde-format
 msgid "Arrow with Comment"
-msgstr "Pil med merknad"
+msgstr "Pil med påteikning"
 
 #. i18n: tag tool attribute name
 #: gui/guiutils.cpp:56 part/data/tools.xml:103
@@ -735,7 +737,7 @@ msgstr "Pil"
 #: gui/guiutils.cpp:59
 #, kde-format
 msgid "Straight Line with Comment"
-msgstr "Rett linje med merknad"
+msgstr "Rett linje med påteikning"
 
 #: gui/guiutils.cpp:59 part/editannottooldialog.cpp:91
 #: part/pageviewannotator.cpp:1490
@@ -746,7 +748,7 @@ msgstr "Rett linje"
 #: gui/guiutils.cpp:63
 #, kde-format
 msgid "Polygon with Comment"
-msgstr "Polygon med merknad"
+msgstr "Polygon med påteikning"
 
 #: gui/guiutils.cpp:63 part/editannottooldialog.cpp:92
 #: part/pageviewannotator.cpp:1482
@@ -757,7 +759,7 @@ msgstr "Mangekant"
 #: gui/guiutils.cpp:71
 #, kde-format
 msgid "Rectangle with Comment"
-msgstr "Rektangel med merknad"
+msgstr "Rektangel med påteikning"
 
 #: gui/guiutils.cpp:71 part/annotationwidgets.cpp:700
 #: part/pageviewannotator.cpp:1484
@@ -768,7 +770,7 @@ msgstr "Rektangel"
 #: gui/guiutils.cpp:74
 #, kde-format
 msgid "Ellipse with Comment"
-msgstr "Ellipse med merknad"
+msgstr "Ellipse med påteikning"
 
 #: gui/guiutils.cpp:74 part/annotationwidgets.cpp:701
 #: part/pageviewannotator.cpp:1472
@@ -779,7 +781,7 @@ msgstr "Ellipse"
 #: gui/guiutils.cpp:83
 #, kde-format
 msgid "Highlight with Comment"
-msgstr "Utheving med merknad"
+msgstr "Utheving med påteikning"
 
 #: gui/guiutils.cpp:83 part/annotationwidgets.cpp:653
 #, kde-format
@@ -789,7 +791,7 @@ msgstr "Utheving"
 #: gui/guiutils.cpp:87
 #, kde-format
 msgid "Squiggle with Comment"
-msgstr "Bølgje med merknad"
+msgstr "Bølgje med påteikning"
 
 #: gui/guiutils.cpp:87 part/annotationwidgets.cpp:654
 #: part/pageviewannotator.cpp:1486
@@ -800,7 +802,7 @@ msgstr "Bølgje"
 #: gui/guiutils.cpp:91
 #, kde-format
 msgid "Underline with Comment"
-msgstr "Understreking med merknad"
+msgstr "Understreking med påteikning"
 
 #: gui/guiutils.cpp:91 part/annotationwidgets.cpp:655
 #: part/pageviewannotator.cpp:1494
@@ -811,7 +813,7 @@ msgstr "Understreking"
 #: gui/guiutils.cpp:95
 #, kde-format
 msgid "Strike Out with Comment"
-msgstr "Overstreking med merknad"
+msgstr "Overstreking med påteikning"
 
 #: gui/guiutils.cpp:95
 #, kde-format
@@ -821,7 +823,7 @@ msgstr "Gjennomstreking"
 #: gui/guiutils.cpp:102
 #, kde-format
 msgid "Stamp with Comment"
-msgstr "Stempel med merknad"
+msgstr "Stempel med påteikning"
 
 #: gui/guiutils.cpp:102 part/editannottooldialog.cpp:95
 #: part/pageviewannotator.cpp:1488
@@ -832,7 +834,7 @@ msgstr "Stempel"
 #: gui/guiutils.cpp:106
 #, kde-format
 msgid "Freehand Line with Comment"
-msgstr "Frihandslinje med merknad"
+msgstr "Frihandslinje med påteikning"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1476
@@ -880,11 +882,9 @@ msgid "Rich Media"
 msgstr "Rike medium"
 
 #: gui/guiutils.cpp:144
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgid "Annotation"
-msgstr "Merknad"
+msgstr "Påteikning"
 
 #: gui/guiutils.cpp:172
 #, kde-format
@@ -1118,11 +1118,10 @@ msgid "The document integrity verification could not be completed."
 msgstr "Kunne ikkje stadfesta integriteten til dokumentet."
 
 #: gui/signatureguiutils.cpp:208
-#, fuzzy, kde-format
-#| msgid "This document has unsigned signature fields."
+#, kde-format
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
-msgstr "Dette dokumentet har usignerte signaturfelt."
+msgstr "Dokumentet har plasshaldarfelt for signatur."
 
 #: gui/signatureguiutils.cpp:211
 #, kde-format
@@ -1146,10 +1145,10 @@ msgstr ""
 "validerast."
 
 #: gui/signaturemodel.cpp:141
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder %1"
-msgstr "Signaturvaliditet:"
+msgstr "Signaturplasshaldar %1"
 
 #: gui/signaturemodel.cpp:144 gui/signaturemodel.cpp:181
 #, kde-format
@@ -1293,31 +1292,31 @@ msgstr "%1 %"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr "Linjebreidd for merknadar (ingen merknad vald)"
+msgstr "Linjebreidd for påteikningar (ingen påteikning vald)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr "Farge for merknadar (ingen merknad vald)"
+msgstr "Farge for påteikningar (ingen påteikning vald)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr "Fyllfarge for merknadar (ingen merknad vald)"
+msgstr "Fyllfarge for påteikningar (ingen påteikning vald)"
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr "Gjennomsikt for merknadar (ingen merknad vald)"
+msgstr "Gjennomsikt for påteikningar (ingen påteikning vald)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Skrift for merknadar (ingen merknad vald)"
+msgstr "Skrift for påteikningar (ingen påteikning vald)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1326,7 +1325,8 @@ msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
 msgstr ""
-"Legg gjeldande merknadstype til kjappmerknadar-menyen (ingen merknad vald)"
+"Legg gjeldande påteikningstype til kjapp-påteikningsmenyen (ingen påteikning "
+"vald)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1336,7 +1336,7 @@ msgid ""
 "selected)"
 msgstr ""
 "Avgrensa figurbreidd/-høgd til 1:1 eller linjevinkel til steg på 15° (ingen "
-"merknad vald)"
+"påteikning vald)"
 
 #: part/annotationactionhandler.cpp:303
 #, kde-format
@@ -1344,61 +1344,63 @@ msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
-"Avanserte innstillingar for gjeldande merknadsverktøy (ingen merknad vald)"
+"Avanserte innstillingar for gjeldande påteikningsverktøy (ingen påteikning "
+"vald)"
 
 #: part/annotationactionhandler.cpp:308
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
-msgstr "Linjebreidd for merknadar"
+msgstr "Linjebreidd for påteikningar"
 
 #: part/annotationactionhandler.cpp:310
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
-msgstr "Linjebreidd for merknadar (gjeldande merknad har ikkje linjebreidd)"
+msgstr ""
+"Linjebreidd for påteikningar (gjeldande påteikning har ikkje linjebreidd)"
 
 #: part/annotationactionhandler.cpp:314
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
-msgstr "Farge for merknadar"
+msgstr "Farge for påteikningar"
 
 #: part/annotationactionhandler.cpp:316
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "Kantlinjefarge for merknadar"
+msgstr "Kantlinjefarge for påteikningar"
 
 #: part/annotationactionhandler.cpp:318
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
-msgstr "Farge for merknadar"
+msgstr "Farge for påteikningar"
 
 #: part/annotationactionhandler.cpp:322
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
-msgstr "Fyllfarge for merknadar"
+msgstr "Fyllfarge for påteikningar"
 
 #: part/annotationactionhandler.cpp:324
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr "Linjebreidd for merknadar (gjeldande merknad har ikkje fyllfarge)"
+msgstr "Linjebreidd for påteikning (gjeldande påteikning har ikkje fyllfarge)"
 
 #: part/annotationactionhandler.cpp:328
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Skrift for merknadar"
+msgstr "Skrift for påteikningar"
 
 #: part/annotationactionhandler.cpp:330
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr "Skrift for merknadar (gjeldande merknad har ikkje skrift)"
+msgstr "Skrift for påteikning (gjeldande påteikning har ikkje skrift)"
 
 #: part/annotationactionhandler.cpp:334
 #, kde-format
@@ -1420,25 +1422,25 @@ msgid ""
 "current annotation)"
 msgstr ""
 "Avgrensa figurbreidd/-høgd til 1:1 eller linjevinkel til steg på 15° (ikkje "
-"støtta av gjeldande merknad)"
+"støtta av gjeldande påteikning)"
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
-msgstr "Gjennomsikt for merknadar"
+msgstr "Gjennomsikt for påteikningar"
 
 #: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr "Legg gjeldande merknadstype til kjappmerknadar-menyen"
+msgstr "Legg gjeldande påteikningstype til kjapp-påteikningsmenyen"
 
 #: part/annotationactionhandler.cpp:343
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr "Avanserte innstillingar for gjeldande merknadsverktøy"
+msgstr "Avanserte innstillingar for gjeldande påteikningsverktøy"
 
 #: part/annotationactionhandler.cpp:432
 #, kde-format
@@ -1473,7 +1475,7 @@ msgstr "Vel farge"
 #: part/annotationactionhandler.cpp:552
 #, kde-format
 msgid "&Annotations"
-msgstr "&Merknadar"
+msgstr "&Påteikningar"
 
 #: part/annotationactionhandler.cpp:553
 #, kde-format
@@ -1485,7 +1487,7 @@ msgstr "Gøym"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Vis fleire merknadsverktøy"
+msgstr "Vis fleire påteikningsverktøy"
 
 #: part/annotationactionhandler.cpp:557
 #, kde-format
@@ -1581,25 +1583,25 @@ msgstr "Stempel"
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
-msgstr "Kjappmerknadar"
+msgstr "Kjapp-påteikningar"
 
 #: part/annotationactionhandler.cpp:641
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr "Vel eit merknadsverktøy frå kjappmerknadar-menyen"
+msgstr "Vel eit påteikningsverktøy frå kjapp-påteikningsmenyen"
 
 #: part/annotationactionhandler.cpp:651
 #, kde-format
 msgid "Quick Annotation Bar"
-msgstr "Kjappmerknadar-linje"
+msgstr "Kjapp-påteikningslinje"
 
 #: part/annotationactionhandler.cpp:665
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "Legg til kjappmerknadar-meny"
+msgstr "Legg til kjapp-påteikningsmeny"
 
 #: part/annotationactionhandler.cpp:668
 #, kde-format
@@ -1613,7 +1615,7 @@ msgstr "Hald i bruk"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "La merknadsverktøyet vera på etter bruk"
+msgstr "La påteikningsverktøyet vera på etter bruk"
 
 #: part/annotationactionhandler.cpp:674
 #, kde-format
@@ -1621,7 +1623,7 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr "Avgrensa breidd/høgd-forhold og linjevinkel i merknadsverktøy"
+msgstr "Avgrensa breidd/høgd-forhold og linjevinkel i påteikningsverktøy"
 
 #: part/annotationactionhandler.cpp:680
 #, kde-format
@@ -1633,7 +1635,7 @@ msgstr "Skrifttype"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "Merknadsinnstillingar"
+msgstr "Påteikningsinnstillingar"
 
 #: part/annotationactionhandler.cpp:684
 #, kde-format
@@ -1667,14 +1669,12 @@ msgid "Page %1"
 msgstr "Side %1"
 
 #: part/annotationpopup.cpp:92
-#, fuzzy, kde-format
-#| msgid "Annotation"
-#| msgid_plural "%1 Annotations"
+#, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "Merknad"
-msgstr[1] "%1 merknadar"
+msgstr[0] "Påteikning"
+msgstr[1] "%1 påteikningar"
 
 #: part/annotationpopup.cpp:94 part/annotationpopup.cpp:156
 #, kde-format
@@ -1820,7 +1820,7 @@ msgstr "Filmeigenskapar"
 #: part/annotationpropertiesdialog.cpp:149
 #, kde-format
 msgid "Annotation Properties"
-msgstr "Merknadseigenskapar"
+msgstr "Påteikningseigenskapar"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -2220,7 +2220,7 @@ msgid ""
 "This annotation may contain LaTeX code.\n"
 "Click here to render."
 msgstr ""
-"Denne merknaden kan innehalda LaTeX-kode.\n"
+"Denne påteikninga kan innehalda LaTeX-kode.\n"
 "Trykk her for å visa LaTeX-resultatet."
 
 #: part/annotwindow.cpp:439
@@ -2654,19 +2654,19 @@ msgstr "Tekst til tale-røyst:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Full merknadsverktøylinje"
+msgstr "Full påteikningsverktøylinje"
 
 #: part/dlgannotations.cpp:26
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Kjappmerknadar-linje"
+msgstr "Kjapp-påteikningslinje"
 
 #: part/dlgannotations.cpp:28
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "Merknadsverktøylinje"
+msgstr "Påteikningsverktøylinje"
 
 #: part/dlgannotations.cpp:34
 #, kde-format
@@ -2682,9 +2682,9 @@ msgid ""
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
-"<b>Merk</b>: Informasjonen du legg inn her, vert berre brukt til kommentarar "
-"og tilbakemeldingar. Han vert lagra i dokumentet og vil vera tilgjengeleg "
-"for dei du sender det til."
+"<b>Merk</b>: Informasjonen du legg inn her, vert berre brukt til "
+"påteikningar. Han vert lagra i dokumentet og vil vera tilgjengeleg for dei "
+"du sender det til."
 
 #: part/dlgannotations.cpp:48
 #, kde-format
@@ -2692,7 +2692,7 @@ msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
 msgid "<h3>Quick Annotation Tools</h3>"
-msgstr "<h3>Kjappmerknadsverktøy</h3>"
+msgstr "<h3>Kjapp-påteikningsverktøy</h3>"
 
 #: part/dlgeditor.cpp:28
 #, kde-format
@@ -2893,32 +2893,32 @@ msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Bruk høgre-til-venstre-leseretning"
 
+# Bør vera litt kort tekst.
 #: part/dlggeneral.cpp:168
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
-msgstr ""
+msgstr "Bruk filinformasjon for å velja eventuell opning i samanhengande-modus"
 
 #: part/dlggeneral.cpp:178
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
-msgstr "Opna i samanhengande-modus som standard"
+msgstr "For filer utan opningsinformasjon, opna i samanhengande-modus"
 
 #: part/dlggeneral.cpp:180
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr "Opna i samanhengande-modus som standard"
+msgstr "Opna filer i samanhengande-modus"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Hald fram og mist endringar"
+msgstr "Hald fram frå sist viste side"
 
 #: part/dlggeneral.cpp:195
 #, kde-format
@@ -2930,7 +2930,7 @@ msgstr "Flytt skrivemerket til neste/førre linje når det når skjermkanten"
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
-msgstr ""
+msgstr "Element"
 
 #: part/dlggeneral.cpp:218
 #, kde-format
@@ -3408,12 +3408,12 @@ msgstr "Geometriske former"
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "Opprett merknadsverktøy"
+msgstr "Opprett påteikningsverktøy"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "Rediger merknadsverktøy"
+msgstr "Rediger påteikningsverktøy"
 
 #: part/editdrawingtooldialog.cpp:51
 #, kde-format
@@ -4000,6 +4000,8 @@ msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
+"Alle signerings­ssertifikata dine er ugyldige. Viss signering har verka "
+"tidlegare, kontroller gyldigheitsdatoane."
 
 #: part/pageview.cpp:5238
 #, kde-format
@@ -4012,19 +4014,16 @@ msgid "Open Certificate Manager"
 msgstr "Opna sertifikathandsamar"
 
 #: part/pageview.cpp:5250
-#, fuzzy, kde-format
-#| msgid ""
-#| "There are no available signing certificates.<br/>For more information, "
-#| "please see the section about <a href=\"%1\">Adding Digital Signatures</a> "
-#| "in the manual."
+#, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
 "to import or manage certificates<br/>For more information, please see the "
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
-"Du har ikkje nokon signerings­sertifikat tilgjengeleg.<br/>Du finn meir "
-"informasjon under avsnittet <a href=\"%1\">Adding Digital Signatures</a> i "
-"brukarhandboka."
+"Du har ikkje nokon signerings­sertifikat tilgjengeleg.<br/> Opna "
+"sertifikathandsamaren for å importera eller handsama sertifikat.<br/>Du finn "
+"meir informasjon under avsnittet <a href=\"%1\">Adding Digital Signatures</"
+"a> i brukarhandboka."
 
 #: part/pageview.cpp:5253 part/pageview.cpp:5265
 #, kde-format
@@ -4112,7 +4111,7 @@ msgstr "Forfattarnamn"
 #: part/pageviewannotator.cpp:1330
 #, kde-format
 msgid "Author name for the annotation:"
-msgstr "Forfattarnamnet til merknaden:"
+msgstr "Forfattarnamnet til påteikninga:"
 
 #: part/pageviewannotator.cpp:1391
 #, kde-format
@@ -4136,7 +4135,7 @@ msgstr "Teikn ei frihandslinje"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
-msgstr "Merknad inne i teksten (dra for å velja område)"
+msgstr "Påteikning inne i teksten (dra for å velja område)"
 
 #: part/pageviewannotator.cpp:1399
 #, kde-format
@@ -4190,7 +4189,7 @@ msgstr "Strek under teksten"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "Skrivemaskinsmerknad (dra for å velja område)"
+msgstr "Skrivemaskinspåteikning (dra for å velja område)"
 
 #: part/pageviewannotator.cpp:1474
 #, kde-format
@@ -4200,12 +4199,12 @@ msgstr "Merkjepenn"
 #: part/pageviewannotator.cpp:1771
 #, kde-format
 msgid "Add favorite annotation"
-msgstr "Legg til favorittmerknad"
+msgstr "Legg til favorittpåteikning"
 
 #: part/pageviewannotator.cpp:1771
 #, kde-format
 msgid "Custom annotation name:"
-msgstr "Sjølvvalt namn på merknad:"
+msgstr "Sjølvvalt namn på påteikning:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -4252,7 +4251,7 @@ msgstr "Miniatyrbilete"
 #: part/part.cpp:408 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
 #, kde-format
 msgid "Annotations"
-msgstr "Merknadar"
+msgstr "Påteikningar"
 
 #: part/part.cpp:451
 #, kde-format
@@ -4262,9 +4261,10 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
-"Dokumentet inneheld merknadar eller skjemadata som vart lagra internt av ein "
-"tidlegare Okular-versjon. Intern lagring er <b>ikkje lenger støtta</b>.<br/"
-">Lagra merknadane til ei fil dersom du vil halda fram å redigera dokumentet."
+"Dokumentet inneheld påteikningar eller skjemadata som vart lagra internt av "
+"ein tidlegare Okular-versjon. Intern lagring er <b>ikkje lenger støtta</b>."
+"<br/>Lagra påteikningane til ei fil dersom du vil halda fram å redigera "
+"dokumentet."
 
 #: part/part.cpp:459
 #, kde-format
@@ -4477,10 +4477,9 @@ msgid "Erase Drawing"
 msgstr "Visk ut teikning"
 
 #: part/part.cpp:972
-#, fuzzy, kde-format
-#| msgid "Configure Annotations..."
+#, kde-format
 msgid "Configure Annotations…"
-msgstr "Set opp merknadar …"
+msgstr "Set opp påteikningar …"
 
 #: part/part.cpp:977
 #, kde-format
@@ -4843,7 +4842,7 @@ msgstr "Utfylt skjemainnhald"
 #: part/part.cpp:2785
 #, kde-format
 msgid "User annotations"
-msgstr "Brukarmerknadar"
+msgstr "Brukarpåteikningar"
 
 #: part/part.cpp:2790
 #, kde-format
@@ -4862,8 +4861,7 @@ msgid "Warning"
 msgstr "Åtvaring"
 
 #: part/part.cpp:2795 part/part.cpp:2817
-#, fuzzy, kde-format
-#| msgid "Save as Okular document archive..."
+#, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Lagra som Okular-dokumentarkiv …"
 
@@ -4928,14 +4926,12 @@ msgstr ""
 "Klarte ikkje lagra fila i «%1». Feil: «%2». Prøv å lagra ho ein annan stad."
 
 #: part/part.cpp:3174
-#, fuzzy, kde-format
-#| msgid "Expand whole section"
+#, kde-format
 msgid "Expand Whole Section"
 msgstr "Utvid heile inndelinga"
 
 #: part/part.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Collapse whole section"
+#, kde-format
 msgid "Collapse Whole Section"
 msgstr "Fald saman heile inndelinga"
 
@@ -5102,13 +5098,13 @@ msgstr "Hovudverktøylinje"
 #: part/part.rc:124
 #, kde-format
 msgid "Annotation Toolbar"
-msgstr "Merknadsverktøylinje"
+msgstr "Påteikningsverktøylinje"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:148
 #, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "Kjappmerknadar-linje"
+msgstr "Kjapp-påteikningslinje"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format
@@ -5153,7 +5149,7 @@ msgstr "Val for presentasjonsmodus"
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr "Val for merknadar"
+msgstr "Val for påteikningar"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5579,8 +5575,8 @@ msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
-"<div align=center><h3>Ingen merknadar</h3>Trykk «F6» eller vel <i>Verktøy → "
-"Merknadar</i> frå menyen for å leggja til merknadar.</div>"
+"<div align=center><h3>Ingen påteikningar</h3>Trykk «F6» eller vel "
+"<i>Verktøy → Påteikningar</i> frå menyen for å leggja til påteikningar.</div>"
 
 #: part/side_reviews.cpp:142
 #, kde-format

@@ -1,4 +1,11 @@
 # Okular – Universal Document Viewer
+# Experimental Feature: Dark reader [Demo](https://youtu.be/Xf0qtwL_RVU)
+## Features: 
+1. Inverts text without inverting images
+2. provides a shortcut to toggle dark reader
+3. option to choose dark reader background from default(breeze background), color scheme or Custom
+4. text's luminosity is changed so they preserve colors ( unlike color mode: change light and dark color
+
 
 Okular can view and annotate documents of various formats, including PDF, Postscript, Comic Book, and various image formats.
 It supports native PDF annotations.

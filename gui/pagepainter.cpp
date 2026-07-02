@@ -199,6 +199,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
     // make this a qcolor, rect map, since we don't need
     // to know s_id here! we are only drawing this right?
     QList<QPair<QColor, Okular::NormalizedRect>> bufferedHighlights;
+    QList<Okular::NormalizedRect> bufferedTextSelections;
     QList<Okular::Annotation *> bufferedAnnotations;
     QList<Okular::Annotation *> unbufferedAnnotations;
     Okular::Annotation *boundingRectOnlyAnn = nullptr; // Paint the bounding rect of this annotation
@@ -224,7 +225,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             const Okular::RegularAreaRect *textSelection = page->textSelection();
             for (const auto &rect : std::as_const(*textSelection)) {
                 if (rect.intersects(limitRect)) {
-                    bufferedHighlights.append(qMakePair(page->textSelectionColor(), rect));
+                    bufferedTextSelections.append(rect);
                 }
             }
         }
@@ -274,7 +275,7 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
 
     /** 3 - ENABLE BACKBUFFERING IF DIRECT IMAGE MANIPULATION IS NEEDED **/
     const bool bufferAccessibility = (flags & Accessibility) && Okular::SettingsCore::changeColors() && (Okular::SettingsCore::renderMode() != Okular::SettingsCore::EnumRenderMode::Paper);
-    const bool useBackBuffer = bufferAccessibility || !bufferedHighlights.isEmpty() || !bufferedAnnotations.isEmpty() || viewPortPoint;
+    const bool useBackBuffer = bufferAccessibility || !bufferedHighlights.isEmpty() || !bufferedTextSelections.isEmpty() || !bufferedAnnotations.isEmpty() || viewPortPoint;
     QPixmap backPixmap; // order of declarations is important: ownedPainter should be destroyed before its pixmap
     std::unique_ptr<QPainter> ownedPainter;
     QPainter *mixedPainter = nullptr; // Will point to either a provided destPainter or the ownedPainter
@@ -438,6 +439,35 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
             const QRect frameRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).translated(-limits.left(), -limits.top());
             painter.setPen(frameColor);
             painter.drawRect(frameRect);
+        }
+
+        // draw text selections that are inside the 'limits' paint region
+        if (!bufferedTextSelections.isEmpty()) {
+            QPainter::CompositionMode compMode = QPainter::CompositionMode_Multiply;
+            QColor highlightColor = page->textSelectionColor();
+            QColor frameColor = highlightColor.darker(150);
+            if (Okular::SettingsCore::changeColors()) {
+                if (Okular::SettingsCore::renderMode() == Okular::SettingsCore::EnumRenderMode::Paper) {
+                    compMode = QPainter::CompositionMode_Difference;
+                } else {
+                    compMode = QPainter::CompositionMode_Screen;
+                    frameColor.setRgb((frameColor.red() - 255) * -1, (frameColor.green() - 255) * -1, (frameColor.blue() - 255) * -1);
+                }
+            }
+
+            for (const auto &r : std::as_const(bufferedTextSelections)) {
+                // find out the rect to highlight on pixmap
+                QRect highlightRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).intersected(limits);
+                highlightRect.translate(-limits.left(), -limits.top());
+
+                QPainter painter(&backImage);
+                painter.setCompositionMode(compMode);
+                painter.fillRect(highlightRect, highlightColor);
+
+                const QRect frameRect = r.geometry(scaledWidth, scaledHeight).translated(-scaledCrop.topLeft()).translated(-limits.left(), -limits.top());
+                painter.setPen(frameColor);
+                painter.drawRect(frameRect);
+            }
         }
 
         // 4B.4. paint annotations [COMPOSITED ONES]

@@ -378,12 +378,25 @@ void PagePainter::paintCroppedPageOnPainter(QPainter *destPainter,
                 hueShiftNegative(&backImage);
                 break;
             case Okular::SettingsCore::EnumRenderMode::DarkReader: {
-                // Text color #eff0f1, background color #31363b. Embedded raster
+                // Text color #eff0f1, background color #232627 (default) or config-driven. Embedded raster
                 // images are left untouched, using an exact per-pixel mask
                 // provided by the generator when available (currently: PDF
                 // only), falling back to recoloring the whole page otherwise.
+                QColor bgColor;
+                switch (Okular::Settings::darkReaderBackgroundMode()) {
+                case Okular::Settings::EnumDarkReaderBackgroundMode::ColorScheme:
+                    bgColor = QApplication::palette().color(QPalette::Active, QPalette::Window);
+                    break;
+                case Okular::Settings::EnumDarkReaderBackgroundMode::Custom:
+                    bgColor = Okular::Settings::darkReaderCustomBackgroundColor();
+                    break;
+                case Okular::Settings::EnumDarkReaderBackgroundMode::Default:
+                default:
+                    bgColor = QColor(0x23, 0x26, 0x27);
+                    break;
+                }
                 const QImage noRecolorMask = fetchNoRecolorMask(page, QSize(dScaledWidth, dScaledHeight), dLimitsInPixmap);
-                recolorExcludingMask(&backImage, QColor(0xef, 0xf0, 0xf1), QColor(0x31, 0x36, 0x3b), noRecolorMask);
+                recolorExcludingMask(&backImage, QColor(0xef, 0xf0, 0xf1), bgColor, noRecolorMask);
                 break;
             }
             }

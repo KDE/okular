@@ -130,6 +130,29 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     m_colorModeConfigStack->addWidget(pageWidget);
     // END Convert to black & white page
 
+    // BEGIN Dark Reader page
+    pageWidget = new QWidget(this);
+    pageLayout = new QFormLayout(pageWidget);
+
+    QComboBox *drBackgroundMode = new QComboBox(this);
+    drBackgroundMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Default"));
+    drBackgroundMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "From color scheme"));
+    drBackgroundMode->addItem(i18nc("@item:inlistbox Config dialog, accessibility page", "Custom"));
+    drBackgroundMode->setObjectName(QStringLiteral("kcfg_DarkReaderBackgroundMode"));
+    pageLayout->addRow(i18nc("@label:listbox Config dialog, accessibility page", "Background color:"), drBackgroundMode);
+
+    KColorButton *drCustomColor = new KColorButton(this);
+    drCustomColor->setObjectName(QStringLiteral("kcfg_DarkReaderCustomBackgroundColor"));
+    pageLayout->addRow(i18nc("@label:chooser Config dialog, accessibility page", "Custom background color:"), drCustomColor);
+
+    m_colorModeConfigStack->addWidget(pageWidget);
+
+    connect(drBackgroundMode, qOverload<int>(&QComboBox::currentIndexChanged), this, [drCustomColor](int index) {
+        drCustomColor->setEnabled(index == 2);
+    });
+    drCustomColor->setEnabled(drBackgroundMode->currentIndex() == 2);
+    // END Dark Reader page
+
     layout->addRow(QString(), m_colorModeConfigStack);
 
     // Setup controls enabled states:
@@ -192,6 +215,8 @@ void DlgAccessibility::slotColorModeSelected(int mode)
         m_colorModeConfigStack->setCurrentIndex(2);
     } else if (mode == Okular::Settings::EnumRenderMode::BlackWhite) {
         m_colorModeConfigStack->setCurrentIndex(3);
+    } else if (mode == Okular::Settings::EnumRenderMode::DarkReader) {
+        m_colorModeConfigStack->setCurrentIndex(4);
     } else {
         m_colorModeConfigStack->setCurrentIndex(0);
     }

@@ -410,6 +410,19 @@
    <default code="true" >0xF0F0F0</default>
    <emit signal="colorModesChanged2" />
   </entry>
+  <entry key="DarkReaderBackgroundMode" type="Enum" >
+   <default>Default</default>
+   <choices>
+    <choice name="Default" />
+    <choice name="ColorScheme" />
+    <choice name="Custom" />
+   </choices>
+   <emit signal="colorModesChanged2" />
+  </entry>
+  <entry key="DarkReaderCustomBackgroundColor" type="Color" >
+   <default code="true" >0x232627</default>
+   <emit signal="colorModesChanged2" />
+  </entry>
   <entry key="BWThreshold" type="UInt" >
    <default>127</default>
    <min>2</min>

@@ -3711,6 +3711,7 @@ void Part::finishSigning()
         m_signatureInProgressMessage->setVisible(false);
         m_saveAs->setEnabled(true);
         m_save->setEnabled(true);
+        actionCollection()->action(QStringLiteral("add_digital_signature"))->setEnabled(true);
     }
 }
 #endif

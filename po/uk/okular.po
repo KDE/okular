@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-22 00:41+0000\n"
+"POT-Creation-Date: 2026-07-03 00:43+0000\n"
 "PO-Revision-Date: 2026-06-22 16:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -265,47 +265,47 @@ msgstr ""
 "<qt>Знайдено більше, ніж один модуль обробки для типу MIME:<br /><b>%1</b> "
 "(%2).<br /><br />Будь ласка, виберіть, який з них використовувати:</qt>"
 
-#: core/document.cpp:200
+#: core/document.cpp:199
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Більшість сторінок має розмір %1."
 
-#: core/document.cpp:221
+#: core/document.cpp:220
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Книжкова %1"
 
-#: core/document.cpp:223
+#: core/document.cpp:222
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Альбомна %1"
 
-#: core/document.cpp:246
+#: core/document.cpp:245
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 ⨯ %2 дюйм (%3)"
 
-#: core/document.cpp:248
+#: core/document.cpp:247
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 мм (%3)"
 
-#: core/document.cpp:1702
+#: core/document.cpp:1701
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Продовжуємо пошук з початку"
 
-#: core/document.cpp:1705
+#: core/document.cpp:1704
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Продовжуємо пошук з кінця"
 
-#: core/document.cpp:2421
+#: core/document.cpp:2420
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -313,19 +313,19 @@ msgstr ""
 "Не вдалося знайти додаток для обробки цього документа, який передано "
 "програмі."
 
-#: core/document.cpp:2843
+#: core/document.cpp:2842
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "Для цього типу документів підписування не реалізовано"
 
-#: core/document.cpp:3557
+#: core/document.cpp:3556
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "вилучити анотації"
 
-#: core/document.cpp:4149 core/document.cpp:4155
+#: core/document.cpp:4148 core/document.cpp:4154
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -334,52 +334,52 @@ msgstr ""
 "Документ намагається запустити зовнішню програму, а Okular цього не дозволяє "
 "з причин безпеки."
 
-#: core/document.cpp:4165
+#: core/document.cpp:4164
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Не знайдено програми для відкриття файли з типом MIME %1."
 
-#: core/document.cpp:4801
+#: core/document.cpp:4800
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Не вдалося відкрити тимчасовий файл"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4802
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Помилка перетворення даних для друку"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4804
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Процес друку завершив роботу у аварійному режимі"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4806
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Не вдалося розпочати процес друку"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4808
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Помилка під час друку до файла"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4810
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Принтер перебував у некоректному стані"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4812
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Не вдалося знайти файл для друку"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4814
 #, kde-format
 msgid "There was no file to print"
 msgstr "Не виявлено файла для друку"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4816
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -388,92 +388,92 @@ msgstr ""
 "Не вдалося знайти відповідну програму для друку. Переконайтеся, що у системі "
 "належним чином встановлено програму lpr зі складу комплексу CUPS."
 
-#: core/document.cpp:4819
+#: core/document.cpp:4818
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Друкований розмір сторінки є некоректним"
 
-#: core/document.cpp:5493 part/part.cpp:1136
+#: core/document.cpp:5492 part/part.cpp:1135
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Не вдалося відкрити «%1». Вказаного файла не існує."
 
-#: core/document.cpp:6002
+#: core/document.cpp:6001
 #, kde-format
 msgid "Title"
 msgstr "Заголовок"
 
-#: core/document.cpp:6005
+#: core/document.cpp:6004
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:6008
+#: core/document.cpp:6007
 #, kde-format
 msgid "Description"
 msgstr "Опис"
 
-#: core/document.cpp:6011
+#: core/document.cpp:6010
 #, kde-format
 msgid "Author"
 msgstr "Автор"
 
-#: core/document.cpp:6014
+#: core/document.cpp:6013
 #, kde-format
 msgid "Creator"
 msgstr "Створено у"
 
-#: core/document.cpp:6017
+#: core/document.cpp:6016
 #, kde-format
 msgid "Producer"
 msgstr "Виготовлено"
 
-#: core/document.cpp:6020
+#: core/document.cpp:6019
 #, kde-format
 msgid "Copyright"
 msgstr "Авторські права"
 
-#: core/document.cpp:6023
+#: core/document.cpp:6022
 #, kde-format
 msgid "Pages"
 msgstr "Сторінок"
 
-#: core/document.cpp:6026
+#: core/document.cpp:6025
 #, kde-format
 msgid "Created"
 msgstr "Дата створення"
 
-#: core/document.cpp:6029
+#: core/document.cpp:6028
 #, kde-format
 msgid "Modified"
 msgstr "Змінено"
 
-#: core/document.cpp:6032
+#: core/document.cpp:6031
 #, kde-format
 msgid "MIME Type"
 msgstr "Тип MIME"
 
-#: core/document.cpp:6035
+#: core/document.cpp:6034
 #, kde-format
 msgid "Category"
 msgstr "Категорія"
 
-#: core/document.cpp:6038
+#: core/document.cpp:6037
 #, kde-format
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: core/document.cpp:6041
+#: core/document.cpp:6040
 #, kde-format
 msgid "File Path"
 msgstr "Шлях до файла"
 
-#: core/document.cpp:6044
+#: core/document.cpp:6043
 #, kde-format
 msgid "File Size"
 msgstr "Розмір файла"
 
-#: core/document.cpp:6047
+#: core/document.cpp:6046
 #, kde-format
 msgid "Page Size"
 msgstr "Розмір сторінки"
@@ -1219,109 +1219,109 @@ msgstr "Замінник підпису"
 msgid "Signature Type: %1"
 msgstr "Тип підпису: %1"
 
-#: part/annotationactionhandler.cpp:148
+#: part/annotationactionhandler.cpp:147
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Red"
 msgstr "Червоний"
 
-#: part/annotationactionhandler.cpp:149
+#: part/annotationactionhandler.cpp:148
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Orange"
 msgstr "Помаранчевий"
 
-#: part/annotationactionhandler.cpp:150
+#: part/annotationactionhandler.cpp:149
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: part/annotationactionhandler.cpp:151
+#: part/annotationactionhandler.cpp:150
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Green"
 msgstr "Зелений"
 
-#: part/annotationactionhandler.cpp:152
+#: part/annotationactionhandler.cpp:151
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Cyan"
 msgstr "Блакитний"
 
-#: part/annotationactionhandler.cpp:153
+#: part/annotationactionhandler.cpp:152
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Blue"
 msgstr "Синій"
 
-#: part/annotationactionhandler.cpp:154
+#: part/annotationactionhandler.cpp:153
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Magenta"
 msgstr "Бузковий"
 
-#: part/annotationactionhandler.cpp:155
+#: part/annotationactionhandler.cpp:154
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "White"
 msgstr "Білий"
 
-#: part/annotationactionhandler.cpp:156
+#: part/annotationactionhandler.cpp:155
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Gray"
 msgstr "Сірий"
 
-#: part/annotationactionhandler.cpp:157
+#: part/annotationactionhandler.cpp:156
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Black"
 msgstr "Чорний"
 
-#: part/annotationactionhandler.cpp:246 part/annotationactionhandler.cpp:687
+#: part/annotationactionhandler.cpp:245 part/annotationactionhandler.cpp:686
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Width %1"
 msgstr "Товщина %1"
 
-#: part/annotationactionhandler.cpp:252
+#: part/annotationactionhandler.cpp:251
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
 msgstr "%1%"
 
-#: part/annotationactionhandler.cpp:296
+#: part/annotationactionhandler.cpp:295
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
 msgstr "Товщина лінії анотації (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:297
+#: part/annotationactionhandler.cpp:296
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
 msgstr "Колір лінії анотації (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:298
+#: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
 msgstr "Колір заповнення анотації (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:299
+#: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
 msgstr "Непрозорість анотації (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:300
+#: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
 msgstr "Шрифт анотації (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:301
+#: part/annotationactionhandler.cpp:300
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1331,7 +1331,7 @@ msgstr ""
 "Додати поточну анотацію до меню пришвидшеного анотування (анотації не "
 "позначено)"
 
-#: part/annotationactionhandler.cpp:302
+#: part/annotationactionhandler.cpp:301
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1341,7 +1341,7 @@ msgstr ""
 "Обмежити співвідношення розмірів форми значенням 1:1, а крок кута повороту "
 "лінії — значенням 15° (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:303
+#: part/annotationactionhandler.cpp:302
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1349,44 +1349,44 @@ msgid ""
 msgstr ""
 "Додаткові параметри для поточного засобу анотування (анотації не позначено)"
 
-#: part/annotationactionhandler.cpp:308
+#: part/annotationactionhandler.cpp:307
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
 msgstr "Товщина лінії анотування"
 
-#: part/annotationactionhandler.cpp:310
+#: part/annotationactionhandler.cpp:309
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
 msgstr ""
 "Товщина лінії анотації (для поточної анотації товщина лінії незастосовна)"
 
-#: part/annotationactionhandler.cpp:314
+#: part/annotationactionhandler.cpp:313
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
 msgstr "Колір тексту анотації"
 
-#: part/annotationactionhandler.cpp:316
+#: part/annotationactionhandler.cpp:315
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
 msgstr "Колір рамки анотації"
 
-#: part/annotationactionhandler.cpp:318
+#: part/annotationactionhandler.cpp:317
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
 msgstr "Колір анотації"
 
-#: part/annotationactionhandler.cpp:322
+#: part/annotationactionhandler.cpp:321
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
 msgstr "Колір заповнення анотації"
 
-#: part/annotationactionhandler.cpp:324
+#: part/annotationactionhandler.cpp:323
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
@@ -1394,31 +1394,31 @@ msgstr ""
 "Колір заповнення анотації (для поточної анотації колір заповнення "
 "незастосовний)"
 
-#: part/annotationactionhandler.cpp:328
+#: part/annotationactionhandler.cpp:327
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
 msgstr "Шрифт анотації"
 
-#: part/annotationactionhandler.cpp:330
+#: part/annotationactionhandler.cpp:329
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
 msgstr "Шрифт анотації (для поточної анотації шрифт незастосовний)"
 
-#: part/annotationactionhandler.cpp:334
+#: part/annotationactionhandler.cpp:333
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain line angle to 15° steps"
 msgstr "Обмежити крок кута повороту лінії значенням 15°"
 
-#: part/annotationactionhandler.cpp:336
+#: part/annotationactionhandler.cpp:335
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
 msgstr "Обмежити співвідношення розмірів форми значенням 1:1"
 
-#: part/annotationactionhandler.cpp:338
+#: part/annotationactionhandler.cpp:337
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1428,186 +1428,186 @@ msgstr ""
 "Обмежити співвідношення розмірів форми значенням 1:1, а крок кута повороту "
 "лінії — значенням 15° (не застосовне до поточної анотації)"
 
-#: part/annotationactionhandler.cpp:341
+#: part/annotationactionhandler.cpp:340
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
 msgstr "Непрозорість анотації"
 
-#: part/annotationactionhandler.cpp:342
+#: part/annotationactionhandler.cpp:341
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
 msgstr "Додати поточну анотацію до меню пришвидшеного анотування"
 
-#: part/annotationactionhandler.cpp:343
+#: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
 msgstr "Додаткові параметри поточного засобу анотування"
 
-#: part/annotationactionhandler.cpp:432
+#: part/annotationactionhandler.cpp:431
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Color"
 msgstr "Колір"
 
-#: part/annotationactionhandler.cpp:434
+#: part/annotationactionhandler.cpp:433
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Fill Color"
 msgstr "Колір заповнення"
 
-#: part/annotationactionhandler.cpp:435
+#: part/annotationactionhandler.cpp:434
 #, kde-format
 msgctxt "@item:inlistbox Color name"
 msgid "Transparent"
 msgstr "Прозорий"
 
-#: part/annotationactionhandler.cpp:445
+#: part/annotationactionhandler.cpp:444
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "Custom Color…"
 msgstr "Нетиповий колір…"
 
-#: part/annotationactionhandler.cpp:499
+#: part/annotationactionhandler.cpp:498
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
 msgstr "Вибір кольору"
 
-#: part/annotationactionhandler.cpp:552
+#: part/annotationactionhandler.cpp:551
 #, kde-format
 msgid "&Annotations"
 msgstr "&Анотації"
 
-#: part/annotationactionhandler.cpp:553
+#: part/annotationactionhandler.cpp:552
 #, kde-format
 msgctxt "@action:intoolbar Hide the toolbar"
 msgid "Hide"
 msgstr "Приховати"
 
-#: part/annotationactionhandler.cpp:554
+#: part/annotationactionhandler.cpp:553
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
 msgstr "Показати більше інструментів анотацій"
 
-#: part/annotationactionhandler.cpp:557
+#: part/annotationactionhandler.cpp:556
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Highlighter"
 msgstr "Підсвічування"
 
-#: part/annotationactionhandler.cpp:558
+#: part/annotationactionhandler.cpp:557
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Underline"
 msgstr "Підкреслення"
 
-#: part/annotationactionhandler.cpp:559
+#: part/annotationactionhandler.cpp:558
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Squiggle"
 msgstr "Підкреслення хвилястою"
 
-#: part/annotationactionhandler.cpp:560
+#: part/annotationactionhandler.cpp:559
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Strike Out"
 msgstr "Закреслення"
 
-#: part/annotationactionhandler.cpp:562
+#: part/annotationactionhandler.cpp:561
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Typewriter"
 msgstr "Друкарська машинка"
 
-#: part/annotationactionhandler.cpp:563
+#: part/annotationactionhandler.cpp:562
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Inline Note"
 msgstr "Рядкова примітка"
 
-#: part/annotationactionhandler.cpp:564
+#: part/annotationactionhandler.cpp:563
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Popup Note"
 msgstr "Контекстна нотатка"
 
-#: part/annotationactionhandler.cpp:565
+#: part/annotationactionhandler.cpp:564
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Freehand Line"
 msgstr "Довільна лінія"
 
-#: part/annotationactionhandler.cpp:567
+#: part/annotationactionhandler.cpp:566
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Straight line"
 msgstr "Пряма"
 
-#: part/annotationactionhandler.cpp:568
+#: part/annotationactionhandler.cpp:567
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Arrow"
 msgstr "Стрілка"
 
-#: part/annotationactionhandler.cpp:569
+#: part/annotationactionhandler.cpp:568
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Rectangle"
 msgstr "Прямокутник"
 
-#: part/annotationactionhandler.cpp:570
+#: part/annotationactionhandler.cpp:569
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Ellipse"
 msgstr "Еліпс"
 
-#: part/annotationactionhandler.cpp:571
+#: part/annotationactionhandler.cpp:570
 #, kde-format
 msgctxt "@action:intoolbar Annotation tool"
 msgid "Polygon"
 msgstr "Багатокутник"
 
-#: part/annotationactionhandler.cpp:572
+#: part/annotationactionhandler.cpp:571
 #, kde-format
 msgctxt "@action"
 msgid "Geometrical shapes"
 msgstr "Геометричні форми"
 
-#: part/annotationactionhandler.cpp:618
+#: part/annotationactionhandler.cpp:617
 #, kde-format
 msgctxt "@action"
 msgid "Stamp"
 msgstr "Штамп"
 
-#: part/annotationactionhandler.cpp:638
+#: part/annotationactionhandler.cpp:637
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
 msgstr "Швидка анотація"
 
-#: part/annotationactionhandler.cpp:641
+#: part/annotationactionhandler.cpp:640
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
 msgstr "Виберіть інструмент анотування з меню пришвидшеного анотування"
 
-#: part/annotationactionhandler.cpp:651
+#: part/annotationactionhandler.cpp:650
 #, kde-format
 msgid "Quick Annotation Bar"
 msgstr "Панель пришвидшеного анотування"
 
-#: part/annotationactionhandler.cpp:665
+#: part/annotationactionhandler.cpp:664
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
 msgstr "Додати на панель пришвидшеного анотування"
 
-#: part/annotationactionhandler.cpp:668
+#: part/annotationactionhandler.cpp:667
 #, kde-format
 msgctxt ""
 "@action:intoolbar When checked keep the current annotation tool active after "
@@ -1615,13 +1615,13 @@ msgctxt ""
 msgid "Keep Active"
 msgstr "Лишати активним"
 
-#: part/annotationactionhandler.cpp:669
+#: part/annotationactionhandler.cpp:668
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
 msgstr "Лишати засіб анотування активним після використання"
 
-#: part/annotationactionhandler.cpp:674
+#: part/annotationactionhandler.cpp:673
 #, kde-format
 msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
@@ -1631,31 +1631,31 @@ msgstr ""
 "Обмежити співвідношення розмірів і кут повороту ліній для інструментів "
 "анотацій"
 
-#: part/annotationactionhandler.cpp:680
+#: part/annotationactionhandler.cpp:679
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
 msgstr "Шрифт"
 
-#: part/annotationactionhandler.cpp:681
+#: part/annotationactionhandler.cpp:680
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
 msgstr "Параметри анотацій"
 
-#: part/annotationactionhandler.cpp:684
+#: part/annotationactionhandler.cpp:683
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
 msgstr "Товщина лінії"
 
-#: part/annotationactionhandler.cpp:693
+#: part/annotationactionhandler.cpp:692
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: part/annotationactionhandler.cpp:696
+#: part/annotationactionhandler.cpp:695
 #, kde-format
 msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
@@ -1669,7 +1669,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Сторінка %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3175
+#: part/annotationmodel.cpp:324 part/part.cpp:3174
 #, kde-format
 msgid "Page %1"
 msgstr "Сторінка %1"
@@ -1690,12 +1690,12 @@ msgid "&Open Pop-up Note"
 msgstr "Від&крити нотатку"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:265 part/part.cpp:2268 part/part.cpp:3181
+#: part/bookmarklist.cpp:263 part/part.cpp:2267 part/part.cpp:3180
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Вилучити закладку"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3183
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3182
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Додати закладку"
@@ -1716,8 +1716,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Копіювати текст до буфера обміну"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2599 part/pageview.cpp:2951 part/pageview.cpp:2953
-#: part/pageview.cpp:3113 part/pageview.cpp:3174 part/pageview.cpp:3176
+#: part/pageview.cpp:2597 part/pageview.cpp:2949 part/pageview.cpp:2951
+#: part/pageview.cpp:3111 part/pageview.cpp:3172 part/pageview.cpp:3174
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копіювання заборонене DRM"
@@ -1727,7 +1727,7 @@ msgstr "Копіювання заборонене DRM"
 msgid "&Delete"
 msgstr "&Вилучити"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:751
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2185,7 +2185,7 @@ msgctxt "'File' as normal file, that can be opened, saved, etc.."
 msgid "File"
 msgstr "Файл"
 
-#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:95
+#: part/annotationwidgets.cpp:764 part/embeddedfilesdialog.cpp:94
 #, kde-format
 msgctxt "Not available size"
 msgid "N/A"
@@ -2279,7 +2279,7 @@ msgstr "Під час спроби виконання команди  «latex» 
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Під час спроби виконання команди «dvipng» виникли проблеми."
 
-#: part/bookmarklist.cpp:116
+#: part/bookmarklist.cpp:114
 #, kde-format
 msgctxt "%1 is the file name"
 msgid ""
@@ -2307,50 +2307,50 @@ msgstr[3] ""
 "\n"
 "Одна закладка"
 
-#: part/bookmarklist.cpp:132 part/part.cpp:417
+#: part/bookmarklist.cpp:130 part/part.cpp:416
 #, kde-format
 msgid "Bookmarks"
 msgstr "Закладки"
 
-#: part/bookmarklist.cpp:136
+#: part/bookmarklist.cpp:134
 #, kde-format
 msgid "Show for all documents"
 msgstr "Показати для усіх документів"
 
-#: part/bookmarklist.cpp:143 part/searchwidget.cpp:38 part/side_reviews.cpp:129
-#: part/toc.cpp:43
+#: part/bookmarklist.cpp:141 part/searchwidget.cpp:38 part/side_reviews.cpp:127
+#: part/toc.cpp:41
 #, kde-format
 msgid "Search…"
 msgstr "Шукати…"
 
-#: part/bookmarklist.cpp:261 part/bookmarklist.cpp:295 part/part.cpp:3163
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3162
 #, kde-format
 msgid "Expand All"
 msgstr "Розгорнути все"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:296 part/part.cpp:3164
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3163
 #, kde-format
 msgid "Collapse All"
 msgstr "Згорнути все"
 
-#: part/bookmarklist.cpp:263
+#: part/bookmarklist.cpp:261
 #, kde-format
 msgid "Go to This Bookmark"
 msgstr "Перейти до цієї закладки"
 
-#: part/bookmarklist.cpp:264 part/bookmarklist.cpp:301 part/part.cpp:682
-#: part/part.cpp:2463
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:681
+#: part/part.cpp:2462
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Перейменувати закладку"
 
-#: part/bookmarklist.cpp:299
+#: part/bookmarklist.cpp:297
 #, kde-format
 msgctxt "Opens the selected document"
 msgid "Open Document"
 msgstr "Відкрити документ"
 
-#: part/bookmarklist.cpp:302
+#: part/bookmarklist.cpp:300
 #, kde-format
 msgid "Remove all Bookmarks for this Document"
 msgstr "Вилучити усі закладки у цьому документі"
@@ -2457,73 +2457,73 @@ msgstr "файл сертифіката (*.cer)"
 msgid "Could not export the certificate"
 msgstr "Не вдалося експортувати сертифікат!"
 
-#: part/colormodemenu.cpp:19
+#: part/colormodemenu.cpp:18
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Color Mode"
 msgstr "&Режим кольорів"
 
-#: part/colormodemenu.cpp:21
+#: part/colormodemenu.cpp:20
 #, kde-format
 msgctxt "@action Change Colors feature toggle action"
 msgid "Change Colors"
 msgstr "Змінити кольори"
 
-#: part/colormodemenu.cpp:29
+#: part/colormodemenu.cpp:28
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Normal Colors"
 msgstr "&Звичайні кольори"
 
-#: part/colormodemenu.cpp:42
+#: part/colormodemenu.cpp:41
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "&Invert Colors"
 msgstr "Інвертувати кольори"
 
-#: part/colormodemenu.cpp:43
+#: part/colormodemenu.cpp:42
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Paper Color"
 msgstr "Змі&нити колір паперу"
 
-#: part/colormodemenu.cpp:45
+#: part/colormodemenu.cpp:44
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Change &Dark && Light Colors"
 msgstr "Змінити &темні і світлі кольори"
 
-#: part/colormodemenu.cpp:47
+#: part/colormodemenu.cpp:46
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Convert to &Black && White"
 msgstr "Перетворити на &чорно-біле"
 
-#: part/colormodemenu.cpp:50
+#: part/colormodemenu.cpp:49
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert &Lightness"
 msgstr "Інвертувати &освітленість"
 
-#: part/colormodemenu.cpp:53
+#: part/colormodemenu.cpp:52
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert L&uma (sRGB Linear)"
 msgstr "Інвертувати &яскравість (лінійний sRGB)"
 
-#: part/colormodemenu.cpp:56
+#: part/colormodemenu.cpp:55
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Invert Luma (&Symmetric)"
 msgstr "Інвертувати яскравість (си&метрично)"
 
-#: part/colormodemenu.cpp:59
+#: part/colormodemenu.cpp:58
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue P&ositive"
 msgstr "&Додатний зсув відтінка"
 
-#: part/colormodemenu.cpp:62
+#: part/colormodemenu.cpp:61
 #, kde-format
 msgctxt "@item:inmenu color mode"
 msgid "Shift Hue N&egative"
@@ -3503,73 +3503,73 @@ msgstr "Створення інструменту малювання"
 msgid "Edit drawing tool"
 msgstr "Редагування інструменту малювання"
 
-#: part/embeddedfilesdialog.cpp:42
+#: part/embeddedfilesdialog.cpp:41
 #, kde-format
 msgctxt "Unknown date"
 msgid "Unknown"
 msgstr "Невідомо"
 
-#: part/embeddedfilesdialog.cpp:48
+#: part/embeddedfilesdialog.cpp:47
 #, kde-format
 msgctxt "@title:window"
 msgid "Embedded Files"
 msgstr "Вбудовані файли"
 
-#: part/embeddedfilesdialog.cpp:62
+#: part/embeddedfilesdialog.cpp:61
 #, kde-format
 msgctxt "@action:button"
 msgid "View"
 msgstr "Переглянути"
 
-#: part/embeddedfilesdialog.cpp:67
+#: part/embeddedfilesdialog.cpp:66
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
 msgstr "Відкрити"
 
-#: part/embeddedfilesdialog.cpp:75
+#: part/embeddedfilesdialog.cpp:74
 #, kde-format
 msgctxt "@title:column"
 msgid "Name"
 msgstr "Назва"
 
-#: part/embeddedfilesdialog.cpp:76
+#: part/embeddedfilesdialog.cpp:75
 #, kde-format
 msgctxt "@title:column"
 msgid "Description"
 msgstr "Опис"
 
-#: part/embeddedfilesdialog.cpp:77
+#: part/embeddedfilesdialog.cpp:76
 #, kde-format
 msgctxt "@title:column"
 msgid "Size"
 msgstr "Розмір"
 
-#: part/embeddedfilesdialog.cpp:78
+#: part/embeddedfilesdialog.cpp:77
 #, kde-format
 msgctxt "@title:column"
 msgid "Created"
 msgstr "Створено"
 
-#: part/embeddedfilesdialog.cpp:79
+#: part/embeddedfilesdialog.cpp:78
 #, kde-format
 msgctxt "@title:column"
 msgid "Modified"
 msgstr "Змінено"
 
-#: part/embeddedfilesdialog.cpp:170
+#: part/embeddedfilesdialog.cpp:169
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Save As…"
 msgstr "&Зберегти як…"
 
-#: part/embeddedfilesdialog.cpp:171
+#: part/embeddedfilesdialog.cpp:170
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&View…"
 msgstr "П&ереглянути…"
 
-#: part/embeddedfilesdialog.cpp:172
+#: part/embeddedfilesdialog.cpp:171
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
@@ -3654,7 +3654,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Замінник підпису (натисніть, щоб підписати)"
 
-#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:95
 #, kde-format
 msgid "&Sign…"
 msgstr "Підп&исати…"
@@ -3681,7 +3681,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Формальний вираз"
 
-#: part/layers.cpp:35 part/part.cpp:2311
+#: part/layers.cpp:33 part/part.cpp:2310
 #, kde-format
 msgid "Layers"
 msgstr "Шари"
@@ -3692,210 +3692,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "з"
 
-#: part/pageview.cpp:541
+#: part/pageview.cpp:539
 #, kde-format
 msgid "Zoom"
 msgstr "Масштабувати"
 
-#: part/pageview.cpp:553
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Масштаб у 100%"
 
-#: part/pageview.cpp:564
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Обернути п&раворуч"
 
-#: part/pageview.cpp:565
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Праворуч"
 
-#: part/pageview.cpp:569
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Обернути &ліворуч"
 
-#: part/pageview.cpp:570
+#: part/pageview.cpp:568
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Ліворуч"
 
-#: part/pageview.cpp:574
+#: part/pageview.cpp:572
 #, kde-format
 msgid "Original Orientation"
 msgstr "Початкова орієнтація"
 
-#: part/pageview.cpp:580
+#: part/pageview.cpp:578
 #, kde-format
 msgid "&Trim View"
 msgstr "Обрізати п&ерегляд"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:582
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Обрізати краї"
 
-#: part/pageview.cpp:591
+#: part/pageview.cpp:589
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Обрізати за &позначеним"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:595
 #, kde-format
 msgid "Fit &Width"
 msgstr "Вмістити за &шириною"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:599
 #, kde-format
 msgid "Fit &Page"
 msgstr "Вмістити &сторінку"
 
-#: part/pageview.cpp:605
+#: part/pageview.cpp:603
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Автомасштаб"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:607
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Масштаб ві&кна за сторінкою"
 
-#: part/pageview.cpp:616
+#: part/pageview.cpp:614
 #, kde-format
 msgid "&View Mode"
 msgstr "Ре&жим перегляду"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:626
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Одна сторінка"
 
-#: part/pageview.cpp:629
+#: part/pageview.cpp:627
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "С&уміжні сторінки"
 
-#: part/pageview.cpp:630
+#: part/pageview.cpp:628
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Суміжні сторінки (перша сторінка у &центрі)"
 
-#: part/pageview.cpp:633
+#: part/pageview.cpp:631
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "О&гляд"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:643
 #, kde-format
 msgid "&Continuous"
 msgstr "&Безперервний"
 
-#: part/pageview.cpp:652
+#: part/pageview.cpp:650
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Використовувати напрям читання справа ліворуч"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:659
 #, kde-format
 msgid "&Browse"
 msgstr "&Навігація"
 
-#: part/pageview.cpp:669
+#: part/pageview.cpp:667
 #, kde-format
 msgid "&Zoom"
 msgstr "&Масштабувати"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:687
 #, kde-format
 msgid "Area &Selection"
 msgstr "Вибір &ділянки"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:694
 #, kde-format
 msgid "&Text Selection"
 msgstr "Вибір &тексту"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:701
 #, kde-format
 msgid "T&able Selection"
 msgstr "Вибір &таблиці"
 
-#: part/pageview.cpp:710
+#: part/pageview.cpp:708
 #, kde-format
 msgid "&Magnifier"
 msgstr "З&більшувальне скло"
 
-#: part/pageview.cpp:719
+#: part/pageview.cpp:717
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Засоби позначення"
 
-#: part/pageview.cpp:745
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Підписати &цифровим підписом…"
 
-#: part/pageview.cpp:751
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Прочитати уголос весь документ"
 
-#: part/pageview.cpp:756
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Прочитати уголос від поточної сторінки"
 
-#: part/pageview.cpp:761
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Прочитати уголос поточну сторінку"
 
-#: part/pageview.cpp:766
+#: part/pageview.cpp:764
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Зупинити читання"
 
-#: part/pageview.cpp:771
+#: part/pageview.cpp:769
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Призупинити/Відновити читання уголос"
 
-#: part/pageview.cpp:783
+#: part/pageview.cpp:781
 #, kde-format
 msgid "Scroll Up"
 msgstr "Прогорнути вгору"
 
-#: part/pageview.cpp:789
+#: part/pageview.cpp:787
 #, kde-format
 msgid "Scroll Down"
 msgstr "Прогорнути вниз"
 
-#: part/pageview.cpp:795
+#: part/pageview.cpp:793
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Прогорнути на сторінку вгору"
 
-#: part/pageview.cpp:801
+#: part/pageview.cpp:799
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Прогорнути на сторінку вниз"
 
-#: part/pageview.cpp:807
+#: part/pageview.cpp:805
 #, kde-format
 msgid "Show Forms"
 msgstr "Показати форми"
 
-#: part/pageview.cpp:1320
+#: part/pageview.cpp:1318
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3904,12 +3904,12 @@ msgstr[1] " Завантажено документ з %1 сторінками."
 msgstr[2] " Завантажено документ з %1 сторінками."
 msgstr[3] " Завантажено документ з однієї сторінки."
 
-#: part/pageview.cpp:2593
+#: part/pageview.cpp:2591
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Копіювати зміст до буфера обміну"
 
-#: part/pageview.cpp:2943
+#: part/pageview.cpp:2941
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3918,82 +3918,82 @@ msgstr[1] "Текст (%1 символи)"
 msgstr[2] "Текст (%1 символів)"
 msgstr[3] "Текст (1 символ)"
 
-#: part/pageview.cpp:2944 part/pageview.cpp:2966
+#: part/pageview.cpp:2942 part/pageview.cpp:2964
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Скопіювати до буфера"
 
-#: part/pageview.cpp:2946 part/pageview.cpp:3165 part/part.cpp:842
+#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:841
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Копіювати текст (без розривів рядків)"
 
-#: part/pageview.cpp:2957 part/pageview.cpp:3169
+#: part/pageview.cpp:2955 part/pageview.cpp:3167
 #, kde-format
 msgid "Speak Text"
 msgstr "Декламувати текст"
 
-#: part/pageview.cpp:2965
+#: part/pageview.cpp:2963
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Зображення (%1 × %2 пікселів)"
 
-#: part/pageview.cpp:2967
+#: part/pageview.cpp:2965
 #, kde-format
 msgid "Save to File…"
 msgstr "Зберегти до файла…"
 
-#: part/pageview.cpp:2987
+#: part/pageview.cpp:2985
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Зображення [%1 × %2] скопійовано до буфера обміну."
 
-#: part/pageview.cpp:2990
+#: part/pageview.cpp:2988
 #, kde-format
 msgid "Save file"
 msgstr "Зберегти файл"
 
-#: part/pageview.cpp:2990
+#: part/pageview.cpp:2988
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "зображення (*.png *.jpeg)"
 
-#: part/pageview.cpp:2992
+#: part/pageview.cpp:2990
 #, kde-format
 msgid "File not saved."
 msgstr "Файл не збережено."
 
-#: part/pageview.cpp:3003
+#: part/pageview.cpp:3001
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Зображення [%1 × %2] збережено у файл %3."
 
-#: part/pageview.cpp:3164
+#: part/pageview.cpp:3162
 #, kde-format
 msgid "Copy Text"
 msgstr "Скопіювати текст"
 
-#: part/pageview.cpp:3187
+#: part/pageview.cpp:3185
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Перейти до «%1»"
 
-#: part/pageview.cpp:4229 part/part.cpp:3186
+#: part/pageview.cpp:4227 part/part.cpp:3185
 #, kde-format
 msgid "Fit Width"
 msgstr "Влаштувати ширину"
 
-#: part/pageview.cpp:4229
+#: part/pageview.cpp:4227
 #, kde-format
 msgid "Fit Page"
 msgstr "Влаштувати сторінку"
 
-#: part/pageview.cpp:4229
+#: part/pageview.cpp:4227
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автомасштаб"
 
-#: part/pageview.cpp:4252
+#: part/pageview.cpp:4250
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4002,68 +4002,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4535
+#: part/pageview.cpp:4533
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Шукати «%1» за допомогою"
 
-#: part/pageview.cpp:4549
+#: part/pageview.cpp:4547
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Налаштувати вебскорочення…"
 
-#: part/pageview.cpp:4575
+#: part/pageview.cpp:4573
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перейти за цим посиланням"
 
-#: part/pageview.cpp:4578
+#: part/pageview.cpp:4576
 #, kde-format
 msgid "Play this Sound"
 msgstr "Відтворити цей звук"
 
-#: part/pageview.cpp:4580
+#: part/pageview.cpp:4578
 #, kde-format
 msgid "Stop Sound"
 msgstr "Припинити відтворення звуку"
 
-#: part/pageview.cpp:4586
+#: part/pageview.cpp:4584
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Скопіювати адресу посилання"
 
-#: part/pageview.cpp:4643
+#: part/pageview.cpp:4641
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Шукати «%1» у цьому документі"
 
-#: part/pageview.cpp:5175
+#: part/pageview.cpp:5173
 #, kde-format
 msgid "Welcome"
 msgstr "Ласкаво просимо!"
 
-#: part/pageview.cpp:5301
+#: part/pageview.cpp:5299
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Виберіть ділянку масштабування. Щоб зменшити, клацніть правою кнопкою мишки."
 
-#: part/pageview.cpp:5316
+#: part/pageview.cpp:5314
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Клацніть, щоб скористатися збільшувальним склом."
 
-#: part/pageview.cpp:5333
+#: part/pageview.cpp:5331
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Намалюйте прямокутник навколо тексту/малюнка для копіювання."
 
-#: part/pageview.cpp:5349
+#: part/pageview.cpp:5347
 #, kde-format
 msgid "Select text"
 msgstr "Вибрати текст"
 
-#: part/pageview.cpp:5365
+#: part/pageview.cpp:5363
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4072,7 +4072,7 @@ msgstr ""
 "Намалюйте прямокутник навколо таблиці, потім клацніть поряд з краєм, щоб "
 "поділити текст. Натисніть Esc, щоб скасувати позначення."
 
-#: part/pageview.cpp:5380 part/pageview.cpp:5388
+#: part/pageview.cpp:5378 part/pageview.cpp:5386
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4081,17 +4081,17 @@ msgstr ""
 "Усі ваші сертифікати для підписування є некоректними. Якщо раніше "
 "підписування працювало, будь ласка, перевірте їхні дати чинності."
 
-#: part/pageview.cpp:5381
+#: part/pageview.cpp:5379
 #, kde-format
 msgid "No valid certificates"
 msgstr "Немає чинний сертифікатів"
 
-#: part/pageview.cpp:5382 part/pageview.cpp:5397
+#: part/pageview.cpp:5380 part/pageview.cpp:5395
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Відкрити керування сертифікатами"
 
-#: part/pageview.cpp:5393
+#: part/pageview.cpp:5391
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4103,12 +4103,12 @@ msgstr ""
 "дізнатися більше, будь ласка, ознайомтеся із розділом <a href="
 "\"%1\">Додавання цифрових підписів</a> у підручнику."
 
-#: part/pageview.cpp:5396 part/pageview.cpp:5408
+#: part/pageview.cpp:5394 part/pageview.cpp:5406
 #, kde-format
 msgid "No certificates found"
 msgstr "Сертифікатів не знайдено"
 
-#: part/pageview.cpp:5406
+#: part/pageview.cpp:5404
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4119,19 +4119,19 @@ msgstr ""
 "будь ласка, ознайомтеся із розділом <a href=\"%1\">Додавання цифрових "
 "підписів</a> у підручнику."
 
-#: part/pageview.cpp:5431
+#: part/pageview.cpp:5429
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Деякі внесені вами зміни не збережено. Будь ласка, збережіть документ, перш "
 "ніж його підписувати."
 
-#: part/pageview.cpp:5454
+#: part/pageview.cpp:5452
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Намалюйте прямокутник для вставлення поля підпису"
 
-#: part/pageview.cpp:5602
+#: part/pageview.cpp:5600
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4324,17 +4324,17 @@ msgstr "&Закладки"
 msgid "Viewer Toolbar"
 msgstr "Панель переглядача"
 
-#: part/part.cpp:407 part/thumbnaillist.cpp:48
+#: part/part.cpp:406 part/thumbnaillist.cpp:46
 #, kde-format
 msgid "Thumbnails"
 msgstr "Мініатюри"
 
-#: part/part.cpp:413 part/preferencesdialog.cpp:50 part/side_reviews.cpp:99
+#: part/part.cpp:412 part/preferencesdialog.cpp:50 part/side_reviews.cpp:97
 #, kde-format
 msgid "Annotations"
 msgstr "Анотації"
 
-#: part/part.cpp:437
+#: part/part.cpp:436
 #, kde-format
 msgid ""
 "This document contains annotations or form data that were saved internally "
@@ -4348,7 +4348,7 @@ msgstr ""
 "дані до файла, щоб їх можна було переносити куди завгодно, якщо ви захочете "
 "редагувати документ."
 
-#: part/part.cpp:445
+#: part/part.cpp:444
 #, kde-format
 msgid ""
 "This document has embedded files. <a href=\"okular:/embeddedfiles\">Click "
@@ -4358,223 +4358,223 @@ msgstr ""
 "\"okular:/embeddedfiles\">натисніть цю частину повідомлення</a> або "
 "скористайтеся пунктом меню Файл -> Вбудовані файли."
 
-#: part/part.cpp:474
+#: part/part.cpp:473
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
 "Виконуємо підписування. Ви можете скоригувати розташування і розмір підпису"
 
-#: part/part.cpp:476
+#: part/part.cpp:475
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "Завершити підписування"
 
-#: part/part.cpp:645
+#: part/part.cpp:644
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Попередня"
 
-#: part/part.cpp:646
+#: part/part.cpp:645
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Перейти до попередньої сторінки"
 
-#: part/part.cpp:647
+#: part/part.cpp:646
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Пересуває вас до попередньої сторінки документа"
 
-#: part/part.cpp:654
+#: part/part.cpp:653
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Наступна"
 
-#: part/part.cpp:655
+#: part/part.cpp:654
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Перейти до наступної сторінки"
 
-#: part/part.cpp:656
+#: part/part.cpp:655
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Пересуває вас до наступної сторінки документа"
 
-#: part/part.cpp:664
+#: part/part.cpp:663
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Початок документа"
 
-#: part/part.cpp:665
+#: part/part.cpp:664
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Пересуває перегляд на початок документа"
 
-#: part/part.cpp:669
+#: part/part.cpp:668
 #, kde-format
 msgid "End of the document"
 msgstr "Кінець документа"
 
-#: part/part.cpp:670
+#: part/part.cpp:669
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Пересуває перегляд до кінця документа"
 
-#: part/part.cpp:684
+#: part/part.cpp:683
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Перейменувати поточну закладку"
 
-#: part/part.cpp:688
+#: part/part.cpp:687
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Попередня закладка"
 
-#: part/part.cpp:690
+#: part/part.cpp:689
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Перейти до попередньої закладки"
 
-#: part/part.cpp:694
+#: part/part.cpp:693
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Наступна закладка"
 
-#: part/part.cpp:696
+#: part/part.cpp:695
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Перейти до наступної закладки"
 
-#: part/part.cpp:726
+#: part/part.cpp:725
 #, kde-format
 msgid "Configure Okular…"
 msgstr "Налаштувати Okular…"
 
-#: part/part.cpp:729
+#: part/part.cpp:728
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "Налаштувати переглядач…"
 
-#: part/part.cpp:735
+#: part/part.cpp:734
 #, kde-format
 msgid "Configure Viewer Backends…"
 msgstr "Налаштувати модулі перегляду…"
 
-#: part/part.cpp:737
+#: part/part.cpp:736
 #, kde-format
 msgid "Configure Backends…"
 msgstr "Налаштувати модулі…"
 
-#: part/part.cpp:773
+#: part/part.cpp:772
 #, kde-format
 msgid "About Backend"
 msgstr "Про модуль обробки"
 
-#: part/part.cpp:778
+#: part/part.cpp:777
 #, kde-format
 msgid "Reloa&d"
 msgstr "Перезава&нтажити"
 
-#: part/part.cpp:780
+#: part/part.cpp:779
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Перезавантажити поточний документ з диска."
 
-#: part/part.cpp:786
+#: part/part.cpp:785
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Закрити смужку &пошуку"
 
-#: part/part.cpp:791
+#: part/part.cpp:790
 #, kde-format
 msgid "Page Number"
 msgstr "Номер сторінки"
 
-#: part/part.cpp:795
+#: part/part.cpp:794
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Налаштувати режим кольорів…"
 
-#: part/part.cpp:834 part/part.cpp:3191
+#: part/part.cpp:833 part/part.cpp:3190
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Вставити анотацію"
 
-#: part/part.cpp:852
+#: part/part.cpp:851
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Позначити увесь текст на поточній сторінці"
 
-#: part/part.cpp:865
+#: part/part.cpp:864
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Показати &бічну панель"
 
-#: part/part.cpp:874
+#: part/part.cpp:873
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Показати панель с&торінок"
 
-#: part/part.cpp:880
+#: part/part.cpp:879
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Показати панель &підписів"
 
-#: part/part.cpp:891
+#: part/part.cpp:890
 #, kde-format
 msgid "&Embedded Files"
 msgstr "В&будовані файли"
 
-#: part/part.cpp:897
+#: part/part.cpp:896
 #, kde-format
 msgid "E&xport As"
 msgstr "Е&кспортувати як"
 
-#: part/part.cpp:909
+#: part/part.cpp:908
 #, kde-format
 msgid "S&hare"
 msgstr "Оп&рилюднити"
 
-#: part/part.cpp:918
+#: part/part.cpp:917
 #, kde-format
 msgid "P&resentation"
 msgstr "П&резентація"
 
-#: part/part.cpp:925
+#: part/part.cpp:924
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Відкрити &теку документа"
 
-#: part/part.cpp:939
+#: part/part.cpp:938
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Імпортувати Postscript як PDF…"
 
-#: part/part.cpp:943
+#: part/part.cpp:942
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Перемкнути режим затемнення екрана"
 
-#: part/part.cpp:951
+#: part/part.cpp:950
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Стерти малюнок"
 
-#: part/part.cpp:956
+#: part/part.cpp:955
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "Налаштувати анотації…"
 
-#: part/part.cpp:961
+#: part/part.cpp:960
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Відтворити або призупинити презентацію"
 
-#: part/part.cpp:1113
+#: part/part.cpp:1112
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4585,37 +4585,37 @@ msgstr ""
 "типу не може бути збережено.\n"
 "Якщо закрити вікно Okular, усі внесені зміни буде втрачено."
 
-#: part/part.cpp:1114
+#: part/part.cpp:1113
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Документ не може бути збережено"
 
-#: part/part.cpp:1143
+#: part/part.cpp:1142
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Не вдалося відкрити «%1» (%2) "
 
-#: part/part.cpp:1196
+#: part/part.cpp:1195
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Завантаження %1 було скасовано."
 
-#: part/part.cpp:1212
+#: part/part.cpp:1211
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Не вдалося відкрити %1. Причина: %2"
 
-#: part/part.cpp:1240
+#: part/part.cpp:1239
 #, kde-format
 msgid "Configure Viewer Backends"
 msgstr "Налаштування модулів перегляду"
 
-#: part/part.cpp:1242
+#: part/part.cpp:1241
 #, kde-format
 msgid "Configure Backends"
 msgstr "Налаштування модулів обробки"
 
-#: part/part.cpp:1327
+#: part/part.cpp:1326
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4623,44 +4623,44 @@ msgid ""
 msgstr ""
 "Не знайдено програму «ps2pdf», тому Okular не може імпортувати файли PS."
 
-#: part/part.cpp:1327
+#: part/part.cpp:1326
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf не знайдено"
 
-#: part/part.cpp:1332
+#: part/part.cpp:1331
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "файли PostScript (%1)"
 
-#: part/part.cpp:1348
+#: part/part.cpp:1347
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Імпортування файла PS як PDF (це може зайняти трохи часу)…"
 
-#: part/part.cpp:1480
+#: part/part.cpp:1479
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Будь ласка, введіть пароль для читання документа:"
 
-#: part/part.cpp:1482
+#: part/part.cpp:1481
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Помилковий пароль. Повторіть спробу:"
 
-#: part/part.cpp:1493
+#: part/part.cpp:1492
 #, kde-format
 msgid "Document Password"
 msgstr "Пароль до документа"
 
-#: part/part.cpp:1616
+#: part/part.cpp:1615
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "У цьому документі містяться форми XFA, підтримки яких ще <b>не передбачено</"
 "b>."
 
-#: part/part.cpp:1623
+#: part/part.cpp:1622
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4669,7 +4669,7 @@ msgstr ""
 "У цьому документі містяться форми. Щоб розпочати роботу з ними, натисніть "
 "кнопку або скористайтесь пунктом меню Перегляд -> Показати форми."
 
-#: part/part.cpp:1639
+#: part/part.cpp:1638
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4679,7 +4679,7 @@ msgstr ""
 "ласка, збережіть копію документа і відкрийте її, якщо хочете редагувати "
 "документ."
 
-#: part/part.cpp:1727
+#: part/part.cpp:1726
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4688,27 +4688,27 @@ msgstr ""
 "Цей документ надіслав запит щодо показу у повноекранному режимі.\n"
 "Полишити звичайний режим і перейти до режиму презентації?"
 
-#: part/part.cpp:1729
+#: part/part.cpp:1728
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Запит щодо зміни режиму перегляду"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1729
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Перейти до режиму презентації"
 
-#: part/part.cpp:1731
+#: part/part.cpp:1730
 #, kde-format
 msgid "Deny Request"
 msgstr "Відмовити у запиті"
 
-#: part/part.cpp:1821
+#: part/part.cpp:1820
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Не вдалося відкрити %1. %2"
 
-#: part/part.cpp:1851
+#: part/part.cpp:1850
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4722,22 +4722,22 @@ msgstr ""
 "змін змінами, які було внесено за допомогою сторонньої програми.<nl/><nl/"
 ">Хочете продовжити перезавантаження файла?"
 
-#: part/part.cpp:1855 part/part.cpp:1865
+#: part/part.cpp:1854 part/part.cpp:1864
 #, kde-format
 msgid "File Changed"
 msgstr "Файл було змінено"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1855
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Продовжити перезавантаження"
 
-#: part/part.cpp:1857
+#: part/part.cpp:1856
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Перервати перезавантаження"
 
-#: part/part.cpp:1861
+#: part/part.cpp:1860
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4751,27 +4751,27 @@ msgstr ""
 "призведе до заміни незбережених змін змінами, які було внесено за допомогою "
 "сторонньої програми.<nl/><nl/>Хочете закрити файл попри це?"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1865
 #, kde-format
 msgid "Continue Closing"
 msgstr "Продовжити закриття"
 
-#: part/part.cpp:1867
+#: part/part.cpp:1866
 #, kde-format
 msgid "Abort Closing"
 msgstr "Перервати закриття"
 
-#: part/part.cpp:1874
+#: part/part.cpp:1873
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Хочете зберегти внесені вами до «%1» зміни чи відкинути їх?"
 
-#: part/part.cpp:1874
+#: part/part.cpp:1873
 #, kde-format
 msgid "Close Document"
 msgstr "Закриття документа"
 
-#: part/part.cpp:2006
+#: part/part.cpp:2005
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4780,7 +4780,7 @@ msgstr ""
 "Це посилання вказує на дію закриття документа, яка не працює, якщо "
 "використовується вбудований переглядач."
 
-#: part/part.cpp:2012
+#: part/part.cpp:2011
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4789,59 +4789,59 @@ msgstr ""
 "Це посилання вказує на дію закриття програми, яка не працює, якщо "
 "використовується вбудований переглядач."
 
-#: part/part.cpp:2104 part/part.cpp:2122
+#: part/part.cpp:2103 part/part.cpp:2121
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Перезавантаження документа…"
 
-#: part/part.cpp:2291 part/toc.cpp:38
+#: part/part.cpp:2290 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Зміст"
 
-#: part/part.cpp:2320 part/signaturepanel.cpp:47
+#: part/part.cpp:2319 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Підписи"
 
-#: part/part.cpp:2347
+#: part/part.cpp:2346
 #, kde-format
 msgid "Go to Page"
 msgstr "Перейти до сторінки"
 
-#: part/part.cpp:2370
+#: part/part.cpp:2369
 #, kde-format
 msgid "&Page:"
 msgstr "&Сторінка:"
 
-#: part/part.cpp:2463
+#: part/part.cpp:2462
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Вкажіть нову назву закладки:"
 
-#: part/part.cpp:2509
+#: part/part.cpp:2508
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Перейменувати цю закладку"
 
-#: part/part.cpp:2512
+#: part/part.cpp:2511
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Вилучити цю закладку"
 
-#: part/part.cpp:2598 part/part.cpp:2599 part/part.cpp:3503
+#: part/part.cpp:2597 part/part.cpp:2598 part/part.cpp:3502
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2606 part/revisionviewer.cpp:44
+#: part/part.cpp:2605 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Зберегти як"
 
-#: part/part.cpp:2623
+#: part/part.cpp:2622
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4850,18 +4850,18 @@ msgstr ""
 "Вами наказано програмі зберегти архів Okular без додавання до назви файла "
 "суфікса «%1». Такі дії заборонено. Хочете вибрати нову назву файла?"
 
-#: part/part.cpp:2624
+#: part/part.cpp:2623
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Непідтримуваний суфікс назви"
 
-#: part/part.cpp:2625
+#: part/part.cpp:2624
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Вибрати нову назву"
 
-#: part/part.cpp:2668
+#: part/part.cpp:2667
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4873,17 +4873,17 @@ msgstr ""
 "Якщо ви збережете його зараз, усі зміни, які було внесено у сторонній "
 "програмі, буде втрачено. Ви справді хочете виконати збереження файла?"
 
-#: part/part.cpp:2671 part/part.cpp:2690 part/part.cpp:2742
+#: part/part.cpp:2670 part/part.cpp:2689 part/part.cpp:2741
 #, kde-format
 msgid "Save - Warning"
 msgstr "Збереження — Попередження"
 
-#: part/part.cpp:2673
+#: part/part.cpp:2672
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Зберегти копію деінде"
 
-#: part/part.cpp:2689
+#: part/part.cpp:2688
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4895,12 +4895,12 @@ msgstr ""
 "а дані журналу дій з документом буде втрачено.<br />Хочете перезавантажити "
 "документ?"
 
-#: part/part.cpp:2716
+#: part/part.cpp:2715
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Не вдалося відкрити тимчасовий файл для збереження."
 
-#: part/part.cpp:2729
+#: part/part.cpp:2728
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4911,7 +4911,7 @@ msgstr ""
 "призначено лише для читання. Спробуйте зберегти його в іншому місці або "
 "змінити права доступу до файла."
 
-#: part/part.cpp:2741
+#: part/part.cpp:2740
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4921,23 +4921,23 @@ msgstr ""
 "файл доведеться перезавантажити. При цьому дані журналу дій з документом "
 "буде втрачено.<br />Хочете зберегти документ?"
 
-#: part/part.cpp:2756 part/part.cpp:2825 part/part.cpp:2846 part/part.cpp:3518
+#: part/part.cpp:2755 part/part.cpp:2824 part/part.cpp:2845 part/part.cpp:3517
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Не вдалось зберегти файл у «%1». Спробуйте зберегти його в іншому місці."
 
-#: part/part.cpp:2769
+#: part/part.cpp:2768
 #, kde-format
 msgid "Filled form contents"
 msgstr "Вміст заповнених форм"
 
-#: part/part.cpp:2772
+#: part/part.cpp:2771
 #, kde-format
 msgid "User annotations"
 msgstr "Анотації користувача"
 
-#: part/part.cpp:2777
+#: part/part.cpp:2776
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4950,17 +4950,17 @@ msgstr ""
 "ці елементи. Натисніть кнопку «Продовжити», щоб зберегти дані. При цьому "
 "буде втрачено вказані елементи, а також дані журналу дій з документом."
 
-#: part/part.cpp:2781 part/part.cpp:2803
+#: part/part.cpp:2780 part/part.cpp:2802
 #, kde-format
 msgid "Warning"
 msgstr "Попередження"
 
-#: part/part.cpp:2782 part/part.cpp:2804
+#: part/part.cpp:2781 part/part.cpp:2803
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Зберегти як архів документа Okular…"
 
-#: part/part.cpp:2794
+#: part/part.cpp:2793
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4974,7 +4974,7 @@ msgstr ""
 "ці елементи. Натисніть кнопку «Продовжити», щоб зберегти зберегти документ і "
 "відкинути дані вказаних елементів."
 
-#: part/part.cpp:2797
+#: part/part.cpp:2796
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4988,22 +4988,22 @@ msgstr ""
 "ці елементи. Натисніть кнопку <i>Продовжити</i>, щоб зберегти дані. При "
 "цьому буде втрачено вказані елементи, а також дані журналу дій з документом."
 
-#: part/part.cpp:2799
+#: part/part.cpp:2798
 #, kde-format
 msgid "Continue"
 msgstr "Продовжити"
 
-#: part/part.cpp:2799
+#: part/part.cpp:2798
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Продовжити із втратою змін"
 
-#: part/part.cpp:2827
+#: part/part.cpp:2826
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Не вдалось зберегти файл у «%1». %2"
 
-#: part/part.cpp:2866
+#: part/part.cpp:2865
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5014,7 +5014,7 @@ msgstr ""
 "\n"
 "Цей документ було вилучено."
 
-#: part/part.cpp:2902
+#: part/part.cpp:2901
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5023,44 +5023,44 @@ msgstr ""
 "Не вдалось зберегти файл до «%1». Помилка: «%2». Спробуйте зберегти його в "
 "іншому місці."
 
-#: part/part.cpp:3161
+#: part/part.cpp:3160
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Розгорнути увесь розділ"
 
-#: part/part.cpp:3162
+#: part/part.cpp:3161
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Згорнути увесь розділ"
 
-#: part/part.cpp:3178
+#: part/part.cpp:3177
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Синхронізувати мініатюру зі сторінкою"
 
-#: part/part.cpp:3210
+#: part/part.cpp:3209
 #, kde-format
 msgid "Tools"
 msgstr "Інструменти"
 
-#: part/part.cpp:3398
+#: part/part.cpp:3397
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Читання уголос"
 
-#: part/part.cpp:3556
+#: part/part.cpp:3555
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Друк"
 
-#: part/part.cpp:3619
+#: part/part.cpp:3618
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Друкувати цей документ не дозволяється."
 
-#: part/part.cpp:3632
+#: part/part.cpp:3631
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5068,7 +5068,7 @@ msgstr ""
 "Не вдалося надрукувати документ. Невідома помилка. Будь ласка, повідомте про "
 "неї на bugs.kde.org"
 
-#: part/part.cpp:3634
+#: part/part.cpp:3633
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5077,17 +5077,17 @@ msgstr ""
 "Не вдалося надрукувати документ. Повідомлення про помилку: «%1». Будь ласка, "
 "повідомте про помилку на bugs.kde.org"
 
-#: part/part.cpp:3723
+#: part/part.cpp:3722
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Перейти до місця, де ви були раніше"
 
-#: part/part.cpp:3727
+#: part/part.cpp:3726
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Перейти до місця, де ви були пізніше"
 
-#: part/part.cpp:3752
+#: part/part.cpp:3751
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5096,7 +5096,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдалося створити тимчасовий файл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3764
+#: part/part.cpp:3763
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5105,7 +5105,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається відкрити файл <nobr><strong>"
 "%1</strong></nobr> для розпаковування. Файл не завантажено.</qt>"
 
-#: part/part.cpp:3768
+#: part/part.cpp:3767
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5119,7 +5119,7 @@ msgstr ""
 "«Властивості» і перейдіть на вкладку «Права доступу» у вікні, яке буде "
 "відкрито.</qt>"
 
-#: part/part.cpp:3790
+#: part/part.cpp:3789
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5128,7 +5128,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається розпакувати файл "
 "<nobr><strong>%1</strong></nobr>. Файл не буде завантажено.</qt>"
 
-#: part/part.cpp:3794
+#: part/part.cpp:3793
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5138,27 +5138,27 @@ msgstr ""
 "його пошкоджено спробуйте розпакувати його вручну за допомогою команди у "
 "командному рядку.</qt>"
 
-#: part/part.cpp:3820
+#: part/part.cpp:3819
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Немає закладок"
 
-#: part/part.cpp:3891
+#: part/part.cpp:3890
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Під час спроби оприлюднити документ виникли проблеми: %1"
 
-#: part/part.cpp:3891 part/part.cpp:3897
+#: part/part.cpp:3890 part/part.cpp:3896
 #, kde-format
 msgid "Share"
 msgstr "Оприлюднення"
 
-#: part/part.cpp:3895
+#: part/part.cpp:3894
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ успішно оприлюднено"
 
-#: part/part.cpp:3897
+#: part/part.cpp:3896
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Оприлюднений документ можна знайти тут: <a href=\"%1\">%1</a>"
@@ -5668,7 +5668,7 @@ msgstr "Вибрати…"
 msgid "Recent backgrounds:"
 msgstr "Нещодавні зображення тла:"
 
-#: part/side_reviews.cpp:66
+#: part/side_reviews.cpp:64
 #, kde-format
 msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
@@ -5677,32 +5677,32 @@ msgstr ""
 "<div align=center><h3>Немає анотацій</h3>Щоб створити нові анотації, "
 "натисніть F6 або виберіть в меню пункт <i>Інструменти → Анотації</i>.</div>"
 
-#: part/side_reviews.cpp:142
+#: part/side_reviews.cpp:140
 #, kde-format
 msgid "Group by Page"
 msgstr "Групувати за сторінками"
 
-#: part/side_reviews.cpp:147
+#: part/side_reviews.cpp:145
 #, kde-format
 msgid "Group by Author"
 msgstr "Групувати за автором"
 
-#: part/side_reviews.cpp:155
+#: part/side_reviews.cpp:153
 #, kde-format
 msgid "Show annotations for current page only"
 msgstr "Показувати анотації лише для поточної сторінки"
 
-#: part/side_reviews.cpp:165
+#: part/side_reviews.cpp:163
 #, kde-format
 msgid "Expand all elements"
 msgstr "Розгорнути усі записи"
 
-#: part/side_reviews.cpp:167
+#: part/side_reviews.cpp:165
 #, kde-format
 msgid "Collapse all elements"
 msgstr "Згорнути усі записи"
 
-#: part/signaturepanel.cpp:101
+#: part/signaturepanel.cpp:99
 #, kde-format
 msgid "Properties"
 msgstr "Властивості"
@@ -5828,7 +5828,7 @@ msgstr "Кваліфікований"
 msgid "PGP"
 msgstr "PGP"
 
-#: part/thumbnaillist.cpp:1015
+#: part/thumbnaillist.cpp:1013
 #, kde-format
 msgid "Show bookmarked pages only"
 msgstr "Показувати тільки сторінки з закладками"
@@ -5996,17 +5996,17 @@ msgstr ""
 "Помилка: якщо вказано параметр --find, не можна відкривати декілька "
 "документів"
 
-#: shell/shell.cpp:207
+#: shell/shell.cpp:204
 #, kde-format
 msgid "Unable to find the Okular component: %1"
 msgstr "Не вдається знайти компонент Okular: %1"
 
-#: shell/shell.cpp:250
+#: shell/shell.cpp:247
 #, kde-format
 msgid "Sidebar"
 msgstr "Бічна панель"
 
-#: shell/shell.cpp:286
+#: shell/shell.cpp:283
 #, kde-format
 msgid ""
 "There is already a unique Okular instance running. This instance won't be "
@@ -6014,12 +6014,12 @@ msgid ""
 msgstr ""
 "Один екземпляр програми вже запущено. Цей екземпляр не буде унікальним."
 
-#: shell/shell.cpp:315
+#: shell/shell.cpp:312
 #, kde-format
 msgid "Unable to find the Okular component."
 msgstr "Не вдається знайти компонент Okular."
 
-#: shell/shell.cpp:570
+#: shell/shell.cpp:567
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6028,7 +6028,7 @@ msgstr ""
 "Клацніть, щоб відкрити файл\n"
 "Натисніть і тримайте, щоб відкрити недавній файл"
 
-#: shell/shell.cpp:571
+#: shell/shell.cpp:568
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6036,62 +6036,62 @@ msgstr ""
 "<b>Клацніть</b>, щоб відкрити файл або <b>натисніть і тримайте</b>, щоб "
 "відкрити недавній файл"
 
-#: shell/shell.cpp:584
+#: shell/shell.cpp:581
 #, kde-format
 msgid "Next Tab"
 msgstr "Наступна вкладка"
 
-#: shell/shell.cpp:590
+#: shell/shell.cpp:587
 #, kde-format
 msgid "Previous Tab"
 msgstr "Попередня вкладка"
 
-#: shell/shell.cpp:598
+#: shell/shell.cpp:595
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Перемкнутися на вкладку %1"
 
-#: shell/shell.cpp:614
+#: shell/shell.cpp:611
 #, kde-format
 msgid "Undo close tab"
 msgstr "Скасувати закриття вкладки"
 
-#: shell/shell.cpp:623
+#: shell/shell.cpp:620
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Заблокувати бічну панель"
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:720
 #, kde-format
 msgid "All files (*)"
 msgstr "усі файли (*)"
 
-#: shell/shell.cpp:724
+#: shell/shell.cpp:721
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "усі файли, що підтримуються (%1)"
 
-#: shell/shell.cpp:728
+#: shell/shell.cpp:725
 #, kde-format
 msgid "Open Document"
 msgstr "Відкрити документ"
 
-#: shell/shell.cpp:842
+#: shell/shell.cpp:839
 #, kde-format
 msgid "Confirm Close"
 msgstr "Підтвердити закриття"
 
-#: shell/shell.cpp:846
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Close Tabs"
 msgstr "Закрити вкладки"
 
-#: shell/shell.cpp:853
+#: shell/shell.cpp:850
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Ви наказали програми закрити вкладки (%1). Ви справді цього хочете?"
 
-#: shell/shell.cpp:855
+#: shell/shell.cpp:852
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Попереджати, якщо відбувається спроба закрити декілька вкладок"

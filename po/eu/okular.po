@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-03 00:43+0000\n"
-"PO-Revision-Date: 2026-04-19 21:07+0200\n"
+"PO-Revision-Date: 2026-07-04 17:52+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.04.0\n"
+"X-Generator: Lokalize 26.04.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1694,15 +1694,14 @@ msgid "Add Bookmark"
 msgstr "Gehitu laster-marka"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Copyright"
+msgstr "Kopiatu"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Itsatsi"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2234,23 +2233,22 @@ msgid ""
 "Click here to render."
 msgstr ""
 "Idatzohar honek LaTeX kodea izan dezake.\n"
-"Klik egin hemen errendatzeko."
+"Egin klik hemen errendatzeko."
 
 #: part/annotwindow.cpp:231 part/annotwindow.cpp:253
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Letra-tipo ezezaguna"
+msgstr "Egile ezezaguna"
 
 #: part/annotwindow.cpp:234 part/annotwindow.cpp:256
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Ez da datarik antzeman"
 
 #: part/annotwindow.cpp:583
 #, kde-format
 msgid "Cannot find latex executable."
-msgstr "Ezin aurkitu latex exekutagarria."
+msgstr "Ezin izan da latex exekutagarria aurkitu."
 
 #: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
 #: part/annotwindow.cpp:598
@@ -2261,17 +2259,17 @@ msgstr "LaTeX errendatzea huts egin du"
 #: part/annotwindow.cpp:588
 #, kde-format
 msgid "Cannot find dvipng executable."
-msgstr "Ezin aurkitu dvipng exekutagarria."
+msgstr "Ezin izan da dvipng exekutagarria aurkitu."
 
 #: part/annotwindow.cpp:593
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
-msgstr "Arazo bat gertatu da 'latex' komandoa exekutatu bitartean."
+msgstr "Arazo bat gertatu da 'latex' komandoa exekutatzean."
 
 #: part/annotwindow.cpp:598
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
-msgstr "Arazo bat gertatu da 'dvipng' komandoa exekutatu bitartean."
+msgstr "Arazo bat gertatu da 'dvipng' komandoa exekutatzean."
 
 #: part/bookmarklist.cpp:114
 #, kde-format
@@ -2387,12 +2385,10 @@ msgid "Validity"
 msgstr "Baliozkotasuna"
 
 #: part/certificateviewer.cpp:89
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "maiztasuna"
+msgstr "Inoiz ez"
 
 #: part/certificateviewer.cpp:93
 #, kde-format
@@ -2410,11 +2406,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 hatz-marka"
 
 #: part/certificateviewer.cpp:106
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Hatz-markak"
+msgstr "Hatz-marka"
 
 #: part/certificateviewer.cpp:115
 #, kde-format
@@ -2432,15 +2427,14 @@ msgid "Where do you want to save this certificate?"
 msgstr "Non gorde nahi duzu ziurtagiri hau?"
 
 #: part/certificateviewer.cpp:172
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Ziurtagiri fitxategia (*.cer)"
+msgstr "Ziurtagiri-fitxategia (*.asc)"
 
 #: part/certificateviewer.cpp:175
 #, kde-format
 msgid "Certificate File (*.cer)"
-msgstr "Ziurtagiri fitxategia (*.cer)"
+msgstr "Ziurtagiri-fitxategia (*.cer)"
 
 #: part/certificateviewer.cpp:181
 #, kde-format
@@ -3514,7 +3508,7 @@ msgstr "Ikuspegia"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Ireki"
 
 #: part/embeddedfilesdialog.cpp:74
 #, kde-format
@@ -3559,12 +3553,10 @@ msgid "&View…"
 msgstr "&Ikuspegia…"
 
 #: part/embeddedfilesdialog.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "&Ireki '%1'…"
+msgstr "&Ireki…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4480,11 +4472,9 @@ msgid "Configure Color Modes…"
 msgstr "Konfiguratu kolore-moduak..."
 
 #: part/part.cpp:833 part/part.cpp:3190
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "doitu idatzoharra"
+msgstr "Itsatsi idatzoharra"
 
 #: part/part.cpp:851
 #, kde-format

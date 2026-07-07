@@ -260,13 +260,13 @@ void PartTest::testGeneratorPreferences()
     Okular::Part part(nullptr, dummyArgs);
 
     // Test that we don't crash while opening the dialog
-    dialog = part.slotPreferences();
+    dialog = part.realSlotPreferences();
     qApp->processEvents();
     delete dialog; // closes the dialog and recursively destroys all widgets
 
     // Test that we don't crash while opening a new instance of the dialog
     // This catches attempts to reuse widgets that have been destroyed
-    dialog = part.slotPreferences();
+    dialog = part.realSlotPreferences();
     qApp->processEvents();
     delete dialog;
 }

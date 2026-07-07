@@ -2993,7 +2993,12 @@ void Part::checkNativeSaveDataLoss(bool *out_wontSaveForms, bool *out_wontSaveAn
     *out_wontSaveAnnotations = wontSaveAnnotations;
 }
 
-KConfigDialog *Part::slotPreferences()
+void Part::slotPreferences()
+{
+    (void)realSlotPreferences();
+}
+
+KConfigDialog *Part::realSlotPreferences()
 {
     // Create dialog
     PreferencesDialog *dialog = new PreferencesDialog(m_pageView, Okular::Settings::self(), m_embedMode, m_document->editorCommandOverride());

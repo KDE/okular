@@ -167,7 +167,7 @@ public Q_SLOTS: // dbus
     Q_SCRIPTABLE uint currentPage();
     Q_SCRIPTABLE QString currentDocument();
     Q_SCRIPTABLE QString documentMetaData(const QString &metaData) const;
-    Q_SCRIPTABLE KConfigDialog *slotPreferences();
+    Q_SCRIPTABLE void slotPreferences();
     Q_SCRIPTABLE void slotFind();
     Q_SCRIPTABLE void slotPrintPreview();
     Q_SCRIPTABLE void slotPreviousPage();
@@ -289,8 +289,10 @@ public Q_SLOTS:
 #endif
 
 private:
+    friend class PartTest;
     bool aboutToShowContextMenu(QMenu *menu, QAction *action, QMenu *contextMenu);
     void showMenu(const Okular::Page *page, const QPoint point, const QString &bookmarkTitle = QString(), const Okular::DocumentViewport &vp = DocumentViewport(), bool showTOCActions = false);
+    KConfigDialog *realSlotPreferences();
     /**
      * Searches the actionCollections of all KXMLGUIClients that were created by the same factory()
      * as this Part for a QAction that has both the specified name and the specified class.

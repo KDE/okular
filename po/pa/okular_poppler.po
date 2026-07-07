@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-07 00:41+0000\n"
 "PO-Revision-Date: 2024-02-01 09:11-0600\n"
 "Last-Translator: A S Alam <aalam@punlinux.org>\n"
 "Language-Team: Punjabi <kde-i18n-doc@kde.org>\n"
@@ -27,6 +27,22 @@ msgstr "ਅਮਨਪਰੀਤ ਸਿੰਘ ਆਲਮ"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "alam.yellow@gmail.com"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr ""
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, kde-format
+msgid "Failed removing file"
+msgstr ""
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -168,6 +184,11 @@ msgstr "ਮੌਜੂਦ ਸਰਟੀਫਿਕੇਟ"
 msgid "&Load Signatures"
 msgstr "ਦਸਤਖ਼ਤ ਲੋਡ ਕਰੋ(&L)"
 
+#: formfields.cpp:561
+#, kde-format
+msgid "Failed renaming temporary file A %1:"
+msgstr ""
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -290,17 +311,12 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF ਬੈਕਐਂਡ ਸੰਰਚਨਾ"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
+#: generator_pdf.cpp:2238
 #, kde-format
-msgid "Failed writing temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr ""
 
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
-msgstr ""
-
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -308,7 +324,7 @@ msgid ""
 msgstr ""
 "ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੁਝ ਗਲਤੀਆਂ ਲੱਭੀਆਂ ਹਨ। ਹੋ ਸਕਦਾ ਹੈ ਕਿ ਓਕੁਲਾਰ ਸਮੱਗਰੀ ਨੂੰ ਠੀਕ ਤਰ੍ਹਾਂ ਨਾ ਦਿਖਾ ਸਕੇ।"
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -316,49 +332,56 @@ msgid ""
 "based backend activated"
 msgstr ""
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, fuzzy, kde-format
 #| msgid "&Load Signatures"
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "ਦਸਤਖ਼ਤ ਲੋਡ ਕਰੋ(&L)"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "ਇਸ ਨੂੰ ਜਾਰੀ ਕੀਤਾ"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "ਈ-ਮੇਲ"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "ਮਿਆਦ"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "Available Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "ਮੌਜੂਦ ਸਰਟੀਫਿਕੇਟ"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr ""
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "ਮੁੜ-ਚਾਲੂ ਕਰਨ ਦੀ ਲੋੜ ਹੈ"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

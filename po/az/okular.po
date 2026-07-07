@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:43+0000\n"
+"POT-Creation-Date: 2026-07-07 00:41+0000\n"
 "PO-Revision-Date: 2024-07-05 17:53+0400\n"
 "Last-Translator: Khayyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -295,35 +295,35 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm (%3)"
 
-#: core/document.cpp:1701
+#: core/document.cpp:1672
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Axtarışı əvvəldən başlatmaq"
 
-#: core/document.cpp:1704
+#: core/document.cpp:1675
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Axtarışı sondan başlatmaq"
 
-#: core/document.cpp:2420
+#: core/document.cpp:2391
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Sənədin işlənməsi üçün lazım olan modul tapılmadı."
 
-#: core/document.cpp:2842
+#: core/document.cpp:2813
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3556
+#: core/document.cpp:3527
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "şərhləri silmək"
 
-#: core/document.cpp:4148 core/document.cpp:4154
+#: core/document.cpp:4119 core/document.cpp:4125
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -332,52 +332,52 @@ msgstr ""
 "Sənəd xarici tətbiqi icra etməyə cəhd edir, lakin təhlükəsizlik məqsədi ilə "
 "Okulyar buna mane olur."
 
-#: core/document.cpp:4164
+#: core/document.cpp:4135
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "%1 mime növü faylını açmaq üçün tətbiq tapılmadı."
 
-#: core/document.cpp:4800
+#: core/document.cpp:4771
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Müvəqqəti fayl açıla bilmədi"
 
-#: core/document.cpp:4802
+#: core/document.cpp:4773
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Söhbəti çap etmək baş tutmadı"
 
-#: core/document.cpp:4804
+#: core/document.cpp:4775
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Çap prosesi çökdü"
 
-#: core/document.cpp:4806
+#: core/document.cpp:4777
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Çap prosesi başladıla bilmədi"
 
-#: core/document.cpp:4808
+#: core/document.cpp:4779
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Fayla çap etmək alınmadı"
 
-#: core/document.cpp:4810
+#: core/document.cpp:4781
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer lazımi vəziyyətdə deyil"
 
-#: core/document.cpp:4812
+#: core/document.cpp:4783
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Çap etmək üçün fayl tapılmadı"
 
-#: core/document.cpp:4814
+#: core/document.cpp:4785
 #, kde-format
 msgid "There was no file to print"
 msgstr "Çap etmək üçün fayl yoxdur"
 
-#: core/document.cpp:4816
+#: core/document.cpp:4787
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,92 +386,92 @@ msgstr ""
 "Çap üçün uyğun proqramı tapmaq mümkün olmadı. CUPS paketindən lpr "
 "vasitəsinin mövcud olduğuna əmin olun"
 
-#: core/document.cpp:4818
+#: core/document.cpp:4789
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Səhifənin çap ölçüsü düzgün deyil"
 
-#: core/document.cpp:5492 part/part.cpp:1135
+#: core/document.cpp:5445 part/part.cpp:1128
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' açıla bilmədi. Fayl mövcud deyil"
 
-#: core/document.cpp:6001
+#: core/document.cpp:5954
 #, kde-format
 msgid "Title"
 msgstr "Başlıq"
 
-#: core/document.cpp:6004
+#: core/document.cpp:5957
 #, kde-format
 msgid "Subject"
 msgstr "Mövzu"
 
-#: core/document.cpp:6007
+#: core/document.cpp:5960
 #, kde-format
 msgid "Description"
 msgstr "Təsviri"
 
-#: core/document.cpp:6010
+#: core/document.cpp:5963
 #, kde-format
 msgid "Author"
 msgstr "Müəllif"
 
-#: core/document.cpp:6013
+#: core/document.cpp:5966
 #, kde-format
 msgid "Creator"
 msgstr "Yaradıcı"
 
-#: core/document.cpp:6016
+#: core/document.cpp:5969
 #, kde-format
 msgid "Producer"
 msgstr "İstehsalçı"
 
-#: core/document.cpp:6019
+#: core/document.cpp:5972
 #, kde-format
 msgid "Copyright"
 msgstr "Müəllif Hüquqları"
 
-#: core/document.cpp:6022
+#: core/document.cpp:5975
 #, kde-format
 msgid "Pages"
 msgstr "Səhifələr"
 
-#: core/document.cpp:6025
+#: core/document.cpp:5978
 #, kde-format
 msgid "Created"
 msgstr "Yaradıldı"
 
-#: core/document.cpp:6028
+#: core/document.cpp:5981
 #, kde-format
 msgid "Modified"
 msgstr "Dəyişdirildi"
 
-#: core/document.cpp:6031
+#: core/document.cpp:5984
 #, kde-format
 msgid "MIME Type"
 msgstr "MİME növü"
 
-#: core/document.cpp:6034
+#: core/document.cpp:5987
 #, kde-format
 msgid "Category"
 msgstr "Kateqoriya"
 
-#: core/document.cpp:6037
+#: core/document.cpp:5990
 #, kde-format
 msgid "Keywords"
 msgstr "Açar sözlər"
 
-#: core/document.cpp:6040
+#: core/document.cpp:5993
 #, kde-format
 msgid "File Path"
 msgstr "Fayl yolu"
 
-#: core/document.cpp:6043
+#: core/document.cpp:5996
 #, kde-format
 msgid "File Size"
 msgstr "Faylın ölçüsü"
 
-#: core/document.cpp:6046
+#: core/document.cpp:5999
 #, kde-format
 msgid "Page Size"
 msgstr "Səhifənin Ölçüsü"
@@ -1125,19 +1125,19 @@ msgstr "Sənəd əvvəlki imzalayan şəxsin icazəsi olmadan dəyişdirilib."
 msgid "The document integrity verification could not be completed."
 msgstr "Sənədin bütövlüyünün yoxlanması tamamlana bilmədi."
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:212
 #, fuzzy, kde-format
 #| msgid "This document has unsigned signature fields."
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
 msgstr "Bu sənəd imzalanmamış imza sahələri var."
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:215
 #, kde-format
 msgid "This document is digitally signed."
 msgstr "Bu sənəd elektron imza ilə imzalanıb."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:217
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
@@ -1145,7 +1145,7 @@ msgstr ""
 "Bu sənəd elektron imza ilə imzalanıb. Sonuncu imzalanmadan bu yana "
 "dəyişikliklər edilib."
 
-#: gui/signatureguiutils.cpp:216
+#: gui/signatureguiutils.cpp:220
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
@@ -1676,7 +1676,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Səhifə %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3174
+#: part/annotationmodel.cpp:324 part/part.cpp:3164
 #, kde-format
 msgid "Page %1"
 msgstr "Səhifə %1"
@@ -1697,12 +1697,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Açılabilən Qeydi açmaq"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2267 part/part.cpp:3180
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Əlfəcini silmək"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3182
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Əlfəcin əlavə et"
@@ -1735,7 +1735,7 @@ msgstr "Kopyalama DRM tərəfindən qadağan edilmişdir"
 msgid "&Delete"
 msgstr "&silin"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:743
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2330,13 +2330,13 @@ msgstr "Bütün səndləri göstərmək"
 msgid "Search…"
 msgstr "&Axtarış:"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3162
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "Hamısını açmaq"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3163
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
@@ -2347,8 +2347,8 @@ msgstr "Hamısını yığmaq"
 msgid "Go to This Bookmark"
 msgstr "Bu əlfəcinə keçmək"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:681
-#: part/part.cpp:2462
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
+#: part/part.cpp:2445
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Əlfəcinin adını dəyişmək"
@@ -3713,7 +3713,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Müntəzəm ifadə"
 
-#: part/layers.cpp:33 part/part.cpp:2310
+#: part/layers.cpp:33 part/part.cpp:2293
 #, kde-format
 msgid "Layers"
 msgstr "Qatlar"
@@ -3953,7 +3953,7 @@ msgstr[1] "Mətn ( %1 simvol)"
 msgid "Copy to Clipboard"
 msgstr "Mübadilə buferinə kopyalamaq"
 
-#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:841
+#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:834
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
@@ -4013,7 +4013,7 @@ msgstr "Mətni  Kopyalamaq"
 msgid "Go to '%1'"
 msgstr "'%1-ə(a) keçmək'"
 
-#: part/pageview.cpp:4227 part/part.cpp:3185
+#: part/pageview.cpp:4227 part/part.cpp:3175
 #, kde-format
 msgid "Fit Width"
 msgstr "Eninə Sığışdır"
@@ -4166,7 +4166,7 @@ msgstr "Saxlanılmamış dəyişiklikləriniz var. İmzalamadan öncə sənədi 
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Düzbucaqlı çəkərək imzalama sahəsi əlavə edin"
 
-#: part/pageview.cpp:5600
+#: part/pageview.cpp:5602
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Görünən kimi saxlamaq üçün sahəni seçin"
@@ -4398,133 +4398,121 @@ msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr ""
 
-#: part/part.cpp:644
+#: part/part.cpp:648
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "Əvvəlki"
 
-#: part/part.cpp:645
+#: part/part.cpp:649
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "Əvvəlki səhifəyə qayıtmaq"
 
-#: part/part.cpp:646
+#: part/part.cpp:650
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "Sənədin əvvəlki səhifəsinə qayıdır"
 
-#: part/part.cpp:653
+#: part/part.cpp:657
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "Növbəti"
 
-#: part/part.cpp:654
+#: part/part.cpp:658
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "Növbəti səhifəyə keçid"
 
-#: part/part.cpp:655
+#: part/part.cpp:659
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "Sənədin növbəti səhifəsinə keçir"
 
-#: part/part.cpp:663
+#: part/part.cpp:667
 #, kde-format
 msgid "Beginning of the document"
 msgstr "Sənədin başlanğıcı"
 
-#: part/part.cpp:664
+#: part/part.cpp:668
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "Sənədin başlanğıcına keçir"
 
-#: part/part.cpp:668
+#: part/part.cpp:672
 #, kde-format
 msgid "End of the document"
 msgstr "Sənədin sonu"
 
-#: part/part.cpp:669
+#: part/part.cpp:673
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "Sənədin sonuna keçir"
 
-#: part/part.cpp:683
+#: part/part.cpp:687
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "Cari əlfəcinin adını dəyişmək"
 
-#: part/part.cpp:687
+#: part/part.cpp:691
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "Əvvəlki Əlfəcin"
 
-#: part/part.cpp:689
+#: part/part.cpp:693
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "Əvvəlki əlfəcinə keçmək"
 
-#: part/part.cpp:693
+#: part/part.cpp:697
 #, kde-format
 msgid "Next Bookmark"
 msgstr "Növbəti əlfəcin"
 
-#: part/part.cpp:695
+#: part/part.cpp:699
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "Növbəti əlfəcinə keçid"
 
-#: part/part.cpp:725
+#: part/part.cpp:729
 #, fuzzy, kde-format
 #| msgid "Configure Okular..."
 msgid "Configure Okular…"
 msgstr "Okulyarı tənzimləmək..."
 
-#: part/part.cpp:728
+#: part/part.cpp:732
 #, fuzzy, kde-format
 #| msgid "Configure Viewer"
 msgid "Configure Viewer…"
 msgstr "Baxış vasitəsinin tənzimlənməsi"
 
-#: part/part.cpp:734
-#, fuzzy, kde-format
-#| msgid "Configure Viewer Backends"
-msgid "Configure Viewer Backends…"
-msgstr "Baxış modullarını tənzimləmək"
-
-#: part/part.cpp:736
-#, fuzzy, kde-format
-#| msgid "Configure Backends"
-msgid "Configure Backends…"
-msgstr "Modulları tənzimləmək"
-
-#: part/part.cpp:772
+#: part/part.cpp:765
 #, kde-format
 msgid "About Backend"
 msgstr "Modul haqqında"
 
-#: part/part.cpp:777
+#: part/part.cpp:770
 #, kde-format
 msgid "Reloa&d"
 msgstr "Yeni&dən yükləmək"
 
-#: part/part.cpp:779
+#: part/part.cpp:772
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Cari sənədi diskdən yenidən yükləmək"
 
-#: part/part.cpp:785
+#: part/part.cpp:778
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Axtarış &panelini bağlamaq"
 
-#: part/part.cpp:790
+#: part/part.cpp:783
 #, kde-format
 msgid "Page Number"
 msgstr "Səhifə Nömrəsi"
 
-#: part/part.cpp:794
+#: part/part.cpp:787
 #, fuzzy, kde-format
 #| msgctxt "@action"
 #| msgid "Configure Color Modes..."
@@ -4532,86 +4520,86 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Rəng rejimlərini ayarlamaq..."
 
-#: part/part.cpp:833 part/part.cpp:3190
+#: part/part.cpp:826 part/part.cpp:3180
 #, fuzzy, kde-format
 #| msgctxt "Change an annotation's size"
 #| msgid "adjust annotation"
 msgid "Paste Annotation"
 msgstr "şərh əlavə etmək"
 
-#: part/part.cpp:851
+#: part/part.cpp:844
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Cari səhifədəki bütün mətnləri seçmək"
 
-#: part/part.cpp:864
+#: part/part.cpp:857
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Yan panel&i göstərmək"
 
-#: part/part.cpp:873
+#: part/part.cpp:866
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Səhifə nömrəsi &panelini göstərmək"
 
-#: part/part.cpp:879
+#: part/part.cpp:872
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "İm&za panelini göstərmək"
 
-#: part/part.cpp:890
+#: part/part.cpp:883
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&Daxili fayllar"
 
-#: part/part.cpp:896
+#: part/part.cpp:889
 #, kde-format
 msgid "E&xport As"
 msgstr "Belə i&xrac etmək"
 
-#: part/part.cpp:908
+#: part/part.cpp:901
 #, kde-format
 msgid "S&hare"
 msgstr "&Paylaşın"
 
-#: part/part.cpp:917
+#: part/part.cpp:910
 #, kde-format
 msgid "P&resentation"
 msgstr "Təq&dimat"
 
-#: part/part.cpp:924
+#: part/part.cpp:917
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Bu &tərkibli qovluğu açın"
 
-#: part/part.cpp:938
+#: part/part.cpp:931
 #, fuzzy, kde-format
 #| msgid "&Import PostScript as PDF..."
 msgid "&Import PostScript as PDF…"
 msgstr "PostScript'i PDF kimi &idxal etmək..."
 
-#: part/part.cpp:942
+#: part/part.cpp:935
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Boş ekran rejiminə keçid"
 
-#: part/part.cpp:950
+#: part/part.cpp:943
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Rəsimi silmək"
 
-#: part/part.cpp:955
+#: part/part.cpp:948
 #, fuzzy, kde-format
 #| msgid "Configure Annotations..."
 msgid "Configure Annotations…"
 msgstr "Şərhləri tənzimləmək..."
 
-#: part/part.cpp:960
+#: part/part.cpp:953
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Təqdimatı Başlat/Fasilə"
 
-#: part/part.cpp:1112
+#: part/part.cpp:1105
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4622,37 +4610,27 @@ msgstr ""
 "bilməz.\n"
 "Okular bağlandıqda bütün dəyişikliklər itiriləcəkdir."
 
-#: part/part.cpp:1113
+#: part/part.cpp:1106
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Sənəd saxlanılmadı"
 
-#: part/part.cpp:1142
+#: part/part.cpp:1135
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1' açıla bilmir (%2) "
 
-#: part/part.cpp:1195
+#: part/part.cpp:1188
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 yüklənməsi başa çatdı."
 
-#: part/part.cpp:1211
+#: part/part.cpp:1204
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1 açıla bilmir. Səbəb: %2"
 
-#: part/part.cpp:1239
-#, kde-format
-msgid "Configure Viewer Backends"
-msgstr "Baxış modullarını tənzimləmək"
-
-#: part/part.cpp:1241
-#, kde-format
-msgid "Configure Backends"
-msgstr "Modulları tənzimləmək"
-
-#: part/part.cpp:1326
+#: part/part.cpp:1298
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4661,43 +4639,43 @@ msgstr ""
 "\"ps2pdf\" proqramı tapılmadı, buna gösrə də Okulyar PostScript fayllarını "
 "idxal edə bilmir."
 
-#: part/part.cpp:1326
+#: part/part.cpp:1298
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf tapılmadı"
 
-#: part/part.cpp:1331
+#: part/part.cpp:1303
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript faylları (%1)"
 
-#: part/part.cpp:1347
+#: part/part.cpp:1319
 #, fuzzy, kde-format
 #| msgid "Importing PS file as PDF (this may take a while)..."
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS faylının PDF kimi idxal edilməsi (bu bir az vaxt apara bilər)..."
 
-#: part/part.cpp:1479
+#: part/part.cpp:1451
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Sənədi oxumaq üçün şifrəni daxil edin:"
 
-#: part/part.cpp:1481
+#: part/part.cpp:1453
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Şifrə səhvdir. Yenidən cəhd edin:"
 
-#: part/part.cpp:1492
+#: part/part.cpp:1464
 #, kde-format
 msgid "Document Password"
 msgstr "Sənədin Şifrəsi"
 
-#: part/part.cpp:1615
+#: part/part.cpp:1587
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "Bu sənəd XFA formatındadır, hansı ki, hal-hazırda <b>dəstəklənmir</b>."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1594
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4706,7 +4684,7 @@ msgstr ""
 "Sənəd formadan ibarətdir. Onunlu qarşılıqlı əlaqə üçün bu düyməni vurun və "
 "ya Görünüş -> Formanı göstərmək bölməsini açın."
 
-#: part/part.cpp:1638
+#: part/part.cpp:1611
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4715,7 +4693,7 @@ msgstr ""
 "Bu sənəd üçün bütün düzəliş etmə və interaktiv imkanlar söndürülüb. Lütfən "
 "bu sənədin surətini saxlayın və düzəliş etmək üçün yenidən açın."
 
-#: part/part.cpp:1726
+#: part/part.cpp:1709
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4724,27 +4702,27 @@ msgstr ""
 "Bu sənəd tam ekranda göstərilməlidir.\n"
 "Normal rejimdən təqdimat rejiminə keçilsin?"
 
-#: part/part.cpp:1728
+#: part/part.cpp:1711
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Baxış rejiminin dəyişdirilməsi"
 
-#: part/part.cpp:1729
+#: part/part.cpp:1712
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Təqdimat rejiminə daxil olmaq"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1713
 #, kde-format
 msgid "Deny Request"
 msgstr "Sorğunu qəbul etməmək"
 
-#: part/part.cpp:1820
+#: part/part.cpp:1803
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1 açıla bilmədi. %2"
 
-#: part/part.cpp:1850
+#: part/part.cpp:1833
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4758,22 +4736,22 @@ msgstr ""
 "saxlanılmamış dəyişiklikləri başqa proqram tərəfindən edilmiş dəyişikliklər "
 "ilə əvəz edəcək.<nl/><nl/>Faylı yenidən yükləməyə davam etmək istəyirsiniz?"
 
-#: part/part.cpp:1854 part/part.cpp:1864
+#: part/part.cpp:1837 part/part.cpp:1847
 #, kde-format
 msgid "File Changed"
 msgstr "Fayl saxlanıldı"
 
-#: part/part.cpp:1855
+#: part/part.cpp:1838
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Açılmanı davam etdirmək"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1839
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Açılmanı ləğv etmək"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1843
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4787,28 +4765,28 @@ msgstr ""
 "dəyişiklikləri başqa proqram tərəfindən edilmiş dəyişikliklər ilə əvəz "
 "edəcək.<nl/><nl/> Bağlamağa davam etmək istəyirsiniz?"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1848
 #, kde-format
 msgid "Continue Closing"
 msgstr "Bağlanmanı davam etdirmək"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1849
 #, kde-format
 msgid "Abort Closing"
 msgstr "Bağlanmanı ləğv etdirmək"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1856
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 "Dəyişikliklərinizi \"%1\"-də(a) saxlamaq yoxsa ləğv etmək istəyirsiniz?"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1856
 #, kde-format
 msgid "Close Document"
 msgstr "Sənədi Bağlayın"
 
-#: part/part.cpp:2005
+#: part/part.cpp:1988
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4817,7 +4795,7 @@ msgstr ""
 "Bu keçid sənədin bağlanmasına işarə edir, hansı ki, bu daxili baxış "
 "vasitəsində işləmir."
 
-#: part/part.cpp:2011
+#: part/part.cpp:1994
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4826,60 +4804,60 @@ msgstr ""
 "Bu keçid proqramın bağlanmasına işarə edir, hansı ki, bu daxili baxış "
 "vasitəsində işləmir."
 
-#: part/part.cpp:2103 part/part.cpp:2121
+#: part/part.cpp:2086 part/part.cpp:2104
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
 msgid "Reloading the document…"
 msgstr "Sənədin yenidən yüklənməsi..."
 
-#: part/part.cpp:2290 part/toc.cpp:36
+#: part/part.cpp:2273 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Tərkibləri"
 
-#: part/part.cpp:2319 part/signaturepanel.cpp:45
+#: part/part.cpp:2302 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "İmzalar"
 
-#: part/part.cpp:2346
+#: part/part.cpp:2329
 #, kde-format
 msgid "Go to Page"
 msgstr "Səhifəyə keçid"
 
-#: part/part.cpp:2369
+#: part/part.cpp:2352
 #, kde-format
 msgid "&Page:"
 msgstr "&Səhifə:"
 
-#: part/part.cpp:2462
+#: part/part.cpp:2445
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Əlfəcinin yeni adını daxil edin:"
 
-#: part/part.cpp:2508
+#: part/part.cpp:2491
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Bu əlfəcinin adını dəyişmək"
 
-#: part/part.cpp:2511
+#: part/part.cpp:2494
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Bu əlfəcini silmək"
 
-#: part/part.cpp:2597 part/part.cpp:2598 part/part.cpp:3502
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2605 part/revisionviewer.cpp:44
+#: part/part.cpp:2588 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Belə saxlayın"
 
-#: part/part.cpp:2622
+#: part/part.cpp:2605
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4888,18 +4866,18 @@ msgstr ""
 "Okulyar arxivini, fayl adında \"%1\" uzantısı olmadan saxlamağı seçdiniz. "
 "Buna icazə verilmir, yeni ad seçmək istəyirsiniz?"
 
-#: part/part.cpp:2623
+#: part/part.cpp:2606
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Dəstəklənməyən uzantı"
 
-#: part/part.cpp:2624
+#: part/part.cpp:2607
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Yeni ad seçin"
 
-#: part/part.cpp:2667
+#: part/part.cpp:2650
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4911,17 +4889,17 @@ msgstr ""
 "Əgər indi saxlamış olsanız başqa proqram tərəfindən edilmiş dəyişikliklər "
 "itiriləcəkdir. Davam etmək istədiyinizə əminsiniz?"
 
-#: part/part.cpp:2670 part/part.cpp:2689 part/part.cpp:2741
+#: part/part.cpp:2653 part/part.cpp:2672 part/part.cpp:2724
 #, kde-format
 msgid "Save - Warning"
 msgstr "Saxlayın - Xəbərdarlıq"
 
-#: part/part.cpp:2672
+#: part/part.cpp:2655
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Nüsxəni başqa yerdə saxlayın"
 
-#: part/part.cpp:2688
+#: part/part.cpp:2671
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4932,12 +4910,12 @@ msgstr ""
 "lazımdır. Sizdən yenidən şifrə tələb olunacaq və irəli/geri tarixçəsi "
 "itiriləcəkdir.<br />Davam etmək istəyirsiniz?"
 
-#: part/part.cpp:2715
+#: part/part.cpp:2698
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Saxlamaq üçün müvəqqəti faylı açmaq mümkün olmadı."
 
-#: part/part.cpp:2728
+#: part/part.cpp:2711
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4948,7 +4926,7 @@ msgstr ""
 "oxumaq üçündür. Başqa yerdə saxlamağa cəhd edinə və ya fayl icazələrini "
 "dəyişdirin."
 
-#: part/part.cpp:2740
+#: part/part.cpp:2723
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4957,22 +4935,22 @@ msgstr ""
 "Saxlanıldıqdan sonra cari sənəd formatı faylın yenidən açılmasını tələb "
 "edir. İrəli/Geri tarixçəsi itiriləcəkdir. <br />Davam etmək istəyirsiniz?"
 
-#: part/part.cpp:2755 part/part.cpp:2824 part/part.cpp:2845 part/part.cpp:3517
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Fayl '%1'-də(a) saxlanılla bilmədi. Başqa yerdə saxlamağa cəhd edin."
 
-#: part/part.cpp:2768
+#: part/part.cpp:2751
 #, kde-format
 msgid "Filled form contents"
 msgstr "Doldurulmuş forma tərkibləri"
 
-#: part/part.cpp:2771
+#: part/part.cpp:2754
 #, kde-format
 msgid "User annotations"
 msgstr "İştifadəçi şərhləri"
 
-#: part/part.cpp:2776
+#: part/part.cpp:2759
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4983,18 +4961,18 @@ msgstr ""
 "elementləri saxlamağı dəstəkləmir. Lütfən, sənədi saxlamaq üçün <i>Okular "
 "document archive</i> formatından istifadə edin."
 
-#: part/part.cpp:2780 part/part.cpp:2802
+#: part/part.cpp:2763 part/part.cpp:2785
 #, kde-format
 msgid "Warning"
 msgstr "Xəbərdarlıq"
 
-#: part/part.cpp:2781 part/part.cpp:2803
+#: part/part.cpp:2764 part/part.cpp:2786
 #, fuzzy, kde-format
 #| msgid "Save as Okular document archive..."
 msgid "Save as Okular document archive…"
 msgstr "Okular document archive kimi saxlayın..."
 
-#: part/part.cpp:2793
+#: part/part.cpp:2776
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5007,7 +4985,7 @@ msgstr ""
 "document archive</i> formatından istifadə edin. Sənədi saxlamaq və bu "
 "elementləri ləğv etmək üçün <i>Davam etmək</i> vurun."
 
-#: part/part.cpp:2796
+#: part/part.cpp:2779
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5020,22 +4998,22 @@ msgstr ""
 "document archive</i> formatından istifadə edin. Sənədi saxlamaq üçün "
 "<i>Davam etmək</i> vurun, lakin, İrəli/Geri tarixçəsi itiriləcəkdir."
 
-#: part/part.cpp:2798
+#: part/part.cpp:2781
 #, kde-format
 msgid "Continue"
 msgstr "Davam etmək"
 
-#: part/part.cpp:2798
+#: part/part.cpp:2781
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Dəyişiklikləri itirməklə davam etmək"
 
-#: part/part.cpp:2826
+#: part/part.cpp:2809
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Fayl '%1'-də(a) saxlanıla bilmədi.%2"
 
-#: part/part.cpp:2865
+#: part/part.cpp:2848
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5046,7 +5024,7 @@ msgstr ""
 "\n"
 "Bu sənəd artıq mövcud deyil."
 
-#: part/part.cpp:2901
+#: part/part.cpp:2884
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5055,53 +5033,53 @@ msgstr ""
 "Fayl '%1'-də(a) saxlanılla bilmədi. Xəta: '%2' Başqa yerdə saxlamağa cəhd "
 "edin."
 
-#: part/part.cpp:3160
+#: part/part.cpp:3150
 #, fuzzy, kde-format
 #| msgid "Expand whole section"
 msgid "Expand Whole Section"
 msgstr "Bütün bölməni açmaq"
 
-#: part/part.cpp:3161
+#: part/part.cpp:3151
 #, fuzzy, kde-format
 #| msgid "Collapse whole section"
 msgid "Collapse Whole Section"
 msgstr "Bütün bölməni yığmaq"
 
-#: part/part.cpp:3177
+#: part/part.cpp:3167
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Miniatürləri səhifə ilə eyniləşdir"
 
-#: part/part.cpp:3209
+#: part/part.cpp:3199
 #, kde-format
 msgid "Tools"
 msgstr "Alətlər"
 
-#: part/part.cpp:3397
+#: part/part.cpp:3387
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Danışmaq"
 
-#: part/part.cpp:3555
+#: part/part.cpp:3545
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Çap"
 
-#: part/part.cpp:3618
+#: part/part.cpp:3608
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Bu sənədin çapına icazə verilmədi."
 
-#: part/part.cpp:3631
+#: part/part.cpp:3621
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "Sənəd çap edilə bilmədi. Naməlum xəta. Hesabatı bugs.kde.org -a göndərin"
 
-#: part/part.cpp:3633
+#: part/part.cpp:3623
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5110,17 +5088,17 @@ msgstr ""
 "Sənəd çap edilə bilmədi. Xətanın təfərrüatları: \"%1\".Hesabatı bugs.kde.org "
 "-a göndərin"
 
-#: part/part.cpp:3722
+#: part/part.cpp:3715
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Əvvəl olduğunuz mövqeyə qayıdın"
 
-#: part/part.cpp:3726
+#: part/part.cpp:3719
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Sonrakı mövqeyə qayıdın"
 
-#: part/part.cpp:3751
+#: part/part.cpp:3744
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5129,7 +5107,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> <nobr><strong>%1</strong></nobr>müvəqqəti "
 "faylı yaradıla bilmədi.</qt>"
 
-#: part/part.cpp:3763
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5138,7 +5116,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> Sıxışdırılmış <nobr><strong>%1</strong></"
 "nobr> faylını açmaq mümkün olmadı. Bu fayl yüklənməyəcək.</qt>"
 
-#: part/part.cpp:3767
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5151,7 +5129,7 @@ msgstr ""
 "seçimindəki 'İcazələr' bölməsində faylın sahibini və icazələrini yoxlaya "
 "bilərsiniz.</qt>"
 
-#: part/part.cpp:3789
+#: part/part.cpp:3782
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5160,7 +5138,7 @@ msgstr ""
 "<qt><strong>Fayl Xətası!</strong> Sıxlaşdırılmış<nobr><strong>%1</strong></"
 "nobr> faylını açmaq mümkün olmadı. Bu fayl yüklənməyəcək.</qt>"
 
-#: part/part.cpp:3793
+#: part/part.cpp:3786
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5169,27 +5147,27 @@ msgstr ""
 "<qt>Adətən fayl korlandıqda bu xəta baş verir. Əmin olmaq üçün əmr sətri "
 "vasitəsindən istifadə edərək sıxılmış faylı açmağa cəhd edin.</qt>"
 
-#: part/part.cpp:3819
+#: part/part.cpp:3812
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Əlfəcinlər yoxdur"
 
-#: part/part.cpp:3890
+#: part/part.cpp:3883
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Bu sənədin paylaşımı zamanı problem yarandı: %1"
 
-#: part/part.cpp:3890 part/part.cpp:3896
+#: part/part.cpp:3883 part/part.cpp:3889
 #, kde-format
 msgid "Share"
 msgstr "Paylaşmaq"
 
-#: part/part.cpp:3894
+#: part/part.cpp:3887
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Sənəd uğurla paylaşıldı"
 
-#: part/part.cpp:3896
+#: part/part.cpp:3889
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Paylaşdığınız sənədi buradan tapa bilərsiniz: <a href=\"%1\">%1</a>"
@@ -5775,10 +5753,17 @@ msgstr "Sertifikat şifrəsini daxil edin"
 msgid "Enter document password"
 msgstr "Sənədin şifrəsini daxil edin"
 
-#: part/signaturepartutils.cpp:267
+#: part/signaturepartutils.cpp:271
 #, kde-format
 msgid "Save Signed File As"
 msgstr "İmzalanmış faylı belə saxlayın"
+
+#: part/signaturepartutils.cpp:273
+#, kde-format
+msgctxt "Error message"
+msgid ""
+"The original file cannot be overwritten. Please choose a different filename."
+msgstr ""
 
 #: part/signaturepartutils.h:62
 #, kde-format
@@ -6170,6 +6155,22 @@ msgstr "Hamısını unudun"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Salamlama səhifəsini gizlətmək"
+
+#, fuzzy
+#~| msgid "Configure Viewer Backends"
+#~ msgid "Configure Viewer Backends…"
+#~ msgstr "Baxış modullarını tənzimləmək"
+
+#, fuzzy
+#~| msgid "Configure Backends"
+#~ msgid "Configure Backends…"
+#~ msgstr "Modulları tənzimləmək"
+
+#~ msgid "Configure Viewer Backends"
+#~ msgstr "Baxış modullarını tənzimləmək"
+
+#~ msgid "Configure Backends"
+#~ msgstr "Modulları tənzimləmək"
 
 #~ msgid "Geometry with Comment"
 #~ msgstr "Şərhlərdən ibarət fiqur"

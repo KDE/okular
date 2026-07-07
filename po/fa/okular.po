@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-03 00:43+0000\n"
+"POT-Creation-Date: 2026-07-07 00:41+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -290,36 +290,36 @@ msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr ""
 
-#: core/document.cpp:1701
+#: core/document.cpp:1672
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1704
+#: core/document.cpp:1675
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2420
+#: core/document.cpp:2391
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 
-#: core/document.cpp:2842
+#: core/document.cpp:2813
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3556
+#: core/document.cpp:3527
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ارائه"
 
-#: core/document.cpp:4148 core/document.cpp:4154
+#: core/document.cpp:4119 core/document.cpp:4125
 #, fuzzy, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,149 +328,149 @@ msgstr ""
 "سند سعی در اجرای یک کاربرد خارجی دارد، و okular برای امنیت به شما اجازه این "
 "کار را نمی‌دهد."
 
-#: core/document.cpp:4164
+#: core/document.cpp:4135
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "برای باز کردن پرونده نوع مایم %1، کاربردی یافت نشد."
 
-#: core/document.cpp:4800
+#: core/document.cpp:4771
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open a temporary file"
 msgstr "نتوانست %1 را باز کند. دلیل: %2"
 
-#: core/document.cpp:4802
+#: core/document.cpp:4773
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4804
+#: core/document.cpp:4775
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4806
+#: core/document.cpp:4777
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4808
+#: core/document.cpp:4779
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4810
+#: core/document.cpp:4781
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4812
+#: core/document.cpp:4783
 #, fuzzy, kde-format
 #| msgid "Unable to find okular part."
 msgid "Unable to find file to print"
 msgstr "قادر به یافتن جزء okular نیست."
 
-#: core/document.cpp:4814
+#: core/document.cpp:4785
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4816
+#: core/document.cpp:4787
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4818
+#: core/document.cpp:4789
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5492 part/part.cpp:1135
+#: core/document.cpp:5445 part/part.cpp:1128
 #, fuzzy, kde-format
 #| msgid "Could not open %1. Reason: %2"
 msgid "Could not open '%1'. File does not exist"
 msgstr "نتوانست %1 را باز کند. دلیل: %2"
 
-#: core/document.cpp:6001
+#: core/document.cpp:5954
 #, kde-format
 msgid "Title"
 msgstr "عنوان"
 
-#: core/document.cpp:6004
+#: core/document.cpp:5957
 #, kde-format
 msgid "Subject"
 msgstr "موضوع"
 
-#: core/document.cpp:6007
+#: core/document.cpp:5960
 #, kde-format
 msgid "Description"
 msgstr "توصیف"
 
-#: core/document.cpp:6010
+#: core/document.cpp:5963
 #, kde-format
 msgid "Author"
 msgstr "نویسنده"
 
-#: core/document.cpp:6013
+#: core/document.cpp:5966
 #, kde-format
 msgid "Creator"
 msgstr "ایجاد‌کننده"
 
-#: core/document.cpp:6016
+#: core/document.cpp:5969
 #, kde-format
 msgid "Producer"
 msgstr "تولید‌کننده"
 
-#: core/document.cpp:6019
+#: core/document.cpp:5972
 #, kde-format
 msgid "Copyright"
 msgstr "حق نشر"
 
-#: core/document.cpp:6022
+#: core/document.cpp:5975
 #, kde-format
 msgid "Pages"
 msgstr "صفحه‌ها"
 
-#: core/document.cpp:6025
+#: core/document.cpp:5978
 #, kde-format
 msgid "Created"
 msgstr "ایجاد‌‌شده"
 
-#: core/document.cpp:6028
+#: core/document.cpp:5981
 #, kde-format
 msgid "Modified"
 msgstr "تغییریافته"
 
-#: core/document.cpp:6031
+#: core/document.cpp:5984
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "نوع مایم"
 
-#: core/document.cpp:6034
+#: core/document.cpp:5987
 #, kde-format
 msgid "Category"
 msgstr "فهرست"
 
-#: core/document.cpp:6037
+#: core/document.cpp:5990
 #, kde-format
 msgid "Keywords"
 msgstr "واژه‌های کلیدی"
 
-#: core/document.cpp:6040
+#: core/document.cpp:5993
 #, fuzzy, kde-format
 #| msgid "File"
 msgid "File Path"
 msgstr "پرونده"
 
-#: core/document.cpp:6043
+#: core/document.cpp:5996
 #, kde-format
 msgid "File Size"
 msgstr "اندازه پرونده"
 
-#: core/document.cpp:6046
+#: core/document.cpp:5999
 #, fuzzy, kde-format
 msgid "Page Size"
 msgstr "اندازه صفحه‌‌‌ها"
@@ -1144,27 +1144,27 @@ msgstr ""
 msgid "The document integrity verification could not be completed."
 msgstr ""
 
-#: gui/signatureguiutils.cpp:208
+#: gui/signatureguiutils.cpp:212
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgctxt "Digital signature"
 msgid "This document has signature placeholder fields."
 msgstr "چاپ این سند مجاز نمی‌‌باشد."
 
-#: gui/signatureguiutils.cpp:211
+#: gui/signatureguiutils.cpp:215
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid "This document is digitally signed."
 msgstr "چاپ این سند مجاز نمی‌‌باشد."
 
-#: gui/signatureguiutils.cpp:213
+#: gui/signatureguiutils.cpp:217
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
 msgstr "چاپ این سند مجاز نمی‌‌باشد."
 
-#: gui/signatureguiutils.cpp:216
+#: gui/signatureguiutils.cpp:220
 #, fuzzy, kde-format
 #| msgid "Printing this document is not allowed."
 msgid ""
@@ -1725,7 +1725,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "صفحه %1"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3174
+#: part/annotationmodel.cpp:324 part/part.cpp:3164
 #, kde-format
 msgid "Page %1"
 msgstr "صفحه %1"
@@ -1746,12 +1746,12 @@ msgid "&Open Pop-up Note"
 msgstr ""
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2267 part/part.cpp:3180
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "حذف چوب الف"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3182
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
 #, kde-format
 msgid "Add Bookmark"
 msgstr "افزودن چوب الف"
@@ -1785,7 +1785,7 @@ msgstr ""
 msgid "&Delete"
 msgstr "&حذف‌"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:743
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2382,12 +2382,12 @@ msgstr "باز کردن یک سند"
 msgid "Search…"
 msgstr ""
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3162
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
 #, kde-format
 msgid "Expand All"
 msgstr ""
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3163
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
 #, kde-format
 msgid "Collapse All"
 msgstr ""
@@ -2397,8 +2397,8 @@ msgstr ""
 msgid "Go to This Bookmark"
 msgstr "برو به این چوب الف"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:681
-#: part/part.cpp:2462
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
+#: part/part.cpp:2445
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "تغییر نام چوب الف"
@@ -3813,7 +3813,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr ""
 
-#: part/layers.cpp:33 part/part.cpp:2310
+#: part/layers.cpp:33 part/part.cpp:2293
 #, kde-format
 msgid "Layers"
 msgstr ""
@@ -4062,7 +4062,7 @@ msgstr[1] ""
 msgid "Copy to Clipboard"
 msgstr "رونوشت در تخته یادداشت"
 
-#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:841
+#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:834
 #, fuzzy, kde-format
 #| msgid "Copy to Clipboard"
 msgid "Copy Text (Without line breaks)"
@@ -4124,7 +4124,7 @@ msgstr "رونوشت متن"
 msgid "Go to '%1'"
 msgstr "برو به صفحه %1"
 
-#: part/pageview.cpp:4227 part/part.cpp:3185
+#: part/pageview.cpp:4227 part/part.cpp:3175
 #, kde-format
 msgid "Fit Width"
 msgstr "متناسب کردن عرض"
@@ -4269,7 +4269,7 @@ msgstr ""
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5600
+#: part/pageview.cpp:5602
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"
@@ -4506,228 +4506,216 @@ msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr ""
 
-#: part/part.cpp:644
+#: part/part.cpp:648
 #, fuzzy, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "صفحه قبلی"
 
-#: part/part.cpp:645
+#: part/part.cpp:649
 #, fuzzy, kde-format
 msgid "Go back to the Previous Page"
 msgstr "برو به صفحه چوب الف شده قبلی"
 
-#: part/part.cpp:646
+#: part/part.cpp:650
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "به صفحه قبلی سند حرکت می‌کند"
 
-#: part/part.cpp:653
+#: part/part.cpp:657
 #, fuzzy, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "صفحه بعدی"
 
-#: part/part.cpp:654
+#: part/part.cpp:658
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr ""
 
-#: part/part.cpp:655
+#: part/part.cpp:659
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "به صفحه بعدی سند حرکت می‌کند"
 
-#: part/part.cpp:663
+#: part/part.cpp:667
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
 msgid "Beginning of the document"
 msgstr "در حال بارگذاری مجدد سند..."
 
-#: part/part.cpp:664
+#: part/part.cpp:668
 #, fuzzy, kde-format
 #| msgid "Moves to the next page of the document"
 msgid "Moves to the beginning of the document"
 msgstr "به صفحه بعدی سند حرکت می‌کند"
 
-#: part/part.cpp:668
+#: part/part.cpp:672
 #, fuzzy, kde-format
 #| msgid "Open a document"
 msgid "End of the document"
 msgstr "باز کردن یک سند"
 
-#: part/part.cpp:669
+#: part/part.cpp:673
 #, fuzzy, kde-format
 #| msgid "Moves to the next page of the document"
 msgid "Moves to the end of the document"
 msgstr "به صفحه بعدی سند حرکت می‌کند"
 
-#: part/part.cpp:683
+#: part/part.cpp:687
 #, fuzzy, kde-format
 #| msgid "Reload the current document from disk."
 msgid "Rename the current bookmark"
 msgstr "بارگذاری مجدد سند از دیسک."
 
-#: part/part.cpp:687
+#: part/part.cpp:691
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "چوب الف قبلی"
 
-#: part/part.cpp:689
+#: part/part.cpp:693
 #, fuzzy, kde-format
 #| msgid "Go to the previous bookmarked page"
 msgid "Go to the previous bookmark"
 msgstr "برو به صفحه چوب الف شده قبلی"
 
-#: part/part.cpp:693
+#: part/part.cpp:697
 #, kde-format
 msgid "Next Bookmark"
 msgstr "چوب الف بعدی"
 
-#: part/part.cpp:695
+#: part/part.cpp:699
 #, fuzzy, kde-format
 #| msgid "Go to the next bookmarked page"
 msgid "Go to the next bookmark"
 msgstr "برو به صفحه چوب الف‌ شده بعدی"
 
-#: part/part.cpp:725
+#: part/part.cpp:729
 #, fuzzy, kde-format
 msgid "Configure Okular…"
 msgstr "پیکربندی okular..."
 
-#: part/part.cpp:728
+#: part/part.cpp:732
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "Configure Viewer…"
 msgstr "پیکربندی مشاهده‌گر..."
 
-#: part/part.cpp:734
-#, fuzzy, kde-format
-#| msgid "Configure Backends..."
-msgid "Configure Viewer Backends…"
-msgstr "پیکربندی پایانه‌ها..."
-
-#: part/part.cpp:736
-#, fuzzy, kde-format
-#| msgid "Configure Backends..."
-msgid "Configure Backends…"
-msgstr "پیکربندی پایانه‌ها..."
-
-#: part/part.cpp:772
+#: part/part.cpp:765
 #, kde-format
 msgid "About Backend"
 msgstr ""
 
-#: part/part.cpp:777
+#: part/part.cpp:770
 #, kde-format
 msgid "Reloa&d"
 msgstr "&بارگذاری مجدد‌"
 
-#: part/part.cpp:779
+#: part/part.cpp:772
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "بارگذاری مجدد سند از دیسک."
 
-#: part/part.cpp:785
+#: part/part.cpp:778
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "بستن نوار &یافتن‌"
 
-#: part/part.cpp:790
+#: part/part.cpp:783
 #, fuzzy, kde-format
 msgid "Page Number"
 msgstr "اندازه صفحه‌‌‌ها"
 
-#: part/part.cpp:794
+#: part/part.cpp:787
 #, fuzzy, kde-format
 #| msgid "Configure okular..."
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "پیکربندی okular..."
 
-#: part/part.cpp:833 part/part.cpp:3190
+#: part/part.cpp:826 part/part.cpp:3180
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
 msgid "Paste Annotation"
 msgstr "حاشیه‌نویسی"
 
-#: part/part.cpp:851
+#: part/part.cpp:844
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr ""
 
-#: part/part.cpp:864
+#: part/part.cpp:857
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Show S&idebar"
 msgstr "نمایش &میله‌های لغزش‌"
 
-#: part/part.cpp:873
+#: part/part.cpp:866
 #, kde-format
 msgid "Show &Page Bar"
 msgstr ""
 
-#: part/part.cpp:879
+#: part/part.cpp:872
 #, fuzzy, kde-format
 #| msgid "Show &Navigation Panel"
 msgid "Show &Signatures Panel"
 msgstr "نمایش تابلوی &ناوش‌"
 
-#: part/part.cpp:890
+#: part/part.cpp:883
 #, kde-format
 msgid "&Embedded Files"
 msgstr "پرونده‌های &نهفته‌"
 
-#: part/part.cpp:896
+#: part/part.cpp:889
 #, kde-format
 msgid "E&xport As"
 msgstr "&صادرات به عنوان‌"
 
-#: part/part.cpp:908
+#: part/part.cpp:901
 #, kde-format
 msgid "S&hare"
 msgstr ""
 
-#: part/part.cpp:917
+#: part/part.cpp:910
 #, kde-format
 msgid "P&resentation"
 msgstr "&ارائه‌"
 
-#: part/part.cpp:924
+#: part/part.cpp:917
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr ""
 
-#: part/part.cpp:938
+#: part/part.cpp:931
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr ""
 
-#: part/part.cpp:942
+#: part/part.cpp:935
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr ""
 
-#: part/part.cpp:950
+#: part/part.cpp:943
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Erase Drawing"
 msgstr "ارائه"
 
-#: part/part.cpp:955
+#: part/part.cpp:948
 #, fuzzy, kde-format
 #| msgid "Configure Backends..."
 msgid "Configure Annotations…"
 msgstr "پیکربندی پایانه‌ها..."
 
-#: part/part.cpp:960
+#: part/part.cpp:953
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Play/Pause Presentation"
 msgstr "ارائه"
 
-#: part/part.cpp:1112
+#: part/part.cpp:1105
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4735,127 +4723,116 @@ msgid ""
 "Any modification will be lost once Okular is closed."
 msgstr ""
 
-#: part/part.cpp:1113
+#: part/part.cpp:1106
 #, fuzzy, kde-format
 #| msgid "Document to open"
 msgid "Document can't be saved"
 msgstr "سند برای باز کردن"
 
-#: part/part.cpp:1142
+#: part/part.cpp:1135
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open '%1' (%2) "
 msgstr "%1 را نتوانست باز کند"
 
-#: part/part.cpp:1195
+#: part/part.cpp:1188
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr ""
 
-#: part/part.cpp:1211
+#: part/part.cpp:1204
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "نتوانست %1 را باز کند. دلیل: %2"
 
-#: part/part.cpp:1239
-#, fuzzy, kde-format
-#| msgid "Configure Backends..."
-msgid "Configure Viewer Backends"
-msgstr "پیکربندی پایانه‌ها..."
-
-#: part/part.cpp:1241
-#, kde-format
-msgid "Configure Backends"
-msgstr ""
-
-#: part/part.cpp:1326
+#: part/part.cpp:1298
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr ""
 
-#: part/part.cpp:1326
+#: part/part.cpp:1298
 #, kde-format
 msgid "ps2pdf not found"
 msgstr ""
 
-#: part/part.cpp:1331
+#: part/part.cpp:1303
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr ""
 
-#: part/part.cpp:1347
+#: part/part.cpp:1319
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr ""
 
-#: part/part.cpp:1479
+#: part/part.cpp:1451
 #, fuzzy, kde-format
 #| msgid "Moves to the last page of the document"
 msgid "Please enter the password to read the document:"
 msgstr "به آخرین صفحه سند حرکت می‌کند"
 
-#: part/part.cpp:1481
+#: part/part.cpp:1453
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr ""
 
-#: part/part.cpp:1492
+#: part/part.cpp:1464
 #, fuzzy, kde-format
 #| msgid "Password"
 msgid "Document Password"
 msgstr "اسم رمز"
 
-#: part/part.cpp:1615
+#: part/part.cpp:1587
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 
-#: part/part.cpp:1622
+#: part/part.cpp:1594
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
 "View -> Show Forms."
 msgstr ""
 
-#: part/part.cpp:1638
+#: part/part.cpp:1611
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
 "save a copy and reopen to edit this document."
 msgstr ""
 
-#: part/part.cpp:1726
+#: part/part.cpp:1709
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
 "Leave normal mode and enter presentation mode?"
 msgstr ""
 
-#: part/part.cpp:1728
+#: part/part.cpp:1711
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr ""
 
-#: part/part.cpp:1729
+#: part/part.cpp:1712
 #, fuzzy, kde-format
 #| msgid "Exit Presentation Mode"
 msgid "Enter Presentation Mode"
 msgstr "خروج از حالت ارائه"
 
-#: part/part.cpp:1730
+#: part/part.cpp:1713
 #, kde-format
 msgid "Deny Request"
 msgstr ""
 
-#: part/part.cpp:1820
+#: part/part.cpp:1803
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open %1. %2"
 msgstr "%1 را نتوانست باز کند"
 
-#: part/part.cpp:1850
+#: part/part.cpp:1833
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4865,23 +4842,23 @@ msgid ""
 "reloading the file?"
 msgstr ""
 
-#: part/part.cpp:1854 part/part.cpp:1864
+#: part/part.cpp:1837 part/part.cpp:1847
 #, kde-format
 msgid "File Changed"
 msgstr ""
 
-#: part/part.cpp:1855
+#: part/part.cpp:1838
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Reloading"
 msgstr "&پیوسته‌"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1839
 #, kde-format
 msgid "Abort Reloading"
 msgstr ""
 
-#: part/part.cpp:1860
+#: part/part.cpp:1843
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4891,28 +4868,28 @@ msgid ""
 "the file?"
 msgstr ""
 
-#: part/part.cpp:1865
+#: part/part.cpp:1848
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue Closing"
 msgstr "&پیوسته‌"
 
-#: part/part.cpp:1866
+#: part/part.cpp:1849
 #, kde-format
 msgid "Abort Closing"
 msgstr ""
 
-#: part/part.cpp:1873
+#: part/part.cpp:1856
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 
-#: part/part.cpp:1873
+#: part/part.cpp:1856
 #, fuzzy, kde-format
 msgid "Close Document"
 msgstr "باز کردن یک سند"
 
-#: part/part.cpp:2005
+#: part/part.cpp:1988
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4921,7 +4898,7 @@ msgstr ""
 "این پیوند به کنش یک سند بسته اشاره دارد، که هنگام استفاده از مشاهده‌گر نهفته "
 "کار نمی‌کند."
 
-#: part/part.cpp:2011
+#: part/part.cpp:1994
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4930,81 +4907,81 @@ msgstr ""
 "این پیوند به کنش یک کاربرد خروج اشاره دارد، که هنگام استفاده از مشاهده‌گر "
 "نهفته کار نمی‌کند."
 
-#: part/part.cpp:2103 part/part.cpp:2121
+#: part/part.cpp:2086 part/part.cpp:2104
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
 msgid "Reloading the document…"
 msgstr "در حال بارگذاری مجدد سند..."
 
-#: part/part.cpp:2290 part/toc.cpp:36
+#: part/part.cpp:2273 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "محتویات"
 
-#: part/part.cpp:2319 part/signaturepanel.cpp:45
+#: part/part.cpp:2302 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr ""
 
-#: part/part.cpp:2346
+#: part/part.cpp:2329
 #, kde-format
 msgid "Go to Page"
 msgstr "رفتن به صفحه"
 
-#: part/part.cpp:2369
+#: part/part.cpp:2352
 #, kde-format
 msgid "&Page:"
 msgstr "&صفحه:‌"
 
-#: part/part.cpp:2462
+#: part/part.cpp:2445
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr ""
 
-#: part/part.cpp:2508
+#: part/part.cpp:2491
 #, fuzzy, kde-format
 #| msgid "Rename Bookmark"
 msgid "Rename this Bookmark"
 msgstr "تغییر نام چوب الف"
 
-#: part/part.cpp:2511
+#: part/part.cpp:2494
 #, fuzzy, kde-format
 #| msgid "Rename Bookmark"
 msgid "Remove this Bookmark"
 msgstr "تغییر نام چوب الف"
 
-#: part/part.cpp:2597 part/part.cpp:2598 part/part.cpp:3502
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr ""
 
-#: part/part.cpp:2605 part/revisionviewer.cpp:44
+#: part/part.cpp:2588 part/revisionviewer.cpp:44
 #, fuzzy, kde-format
 #| msgid "Save As..."
 msgid "Save As"
 msgstr "ذخیره به عنوان..."
 
-#: part/part.cpp:2622
+#: part/part.cpp:2605
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
 "the '%1' extension. That is not allowed, do you want to choose a new name?"
 msgstr ""
 
-#: part/part.cpp:2623
+#: part/part.cpp:2606
 #, kde-format
 msgid "Unsupported extension"
 msgstr ""
 
-#: part/part.cpp:2624
+#: part/part.cpp:2607
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr ""
 
-#: part/part.cpp:2667
+#: part/part.cpp:2650
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -5013,17 +4990,17 @@ msgid ""
 "sure you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2670 part/part.cpp:2689 part/part.cpp:2741
+#: part/part.cpp:2653 part/part.cpp:2672 part/part.cpp:2724
 #, kde-format
 msgid "Save - Warning"
 msgstr ""
 
-#: part/part.cpp:2672
+#: part/part.cpp:2655
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr ""
 
-#: part/part.cpp:2688
+#: part/part.cpp:2671
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -5031,12 +5008,12 @@ msgid ""
 "your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2715
+#: part/part.cpp:2698
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr ""
 
-#: part/part.cpp:2728
+#: part/part.cpp:2711
 #, fuzzy, kde-kuit-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgctxt "@info"
@@ -5046,32 +5023,32 @@ msgid ""
 msgstr ""
 "پرونده را نمی‌توان در »%1« ذخیره کرد. سعی کنید آن را در محل دیگری ذخیره کنید."
 
-#: part/part.cpp:2740
+#: part/part.cpp:2723
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
 "Your undo/redo history will be lost.<br />Do you want to continue?"
 msgstr ""
 
-#: part/part.cpp:2755 part/part.cpp:2824 part/part.cpp:2845 part/part.cpp:3517
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "پرونده را نمی‌توان در »%1« ذخیره کرد. سعی کنید آن را در محل دیگری ذخیره کنید."
 
-#: part/part.cpp:2768
+#: part/part.cpp:2751
 #, fuzzy, kde-format
 #| msgid "Annotation Properties"
 msgid "Filled form contents"
 msgstr "ویژگیهای حاشیه‌نویسی"
 
-#: part/part.cpp:2771
+#: part/part.cpp:2754
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "User annotations"
 msgstr "ارائه"
 
-#: part/part.cpp:2776
+#: part/part.cpp:2759
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5079,17 +5056,17 @@ msgid ""
 "format to preserve them."
 msgstr ""
 
-#: part/part.cpp:2780 part/part.cpp:2802
+#: part/part.cpp:2763 part/part.cpp:2785
 #, kde-format
 msgid "Warning"
 msgstr ""
 
-#: part/part.cpp:2781 part/part.cpp:2803
+#: part/part.cpp:2764 part/part.cpp:2786
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr ""
 
-#: part/part.cpp:2793
+#: part/part.cpp:2776
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5098,7 +5075,7 @@ msgid ""
 "discard these elements."
 msgstr ""
 
-#: part/part.cpp:2796
+#: part/part.cpp:2779
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5107,25 +5084,25 @@ msgid ""
 "these elements as well as the undo/redo history."
 msgstr ""
 
-#: part/part.cpp:2798
+#: part/part.cpp:2781
 #, fuzzy, kde-format
 #| msgid "&Continuous"
 msgid "Continue"
 msgstr "&پیوسته‌"
 
-#: part/part.cpp:2798
+#: part/part.cpp:2781
 #, kde-format
 msgid "Continue losing changes"
 msgstr ""
 
-#: part/part.cpp:2826
+#: part/part.cpp:2809
 #, fuzzy, kde-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgid "File could not be saved in '%1'. %2"
 msgstr ""
 "پرونده را نمی‌توان در »%1« ذخیره کرد. سعی کنید آن را در محل دیگری ذخیره کنید."
 
-#: part/part.cpp:2865
+#: part/part.cpp:2848
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5133,7 +5110,7 @@ msgid ""
 "The document does not exist anymore."
 msgstr ""
 
-#: part/part.cpp:2901
+#: part/part.cpp:2884
 #, fuzzy, kde-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgid ""
@@ -5142,55 +5119,55 @@ msgid ""
 msgstr ""
 "پرونده را نمی‌توان در »%1« ذخیره کرد. سعی کنید آن را در محل دیگری ذخیره کنید."
 
-#: part/part.cpp:3160
+#: part/part.cpp:3150
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Expand Whole Section"
 msgstr "پایان ارائه"
 
-#: part/part.cpp:3161
+#: part/part.cpp:3151
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Collapse Whole Section"
 msgstr "پایان ارائه"
 
-#: part/part.cpp:3177
+#: part/part.cpp:3167
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "پیوند &ریزنقشها با صفحه‌"
 
-#: part/part.cpp:3209
+#: part/part.cpp:3199
 #, kde-format
 msgid "Tools"
 msgstr "ابزارها"
 
-#: part/part.cpp:3397
+#: part/part.cpp:3387
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "گفتن متن"
 
-#: part/part.cpp:3555
+#: part/part.cpp:3545
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3618
+#: part/part.cpp:3608
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "چاپ این سند مجاز نمی‌‌باشد."
 
-#: part/part.cpp:3631
+#: part/part.cpp:3621
 #, fuzzy, kde-format
 #| msgid "Could not print the document. Please report to bugs.kde.org"
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr "سند را نتوانست ذخیره کند. لطفاً، به bugs.kde.org گزارش دهید"
 
-#: part/part.cpp:3633
+#: part/part.cpp:3623
 #, fuzzy, kde-format
 #| msgid "Could not print the document. Please report to bugs.kde.org"
 msgid ""
@@ -5198,31 +5175,31 @@ msgid ""
 "bugs.kde.org"
 msgstr "سند را نتوانست ذخیره کند. لطفاً، به bugs.kde.org گزارش دهید"
 
-#: part/part.cpp:3722
+#: part/part.cpp:3715
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "به جایی که قبلاً بودید، بروید"
 
-#: part/part.cpp:3726
+#: part/part.cpp:3719
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "به جایی که بعداً بودید، بروید"
 
-#: part/part.cpp:3751
+#: part/part.cpp:3744
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 msgstr ""
 
-#: part/part.cpp:3763
+#: part/part.cpp:3756
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
 "strong></nobr> for uncompression. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3767
+#: part/part.cpp:3760
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5231,41 +5208,41 @@ msgid ""
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
 
-#: part/part.cpp:3789
+#: part/part.cpp:3782
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
 "%1</strong></nobr>. The file will not be loaded.</qt>"
 msgstr ""
 
-#: part/part.cpp:3793
+#: part/part.cpp:3786
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
 
-#: part/part.cpp:3819
+#: part/part.cpp:3812
 #, kde-format
 msgid "No Bookmarks"
 msgstr "بدون چوب الف"
 
-#: part/part.cpp:3890
+#: part/part.cpp:3883
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3890 part/part.cpp:3896
+#: part/part.cpp:3883 part/part.cpp:3889
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3894
+#: part/part.cpp:3887
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3896
+#: part/part.cpp:3889
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
@@ -5872,9 +5849,16 @@ msgstr ""
 msgid "Enter document password"
 msgstr "اسم رمز"
 
-#: part/signaturepartutils.cpp:267
+#: part/signaturepartutils.cpp:271
 #, kde-format
 msgid "Save Signed File As"
+msgstr ""
+
+#: part/signaturepartutils.cpp:273
+#, kde-format
+msgctxt "Error message"
+msgid ""
+"The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
 
 #: part/signaturepartutils.h:62
@@ -6281,6 +6265,21 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Configure Backends..."
+#~ msgid "Configure Viewer Backends…"
+#~ msgstr "پیکربندی پایانه‌ها..."
+
+#, fuzzy
+#~| msgid "Configure Backends..."
+#~ msgid "Configure Backends…"
+#~ msgstr "پیکربندی پایانه‌ها..."
+
+#, fuzzy
+#~| msgid "Configure Backends..."
+#~ msgid "Configure Viewer Backends"
+#~ msgstr "پیکربندی پایانه‌ها..."
 
 #, fuzzy
 #~ msgid "Geometry with Comment"

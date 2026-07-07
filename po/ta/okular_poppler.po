@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-07 00:41+0000\n"
 "PO-Revision-Date: 2025-11-30 11:40+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -26,6 +26,23 @@ msgstr "கோ. கிஷோர்"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "தற்காலிக கோப்புக்கு எழுதுவது தோல்வியடைந்தது"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "தற்காலிக கோப்புக்கு மறுபெயரிடுவது தோல்வியடைந்தது"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "தற்காலிக கோப்புக்கு மறுபெயரிடுவது தோல்வியடைந்தது"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -173,6 +190,12 @@ msgstr "உள்ள சான்றிதழ்கள்"
 msgid "&Load Signatures"
 msgstr "சான்றிதழ்களை &ஏற்று:"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "தற்காலிக கோப்புக்கு மறுபெயரிடுவது தோல்வியடைந்தது"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -301,24 +324,20 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF பின்நிலை அமைப்பு"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "தற்காலிக கோப்புக்கு எழுதுவது தோல்வியடைந்தது"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "தற்காலிக கோப்புக்கு மறுபெயரிடுவது தோல்வியடைந்தது"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "ஆவணத்தில் சில பிழைகள் இருப்பதால், ஆக்குலர் அதனை தவறாக காட்டலாம்"
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -328,30 +347,37 @@ msgstr ""
 "GnuPG பின்நிரல் இயக்கப்பட்டுள்ள சமீபத்திய ஆக்குலர் பதிப்புகளில் மட்டுமே இக்கையொப்பங்களை வேலை "
 "செய்யும்"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "PGP கையொப்பங்களை இயக்கு"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "யாரிடம் வழங்கப்பட்டது"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "மின்னஞ்சல் முகவரி"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "காலாவதியாகும் தேதி"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "Available Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "உள்ள சான்றிதழ்கள்"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -360,18 +386,18 @@ msgstr ""
 "NSS ஆதரவில்லா Poppler நிரலகத்தைப் பயன்படுத்துகிறீர்.\n"
 "அக்காரணத்தால் எண்ம கையொப்பங்களை இட முடியாது"
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "என்றென்றும்"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "மறுதொடக்கம் தேவை"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS அடைவு அமைப்புகளை மாற்றிய பின் நீங்கள் ஆக்குலரை மீண்டும் தொடக்க வேண்டும்"

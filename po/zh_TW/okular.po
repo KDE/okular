@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-08 00:42+0000\n"
 "PO-Revision-Date: 2026-06-25 23:58+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1645,7 +1645,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "頁面 %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3164
+#: part/annotationmodel.cpp:324 part/part.cpp:3169
 #, kde-format
 msgid "Page %1"
 msgstr "頁 %1"
@@ -1663,12 +1663,12 @@ msgid "&Open Pop-up Note"
 msgstr "開啟彈出式備註(&O)"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "移除書籤"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
 #, kde-format
 msgid "Add Bookmark"
 msgstr "新增書籤"
@@ -2282,12 +2282,12 @@ msgstr "為所有文件顯示"
 msgid "Search…"
 msgstr "搜尋…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
 #, kde-format
 msgid "Expand All"
 msgstr "全部展開"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
 #, kde-format
 msgid "Collapse All"
 msgstr "全部收起"
@@ -3914,7 +3914,7 @@ msgstr "複製文字"
 msgid "Go to '%1'"
 msgstr "前往 '%1'"
 
-#: part/pageview.cpp:4227 part/part.cpp:3175
+#: part/pageview.cpp:4227 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "符合寬度"
@@ -4408,7 +4408,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "設定顏色模式…"
 
-#: part/part.cpp:826 part/part.cpp:3180
+#: part/part.cpp:826 part/part.cpp:3185
 #, kde-format
 msgid "Paste Annotation"
 msgstr "貼上註記"
@@ -4713,7 +4713,7 @@ msgstr "重新命名書籤"
 msgid "Remove this Bookmark"
 msgstr "移除此書籤"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4800,7 +4800,7 @@ msgstr ""
 "儲存後，目前的檔案格式要求檔案需要重新載入。你的還原 / 重做 (redo) 紀錄將會消"
 "失。<br />仍要繼續？"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "無法儲存檔案到 %1。請儲存在其他位置。"
@@ -4891,67 +4891,67 @@ msgid ""
 "location."
 msgstr "無法儲存檔案到 %1，因為錯誤：「%2」。請儲存在其他位置。"
 
-#: part/part.cpp:3150
+#: part/part.cpp:3155
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "展開整個部分"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3156
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "收起整個部分"
 
-#: part/part.cpp:3167
+#: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "將縮圖與頁面同步"
 
-#: part/part.cpp:3199
+#: part/part.cpp:3204
 #, kde-format
 msgid "Tools"
 msgstr "工具"
 
-#: part/part.cpp:3387
+#: part/part.cpp:3392
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "語音"
 
-#: part/part.cpp:3545
+#: part/part.cpp:3550
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "列印"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3613
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "不允許列印此文件。"
 
-#: part/part.cpp:3621
+#: part/part.cpp:3626
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr "無法列印此文件。未知的錯誤。請回報到 bugs.kde.org"
 
-#: part/part.cpp:3623
+#: part/part.cpp:3628
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr "無法列印此文件。錯誤詳情為：%1。請回報到 bugs.kde.org"
 
-#: part/part.cpp:3715
+#: part/part.cpp:3720
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Go to the place you were before"
 
-#: part/part.cpp:3719
+#: part/part.cpp:3724
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Go to the place you were after"
 
-#: part/part.cpp:3744
+#: part/part.cpp:3749
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4960,7 +4960,7 @@ msgstr ""
 "<qt><strong>檔案錯誤</strong>：無法建立暫存檔。<nobr> <strong>%1</strong></"
 "nobr>。</qt>"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3761
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4969,7 +4969,7 @@ msgstr ""
 "<qt><strong>檔案錯誤</strong>：無法開啟檔案 <nobr> <strong>%1</strong></nobr>"
 "做解壓縮。此檔案將不會被載入。</qt>"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3765
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4981,7 +4981,7 @@ msgstr ""
 "查所有者和權限。操作方式：對檔案按下右鍵 ，選擇「屬性」選項，並在開啟的視窗中"
 "選擇「權限」標籤頁。</qt>"
 
-#: part/part.cpp:3782
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4990,7 +4990,7 @@ msgstr ""
 "<qt><strong>檔案錯誤</strong>：無法解壓此檔 <nobr><strong>%1</strong></"
 "nobr>。檔案將不會被載入。</qt>"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3791
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -4998,27 +4998,27 @@ msgid ""
 msgstr ""
 "<qt>這個錯誤通常是因為檔案已損毀。您可以試著在命令列直接解壓此檔看看。</qt>"
 
-#: part/part.cpp:3812
+#: part/part.cpp:3817
 #, kde-format
 msgid "No Bookmarks"
 msgstr "沒有書籤"
 
-#: part/part.cpp:3883
+#: part/part.cpp:3888
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "分享檔案時發生問題：%1"
 
-#: part/part.cpp:3883 part/part.cpp:3889
+#: part/part.cpp:3888 part/part.cpp:3894
 #, kde-format
 msgid "Share"
 msgstr "分享"
 
-#: part/part.cpp:3887
+#: part/part.cpp:3892
 #, kde-format
 msgid "Document shared successfully"
 msgstr "檔案分享完畢"
 
-#: part/part.cpp:3889
+#: part/part.cpp:3894
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "你可以在這裡找到分享的檔案：<a href=\"%1\">%1</a>"

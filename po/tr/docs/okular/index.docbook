@@ -636,7 +636,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</itemizedlist>
 				<para
 >Özel bir sertifika deposu kullanmak istiyorsanız bunu <link linkend="configure-backends"
->Arka Uçları Yapılandır…</link
+>Okular Uygulamasını Yapılandır…</link
 > iletişim kutusunun <link linkend="config-pdf-digital-signatures"
 >&PDF; Arka Ucu Yapılandırması</link
 > bölümünden ayarlayabilirsiniz. </para>
@@ -3230,246 +3230,9 @@ Context menu actions like Rename Bookmarks etc.)
 >. Sayfa numaraları her halükarda öntanımlı araç çubuğunda gösterileceklerdir.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Ayarlar</guimenu
-> <guimenuitem
->Arka Uçları Yapılandır…</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
-><link linkend="configure-backends"
->Arka Uç Yapılandırması</link
-> iletişim kutusunu açar.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->&okular; Arka Uçlarını Yapılandırmak</title>
-	  <para
->&okular; arka uçlarını <menuchoice
-><guimenu
->Ayarlar</guimenu
-> <guimenuitem
->Arka Uçları Yapılandır…</guimenuitem
-></menuchoice
-> seçimini yaparak yapılandırabilirsiniz. Şu anda yalnızca; EPub, &PostScript;, FictionBook, Txt, OpenDocument Text ve &PDF; arka uçları için yapılandırma seçenekleri sağlanır. </para>
-	  <screenshot>
-	    <screeninfo
->Arka uçlar yapılandırmasi iletişim kutusu</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->Arka uçlar yapılandırması iletişim kutusu</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazıtipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
->Seç…</guibutton
-> düğmesi, standart &kde; yazıtipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
->&kde; Temelleri belgelendirmesine</ulink
-> başvurun. </para>
-	  <para
->Markdown, &PostScript; ve &PDF; arka uçlarının yapılandırma sayfalarının açıklamaları aşağıda bulunabilir. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Markdown arka ucu yapılandırması</title>
-	    <para
->Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
->Markdown</guilabel
->’u seçip <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> tabanlı &okular; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->SmartyPants biçimlendirmesini etkinleştir</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Bu seçenek, işaretlendiğinde &okular;’ın <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
-> biçimlendirmesini işlemesine olanak tanır. Bu biçimlendirme türü teknik metinlerde sorun yaratabilir; çünkü istenmeyebilecek değişimler yapar (örneğin, <literal
->(C)</literal
->’yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->&PostScript; arka ucu yapılandırması</title>
-	    <para
->Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
->Ghostscript</guilabel
->’i seçip <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> tabanlı &okular; &PostScript; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Platform yazıtiplerini kullan</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Bu seçenek Ghostscript’in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->&PDF; arka ucu yapılandırması</title>
-	    <para
->Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
->&PDF;</guilabel
->’yi seçip <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> tabanlı &okular; &PDF; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->İnce satırları iyileştir</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->&okular;’da çizgi çizmek iki adımda gerçekleştirilir: Kırpma yolunun oluşturulması ve bu kırpma yolunun doldurulması. Özgün belgedeki çizgi bir pikselden küçük olduğunda bu iki aşamalı uygulama sorunlara neden olabilir. Bu çizgiler için kırpma yolu, kırpma alanı içindeki çizgi kısmının kalınlığına bağlı olan dolgu rengiyle doldurulur. Çizginin kırpma alanı içindeki kısmı çok küçülürse şekil ile arka plan rengi arasındaki karşıtlık çizginin tanınamayacağı kadar düşük olabilir. Bu tür çizgilerin ızgaraları daha sonra çok çirkin görünürler. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->İnce çizgi (kırmızı), kırpma yolu (kesikli çizgi) ve piksel sınırları (siyah düz çizgiler)</entry>
-			    <entry
->Düşük karşıtlıkta gösterilen ince çizgi</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->İnce çizgilerin görünümünü geliştirmek için &okular; iki seçeneği uygular. </para>
-		    <para
->İlk seçenek <guimenuitem
->Katı</guimenuitem
->’dır. Bu seçenekle &okular;, kırpma yolu ve çizgi konumunu, kırpma yolu ve çizgi aynı piksel sınırında olacak şekilde ayarlar; örneğin &okular;, ince çizgileri çıkış aygıtında bir piksele büyütür. Bu kip, <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->’daki <guilabel
->İnce çizgileri iyileştir</guilabel
-> kipine benzerdir. Bu seçenek seçilirse ince çizgiler her zaman büyütülürler. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
-><guimenuitem
->Katı</guimenuitem
-> iyileştirmeli ince çizgi</phrase>
-			  </textobject>
-			  <caption>
-			    <para
-><guimenuitem
->Katı</guimenuitem
-> iyileştirmeli ince çizgi</para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->İkince seçenek <guimenuitem
->Şekil</guimenuitem
->’dir. Bu seçenekte kırpma yolu ve çizgi de piksel sınırına göre ayarlanır; ancak çizgi yoğunluğu genişliğine göre düzeltilir. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
-><guimenuitem
->Şekil</guimenuitem
-> iyileştirmeli ince çizgi</phrase>
-			  </textobject>
-			  <caption>
-			    <para
-><guimenuitem
->Şekil</guimenuitem
-> iyileştirmeli ince çizgi</para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->İnce çizgiler öntanımlı olarak iyileştirilmezler (<guimenuitem
->Hayır</guimenuitem
-> seçeneği). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->&PDF; Sayısal İmza Sertifikaları</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Bu bölüm, &PDF; dosyalarına Sayısal İmzalar eklerken kullanılacak özel bir Sertifika Veri Tabanı ayarlamanıza olanak tanır. </para>
-			<para
->Ayrıca geçerli sertifika veri tabanında (varsa) bulunan sertifikaları da listeler. </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3537,13 +3300,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Geçerli kurulu arka uçlara bağlı olarak, <menuchoice
-><guimenu
->Ayarlar</guimenu
-> <guimenuitem
->Arka Uçları Yapılandır…</guimenuitem
-></menuchoice
-> menü ögesi etkin olabilir. Bu yapılandırma iletişim kutusu, yapılandırılabilir olan arka uçların yapılandırmalarını barındırır. </para>
+>Şu anda kurulu olan arka uçlara bağlı olarak, iletişim kutusunda ayrıca yapılandırma seçeneklerine iye arka uçların bir listesi de bulunur. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -4383,6 +4140,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>&okular; Arka Uçlarını Yapılandırmak</title>
+	  <para
+>&okular; arka uçlarını <menuchoice
+><guimenu
+>Ayarlar</guimenu
+> <guimenuitem
+>Okular Uygulamasını Yapılandır…</guimenuitem
+></menuchoice
+> seçimini yaparak yapılandırabilirsiniz. Şu anda yalnızca; EPub, &PostScript;, FictionBook, Txt, OpenDocument Text ve &PDF; arka uçları için yapılandırma seçenekleri sağlanır. </para>
+	  <para
+>EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazıtipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
+>Seç…</guibutton
+> düğmesi, standart &kde; yazıtipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
+>&kde; Temelleri belgelendirmesine</ulink
+> başvurun. </para>
+	  <para
+>Markdown, &PostScript; ve &PDF; arka uçlarının yapılandırma sayfalarının açıklamaları aşağıda bulunabilir. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Markdown arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>Markdown</guilabel
+>’u seçip <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> tabanlı &okular; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>SmartyPants biçimlendirmesini etkinleştir</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Bu seçenek, işaretlendiğinde &okular;’ın <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+> biçimlendirmesini işlemesine olanak tanır. Bu biçimlendirme türü teknik metinlerde sorun yaratabilir; çünkü istenmeyebilecek değişimler yapar (örneğin, <literal
+>(C)</literal
+>’yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>&PostScript; arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>Ghostscript</guilabel
+>’i seçip <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> tabanlı &okular; &PostScript; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Platform yazıtiplerini kullan</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Bu seçenek Ghostscript’in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>&PDF; arka ucu yapılandırması</title>
+	    <para
+>Yapılandırma iletişim kutusunun sol tarafındaki listeden <guilabel
+>&PDF;</guilabel
+>’yi seçip <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> tabanlı &okular; &PDF; arka ucunu seçebilirsiniz. Aşağıda ek bir yapılandırma seçeneğini bulabilirsiniz. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>İnce satırları iyileştir</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>&okular;’da çizgi çizmek iki adımda gerçekleştirilir: Kırpma yolunun oluşturulması ve bu kırpma yolunun doldurulması. Özgün belgedeki çizgi bir pikselden küçük olduğunda bu iki aşamalı uygulama sorunlara neden olabilir. Bu çizgiler için kırpma yolu, kırpma alanı içindeki çizgi kısmının kalınlığına bağlı olan dolgu rengiyle doldurulur. Çizginin kırpma alanı içindeki kısmı çok küçülürse şekil ile arka plan rengi arasındaki karşıtlık çizginin tanınamayacağı kadar düşük olabilir. Bu tür çizgilerin ızgaraları daha sonra çok çirkin görünürler. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>İnce çizgi (kırmızı), kırpma yolu (kesikli çizgi) ve piksel sınırları (siyah düz çizgiler)</entry>
+			    <entry
+>Düşük karşıtlıkta gösterilen ince çizgi</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>İnce çizgilerin görünümünü geliştirmek için &okular; iki seçeneği uygular. </para>
+		    <para
+>İlk seçenek <guimenuitem
+>Katı</guimenuitem
+>’dır. Bu seçenekle &okular;, kırpma yolu ve çizgi konumunu, kırpma yolu ve çizgi aynı piksel sınırında olacak şekilde ayarlar; örneğin &okular;, ince çizgileri çıkış aygıtında bir piksele büyütür. Bu kip, <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>’daki <guilabel
+>İnce çizgileri iyileştir</guilabel
+> kipine benzerdir. Bu seçenek seçilirse ince çizgiler her zaman büyütülürler. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+><guimenuitem
+>Katı</guimenuitem
+> iyileştirmeli ince çizgi</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+><guimenuitem
+>Katı</guimenuitem
+> iyileştirmeli ince çizgi</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>İkince seçenek <guimenuitem
+>Şekil</guimenuitem
+>’dir. Bu seçenekte kırpma yolu ve çizgi de piksel sınırına göre ayarlanır; ancak çizgi yoğunluğu genişliğine göre düzeltilir. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+><guimenuitem
+>Şekil</guimenuitem
+> iyileştirmeli ince çizgi</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+><guimenuitem
+>Şekil</guimenuitem
+> iyileştirmeli ince çizgi</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>İnce çizgiler öntanımlı olarak iyileştirilmezler (<guimenuitem
+>Hayır</guimenuitem
+> seçeneği). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Sayısal İmza Sertifikaları</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Bu bölüm, &PDF; dosyalarına Sayısal İmzalar eklerken kullanılacak özel bir Sertifika Veri Tabanı ayarlamanıza olanak tanır. </para>
+			<para
+>Ayrıca geçerli sertifika veri tabanında (varsa) bulunan sertifikaları da listeler. </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

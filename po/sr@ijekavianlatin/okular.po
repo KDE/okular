@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-08 00:42+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1772,7 +1772,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Stranica %1"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3164
+#: part/annotationmodel.cpp:324 part/part.cpp:3169
 #, kde-format
 msgid "Page %1"
 msgstr "Stranica %1"
@@ -1795,12 +1795,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Otvori iskačuću bilješku"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Ukloni obilježivač"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Dodaj obilježivač"
@@ -2486,12 +2486,12 @@ msgstr ""
 msgid "Search…"
 msgstr "&Traži:"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
 #, kde-format
 msgid "Expand All"
 msgstr ""
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
 #, kde-format
 msgid "Collapse All"
 msgstr ""
@@ -4310,7 +4310,7 @@ msgstr "Kopiraj tekst"
 msgid "Go to '%1'"
 msgstr "Idi na „%1“"
 
-#: part/pageview.cpp:4227 part/part.cpp:3175
+#: part/pageview.cpp:4227 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "uklopljena širina"
@@ -4822,7 +4822,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Podesi Okular..."
 
-#: part/part.cpp:826 part/part.cpp:3180
+#: part/part.cpp:826 part/part.cpp:3185
 #, fuzzy, kde-format
 #| msgctxt "Change an annotation's size"
 #| msgid "adjust annotation"
@@ -5153,7 +5153,7 @@ msgstr "Preimenuj ovaj obilježivač"
 msgid "Remove this Bookmark"
 msgstr "Ukloni ovaj obilježivač"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -5238,7 +5238,7 @@ msgstr ""
 "ponovo učita. Izgubićete istorijat opoziva i ponavljanja.<br />Želite li da "
 "nastavite?</html>"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5345,48 +5345,48 @@ msgstr ""
 "Fajl nije mogao biti sačuvan u ‘%1’. Greška: ‘%2’. Pokušajte da ga sačuvate "
 "na drugom mjestu."
 
-#: part/part.cpp:3150
+#: part/part.cpp:3155
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Expand Whole Section"
 msgstr "Završi prezentaciju"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3156
 #, fuzzy, kde-format
 #| msgid "End Presentation"
 msgid "Collapse Whole Section"
 msgstr "Završi prezentaciju"
 
-#: part/part.cpp:3167
+#: part/part.cpp:3172
 #, fuzzy, kde-format
 #| msgid "Link the &thumbnails with the page"
 msgid "Sync Thumbnail with Page"
 msgstr "Poveži s&ličice sa stranicom"
 
-#: part/part.cpp:3199
+#: part/part.cpp:3204
 #, kde-format
 msgid "Tools"
 msgstr "Alatke"
 
-#: part/part.cpp:3387
+#: part/part.cpp:3392
 #, fuzzy, kde-format
 #| msgid "Speak Text"
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Izgovori tekst"
 
-#: part/part.cpp:3545
+#: part/part.cpp:3550
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Štampanje"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3613
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Štampanje ovog dokumenta nije dozvoljeno."
 
-#: part/part.cpp:3621
+#: part/part.cpp:3626
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5394,7 +5394,7 @@ msgstr ""
 "Ne mogu da odštampam dokument. Nepoznata greška. Prijavite ovo na bugs.kde."
 "org."
 
-#: part/part.cpp:3623
+#: part/part.cpp:3628
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5403,18 +5403,18 @@ msgstr ""
 "Ne mogu da odštampam dokument. Greška je „%1“. Prijavite ovo na bugs.kde.org."
 
 # >> @info:whatsthis
-#: part/part.cpp:3715
+#: part/part.cpp:3720
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Idite na mjesto na kome ste bili prije."
 
 # >> @info:whatsthis
-#: part/part.cpp:3719
+#: part/part.cpp:3724
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Idite na mjesto na kome ste bili poslije."
 
-#: part/part.cpp:3744
+#: part/part.cpp:3749
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5423,7 +5423,7 @@ msgstr ""
 "<qt><strong>Greška fajla!</strong> Ne mogu da napravim privremeni fajl "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3761
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5432,7 +5432,7 @@ msgstr ""
 "<qt><strong>Greška fajla!</strong> Ne mogu da otvorim fajl <nobr><strong>%1</"
 "strong></nobr> zarad raspakivanja. Fajl neće biti učitan.</qt>"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3765
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5449,7 +5449,7 @@ msgstr ""
 "fajla. Vlasništvo i dozvole možete da provjerite ako kliknete desnim na fajl "
 "u menadžeru fajlova Dolphinu i izaberete jezičak <i>Svojstva</i>.</qt>"
 
-#: part/part.cpp:3782
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5458,7 +5458,7 @@ msgstr ""
 "<qt><strong>Greška fajla!</strong> Ne mogu da raspakujem <nobr><strong>%1</"
 "strong></nobr>. Fajl neće biti učitan.</qt>"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3791
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5468,28 +5468,28 @@ msgstr ""
 "sigurni, pokušajte da ga raspakujete ručno pomoću naredbi iz komandne linije."
 "</qt>"
 
-#: part/part.cpp:3812
+#: part/part.cpp:3817
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Nema obilježivača"
 
-#: part/part.cpp:3883
+#: part/part.cpp:3888
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Problem pri deljenju dokumenta: %1"
 
 # >> @title:window
-#: part/part.cpp:3883 part/part.cpp:3889
+#: part/part.cpp:3888 part/part.cpp:3894
 #, kde-format
 msgid "Share"
 msgstr "Deljenje"
 
-#: part/part.cpp:3887
+#: part/part.cpp:3892
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument uspešno podeljen."
 
-#: part/part.cpp:3889
+#: part/part.cpp:3894
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Podeljeni dokument možete naći na: <a href=\"%1\">%1</a>"

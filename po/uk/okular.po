@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
-"PO-Revision-Date: 2026-06-22 16:44+0300\n"
+"POT-Creation-Date: 2026-07-08 00:42+0000\n"
+"PO-Revision-Date: 2026-07-07 08:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1669,7 +1669,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Сторінка %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3164
+#: part/annotationmodel.cpp:324 part/part.cpp:3169
 #, kde-format
 msgid "Page %1"
 msgstr "Сторінка %1"
@@ -1690,12 +1690,12 @@ msgid "&Open Pop-up Note"
 msgstr "Від&крити нотатку"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Вилучити закладку"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Додати закладку"
@@ -2323,12 +2323,12 @@ msgstr "Показати для усіх документів"
 msgid "Search…"
 msgstr "Шукати…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
 #, kde-format
 msgid "Expand All"
 msgstr "Розгорнути все"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
 #, kde-format
 msgid "Collapse All"
 msgstr "Згорнути все"
@@ -3978,7 +3978,7 @@ msgstr "Скопіювати текст"
 msgid "Go to '%1'"
 msgstr "Перейти до «%1»"
 
-#: part/pageview.cpp:4227 part/part.cpp:3175
+#: part/pageview.cpp:4227 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "Влаштувати ширину"
@@ -4489,7 +4489,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Налаштувати режим кольорів…"
 
-#: part/part.cpp:826 part/part.cpp:3180
+#: part/part.cpp:826 part/part.cpp:3185
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Вставити анотацію"
@@ -4809,7 +4809,7 @@ msgstr "Перейменувати цю закладку"
 msgid "Remove this Bookmark"
 msgstr "Вилучити цю закладку"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4901,7 +4901,7 @@ msgstr ""
 "файл доведеться перезавантажити. При цьому дані журналу дій з документом "
 "буде втрачено.<br />Хочете зберегти документ?"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
@@ -5003,44 +5003,44 @@ msgstr ""
 "Не вдалось зберегти файл до «%1». Помилка: «%2». Спробуйте зберегти його в "
 "іншому місці."
 
-#: part/part.cpp:3150
+#: part/part.cpp:3155
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Розгорнути увесь розділ"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3156
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Згорнути увесь розділ"
 
-#: part/part.cpp:3167
+#: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Синхронізувати мініатюру зі сторінкою"
 
-#: part/part.cpp:3199
+#: part/part.cpp:3204
 #, kde-format
 msgid "Tools"
 msgstr "Інструменти"
 
-#: part/part.cpp:3387
+#: part/part.cpp:3392
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Читання уголос"
 
-#: part/part.cpp:3545
+#: part/part.cpp:3550
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Друк"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3613
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Друкувати цей документ не дозволяється."
 
-#: part/part.cpp:3621
+#: part/part.cpp:3626
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5048,7 +5048,7 @@ msgstr ""
 "Не вдалося надрукувати документ. Невідома помилка. Будь ласка, повідомте про "
 "неї на bugs.kde.org"
 
-#: part/part.cpp:3623
+#: part/part.cpp:3628
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5057,17 +5057,17 @@ msgstr ""
 "Не вдалося надрукувати документ. Повідомлення про помилку: «%1». Будь ласка, "
 "повідомте про помилку на bugs.kde.org"
 
-#: part/part.cpp:3715
+#: part/part.cpp:3720
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Перейти до місця, де ви були раніше"
 
-#: part/part.cpp:3719
+#: part/part.cpp:3724
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Перейти до місця, де ви були пізніше"
 
-#: part/part.cpp:3744
+#: part/part.cpp:3749
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5076,7 +5076,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдалося створити тимчасовий файл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3761
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5085,7 +5085,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається відкрити файл <nobr><strong>"
 "%1</strong></nobr> для розпаковування. Файл не завантажено.</qt>"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3765
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5099,7 +5099,7 @@ msgstr ""
 "«Властивості» і перейдіть на вкладку «Права доступу» у вікні, яке буде "
 "відкрито.</qt>"
 
-#: part/part.cpp:3782
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5108,7 +5108,7 @@ msgstr ""
 "<qt><strong>Помилка файла!</strong> Не вдається розпакувати файл "
 "<nobr><strong>%1</strong></nobr>. Файл не буде завантажено.</qt>"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3791
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5118,27 +5118,27 @@ msgstr ""
 "його пошкоджено спробуйте розпакувати його вручну за допомогою команди у "
 "командному рядку.</qt>"
 
-#: part/part.cpp:3812
+#: part/part.cpp:3817
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Немає закладок"
 
-#: part/part.cpp:3883
+#: part/part.cpp:3888
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Під час спроби оприлюднити документ виникли проблеми: %1"
 
-#: part/part.cpp:3883 part/part.cpp:3889
+#: part/part.cpp:3888 part/part.cpp:3894
 #, kde-format
 msgid "Share"
 msgstr "Оприлюднення"
 
-#: part/part.cpp:3887
+#: part/part.cpp:3892
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ успішно оприлюднено"
 
-#: part/part.cpp:3889
+#: part/part.cpp:3894
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Оприлюднений документ можна знайти тут: <a href=\"%1\">%1</a>"
@@ -5734,6 +5734,8 @@ msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
+"Початковий файл не можна перезаписувати. Будь ласка, виберіть якусь іншу "
+"назву файла."
 
 #: part/signaturepartutils.h:62
 #, kde-format

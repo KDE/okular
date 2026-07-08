@@ -4,13 +4,13 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Ivan Petrouchtchak <fr.ivan@ukrainian-orthodox.org>, 2007, 2008.
-# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2018, 2019, 2020, 2021, 2023, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2008, 2009, 2010, 2011, 2012, 2013, 2018, 2019, 2020, 2021, 2023, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-07 00:41+0000\n"
-"PO-Revision-Date: 2025-07-10 16:35+0300\n"
+"PO-Revision-Date: 2026-07-07 08:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -38,10 +38,9 @@ msgid "Failed writing temporary file"
 msgstr "Не вдалося записати тимчасовий файл"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Не вдалося перейменувати тимчасовий файл"
+msgstr "Не вдалося вилучити файл"
 
 #: annots.cpp:607
 #, kde-format
@@ -196,10 +195,9 @@ msgid "&Load Signatures"
 msgstr "З&авантажити підписи"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file A %1:"
-msgstr "Не вдалося перейменувати тимчасовий файл"
+msgstr "Не вдалося перейменувати тимчасовий файл A %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -332,10 +330,9 @@ msgid "PDF Backend Configuration"
 msgstr "Налаштовування модуля PDF"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Не вдалося перейменувати тимчасовий файл"
+msgstr "Не вдалося перейменувати тимчасовий файл: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -380,11 +377,10 @@ msgid "Expiration date"
 msgstr "Дата завершення строку дії"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "PDF Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Сертифікати PDF"
+msgstr "Вивести список сертифікатів"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

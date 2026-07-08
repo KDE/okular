@@ -666,7 +666,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Di desea usar un almacén de certificados personalizado, puede definirlo en la sección <link linkend="config-pdf-digital-signatures"
 >Configuración del motor &PDF;</link
 > del diálogo <link linkend="configure-backends"
->Configurar motores…</link
+>Configurar Okular…</link
 >. </para>
 				<note>
 					<para
@@ -3252,246 +3252,9 @@ Context menu actions like Rename Bookmarks etc.)
 > en el área inferior del documento para ahorrar espacio vertical en la ventana de &okular;. Note que los números de página siempre se mostrarán en la barra de herramientas predeterminada.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Preferencias</guimenu
-> <guimenuitem
->Configurar motores de programas…</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Abre la ventana de <link linkend="configure-backends"
->Configuración del motor</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Configuración de motores de &okular;</title>
-	  <para
->Puede configurar motores de &okular; mediante <menuchoice
-> <guimenu
->Preferencias</guimenu
-> <guimenuitem
->Configurar motores…</guimenuitem
-> </menuchoice
->. En la actualidad solo se proporcionan opciones de configuración para los motores EPub, &PostScript;, FictionBook, Txt, texto de OpenDocument y &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->El diálogo de configuración de motores</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->El diálogo de configuración de motores</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Use las páginas de configuración para los motores EPub, FictionBook, Mobipocket, Markdown, texto sencillo y texto de OpenDocument para definir el tipo de letra a usar para mostrar los documentos en el correspondiente formato. El botón <guibutton
->Escoger…</guibutton
-> de estas páginas abre la ventana estándar de &kde; para seleccionar el tipo de letra. Por favor, consulte la <ulink url="help:/fundamentals/fonts.html"
->documentación de los principios básicos de &kde;</ulink
-> para más detalles. </para>
-	  <para
->La descripción de las páginas de configuración de los motores Markdown, &PostScript; y &PDF; se puede encontrar a continuación. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Configuración del motor Markdown</title>
-	    <para
->Puede configurar el motor de representación Markdown de &okular;, basado en <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> escogiendo <guilabel
->Markdown</guilabel
-> en la lista que hay en la parte izquierda del diálogo de configuración. Dispone de la siguiente opción adicional que puede configurar. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Activar el formato SmartyPants</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Cuando está marcada, esta opción permite a &okular; procesar el formato <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->. Este formato puede ser problemático en textos técnicos por algunas sustituciones no deseadas (por ejemplo, sustituye <literal
->(C)</literal
-> con el símbolo de copyright). Esta opción está marcada por omisión. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Configuración del motor &PostScript;</title>
-	    <para
->Puede configurar el motor de representación &PostScript; de &okular; basado en <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> escogiendo <guilabel
->Ghostscript</guilabel
-> en la lista que hay en la parte izquierda del diálogo de configuración. La única opción configurable es la siguiente. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Usar tipos de letra de la plataforma</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Esta opción determina si se le debe permitir a Ghostscript que use los tipos de letra de la plataforma; si no está marcada, solo se permitirá el uso de los tipos de letra integrados en el documento. Esta opción está marcada por omisión. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Configuración del motor &PDF;</title>
-	    <para
->Puede configurar el motor de representación &PDF; de &okular; basado en <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> escogiendo <guilabel
->&PDF;</guilabel
-> en la lista que hay en la parte izquierda del diálogo de configuración. La única opción configurable es la siguiente. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Mejorar las líneas finas</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->El dibujo de líneas en &okular; se implementa en dos pasos: generación de la ruta de recorte y rellenado de dicha ruta. Cuando la línea del documento original tiene menos de un píxel de grosor, esta solución de dos pasos puede causar problemas. Para dichas líneas, la ruta de recorte se rellena con un color que depende del grosor de la parte de la línea que hay dentro del área de recorte. Si esta parte de la línea es muy pequeña, el contraste entre la forma y el color de fondo puede ser demasiado bajo para que la línea se pueda reconocer. En este caso, las cuadrículas de las líneas no se muestran de una forma agradable. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Línea fina (en rojo), su ruta de recorte (línea de trazos) y límites de píxeles (líneas negras sólidas)</entry>
-			    <entry
->Línea delgada mostrada en bajo contraste</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->&okular; contiene dos opciones para mejorar el aspecto de las líneas finas. </para>
-		    <para
->La primera opción es <guimenuitem
->Sólida</guimenuitem
->. Con esta opción, &okular; ajusta la ruta de recorte y la posición de la línea para que ambas estén en el mismo límite de píxeles; &ie;, &okular; agranda las líneas finas a un píxel en el dispositivo de salida. Este modo es similar a <guilabel
->Mejorar líneas finas</guilabel
-> de <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Si se escoge esta opción, las líneas finas siempre se agrandarán. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Línea delgada con realce <guimenuitem
->Sólido</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Línea delgada con realce <guimenuitem
->Sólido</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->La segunda opción es <guimenuitem
->Forma</guimenuitem
->. Con esta opción, la ruta de recorte y la línea se ajustan también al límite de píxel, pero se corrige la intensidad de la línea según su grosor. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Línea delgada con realce de <guimenuitem
->Forma</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Línea delgada con realce de <guimenuitem
->Forma</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->Las líneas finas no se mejoran por omisión (opción <guimenuitem
->No</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->Certificados de firma digital &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Esta sección le permite definir una base de certificados personalizada para usar cuando se añadan firmas digitales a archivos &PDF;. </para>
-			<para
->También muestra una lista de los certificados disponibles en la base de datos de certificados (si existe alguno). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3559,13 +3322,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->En función de los motores de programa instalados, la opción de menú <menuchoice
-><guimenu
->Configuración</guimenu
-> <guimenuitem
->Configurar motores…</guimenuitem
-></menuchoice
-> puede estar activada. Este dialogo de configuración mantiene las configuraciones de los motores de programa que pueden ser configurados. </para>
+>Según los motores instalados, el diálogo también contiene una lista de los motores que disponen de opciones de configuración. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -4405,6 +4162,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Configuración de motores de &okular;</title>
+	  <para
+>Puede configurar motores de &okular; mediante <menuchoice
+> <guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar Okular…</guimenuitem
+> </menuchoice
+>. En la actualidad solo se proporcionan opciones de configuración para los motores EPub, &PostScript;, FictionBook, Txt, texto de OpenDocument y &PDF;. </para>
+	  <para
+>Use las páginas de configuración para los motores EPub, FictionBook, Mobipocket, Markdown, texto sencillo y texto de OpenDocument para definir el tipo de letra a usar para mostrar los documentos en el correspondiente formato. El botón <guibutton
+>Escoger…</guibutton
+> de estas páginas abre la ventana estándar de &kde; para seleccionar el tipo de letra. Por favor, consulte la <ulink url="help:/fundamentals/fonts.html"
+>documentación de los principios básicos de &kde;</ulink
+> para más detalles. </para>
+	  <para
+>La descripción de las páginas de configuración de los motores Markdown, &PostScript; y &PDF; se puede encontrar a continuación. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Configuración del motor Markdown</title>
+	    <para
+>Puede configurar el motor de representación Markdown de &okular;, basado en <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> escogiendo <guilabel
+>Markdown</guilabel
+> en la lista que hay en la parte izquierda del diálogo de configuración. Dispone de la siguiente opción adicional que puede configurar. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Activar el formato SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Cuando está marcada, esta opción permite a &okular; procesar el formato <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Este formato puede ser problemático en textos técnicos por algunas sustituciones no deseadas (por ejemplo, sustituye <literal
+>(C)</literal
+> con el símbolo de copyright). Esta opción está marcada por omisión. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Configuración del motor &PostScript;</title>
+	    <para
+>Puede configurar el motor de representación &PostScript; de &okular; basado en <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> escogiendo <guilabel
+>Ghostscript</guilabel
+> en la lista que hay en la parte izquierda del diálogo de configuración. La única opción configurable es la siguiente. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Usar tipos de letra de la plataforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Esta opción determina si se le debe permitir a Ghostscript que use los tipos de letra de la plataforma; si no está marcada, solo se permitirá el uso de los tipos de letra integrados en el documento. Esta opción está marcada por omisión. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Configuración del motor &PDF;</title>
+	    <para
+>Puede configurar el motor de representación &PDF; de &okular; basado en <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> escogiendo <guilabel
+>&PDF;</guilabel
+> en la lista que hay en la parte izquierda del diálogo de configuración. La única opción configurable es la siguiente. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Mejorar las líneas finas</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>El dibujo de líneas en &okular; se implementa en dos pasos: generación de la ruta de recorte y rellenado de dicha ruta. Cuando la línea del documento original tiene menos de un píxel de grosor, esta solución de dos pasos puede causar problemas. Para dichas líneas, la ruta de recorte se rellena con un color que depende del grosor de la parte de la línea que hay dentro del área de recorte. Si esta parte de la línea es muy pequeña, el contraste entre la forma y el color de fondo puede ser demasiado bajo para que la línea se pueda reconocer. En este caso, las cuadrículas de las líneas no se muestran de una forma agradable. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Línea fina (en rojo), su ruta de recorte (línea de trazos) y límites de píxeles (líneas negras sólidas)</entry>
+			    <entry
+>Línea delgada mostrada en bajo contraste</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>&okular; contiene dos opciones para mejorar el aspecto de las líneas finas. </para>
+		    <para
+>La primera opción es <guimenuitem
+>Sólida</guimenuitem
+>. Con esta opción, &okular; ajusta la ruta de recorte y la posición de la línea para que ambas estén en el mismo límite de píxeles; &ie;, &okular; agranda las líneas finas a un píxel en el dispositivo de salida. Este modo es similar a <guilabel
+>Mejorar líneas finas</guilabel
+> de <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Si se escoge esta opción, las líneas finas siempre se agrandarán. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línea delgada con realce <guimenuitem
+>Sólido</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línea delgada con realce <guimenuitem
+>Sólido</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>La segunda opción es <guimenuitem
+>Forma</guimenuitem
+>. Con esta opción, la ruta de recorte y la línea se ajustan también al límite de píxel, pero se corrige la intensidad de la línea según su grosor. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línea delgada con realce de <guimenuitem
+>Forma</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línea delgada con realce de <guimenuitem
+>Forma</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Las líneas finas no se mejoran por omisión (opción <guimenuitem
+>No</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>Certificados de firma digital &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Esta sección le permite definir una base de certificados personalizada para usar cuando se añadan firmas digitales a archivos &PDF;. </para>
+			<para
+>También muestra una lista de los certificados disponibles en la base de datos de certificados (si existe alguno). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

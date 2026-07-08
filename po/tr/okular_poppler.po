@@ -6,13 +6,13 @@
 # obsoleteman <tulliana@gmail.com>, 2008-2009,2012.
 # Serhat Demirkol <serhat_demirkol@yahoo.com>, 2009.
 # Volkan Gezer <volkangezer@gmail.com>, 2013, 2022.
-# SPDX-FileCopyrightText: 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2023-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-07 00:41+0000\n"
-"PO-Revision-Date: 2026-05-02 19:42+0300\n"
+"PO-Revision-Date: 2026-07-07 08:31+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -39,10 +39,9 @@ msgid "Failed writing temporary file"
 msgstr "Geçici dosya yazılamadı"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Geçici dosya yeniden adlandırılamadı"
+msgstr "Dosya yeniden adlandırılamadı"
 
 #: annots.cpp:607
 #, kde-format
@@ -197,10 +196,9 @@ msgid "&Load Signatures"
 msgstr "İmzalar &Yükle"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file A %1:"
-msgstr "Geçici dosya yeniden adlandırılamadı"
+msgstr "Geçici dosya A yeniden adlandırılamadı: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -331,10 +329,9 @@ msgid "PDF Backend Configuration"
 msgstr "PDF Arka Ucu Yapılandırması"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Geçici dosya yeniden adlandırılamadı"
+msgstr "Geçici dosya yeniden adlandırılamadı: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -379,11 +376,10 @@ msgid "Expiration date"
 msgstr "Son Kullanım Tarihi"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Kullanılabilir Sertifikalar"
+msgstr "Sertifikaları Listele"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

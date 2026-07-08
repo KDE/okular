@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-08 00:42+0000\n"
 "PO-Revision-Date: 2026-05-26 21:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1645,7 +1645,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1쪽(%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3164
+#: part/annotationmodel.cpp:324 part/part.cpp:3169
 #, kde-format
 msgid "Page %1"
 msgstr "%1쪽"
@@ -1663,12 +1663,12 @@ msgid "&Open Pop-up Note"
 msgstr "팝업 노트 열기(&O)"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3170
+#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "책갈피 삭제"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3172
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
 #, kde-format
 msgid "Add Bookmark"
 msgstr "책갈피에 추가"
@@ -2282,12 +2282,12 @@ msgstr "모든 문서에 표시"
 msgid "Search…"
 msgstr "찾기…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3152
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
 #, kde-format
 msgid "Expand All"
 msgstr "모두 펴기"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3153
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
 #, kde-format
 msgid "Collapse All"
 msgstr "모두 접기"
@@ -3919,7 +3919,7 @@ msgstr "텍스트 복사"
 msgid "Go to '%1'"
 msgstr "'%1'(으)로 가기"
 
-#: part/pageview.cpp:4227 part/part.cpp:3175
+#: part/pageview.cpp:4227 part/part.cpp:3180
 #, kde-format
 msgid "Fit Width"
 msgstr "폭 맞춤"
@@ -4417,7 +4417,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "색상 모드 설정…"
 
-#: part/part.cpp:826 part/part.cpp:3180
+#: part/part.cpp:826 part/part.cpp:3185
 #, kde-format
 msgid "Paste Annotation"
 msgstr "주석 붙여넣기"
@@ -4729,7 +4729,7 @@ msgstr "이 책갈피 이름 바꾸기"
 msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3492
+#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
@@ -4817,7 +4817,7 @@ msgstr ""
 "현재 문서 형식은 문서를 저장한 후 다시 불러와야 합니다. 실행 취소/다시 실행 "
 "기록이 지워집니다.<br />계속 진행하시겠습니까?j"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3507
+#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "파일이 '%1' 안에 저장될 수 없습니다. 다른 경로에 저장해 보십시오."
@@ -4911,44 +4911,44 @@ msgid ""
 msgstr ""
 "파일을 '%1' 안에 저장할 수 없습니다. 오류: '%2'. 다른 경로에 저장해 보십시오."
 
-#: part/part.cpp:3150
+#: part/part.cpp:3155
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "전체 장 펼치기"
 
-#: part/part.cpp:3151
+#: part/part.cpp:3156
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "전체 장 접기"
 
-#: part/part.cpp:3167
+#: part/part.cpp:3172
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "섬네일과 쪽 동기화"
 
-#: part/part.cpp:3199
+#: part/part.cpp:3204
 #, kde-format
 msgid "Tools"
 msgstr "도구"
 
-#: part/part.cpp:3387
+#: part/part.cpp:3392
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "말하기"
 
-#: part/part.cpp:3545
+#: part/part.cpp:3550
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "인쇄"
 
-#: part/part.cpp:3608
+#: part/part.cpp:3613
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "이 문서를 인쇄하는 것이 허가되어 있지 않습니다."
 
-#: part/part.cpp:3621
+#: part/part.cpp:3626
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4956,7 +4956,7 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 알 수 없는 오류입니다. bugs.kde.org에 버그를 보"
 "고하십시오."
 
-#: part/part.cpp:3623
+#: part/part.cpp:3628
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4965,17 +4965,17 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 오류 정보: \"%1\". bugs.kde.org에 버그를 보고하"
 "십시오."
 
-#: part/part.cpp:3715
+#: part/part.cpp:3720
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "이전에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3719
+#: part/part.cpp:3724
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "이후에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3744
+#: part/part.cpp:3749
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4984,7 +4984,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 임시 파일 <nobr><strong>%1</strong></nobr>을"
 "(를) 만들 수 없습니다.</qt>"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3761
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4993,7 +4993,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제하려고 열 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3765
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5006,7 +5006,7 @@ msgstr ""
 "션을 선택한 다음 대화 상자의 권한 탭에서 소유권과 권한을 확인해 보십시오.</"
 "qt>"
 
-#: part/part.cpp:3782
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5015,7 +5015,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제할 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3791
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5024,27 +5024,27 @@ msgstr ""
 "<qt>이 오류는 파일이 잘못되었을 때 발생합니다. 만약 확인해 보고 싶으면, 명령"
 "행 유틸리티를 사용해서 압축을 풀어 보십시오.</qt>"
 
-#: part/part.cpp:3812
+#: part/part.cpp:3817
 #, kde-format
 msgid "No Bookmarks"
 msgstr "책갈피 없음"
 
-#: part/part.cpp:3883
+#: part/part.cpp:3888
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "문서 공유 중 문제 발생: %1"
 
-#: part/part.cpp:3883 part/part.cpp:3889
+#: part/part.cpp:3888 part/part.cpp:3894
 #, kde-format
 msgid "Share"
 msgstr "공유"
 
-#: part/part.cpp:3887
+#: part/part.cpp:3892
 #, kde-format
 msgid "Document shared successfully"
 msgstr "문서를 성공적으로 공유함"
 
-#: part/part.cpp:3889
+#: part/part.cpp:3894
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "다음에서 공유된 문서를 확인할 수 있습니다: <a href=\"%1\">%1</a>"

@@ -117,6 +117,7 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto certTree = new QTreeView(this);
     certTree->setIndentation(0);
     m_certificateModel = new CertificateModel(m_certificateInfo, this);
+    certTree->setSizePolicy(certTree->sizePolicy().horizontalPolicy(), QSizePolicy::Expanding);
     certTree->setModel(m_certificateModel);
     connect(certTree->selectionModel(), &QItemSelectionModel::currentChanged, this, &CertificateViewer::updateText);
     m_propertyText = new QTextEdit(this);

@@ -513,7 +513,7 @@ QString Okular::errorString(SigningResult result, const QVariant &additionalMess
     case UserCancelled: // This is unlikely to actually happen in a way where we want to show a message
         return i18n("Signing cancelled by user");
     case BadPassphrase:
-        return i18n("Could not sign. Wrong passphrase");
+        return i18n("Signing failed: Wrong passphrase");
     case SignatureWriteFailed:
         return xi18nc("%1 is a filename with path", "Could not write the signed document to <filename>%1</filename>, please ensure you have selected a folder with write permission", additionalMessage.toString());
     }

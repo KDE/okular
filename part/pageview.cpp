@@ -5768,7 +5768,7 @@ PageView::FinishSigningResult PageView::finishSigning()
     case Okular::UserCancelled:
         return Cancelled;
     case Okular::BadPassphrase:
-        KMessageBox::detailedError(this, errorString(result.first, {}), result.second);
+        KMessageBox::error(this, errorString(result.first, {}));
         return Cancelled;
     case Okular::SignatureWriteFailed:
         KMessageBox::detailedError(this, errorString(result.first, newFilePath), result.second);

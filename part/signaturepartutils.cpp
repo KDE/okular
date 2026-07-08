@@ -317,7 +317,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
         case Okular::UserCancelled:
             break;
         case Okular::BadPassphrase:
-            KMessageBox::detailedError(pageView, errorString(success.first, {}), success.second);
+            KMessageBox::error(pageView, errorString(success.first, {}));
             break;
         case Okular::SignatureWriteFailed:
             KMessageBox::detailedError(pageView, errorString(success.first, newFilePath), success.second);

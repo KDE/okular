@@ -15,9 +15,21 @@
 #include <QFile>
 #include <QUrl>
 
+static QList<CertificateModel::Property> propertiesForType(Okular::CertificateInfo::CertificateType type)
+{
+    switch (type) {
+    case Okular::CertificateInfo::X509:
+        return {
+            CertificateModel::Version, CertificateModel::SerialNumber, CertificateModel::Issuer, CertificateModel::IssuedOn, CertificateModel::ExpiresOn, CertificateModel::Subject, CertificateModel::PublicKey, CertificateModel::KeyUsage};
+    case Okular::CertificateInfo::PGP:
+        return {CertificateModel::IssuedOn, CertificateModel::ExpiresOn, CertificateModel::Subject, CertificateModel::CertificateModel::PublicKey, CertificateModel::KeyUsage};
+    }
+    return {};
+}
+
 CertificateModel::CertificateModel(const Okular::CertificateInfo &certInfo, QObject *parent)
     : QAbstractTableModel(parent)
-    , m_certificateProperties({Version, SerialNumber, Issuer, IssuedOn, ExpiresOn, Subject, PublicKey, KeyUsage})
+    , m_certificateProperties(propertiesForType(certInfo.certificateType()))
     , m_certificateInfo(certInfo)
 {
 }
@@ -32,7 +44,7 @@ int CertificateModel::rowCount(const QModelIndex &) const
     return m_certificateProperties.size();
 }
 
-static QString propertyVisibleName(CertificateModel::Property p)
+static QString propertyVisibleName(CertificateModel::Property p, Okular::CertificateInfo::CertificateType type)
 {
     switch (p) {
     case CertificateModel::Version:
@@ -46,7 +58,7 @@ static QString propertyVisibleName(CertificateModel::Property p)
     case CertificateModel::ExpiresOn:
         return i18n("Expires On");
     case CertificateModel::Subject:
-        return i18nc("The person/company that made the signature", "Subject");
+        return type == Okular::CertificateInfo::X509 ? i18nc("The person/company that made the signature", "Subject") : i18nc("Name/email on key", "User Id");
     case CertificateModel::PublicKey:
         return i18n("Public Key");
     case CertificateModel::KeyUsage:
@@ -116,7 +128,7 @@ QVariant CertificateModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         switch (index.column()) {
         case 0:
-            return propertyVisibleName(m_certificateProperties[row]);
+            return propertyVisibleName(m_certificateProperties[row], m_certificateInfo.certificateType());
         case 1:
             return propertyVisibleValue(m_certificateProperties[row]);
         default:

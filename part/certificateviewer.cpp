@@ -73,7 +73,8 @@ CertificateViewer::CertificateViewer(const Okular::CertificateInfo &certInfo, QW
     auto subjectBox = new QGroupBox(i18n("Issued To"), generalPage);
     auto subjectFormLayout = new QFormLayout(subjectBox);
     subjectFormLayout->setLabelAlignment(Qt::AlignLeft);
-    subjectFormLayout->addRow(i18n("Common Name(CN)"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
+    subjectFormLayout->addRow(m_certificateInfo.certificateType() == Okular::CertificateInfo::X509 ? i18n("Common Name(CN)") : i18n("Name"),
+                              new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
     subjectFormLayout->addRow(i18n("EMail"), new QLabel(m_certificateInfo.subjectInfo(Okular::CertificateInfo::EmailAddress, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable)));
 
     if (m_certificateInfo.certificateType() == Okular::CertificateInfo::X509) {
@@ -142,7 +143,10 @@ void CertificateViewer::updateText(const QModelIndex &index)
         break;
     case CertificateModel::Issuer:
     case CertificateModel::Subject:
-        text = splitDNAttributes(m_certificateModel->data(index, CertificateModel::PropertyVisibleValueRole).toString());
+        text = m_certificateModel->data(index, CertificateModel::PropertyVisibleValueRole).toString();
+        if (m_certificateInfo.certificateType() == Okular::CertificateInfo::X509) {
+            text = splitDNAttributes(text);
+        }
         break;
     case CertificateModel::PublicKey:
         text = QString::fromLatin1(m_certificateInfo.publicKey().toHex(' '));

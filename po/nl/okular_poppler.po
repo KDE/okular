@@ -3,31 +3,48 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Rinse de Vries <rinsedevries@kde.nl>, 2007, 2008.
-# SPDX-FileCopyrightText: 2009, 2010, 2012, 2013, 2018, 2019, 2020, 2021, 2023, 2025 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2009-2010, 2012-2013, 2018-2021, 2023, 2025-2026 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
-"PO-Revision-Date: 2025-07-10 12:47+0200\n"
+"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"PO-Revision-Date: 2026-07-07 17:02+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 26.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Rinse de Vries - 2007, Freek de Kruijf - 2013 t/m 2025"
+msgstr "Rinse de Vries - 2007, Freek de Kruijf - 2013 t/m 2026"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "rinsedevries@kde.nl,freekdekruijf@kde.nl"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "Schrijven in tijdelijk bestand is mislukt"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "Hernoemen tijdelijk bestand is mislukt"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "Hernoemen tijdelijk bestand is mislukt"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -176,6 +193,12 @@ msgstr "Beschikbare certificaten"
 msgid "&Load Signatures"
 msgstr "Ondertekeningen &laden"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "Hernoemen tijdelijk bestand is mislukt"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -304,17 +327,13 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Configuratie van PDF-backend"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "Schrijven in tijdelijk bestand is mislukt"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "Hernoemen tijdelijk bestand is mislukt"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -323,7 +342,7 @@ msgstr ""
 "Er zijn enige fouten in het document gevonden, Okular kan mogelijk de inhoud "
 "niet juist tonen"
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -333,30 +352,37 @@ msgstr ""
 "Deze ondertekeningen werken alleen tussen moderne versies van Okular met de "
 "backend gebaseerd op GnuPG geactiveerd"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "PGP-ondertekeningen inschakelen"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Uitgegeven aan"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Vervaldatum"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "PDF Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "PDF-certificaten"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -365,18 +391,18 @@ msgstr ""
 "U gebruikt een Poppler bibliotheek gebouwd zonder ondersteuning van NSS.\n"
 "Daarom is het toevoegen van digitale ondertekening niet beschikbaar"
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "eeuwig"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Herstart vereist"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
@@ -395,9 +421,6 @@ msgstr "Wachtwoord invoeren om %1 te openen:"
 
 #~ msgid "Not Available"
 #~ msgstr "Niet beschikbaar"
-
-#~ msgid "PDF Certificates"
-#~ msgstr "PDF-certificaten"
 
 #~ msgid "PDF Digital Signature Certificates"
 #~ msgstr "PDF-certificaten met digitale ondertekening"

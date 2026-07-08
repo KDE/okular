@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-08 02:43+0000\n"
 "PO-Revision-Date: 2025-07-10 07:34+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -31,6 +31,23 @@ msgstr "Jure Repinc,Andrej Mernik,Matjaž Jeran"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "jlp@holodeck1.com,andrejm@ubuntu.si,matjaz.jeran@amis.net"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "Zapisovanje začasne datoteke ni uspelo"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "Preimenovanje začasne datoteke ni uspelo"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "Preimenovanje začasne datoteke ni uspelo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -179,6 +196,12 @@ msgstr "Razpoložljiva potrdila"
 msgid "&Load Signatures"
 msgstr "Naloži podpise"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "Preimenovanje začasne datoteke ni uspelo"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -307,17 +330,13 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Nastavitve zaledja za PDF"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "Zapisovanje začasne datoteke ni uspelo"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "Preimenovanje začasne datoteke ni uspelo"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -326,7 +345,7 @@ msgstr ""
 "Najdeno je nekaj napak v dokumentu zaradi katerih Okular morda ne bo mogel "
 "korektno prikazati vsebine"
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -336,30 +355,37 @@ msgstr ""
 "Ti podpisi delujejo samo med sodobnimi različicami Okularja z aktiviranim "
 "zaledjem, ki temelji na GnuPG"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Omogoči podpise PGP"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Izdan za"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "E-pošta"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Datum poteka"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "PDF Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "Potrdila PDF"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -368,18 +394,18 @@ msgstr ""
 "Uporabljate knjižnico Poppler, zgrajeno brez podpore za NSS.\n"
 "Dodajanje digitalnih podpisov zaradi tega ni na voljo"
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "za vedno"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Potreben ponovni zagon"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Po spremembi nastavitev imenika NSS morate ponovno zagnati Okular"
@@ -396,9 +422,6 @@ msgstr "Vnesite geslo za odprtje %1:"
 
 #~ msgid "Not Available"
 #~ msgstr "Ni na voljo"
-
-#~ msgid "PDF Certificates"
-#~ msgstr "Potrdila PDF"
 
 #~ msgid "PDF Digital Signature Certificates"
 #~ msgstr "Potrdila digitalnih podpisov PDF"

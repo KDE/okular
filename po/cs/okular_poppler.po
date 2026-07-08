@@ -4,12 +4,13 @@
 # Lukáš Tinkl <lukas@kde.org>, 2012.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012.
 # Vit Pelcak <vit@pelcak.org>, 2021, 2023.
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-08 02:43+0000\n"
 "PO-Revision-Date: 2025-12-19 16:32+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.12.0\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -29,6 +30,23 @@ msgstr "Lukáš Tinkl,David Kolibáč"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "lukas@kde.org,david@kolibac.cz"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "Zápis dočasného souboru selhal"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "Přejmenování dočasného souboru selhalo"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "Přejmenování dočasného souboru selhalo"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -176,6 +194,12 @@ msgstr "Dostupné certifikáty"
 msgid "&Load Signatures"
 msgstr "Načíst podp&isy"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "Přejmenování dočasného souboru selhalo"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -304,24 +328,20 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Nastavení podpůrné vrstvy PDF"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "Zápis dočasného souboru selhal"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "Přejmenování dočasného souboru selhalo"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "V dokumentu byly nalezeny chyby. Okular jej nemusí zobrazit správně."
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -331,30 +351,37 @@ msgstr ""
 "Tyto podpisy fungují pouze mezi moderními verzemi Okularu s aktivovanou "
 "podpůrnou vrstvou založeným na GnuPG."
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Povolit podpisy PGP"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Vydáno pro"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Datum konce platnosti"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "Available Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "Dostupné certifikáty"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -363,18 +390,18 @@ msgstr ""
 "Používáte knihovnu Poppler sestavenou bez podpory NSS.\n"
 "Přidání digitálních podpisů z tohoto důvodu není možné"
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "navždy"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Vyžadován restart"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Pro změnu nastavení adresáře NSS potřebujete restartovat Okular"

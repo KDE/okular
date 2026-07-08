@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-08 02:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -26,6 +26,23 @@ msgstr "Guo Yunhe, Tyson Tan"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "i@guoyunhe.me, tds00@qq.com"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "写入临时文件失败"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "重命名临时文件失败"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "重命名临时文件失败"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -169,6 +186,12 @@ msgstr "可用证书"
 msgid "&Load Signatures"
 msgstr "加载签名(&L)"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "重命名临时文件失败"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -294,24 +317,20 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF 后端程序配置"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "写入临时文件失败"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "重命名临时文件失败"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "文档中发现了错误，Okular 可能无法正确显示其内容"
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -319,30 +338,37 @@ msgid ""
 "based backend activated"
 msgstr "这些签名只能在激活了 GnuPG 的 Okular 现代版本之间通用"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "启用 PGP 签名"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "颁发给"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "电子邮件"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "过期日期"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "Available Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "可用证书"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -351,18 +377,18 @@ msgstr ""
 "程序使用的 Poppler 程序库在构建时没有启用 NSS 支持。\n"
 "添加数字签名因此不可用。"
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "永久"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "需要重新启动"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "更改 NSS 目录设置后，您需要重启 Okular"

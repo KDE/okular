@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-02 00:42+0000\n"
+"POT-Creation-Date: 2026-07-08 02:43+0000\n"
 "PO-Revision-Date: 2026-01-03 18:02+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
@@ -36,6 +36,23 @@ msgid "Your emails"
 msgstr ""
 "xavier.besnard@kde.org, thomas.boeglin@gmail.com, florian.guillochon@gmail."
 "com, peter.potrowl@gmail.com"
+
+#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
+#: generator_pdf.cpp:2211
+#, kde-format
+msgid "Failed writing temporary file"
+msgstr "Échec de l'écriture du fichier temporaire"
+
+#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed removing file"
+msgstr "Échec du renommage du fichier temporaire"
+
+#: annots.cpp:607
+#, kde-format
+msgid "Failed renaming temporary file"
+msgstr "Échec du renommage du fichier temporaire"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
@@ -184,6 +201,12 @@ msgstr "Certificats disponibles"
 msgid "&Load Signatures"
 msgstr "Charger &les signatures"
 
+#: formfields.cpp:561
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file A %1:"
+msgstr "Échec du renommage du fichier temporaire"
+
 #: generator_pdf.cpp:85
 #, kde-format
 msgid "PDF Options"
@@ -313,17 +336,13 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Configuration du moteur PDF"
 
-#: generator_pdf.cpp:2183 generator_pdf.cpp:2211
-#, kde-format
-msgid "Failed writing temporary file"
-msgstr "Échec de l'écriture du fichier temporaire"
-
-#: generator_pdf.cpp:2233
-#, kde-format
-msgid "Failed renaming temporary file"
+#: generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file"
+msgid "Failed renaming temporary file: %1"
 msgstr "Échec du renommage du fichier temporaire"
 
-#: generator_pdf.cpp:2253
+#: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -332,7 +351,7 @@ msgstr ""
 "Des erreurs ont été trouvées dans le document. Okular pourrait ne pas être "
 "en mesure d'afficher le contenu correctement."
 
-#: pdfsettingswidget.cpp:115
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -342,30 +361,37 @@ msgstr ""
 "Ces signatures ne fonctionnent qu'entre les versions récentes de Okular "
 "ayant  le moteur reposant sur GnuPG activé"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:118
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Activer les signatures « PGP »"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Émis pour"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgid "E-mail"
 msgstr "Courriel"
 
-#: pdfsettingswidget.cpp:146
+#: pdfsettingswidget.cpp:148
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Date d'expiration"
 
-#: pdfsettingswidget.cpp:163
+#: pdfsettingswidget.cpp:153
+#, fuzzy, kde-format
+#| msgid "PDF Certificates"
+msgctxt "@button"
+msgid "List certificates"
+msgstr "Certificats « PDF »"
+
+#: pdfsettingswidget.cpp:175
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -375,18 +401,18 @@ msgstr ""
 "prise en charge de « NSS ».\n"
 "L'ajout de signatures numériques est indisponible pour cette raison."
 
-#: pdfsettingswidget.cpp:187
+#: pdfsettingswidget.cpp:199
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "pour toujours"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "Restart needed"
 msgstr "Redémarrage nécessaire"
 
-#: pdfsettingswidget.cpp:211
+#: pdfsettingswidget.cpp:223
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
@@ -405,9 +431,6 @@ msgstr "Veuillez saisir le mot de passe pour ouvrir %1 :"
 
 #~ msgid "Not Available"
 #~ msgstr "Non disponible"
-
-#~ msgid "PDF Certificates"
-#~ msgstr "Certificats « PDF »"
 
 #~ msgid "PDF Digital Signature Certificates"
 #~ msgstr "Certificats de signature numérique « PDF »"

@@ -1098,7 +1098,11 @@ void Part::setModified(bool modified)
 {
     KParts::ReadWritePart::setModified(modified);
 
-    if (modified && !m_save->isEnabled()) {
+    if (modified && !m_save->isEnabled()
+#if HAVE_NEW_SIGNATURE_API
+        && !m_signatureInProgressMessage->isVisible()
+#endif
+    ) {
         if (!m_warnedAboutModifyingUnsaveableDocument) {
             m_warnedAboutModifyingUnsaveableDocument = true;
             KMessageBox::information(widget(),

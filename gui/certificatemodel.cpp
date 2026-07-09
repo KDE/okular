@@ -12,7 +12,7 @@
 
 #include <QCryptographicHash>
 #include <QDebug>
-#include <QFile>
+#include <QSaveFile>
 #include <QUrl>
 
 static QList<CertificateModel::Property> propertiesForType(Okular::CertificateInfo::CertificateType type)
@@ -169,10 +169,16 @@ bool CertificateModel::exportCertificateTo(const QString &path)
     if (!url.isLocalFile()) {
         return false;
     }
-    QFile targetFile(url.toLocalFile());
+    QSaveFile targetFile(url.toLocalFile());
     if (!targetFile.open(QIODevice::WriteOnly)) {
         return false;
     }
     const QByteArray certificateData = m_certificateInfo.certificateData();
-    return targetFile.write(certificateData) == certificateData.size();
+    if (targetFile.write(certificateData) == certificateData.size()) {
+        targetFile.commit();
+        return true;
+    } else {
+        targetFile.cancelWriting();
+        return false;
+    }
 }

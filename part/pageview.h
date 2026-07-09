@@ -83,9 +83,6 @@ public:
         WithoutLineBreaks,
     };
 
-    // inherited from QAbstractScrollArea
-    void setupViewport(QWidget *viewport) override;
-
     // create actions that interact with this widget
     void setupBaseActions(KActionCollection *ac);
     void setupViewerActions(KActionCollection *ac);
@@ -208,10 +205,6 @@ protected:
     void scrollContentsBy(int dx, int dy) override;
 
 private:
-    // Geometry bounds of the viewport for annotation windows, excludes scrollbars
-    const QRect &viewportBoundsForAnnotationWindows();
-    // Notify all annotation windows of the new viewport geometry, so they could reposition themselves
-    void notifyAnnotationWindowsAboutViewportBoundsChange();
     // draw background and items on the opened qpainter
     void drawDocumentOnPainter(const QRect contentsRect, QPainter *p);
     // update item width and height using current zoom parameters

@@ -168,6 +168,11 @@ void CertificateViewer::updateText(const QModelIndex &index)
     m_propertyText->setText(text);
 }
 
+static QString sanitizedFileName(QString &&fileName)
+{
+    return std::move(fileName.replace(u' ', u'_').replace(u'/', u'_').replace(u'\\', u'_').replace(u':', u'_'));
+}
+
 void CertificateViewer::exportCertificate()
 {
     const QString caption = i18n("Where do you want to save this certificate?");
@@ -175,7 +180,7 @@ void CertificateViewer::exportCertificate()
     QString fileName;
     if (m_certificateInfo.certificateType() == Okular::CertificateInfo::PGP) {
         fileTypes = i18n("Certificate File (*.asc)");
-        fileName = QStringLiteral("%1_public.asc").arg(m_certificateInfo.nickName());
+        fileName = sanitizedFileName(QStringLiteral("%1_%2_public.asc").arg(m_certificateInfo.subjectInfo(Okular::CertificateInfo::CommonName, Okular::CertificateInfo::EmptyString::Empty), m_certificateInfo.nickName()));
     } else {
         fileTypes = i18n("Certificate File (*.cer)");
         fileName = QStringLiteral("Certificate.cer");

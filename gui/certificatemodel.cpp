@@ -174,11 +174,44 @@ bool CertificateModel::exportCertificateTo(const QString &path)
         return false;
     }
     const QByteArray certificateData = m_certificateInfo.certificateData();
-    if (targetFile.write(certificateData) == certificateData.size()) {
-        targetFile.commit();
-        return true;
-    } else {
-        targetFile.cancelWriting();
-        return false;
+    switch (m_certificateInfo.certificateType()) {
+    case Okular::CertificateInfo::X509:
+        if (targetFile.write(certificateData) == certificateData.size()) {
+            targetFile.commit();
+            return true;
+        } else {
+            targetFile.cancelWriting();
+            return false;
+        }
+    case Okular::CertificateInfo::PGP: {
+        if (targetFile.write("-----BEGIN PGP PUBLIC KEY BLOCK-----\n\n") != 38) {
+            return false;
+        }
+        const auto base64 = certificateData.toBase64(QByteArray::Base64Encoding | QByteArray::KeepTrailingEquals);
+
+        bool last = false;
+        for (qsizetype i = 0; i < base64.size(); i += 64) {
+            qsizetype remainder = base64.size() - i;
+            auto written = targetFile.write(base64.sliced(i, std::min<qsizetype>(64, remainder)));
+            if (last) {
+                qWarning("Some failed write during export");
+                return false;
+            }
+            if (written != 64) {
+                last = true;
+                if (written != remainder) {
+                    return false;
+                }
+            }
+            if (targetFile.write("\n") != 1) {
+                return false;
+            }
+        }
+        if (targetFile.write("-----END PGP PUBLIC KEY BLOCK-----\n") != 35) {
+            return false;
+        }
+        return targetFile.commit();
     }
+    }
+    return false;
 }

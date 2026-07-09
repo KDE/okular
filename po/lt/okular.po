@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2026-06-29 15:47+0300\n"
+"PO-Revision-Date: 2026-07-08 13:04+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -5721,6 +5721,7 @@ msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
+"Pradinis failas negali būti perrašytas. Pasirinkite kitą failo pavadinimą."
 
 #: part/signaturepartutils.h:62
 #, kde-format

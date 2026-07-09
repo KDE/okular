@@ -662,7 +662,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Якщо ви хочете скористатися нетиповим сховищем сертифікатів, ви можете вказати його у розділі <link linkend="config-pdf-digital-signatures"
 >Налаштування модуля &PDF;</link
 > діалогового вікна <link linkend="configure-backends"
->Налаштувати модулі...</link
+>Налаштувати Okular...</link
 >. </para>
 				<note>
 					<para
@@ -3248,246 +3248,9 @@ Context menu actions like Rename Bookmarks etc.)
 > у нижній частині області показу документа з метою належного використання вертикального простору у вікні &okular;. Зауважте, що номер поточної сторінки все одно буде показано на типовій панелі інструментів.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Параметри</guimenu
-> <guimenuitem
->Налаштувати модулі обробки...</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Відкриває діалогове вікно <link linkend="configure-backends"
->Налаштування модулів обробки</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Налаштовування модулів &okular;</title>
-	  <para
->Ви можете налаштувати модулі &okular; за допомогою пункту меню <menuchoice
-><guimenu
->Параметри</guimenu
-> <guimenuitem
->Налаштувати модулі...</guimenuitem
-></menuchoice
->. У поточній версії передбачено налаштовування лише модулів EPub, &PostScript;, FictionBook, TXT, ODT і &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->Діалогове вікно налаштовування модулів</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->Діалогове вікно налаштовування модулів</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->За допомогою сторінок налаштовування модулів EPub, FictionBook, Mobipocket, Markdown, TXT та ODT ви можете визначити шрифт, яким буде показано документи у відповідних форматах. За допомогою кнопки <guibutton
->Вибрати...</guibutton
-> на цих сторінках можна відкрити стандартне вікно налаштування шрифтів &kde;. Докладніший його опис можна знайти у <ulink url="help:/fundamentals/fonts.html"
->документації щодо основ роботи у &kde;</ulink
->. </para>
-	  <para
->Опис сторінок налаштування Markdown, &PostScript; і &PDF; наведено нижче. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Налаштовування модуля Markdown</title>
-	    <para
->Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Dicsount</ulink
->, вибором пункту <guilabel
->Markdown</guilabel
-> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано додатковий параметр налаштувань. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Увімкнути форматування SmartyPants</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Якщо позначено, цей пункт уможливлює обробку в &okular; форматування <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->. Таке форматування може призводити до проблем у технічних текстах через небажані заміни (наприклад, заміну <literal
->(C)</literal
-> на символ захисту авторських прав). Типово цей пункт позначено. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Налаштовування модуля &PostScript;</title>
-	    <para
->Налаштувати модуль показу &PostScript; &okular;, заснований на <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
->, вибором пункту <guilabel
->Ghostscript</guilabel
-> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Використовувати шрифти платформи</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->За допомогою цього пункту можна визначити, чи слід дозволяти Ghostscript використовувати системні шрифти, якщо пункт не буде позначено, дозволятиметься лише використання шрифтів, вбудованих у сам документ. Типово цей пункт позначено. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Налаштовування модуля &PDF;</title>
-	    <para
->Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
->, вибором пункту <guilabel
->&PDF;</guilabel
-> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Покращення тонких ліній</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Малювання ліній у &okular; відбувається у два кроки: створення контуру-обгортки та заповнення цього контуру обгортки. Якщо лінія у початковому документі є вужчою за один піксель на екрані, така двокрокова реалізація може призвести до проблеми. Для таки тонких ліній контур-обгортка заповнюється кольором, що залежить від товщини частини лінії у огорнутій ним області. Якщо частина ліній у контурі-обгортці є дуже малою, контрастність між формою лінії та кольором тла може стати надто малою для розпізнавання лінії на екрані. Вигляд сіток з таких ліній може стати дуже непривабливим. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Тонка лінія (червоним), її контур-обгортка (пунктирна лінія) та межі пікселів (чорні суцільні лінії)</entry>
-			    <entry
->Тонка лінія з низькою контрастністю</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Щоб покращити вигляд тонких ліній, у &okular; реалізовано два варіанти обробки. </para>
-		    <para
->Перший варіант визначається пунктом <guimenuitem
->Суцільні</guimenuitem
->. Якщо буде вибрано цей варіант, &okular; вирівнює контур-обгортку та розташування лінії на межу пікселя, тобто &okular; розширює тонкі лінії до одного пікселя на екрані. Цей режим подібний до режиму <guilabel
->Enhance thin lines</guilabel
-> у <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Якщо буде вибрано цей варіант, програма завжди розширюватиме тонкі лінії. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Тонка лінія за використання режиму покращення <guimenuitem
->Суцільні</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Тонка лінія за використання режиму покращення <guimenuitem
->Суцільні</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->Іншим варіантом є пункт <guimenuitem
->Надати форму</guimenuitem
->. Якщо буде вибрано цей пункт, контур-обгортка та лінія також вирівнюватимуться на межу пікселя, але інтенсивність кольору лінії буде виправлено відповідно до її товщини. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Тонка лінія за використання режиму покращення <guimenuitem
->Надати форму</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Тонка лінія за використання режиму покращення <guimenuitem
->Надати форму</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->Типово, показ тонких ліній не покращуватиметься (варіант <guimenuitem
->Без оптимізації</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->Сертифікати цифрових підписів &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> За допомогою цього розділу ви можете встановити нетипову базу даних сертифікатів, якими можна скористатися для додавання цифрових підписів до файлів &PDF;. </para>
-			<para
->Тут також буде показано список сертифікатів, які є доступними у поточній базі даних сертифікатів (якщо такі сертифікати зберігаються на комп'ютері). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3555,13 +3318,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Залежно від встановлених модулів обробки, може бути задіяно пункт меню <menuchoice
-><guimenu
->Параметри</guimenu
-> <guimenuitem
->Налаштувати модулі обробки...</guimenuitem
-></menuchoice
->. У діалоговому вікні, яке можна відкрити за допомогою цього пункту, можна налаштувати модулі обробки, які піддаються налаштуванню. </para>
+>Залежно від переліку поточних встановлених модулів обробки, у вікні також міститиметься список модулів, для яких передбачено параметри налаштовування. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -4405,6 +4162,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Налаштовування модулів &okular;</title>
+	  <para
+>Ви можете налаштувати модулі &okular; за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати Okular...</guimenuitem
+></menuchoice
+>. У поточній версії передбачено налаштовування лише модулів EPub, &PostScript;, FictionBook, TXT, ODT і &PDF;. </para>
+	  <para
+>За допомогою сторінок налаштовування модулів EPub, FictionBook, Mobipocket, Markdown, TXT та ODT ви можете визначити шрифт, яким буде показано документи у відповідних форматах. За допомогою кнопки <guibutton
+>Вибрати...</guibutton
+> на цих сторінках можна відкрити стандартне вікно налаштування шрифтів &kde;. Докладніший його опис можна знайти у <ulink url="help:/fundamentals/fonts.html"
+>документації щодо основ роботи у &kde;</ulink
+>. </para>
+	  <para
+>Опис сторінок налаштування Markdown, &PostScript; і &PDF; наведено нижче. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Налаштовування модуля Markdown</title>
+	    <para
+>Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Dicsount</ulink
+>, вибором пункту <guilabel
+>Markdown</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано додатковий параметр налаштувань. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Увімкнути форматування SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Якщо позначено, цей пункт уможливлює обробку в &okular; форматування <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Таке форматування може призводити до проблем у технічних текстах через небажані заміни (наприклад, заміну <literal
+>(C)</literal
+> на символ захисту авторських прав). Типово цей пункт позначено. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Налаштовування модуля &PostScript;</title>
+	    <para
+>Налаштувати модуль показу &PostScript; &okular;, заснований на <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+>, вибором пункту <guilabel
+>Ghostscript</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Використовувати шрифти платформи</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>За допомогою цього пункту можна визначити, чи слід дозволяти Ghostscript використовувати системні шрифти, якщо пункт не буде позначено, дозволятиметься лише використання шрифтів, вбудованих у сам документ. Типово цей пункт позначено. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Налаштовування модуля &PDF;</title>
+	    <para
+>Налаштувати модуль показу &PDF; &okular;, заснований на <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>, вибором пункту <guilabel
+>&PDF;</guilabel
+> зі списку у лівій частині діалогового вікна налаштовування. Нижче описано єдиний доступний до налаштовування параметр. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Покращення тонких ліній</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Малювання ліній у &okular; відбувається у два кроки: створення контуру-обгортки та заповнення цього контуру обгортки. Якщо лінія у початковому документі є вужчою за один піксель на екрані, така двокрокова реалізація може призвести до проблеми. Для таки тонких ліній контур-обгортка заповнюється кольором, що залежить від товщини частини лінії у огорнутій ним області. Якщо частина ліній у контурі-обгортці є дуже малою, контрастність між формою лінії та кольором тла може стати надто малою для розпізнавання лінії на екрані. Вигляд сіток з таких ліній може стати дуже непривабливим. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Тонка лінія (червоним), її контур-обгортка (пунктирна лінія) та межі пікселів (чорні суцільні лінії)</entry>
+			    <entry
+>Тонка лінія з низькою контрастністю</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Щоб покращити вигляд тонких ліній, у &okular; реалізовано два варіанти обробки. </para>
+		    <para
+>Перший варіант визначається пунктом <guimenuitem
+>Суцільні</guimenuitem
+>. Якщо буде вибрано цей варіант, &okular; вирівнює контур-обгортку та розташування лінії на межу пікселя, тобто &okular; розширює тонкі лінії до одного пікселя на екрані. Цей режим подібний до режиму <guilabel
+>Enhance thin lines</guilabel
+> у <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Якщо буде вибрано цей варіант, програма завжди розширюватиме тонкі лінії. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Суцільні</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Суцільні</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Іншим варіантом є пункт <guimenuitem
+>Надати форму</guimenuitem
+>. Якщо буде вибрано цей пункт, контур-обгортка та лінія також вирівнюватимуться на межу пікселя, але інтенсивність кольору лінії буде виправлено відповідно до її товщини. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Надати форму</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Тонка лінія за використання режиму покращення <guimenuitem
+>Надати форму</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Типово, показ тонких ліній не покращуватиметься (варіант <guimenuitem
+>Без оптимізації</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>Сертифікати цифрових підписів &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> За допомогою цього розділу ви можете встановити нетипову базу даних сертифікатів, якими можна скористатися для додавання цифрових підписів до файлів &PDF;. </para>
+			<para
+>Тут також буде показано список сертифікатів, які є доступними у поточній базі даних сертифікатів (якщо такі сертифікати зберігаються на комп'ютері). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

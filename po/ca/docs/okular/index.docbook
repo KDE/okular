@@ -616,7 +616,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Si voleu utilitzar un magatzem de certificats personalitzat, podreu fer-ho configurant-lo a la secció <link linkend="config-pdf-digital-signatures"
 >Configuració del dorsal &PDF;</link
 > del diàleg <link linkend="configure-backends"
->Configura els dorsals...</link
+>Configura l'Okular...</link
 >. </para>
 				<note>
 					<para
@@ -3194,246 +3194,9 @@ Context menu actions like Rename Bookmarks etc.)
 > a la part inferior de l'àrea del document i oculta per a estalviar espai vertical a la finestra de l'&okular;. Recordeu que els números de pàgina es mostraran de totes maneres a la barra d'eines predeterminada.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Arranjament</guimenu
-> <guimenuitem
->Configura els dorsals...</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Obre la finestra <link linkend="configure-backends"
->Configuració del dorsal</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Configurar els dorsals de l'&okular;</title>
-	  <para
->Podeu configurar els dorsals de l'&okular; escollint <menuchoice
-><guimenu
->Arranjament</guimenu
-> <guimenuitem
->Configura els dorsals...</guimenuitem
-></menuchoice
->. Actualment, les opcions de configuració sols es proporcionen per als dorsals EPub, &PostScript;, FictionBook, Txt, Text en OpenDocument i &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->El diàleg de configuració dels dorsals</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->El diàleg de configuració dels dorsals</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Utilitzant les pàgines de configuració per als dorsals EPub, FictionBook, Mobipocket, Markdown, Txt i Text en OpenDocument podreu definir la lletra per a representar els documents en els formats corresponents. El botó <guibutton
->Tria...</guibutton
-> en aquestes pàgines obre la finestra de configuració estàndard del &kde; de les lletres. Per als detalls, vegeu la <ulink url="help:/fundamentals/fonts.html"
->documentació Fonaments del &kde;</ulink
->. </para>
-	  <para
->La descripció de les pàgines de configuració dels dorsals Markdown, &PostScript; i &PDF; la trobareu a continuació. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Configuració del dorsal de Markdown</title>
-	    <para
->Podeu configurar el renderitzat del dorsal Markdown de l'&okular; basat en <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> escollint <guilabel
->Markdown</guilabel
-> des de la llista a la part esquerra del diàleg de configuració. Una opció configurable addicional és la següent. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Activa el format SmartyPants</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Quan es marca aquesta opció, l'&okular; permetrà processar el format <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->. Aquest format pot ser problemàtic en els textos tècnics a causa de substitucions no desitjades (&pex;, substitueix <literal
->(C)</literal
-> amb un símbol de copyright). De manera predeterminada aquesta opció està marcada. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Configuració del dorsal de &PostScript;</title>
-	    <para
->Podeu configurar el renderitzat del dorsal &PostScript; de l'&okular; basat en <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> escollint <guilabel
->Ghostscript</guilabel
-> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Utilitza les lletres de la plataforma</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Aquesta opció determina si el Ghostscript ha de poder utilitzar les lletres de la plataforma, si està sense marcar, només podrà utilitzar les lletres incrustades en el document. De manera predeterminada es troba marcada. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Configuració del dorsal de &PDF;</title>
-	    <para
->Podeu configurar el renderitzat del dorsal &PDF; de l'&okular; basat en <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> escollint <guilabel
->&PDF;</guilabel
-> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Millora les línies fines</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->El dibuix de les línies a l'&okular; està implementat en dos passos: generació del traçat de retall i omplert d'aquest traçat de retall. Quan la línia en el document original sigui inferior a un píxel aquest pas de la implementació podria causar problemes. Per a aquestes línies, el traçat de retall s'emplena amb el color de farciment que dependrà del gruix de la part de línia dins de l'àrea de tall. Si la part de la línia dins de l'àrea de tall es fa molt petita, la diferència entre la forma i el color de fons esdevindrà massa baixa perquè la línia es pugui reconèixer. Llavors les graelles d'aquestes línies es veuran poc agraciades. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Línia fina (vermella), el seu traçat de tall (línia discontínua) i límits dels píxels negres (línies negres contínues)</entry>
-			    <entry
->Mostra la línia fina amb un contrast baix</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Per a millorar l'aspecte de les línies fines, l'&okular; implementa dues opcions. </para>
-		    <para
->La primera opció és <guimenuitem
->Solid</guimenuitem
->. Amb aquesta opció, l'&okular; ajusta el camí de retall i la posició de la línia de manera que el camí de retall i la línia estiguin en el mateix límit del píxel, &ead;, l'&okular; allargarà les línies fines a un píxel en el dispositiu de sortida. Aquest mode és similar a <guilabel
->Millora les línies fines</guilabel
-> <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Si es tria aquesta opció, les línies fines sempre s'allargaran. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Línia fina amb la millora <guimenuitem
->Solid</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Línia fina amb la millora <guimenuitem
->Solid</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->La segona opció és <guimenuitem
->Forma</guimenuitem
->. Amb aquesta opció el camí del retall i la línia s'ajustaran també al límit del píxel, però la intensitat de la línia es corregirà en funció de la seva amplada. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Línia fina amb la millora <guimenuitem
->Forma</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Línia fina amb la millora <guimenuitem
->Forma</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->De manera predeterminada, les línies fines no es veuen millorades (opció <guimenuitem
->No</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->Certificats de signatura digital de &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Aquesta secció permet configurar una base de dades de certificats personalitzada a utilitzar en afegir signatures digitals als fitxers &PDF;. </para>
-			<para
->També llista els certificats disponibles a la base de dades de certificats actual (si n'hi ha cap). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3501,13 +3264,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Depenent dels dorsals instal·lats, l'element de menú <menuchoice
-><guimenu
->Arranjament</guimenu
-> <guimenuitem
->Configura els dorsals...</guimenuitem
-></menuchoice
-> podria estar activat. Aquest diàleg de configuració en particular conté les configuracions dels dorsals que es poden configurar. </para>
+>Depenent dels dorsals instal·lats actualment, el diàleg també conté una llista dels dorsals que tenen opcions de configuració. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -4347,6 +4104,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Configurar els dorsals de l'&okular;</title>
+	  <para
+>Podeu configurar els dorsals de l'&okular; escollint <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura l'Okular...</guimenuitem
+></menuchoice
+>. Actualment, les opcions de configuració sols es proporcionen per als dorsals EPub, &PostScript;, FictionBook, Txt, Text en OpenDocument i &PDF;. </para>
+	  <para
+>Utilitzant les pàgines de configuració per als dorsals EPub, FictionBook, Mobipocket, Markdown, Txt i Text en OpenDocument podreu definir la lletra per a representar els documents en els formats corresponents. El botó <guibutton
+>Tria...</guibutton
+> en aquestes pàgines obre la finestra de configuració estàndard del &kde; de les lletres. Per als detalls, vegeu la <ulink url="help:/fundamentals/fonts.html"
+>documentació Fonaments del &kde;</ulink
+>. </para>
+	  <para
+>La descripció de les pàgines de configuració dels dorsals Markdown, &PostScript; i &PDF; la trobareu a continuació. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Configuració del dorsal de Markdown</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal Markdown de l'&okular; basat en <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> escollint <guilabel
+>Markdown</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. Una opció configurable addicional és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Activa el format SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Quan es marca aquesta opció, l'&okular; permetrà processar el format <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Aquest format pot ser problemàtic en els textos tècnics a causa de substitucions no desitjades (&pex;, substitueix <literal
+>(C)</literal
+> amb un símbol de copyright). De manera predeterminada aquesta opció està marcada. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Configuració del dorsal de &PostScript;</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal &PostScript; de l'&okular; basat en <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> escollint <guilabel
+>Ghostscript</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Utilitza les lletres de la plataforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Aquesta opció determina si el Ghostscript ha de poder utilitzar les lletres de la plataforma, si està sense marcar, només podrà utilitzar les lletres incrustades en el document. De manera predeterminada es troba marcada. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Configuració del dorsal de &PDF;</title>
+	    <para
+>Podeu configurar el renderitzat del dorsal &PDF; de l'&okular; basat en <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> escollint <guilabel
+>&PDF;</guilabel
+> des de la llista a la part esquerra del diàleg de configuració. L'única opció configurable és la següent. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Millora les línies fines</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>El dibuix de les línies a l'&okular; està implementat en dos passos: generació del traçat de retall i omplert d'aquest traçat de retall. Quan la línia en el document original sigui inferior a un píxel aquest pas de la implementació podria causar problemes. Per a aquestes línies, el traçat de retall s'emplena amb el color de farciment que dependrà del gruix de la part de línia dins de l'àrea de tall. Si la part de la línia dins de l'àrea de tall es fa molt petita, la diferència entre la forma i el color de fons esdevindrà massa baixa perquè la línia es pugui reconèixer. Llavors les graelles d'aquestes línies es veuran poc agraciades. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Línia fina (vermella), el seu traçat de tall (línia discontínua) i límits dels píxels negres (línies negres contínues)</entry>
+			    <entry
+>Mostra la línia fina amb un contrast baix</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Per a millorar l'aspecte de les línies fines, l'&okular; implementa dues opcions. </para>
+		    <para
+>La primera opció és <guimenuitem
+>Solid</guimenuitem
+>. Amb aquesta opció, l'&okular; ajusta el camí de retall i la posició de la línia de manera que el camí de retall i la línia estiguin en el mateix límit del píxel, &ead;, l'&okular; allargarà les línies fines a un píxel en el dispositiu de sortida. Aquest mode és similar a <guilabel
+>Millora les línies fines</guilabel
+> <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Si es tria aquesta opció, les línies fines sempre s'allargaran. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línia fina amb la millora <guimenuitem
+>Solid</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línia fina amb la millora <guimenuitem
+>Solid</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>La segona opció és <guimenuitem
+>Forma</guimenuitem
+>. Amb aquesta opció el camí del retall i la línia s'ajustaran també al límit del píxel, però la intensitat de la línia es corregirà en funció de la seva amplada. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Línia fina amb la millora <guimenuitem
+>Forma</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Línia fina amb la millora <guimenuitem
+>Forma</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De manera predeterminada, les línies fines no es veuen millorades (opció <guimenuitem
+>No</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>Certificats de signatura digital de &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Aquesta secció permet configurar una base de dades de certificats personalitzada a utilitzar en afegir signatures digitals als fitxers &PDF;. </para>
+			<para
+>També llista els certificats disponibles a la base de dades de certificats actual (si n'hi ha cap). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

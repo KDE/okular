@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2026-06-25 12:16+0200\n"
+"PO-Revision-Date: 2026-07-07 20:01+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -5698,7 +5698,7 @@ msgstr "Uložit podepsaný soubor jako"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Původní soubor nelze přepsat. Zvolte prosím jiný název souboru."
 
 #: part/signaturepartutils.h:62
 #, kde-format

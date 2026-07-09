@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2025-12-19 16:32+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-07-07 20:03+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -38,10 +38,9 @@ msgid "Failed writing temporary file"
 msgstr "Zápis dočasného souboru selhal"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Přejmenování dočasného souboru selhalo"
+msgstr "Odstranění souboru se nezdařilo"
 
 #: annots.cpp:607
 #, kde-format
@@ -195,10 +194,9 @@ msgid "&Load Signatures"
 msgstr "Načíst podp&isy"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file A %1:"
-msgstr "Přejmenování dočasného souboru selhalo"
+msgstr "Nepodařilo se přejmenovat dočasný soubor A %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -329,10 +327,9 @@ msgid "PDF Backend Configuration"
 msgstr "Nastavení podpůrné vrstvy PDF"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Přejmenování dočasného souboru selhalo"
+msgstr "Přejmenování dočasného souboru selhalo: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -375,11 +372,10 @@ msgid "Expiration date"
 msgstr "Datum konce platnosti"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Dostupné certifikáty"
+msgstr "Seznam certifikátů"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

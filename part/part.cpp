@@ -2104,6 +2104,10 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
         m_toc->finishReload();
     }
 
+#if HAVE_NEW_SIGNATURE_API
+    m_signatureInProgressMessage->setVisible(false);
+#endif
+
     // inform the user about the operation in progress
     m_pageView->displayMessage(i18n("Reloading the document…"));
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2025-07-10 03:51+0200\n"
+"PO-Revision-Date: 2026-07-09 07:15+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -35,10 +35,9 @@ msgid "Failed writing temporary file"
 msgstr "დროებითი ფაილის ჩაწერა ჩავარდა"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა"
+msgstr "ფაილის წაშლის შეცდომა"
 
 #: annots.cpp:607
 #, kde-format
@@ -193,10 +192,9 @@ msgid "&Load Signatures"
 msgstr "ხელმოწერების &ჩატვირთვა"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file A %1:"
-msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა"
+msgstr "დროებითი ფაილის A %1 სახელის გადარქმევა ჩავარდა:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -327,10 +325,9 @@ msgid "PDF Backend Configuration"
 msgstr "PDF უკანაბოლოს მორგება"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა"
+msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -375,11 +372,10 @@ msgid "Expiration date"
 msgstr "ვადის გასვლის თარიღი"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "ხელმისაწვდომი სერთიფიკატები"
+msgstr "სერტიფიკატების სია"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

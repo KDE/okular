@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2026-06-22 03:43+0200\n"
+"PO-Revision-Date: 2026-07-09 07:15+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5691,6 +5691,7 @@ msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
+"ორიგინალი ფაილის თავზე გადაწერა შეუძლებელია. აირჩიეთ ფაილის სხვა სახელი."
 
 #: part/signaturepartutils.h:62
 #, kde-format

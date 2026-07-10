@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2026-07-05 16:29+0200\n"
+"PO-Revision-Date: 2026-07-07 18:03+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -5689,7 +5689,7 @@ msgstr "Lagra signert fil som"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Det opphavlege filnamnet kan ikkje overskrivast. Vel eit anna namn."
 
 #: part/signaturepartutils.h:62
 #, kde-format
@@ -6087,15 +6087,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "Configure Viewer Backends…"
-#~ msgstr "Set opp visingsmotorar …"
-
-#~ msgid "Configure Backends…"
-#~ msgstr "Set opp motorar …"
-
-#~ msgid "Configure Viewer Backends"
-#~ msgstr "Set opp visingsmotorar"
-
-#~ msgid "Configure Backends"
-#~ msgstr "Set opp visingsmotorar"

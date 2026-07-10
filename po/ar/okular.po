@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-08 02:43+0000\n"
-"PO-Revision-Date: 2026-06-30 21:31+0400\n"
+"PO-Revision-Date: 2026-07-07 18:05+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -5673,7 +5673,7 @@ msgstr "حفظ الملف الموقع باسم"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "لا يمكن الكتابة فوق الملف الأصلي. يرجى اختيار اسم ملف آخر."
 
 #: part/signaturepartutils.h:62
 #, kde-format

@@ -5991,19 +5991,3 @@ msgstr ""
 #, kde-format
 msgid "Hide welcome screen"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Configure Viewer Backends"
-#~ msgid "Configure Viewer Backends…"
-#~ msgstr "Sett opp visningsmotorer"
-
-#, fuzzy
-#~| msgid "Configure Backends"
-#~ msgid "Configure Backends…"
-#~ msgstr "Sett opp visningsmotorer"
-
-#~ msgid "Configure Viewer Backends"
-#~ msgstr "Sett opp visningsmotorer"
-
-#~ msgid "Configure Backends"
-#~ msgstr "Sett opp visningsmotorer"

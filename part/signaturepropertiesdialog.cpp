@@ -96,7 +96,7 @@ SignaturePropertiesDialog::SignaturePropertiesDialog(Okular::Document *doc, cons
     certPropBtn->setEnabled(!signatureInfo.certificateInfo().isNull());
     auto certManagerBtn = new QPushButton(i18n("View in Certificate Manager"));
     certManagerBtn->setVisible(signatureInfo.certificateInfo().backend() == Okular::CertificateInfo::Backend::Gpg);
-    certManagerBtn->setEnabled(kleo->kleopatraIntegrationActive());
+    certManagerBtn->setEnabled(kleo->kleopatraIntegrationActive() && !signatureInfo.certificateInfo().isNull());
     if (!kleo->kleopatraIntegrationActive()) {
         certManagerBtn->setToolTip(i18n("KDE Certificate Manager (kleopatra) not found"));
     }

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-09 00:41+0000\n"
+"POT-Creation-Date: 2026-07-10 00:42+0000\n"
 "PO-Revision-Date: 2026-07-07 10:17+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -616,8 +616,9 @@ msgid "Signing cancelled by user"
 msgstr "Signatura cancel·lada per l'usuari"
 
 #: core/signatureutils.cpp:516
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
+#, fuzzy, kde-format
+#| msgid "Could not sign. Wrong passphrase"
+msgid "Signing failed: Wrong passphrase"
 msgstr "No s'ha pogut signar. Frase de pas incorrecta"
 
 #: core/signatureutils.cpp:518
@@ -646,63 +647,69 @@ msgstr "Origen: %1"
 msgid "&Default Font:"
 msgstr "Lletra pre&determinada:"
 
-#: gui/certificatemodel.cpp:39
+#: gui/certificatemodel.cpp:51
 #, kde-format
 msgid "Version"
 msgstr "Versió"
 
-#: gui/certificatemodel.cpp:41
+#: gui/certificatemodel.cpp:53
 #, kde-format
 msgid "Serial Number"
 msgstr "Número de sèrie"
 
-#: gui/certificatemodel.cpp:43
+#: gui/certificatemodel.cpp:55
 #, kde-format
 msgid "Issuer"
 msgstr "Emissor"
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:88
+#: gui/certificatemodel.cpp:57 part/certificateviewer.cpp:89
 #, kde-format
 msgid "Issued On"
 msgstr "Emés el"
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:89
+#: gui/certificatemodel.cpp:59 part/certificateviewer.cpp:90
 #, kde-format
 msgid "Expires On"
 msgstr "Expira el"
 
-#: gui/certificatemodel.cpp:49
+#: gui/certificatemodel.cpp:61
 #, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
 msgstr "Assumpte"
 
-#: gui/certificatemodel.cpp:51
+#: gui/certificatemodel.cpp:61
+#, kde-format
+msgctxt "Name/email on key"
+msgid "User Id"
+msgstr ""
+
+#: gui/certificatemodel.cpp:63
 #, kde-format
 msgid "Public Key"
 msgstr "Clau pública"
 
-#: gui/certificatemodel.cpp:53
+#: gui/certificatemodel.cpp:65
 #, kde-format
 msgid "Key Usage"
 msgstr "Ús de la clau"
 
-#: gui/certificatemodel.cpp:72
+#: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "V%1"
 msgstr "V%1"
 
-#: gui/certificatemodel.cpp:84
+#: gui/certificatemodel.cpp:96
 #, kde-format
 msgid "%1 (%2 bits)"
 msgstr "%1 (%2 bits)"
 
-#: gui/certificatemodel.cpp:146
+#: gui/certificatemodel.cpp:158
 #, kde-format
 msgid "Property"
 msgstr "Propietat"
 
-#: gui/certificatemodel.cpp:148
+#: gui/certificatemodel.cpp:160
 #, kde-format
 msgid "Value"
 msgstr "Valor"
@@ -2365,12 +2372,12 @@ msgstr "Emés per"
 msgid "Common Name(CN)"
 msgstr "Nom comú (CN)"
 
-#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:77
+#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:78
 #, kde-format
 msgid "EMail"
 msgstr "Correu electrònic"
 
-#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:80
+#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:81
 #, kde-format
 msgid "Organization(O)"
 msgstr "Organització (O)"
@@ -2380,64 +2387,69 @@ msgstr "Organització (O)"
 msgid "Issued To"
 msgstr "Emés a"
 
-#: part/certificateviewer.cpp:85
+#: part/certificateviewer.cpp:76 part/propertiesdialog.cpp:424
+#, kde-format
+msgid "Name"
+msgstr "Nom"
+
+#: part/certificateviewer.cpp:86
 #, kde-format
 msgid "Validity"
 msgstr "Validesa"
 
-#: part/certificateviewer.cpp:89
+#: part/certificateviewer.cpp:90
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
 msgstr "Mai"
 
-#: part/certificateviewer.cpp:93
+#: part/certificateviewer.cpp:94
 #, kde-format
 msgid "Fingerprints"
 msgstr "Empremtes digitals"
 
-#: part/certificateviewer.cpp:103
+#: part/certificateviewer.cpp:104
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Empremta digital SHA-1"
 
-#: part/certificateviewer.cpp:104
+#: part/certificateviewer.cpp:105
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Empremta digital SHA-256"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
 msgstr "Empremta digital"
 
-#: part/certificateviewer.cpp:115
+#: part/certificateviewer.cpp:116
 #, kde-format
 msgid "Details"
 msgstr "Detalls"
 
-#: part/certificateviewer.cpp:116
+#: part/certificateviewer.cpp:117
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Dades del certificat:"
 
-#: part/certificateviewer.cpp:168
+#: part/certificateviewer.cpp:178
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "A on voleu guardar este certificat?"
 
-#: part/certificateviewer.cpp:172
+#: part/certificateviewer.cpp:182
 #, kde-format
 msgid "Certificate File (*.asc)"
 msgstr "Fitxer de certificat (*.asc)"
 
-#: part/certificateviewer.cpp:175
+#: part/certificateviewer.cpp:185
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Fitxer de certificat (*.cer)"
 
-#: part/certificateviewer.cpp:181
+#: part/certificateviewer.cpp:191
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "No s'ha pogut exportar el certificat"
@@ -5487,11 +5499,6 @@ msgstr "Lletra desconeguda"
 #, kde-format
 msgid "Embedded: %1"
 msgstr "Incrustat: %1"
-
-#: part/propertiesdialog.cpp:424
-#, kde-format
-msgid "Name"
-msgstr "Nom"
 
 #: part/propertiesdialog.cpp:427
 #, kde-format

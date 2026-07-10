@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-09 00:41+0000\n"
+"POT-Creation-Date: 2026-07-10 00:42+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -615,8 +615,9 @@ msgid "Signing cancelled by user"
 msgstr "A felhasználó megszakította az aláírást"
 
 #: core/signatureutils.cpp:516
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
+#, fuzzy, kde-format
+#| msgid "Could not sign. Wrong passphrase"
+msgid "Signing failed: Wrong passphrase"
 msgstr "Nem sikerült aláírni. Hibás jelszó"
 
 #: core/signatureutils.cpp:518
@@ -645,63 +646,69 @@ msgstr "Forrás: %1"
 msgid "&Default Font:"
 msgstr "&Alapértelmezett betűkészlet:"
 
-#: gui/certificatemodel.cpp:39
+#: gui/certificatemodel.cpp:51
 #, kde-format
 msgid "Version"
 msgstr "Verzió"
 
-#: gui/certificatemodel.cpp:41
+#: gui/certificatemodel.cpp:53
 #, kde-format
 msgid "Serial Number"
 msgstr "Sorozatszám"
 
-#: gui/certificatemodel.cpp:43
+#: gui/certificatemodel.cpp:55
 #, kde-format
 msgid "Issuer"
 msgstr "Kibocsátó"
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:88
+#: gui/certificatemodel.cpp:57 part/certificateviewer.cpp:89
 #, kde-format
 msgid "Issued On"
 msgstr "Kibocsátva"
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:89
+#: gui/certificatemodel.cpp:59 part/certificateviewer.cpp:90
 #, kde-format
 msgid "Expires On"
 msgstr "Lejárat"
 
-#: gui/certificatemodel.cpp:49
+#: gui/certificatemodel.cpp:61
 #, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
 msgstr "Tulajdonos"
 
-#: gui/certificatemodel.cpp:51
+#: gui/certificatemodel.cpp:61
+#, kde-format
+msgctxt "Name/email on key"
+msgid "User Id"
+msgstr ""
+
+#: gui/certificatemodel.cpp:63
 #, kde-format
 msgid "Public Key"
 msgstr "Nyilvános kulcs"
 
-#: gui/certificatemodel.cpp:53
+#: gui/certificatemodel.cpp:65
 #, kde-format
 msgid "Key Usage"
 msgstr "Kulcshasználat"
 
-#: gui/certificatemodel.cpp:72
+#: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "V%1"
 msgstr "V%1"
 
-#: gui/certificatemodel.cpp:84
+#: gui/certificatemodel.cpp:96
 #, kde-format
 msgid "%1 (%2 bits)"
 msgstr "%1 (%2 bit)"
 
-#: gui/certificatemodel.cpp:146
+#: gui/certificatemodel.cpp:158
 #, kde-format
 msgid "Property"
 msgstr "Tulajdonság"
 
-#: gui/certificatemodel.cpp:148
+#: gui/certificatemodel.cpp:160
 #, kde-format
 msgid "Value"
 msgstr "Érték"
@@ -2380,12 +2387,12 @@ msgstr "Kibocsátó"
 msgid "Common Name(CN)"
 msgstr "Köznapi név (CN)"
 
-#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:77
+#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:78
 #, kde-format
 msgid "EMail"
 msgstr "E-mail"
 
-#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:80
+#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:81
 #, kde-format
 msgid "Organization(O)"
 msgstr "Szervezet (O)"
@@ -2395,12 +2402,17 @@ msgstr "Szervezet (O)"
 msgid "Issued To"
 msgstr "Kérelmező"
 
-#: part/certificateviewer.cpp:85
+#: part/certificateviewer.cpp:76 part/propertiesdialog.cpp:424
+#, kde-format
+msgid "Name"
+msgstr "Név"
+
+#: part/certificateviewer.cpp:86
 #, kde-format
 msgid "Validity"
 msgstr "Érvényesség"
 
-#: part/certificateviewer.cpp:89
+#: part/certificateviewer.cpp:90
 #, fuzzy, kde-format
 #| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 #| msgid "every "
@@ -2408,55 +2420,55 @@ msgctxt "certificate that never expires"
 msgid "Never"
 msgstr "minden "
 
-#: part/certificateviewer.cpp:93
+#: part/certificateviewer.cpp:94
 #, kde-format
 msgid "Fingerprints"
 msgstr "Ujjlenyomatok"
 
-#: part/certificateviewer.cpp:103
+#: part/certificateviewer.cpp:104
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "SHA-1 ujjlenyomat"
 
-#: part/certificateviewer.cpp:104
+#: part/certificateviewer.cpp:105
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 ujjlenyomat"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, fuzzy, kde-format
 #| msgid "Fingerprints"
 msgctxt "certificate key"
 msgid "Fingerprint"
 msgstr "Ujjlenyomatok"
 
-#: part/certificateviewer.cpp:115
+#: part/certificateviewer.cpp:116
 #, kde-format
 msgid "Details"
 msgstr "Részletek"
 
-#: part/certificateviewer.cpp:116
+#: part/certificateviewer.cpp:117
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Tanúsítvány dátuma:"
 
-#: part/certificateviewer.cpp:168
+#: part/certificateviewer.cpp:178
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Hová szeretné menteni ezt a tanúsítványt?"
 
-#: part/certificateviewer.cpp:172
+#: part/certificateviewer.cpp:182
 #, fuzzy, kde-format
 #| msgid "Certificate File (*.cer)"
 msgid "Certificate File (*.asc)"
 msgstr "Tanúsítványfájl (*.cer)"
 
-#: part/certificateviewer.cpp:175
+#: part/certificateviewer.cpp:185
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Tanúsítványfájl (*.cer)"
 
-#: part/certificateviewer.cpp:181
+#: part/certificateviewer.cpp:191
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Nem sikerült exportálni a tanúsítványt"
@@ -5505,11 +5517,6 @@ msgstr "Ismeretlen betűtípus"
 #, kde-format
 msgid "Embedded: %1"
 msgstr "Beágyazott: %1"
-
-#: part/propertiesdialog.cpp:424
-#, kde-format
-msgid "Name"
-msgstr "Név"
 
 #: part/propertiesdialog.cpp:427
 #, kde-format

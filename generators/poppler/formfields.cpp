@@ -558,7 +558,7 @@ std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const 
         }
     }
     if (!tf.rename(fileName)) {
-        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file A %1:", tf.errorString())};
+        return {Okular::SignatureWriteFailed, i18n("Failed renaming temporary file %1:", tf.errorString())};
     }
 
     return {Okular::SigningSuccess, {}};

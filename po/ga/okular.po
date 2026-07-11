@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"POT-Creation-Date: 2026-07-11 02:37+0000\n"
 "PO-Revision-Date: 2026-03-20 18:28+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
@@ -387,7 +387,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Tá méid priontála an leathanaigh neamhbhailí"
 
-#: core/document.cpp:5445 part/part.cpp:1128
+#: core/document.cpp:5445 part/part.cpp:1132
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Níorbh fhéidir '%1' a oscailt. Níl an comhad ann"
@@ -612,8 +612,9 @@ msgid "Signing cancelled by user"
 msgstr "Cealaíodh an síniú ag an úsáideoir"
 
 #: core/signatureutils.cpp:516
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
+#, fuzzy, kde-format
+#| msgid "Could not sign. Wrong passphrase"
+msgid "Signing failed: Wrong passphrase"
 msgstr "Níorbh fhéidir síniú. Pasfrása mícheart"
 
 #: core/signatureutils.cpp:518
@@ -642,63 +643,69 @@ msgstr "Foinse: %1"
 msgid "&Default Font:"
 msgstr "&Cló Réamhshocraithe:"
 
-#: gui/certificatemodel.cpp:39
+#: gui/certificatemodel.cpp:51
 #, kde-format
 msgid "Version"
 msgstr "Leagan"
 
-#: gui/certificatemodel.cpp:41
+#: gui/certificatemodel.cpp:53
 #, kde-format
 msgid "Serial Number"
 msgstr "Uimhir Sraitheach"
 
-#: gui/certificatemodel.cpp:43
+#: gui/certificatemodel.cpp:55
 #, kde-format
 msgid "Issuer"
 msgstr "Eisitheoir"
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:88
+#: gui/certificatemodel.cpp:57 part/certificateviewer.cpp:89
 #, kde-format
 msgid "Issued On"
 msgstr "Eisithe Ar"
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:89
+#: gui/certificatemodel.cpp:59 part/certificateviewer.cpp:90
 #, kde-format
 msgid "Expires On"
 msgstr "Éagaíonn Ar"
 
-#: gui/certificatemodel.cpp:49
+#: gui/certificatemodel.cpp:61
 #, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
 msgstr "Ábhar"
 
-#: gui/certificatemodel.cpp:51
+#: gui/certificatemodel.cpp:61
+#, kde-format
+msgctxt "Name/email on key"
+msgid "User Id"
+msgstr ""
+
+#: gui/certificatemodel.cpp:63
 #, kde-format
 msgid "Public Key"
 msgstr "Eochair Phoiblí"
 
-#: gui/certificatemodel.cpp:53
+#: gui/certificatemodel.cpp:65
 #, kde-format
 msgid "Key Usage"
 msgstr "Úsáid Eochrach"
 
-#: gui/certificatemodel.cpp:72
+#: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "V%1"
 msgstr "V%1"
 
-#: gui/certificatemodel.cpp:84
+#: gui/certificatemodel.cpp:96
 #, kde-format
 msgid "%1 (%2 bits)"
 msgstr "%1 (%2 giotán)"
 
-#: gui/certificatemodel.cpp:146
+#: gui/certificatemodel.cpp:158
 #, kde-format
 msgid "Property"
 msgstr "Maoin"
 
-#: gui/certificatemodel.cpp:148
+#: gui/certificatemodel.cpp:160
 #, kde-format
 msgid "Value"
 msgstr "Luach"
@@ -1659,7 +1666,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Leathanach %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3169
+#: part/annotationmodel.cpp:324 part/part.cpp:3177
 #, kde-format
 msgid "Page %1"
 msgstr "Leathanach %1"
@@ -1681,12 +1688,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Oscail Preabnóta"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
+#: part/bookmarklist.cpp:263 part/part.cpp:2258 part/part.cpp:3183
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Bain Leabharmharc"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3185
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Cuir Leabharmharc Leis"
@@ -1708,8 +1715,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Cóipeáil Téacs chuig an nGearrthaisce"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2597 part/pageview.cpp:2949 part/pageview.cpp:2951
-#: part/pageview.cpp:3111 part/pageview.cpp:3172 part/pageview.cpp:3174
+#: part/pageview.cpp:2588 part/pageview.cpp:2940 part/pageview.cpp:2942
+#: part/pageview.cpp:3102 part/pageview.cpp:3163 part/pageview.cpp:3165
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Cóipeáil faoi chosc ag DRM"
@@ -2215,17 +2222,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:59
+#: part/annotwindow.cpp:58
 #, kde-format
 msgid "Close this note"
 msgstr "Dún an nóta seo"
 
-#: part/annotwindow.cpp:139 part/findbar.cpp:63
+#: part/annotwindow.cpp:138 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Roghanna"
 
-#: part/annotwindow.cpp:150
+#: part/annotwindow.cpp:149
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2234,39 +2241,39 @@ msgstr ""
 "D’fhéadfadh cód LaTeX a bheith sa nóta seo.\n"
 "Cliceáil anseo chun é a rindreáil."
 
-#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#: part/annotwindow.cpp:250 part/annotwindow.cpp:272
 #, fuzzy, kde-format
 #| msgid "Unknown font"
 msgid "Unknown author"
 msgstr "Cló anaithnid"
 
-#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#: part/annotwindow.cpp:253 part/annotwindow.cpp:275
 #, kde-format
 msgid "No date recognized"
 msgstr ""
 
-#: part/annotwindow.cpp:583
+#: part/annotwindow.cpp:562
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Ní féidir an comhad inrite LaTeX a aimsiú."
 
-#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
-#: part/annotwindow.cpp:598
+#: part/annotwindow.cpp:562 part/annotwindow.cpp:567 part/annotwindow.cpp:572
+#: part/annotwindow.cpp:577
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "Theip ar rindreáil LaTeX"
 
-#: part/annotwindow.cpp:588
+#: part/annotwindow.cpp:567
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Ní féidir an comhad inrite dvipng a aimsiú."
 
-#: part/annotwindow.cpp:593
+#: part/annotwindow.cpp:572
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Tharla fadhb agus an t-ordú 'latex' á fhorghníomhú."
 
-#: part/annotwindow.cpp:598
+#: part/annotwindow.cpp:577
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Tharla fadhb le linn fhorghníomhú an ordaithe 'dvipng'."
@@ -2319,12 +2326,12 @@ msgstr "Taispeáin do gach doiciméad"
 msgid "Search…"
 msgstr "Cuardaigh…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3165
 #, kde-format
 msgid "Expand All"
 msgstr "Leathnaigh Uile"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3166
 #, kde-format
 msgid "Collapse All"
 msgstr "Laghdaigh Gach Rud"
@@ -2335,7 +2342,7 @@ msgid "Go to This Bookmark"
 msgstr "Téigh go dtí an Leabharmharc Seo"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
-#: part/part.cpp:2445
+#: part/part.cpp:2453
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Athainmnigh an Leabharmharc"
@@ -2376,12 +2383,12 @@ msgstr "Eisithe ag"
 msgid "Common Name(CN)"
 msgstr "Ainm Coitianta (CN)"
 
-#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:77
+#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:78
 #, kde-format
 msgid "EMail"
 msgstr "Ríomhphost"
 
-#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:80
+#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:81
 #, kde-format
 msgid "Organization(O)"
 msgstr "Eagraíocht(O)"
@@ -2391,66 +2398,71 @@ msgstr "Eagraíocht(O)"
 msgid "Issued To"
 msgstr "Eisithe Chuig"
 
-#: part/certificateviewer.cpp:85
+#: part/certificateviewer.cpp:76 part/propertiesdialog.cpp:424
+#, kde-format
+msgid "Name"
+msgstr "Ainm"
+
+#: part/certificateviewer.cpp:86
 #, kde-format
 msgid "Validity"
 msgstr "Bailíocht"
 
-#: part/certificateviewer.cpp:89
+#: part/certificateviewer.cpp:90
 #, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
 msgstr ""
 
-#: part/certificateviewer.cpp:93
+#: part/certificateviewer.cpp:94
 #, kde-format
 msgid "Fingerprints"
 msgstr "Méarloirg"
 
-#: part/certificateviewer.cpp:103
+#: part/certificateviewer.cpp:104
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Méarlorg SHA-1"
 
-#: part/certificateviewer.cpp:104
+#: part/certificateviewer.cpp:105
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Méarlorg SHA-256"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, fuzzy, kde-format
 #| msgid "Fingerprints"
 msgctxt "certificate key"
 msgid "Fingerprint"
 msgstr "Méarloirg"
 
-#: part/certificateviewer.cpp:115
+#: part/certificateviewer.cpp:116
 #, kde-format
 msgid "Details"
 msgstr "Sonraí"
 
-#: part/certificateviewer.cpp:116
+#: part/certificateviewer.cpp:117
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Sonraí Teastais:"
 
-#: part/certificateviewer.cpp:168
+#: part/certificateviewer.cpp:178
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Cá háit ar mhaith leat an teastas seo a shábháil?"
 
-#: part/certificateviewer.cpp:172
+#: part/certificateviewer.cpp:182
 #, fuzzy, kde-format
 #| msgid "Certificate File (*.cer)"
 msgid "Certificate File (*.asc)"
 msgstr "Comhad Teastais (*.cer)"
 
-#: part/certificateviewer.cpp:175
+#: part/certificateviewer.cpp:185
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Comhad Teastais (*.cer)"
 
-#: part/certificateviewer.cpp:181
+#: part/certificateviewer.cpp:191
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Níorbh fhéidir an deimhniú a easpórtáil"
@@ -3688,7 +3700,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Léiriú Rialta"
 
-#: part/layers.cpp:33 part/part.cpp:2293
+#: part/layers.cpp:33 part/part.cpp:2301
 #, kde-format
 msgid "Layers"
 msgstr "Sraitheanna"
@@ -3699,210 +3711,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "as"
 
-#: part/pageview.cpp:539
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Zoom"
 msgstr "Súmáil"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:545
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Súmáil go 100%"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Rothlaigh go &Deisealach"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:557
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Ar dheis"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Rothlaigh go &Tuathalach"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:562
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Ar chlé"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:566
 #, kde-format
 msgid "Original Orientation"
 msgstr "Treoshuíomh Bunúsach"
 
-#: part/pageview.cpp:578
+#: part/pageview.cpp:572
 #, kde-format
 msgid "&Trim View"
 msgstr "&Bearr an Radharc"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:576
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Bearr na hImill"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:583
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Bearr go dtí an &Roghnú"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:589
 #, kde-format
 msgid "Fit &Width"
 msgstr "Oiriúnaigh don &Leithead"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:593
 #, kde-format
 msgid "Fit &Page"
 msgstr "Laghdai&gh go dtí an Leathanach"
 
-#: part/pageview.cpp:603
+#: part/pageview.cpp:597
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Oiriú Uathoibríoch"
 
-#: part/pageview.cpp:607
+#: part/pageview.cpp:601
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Oiriúnaigh an Fhuinneog don Leathanach"
 
-#: part/pageview.cpp:614
+#: part/pageview.cpp:608
 #, kde-format
 msgid "&View Mode"
 msgstr "Mód &Amhairc"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Leathanach Aonair"
 
-#: part/pageview.cpp:627
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Leathanaigh atá os comhair"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Leathanaigh Os Comhair (& Lár an Chéad Leathanach)"
 
-#: part/pageview.cpp:631
+#: part/pageview.cpp:625
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Forbhreathnú"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:637
 #, kde-format
 msgid "&Continuous"
 msgstr "&Leanúnach"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:644
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Úsáid Treo Léitheoireachta Deas go Clé"
 
-#: part/pageview.cpp:659
+#: part/pageview.cpp:653
 #, kde-format
 msgid "&Browse"
 msgstr "&Brabhsáil"
 
-#: part/pageview.cpp:667
+#: part/pageview.cpp:661
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:687
+#: part/pageview.cpp:681
 #, kde-format
 msgid "Area &Selection"
 msgstr "Limistéar &Roghnú"
 
-#: part/pageview.cpp:694
+#: part/pageview.cpp:688
 #, kde-format
 msgid "&Text Selection"
 msgstr "Roghnú &Téacs"
 
-#: part/pageview.cpp:701
+#: part/pageview.cpp:695
 #, kde-format
 msgid "T&able Selection"
 msgstr "Roghnú Tábl&a"
 
-#: part/pageview.cpp:708
+#: part/pageview.cpp:702
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Formhéadaitheoir"
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:711
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Uirlisí Roghnúcháin"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:737
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Go digiteach & Sínigh…"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Léigh an Cháipéis Iomlán"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Labhair Ón Leathanach Reatha"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:753
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Léigh an Leathanach Reatha"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:758
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Stad an Léamh"
 
-#: part/pageview.cpp:769
+#: part/pageview.cpp:763
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Sos/Atosú ag Labhairt"
 
-#: part/pageview.cpp:781
+#: part/pageview.cpp:775
 #, kde-format
 msgid "Scroll Up"
 msgstr "Scrollaigh Suas"
 
-#: part/pageview.cpp:787
+#: part/pageview.cpp:781
 #, kde-format
 msgid "Scroll Down"
 msgstr "Scrollaigh Síos"
 
-#: part/pageview.cpp:793
+#: part/pageview.cpp:787
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Scrollaigh Leathanach Suas"
 
-#: part/pageview.cpp:799
+#: part/pageview.cpp:793
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Scrollaigh Leathanach Síos"
 
-#: part/pageview.cpp:805
+#: part/pageview.cpp:799
 #, kde-format
 msgid "Show Forms"
 msgstr "Taispeáin Foirmeacha"
 
-#: part/pageview.cpp:1318
+#: part/pageview.cpp:1311
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3912,12 +3924,12 @@ msgstr[2] " Luchtaíodh doiciméad %1 leathanach."
 msgstr[3] " Luchtaíodh doiciméad %1 leathanach."
 msgstr[4] " Luchtaíodh doiciméad %1 leathanach."
 
-#: part/pageview.cpp:2591
+#: part/pageview.cpp:2582
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Cóipeáil Ábhar an Tábla chuig an nGearrthaisce"
 
-#: part/pageview.cpp:2941
+#: part/pageview.cpp:2932
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3927,82 +3939,82 @@ msgstr[2] "Téacs (%1 carachtar)"
 msgstr[3] "Téacs (%1 carachtar)"
 msgstr[4] "Téacs (%1 carachtar)"
 
-#: part/pageview.cpp:2942 part/pageview.cpp:2964
+#: part/pageview.cpp:2933 part/pageview.cpp:2955
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Cóipeáil go dtí an Ghearrthaisce"
 
-#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:834
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:834
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Cóipeáil Téacs (Gan sosanna líne)"
 
-#: part/pageview.cpp:2955 part/pageview.cpp:3167
+#: part/pageview.cpp:2946 part/pageview.cpp:3158
 #, kde-format
 msgid "Speak Text"
 msgstr "Léigh an Téacs"
 
-#: part/pageview.cpp:2963
+#: part/pageview.cpp:2954
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Íomhá (%1 × %2 picteilín)"
 
-#: part/pageview.cpp:2965
+#: part/pageview.cpp:2956
 #, kde-format
 msgid "Save to File…"
 msgstr "Sábháil chuig Comhad…"
 
-#: part/pageview.cpp:2985
+#: part/pageview.cpp:2976
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Íomhá [%1 × %2] cóipeáilte chuig an ghearrthaisce."
 
-#: part/pageview.cpp:2988
+#: part/pageview.cpp:2979
 #, kde-format
 msgid "Save file"
 msgstr "Sábháil comhad"
 
-#: part/pageview.cpp:2988
+#: part/pageview.cpp:2979
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Íomhánna (*.png *.jpeg)"
 
-#: part/pageview.cpp:2990
+#: part/pageview.cpp:2981
 #, kde-format
 msgid "File not saved."
 msgstr "Níor sábháladh an comhad."
 
-#: part/pageview.cpp:3001
+#: part/pageview.cpp:2992
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Íomhá [%1 × %2] sábháilte i gcomhad %3."
 
-#: part/pageview.cpp:3162
+#: part/pageview.cpp:3153
 #, kde-format
 msgid "Copy Text"
 msgstr "Cóipeáil Téacs"
 
-#: part/pageview.cpp:3185
+#: part/pageview.cpp:3176
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Téigh go '%1'"
 
-#: part/pageview.cpp:4227 part/part.cpp:3180
+#: part/pageview.cpp:4205 part/part.cpp:3188
 #, kde-format
 msgid "Fit Width"
 msgstr "Leithead Oiriúnach"
 
-#: part/pageview.cpp:4227
+#: part/pageview.cpp:4205
 #, kde-format
 msgid "Fit Page"
 msgstr "Oiriúnaigh an Leathanach"
 
-#: part/pageview.cpp:4227
+#: part/pageview.cpp:4205
 #, kde-format
 msgid "Auto Fit"
 msgstr "Oiriúnú Uathoibríoch"
 
-#: part/pageview.cpp:4250
+#: part/pageview.cpp:4228
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4011,67 +4023,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4533
+#: part/pageview.cpp:4511
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Déan cuardach ar '%1' le"
 
-#: part/pageview.cpp:4547
+#: part/pageview.cpp:4525
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Cumraigh Aicearraí Gréasáin…"
 
-#: part/pageview.cpp:4573
+#: part/pageview.cpp:4551
 #, kde-format
 msgid "Follow This Link"
 msgstr "Lean an Nasc Seo"
 
-#: part/pageview.cpp:4576
+#: part/pageview.cpp:4554
 #, kde-format
 msgid "Play this Sound"
 msgstr "Seinn an Fuaim seo"
 
-#: part/pageview.cpp:4578
+#: part/pageview.cpp:4556
 #, kde-format
 msgid "Stop Sound"
 msgstr "Stop Fuaim"
 
-#: part/pageview.cpp:4584
+#: part/pageview.cpp:4562
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Cóipeáil Seoladh an Naisc"
 
-#: part/pageview.cpp:4641
+#: part/pageview.cpp:4619
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Cuardaigh '%1' sa cháipéis seo"
 
-#: part/pageview.cpp:5173
+#: part/pageview.cpp:5151
 #, kde-format
 msgid "Welcome"
 msgstr "Fáilte"
 
-#: part/pageview.cpp:5299
+#: part/pageview.cpp:5277
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Roghnaigh limistéar súmála. Deaschliceáil le súmáil amach."
 
-#: part/pageview.cpp:5314
+#: part/pageview.cpp:5292
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Cliceáil chun an radharc formhéadaithe a fheiceáil."
 
-#: part/pageview.cpp:5331
+#: part/pageview.cpp:5309
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dear dronuilleog timpeall an téacs/grafaic is mian leat cóipeáil."
 
-#: part/pageview.cpp:5347
+#: part/pageview.cpp:5325
 #, kde-format
 msgid "Select text"
 msgstr "Roghnaigh téacs"
 
-#: part/pageview.cpp:5363
+#: part/pageview.cpp:5341
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4080,7 +4092,7 @@ msgstr ""
 "Tarraing dronuilleog timpeall an tábla, ansin cliceáil in aice leis na "
 "himill chun é a roinnt; brúigh Esc chun é a ghlanadh."
 
-#: part/pageview.cpp:5378 part/pageview.cpp:5386
+#: part/pageview.cpp:5356 part/pageview.cpp:5364
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4089,17 +4101,17 @@ msgstr ""
 "Tá do theastais shínithe uile neamhbhailí. Sa chás go n-oibrigh an síniú "
 "roimhe seo, seiceáil a ndátaí bailíochta le do thoil."
 
-#: part/pageview.cpp:5379
+#: part/pageview.cpp:5357
 #, kde-format
 msgid "No valid certificates"
 msgstr "Gan aon deimhnithe bailí"
 
-#: part/pageview.cpp:5380 part/pageview.cpp:5395
+#: part/pageview.cpp:5358 part/pageview.cpp:5373
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Bainisteoir Teastas Oscailte"
 
-#: part/pageview.cpp:5391
+#: part/pageview.cpp:5369
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4111,12 +4123,12 @@ msgstr ""
 "féach ar an rannóg faoi <a href=\"%1\">Sínithe Digiteacha a Chur Leis</a> sa "
 "lámhleabhar."
 
-#: part/pageview.cpp:5394 part/pageview.cpp:5406
+#: part/pageview.cpp:5372 part/pageview.cpp:5384
 #, kde-format
 msgid "No certificates found"
 msgstr "Níor aimsíodh aon teastais"
 
-#: part/pageview.cpp:5404
+#: part/pageview.cpp:5382
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4127,18 +4139,18 @@ msgstr ""
 "ar an rannóg faoi <a href=\"%1\">Sínithe Digiteacha a Chur Leis</a> sa "
 "lámhleabhar."
 
-#: part/pageview.cpp:5429
+#: part/pageview.cpp:5407
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Tá athruithe neamhshábháilte agat. Sábháil an doiciméad sula síneoidh tú é."
 
-#: part/pageview.cpp:5452
+#: part/pageview.cpp:5430
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Tarraing dronuilleog chun an réimse sínithe a chur isteach"
 
-#: part/pageview.cpp:5602
+#: part/pageview.cpp:5580
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4494,7 +4506,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Cumraigh Móid Dathanna…"
 
-#: part/part.cpp:826 part/part.cpp:3185
+#: part/part.cpp:826 part/part.cpp:3193
 #, fuzzy, kde-format
 #| msgctxt "Change an annotation's size"
 #| msgid "adjust annotation"
@@ -4571,7 +4583,7 @@ msgstr "Cumraigh na nótaí…"
 msgid "Play/Pause Presentation"
 msgstr "Seinn/Sos Cur i Láthair"
 
-#: part/part.cpp:1105
+#: part/part.cpp:1109
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4582,27 +4594,27 @@ msgstr ""
 "cineál seo doiciméid a shábháil.\n"
 "Caillfear aon mhodhnú a luaithe a dhúnfar Okular."
 
-#: part/part.cpp:1106
+#: part/part.cpp:1110
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Ní féidir an doiciméad a shábháil"
 
-#: part/part.cpp:1135
+#: part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Níorbh fhéidir '%1' (%2) a oscailt "
 
-#: part/part.cpp:1188
+#: part/part.cpp:1192
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Cealaíodh luchtú %1."
 
-#: part/part.cpp:1204
+#: part/part.cpp:1208
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Níorbh fhéidir %1 a oscailt. Fáth: %2"
 
-#: part/part.cpp:1298
+#: part/part.cpp:1302
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4611,44 +4623,44 @@ msgstr ""
 "Níor aimsíodh an clár \"ps2pdf\", mar sin ní féidir le Okular comhaid PS a "
 "allmhairiú ag baint úsáide as."
 
-#: part/part.cpp:1298
+#: part/part.cpp:1302
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf gan aimsiú"
 
-#: part/part.cpp:1303
+#: part/part.cpp:1307
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "Comhaid PostScript (%1)"
 
-#: part/part.cpp:1319
+#: part/part.cpp:1323
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Ag iompórtáil comhad PS mar PDF (d’fhéadfadh sé seo tamall a thógáil)…"
 
-#: part/part.cpp:1451
+#: part/part.cpp:1455
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Cuir isteach an focal faire le do thoil chun an doiciméad a léamh:"
 
-#: part/part.cpp:1453
+#: part/part.cpp:1457
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Focal faire mícheart. Triail arís é:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1468
 #, kde-format
 msgid "Document Password"
 msgstr "Pasfhocal Doiciméid"
 
-#: part/part.cpp:1587
+#: part/part.cpp:1591
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Tá foirmeacha XFA sa cháipéis seo, <b>nach bhfuil tacaíocht</b> leo faoi "
 "láthair."
 
-#: part/part.cpp:1594
+#: part/part.cpp:1598
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4657,7 +4669,7 @@ msgstr ""
 "Tá foirmeacha sa cháipéis seo. Cliceáil an cnaipe chun idirghníomhú leo, nó "
 "úsáid Amharc -> Taispeáin Foirmeacha."
 
-#: part/part.cpp:1611
+#: part/part.cpp:1615
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4667,7 +4679,7 @@ msgstr ""
 "díchumasaithe. Sábháil cóip agus athoscail le do thoil chun an doiciméad seo "
 "a chur in eagar."
 
-#: part/part.cpp:1709
+#: part/part.cpp:1713
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4676,27 +4688,27 @@ msgstr ""
 "Ba mhaith an doiciméad seo a thaispeáint ar lánscáileán.\n"
 "Fág an gnáthmhód agus téigh isteach i mód cur i láthair?"
 
-#: part/part.cpp:1711
+#: part/part.cpp:1715
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Iarratas chun Mód Amharc a Athrú"
 
-#: part/part.cpp:1712
+#: part/part.cpp:1716
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Téigh isteach i Mód Cur i Láthair"
 
-#: part/part.cpp:1713
+#: part/part.cpp:1717
 #, kde-format
 msgid "Deny Request"
 msgstr "Diúltaigh Iarratas"
 
-#: part/part.cpp:1803
+#: part/part.cpp:1807
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Níorbh fhéidir %1 a oscailt. %2"
 
-#: part/part.cpp:1833
+#: part/part.cpp:1837
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4710,22 +4722,22 @@ msgstr ""
 "neamhshábháilte in ionad na n-athruithe a rinneadh sa chlár eile.<nl/><nl/"
 ">Ar mhaith leat leanúint ar aghaidh ag athlódáil an chomhaid?"
 
-#: part/part.cpp:1837 part/part.cpp:1847
+#: part/part.cpp:1841 part/part.cpp:1851
 #, kde-format
 msgid "File Changed"
 msgstr "Comhad Athraithe"
 
-#: part/part.cpp:1838
+#: part/part.cpp:1842
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Lean ar aghaidh ag athlódáil"
 
-#: part/part.cpp:1839
+#: part/part.cpp:1843
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Athlódáil a Thosaigh"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1847
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4739,29 +4751,29 @@ msgstr ""
 "neamhshábháilte in ionad na n-athruithe a rinneadh sa chlár eile.<nl/><nl/"
 ">Ar mhaith leat leanúint ar aghaidh ag dúnadh an chomhaid?"
 
-#: part/part.cpp:1848
+#: part/part.cpp:1852
 #, kde-format
 msgid "Continue Closing"
 msgstr "Lean ar aghaidh ag Dúnadh"
 
-#: part/part.cpp:1849
+#: part/part.cpp:1853
 #, kde-format
 msgid "Abort Closing"
 msgstr "Cealaigh Dúnadh"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1860
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr ""
 "Ar mhaith leat do chuid athruithe a shábháil chuig \"%1\" nó iad a "
 "chaitheamh amach?"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1860
 #, kde-format
 msgid "Close Document"
 msgstr "Dún an Cháipéis"
 
-#: part/part.cpp:1988
+#: part/part.cpp:1992
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4770,7 +4782,7 @@ msgstr ""
 "Tá an nasc seo ag tagairt do ghníomh chun doiciméad a dhúnadh nach n-"
 "oibríonn nuair a úsáidtear an breathnóir leabaithe."
 
-#: part/part.cpp:1994
+#: part/part.cpp:1998
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4779,59 +4791,59 @@ msgstr ""
 "Léiríonn an nasc seo gníomh scoir feidhmchláir nach n-oibríonn nuair a "
 "úsáidtear an breathnóir leabaithe."
 
-#: part/part.cpp:2086 part/part.cpp:2104
+#: part/part.cpp:2090 part/part.cpp:2112
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Ag athlódáil an doiciméid…"
 
-#: part/part.cpp:2273 part/toc.cpp:36
+#: part/part.cpp:2281 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Inneachar"
 
-#: part/part.cpp:2302 part/signaturepanel.cpp:45
+#: part/part.cpp:2310 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Sínithe"
 
-#: part/part.cpp:2329
+#: part/part.cpp:2337
 #, kde-format
 msgid "Go to Page"
 msgstr "Téigh go Leathanach"
 
-#: part/part.cpp:2352
+#: part/part.cpp:2360
 #, kde-format
 msgid "&Page:"
 msgstr "&Leathanach:"
 
-#: part/part.cpp:2445
+#: part/part.cpp:2453
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Cuir isteach ainm nua an leabharmharc:"
 
-#: part/part.cpp:2491
+#: part/part.cpp:2499
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Athainmnigh an Leabharmharc seo"
 
-#: part/part.cpp:2494
+#: part/part.cpp:2502
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Bain an Leabharmharc seo"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
+#: part/part.cpp:2588 part/part.cpp:2589 part/part.cpp:3505
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2588 part/revisionviewer.cpp:44
+#: part/part.cpp:2596 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Sábháil Mar"
 
-#: part/part.cpp:2605
+#: part/part.cpp:2613
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4840,18 +4852,18 @@ msgstr ""
 "Tá tú tar éis Cartlann Okular a shábháil gan ainm comhaid a chríochnaíonn "
 "leis an síneadh '%1'. Ní cheadaítear é sin, ar mhaith leat ainm nua a roghnú?"
 
-#: part/part.cpp:2606
+#: part/part.cpp:2614
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Síneadh gan tacaíocht"
 
-#: part/part.cpp:2607
+#: part/part.cpp:2615
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Roghnaigh Ainm Nua"
 
-#: part/part.cpp:2650
+#: part/part.cpp:2658
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4863,17 +4875,17 @@ msgstr ""
 "tú anois, caillfear aon athruithe a rinneadh sa chlár eile. An bhfuil tú "
 "cinnte gur mian leat leanúint ar aghaidh?"
 
-#: part/part.cpp:2653 part/part.cpp:2672 part/part.cpp:2724
+#: part/part.cpp:2661 part/part.cpp:2680 part/part.cpp:2732
 #, kde-format
 msgid "Save - Warning"
 msgstr "Sábháil - Rabhadh"
 
-#: part/part.cpp:2655
+#: part/part.cpp:2663
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Sábháil Cóip in Áit Eile"
 
-#: part/part.cpp:2671
+#: part/part.cpp:2679
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4884,12 +4896,12 @@ msgstr ""
 "shábháil, ní mór é a athlódáil. Iarrfar an pasfhocal ort arís agus caillfear "
 "do stair cealaithe/athdhéanta.<br />Ar mhaith leat leanúint ar aghaidh?"
 
-#: part/part.cpp:2698
+#: part/part.cpp:2706
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Níorbh fhéidir an comhad sealadach a oscailt le haghaidh sábhála."
 
-#: part/part.cpp:2711
+#: part/part.cpp:2719
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4900,7 +4912,7 @@ msgstr ""
 "sin inléite amháin. Déan iarracht é a shábháil in áit eile nó ceadanna an "
 "chomhaid sin a athrú."
 
-#: part/part.cpp:2723
+#: part/part.cpp:2731
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4910,23 +4922,23 @@ msgstr ""
 "an doiciméid. Caillfear do stair chealaithe/athdhéanta.<br />Ar mhaith leat "
 "leanúint ar aghaidh?"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
+#: part/part.cpp:2746 part/part.cpp:2815 part/part.cpp:2836 part/part.cpp:3520
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Níorbh fhéidir an comhad a shábháil i '%1'. Bain triail as suíomh eile."
 
-#: part/part.cpp:2751
+#: part/part.cpp:2759
 #, kde-format
 msgid "Filled form contents"
 msgstr "Ábhar na foirme líonta"
 
-#: part/part.cpp:2754
+#: part/part.cpp:2762
 #, kde-format
 msgid "User annotations"
 msgstr "Nótaí úsáideora"
 
-#: part/part.cpp:2759
+#: part/part.cpp:2767
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4937,17 +4949,17 @@ msgstr ""
 "reatha le sábháil na n-eilimintí seo a leanas. Bain úsáid as an bhformáid "
 "<i>cartlann doiciméad Okular</i> le do thoil chun iad a chaomhnú."
 
-#: part/part.cpp:2763 part/part.cpp:2785
+#: part/part.cpp:2771 part/part.cpp:2793
 #, kde-format
 msgid "Warning"
 msgstr "Rabhadh"
 
-#: part/part.cpp:2764 part/part.cpp:2786
+#: part/part.cpp:2772 part/part.cpp:2794
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Sábháil mar chartlann doiciméad Okular…"
 
-#: part/part.cpp:2776
+#: part/part.cpp:2784
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4961,7 +4973,7 @@ msgstr ""
 "<i>Lean ar aghaidh</i> chun an doiciméad a shábháil agus na heilimintí seo a "
 "chaitheamh amach."
 
-#: part/part.cpp:2779
+#: part/part.cpp:2787
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4975,22 +4987,22 @@ msgstr ""
 "<i>Lean ar aghaidh</i> chun iad a shábháil, ach caillfidh tú na heilimintí "
 "seo chomh maith leis an stair cealaithe/athdhéanta."
 
-#: part/part.cpp:2781
+#: part/part.cpp:2789
 #, kde-format
 msgid "Continue"
 msgstr "Lean ar aghaidh"
 
-#: part/part.cpp:2781
+#: part/part.cpp:2789
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Lean ort ag cailleadh athruithe"
 
-#: part/part.cpp:2809
+#: part/part.cpp:2817
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Níorbh fhéidir an comhad a shábháil i '%1'. %2"
 
-#: part/part.cpp:2848
+#: part/part.cpp:2856
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5001,7 +5013,7 @@ msgstr ""
 "\n"
 "Níl an doiciméad ann a thuilleadh."
 
-#: part/part.cpp:2884
+#: part/part.cpp:2892
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5010,44 +5022,44 @@ msgstr ""
 "Níorbh fhéidir an comhad a shábháil i '%1'. Earráid: '%2'. Déan iarracht é a "
 "shábháil in áit eile."
 
-#: part/part.cpp:3155
+#: part/part.cpp:3163
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Leathnaigh an Rannóg Iomlán"
 
-#: part/part.cpp:3156
+#: part/part.cpp:3164
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Laghdaigh an Rannóg Iomlán"
 
-#: part/part.cpp:3172
+#: part/part.cpp:3180
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sioncrónaigh Mionsamhail leis an Leathanach"
 
-#: part/part.cpp:3204
+#: part/part.cpp:3212
 #, kde-format
 msgid "Tools"
 msgstr "Uirlisí"
 
-#: part/part.cpp:3392
+#: part/part.cpp:3400
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Labhair"
 
-#: part/part.cpp:3550
+#: part/part.cpp:3558
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Priontáil"
 
-#: part/part.cpp:3613
+#: part/part.cpp:3621
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Níl cead agat an cháipéis seo a phriontáil."
 
-#: part/part.cpp:3626
+#: part/part.cpp:3634
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5055,7 +5067,7 @@ msgstr ""
 "Níorbh fhéidir an doiciméad a phriontáil. Earráid anaithnid. Tuairiscigh "
 "chuig bugs.kde.org le do thoil"
 
-#: part/part.cpp:3628
+#: part/part.cpp:3636
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5064,17 +5076,17 @@ msgstr ""
 "Níorbh fhéidir an doiciméad a phriontáil. Is é \"%1\" an earráid "
 "mhionsonraithe. Tuairiscigh chuig bugs.kde.org le do thoil"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3728
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Téigh go dtí an áit a raibh tú roimhe seo"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3732
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Téigh go dtí an áit a raibh tú ag iarraidh"
 
-#: part/part.cpp:3749
+#: part/part.cpp:3757
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5083,7 +5095,7 @@ msgstr ""
 "<qt><strong>Earráid Chomhaid!</strong> Níorbh fhéidir comhad sealadach "
 "<nobr><strong>%1</strong></nobr> a chruthú.</qt>"
 
-#: part/part.cpp:3761
+#: part/part.cpp:3769
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5093,7 +5105,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> a oscailt le haghaidh dí-chomhbhrú. Ní "
 "luchtófar an comhad.</qt>"
 
-#: part/part.cpp:3765
+#: part/part.cpp:3773
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5107,7 +5119,7 @@ msgstr ""
 "ansin roghnaigh an rogha 'Airíonna', agus roghnaigh an cluaisín 'Ceadanna' "
 "sa fhuinneog a osclaítear.</qt>"
 
-#: part/part.cpp:3787
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5117,7 +5129,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> a dhí-chomhbhrú. Ní luchtófar an comhad.</"
 "qt>"
 
-#: part/part.cpp:3791
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5127,27 +5139,27 @@ msgstr ""
 "mian leat a bheith cinnte, déan iarracht an comhad a dhí-chomhbhrú de láimh "
 "ag baint úsáide as uirlisí líne ordaithe.</qt>"
 
-#: part/part.cpp:3817
+#: part/part.cpp:3825
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Gan Leabharmharcanna"
 
-#: part/part.cpp:3888
+#: part/part.cpp:3896
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Bhí fadhb ann an doiciméad a roinnt: %1"
 
-#: part/part.cpp:3888 part/part.cpp:3894
+#: part/part.cpp:3896 part/part.cpp:3902
 #, kde-format
 msgid "Share"
 msgstr "Comhroinn"
 
-#: part/part.cpp:3892
+#: part/part.cpp:3900
 #, kde-format
 msgid "Document shared successfully"
 msgstr "D'éirigh le roinnt an doiciméid"
 
-#: part/part.cpp:3894
+#: part/part.cpp:3902
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
@@ -5511,11 +5523,6 @@ msgstr "Cló anaithnid"
 #, kde-format
 msgid "Embedded: %1"
 msgstr "Leabaithe: %1"
-
-#: part/propertiesdialog.cpp:424
-#, kde-format
-msgid "Name"
-msgstr "Ainm"
 
 #: part/propertiesdialog.cpp:427
 #, kde-format

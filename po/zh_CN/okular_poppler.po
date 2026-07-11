@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"POT-Creation-Date: 2026-07-11 02:37+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_poppler.pot\n"
-"X-Crowdin-File-ID: 48902\n"
+"X-Crowdin-File: /kf6-stable/messages/okular/okular_poppler.pot\n"
+"X-Crowdin-File-ID: 51872\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,10 +34,9 @@ msgid "Failed writing temporary file"
 msgstr "写入临时文件失败"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "重命名临时文件失败"
+msgstr ""
 
 #: annots.cpp:607
 #, kde-format
@@ -189,7 +188,7 @@ msgstr "加载签名(&L)"
 #: formfields.cpp:561
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
-msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "重命名临时文件失败"
 
 #: generator_pdf.cpp:85
@@ -318,10 +317,9 @@ msgid "PDF Backend Configuration"
 msgstr "PDF 后端程序配置"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "重命名临时文件失败"
+msgstr ""
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -362,11 +360,10 @@ msgid "Expiration date"
 msgstr "过期日期"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "可用证书"
+msgstr ""
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

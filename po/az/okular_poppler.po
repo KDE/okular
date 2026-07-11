@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"POT-Creation-Date: 2026-07-11 02:37+0000\n"
 "PO-Revision-Date: 2023-06-30 11:51+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -191,7 +191,7 @@ msgstr "İmzaları Yük&ləmək"
 
 #: formfields.cpp:561
 #, kde-format
-msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr ""
 
 #: generator_pdf.cpp:85

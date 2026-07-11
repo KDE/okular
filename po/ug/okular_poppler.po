@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"POT-Creation-Date: 2026-07-11 02:37+0000\n"
 "PO-Revision-Date: 2026-06-01 16:31-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -195,7 +195,7 @@ msgstr "ئىمزا يۈكلە(&L)"
 #: formfields.cpp:561
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
-msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "ۋاقىتلىق ھۆججەت ئاتىنى ئۆزگەرتەلمىدى"
 
 #: generator_pdf.cpp:85

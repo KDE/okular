@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-08 02:43+0000\n"
+"POT-Creation-Date: 2026-07-11 02:37+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -392,7 +392,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Veľkosť tlače strany je neplatná"
 
-#: core/document.cpp:5445 part/part.cpp:1128
+#: core/document.cpp:5445 part/part.cpp:1132
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepodarilo sa otvoriť \"%1\". Súbor neexisstuje."
@@ -617,8 +617,9 @@ msgid "Signing cancelled by user"
 msgstr "Signing cancelled by user"
 
 #: core/signatureutils.cpp:516
-#, kde-format
-msgid "Could not sign. Wrong passphrase"
+#, fuzzy, kde-format
+#| msgid "Could not sign. Wrong passphrase"
+msgid "Signing failed: Wrong passphrase"
 msgstr "Could not sign. Wrong passphrase"
 
 #: core/signatureutils.cpp:518
@@ -647,63 +648,69 @@ msgstr "Zdroj: %1"
 msgid "&Default Font:"
 msgstr "Predvolené písmo:"
 
-#: gui/certificatemodel.cpp:39
+#: gui/certificatemodel.cpp:51
 #, kde-format
 msgid "Version"
 msgstr "Verzia"
 
-#: gui/certificatemodel.cpp:41
+#: gui/certificatemodel.cpp:53
 #, kde-format
 msgid "Serial Number"
 msgstr "Sériové číslo"
 
-#: gui/certificatemodel.cpp:43
+#: gui/certificatemodel.cpp:55
 #, kde-format
 msgid "Issuer"
 msgstr "Vydavateľ"
 
-#: gui/certificatemodel.cpp:45 part/certificateviewer.cpp:88
+#: gui/certificatemodel.cpp:57 part/certificateviewer.cpp:89
 #, kde-format
 msgid "Issued On"
 msgstr "Vydané (kedy)"
 
-#: gui/certificatemodel.cpp:47 part/certificateviewer.cpp:89
+#: gui/certificatemodel.cpp:59 part/certificateviewer.cpp:90
 #, kde-format
 msgid "Expires On"
 msgstr "Expiruje"
 
-#: gui/certificatemodel.cpp:49
+#: gui/certificatemodel.cpp:61
 #, kde-format
 msgctxt "The person/company that made the signature"
 msgid "Subject"
 msgstr "Predmet"
 
-#: gui/certificatemodel.cpp:51
+#: gui/certificatemodel.cpp:61
+#, kde-format
+msgctxt "Name/email on key"
+msgid "User Id"
+msgstr ""
+
+#: gui/certificatemodel.cpp:63
 #, kde-format
 msgid "Public Key"
 msgstr "Verejný kľúč"
 
-#: gui/certificatemodel.cpp:53
+#: gui/certificatemodel.cpp:65
 #, kde-format
 msgid "Key Usage"
 msgstr "Použitie kľúča"
 
-#: gui/certificatemodel.cpp:72
+#: gui/certificatemodel.cpp:84
 #, kde-format
 msgid "V%1"
 msgstr "V%1"
 
-#: gui/certificatemodel.cpp:84
+#: gui/certificatemodel.cpp:96
 #, kde-format
 msgid "%1 (%2 bits)"
 msgstr "%1 (%2 bity)"
 
-#: gui/certificatemodel.cpp:146
+#: gui/certificatemodel.cpp:158
 #, kde-format
 msgid "Property"
 msgstr "Vlastníctvo"
 
-#: gui/certificatemodel.cpp:148
+#: gui/certificatemodel.cpp:160
 #, kde-format
 msgid "Value"
 msgstr "Hodnota"
@@ -1664,7 +1671,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Stránka %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3169
+#: part/annotationmodel.cpp:324 part/part.cpp:3177
 #, kde-format
 msgid "Page %1"
 msgstr "Stránka %1"
@@ -1684,12 +1691,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Otvoriť vyskakovaciu poznámku"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2250 part/part.cpp:3175
+#: part/bookmarklist.cpp:263 part/part.cpp:2258 part/part.cpp:3183
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Odstrániť záložku"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3177
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3185
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Pridať záložku"
@@ -1710,8 +1717,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopírovať text do schránky"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2597 part/pageview.cpp:2949 part/pageview.cpp:2951
-#: part/pageview.cpp:3111 part/pageview.cpp:3172 part/pageview.cpp:3174
+#: part/pageview.cpp:2588 part/pageview.cpp:2940 part/pageview.cpp:2942
+#: part/pageview.cpp:3102 part/pageview.cpp:3163 part/pageview.cpp:3165
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Kopírovanie zakázané kvôli DRM"
@@ -2216,17 +2223,17 @@ msgctxt "Symbol for caret annotations"
 msgid "P"
 msgstr "P"
 
-#: part/annotwindow.cpp:59
+#: part/annotwindow.cpp:58
 #, kde-format
 msgid "Close this note"
 msgstr "Zavrieť túto poznámku"
 
-#: part/annotwindow.cpp:139 part/findbar.cpp:63
+#: part/annotwindow.cpp:138 part/findbar.cpp:63
 #, kde-format
 msgid "Options"
 msgstr "Možnosti"
 
-#: part/annotwindow.cpp:150
+#: part/annotwindow.cpp:149
 #, kde-format
 msgid ""
 "This annotation may contain LaTeX code.\n"
@@ -2235,38 +2242,38 @@ msgstr ""
 "Táto poznámka môže obsahovať kód LaTeX.\n"
 "Kliknite sem na vykreslenie."
 
-#: part/annotwindow.cpp:231 part/annotwindow.cpp:253
+#: part/annotwindow.cpp:250 part/annotwindow.cpp:272
 #, kde-format
 msgid "Unknown author"
 msgstr "Neznámy autor"
 
-#: part/annotwindow.cpp:234 part/annotwindow.cpp:256
+#: part/annotwindow.cpp:253 part/annotwindow.cpp:275
 #, kde-format
 msgid "No date recognized"
 msgstr "Nerozpoznaný dátum"
 
-#: part/annotwindow.cpp:583
+#: part/annotwindow.cpp:562
 #, kde-format
 msgid "Cannot find latex executable."
 msgstr "Nie je možné nájsť program latex."
 
-#: part/annotwindow.cpp:583 part/annotwindow.cpp:588 part/annotwindow.cpp:593
-#: part/annotwindow.cpp:598
+#: part/annotwindow.cpp:562 part/annotwindow.cpp:567 part/annotwindow.cpp:572
+#: part/annotwindow.cpp:577
 #, kde-format
 msgid "LaTeX rendering failed"
 msgstr "LaTeX renderovanie zlyhalo"
 
-#: part/annotwindow.cpp:588
+#: part/annotwindow.cpp:567
 #, kde-format
 msgid "Cannot find dvipng executable."
 msgstr "Nie je možné nájsť program dvipng."
 
-#: part/annotwindow.cpp:593
+#: part/annotwindow.cpp:572
 #, kde-format
 msgid "A problem occurred during the execution of the 'latex' command."
 msgstr "Počas vykonania príkazu 'latex' nastala chyba."
 
-#: part/annotwindow.cpp:598
+#: part/annotwindow.cpp:577
 #, kde-format
 msgid "A problem occurred during the execution of the 'dvipng' command."
 msgstr "Počas vykonania príkazu 'dvipng' nastala chyba."
@@ -2311,12 +2318,12 @@ msgstr "Zobraziť pre všetky dokumenty"
 msgid "Search…"
 msgstr "Search…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3157
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3165
 #, kde-format
 msgid "Expand All"
 msgstr "Rozbaliť všetko"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3158
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3166
 #, kde-format
 msgid "Collapse All"
 msgstr "Zbaliť všetko"
@@ -2327,7 +2334,7 @@ msgid "Go to This Bookmark"
 msgstr "Prejsť na túto záložku"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
-#: part/part.cpp:2445
+#: part/part.cpp:2453
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Premenovať záložku"
@@ -2368,12 +2375,12 @@ msgstr "Vydané (kým)"
 msgid "Common Name(CN)"
 msgstr "Bežný názov (KN)"
 
-#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:77
+#: part/certificateviewer.cpp:67 part/certificateviewer.cpp:78
 #, kde-format
 msgid "EMail"
 msgstr "EMail"
 
-#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:80
+#: part/certificateviewer.cpp:68 part/certificateviewer.cpp:81
 #, kde-format
 msgid "Organization(O)"
 msgstr "Organizácia"
@@ -2383,12 +2390,17 @@ msgstr "Organizácia"
 msgid "Issued To"
 msgstr "Vydané (komu)"
 
-#: part/certificateviewer.cpp:85
+#: part/certificateviewer.cpp:76 part/propertiesdialog.cpp:424
+#, kde-format
+msgid "Name"
+msgstr "Názov"
+
+#: part/certificateviewer.cpp:86
 #, kde-format
 msgid "Validity"
 msgstr "Platnosť"
 
-#: part/certificateviewer.cpp:89
+#: part/certificateviewer.cpp:90
 #, fuzzy, kde-format
 #| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
 #| msgid "every "
@@ -2396,55 +2408,55 @@ msgctxt "certificate that never expires"
 msgid "Never"
 msgstr "každých "
 
-#: part/certificateviewer.cpp:93
+#: part/certificateviewer.cpp:94
 #, kde-format
 msgid "Fingerprints"
 msgstr "Odtlačky"
 
-#: part/certificateviewer.cpp:103
+#: part/certificateviewer.cpp:104
 #, kde-format
 msgid "SHA-1 Fingerprint"
 msgstr "Odtlačok SHA-1"
 
-#: part/certificateviewer.cpp:104
+#: part/certificateviewer.cpp:105
 #, kde-format
 msgid "SHA-256 Fingerprint"
 msgstr "Odtlačok SHA-256"
 
-#: part/certificateviewer.cpp:106
+#: part/certificateviewer.cpp:107
 #, fuzzy, kde-format
 #| msgid "Fingerprints"
 msgctxt "certificate key"
 msgid "Fingerprint"
 msgstr "Odtlačky"
 
-#: part/certificateviewer.cpp:115
+#: part/certificateviewer.cpp:116
 #, kde-format
 msgid "Details"
 msgstr "Podrobnosti"
 
-#: part/certificateviewer.cpp:116
+#: part/certificateviewer.cpp:117
 #, kde-format
 msgid "Certificate Data:"
 msgstr "Údaje certifikátu:"
 
-#: part/certificateviewer.cpp:168
+#: part/certificateviewer.cpp:178
 #, kde-format
 msgid "Where do you want to save this certificate?"
 msgstr "Kde chcete uložiť tento certifikát?"
 
-#: part/certificateviewer.cpp:172
+#: part/certificateviewer.cpp:182
 #, fuzzy, kde-format
 #| msgid "Certificate File (*.cer)"
 msgid "Certificate File (*.asc)"
 msgstr "Súbor certifikátu (*.cer)"
 
-#: part/certificateviewer.cpp:175
+#: part/certificateviewer.cpp:185
 #, kde-format
 msgid "Certificate File (*.cer)"
 msgstr "Súbor certifikátu (*.cer)"
 
-#: part/certificateviewer.cpp:181
+#: part/certificateviewer.cpp:191
 #, kde-format
 msgid "Could not export the certificate"
 msgstr "Nepodarilo sa exportovať certifikát"
@@ -3669,7 +3681,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Regulárny výraz"
 
-#: part/layers.cpp:33 part/part.cpp:2293
+#: part/layers.cpp:33 part/part.cpp:2301
 #, kde-format
 msgid "Layers"
 msgstr "Vrstvy"
@@ -3680,210 +3692,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "z"
 
-#: part/pageview.cpp:539
+#: part/pageview.cpp:533
 #, kde-format
 msgid "Zoom"
 msgstr "Lupa"
 
-#: part/pageview.cpp:551
+#: part/pageview.cpp:545
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Priblížiť na 100%"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Otočiť dop&rava"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:557
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Doprava"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Otočiť doľa&va"
 
-#: part/pageview.cpp:568
+#: part/pageview.cpp:562
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Doľava"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:566
 #, kde-format
 msgid "Original Orientation"
 msgstr "Pôvodná orientácia"
 
-#: part/pageview.cpp:578
+#: part/pageview.cpp:572
 #, kde-format
 msgid "&Trim View"
 msgstr "&Orezať pohľad"
 
-#: part/pageview.cpp:582
+#: part/pageview.cpp:576
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Orezať okraje"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:583
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Orezať na výber"
 
-#: part/pageview.cpp:595
+#: part/pageview.cpp:589
 #, kde-format
 msgid "Fit &Width"
 msgstr "&Prispôsobiť šírke"
 
-#: part/pageview.cpp:599
+#: part/pageview.cpp:593
 #, kde-format
 msgid "Fit &Page"
 msgstr "P&rispôsobiť stránke"
 
-#: part/pageview.cpp:603
+#: part/pageview.cpp:597
 #, kde-format
 msgid "&Auto Fit"
 msgstr "Automaticky prispôsobiť"
 
-#: part/pageview.cpp:607
+#: part/pageview.cpp:601
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Prispôsobiť okno stránke"
 
-#: part/pageview.cpp:614
+#: part/pageview.cpp:608
 #, kde-format
 msgid "&View Mode"
 msgstr "&Režim zobrazenia"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Jedna stránka"
 
-#: part/pageview.cpp:627
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Protiľahlé stránky"
 
-#: part/pageview.cpp:628
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Protiľahlé stránky (Prvú stránku zarovnať na stred)"
 
-#: part/pageview.cpp:631
+#: part/pageview.cpp:625
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Prehľad"
 
-#: part/pageview.cpp:643
+#: part/pageview.cpp:637
 #, kde-format
 msgid "&Continuous"
 msgstr "&Súvislý"
 
-#: part/pageview.cpp:650
+#: part/pageview.cpp:644
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Použiť smer čítania sprava doľava"
 
-#: part/pageview.cpp:659
+#: part/pageview.cpp:653
 #, kde-format
 msgid "&Browse"
 msgstr "Prehliadanie"
 
-#: part/pageview.cpp:667
+#: part/pageview.cpp:661
 #, kde-format
 msgid "&Zoom"
 msgstr "Lupa"
 
-#: part/pageview.cpp:687
+#: part/pageview.cpp:681
 #, kde-format
 msgid "Area &Selection"
 msgstr "Výber oblasti"
 
-#: part/pageview.cpp:694
+#: part/pageview.cpp:688
 #, kde-format
 msgid "&Text Selection"
 msgstr "Výber textu"
 
-#: part/pageview.cpp:701
+#: part/pageview.cpp:695
 #, kde-format
 msgid "T&able Selection"
 msgstr "Výber tabuľky"
 
-#: part/pageview.cpp:708
+#: part/pageview.cpp:702
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Lupa"
 
-#: part/pageview.cpp:717
+#: part/pageview.cpp:711
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Nástroje výberu"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:737
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Digitálne podpísať..."
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Prečítať celý dokument"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Prečítať od aktuálnej stránky"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:753
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Prečítať aktuálnu stránku"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:758
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Zastaviť čítanie"
 
-#: part/pageview.cpp:769
+#: part/pageview.cpp:763
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pozastaviť/Pokračovať reč"
 
-#: part/pageview.cpp:781
+#: part/pageview.cpp:775
 #, kde-format
 msgid "Scroll Up"
 msgstr "Posunúť hore"
 
-#: part/pageview.cpp:787
+#: part/pageview.cpp:781
 #, kde-format
 msgid "Scroll Down"
 msgstr "Posunúť dole"
 
-#: part/pageview.cpp:793
+#: part/pageview.cpp:787
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Posun o stránku hore"
 
-#: part/pageview.cpp:799
+#: part/pageview.cpp:793
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Posun o stránku dole"
 
-#: part/pageview.cpp:805
+#: part/pageview.cpp:799
 #, kde-format
 msgid "Show Forms"
 msgstr "Zobraziť formuláre"
 
-#: part/pageview.cpp:1318
+#: part/pageview.cpp:1311
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3891,12 +3903,12 @@ msgstr[0] " Načítaný jednostránkový dokument."
 msgstr[1] " Načítaný %1-stránkový dokument."
 msgstr[2] " Načítaný %1-stránkový dokument."
 
-#: part/pageview.cpp:2591
+#: part/pageview.cpp:2582
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopírovať obsah tabuľky do schránky"
 
-#: part/pageview.cpp:2941
+#: part/pageview.cpp:2932
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3904,82 +3916,82 @@ msgstr[0] "Text (1 znak)"
 msgstr[1] "Text (%1 znaky)"
 msgstr[2] "Text (%1 znakov)"
 
-#: part/pageview.cpp:2942 part/pageview.cpp:2964
+#: part/pageview.cpp:2933 part/pageview.cpp:2955
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopírovať do schránky"
 
-#: part/pageview.cpp:2944 part/pageview.cpp:3163 part/part.cpp:834
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:834
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopírovať text (bez zalomení riadkov)"
 
-#: part/pageview.cpp:2955 part/pageview.cpp:3167
+#: part/pageview.cpp:2946 part/pageview.cpp:3158
 #, kde-format
 msgid "Speak Text"
 msgstr "Prečítať text"
 
-#: part/pageview.cpp:2963
+#: part/pageview.cpp:2954
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Obrázok (%1 x %2 pixelov)"
 
-#: part/pageview.cpp:2965
+#: part/pageview.cpp:2956
 #, kde-format
 msgid "Save to File…"
 msgstr "Uložiť do súboru..."
 
-#: part/pageview.cpp:2985
+#: part/pageview.cpp:2976
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Obrázok [%1x%2] skopírovaný do schránky."
 
-#: part/pageview.cpp:2988
+#: part/pageview.cpp:2979
 #, kde-format
 msgid "Save file"
 msgstr "Uložiť súbor"
 
-#: part/pageview.cpp:2988
+#: part/pageview.cpp:2979
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Obrázky (*.png *.jpeg)"
 
-#: part/pageview.cpp:2990
+#: part/pageview.cpp:2981
 #, kde-format
 msgid "File not saved."
 msgstr "Súbor nebol uložený."
 
-#: part/pageview.cpp:3001
+#: part/pageview.cpp:2992
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Obrázok [%1x%2] bol uložený do súboru %3."
 
-#: part/pageview.cpp:3162
+#: part/pageview.cpp:3153
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopírovať text"
 
-#: part/pageview.cpp:3185
+#: part/pageview.cpp:3176
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Prejsť na '%1'"
 
-#: part/pageview.cpp:4227 part/part.cpp:3180
+#: part/pageview.cpp:4205 part/part.cpp:3188
 #, kde-format
 msgid "Fit Width"
 msgstr "Prispôsobiť šírke"
 
-#: part/pageview.cpp:4227
+#: part/pageview.cpp:4205
 #, kde-format
 msgid "Fit Page"
 msgstr "Prispôsobiť stránke"
 
-#: part/pageview.cpp:4227
+#: part/pageview.cpp:4205
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automaticky prispôsobiť"
 
-#: part/pageview.cpp:4250
+#: part/pageview.cpp:4228
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3988,68 +4000,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4533
+#: part/pageview.cpp:4511
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Hľadať '%1' pomocou"
 
-#: part/pageview.cpp:4547
+#: part/pageview.cpp:4525
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Nastaviť webové skratky..."
 
-#: part/pageview.cpp:4573
+#: part/pageview.cpp:4551
 #, kde-format
 msgid "Follow This Link"
 msgstr "Nasledovať tento odkaz"
 
-#: part/pageview.cpp:4576
+#: part/pageview.cpp:4554
 #, kde-format
 msgid "Play this Sound"
 msgstr "Prehrať tento zvuk"
 
-#: part/pageview.cpp:4578
+#: part/pageview.cpp:4556
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zastaviť zvuk"
 
-#: part/pageview.cpp:4584
+#: part/pageview.cpp:4562
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopírovať adresu odkazu"
 
-#: part/pageview.cpp:4641
+#: part/pageview.cpp:4619
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Hľadať '%1' v tomto dokumente"
 
-#: part/pageview.cpp:5173
+#: part/pageview.cpp:5151
 #, kde-format
 msgid "Welcome"
 msgstr "Vitajte"
 
-#: part/pageview.cpp:5299
+#: part/pageview.cpp:5277
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Vyberte oblasť, ktorú chcete zväčšiť. Pravým kliknutím oblasť zmenšíte."
 
-#: part/pageview.cpp:5314
+#: part/pageview.cpp:5292
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite na zobrazenie zväčšenia zobrazenia."
 
-#: part/pageview.cpp:5331
+#: part/pageview.cpp:5309
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Okolo kopírovaného textu/grafiky urobte myšou obdĺžnik."
 
-#: part/pageview.cpp:5347
+#: part/pageview.cpp:5325
 #, kde-format
 msgid "Select text"
 msgstr "Vyberte text"
 
-#: part/pageview.cpp:5363
+#: part/pageview.cpp:5341
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4058,7 +4070,7 @@ msgstr ""
 "Nakreslite obdĺžnik okolo tabuľky, potom kliknite vedľa okrajov na "
 "rozdelenie; Esc na vyčistenie."
 
-#: part/pageview.cpp:5378 part/pageview.cpp:5386
+#: part/pageview.cpp:5356 part/pageview.cpp:5364
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4067,17 +4079,17 @@ msgstr ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 
-#: part/pageview.cpp:5379
+#: part/pageview.cpp:5357
 #, kde-format
 msgid "No valid certificates"
 msgstr "Žiadne platné certifikáty"
 
-#: part/pageview.cpp:5380 part/pageview.cpp:5395
+#: part/pageview.cpp:5358 part/pageview.cpp:5373
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Otvoriť správcu certifikátov"
 
-#: part/pageview.cpp:5391
+#: part/pageview.cpp:5369
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4088,12 +4100,12 @@ msgstr ""
 "certifikátov na import alebo správu certifikátov.<br/>Viac informácií "
 "nájdete v časti <a href=\"%1\">Pridanie digitálnych podpisov</a> v príručke."
 
-#: part/pageview.cpp:5394 part/pageview.cpp:5406
+#: part/pageview.cpp:5372 part/pageview.cpp:5384
 #, kde-format
 msgid "No certificates found"
 msgstr "Nenašli sa žiadne certifikáty"
 
-#: part/pageview.cpp:5404
+#: part/pageview.cpp:5382
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4103,17 +4115,17 @@ msgstr ""
 "Nie sú k dispozícii žiadne podpisové certifikáty.<br/>Viac informácií "
 "nájdete v časti <a href=\"%1\">Pridanie digitálnych podpisov</a> v príručke."
 
-#: part/pageview.cpp:5429
+#: part/pageview.cpp:5407
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Máte neuložené zmeny. Pred podpísaním dokument uložte."
 
-#: part/pageview.cpp:5452
+#: part/pageview.cpp:5430
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Nakresliť obdĺžnik na vloženie pola podpisu"
 
-#: part/pageview.cpp:5602
+#: part/pageview.cpp:5580
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4466,7 +4478,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "+Nastaviť Okular..."
 
-#: part/part.cpp:826 part/part.cpp:3185
+#: part/part.cpp:826 part/part.cpp:3193
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Vložiť anotáciu"
@@ -4541,7 +4553,7 @@ msgstr "Nastaviť poznámky..."
 msgid "Play/Pause Presentation"
 msgstr "Spustiť/pozastaviť prezentáciu"
 
-#: part/part.cpp:1105
+#: part/part.cpp:1109
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4552,71 +4564,71 @@ msgstr ""
 "uložiť.\n"
 "Všetky zmeny sa po zatvorení aplikácie Okular stratia."
 
-#: part/part.cpp:1106
+#: part/part.cpp:1110
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokument sa nedá uložiť"
 
-#: part/part.cpp:1135
+#: part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Nepodarilo sa otvoriť '%1' (%2) "
 
-#: part/part.cpp:1188
+#: part/part.cpp:1192
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Načítanie %1 bolo zrušené."
 
-#: part/part.cpp:1204
+#: part/part.cpp:1208
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Nepodarilo sa otvoriť %1. Dôvod: %2"
 
-#: part/part.cpp:1298
+#: part/part.cpp:1302
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr "Nebol nájdený program \"ps2pdf\", Okular nemôže importovať PS súbory."
 
-#: part/part.cpp:1298
+#: part/part.cpp:1302
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf nenájdený"
 
-#: part/part.cpp:1303
+#: part/part.cpp:1307
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript súbory (%1)"
 
-#: part/part.cpp:1319
+#: part/part.cpp:1323
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importovanie PS súboru ako PDF (môže to chvíľu trvať)..."
 
-#: part/part.cpp:1451
+#: part/part.cpp:1455
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Prosím zadajte heslo pre zobrazenie dokumentu:"
 
-#: part/part.cpp:1453
+#: part/part.cpp:1457
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Nesprávne heslo. Skúste znovu:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1468
 #, kde-format
 msgid "Document Password"
 msgstr "Heslo dokumentu"
 
-#: part/part.cpp:1587
+#: part/part.cpp:1591
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Tento dokument obsahuje XFA formuláre, ktoré sú aktuálne <b>nepodporované</"
 "b>."
 
-#: part/part.cpp:1594
+#: part/part.cpp:1598
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4625,7 +4637,7 @@ msgstr ""
 "Tento dokument obsahuje formuláre. Kliknite na tlačidlo, alebo použite menu "
 "Zobraziť  -> Zobraziť formuláre."
 
-#: part/part.cpp:1611
+#: part/part.cpp:1615
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4634,7 +4646,7 @@ msgstr ""
 "Všetky úpravy a interaktívne funkcie tohto dokumentu sú zakázané. "
 "Prosímuložte kópiu a znova otvorte tento súbor na úpravu."
 
-#: part/part.cpp:1709
+#: part/part.cpp:1713
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4643,27 +4655,27 @@ msgstr ""
 "Tento dokument chce byť zobrazený na celej obrazovke.\n"
 "Opustiť normálny režim a prejsť do režimu prezentácie?"
 
-#: part/part.cpp:1711
+#: part/part.cpp:1715
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Žiadosť o zmenu režimu zobrazenia"
 
-#: part/part.cpp:1712
+#: part/part.cpp:1716
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Spustiť prezentačný režim"
 
-#: part/part.cpp:1713
+#: part/part.cpp:1717
 #, kde-format
 msgid "Deny Request"
 msgstr "Zamietnuť žiadosť"
 
-#: part/part.cpp:1803
+#: part/part.cpp:1807
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Nepodarilo sa otvoriť %1. %2"
 
-#: part/part.cpp:1833
+#: part/part.cpp:1837
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4677,22 +4689,22 @@ msgstr ""
 "changes made in the other program.<nl/><nl/>Do chcete to continue reloading "
 "the file?"
 
-#: part/part.cpp:1837 part/part.cpp:1847
+#: part/part.cpp:1841 part/part.cpp:1851
 #, kde-format
 msgid "File Changed"
 msgstr "Súbor bol zmenený"
 
-#: part/part.cpp:1838
+#: part/part.cpp:1842
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Pokračovať znovunačítanie"
 
-#: part/part.cpp:1839
+#: part/part.cpp:1843
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Prerušiť Obnovovanie"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1847
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4706,27 +4718,27 @@ msgstr ""
 "changes made in the other program.<nl/><nl/>Do chcete to continue closing "
 "the file?"
 
-#: part/part.cpp:1848
+#: part/part.cpp:1852
 #, kde-format
 msgid "Continue Closing"
 msgstr "Pokračovať v zatváraní"
 
-#: part/part.cpp:1849
+#: part/part.cpp:1853
 #, kde-format
 msgid "Abort Closing"
 msgstr "Prerušiť zatváranie"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1860
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Chcete uložiť vaše zmeny do \"%1\" alebo ich zahodiť?"
 
-#: part/part.cpp:1856
+#: part/part.cpp:1860
 #, kde-format
 msgid "Close Document"
 msgstr "Zatvoriť dokument"
 
-#: part/part.cpp:1988
+#: part/part.cpp:1992
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4735,7 +4747,7 @@ msgstr ""
 "Tento odkaz spúšťa operáciu na zatvorenie dokumentu, ktorý nefunguje pri "
 "použití vloženého prehliadača."
 
-#: part/part.cpp:1994
+#: part/part.cpp:1998
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4744,59 +4756,59 @@ msgstr ""
 "Tento odkaz spúšťa operáciu na ukončenie aplikácie, ktorý nefunguje pri "
 "použití vloženého prehliadača."
 
-#: part/part.cpp:2086 part/part.cpp:2104
+#: part/part.cpp:2090 part/part.cpp:2112
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Znovunačítanie dokumentu..."
 
-#: part/part.cpp:2273 part/toc.cpp:36
+#: part/part.cpp:2281 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Obsah"
 
-#: part/part.cpp:2302 part/signaturepanel.cpp:45
+#: part/part.cpp:2310 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Podpisy"
 
-#: part/part.cpp:2329
+#: part/part.cpp:2337
 #, kde-format
 msgid "Go to Page"
 msgstr "Prejsť na stránku"
 
-#: part/part.cpp:2352
+#: part/part.cpp:2360
 #, kde-format
 msgid "&Page:"
 msgstr "S&tránka:"
 
-#: part/part.cpp:2445
+#: part/part.cpp:2453
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Zadajte nový názov záložky:"
 
-#: part/part.cpp:2491
+#: part/part.cpp:2499
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Premenovať túto záložku"
 
-#: part/part.cpp:2494
+#: part/part.cpp:2502
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Odstrániť túto záložku"
 
-#: part/part.cpp:2580 part/part.cpp:2581 part/part.cpp:3497
+#: part/part.cpp:2588 part/part.cpp:2589 part/part.cpp:3505
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2588 part/revisionviewer.cpp:44
+#: part/part.cpp:2596 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Uložiť ako"
 
-#: part/part.cpp:2605
+#: part/part.cpp:2613
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4805,18 +4817,18 @@ msgstr ""
 "Rozhodli ste sa uložiť archív Okular bez názvu súboru končiaceho príponou "
 "'%1'. To nie je povolené, chcete si vybrať nový názov?"
 
-#: part/part.cpp:2606
+#: part/part.cpp:2614
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Nepodporovaná prípona"
 
-#: part/part.cpp:2607
+#: part/part.cpp:2615
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Vybrať nový názov"
 
-#: part/part.cpp:2650
+#: part/part.cpp:2658
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4828,17 +4840,17 @@ msgstr ""
 "save now, any changes made in the other program will be lost. Are you sure "
 "chcete to continue?"
 
-#: part/part.cpp:2653 part/part.cpp:2672 part/part.cpp:2724
+#: part/part.cpp:2661 part/part.cpp:2680 part/part.cpp:2732
 #, kde-format
 msgid "Save - Warning"
 msgstr "Uložiť - Upozornenie"
 
-#: part/part.cpp:2655
+#: part/part.cpp:2663
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Save a Copy Elsewhere"
 
-#: part/part.cpp:2671
+#: part/part.cpp:2679
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4849,12 +4861,12 @@ msgstr ""
 "potrebné znova načítať. Budete znova požiadaní o heslo a história operácií "
 "späť/dopredu sa stratí.<br />Chcete pokračovať?"
 
-#: part/part.cpp:2698
+#: part/part.cpp:2706
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Nepodarilo sa otvoriť dočasný súbor pre uloženie."
 
-#: part/part.cpp:2711
+#: part/part.cpp:2719
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4864,7 +4876,7 @@ msgstr ""
 "Nemožno prepísať <filename>%1</filename>, pretože tento súbor je len na "
 "čítanie. Skúste uložiť na iné miesto alebo zmeniť oprávnenia tohto súboru."
 
-#: part/part.cpp:2723
+#: part/part.cpp:2731
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4873,22 +4885,22 @@ msgstr ""
 "Po uložení si aktuálny formát dokumentu vyžaduje opätovné načítanie súboru. "
 "História operácií späť/dopredu sa stratí.<br />Chcete pokračovať?"
 
-#: part/part.cpp:2738 part/part.cpp:2807 part/part.cpp:2828 part/part.cpp:3512
+#: part/part.cpp:2746 part/part.cpp:2815 part/part.cpp:2836 part/part.cpp:3520
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "Súbor sa nepodarilo uložiť do '%1'. Skúste iné umiestnenie."
 
-#: part/part.cpp:2751
+#: part/part.cpp:2759
 #, kde-format
 msgid "Filled form contents"
 msgstr "Vyplnený obsah formulára"
 
-#: part/part.cpp:2754
+#: part/part.cpp:2762
 #, kde-format
 msgid "User annotations"
 msgstr "Poznámky používateľa"
 
-#: part/part.cpp:2759
+#: part/part.cpp:2767
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4899,17 +4911,17 @@ msgstr ""
 "nasledujúcich prvkov. Na ich uchovanie použite formát <i>Archív dokumentov "
 "Okular</i>."
 
-#: part/part.cpp:2763 part/part.cpp:2785
+#: part/part.cpp:2771 part/part.cpp:2793
 #, kde-format
 msgid "Warning"
 msgstr "Varovanie"
 
-#: part/part.cpp:2764 part/part.cpp:2786
+#: part/part.cpp:2772 part/part.cpp:2794
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Uložiť ako Archív dokumentov Okular..."
 
-#: part/part.cpp:2776
+#: part/part.cpp:2784
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4922,7 +4934,7 @@ msgstr ""
 "zachovanie. Ak chcete dokument uložiť, kliknite na tlačidlo <i>Pokračovať</"
 "i> na uloženie a zahodenie týchto prvkov."
 
-#: part/part.cpp:2779
+#: part/part.cpp:2787
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4935,22 +4947,22 @@ msgstr ""
 "zachovanie. Kliknutím na tlačidlo <i>Pokračovať</i> subor uložíte, ale "
 "stratíte tieto prvky, ako aj históriu vrátenia/opakovania."
 
-#: part/part.cpp:2781
+#: part/part.cpp:2789
 #, kde-format
 msgid "Continue"
 msgstr "Pokračovať"
 
-#: part/part.cpp:2781
+#: part/part.cpp:2789
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Pokračovať stratením zmien"
 
-#: part/part.cpp:2809
+#: part/part.cpp:2817
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Súbor sa nepodarilo uložiť do '%1'. %2"
 
-#: part/part.cpp:2848
+#: part/part.cpp:2856
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4961,7 +4973,7 @@ msgstr ""
 "\n"
 "Dokument už neexistuje."
 
-#: part/part.cpp:2884
+#: part/part.cpp:2892
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4969,44 +4981,44 @@ msgid ""
 msgstr ""
 "Súbor sa nepodarilo uložiť do '%1'. Chyba: '%2'. Skúste iné umiestnenie."
 
-#: part/part.cpp:3155
+#: part/part.cpp:3163
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Rozbaliť celú sekciu"
 
-#: part/part.cpp:3156
+#: part/part.cpp:3164
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Zbaliť celú sekciu"
 
-#: part/part.cpp:3172
+#: part/part.cpp:3180
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Synchronizovať náhľady so stránkou"
 
-#: part/part.cpp:3204
+#: part/part.cpp:3212
 #, kde-format
 msgid "Tools"
 msgstr "Nástroje"
 
-#: part/part.cpp:3392
+#: part/part.cpp:3400
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Čítať"
 
-#: part/part.cpp:3550
+#: part/part.cpp:3558
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Tlačiť"
 
-#: part/part.cpp:3613
+#: part/part.cpp:3621
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Tlač tohto dokumentu nie je povolená."
 
-#: part/part.cpp:3626
+#: part/part.cpp:3634
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5014,7 +5026,7 @@ msgstr ""
 "Nepodarilo sa vytlačiť dokument. Neznáma chyba. Prosím nahláste chybu na "
 "bugs.kde.org"
 
-#: part/part.cpp:3628
+#: part/part.cpp:3636
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5023,17 +5035,17 @@ msgstr ""
 "Nepodarilo sa vytlačiť dokument. Podrobný popis chyby je \"%1\" Prosím "
 "nahláste chybu na bugs.kde.org"
 
-#: part/part.cpp:3720
+#: part/part.cpp:3728
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Prejsť na predchádzajúce miesto"
 
-#: part/part.cpp:3724
+#: part/part.cpp:3732
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Prejsť na nasledujúce miesto"
 
-#: part/part.cpp:3749
+#: part/part.cpp:3757
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5042,7 +5054,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa vytvoriť dočasný súbor "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3761
+#: part/part.cpp:3769
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5051,7 +5063,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa otvoriť súbor <nobr><strong>"
 "%1</strong></nobr> pre rozbalenie. Súbor nebude načítaný.</qt>"
 
-#: part/part.cpp:3765
+#: part/part.cpp:3773
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5064,7 +5076,7 @@ msgstr ""
 "myši na súbor v správcovi súborov Dolphin a vyberiete položku 'Vlastnosti', "
 "a následne záložku 'Oprávnenia' v okne, ktoré sa otvorí.</qt>"
 
-#: part/part.cpp:3787
+#: part/part.cpp:3795
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5073,7 +5085,7 @@ msgstr ""
 "<qt><strong>Chyba súboru!</strong> Nepodarilo sa rozbaliť súbor <nobr> "
 "<strong>%1</strong></nobr>. Súbor nebude načítaný.</qt>"
 
-#: part/part.cpp:3791
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5082,27 +5094,27 @@ msgstr ""
 "<qt>Táto chyba sa obvykle vyskytne, ak je súbor poškodený. Ak si chcete byť "
 "istý, skúste rozbaliť súbor ručne pomocou nástrojov príkazového riadku.</qt>"
 
-#: part/part.cpp:3817
+#: part/part.cpp:3825
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Žiadne záložky"
 
-#: part/part.cpp:3888
+#: part/part.cpp:3896
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Vyskytol sa problém pri zdieľaní dokumentu: %1"
 
-#: part/part.cpp:3888 part/part.cpp:3894
+#: part/part.cpp:3896 part/part.cpp:3902
 #, kde-format
 msgid "Share"
 msgstr "Zdieľať"
 
-#: part/part.cpp:3892
+#: part/part.cpp:3900
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokument úspešne zdieľaný"
 
-#: part/part.cpp:3894
+#: part/part.cpp:3902
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Zdieľaný dokument môžete nájsť na adrese: <a href=\"%1\">%1</a>"
@@ -5465,11 +5477,6 @@ msgstr "Neznáme písmo"
 #, kde-format
 msgid "Embedded: %1"
 msgstr "Vložené: %1"
-
-#: part/propertiesdialog.cpp:424
-#, kde-format
-msgid "Name"
-msgstr "Názov"
 
 #: part/propertiesdialog.cpp:427
 #, kde-format

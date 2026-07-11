@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-11 00:41+0000\n"
 "PO-Revision-Date: 2026-07-07 06:18+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -192,8 +192,9 @@ msgid "&Load Signatures"
 msgstr "ხელმოწერების &ჩატვირთვა"
 
 #: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file A %1:"
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "დროებითი ფაილის A %1 სახელის გადარქმევა ჩავარდა:"
 
 #: generator_pdf.cpp:85

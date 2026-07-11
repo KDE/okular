@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-11 00:41+0000\n"
 "PO-Revision-Date: 2026-07-07 10:16+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -195,8 +195,9 @@ msgid "&Load Signatures"
 msgstr "&Carrega signatures"
 
 #: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file A %1:"
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "Ha fallat en canviar de nom el fitxer temporal A %1:"
 
 #: generator_pdf.cpp:85

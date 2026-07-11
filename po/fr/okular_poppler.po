@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-11 00:41+0000\n"
 "PO-Revision-Date: 2026-07-08 08:52+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -201,8 +201,9 @@ msgid "&Load Signatures"
 msgstr "Charger &les signatures"
 
 #: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file A %1:"
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "Échec du renommage du fichier temporaire A %1 :"
 
 #: generator_pdf.cpp:85

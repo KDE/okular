@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:41+0000\n"
+"POT-Creation-Date: 2026-07-11 00:41+0000\n"
 "PO-Revision-Date: 2026-07-07 18:04+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -192,8 +192,9 @@ msgid "&Load Signatures"
 msgstr "&Last inn signaturar"
 
 #: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file A %1:"
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file A %1:"
+msgid "Failed renaming temporary file %1:"
 msgstr "Klarte ikkje endra namn på mellombels fil A %1:"
 
 #: generator_pdf.cpp:85

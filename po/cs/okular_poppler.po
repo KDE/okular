@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-07 20:03+0200\n"
+"PO-Revision-Date: 2026-07-11 11:01+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -194,10 +194,9 @@ msgid "&Load Signatures"
 msgstr "Načíst podp&isy"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Nepodařilo se přejmenovat dočasný soubor A %1:"
+msgstr "Přejmenování dočasného souboru selhalo: %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format

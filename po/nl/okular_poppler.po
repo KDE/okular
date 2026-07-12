@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-07 17:02+0200\n"
+"PO-Revision-Date: 2026-07-11 13:51+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -193,10 +193,9 @@ msgid "&Load Signatures"
 msgstr "Ondertekeningen &laden"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Hernoemen tijdelijk bestand A %1 is mislukt:"
+msgstr "Hernoemen tijdelijk bestand %1 is mislukt:"
 
 #: generator_pdf.cpp:85
 #, kde-format

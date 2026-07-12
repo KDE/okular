@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-07 23:45+0100\n"
+"PO-Revision-Date: 2026-07-11 11:58+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -192,10 +192,9 @@ msgid "&Load Signatures"
 msgstr "Cargar &firmas"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "No se ha podido cambiar el nombre del archivo temporal A %1:"
+msgstr "No se ha podido cambiar el nombre del archivo temporal %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format

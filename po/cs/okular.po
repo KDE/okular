@@ -620,10 +620,9 @@ msgid "Signing cancelled by user"
 msgstr "Podpis zrušen uživatelem"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Nepodařilo se podepsat. Špatné heslo"
+msgstr "Přihlášení se nezdařilo: Špatné heslo"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -686,7 +685,7 @@ msgstr "Předmět"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "ID uživatele"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format

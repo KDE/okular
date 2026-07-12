@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2026-07-08 07:38+0200\n"
+"PO-Revision-Date: 2026-07-11 12:20+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -196,10 +196,9 @@ msgid "&Load Signatures"
 msgstr "Naloži podpise"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Neuspelo preimenovanje začasne datoteke A %1:"
+msgstr "Neuspelo preimenovanje začasne datoteke %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2026-07-08 08:21+0300\n"
+"PO-Revision-Date: 2026-07-12 14:08+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -195,10 +195,9 @@ msgid "&Load Signatures"
 msgstr "З&авантажити підписи"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Не вдалося перейменувати тимчасовий файл A %1:"
+msgstr "Не вдалося перейменувати тимчасовий файл %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format

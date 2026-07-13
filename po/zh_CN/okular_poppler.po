@@ -36,7 +36,7 @@ msgstr "写入临时文件失败"
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
 #, kde-format
 msgid "Failed removing file"
-msgstr ""
+msgstr "移除文件失败"
 
 #: annots.cpp:607
 #, kde-format
@@ -186,10 +186,9 @@ msgid "&Load Signatures"
 msgstr "加载签名(&L)"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "重命名临时文件失败"
+msgstr ""
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -319,7 +318,7 @@ msgstr "PDF 后端程序配置"
 #: generator_pdf.cpp:2238
 #, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr ""
+msgstr "重命名临时文件失败：%1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -363,7 +362,7 @@ msgstr "过期日期"
 #, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr ""
+msgstr "列出证书"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

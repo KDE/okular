@@ -610,7 +610,7 @@ msgstr "签名被用户取消"
 #: core/signatureutils.cpp:516
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr ""
+msgstr "签名失败：密码错误"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -673,7 +673,7 @@ msgstr "主题"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "用户 ID"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -5614,7 +5614,7 @@ msgstr "另存已签名文件为"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "无法覆盖原始文件。请选择不同的文件名。"
 
 #: part/signaturepartutils.h:62
 #, kde-format

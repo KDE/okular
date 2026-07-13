@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-07 09:06+0300\n"
+"PO-Revision-Date: 2026-07-12 18:24+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -189,10 +189,9 @@ msgid "&Load Signatures"
 msgstr "&טעינת חתימות"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "שינוי שם הקובץ הזמני א׳ %1 נכשל:"
+msgstr "שינוי שם הקובץ הזמני %1 נכשל:"
 
 #: generator_pdf.cpp:85
 #, kde-format

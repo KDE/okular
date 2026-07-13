@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-08 08:50+0200\n"
+"PO-Revision-Date: 2026-07-11 09:17+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -636,10 +636,9 @@ msgid "Signing cancelled by user"
 msgstr "La signature a été annulée par l'utilisateur."
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Impossible de faire une signature car phrase de passe incorrecte"
+msgstr "Échec de signature : phrase de passe incorrecte"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -703,7 +702,7 @@ msgstr "Sujet"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "Identifiant utilisateur"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format

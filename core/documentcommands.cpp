@@ -211,7 +211,7 @@ int TranslateAnnotationCommand::id() const
 
 bool TranslateAnnotationCommand::mergeWith(const QUndoCommand *uc)
 {
-    TranslateAnnotationCommand *tuc = (TranslateAnnotationCommand *)uc;
+    const auto *tuc = static_cast<const TranslateAnnotationCommand *>(uc);
 
     if (tuc->m_annotation != m_annotation) {
         return false;
@@ -286,7 +286,7 @@ int AdjustAnnotationCommand::id() const
 
 bool AdjustAnnotationCommand::mergeWith(const QUndoCommand *uc)
 {
-    AdjustAnnotationCommand *tuc = (AdjustAnnotationCommand *)uc;
+    const auto *tuc = static_cast<const AdjustAnnotationCommand *>(uc);
 
     if (tuc->m_annotation != m_annotation) {
         return false;
@@ -419,7 +419,7 @@ int EditAnnotationContentsCommand::id() const
 
 bool EditAnnotationContentsCommand::mergeWith(const QUndoCommand *uc)
 {
-    EditAnnotationContentsCommand *euc = (EditAnnotationContentsCommand *)uc;
+    const auto *euc = static_cast<const EditAnnotationContentsCommand *>(uc);
     // Only attempt merge of euc into this if they modify the same annotation
     if (m_annotation == euc->m_annotation) {
         return EditTextCommand::mergeWith(uc);
@@ -468,7 +468,7 @@ int EditFormTextCommand::id() const
 
 bool EditFormTextCommand::mergeWith(const QUndoCommand *uc)
 {
-    EditFormTextCommand *euc = (EditFormTextCommand *)uc;
+    const auto *euc = static_cast<const EditFormTextCommand *>(uc);
     // Only attempt merge of euc into this if they modify the same form
     if (m_form == euc->m_form) {
         return EditTextCommand::mergeWith(uc);
@@ -568,7 +568,7 @@ int EditFormComboCommand::id() const
 
 bool EditFormComboCommand::mergeWith(const QUndoCommand *uc)
 {
-    EditFormComboCommand *euc = (EditFormComboCommand *)uc;
+    const auto *euc = static_cast<const EditFormComboCommand *>(uc);
     // Only attempt merge of euc into this if they modify the same form
     if (m_form == euc->m_form) {
         bool shouldMerge = EditTextCommand::mergeWith(uc);

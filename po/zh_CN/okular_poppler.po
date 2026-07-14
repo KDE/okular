@@ -188,7 +188,7 @@ msgstr "加载签名(&L)"
 #: formfields.cpp:561
 #, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr ""
+msgstr "重命名临时文件失败：%1："
 
 #: generator_pdf.cpp:85
 #, kde-format

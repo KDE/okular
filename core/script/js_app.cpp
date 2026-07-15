@@ -248,7 +248,8 @@ int JSApp::alert(const QString &cMsg, int nIcon, int nType, const QString &cTitl
         QJSValue(oCheckbox).setProperty(QStringLiteral("bAfterValue"), checkBox->isChecked());
     }
 
-    delete checkBox;
+    // checkBox is owned by QMessageBox (via setCheckBox) and will be
+    // deleted when 'box' goes out of scope. Do not delete it here.
 
     return ret;
 }

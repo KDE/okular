@@ -8,20 +8,20 @@
 # Alexander Potashev <aspotashev@gmail.com>, 2010.
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
 # SPDX-FileCopyrightText: 2019, 2020, 2021, 2025 Alexander Yavorsky <kekcuha@gmail.com>
-# SPDX-FileCopyrightText: 2022, 2023, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2022, 2023, 2025, 2026 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2025-08-18 11:44+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
-"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"PO-Revision-Date: 2026-07-15 11:49+0300\n"
+"Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.07.90\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -45,10 +45,9 @@ msgid "Failed writing temporary file"
 msgstr "Ошибка записи временного файла"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Ошибка переименования временного файла"
+msgstr "Ошибка удаления файла"
 
 #: annots.cpp:607
 #, kde-format
@@ -202,10 +201,9 @@ msgid "&Load Signatures"
 msgstr "&Загрузить подписи"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Ошибка переименования временного файла"
+msgstr "Ошибка переименования временного файла %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -335,10 +333,9 @@ msgid "PDF Backend Configuration"
 msgstr "Конфигурация генератора PDF"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Ошибка переименования временного файла"
+msgstr "Ошибка переименования временного файла: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -383,11 +380,10 @@ msgid "Expiration date"
 msgstr "Дата истечения срока действия"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Доступные сертификаты"
+msgstr "Список сертификатов"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

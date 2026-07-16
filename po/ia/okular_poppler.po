@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2013, 2020, 2021, 2023, 2025 Giovanni Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2013, 2020, 2021, 2023, 2025, 2026 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2025-09-02 17:18+0200\n"
+"PO-Revision-Date: 2026-07-15 17:24+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,10 +34,9 @@ msgid "Failed writing temporary file"
 msgstr "Ilfalleva a scriber file temporanee"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Il falleva a renominar file temporanee"
+msgstr "Il falleva a remover file"
 
 #: annots.cpp:607
 #, kde-format
@@ -192,10 +191,9 @@ msgid "&Load Signatures"
 msgstr "Car&ga Signaturas"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Il falleva a renominar file temporanee"
+msgstr "Il falleva a renominar file temporanee %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -326,10 +324,9 @@ msgid "PDF Backend Configuration"
 msgstr "Configuration de Retro-administration de PDF"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Il falleva a renominar file temporanee"
+msgstr "Il falleva a renominar file temporanee: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -374,11 +371,10 @@ msgid "Expiration date"
 msgstr "Data de expiration"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Certificatos disponibile"
+msgstr "Lista certificatos"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

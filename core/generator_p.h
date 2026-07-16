@@ -17,6 +17,8 @@
 #include <QSet>
 #include <QThread>
 
+#include <atomic>
+
 class QEventLoop;
 
 #include "generator.h"
@@ -180,7 +182,7 @@ protected:
 private:
     Generator *mGenerator;
     int mNumOfPages;
-    bool mGoOn;
+    std::atomic<bool> mGoOn;
 };
 
 }

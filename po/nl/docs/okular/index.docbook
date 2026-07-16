@@ -45,9 +45,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2022-02-19</date>
+>2026-02-23</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -622,7 +622,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Als u een eigen opslag voor certificaten wilt gebruiken, dan kunt u dat doen in de sectie <link linkend="config-pdf-digital-signatures"
 > Backendconfiguratie van &PDF;</link
 > van de dialoog <link linkend="configure-backends"
->Backends configureren...</link
+>Okular configureren...</link
 >. </para>
 				<note>
 					<para
@@ -3214,246 +3214,9 @@ Context menu actions like Rename Bookmarks etc.)
 > onderaan het documentgebied aan of uit voor verticale ruimte in het venster van &okular;. Merk op dat de paginanummers in elk geval getoond zullen worden in de standaard werkbalk.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Instellingen</guimenu
-> <guimenuitem
->Backends instellen...</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Dit opent het venster <link linkend="configure-backends"
->Backend-configuratie</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Backends van &okular; configureren</title>
-	  <para
->U kunt backends van &okular; instellen door te klikken op <menuchoice
-><guimenu
->Instellingen</guimenu
-> <guimenuitem
->Backends instellen...</guimenuitem
-></menuchoice
->. Op dit moment worden instellingsmogelijkheden alleen geboden voor backends van EPub, &PostScript;, FictionBook, Txt, OpenDocument-tekst en &PDF; </para>
-	  <screenshot>
-	    <screeninfo
->Het dialoogvenster voor configuratie van backends</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->Het dialoogvenster voor configuratie van backends</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Met het gebruik van de instellingenpagina van backends voor EPub, FictionBook, Mobipocket, Markdown, TXT and OpenDocument-tekst kunt u het lettertype definiëren om documenten weer te geven in de overeenkomstige formaten. De knop <guibutton
->Kiezen...</guibutton
-> in deze pagina's opent het standaard instellingenvenster van &kde; voor lettertypen. Kijk in de <ulink url="help:/fundamentals/fonts.html"
->&kde; Fundamentals documentatie</ulink
-> voor de details. </para>
-	  <para
->De beschrijving van de instellingenpagina's van de backends van Markdown, &PostScript; en &PDF; zijn hier onder te vinden. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Configuratie van Markdown-backend</title>
-	    <para
->U kunt rendering van &okular; Markdown-backend gebaseerd op <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> configureren door <guilabel
->Markdown</guilabel
-> te kiezen uit de lijst in het linker deel van de configuratiedialoog. Een extra te configureren optie is als volgt. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->SmartyPants formattering inschakelen</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Indien geactiveerd staat deze optie toe aan &okular; om <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
-> formattering toe te passen. Die formattering kan problemen geven in de technische teksten vanwege ongewenste substitutities (&eg;, het vervangt <literal
->(C)</literal
-> door een copyrightsymbool). Deze optie is standaard geactiveerd. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Backendinstellingen van &PostScript;</title>
-	    <para
->U kunt &PostScript; rendering backend van &okular; gebaseerd op <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> instellen door <guilabel
->Ghostscript</guilabel
-> te kiezen uit de lijst aan de linkerkant van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Platformlettertypen gebruiken</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Deze optie bepaalt of Ghostscript moet worden toegestaan platformlettertypen te gebruiken, zo niet dan zijn alleen lettertypen ingebed in het document toegestaan. De optie is standaard geactiveerd. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Configuratie van &PDF;-backend</title>
-	    <para
->U kunt de &PDF; rendering backend van &okular; gebaseerd op <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> instellen door <guilabel
->&PDF;</guilabel
-> te kiezen uit de lijst aan de linker van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Maak dunne lijnen beter zichtbaar</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Lijnen trekken is in &okular; geïmplementeerd in twee stappen: generatie van het pad voor clipping en dit opvullen. Wanneer de lijn in het originele document minder is dan één pixel dan kan deze implementatie in twee stappen problemen veroorzaken. Voor deze lijnen wordt het pad voor clipping gevuld met de vulkleur die afhangt van de dikte van de lijngedeelte binnen het clippinggebied. Als het deel van de lijn binnen het clippinggebied erg klein wordt dan zal het contrast tussen de vorm en de achtergrondkleur te laag worden om de lijn te kunnen herkennen. De rasters van zulke lijnen zien er erg onaangenaam uit. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Dunne lijn (rood), het knippad (gestreepte lijn) en pixelranden (zwarte volle lijnen)</entry>
-			    <entry
->Dunne lijn getoond in een laag contrast</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Om dunne lijnen beter zichtbaar te maken implementeert &okular; twee opties. </para>
-		    <para
->De eerste optie is <guimenuitem
->Vast</guimenuitem
->. Met deze optie past &okular; het pad voor clipping en de lijnpositie aan zodat het pad voor clipping en lijn zich op dezelfde pixelgrens bevinden, &ie; &okular; vergroot de dunne lijnen tot één pixel op het uitvoerapparaat. Deze modus is vergelijkbaar met de <guilabel
->Verbeter dunne lijnen</guilabel
-> in <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Als deze optie wordt gekozen, dan worden de dunne lijnen altijd vergroot. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Dunne <guimenuitem
->Volle</guimenuitem
-> lijn voor attentie</phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Dunne <guimenuitem
->Volle</guimenuitem
-> lijn voor attentie</para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->De tweede optie is <guimenuitem
->Vorm</guimenuitem
->. Met deze optie worden het pad van de clipping en lijn ook aangepast aan de pixelgrens, maar de lijnintensiteit wordt overeenkomstig zijn breedte gecorrigeerd. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Dunne <guimenuitem
->Vorm</guimenuitem
-> lijn voor attentie</phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Dunne <guimenuitem
->Vorm</guimenuitem
-> lijn voor attentie</para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->De dunne lijnen worden niet standaard verbeterd (optie <guimenuitem
->Nee</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->&PDF; Digitale ondertekeningscertificaten</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Deze sectie biedt u het instellen van een eigen certificatendatabase om te gebruiken bij toevoegen van digitale ondertekening aan &PDF; bestanden. </para>
-			<para
->Het kan ook een lijst maken van de beschikbare certificaten in de huidige certificatendatabase (indien aanwezig). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3521,13 +3284,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Afhankelijk van de huidig geïnstalleerde backends, is het menu-item <menuchoice
-><guimenu
->Instellingen</guimenu
-> <guimenuitem
->Backends configureren...</guimenuitem
-> </menuchoice
-> geactiveerd. In dit configuratievenster kunt u de instellingen van de backends terugvinden (indien deze een configuratie hebben). </para>
+>Afhankelijk van de momenteel geïnstalleerde back-ends bevat het dialoogvenster ook een lijst van de back-ends die configuratieopties hebben. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -3712,6 +3469,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Doorgaan vanaf de laatst bekeken pagina</guilabel
+></term>
+					<listitem>
+						<para
+>Of de laatst bekeken pagina voor elk document moet worden opgeslagen en hersteld met de opgeslagen paginagegevens. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Bij gebruik van hulpmiddel Bladeren, laat cursor teruglopen bij schermranden</guilabel
 ></term>
 					<listitem>
@@ -3721,6 +3488,17 @@ Context menu actions like Rename Bookmarks etc.)
 >. Indien ingeschakeld, zak de muiscursor teruglopen naar het andere einde van het scherm wanneer het de randen raakt tijdens het verslepen van het document. Deze functie wordt alleen ondersteund onder X11. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Items in recente geschiedenis</guilabel
+></term>
+					<listitem>
+						<para
+>Hiermee kunt u de lengte van de opgeslagen geschiedenislijst configureren. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel
@@ -4346,6 +4124,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Backends van &okular; configureren</title>
+	  <para
+>U kunt backends van &okular; instellen door te klikken op <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Okular configureren...</guimenuitem
+></menuchoice
+>. Op dit moment worden instellingsmogelijkheden alleen geboden voor backends van EPub, &PostScript;, FictionBook, Txt, OpenDocument-tekst en &PDF; </para>
+	  <para
+>Met het gebruik van de instellingenpagina van backends voor EPub, FictionBook, Mobipocket, Markdown, TXT and OpenDocument-tekst kunt u het lettertype definiëren om documenten weer te geven in de overeenkomstige formaten. De knop <guibutton
+>Kiezen...</guibutton
+> in deze pagina's opent het standaard instellingenvenster van &kde; voor lettertypen. Kijk in de <ulink url="help:/fundamentals/fonts.html"
+>&kde; Fundamentals documentatie</ulink
+> voor de details. </para>
+	  <para
+>De beschrijving van de instellingenpagina's van de backends van Markdown, &PostScript; en &PDF; zijn hier onder te vinden. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Configuratie van Markdown-backend</title>
+	    <para
+>U kunt rendering van &okular; Markdown-backend gebaseerd op <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> configureren door <guilabel
+>Markdown</guilabel
+> te kiezen uit de lijst in het linker deel van de configuratiedialoog. Een extra te configureren optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>SmartyPants formattering inschakelen</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Indien geactiveerd staat deze optie toe aan &okular; om <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+> formattering toe te passen. Die formattering kan problemen geven in de technische teksten vanwege ongewenste substitutities (&eg;, het vervangt <literal
+>(C)</literal
+> door een copyrightsymbool). Deze optie is standaard geactiveerd. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Backendinstellingen van &PostScript;</title>
+	    <para
+>U kunt &PostScript; rendering backend van &okular; gebaseerd op <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> instellen door <guilabel
+>Ghostscript</guilabel
+> te kiezen uit de lijst aan de linkerkant van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Platformlettertypen gebruiken</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Deze optie bepaalt of Ghostscript moet worden toegestaan platformlettertypen te gebruiken, zo niet dan zijn alleen lettertypen ingebed in het document toegestaan. De optie is standaard geactiveerd. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Configuratie van &PDF;-backend</title>
+	    <para
+>U kunt de &PDF; rendering backend van &okular; gebaseerd op <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> instellen door <guilabel
+>&PDF;</guilabel
+> te kiezen uit de lijst aan de linker van de instellingendialoog. De enige in te stellen optie is als volgt. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Maak dunne lijnen beter zichtbaar</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Lijnen trekken is in &okular; geïmplementeerd in twee stappen: generatie van het pad voor clipping en dit opvullen. Wanneer de lijn in het originele document minder is dan één pixel dan kan deze implementatie in twee stappen problemen veroorzaken. Voor deze lijnen wordt het pad voor clipping gevuld met de vulkleur die afhangt van de dikte van de lijngedeelte binnen het clippinggebied. Als het deel van de lijn binnen het clippinggebied erg klein wordt dan zal het contrast tussen de vorm en de achtergrondkleur te laag worden om de lijn te kunnen herkennen. De rasters van zulke lijnen zien er erg onaangenaam uit. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Dunne lijn (rood), het knippad (gestreepte lijn) en pixelranden (zwarte volle lijnen)</entry>
+			    <entry
+>Dunne lijn getoond in een laag contrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Om dunne lijnen beter zichtbaar te maken implementeert &okular; twee opties. </para>
+		    <para
+>De eerste optie is <guimenuitem
+>Vast</guimenuitem
+>. Met deze optie past &okular; het pad voor clipping en de lijnpositie aan zodat het pad voor clipping en lijn zich op dezelfde pixelgrens bevinden, &ie; &okular; vergroot de dunne lijnen tot één pixel op het uitvoerapparaat. Deze modus is vergelijkbaar met de <guilabel
+>Verbeter dunne lijnen</guilabel
+> in <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Als deze optie wordt gekozen, dan worden de dunne lijnen altijd vergroot. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dunne <guimenuitem
+>Volle</guimenuitem
+> lijn voor attentie</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dunne <guimenuitem
+>Volle</guimenuitem
+> lijn voor attentie</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De tweede optie is <guimenuitem
+>Vorm</guimenuitem
+>. Met deze optie worden het pad van de clipping en lijn ook aangepast aan de pixelgrens, maar de lijnintensiteit wordt overeenkomstig zijn breedte gecorrigeerd. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dunne <guimenuitem
+>Vorm</guimenuitem
+> lijn voor attentie</phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dunne <guimenuitem
+>Vorm</guimenuitem
+> lijn voor attentie</para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>De dunne lijnen worden niet standaard verbeterd (optie <guimenuitem
+>Nee</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Digitale ondertekeningscertificaten</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Deze sectie biedt u het instellen van een eigen certificatendatabase om te gebruiken bij toevoegen van digitale ondertekening aan &PDF; bestanden. </para>
+			<para
+>Het kan ook een lijst maken van de beschikbare certificaten in de huidige certificatendatabase (indien aanwezig). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

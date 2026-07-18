@@ -1175,7 +1175,7 @@ void DocumentPrivate::recalculateForms()
                                 // Prepare text calculate event
                                 event = Event::createFormCalculateEvent(form, page);
                                 const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
-                                executeScriptEvent(event, linkscript);
+                                executeScriptEvent(event, *linkscript);
                                 // The value maybe changed in javascript so save it first.
                                 QString oldVal = form->value().toString();
 
@@ -2183,12 +2183,17 @@ int DocumentPrivate::findFieldPageNumber(Okular::FormField *field)
     return foundPage;
 }
 
-void DocumentPrivate::executeScriptEvent(const std::shared_ptr<Event> &event, const Okular::ScriptAction *linkscript)
+void DocumentPrivate::executeScriptEvent(const std::shared_ptr<Event> &event, const Okular::ScriptAction &linkscript)
+{
+    executeScriptEvent(event, linkscript.scriptType(), linkscript.script());
+}
+
+void DocumentPrivate::executeScriptEvent(const std::shared_ptr<Event> &event, ScriptType type, const QString &script)
 {
     if (!m_scripter) {
         m_scripter = new Scripter(this);
     }
-    m_scripter->execute(event.get(), linkscript->scriptType(), linkscript->script());
+    m_scripter->execute(event.get(), type, script);
 }
 
 Document::Document(QWidget *widget)
@@ -2517,9 +2522,8 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
     if (!docScripts.isEmpty()) {
         d->m_scripter = new Scripter(d);
         for (const QString &docscript : docScripts) {
-            const Okular::ScriptAction linkScript(Okular::JavaScript, docscript);
             std::shared_ptr<Event> event = Event::createDocEvent(Event::DocOpen);
-            d->executeScriptEvent(event, &linkScript);
+            d->executeScriptEvent(event, Okular::JavaScript, docscript);
         }
     }
 
@@ -4296,7 +4300,7 @@ void Document::processFormatAction(const Action *action, Okular::FormField *ff)
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
 
     const QString formattedText = event->value().toString();
     ff->commitFormattedValue(formattedText);
@@ -4411,7 +4415,7 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormField *f
     event->setChange(DocumentPrivate::evaluateKeystrokeEventChange(inputString, newValue.toString(), selStart, selEnd));
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
 
     if (event->returnCode()) {
         ff->setValue(newValue);
@@ -4451,7 +4455,7 @@ void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFi
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
 
     if (!event->returnCode()) {
         ff->setValue(QVariant(ff->committedFormattedValue()));
@@ -4482,7 +4486,7 @@ void Document::processFocusAction(const Action *action, Okular::FormField *field
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
 }
 
 void Document::processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode)
@@ -4508,7 +4512,7 @@ void Document::processValidateAction(const Action *action, Okular::FormField *ff
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
     if (!event->returnCode()) {
         ff->setValue(QVariant(ff->committedFormattedValue()));
         Q_EMIT refreshFormWidget(ff);
@@ -4585,7 +4589,7 @@ void Document::processDocumentAction(const Action *action, DocumentAdditionalAct
 
     const ScriptAction *linkScript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkScript);
+    d->executeScriptEvent(event, *linkScript);
 }
 
 void Document::processFormMouseScriptAction(const Action *action, Okular::FormField *ff, MouseEventType fieldMouseEventType)
@@ -4623,7 +4627,7 @@ void Document::processFormMouseScriptAction(const Action *action, Okular::FormFi
 
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
-    d->executeScriptEvent(event, linkscript);
+    d->executeScriptEvent(event, *linkscript);
 }
 
 void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)

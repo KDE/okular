@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-07-19 00:42+0000\n"
 "PO-Revision-Date: 2026-06-24 11:19+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -305,25 +305,25 @@ msgstr "Halda leit áfram frá byrjun"
 msgid "Continuing search from bottom"
 msgstr "Halda leit áfram neðan frá"
 
-#: core/document.cpp:2391
+#: core/document.cpp:2396
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Finn enga viðbót sem getur unnið með skjalið sem um ræðir."
 
-#: core/document.cpp:2813
+#: core/document.cpp:2817
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "Undirritun er ekki útfært enn fyrir þessa tegund skjala"
 
-#: core/document.cpp:3527
+#: core/document.cpp:3531
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "fjarlægja glósu"
 
-#: core/document.cpp:4119 core/document.cpp:4125
+#: core/document.cpp:4123 core/document.cpp:4129
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -332,52 +332,52 @@ msgstr ""
 "Skjalið er að reyna að keyra ytra forrit og af öryggisástæðum leyfir Okular "
 "það ekki."
 
-#: core/document.cpp:4135
+#: core/document.cpp:4139
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Ekkert forrit fannst sem getur opnað skrá af gerðinni %1."
 
-#: core/document.cpp:4771
+#: core/document.cpp:4775
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Gat ekki opnað bráðabirgðaskrá"
 
-#: core/document.cpp:4773
+#: core/document.cpp:4777
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Umbreyting fyrir prentun mistókst"
 
-#: core/document.cpp:4775
+#: core/document.cpp:4779
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Prentferlið hrundi"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4781
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ekki var hægt að ræsa prentferlið"
 
-#: core/document.cpp:4779
+#: core/document.cpp:4783
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Prentun í skrá mistókst"
 
-#: core/document.cpp:4781
+#: core/document.cpp:4785
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Prentarinn var í ógildu ástandi"
 
-#: core/document.cpp:4783
+#: core/document.cpp:4787
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Get ekki fundið skrá til að prenta"
 
-#: core/document.cpp:4785
+#: core/document.cpp:4789
 #, kde-format
 msgid "There was no file to print"
 msgstr "Það var engin skrá til að prenta"
 
-#: core/document.cpp:4787
+#: core/document.cpp:4791
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -386,92 +386,92 @@ msgstr ""
 "Gat ekki fundið hentugt forrit til að prenta með. Gakktu úr skugga um að "
 "CUPS lpr-tvíundaskráin (forritið) sé tiltæk"
 
-#: core/document.cpp:4789
+#: core/document.cpp:4793
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Prentstærð síðunnar er ógild"
 
-#: core/document.cpp:5445 part/part.cpp:1132
+#: core/document.cpp:5449 part/part.cpp:1132
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Gat ekki opnað '%1'. Skráin er ekki til."
 
-#: core/document.cpp:5954
+#: core/document.cpp:5958
 #, kde-format
 msgid "Title"
 msgstr "Titill"
 
-#: core/document.cpp:5957
+#: core/document.cpp:5961
 #, kde-format
 msgid "Subject"
 msgstr "Efni"
 
-#: core/document.cpp:5960
+#: core/document.cpp:5964
 #, kde-format
 msgid "Description"
 msgstr "Lýsing"
 
-#: core/document.cpp:5963
+#: core/document.cpp:5967
 #, kde-format
 msgid "Author"
 msgstr "Höfundur"
 
-#: core/document.cpp:5966
+#: core/document.cpp:5970
 #, kde-format
 msgid "Creator"
 msgstr "Skapari"
 
-#: core/document.cpp:5969
+#: core/document.cpp:5973
 #, kde-format
 msgid "Producer"
 msgstr "Framleiðandi"
 
-#: core/document.cpp:5972
+#: core/document.cpp:5976
 #, kde-format
 msgid "Copyright"
 msgstr "Höfundarréttur"
 
-#: core/document.cpp:5975
+#: core/document.cpp:5979
 #, kde-format
 msgid "Pages"
 msgstr "Síður"
 
-#: core/document.cpp:5978
+#: core/document.cpp:5982
 #, kde-format
 msgid "Created"
 msgstr "Búið til"
 
-#: core/document.cpp:5981
+#: core/document.cpp:5985
 #, kde-format
 msgid "Modified"
 msgstr "Breytt"
 
-#: core/document.cpp:5984
+#: core/document.cpp:5988
 #, kde-format
 msgid "MIME Type"
 msgstr "Mime-gerð"
 
-#: core/document.cpp:5987
+#: core/document.cpp:5991
 #, kde-format
 msgid "Category"
 msgstr "Flokkur"
 
-#: core/document.cpp:5990
+#: core/document.cpp:5994
 #, kde-format
 msgid "Keywords"
 msgstr "Stikkorð"
 
-#: core/document.cpp:5993
+#: core/document.cpp:5997
 #, kde-format
 msgid "File Path"
 msgstr "Skráarslóð"
 
-#: core/document.cpp:5996
+#: core/document.cpp:6000
 #, kde-format
 msgid "File Size"
 msgstr "Skráarstærð"
 
-#: core/document.cpp:5999
+#: core/document.cpp:6003
 #, kde-format
 msgid "Page Size"
 msgstr "Síðustærð"

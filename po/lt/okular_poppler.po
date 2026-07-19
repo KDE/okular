@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 00:41+0000\n"
-"PO-Revision-Date: 2026-07-08 13:10+0300\n"
+"PO-Revision-Date: 2026-07-18 22:11+0300\n"
 "Last-Translator: Liudas <liudas.alisauskas@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -194,10 +194,9 @@ msgid "&Load Signatures"
 msgstr "Įke&lti parašus"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file A %1:"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Nepavyko pervadinti laikinojo failo A %1:"
+msgstr "Nepavyko pervadinti laikinojo failo %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format

@@ -16,14 +16,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-19 00:42+0000\n"
-"PO-Revision-Date: 2026-06-25 23:58+0900\n"
+"PO-Revision-Date: 2026-07-22 01:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.07.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -612,10 +612,9 @@ msgid "Signing cancelled by user"
 msgstr "簽署已被使用者取消"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "無法簽名。錯誤密碼"
+msgstr "簽名失敗：密碼錯誤"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -678,7 +677,7 @@ msgstr "主旨"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "使用者 ID"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -5617,7 +5616,7 @@ msgstr "將已簽名檔案另存為"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "無法覆寫原始檔案。請選擇另一個檔名。"
 
 #: part/signaturepartutils.h:62
 #, kde-format

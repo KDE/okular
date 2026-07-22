@@ -7,20 +7,20 @@
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
 # Franklin Weng <franklin@goodhorse.idv.tw>, 2012, 2013.
 # pan93412 <pan93412@gmail.com>, 2018, 2019.
-# SPDX-FileCopyrightText: 2023, 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2023, 2025-2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2025-08-29 23:17+0900\n"
+"PO-Revision-Date: 2026-07-22 01:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.11.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -40,10 +40,9 @@ msgid "Failed writing temporary file"
 msgstr "寫入暫存檔失敗"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "重新命名暫存檔失敗"
+msgstr "移除檔案失敗"
 
 #: annots.cpp:607
 #, kde-format
@@ -193,10 +192,9 @@ msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "重新命名暫存檔失敗"
+msgstr "重新命名暫存檔 %1 失敗："
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -325,10 +323,9 @@ msgid "PDF Backend Configuration"
 msgstr "PDF 後端介面設定"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "重新命名暫存檔失敗"
+msgstr "重新命名暫存檔失敗：%1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -369,11 +366,10 @@ msgid "Expiration date"
 msgstr "有效日期"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "可用的憑證"
+msgstr "列出憑證"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

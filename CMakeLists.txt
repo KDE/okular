@@ -16,7 +16,7 @@ set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible va
 set(FORCE_NOT_REQUIRED_DEPENDENCIES "" CACHE STRING "List (semicolon-separated) of dependencies that will be downgraded from REQUIRED to RECOMMENDED")
 
 find_package(ECM ${KF_REQUIRED_VERSION} CONFIG REQUIRED)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(ECMInstallIcons)
 include(ECMSetupVersion)
@@ -196,7 +196,7 @@ endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
     if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
-        find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED)
+        find_package(Qt6GuiPrivate ${QT_REQUIRED_VERSION} REQUIRED)
     else()
         find_package(Qt6Gui REQUIRED COMPONENTS Private)
     endif()

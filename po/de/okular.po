@@ -264,7 +264,7 @@ msgid ""
 "><br />Please select which one to use:</qt>"
 msgstr ""
 "<qt>Mehr als ein Anzeigemodul für diesen MIME-Typ gefunden:<br /><b>%1</b> "
-"(%2).<br /><br />Bitte wählen Sie aus, welches Modul benutzt werden soll:</"
+"(%2).<br /><br />Bitte wählen Sie aus, welches Modul verwendet werden soll:</"
 "qt>"
 
 #: core/document.cpp:199
@@ -5275,7 +5275,7 @@ msgid ""
 msgstr ""
 "Der Editor wurde über die Kommandozeile auf\n"
 " %1 \n"
-"gesetzt. Wenn Sie diese Option nutzen wollen, starten Sie Okular ohne die "
+"gesetzt. Wenn Sie diese Option nutzen möchten, starten Sie Okular ohne die "
 "Option --editor-cmd"
 
 #: part/presentationsearchbar.cpp:77

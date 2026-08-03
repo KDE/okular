@@ -1,5 +1,6 @@
 # Translation of okular_poppler to Norwegian Nynorsk
 #
+# Karl Ove Hufthammer <karl@huftis.org>, 2007, 2008, 2016, 2019, 2020, 2023, 2026.
 # Eirik U. Birkeland <eirbir@gmail.com>, 2008.
 msgid ""
 msgstr ""

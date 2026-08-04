@@ -467,7 +467,6 @@ if (TARGET Qt6::Qml)
     target_sources(okularcore PRIVATE
             core/script/executor_js.cpp
             core/script/js_app.cpp
-            core/script/js_console.cpp
             core/script/js_data.cpp
             core/script/js_display.cpp
             core/script/js_document.cpp

@@ -13,7 +13,6 @@
 
 #include "event_p.h"
 #include "js_app_p.h"
-#include "js_console_p.h"
 #include "js_data_p.h"
 #include "js_display_p.h"
 #include "js_document_p.h"
@@ -69,9 +68,9 @@ void ExecutorJSPrivate::initTypes()
     m_watchdogTimer->setSingleShot(true);
     m_watchdogTimer->moveToThread(&m_watchdogThread);
     QObject::connect(m_watchdogTimer, &QTimer::timeout, &m_interpreter, [this]() { m_interpreter.setInterrupted(true); }, Qt::DirectConnection);
+    m_interpreter.installExtensions(QJSEngine::ConsoleExtension);
 
     m_interpreter.globalObject().setProperty(QStringLiteral("app"), m_interpreter.newQObject(new JSApp(m_doc, m_watchdogTimer)));
-    m_interpreter.globalObject().setProperty(QStringLiteral("console"), m_interpreter.newQObject(new JSConsole));
     m_interpreter.globalObject().setProperty(QStringLiteral("Doc"), m_interpreter.newQObject(new JSDocument(m_doc)));
     m_interpreter.globalObject().setProperty(QStringLiteral("display"), m_interpreter.newQObject(new JSDisplay));
     m_interpreter.globalObject().setProperty(QStringLiteral("spell"), m_interpreter.newQObject(new JSSpell));

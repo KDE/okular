@@ -15,6 +15,10 @@
             this.__proto__[name] = Doc[name];
         }
     }
+    console.println = function(args) { console.log(args) }
+    console.show = function(args) { console.log(">>>>") }
+    console.hide = function(args) { console.log("<<<<") }
+    console.clear = function(args) { console.log("----") }
 }
 
 /* Builtin functions for Okular's PDF JavaScript interpretation. */

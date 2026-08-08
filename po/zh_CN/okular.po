@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 02:37+0000\n"
+"POT-Creation-Date: 2026-08-08 02:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -331,47 +331,47 @@ msgstr "此文档正在试图执行外部应用程序。出于安全考虑，Oku
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用于打开 MIME 类型为 %1 的应用程序。"
 
-#: core/document.cpp:4771
+#: core/document.cpp:4795
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "无法打开临时文件"
 
-#: core/document.cpp:4773
+#: core/document.cpp:4797
 #, kde-format
 msgid "Print conversion failed"
 msgstr "打印转换失败"
 
-#: core/document.cpp:4775
+#: core/document.cpp:4799
 #, kde-format
 msgid "Printing process crashed"
 msgstr "打印进程崩溃"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4801
 #, kde-format
 msgid "Printing process could not start"
 msgstr "打印进程无法启动"
 
-#: core/document.cpp:4779
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing to file failed"
 msgstr "打印到文件失败"
 
-#: core/document.cpp:4781
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "打印机状态无效"
 
-#: core/document.cpp:4783
+#: core/document.cpp:4807
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "无法找到要打印的文件"
 
-#: core/document.cpp:4785
+#: core/document.cpp:4809
 #, kde-format
 msgid "There was no file to print"
 msgstr "没有要打印的文件"
 
-#: core/document.cpp:4787
+#: core/document.cpp:4811
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -380,92 +380,92 @@ msgstr ""
 "无法找到打印所需的二进制程序。请检查并确保 CUPS lpr 二进制程序已经安装并可"
 "用。"
 
-#: core/document.cpp:4789
+#: core/document.cpp:4813
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "页面的打印尺寸无效"
 
-#: core/document.cpp:5445 part/part.cpp:1132
+#: core/document.cpp:5469 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "无法打开“%1”。文件不存在"
 
-#: core/document.cpp:5954
+#: core/document.cpp:5978
 #, kde-format
 msgid "Title"
 msgstr "标题"
 
-#: core/document.cpp:5957
+#: core/document.cpp:5981
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: core/document.cpp:5960
+#: core/document.cpp:5984
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5963
+#: core/document.cpp:5987
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5966
+#: core/document.cpp:5990
 #, kde-format
 msgid "Creator"
 msgstr "创建程序"
 
-#: core/document.cpp:5969
+#: core/document.cpp:5993
 #, kde-format
 msgid "Producer"
 msgstr "转换程序"
 
-#: core/document.cpp:5972
+#: core/document.cpp:5996
 #, kde-format
 msgid "Copyright"
 msgstr "版权"
 
-#: core/document.cpp:5975
+#: core/document.cpp:5999
 #, kde-format
 msgid "Pages"
 msgstr "页数"
 
-#: core/document.cpp:5978
+#: core/document.cpp:6002
 #, kde-format
 msgid "Created"
 msgstr "创建时间"
 
-#: core/document.cpp:5981
+#: core/document.cpp:6005
 #, kde-format
 msgid "Modified"
 msgstr "修改时间"
 
-#: core/document.cpp:5984
+#: core/document.cpp:6008
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 类型"
 
-#: core/document.cpp:5987
+#: core/document.cpp:6011
 #, kde-format
 msgid "Category"
 msgstr "类别"
 
-#: core/document.cpp:5990
+#: core/document.cpp:6014
 #, kde-format
 msgid "Keywords"
 msgstr "关键词"
 
-#: core/document.cpp:5993
+#: core/document.cpp:6017
 #, kde-format
 msgid "File Path"
 msgstr "文件路径"
 
-#: core/document.cpp:5996
+#: core/document.cpp:6020
 #, kde-format
 msgid "File Size"
 msgstr "文件大小"
 
-#: core/document.cpp:5999
+#: core/document.cpp:6023
 #, kde-format
 msgid "Page Size"
 msgstr "页面大小"
@@ -1647,7 +1647,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "页面 %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3177
+#: part/annotationmodel.cpp:324 part/part.cpp:3205
 #, kde-format
 msgid "Page %1"
 msgstr "第 %1 页"
@@ -1665,12 +1665,12 @@ msgid "&Open Pop-up Note"
 msgstr "打开弹窗批注(&O)"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2258 part/part.cpp:3183
+#: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "移除书签"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3185
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
 #, kde-format
 msgid "Add Bookmark"
 msgstr "添加书签"
@@ -1702,7 +1702,7 @@ msgstr "复制操作被 DRM 禁止"
 msgid "&Delete"
 msgstr "删除(&D)"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:743
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2284,12 +2284,12 @@ msgstr "显示到所有文档中"
 msgid "Search…"
 msgstr "搜索…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3165
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3193
 #, kde-format
 msgid "Expand All"
 msgstr "展开全部"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3166
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3194
 #, kde-format
 msgid "Collapse All"
 msgstr "折叠全部"
@@ -2299,8 +2299,8 @@ msgstr "折叠全部"
 msgid "Go to This Bookmark"
 msgstr "跳转到此书签"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
-#: part/part.cpp:2453
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:692
+#: part/part.cpp:2481
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "重命名书签"
@@ -3591,23 +3591,23 @@ msgstr "从当前页开始查找"
 msgid "Find as you type"
 msgstr "在您输入的同时查找"
 
-#: part/formwidgets.cpp:870
+#: part/formwidgets.cpp:874
 #, kde-format
 msgid "All Files (*)"
 msgstr "所有文件 (*)"
 
-#: part/formwidgets.cpp:1280
+#: part/formwidgets.cpp:1284
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "签名占位符 (点击签名)"
 
-#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
 #, kde-format
 msgid "&Sign…"
 msgstr "签名(&S)…"
 
-#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1354 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "签名属性"
@@ -3629,7 +3629,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "正则表达式"
 
-#: part/layers.cpp:33 part/part.cpp:2301
+#: part/layers.cpp:33 part/part.cpp:2329
 #, kde-format
 msgid "Layers"
 msgstr "图层"
@@ -3865,7 +3865,7 @@ msgstr[0] "文本 (%1 个字符)"
 msgid "Copy to Clipboard"
 msgstr "复制到剪贴板"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:834
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:841
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "复制文本 (不带换行符)"
@@ -3920,7 +3920,7 @@ msgstr "复制文本"
 msgid "Go to '%1'"
 msgstr "跳转到“%1”"
 
-#: part/pageview.cpp:4205 part/part.cpp:3188
+#: part/pageview.cpp:4205 part/part.cpp:3216
 #, kde-format
 msgid "Fit Width"
 msgstr "适合宽度"
@@ -4282,212 +4282,220 @@ msgstr ""
 "此文档包含嵌入的文件。<a href=\"okular:/embeddedfiles\">点击此处可查看这些文"
 "件</a>，也可通过菜单栏的文件 -> 嵌入的文件查看。"
 
-#: part/part.cpp:473
+#: part/part.cpp:468
+#, kde-format
+msgctxt "This is a normal pdf feature, but can be abused by hostile parties"
+msgid ""
+"This document has elements that might be hidden or shown differently when "
+"printed. For important documents, please verify both."
+msgstr ""
+
+#: part/part.cpp:480
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr "签名正在进行中。您可以调整签名的位置和大小"
 
-#: part/part.cpp:475
+#: part/part.cpp:482
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "完成签名"
 
-#: part/part.cpp:648
+#: part/part.cpp:655
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "上一页"
 
-#: part/part.cpp:649
+#: part/part.cpp:656
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "后退到上一页"
 
-#: part/part.cpp:650
+#: part/part.cpp:657
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "移动到文档的上一页"
 
-#: part/part.cpp:657
+#: part/part.cpp:664
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "下一页"
 
-#: part/part.cpp:658
+#: part/part.cpp:665
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "前进到下一页"
 
-#: part/part.cpp:659
+#: part/part.cpp:666
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "移动到文档的下一页"
 
-#: part/part.cpp:667
+#: part/part.cpp:674
 #, kde-format
 msgid "Beginning of the document"
 msgstr "文档开头"
 
-#: part/part.cpp:668
+#: part/part.cpp:675
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "移动到文档的开头"
 
-#: part/part.cpp:672
+#: part/part.cpp:679
 #, kde-format
 msgid "End of the document"
 msgstr "文档末尾"
 
-#: part/part.cpp:673
+#: part/part.cpp:680
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "移动到文档的末尾"
 
-#: part/part.cpp:687
+#: part/part.cpp:694
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "重命名当前书签"
 
-#: part/part.cpp:691
+#: part/part.cpp:698
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "上一个书签"
 
-#: part/part.cpp:693
+#: part/part.cpp:700
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "跳转到上一个书签"
 
-#: part/part.cpp:697
+#: part/part.cpp:704
 #, kde-format
 msgid "Next Bookmark"
 msgstr "下一个书签"
 
-#: part/part.cpp:699
+#: part/part.cpp:706
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "跳转到下一个书签"
 
-#: part/part.cpp:729
+#: part/part.cpp:736
 #, kde-format
 msgid "Configure Okular…"
 msgstr "配置 Okular…"
 
-#: part/part.cpp:732
+#: part/part.cpp:739
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "配置查看器…"
 
-#: part/part.cpp:765
+#: part/part.cpp:772
 #, kde-format
 msgid "About Backend"
 msgstr "关于后端程序"
 
-#: part/part.cpp:770
+#: part/part.cpp:777
 #, kde-format
 msgid "Reloa&d"
 msgstr "重新加载(&D)"
 
-#: part/part.cpp:772
+#: part/part.cpp:779
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "重新从磁盘加载当前文档。"
 
-#: part/part.cpp:778
+#: part/part.cpp:785
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "关闭查找栏(&F)"
 
-#: part/part.cpp:783
+#: part/part.cpp:790
 #, kde-format
 msgid "Page Number"
 msgstr "页码"
 
-#: part/part.cpp:787
+#: part/part.cpp:794
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "配置颜色模式…"
 
-#: part/part.cpp:826 part/part.cpp:3193
+#: part/part.cpp:833 part/part.cpp:3221
 #, kde-format
 msgid "Paste Annotation"
 msgstr "粘贴批注"
 
-#: part/part.cpp:844
+#: part/part.cpp:851
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "选择当前页的所有文本"
 
-#: part/part.cpp:857
+#: part/part.cpp:864
 #, kde-format
 msgid "Show S&idebar"
 msgstr "显示侧边栏(&I)"
 
-#: part/part.cpp:866
+#: part/part.cpp:873
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "显示页码栏(&P)"
 
-#: part/part.cpp:872
+#: part/part.cpp:879
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "显示签名面板(&S)"
 
-#: part/part.cpp:883
+#: part/part.cpp:890
 #, kde-format
 msgid "&Embedded Files"
 msgstr "嵌入的文件(&E)"
 
-#: part/part.cpp:889
+#: part/part.cpp:896
 #, kde-format
 msgid "E&xport As"
 msgstr "导出为(&X)"
 
-#: part/part.cpp:901
+#: part/part.cpp:908
 #, kde-format
 msgid "S&hare"
 msgstr "分享(&H)"
 
-#: part/part.cpp:910
+#: part/part.cpp:917
 #, kde-format
 msgid "P&resentation"
 msgstr "演示模式(&R)"
 
-#: part/part.cpp:917
+#: part/part.cpp:924
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "打开所在文件夹(&T)"
 
-#: part/part.cpp:931
+#: part/part.cpp:938
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "导入 Postscript 为 PDF(&I)…"
 
-#: part/part.cpp:935
+#: part/part.cpp:942
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "切换黑屏模式"
 
-#: part/part.cpp:943
+#: part/part.cpp:950
 #, kde-format
 msgid "Erase Drawing"
 msgstr "清除绘制的图案"
 
-#: part/part.cpp:948
+#: part/part.cpp:955
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "配置批注…"
 
-#: part/part.cpp:953
+#: part/part.cpp:960
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "播放/暂停演示"
 
-#: part/part.cpp:1109
+#: part/part.cpp:1116
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4497,69 +4505,69 @@ msgstr ""
 "您刚刚修改了打开的文档，但这种文档无法保存。\n"
 "Okular 关闭后，所有修改都将丢失。"
 
-#: part/part.cpp:1110
+#: part/part.cpp:1117
 #, kde-format
 msgid "Document can't be saved"
 msgstr "文档无法保存"
 
-#: part/part.cpp:1139
+#: part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "无法打开“%1”(%2) "
 
-#: part/part.cpp:1192
+#: part/part.cpp:1199
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "已取消加载 %1。"
 
-#: part/part.cpp:1208
+#: part/part.cpp:1215
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "无法打开 %1。原因：%2"
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr "找不到“ps2pdf”程序，因此 Okular 无法使用它来导入 PS 文件。"
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "找不到 ps2pdf 程序"
 
-#: part/part.cpp:1307
+#: part/part.cpp:1314
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript 文件 (%1)"
 
-#: part/part.cpp:1323
+#: part/part.cpp:1330
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "正在将 PS 文件导入为 PDF (可能需要一些时间)…"
 
-#: part/part.cpp:1455
+#: part/part.cpp:1462
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "请输入文档的读取密码："
 
-#: part/part.cpp:1457
+#: part/part.cpp:1464
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "密码错误。请重试："
 
-#: part/part.cpp:1468
+#: part/part.cpp:1475
 #, kde-format
 msgid "Document Password"
 msgstr "文档密码"
 
-#: part/part.cpp:1591
+#: part/part.cpp:1598
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "此文档包含 XFA 表单，目前程序<b>尚未支持这种表单</b>。"
 
-#: part/part.cpp:1598
+#: part/part.cpp:1605
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4568,7 +4576,7 @@ msgstr ""
 "此文档包含表单。点击按钮，或者在菜单栏选择视图 -> 显示表单即可对表单进行操"
 "作。"
 
-#: part/part.cpp:1615
+#: part/part.cpp:1622
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4577,7 +4585,7 @@ msgstr ""
 "此文档的所有编辑和交互功能已被禁用。要编辑此文档，请另存为一个副本再重新打"
 "开。"
 
-#: part/part.cpp:1713
+#: part/part.cpp:1741
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4586,27 +4594,27 @@ msgstr ""
 "此文档请求全屏显示。\n"
 "您想要离开正常模式进入演示模式吗？"
 
-#: part/part.cpp:1715
+#: part/part.cpp:1743
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "请求改变查看模式"
 
-#: part/part.cpp:1716
+#: part/part.cpp:1744
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "进入演示模式"
 
-#: part/part.cpp:1717
+#: part/part.cpp:1745
 #, kde-format
 msgid "Deny Request"
 msgstr "拒绝请求"
 
-#: part/part.cpp:1807
+#: part/part.cpp:1835
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "无法打开 %1。%2"
 
-#: part/part.cpp:1837
+#: part/part.cpp:1865
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4619,22 +4627,22 @@ msgstr ""
 "载该文件后，未保存的更改将被替换为其他程序修改过的版本。<nl/><nl/>你想要继续"
 "重新加载该文件吗？"
 
-#: part/part.cpp:1841 part/part.cpp:1851
+#: part/part.cpp:1869 part/part.cpp:1879
 #, kde-format
 msgid "File Changed"
 msgstr "文件已更改"
 
-#: part/part.cpp:1842
+#: part/part.cpp:1870
 #, kde-format
 msgid "Continue Reloading"
 msgstr "继续重新加载"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1871
 #, kde-format
 msgid "Abort Reloading"
 msgstr "中止重新加载"
 
-#: part/part.cpp:1847
+#: part/part.cpp:1875
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4647,93 +4655,93 @@ msgstr ""
 "文件后，未保存的更改将被替换为其他程序修改过的版本。<nl/><nl/>你想要继续关闭"
 "该文件吗？"
 
-#: part/part.cpp:1852
+#: part/part.cpp:1880
 #, kde-format
 msgid "Continue Closing"
 msgstr "继续关闭"
 
-#: part/part.cpp:1853
+#: part/part.cpp:1881
 #, kde-format
 msgid "Abort Closing"
 msgstr "中止关闭"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "您想要保存“%1”的更改还是丢弃更改？"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Close Document"
 msgstr "关闭文档"
 
-#: part/part.cpp:1992
+#: part/part.cpp:2020
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
 "the embedded viewer."
 msgstr "此链接指向一个关闭文档的操作，但该操作在使用嵌入式查看器时无效。"
 
-#: part/part.cpp:1998
+#: part/part.cpp:2026
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
 "the embedded viewer."
 msgstr "此链接指向一个退出程序的操作，但该操作在使用嵌入式查看器时无效。"
 
-#: part/part.cpp:2090 part/part.cpp:2112
+#: part/part.cpp:2118 part/part.cpp:2140
 #, kde-format
 msgid "Reloading the document…"
 msgstr "正在重新加载文档…"
 
-#: part/part.cpp:2281 part/toc.cpp:36
+#: part/part.cpp:2309 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "目录"
 
-#: part/part.cpp:2310 part/signaturepanel.cpp:45
+#: part/part.cpp:2338 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "签名"
 
-#: part/part.cpp:2337
+#: part/part.cpp:2365
 #, kde-format
 msgid "Go to Page"
 msgstr "跳转到页面"
 
-#: part/part.cpp:2360
+#: part/part.cpp:2388
 #, kde-format
 msgid "&Page:"
 msgstr "页码(&P)："
 
-#: part/part.cpp:2453
+#: part/part.cpp:2481
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "输入书签的新名称："
 
-#: part/part.cpp:2499
+#: part/part.cpp:2527
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "重命名此书签"
 
-#: part/part.cpp:2502
+#: part/part.cpp:2530
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "删除此书签"
 
-#: part/part.cpp:2588 part/part.cpp:2589 part/part.cpp:3505
+#: part/part.cpp:2616 part/part.cpp:2617 part/part.cpp:3533
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2596 part/revisionviewer.cpp:44
+#: part/part.cpp:2624 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "另存为"
 
-#: part/part.cpp:2613
+#: part/part.cpp:2641
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4742,18 +4750,18 @@ msgstr ""
 "您想要保存的 Okular 文档存档文件名没有以“%1”扩展名结尾，不支持这种文件名模"
 "式。您想要提供一个新的文件名吗？"
 
-#: part/part.cpp:2614
+#: part/part.cpp:2642
 #, kde-format
 msgid "Unsupported extension"
 msgstr "不支持的扩展名"
 
-#: part/part.cpp:2615
+#: part/part.cpp:2643
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "选择新文件名"
 
-#: part/part.cpp:2658
+#: part/part.cpp:2686
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4764,17 +4772,17 @@ msgstr ""
 "文件 <filename>%1</filename> 已被其他程序修改。如果您保存该文件，之前在其他程"
 "序中作出的更改将会丢失。您确定要继续吗？"
 
-#: part/part.cpp:2661 part/part.cpp:2680 part/part.cpp:2732
+#: part/part.cpp:2689 part/part.cpp:2708 part/part.cpp:2760
 #, kde-format
 msgid "Save - Warning"
 msgstr "保存 - 警告"
 
-#: part/part.cpp:2663
+#: part/part.cpp:2691
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "保存副本到另一个位置"
 
-#: part/part.cpp:2679
+#: part/part.cpp:2707
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4784,12 +4792,12 @@ msgstr ""
 "当前文档通过密码保护。<br/>进行保存需要重新加载该文件。程序将要求您重新输入密"
 "码，撤销/重做历史记录也将丢失。<br/>您想要继续吗？"
 
-#: part/part.cpp:2706
+#: part/part.cpp:2734
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "无法打开临时文件进行保存。"
 
-#: part/part.cpp:2719
+#: part/part.cpp:2747
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4799,7 +4807,7 @@ msgstr ""
 "无法覆盖 <filename>%1</filename>，因为该文件已被设为只读。请尝试保存到另一个"
 "位置，或者更改该文件的权限属性。"
 
-#: part/part.cpp:2731
+#: part/part.cpp:2759
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4808,22 +4816,22 @@ msgstr ""
 "保存完成后，当前文档格式要求重新加载此文件。您的撤销/重做历史记录将会丢失。"
 "<br />您想要继续吗？"
 
-#: part/part.cpp:2746 part/part.cpp:2815 part/part.cpp:2836 part/part.cpp:3520
+#: part/part.cpp:2774 part/part.cpp:2843 part/part.cpp:2864 part/part.cpp:3548
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "文件无法保存到“%1”。请尝试保存到其他位置。"
 
-#: part/part.cpp:2759
+#: part/part.cpp:2787
 #, kde-format
 msgid "Filled form contents"
 msgstr "已填写的表单内容"
 
-#: part/part.cpp:2762
+#: part/part.cpp:2790
 #, kde-format
 msgid "User annotations"
 msgstr "用户批注"
 
-#: part/part.cpp:2767
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4833,17 +4841,17 @@ msgstr ""
 "即将保存文档的更改，但是当前文件格式不支持保存以下元素。要保留这些元素，请使"
 "用 <i>Okular 文档存档</i> 格式进行保存。"
 
-#: part/part.cpp:2771 part/part.cpp:2793
+#: part/part.cpp:2799 part/part.cpp:2821
 #, kde-format
 msgid "Warning"
 msgstr "警告"
 
-#: part/part.cpp:2772 part/part.cpp:2794
+#: part/part.cpp:2800 part/part.cpp:2822
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "另存为 Okular 文档存档…"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2812
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4855,7 +4863,7 @@ msgstr ""
 "用 <i>Okular 文档存档</i> 格式进行保存。点击 <i>继续</i> 将使用当前格式进行保"
 "存，这些元素将被丢弃。"
 
-#: part/part.cpp:2787
+#: part/part.cpp:2815
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4867,22 +4875,22 @@ msgstr ""
 "用 <i>Okular 文档存档</i> 格式进行保存。点击 <i>继续</i> 将使用当前格式进行保"
 "存，这些元素和撤销/重做历史记录将被丢弃。"
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue"
 msgstr "继续"
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue losing changes"
 msgstr "继续，丢弃更改"
 
-#: part/part.cpp:2817
+#: part/part.cpp:2845
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "文件无法保存到“%1”。%2"
 
-#: part/part.cpp:2856
+#: part/part.cpp:2884
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4893,74 +4901,74 @@ msgstr ""
 "\n"
 "该文档已不存在。"
 
-#: part/part.cpp:2892
+#: part/part.cpp:2920
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
 "location."
 msgstr "文件无法保存到“%1”。错误：“%2”。请尝试保存到其他位置。"
 
-#: part/part.cpp:3163
+#: part/part.cpp:3191
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "展开整个章节"
 
-#: part/part.cpp:3164
+#: part/part.cpp:3192
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "折叠整个章节"
 
-#: part/part.cpp:3180
+#: part/part.cpp:3208
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "同步滚动缩略图和页面"
 
-#: part/part.cpp:3212
+#: part/part.cpp:3240
 #, kde-format
 msgid "Tools"
 msgstr "工具"
 
-#: part/part.cpp:3400
+#: part/part.cpp:3428
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "朗读"
 
-#: part/part.cpp:3558
+#: part/part.cpp:3586
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "打印"
 
-#: part/part.cpp:3621
+#: part/part.cpp:3649
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "此文档不允许打印。"
 
-#: part/part.cpp:3634
+#: part/part.cpp:3662
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr "无法打印此文档。未知错误。请到 bugs.kde.org 网站提交程序缺陷报告"
 
-#: part/part.cpp:3636
+#: part/part.cpp:3664
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
 "bugs.kde.org"
 msgstr "无法打印此文档。具体错误是“%1”。请到 bugs.kde.org 网站提交程序缺陷报告"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3756
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "跳转到之前的位置"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3760
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "跳转到之后的位置"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3785
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -4969,7 +4977,7 @@ msgstr ""
 "<qt><strong>文件错误。</strong>无法创建临时文件 <nobr><strong>%1</strong></"
 "nobr>。</qt>"
 
-#: part/part.cpp:3769
+#: part/part.cpp:3797
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -4978,7 +4986,7 @@ msgstr ""
 "<qt><strong>文件错误！</strong> 无法打开并解压文件 <nobr><strong>%1</"
 "strong></nobr>。将不会加载此文件。</qt>"
 
-#: part/part.cpp:3773
+#: part/part.cpp:3801
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -4989,7 +4997,7 @@ msgstr ""
 "<qt>此错误通常是因为您没有文件的读取权限。您可以在 Dolphin 文件管理器中右键点"
 "击该文件，选择“属性”，然后切换到“权限”标签页，检查文件的所有者和权限。</qt>"
 
-#: part/part.cpp:3795
+#: part/part.cpp:3823
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -4998,7 +5006,7 @@ msgstr ""
 "<qt><strong>文件错误！</strong>无法解压文件 <nobr><strong>%1</strong></nobr>"
 "将不会加载此文件。</qt>"
 
-#: part/part.cpp:3799
+#: part/part.cpp:3827
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5007,27 +5015,27 @@ msgstr ""
 "<qt>此错误通常是因为文件已经损坏。您可以尝试使用命令行工具手动解压此文件，以"
 "确认它是否已经损坏。</qt>"
 
-#: part/part.cpp:3825
+#: part/part.cpp:3853
 #, kde-format
 msgid "No Bookmarks"
 msgstr "没有书签"
 
-#: part/part.cpp:3896
+#: part/part.cpp:3924
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "分享文档时出错：%1"
 
-#: part/part.cpp:3896 part/part.cpp:3902
+#: part/part.cpp:3924 part/part.cpp:3930
 #, kde-format
 msgid "Share"
 msgstr "分享"
 
-#: part/part.cpp:3900
+#: part/part.cpp:3928
 #, kde-format
 msgid "Document shared successfully"
 msgstr "文档成功分享"
 
-#: part/part.cpp:3902
+#: part/part.cpp:3930
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "您可以在此找到已分享的文档：<a href=\"%1\">%1</a>"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 02:37+0000\n"
+"POT-Creation-Date: 2026-08-08 02:39+0000\n"
 "PO-Revision-Date: 2026-07-17 08:45+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -333,47 +333,47 @@ msgstr ""
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME ტიპის, %1 მქონე ფაილის გასახსნელად აპლიკაცია აღმოჩენილი არაა."
 
-#: core/document.cpp:4771
+#: core/document.cpp:4795
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "დროებითი ფაილის გახსნის შეცდომა"
 
-#: core/document.cpp:4773
+#: core/document.cpp:4797
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ბეჭდვის გადაყვანის შეცდომა"
 
-#: core/document.cpp:4775
+#: core/document.cpp:4799
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ბეჭდვის პროცესი ავარიულად დასრულდა"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4801
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ბეჭდვის პროცესის გაშვების შეცდომა"
 
-#: core/document.cpp:4779
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ფაილში დაბეჭდვის შეცდომა"
 
-#: core/document.cpp:4781
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "პრინტერი არასწორ მდგომარეობაშია"
 
-#: core/document.cpp:4783
+#: core/document.cpp:4807
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "დასაბეჭდი ფაილის აღმოჩენის შეცდომა"
 
-#: core/document.cpp:4785
+#: core/document.cpp:4809
 #, kde-format
 msgid "There was no file to print"
 msgstr "დასაბეჭდი ფაილი ვერ ვიპოვე"
 
-#: core/document.cpp:4787
+#: core/document.cpp:4811
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +382,92 @@ msgstr ""
 "დაბეჭდვისთვის საჭირო გამშვები ფაილი აღმოჩენილი არაა. დარწმუნდით, რომ CUPS-ის "
 "lpr გამშვები ფაილი ხელმისაწვდომია"
 
-#: core/document.cpp:4789
+#: core/document.cpp:4813
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "გვერდის დასაბეჭდი ზომა არასწორია"
 
-#: core/document.cpp:5445 part/part.cpp:1132
+#: core/document.cpp:5469 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ვერ გავხსენი. ფალი არ არსებობს"
 
-#: core/document.cpp:5954
+#: core/document.cpp:5978
 #, kde-format
 msgid "Title"
 msgstr "სათაური"
 
-#: core/document.cpp:5957
+#: core/document.cpp:5981
 #, kde-format
 msgid "Subject"
 msgstr "თემა"
 
-#: core/document.cpp:5960
+#: core/document.cpp:5984
 #, kde-format
 msgid "Description"
 msgstr "აღწერა"
 
-#: core/document.cpp:5963
+#: core/document.cpp:5987
 #, kde-format
 msgid "Author"
 msgstr "ავტორი"
 
-#: core/document.cpp:5966
+#: core/document.cpp:5990
 #, kde-format
 msgid "Creator"
 msgstr "შემქმნელი"
 
-#: core/document.cpp:5969
+#: core/document.cpp:5993
 #, kde-format
 msgid "Producer"
 msgstr "პროდუსერი"
 
-#: core/document.cpp:5972
+#: core/document.cpp:5996
 #, kde-format
 msgid "Copyright"
 msgstr "საავტორო უფლებები"
 
-#: core/document.cpp:5975
+#: core/document.cpp:5999
 #, kde-format
 msgid "Pages"
 msgstr "გვერდები"
 
-#: core/document.cpp:5978
+#: core/document.cpp:6002
 #, kde-format
 msgid "Created"
 msgstr "შექმნილია"
 
-#: core/document.cpp:5981
+#: core/document.cpp:6005
 #, kde-format
 msgid "Modified"
 msgstr "შეიცვალა"
 
-#: core/document.cpp:5984
+#: core/document.cpp:6008
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ტიპი"
 
-#: core/document.cpp:5987
+#: core/document.cpp:6011
 #, kde-format
 msgid "Category"
 msgstr "კატეგორია"
 
-#: core/document.cpp:5990
+#: core/document.cpp:6014
 #, kde-format
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: core/document.cpp:5993
+#: core/document.cpp:6017
 #, kde-format
 msgid "File Path"
 msgstr "ფაილის ბილიკი"
 
-#: core/document.cpp:5996
+#: core/document.cpp:6020
 #, kde-format
 msgid "File Size"
 msgstr "ფაილის ზომა"
 
-#: core/document.cpp:5999
+#: core/document.cpp:6023
 #, kde-format
 msgid "Page Size"
 msgstr "Page Size"
@@ -1663,7 +1663,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "გვერდი %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3177
+#: part/annotationmodel.cpp:324 part/part.cpp:3205
 #, kde-format
 msgid "Page %1"
 msgstr "გვერდი %1"
@@ -1682,12 +1682,12 @@ msgid "&Open Pop-up Note"
 msgstr "მხტუნარა შეტყობინების &გახსნა"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2258 part/part.cpp:3183
+#: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "სანიშნეების ამოღება"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3185
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
 #, kde-format
 msgid "Add Bookmark"
 msgstr "სანიშნის დამატება"
@@ -1719,7 +1719,7 @@ msgstr "კოპირება აკრძალულია DRM-ის მ�
 msgid "&Delete"
 msgstr "&წაშლა"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:743
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2306,12 +2306,12 @@ msgstr "ყველა დოკუმენტისთვის ჩვენ�
 msgid "Search…"
 msgstr "ძებნა…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3165
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3193
 #, kde-format
 msgid "Expand All"
 msgstr "ყველას ჩამოშლა"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3166
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3194
 #, kde-format
 msgid "Collapse All"
 msgstr "ყველას აკეცვა"
@@ -2321,8 +2321,8 @@ msgstr "ყველას აკეცვა"
 msgid "Go to This Bookmark"
 msgstr "არჩეულ სანიშნზე გადასვლა"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
-#: part/part.cpp:2453
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:692
+#: part/part.cpp:2481
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "სანიშნის გადარქმევა"
@@ -3630,23 +3630,23 @@ msgstr "მიმდინარე გვერდიდან"
 msgid "Find as you type"
 msgstr "ტექსტის პოვნა აკრეფისას"
 
-#: part/formwidgets.cpp:870
+#: part/formwidgets.cpp:874
 #, kde-format
 msgid "All Files (*)"
 msgstr "ყველა ფაილი (*)"
 
-#: part/formwidgets.cpp:1280
+#: part/formwidgets.cpp:1284
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "ხელმოწერის ადგილმჭერი (წკაპი ხელმოსაწერად)"
 
-#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
 #, kde-format
 msgid "&Sign…"
 msgstr "ხელმო&წერა…"
 
-#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1354 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "ხელმოწერის თვისებები"
@@ -3668,7 +3668,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "რეგულარული ექსპრესია"
 
-#: part/layers.cpp:33 part/part.cpp:2301
+#: part/layers.cpp:33 part/part.cpp:2329
 #, kde-format
 msgid "Layers"
 msgstr "ფენები"
@@ -3906,7 +3906,7 @@ msgstr[1] "ტექსტი (%1 სიმბოლო)"
 msgid "Copy to Clipboard"
 msgstr "გაცვლის ბუფერში კოპირება"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:834
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:841
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "ტექსტის კოპირება (ხაზის გადატანების გარეშე)"
@@ -3961,7 +3961,7 @@ msgstr "ტექსტის კოპირება"
 msgid "Go to '%1'"
 msgstr "%1-ზე გადასვლა"
 
-#: part/pageview.cpp:4205 part/part.cpp:3188
+#: part/pageview.cpp:4205 part/part.cpp:3216
 #, kde-format
 msgid "Fit Width"
 msgstr "სიგანის ჩატევა"
@@ -4334,213 +4334,221 @@ msgstr ""
 "\">მათ სახანავად დააწკაპუნეთ აქ</a> ან გადადით მენიუში ფაილი -> ჩაშენებული "
 "ფაილები."
 
-#: part/part.cpp:473
+#: part/part.cpp:468
+#, kde-format
+msgctxt "This is a normal pdf feature, but can be abused by hostile parties"
+msgid ""
+"This document has elements that might be hidden or shown differently when "
+"printed. For important documents, please verify both."
+msgstr ""
+
+#: part/part.cpp:480
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr ""
 "მიმდინარეობს ხელმოწერა. შეგიძლიათ, ხელმოწერის მდებარეობა და ზომა გაასწოროთ"
 
-#: part/part.cpp:475
+#: part/part.cpp:482
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "ხელმოწერის დასრულება"
 
-#: part/part.cpp:648
+#: part/part.cpp:655
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "წინა"
 
-#: part/part.cpp:649
+#: part/part.cpp:656
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "წინა გვერდზე დაბრუნება"
 
-#: part/part.cpp:650
+#: part/part.cpp:657
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "დოკუმენტის წინა გვერდზე გადასვლა"
 
-#: part/part.cpp:657
+#: part/part.cpp:664
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "შემდეგი"
 
-#: part/part.cpp:658
+#: part/part.cpp:665
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "შემდეგ გვერდზე გაასვლა"
 
-#: part/part.cpp:659
+#: part/part.cpp:666
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "დოკუმენტის შემდეგ გვერდზე გადასვლა"
 
-#: part/part.cpp:667
+#: part/part.cpp:674
 #, kde-format
 msgid "Beginning of the document"
 msgstr "დოკუმენტის დასაწყისში"
 
-#: part/part.cpp:668
+#: part/part.cpp:675
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "გადავა დოკუმენტის დასაწყისში"
 
-#: part/part.cpp:672
+#: part/part.cpp:679
 #, kde-format
 msgid "End of the document"
 msgstr "დოკუმენტის დასასრული"
 
-#: part/part.cpp:673
+#: part/part.cpp:680
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "გადავა დოკუმენტის ბოლოში"
 
-#: part/part.cpp:687
+#: part/part.cpp:694
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "მიმდინარე სანიშნეს სახელის გადარქმევა"
 
-#: part/part.cpp:691
+#: part/part.cpp:698
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "წინა სანიშნი"
 
-#: part/part.cpp:693
+#: part/part.cpp:700
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "წინა სანიშნზე გადასვლა"
 
-#: part/part.cpp:697
+#: part/part.cpp:704
 #, kde-format
 msgid "Next Bookmark"
 msgstr "შემდეგი სანიშნი"
 
-#: part/part.cpp:699
+#: part/part.cpp:706
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "შემდეგ სანიშნზე გადასვლა"
 
-#: part/part.cpp:729
+#: part/part.cpp:736
 #, kde-format
 msgid "Configure Okular…"
 msgstr "Okular-ის მორგება…"
 
-#: part/part.cpp:732
+#: part/part.cpp:739
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "დამთვალიერებლის მორგება…"
 
-#: part/part.cpp:765
+#: part/part.cpp:772
 #, kde-format
 msgid "About Backend"
 msgstr "უკანაბოლოს შესახებ"
 
-#: part/part.cpp:770
+#: part/part.cpp:777
 #, kde-format
 msgid "Reloa&d"
 msgstr "&თავიდან ჩატვირთვა"
 
-#: part/part.cpp:772
+#: part/part.cpp:779
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "მონიშნული დოკუმენტის დისკიდან თავიდან ჩატვირთვა."
 
-#: part/part.cpp:778
+#: part/part.cpp:785
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "ძებნის &ზოლის დახურვა"
 
-#: part/part.cpp:783
+#: part/part.cpp:790
 #, kde-format
 msgid "Page Number"
 msgstr "გვერდის ნომერი"
 
-#: part/part.cpp:787
+#: part/part.cpp:794
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "ფერის რეჟიმების მორგება…"
 
-#: part/part.cpp:826 part/part.cpp:3193
+#: part/part.cpp:833 part/part.cpp:3221
 #, kde-format
 msgid "Paste Annotation"
 msgstr "ანოტაციის ჩასმა"
 
-#: part/part.cpp:844
+#: part/part.cpp:851
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "მიმდინარე გვერდის ტექსტის სრულად მონშვნა"
 
-#: part/part.cpp:857
+#: part/part.cpp:864
 #, kde-format
 msgid "Show S&idebar"
 msgstr "&გვერდითი პანელის ჩვენება"
 
-#: part/part.cpp:866
+#: part/part.cpp:873
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "&გვერდის პანელის ჩვენება"
 
-#: part/part.cpp:872
+#: part/part.cpp:879
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "&ხელმოწერების პაჯნელის ჩვენება"
 
-#: part/part.cpp:883
+#: part/part.cpp:890
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&ჩაშენებული ფაილები"
 
-#: part/part.cpp:889
+#: part/part.cpp:896
 #, kde-format
 msgid "E&xport As"
 msgstr "&გატანა, როგორც"
 
-#: part/part.cpp:901
+#: part/part.cpp:908
 #, kde-format
 msgid "S&hare"
 msgstr "&გაზიარება"
 
-#: part/part.cpp:910
+#: part/part.cpp:917
 #, kde-format
 msgid "P&resentation"
 msgstr "&პრეზენტაცია"
 
-#: part/part.cpp:917
+#: part/part.cpp:924
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "შ&ემცველი საქაღალდის ჩვენება"
 
-#: part/part.cpp:931
+#: part/part.cpp:938
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "PostScript-ის შ&ემოტანა PDF-ის სახით…"
 
-#: part/part.cpp:935
+#: part/part.cpp:942
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "შავი ეკრანის რეჟიმზე გადართვა"
 
-#: part/part.cpp:943
+#: part/part.cpp:950
 #, kde-format
 msgid "Erase Drawing"
 msgstr "ნახატის წაშლა"
 
-#: part/part.cpp:948
+#: part/part.cpp:955
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "ანოტაციების მორგება…"
 
-#: part/part.cpp:953
+#: part/part.cpp:960
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "პრეზენტაციის დაკვრა/შეჩერება"
 
-#: part/part.cpp:1109
+#: part/part.cpp:1116
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4550,27 +4558,27 @@ msgstr ""
 "ახლახანს ღია დოკუმენტი შეცვალეთ, მაგრამ ამნაირ დოკუმენტს ვერ შეინახავთ.\n"
 "ყველა ცვლილება დაიკარგება, როცა Okular-ს დახურავთ."
 
-#: part/part.cpp:1110
+#: part/part.cpp:1117
 #, kde-format
 msgid "Document can't be saved"
 msgstr "დოკუმენტის შენახვა შეუძლებელია"
 
-#: part/part.cpp:1139
+#: part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1'-ის გახსნის შეცდომა (%2) "
 
-#: part/part.cpp:1192
+#: part/part.cpp:1199
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1-ის ჩატვირთვა გაუქმდა."
 
-#: part/part.cpp:1208
+#: part/part.cpp:1215
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1-ის გახსნის შეცდომა. მიზეზი: %2"
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4579,43 +4587,43 @@ msgstr ""
 "პროგრამა \"ps2pdf\" ვერ ვიპოვე, ასე რომ Okular-ს PS ფაილების შემოტანა მისი "
 "გამოყენებით არ შეუძლია."
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf ვერ ვიპოვე"
 
-#: part/part.cpp:1307
+#: part/part.cpp:1314
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript ფაილები (%1)"
 
-#: part/part.cpp:1323
+#: part/part.cpp:1330
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS ფაილის შემოტანა PDF ფაილი სახით (ამას დიდი დრო შეიძლება დასჭირდეს)…"
 
-#: part/part.cpp:1455
+#: part/part.cpp:1462
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "შეიყვანეთ პაროლი დოკუმენტის წასაკითხად:"
 
-#: part/part.cpp:1457
+#: part/part.cpp:1464
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "არასწორი პაროლი. თავიდან სცადეთ:"
 
-#: part/part.cpp:1468
+#: part/part.cpp:1475
 #, kde-format
 msgid "Document Password"
 msgstr "დოკუმენტის პაროლი"
 
-#: part/part.cpp:1591
+#: part/part.cpp:1598
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "ამ დოკუმენტს აქვს XFA ფორმები, რომლებიც ამჟამად <b>მხარდაჭერილი არაა</b>."
 
-#: part/part.cpp:1598
+#: part/part.cpp:1605
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4624,7 +4632,7 @@ msgstr ""
 "ამ დოკუმენტს ფორმები აქვს. დააწკაპუნეთ ღილაკზე, რათა მათთან ურთიერთობა "
 "იქონიოთ. ან გამოიყენეთ მენიუ ხედი -> ფორმების ჩვენება."
 
-#: part/part.cpp:1615
+#: part/part.cpp:1622
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4633,7 +4641,7 @@ msgstr ""
 "ამ დოკუმენტისთვის ყველა ჩასწორებისა და ურთიერთობის ფუნქციები გამორთულია. ამ "
 "დოკუმენტის ჩასასწორებლად შეინახეთ მისი ასლი და თავიდან გახსენით."
 
-#: part/part.cpp:1713
+#: part/part.cpp:1741
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4642,27 +4650,27 @@ msgstr ""
 "ეს დოკუმენტი მოითხოვს, სრულ ეკრანზე გაიშალოს.\n"
 "გავიდე ნორმალური რეჟიმიდან და გადავიდე პრეზენტაციის რეჟიმზე?"
 
-#: part/part.cpp:1715
+#: part/part.cpp:1743
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "თვალიერების რეჟიმის შეცვლის მოთხოვნა"
 
-#: part/part.cpp:1716
+#: part/part.cpp:1744
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "პრეზენტაციის რეჟიმში გადასვლა"
 
-#: part/part.cpp:1717
+#: part/part.cpp:1745
 #, kde-format
 msgid "Deny Request"
 msgstr "მოთხოვნის უარყოფა"
 
-#: part/part.cpp:1807
+#: part/part.cpp:1835
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1-ის გახსნის შეცდომა. %2"
 
-#: part/part.cpp:1837
+#: part/part.cpp:1865
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4676,22 +4684,22 @@ msgstr ""
 "შეტანილი ცვლილებებით ჩაანაცვლებს.<nl/><nl/>გნებავთ ფაილის თავიდან ჩატვირთვის "
 "გაგრძელება?"
 
-#: part/part.cpp:1841 part/part.cpp:1851
+#: part/part.cpp:1869 part/part.cpp:1879
 #, kde-format
 msgid "File Changed"
 msgstr "ფაილი შეცვლილია"
 
-#: part/part.cpp:1842
+#: part/part.cpp:1870
 #, kde-format
 msgid "Continue Reloading"
 msgstr "თავიდან ჩატვირთვის გაგრძელება"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1871
 #, kde-format
 msgid "Abort Reloading"
 msgstr "თავიდან ჩატვირთვის გაუქმება"
 
-#: part/part.cpp:1847
+#: part/part.cpp:1875
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4704,27 +4712,27 @@ msgstr ""
 "პროგრამამ შეცვალა. დახურვა შეუნახავ ცვლილებებს სხვა პროგრამის მიერ შეტანილი "
 "ცვლილებებით ჩაანაცვლებს.<nl/><nl/>გნებავთ ფაილის დახურვის გაგრძელება?"
 
-#: part/part.cpp:1852
+#: part/part.cpp:1880
 #, kde-format
 msgid "Continue Closing"
 msgstr "დახურვის გაგრძელება"
 
-#: part/part.cpp:1853
+#: part/part.cpp:1881
 #, kde-format
 msgid "Abort Closing"
 msgstr "დახურვის შეწყვეტა"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "გნებავთ, შეინახოთ ცვლილებები \"%1\"-ში თუ მოაცილოთ ისინი?"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Close Document"
 msgstr "დოკუმენტის დახურვა"
 
-#: part/part.cpp:1992
+#: part/part.cpp:2020
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4733,7 +4741,7 @@ msgstr ""
 "ეს ბმული მიუთითებს დოკუმენტის დახურვის ქმედებაზე, რომელიც არ მუშაობს, როცა "
 "ჩაშენებულ დამთვალიერებელს იყენებთ."
 
-#: part/part.cpp:1998
+#: part/part.cpp:2026
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4742,59 +4750,59 @@ msgstr ""
 "ეს ბმული მიუთითებს აპლიკაციიდან გასვლის ქმედებაზე, რომელიც არ მუშაობს, როცა "
 "ჩაშენებულ დამთვალიერებელს იყენებთ."
 
-#: part/part.cpp:2090 part/part.cpp:2112
+#: part/part.cpp:2118 part/part.cpp:2140
 #, kde-format
 msgid "Reloading the document…"
 msgstr "დოკუმენტის თავიდან ჩატვირთვა…"
 
-#: part/part.cpp:2281 part/toc.cpp:36
+#: part/part.cpp:2309 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "შიგთავსი"
 
-#: part/part.cpp:2310 part/signaturepanel.cpp:45
+#: part/part.cpp:2338 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "ხელმოწერები"
 
-#: part/part.cpp:2337
+#: part/part.cpp:2365
 #, kde-format
 msgid "Go to Page"
 msgstr "გვერდზე გადასვლა"
 
-#: part/part.cpp:2360
+#: part/part.cpp:2388
 #, kde-format
 msgid "&Page:"
 msgstr "&გვერდი:"
 
-#: part/part.cpp:2453
+#: part/part.cpp:2481
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "შეიყვანეთ სანიშნეს ახალი სახელი:"
 
-#: part/part.cpp:2499
+#: part/part.cpp:2527
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "სანიშნის გადარქმევა"
 
-#: part/part.cpp:2502
+#: part/part.cpp:2530
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "სანიშნის წაშლა"
 
-#: part/part.cpp:2588 part/part.cpp:2589 part/part.cpp:3505
+#: part/part.cpp:2616 part/part.cpp:2617 part/part.cpp:3533
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2596 part/revisionviewer.cpp:44
+#: part/part.cpp:2624 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "შენახვა, როგორც"
 
-#: part/part.cpp:2613
+#: part/part.cpp:2641
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4803,18 +4811,18 @@ msgstr ""
 "აირჩიეთ, რომ შეინახოთ Okular-ის არქივი ფაილის სახელის გარეშე, რომელიც '%1' "
 "გაფართოებით სრულდება. ეს დაუშვებელია. გნებავთ, ახალი სახელი აირჩიოთ?"
 
-#: part/part.cpp:2614
+#: part/part.cpp:2642
 #, kde-format
 msgid "Unsupported extension"
 msgstr "მხარდაუჭერელი გაფართოება"
 
-#: part/part.cpp:2615
+#: part/part.cpp:2643
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "აირჩიეთ სახელი"
 
-#: part/part.cpp:2658
+#: part/part.cpp:2686
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4826,17 +4834,17 @@ msgstr ""
 "სხვა პროგრამის მიერ შეტანილი ცვლილებები დაიკარგება. დარწმუნებული ბრძანდებით, "
 "რომ გნებავთ, გააგრძელოთ?"
 
-#: part/part.cpp:2661 part/part.cpp:2680 part/part.cpp:2732
+#: part/part.cpp:2689 part/part.cpp:2708 part/part.cpp:2760
 #, kde-format
 msgid "Save - Warning"
 msgstr "შენახვა - გაფრტხილება"
 
-#: part/part.cpp:2663
+#: part/part.cpp:2691
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "ასლის სადმე სხვაგან შენახვა"
 
-#: part/part.cpp:2679
+#: part/part.cpp:2707
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4847,12 +4855,12 @@ msgstr ""
 "თავიდან უნდა ჩატვირთოთ. პაროლს თავიდან გკითხავ და თქვენი გაუქმება/გამეორების "
 "ისტორია დაიკარგება.<br />გნებავთ, გააგრძელოთ?"
 
-#: part/part.cpp:2706
+#: part/part.cpp:2734
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "დროებითი ფაილის შესანახად გახსნა შეუძლებელია."
 
-#: part/part.cpp:2719
+#: part/part.cpp:2747
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4862,7 +4870,7 @@ msgstr ""
 "ფაილს <filename>%1</filename> თავზე ვერ გადავაწერე, რადგან ფაილ მხოლოდ-"
 "კითხვადია. სცადეთ, სხვა ადგილას შეინახოთ, ან ფაილის წვდომები შეცვალეთ."
 
-#: part/part.cpp:2731
+#: part/part.cpp:2759
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4872,22 +4880,22 @@ msgstr ""
 "ჩატვირთოთ. თქვენი გაუქმება/გამეორების ისტორია დაიკარგება. <br />გნებავთ, "
 "გააგრძელოთ?"
 
-#: part/part.cpp:2746 part/part.cpp:2815 part/part.cpp:2836 part/part.cpp:3520
+#: part/part.cpp:2774 part/part.cpp:2843 part/part.cpp:2864 part/part.cpp:3548
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "ფაილის შენახვა '%1'-ში შეუძლებელია. სცადეთ, სხვა ადგილას შეინახოთ."
 
-#: part/part.cpp:2759
+#: part/part.cpp:2787
 #, kde-format
 msgid "Filled form contents"
 msgstr "შევსებული ფორმის შემცველობა"
 
-#: part/part.cpp:2762
+#: part/part.cpp:2790
 #, kde-format
 msgid "User annotations"
 msgstr "მომხმარებლის ანოტაციები"
 
-#: part/part.cpp:2767
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4898,17 +4906,17 @@ msgstr ""
 "ელემენტების შენახვის მხარდაჭერა არ აქვს. მათ შესანახად შეგიძლიათ <i>Okular-ი "
 "დოკუმენტის არქივი</i> გამოიყენოთ."
 
-#: part/part.cpp:2771 part/part.cpp:2793
+#: part/part.cpp:2799 part/part.cpp:2821
 #, kde-format
 msgid "Warning"
 msgstr "გაფრთხილება"
 
-#: part/part.cpp:2772 part/part.cpp:2794
+#: part/part.cpp:2800 part/part.cpp:2822
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "შენახვა, როგორც Okular-ის დოკუმენტების არქივის…"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2812
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4921,7 +4929,7 @@ msgstr ""
 "დოკუმენტის არქივი</i> გამოიყენოთ. დააწკაპუნეთ <i>გაგრძელებაზე</i>, რომ "
 "დოკუმენტი შეინახოთ, ეს ელემენტები კი მოაცილოთ."
 
-#: part/part.cpp:2787
+#: part/part.cpp:2815
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4935,22 +4943,22 @@ msgstr ""
 "დოკუმენტი შეინახოთ, მაგრამ ამ ელემენტებს, ისევე, როგორც გაუქმება/გამეორების "
 "ისტორიას, დაკარგავთ."
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue"
 msgstr "გაგრძელება"
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue losing changes"
 msgstr "გაგრძელება ცვლილებების დაკარგვით"
 
-#: part/part.cpp:2817
+#: part/part.cpp:2845
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "ფაილი '%1'-ში ვერ შევინახე: %2"
 
-#: part/part.cpp:2856
+#: part/part.cpp:2884
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4961,7 +4969,7 @@ msgstr ""
 "\n"
 "დოკუმენტი აღარ არსებობს."
 
-#: part/part.cpp:2892
+#: part/part.cpp:2920
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4970,44 +4978,44 @@ msgstr ""
 "ფაილის შენახვა '%1'-ში შეუძლებელია. შეცდომა: '%2'. სცადეთ, სხვა ადგილას "
 "შეინახოთ."
 
-#: part/part.cpp:3163
+#: part/part.cpp:3191
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "მთელი სექციის ჩამოშლა"
 
-#: part/part.cpp:3164
+#: part/part.cpp:3192
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "მთელი სექციის აკეცვა"
 
-#: part/part.cpp:3180
+#: part/part.cpp:3208
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "მინიატურის სინქრონიზაცია გვერდთან"
 
-#: part/part.cpp:3212
+#: part/part.cpp:3240
 #, kde-format
 msgid "Tools"
 msgstr "ხელსაწყოები"
 
-#: part/part.cpp:3400
+#: part/part.cpp:3428
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "ლაპარაკი"
 
-#: part/part.cpp:3558
+#: part/part.cpp:3586
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "ამობეჭდვა"
 
-#: part/part.cpp:3621
+#: part/part.cpp:3649
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "ამ დოკუმენტის დაბეჭდვა დაშვებული არაა."
 
-#: part/part.cpp:3634
+#: part/part.cpp:3662
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5015,7 +5023,7 @@ msgstr ""
 "დოკუმენტი ვერ დავბეჭდე. უცნობი შეცდომა. მოგვწერეთ შეცდომის შესახებ საიტზე "
 "bugs.kde.org"
 
-#: part/part.cpp:3636
+#: part/part.cpp:3664
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5024,17 +5032,17 @@ msgstr ""
 "დოკუმენტი ვერ დავბეჭდე. დეტალური შეცდომაა \"%1\". მოგვწერეთ შეცდომის შესახებ "
 "საიტზე bugs.kde.org"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3756
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "გადასვლა ადგილზე, სადაც მანამდე იყავით"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3760
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "გადასვლა ადგილზე, სადაც შემდეგ იყავით"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3785
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5043,7 +5051,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ შევქმენი დროებითი ფაილი "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3769
+#: part/part.cpp:3797
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5052,7 +5060,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ გავხსენი ფაილი <nobr><strong>%1</"
 "strong></nobr> გასაშლელად. ფაილი არ ჩაიტვირთება.</qt>"
 
-#: part/part.cpp:3773
+#: part/part.cpp:3801
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5065,7 +5073,7 @@ msgstr ""
 "თუ Dolphin-ში ფაილზე მარჯვენა ღილაკით დააწკაპუნეთ, შემდეგ აირჩევთ "
 "'თვისებებს' და 'წვდომების' ჩანართს ფანჯარაში, რომელიც გაიხსნება.</qt>"
 
-#: part/part.cpp:3795
+#: part/part.cpp:3823
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5074,7 +5082,7 @@ msgstr ""
 "<qt><strong>ფაილის შეცდომა!</strong> ვერ გავშალე ფაილი <nobr><strong>%1</"
 "strong></nobr>. ფაილი არ ჩაიტვირთება.</qt>"
 
-#: part/part.cpp:3799
+#: part/part.cpp:3827
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5084,27 +5092,27 @@ msgstr ""
 "გნებავთ, დარწმუნდეთ, სცადეთ, ფაილი ხელით, ბრძანების სტრიქონის ბრძანებებით "
 "გაშალოთ</qt>"
 
-#: part/part.cpp:3825
+#: part/part.cpp:3853
 #, kde-format
 msgid "No Bookmarks"
 msgstr "სანიშნების გარეშე"
 
-#: part/part.cpp:3896
+#: part/part.cpp:3924
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "პრობლემა დოკუმენტის გაზიარებისას: %1"
 
-#: part/part.cpp:3896 part/part.cpp:3902
+#: part/part.cpp:3924 part/part.cpp:3930
 #, kde-format
 msgid "Share"
 msgstr "გაზიარება"
 
-#: part/part.cpp:3900
+#: part/part.cpp:3928
 #, kde-format
 msgid "Document shared successfully"
 msgstr "დოკუმენტი წარმატებით გაზიარდა"
 
-#: part/part.cpp:3902
+#: part/part.cpp:3930
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

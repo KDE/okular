@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-19 00:42+0000\n"
+"POT-Creation-Date: 2026-08-08 00:42+0000\n"
 "PO-Revision-Date: 2026-07-10 10:25+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -336,139 +336,139 @@ msgstr "המסמך מנסה להריץ יישום חיצוני, ולמען בי�
 msgid "No application found for opening file of mimetype %1."
 msgstr "לא נמצא יישום לפתיחה של קובץ מסוג %1."
 
-#: core/document.cpp:4775
+#: core/document.cpp:4799
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "לא ניתן לפתוח קובץ זמני"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4801
 #, kde-format
 msgid "Print conversion failed"
 msgstr "המרה להדפסה נכשלה"
 
-#: core/document.cpp:4779
+#: core/document.cpp:4803
 #, kde-format
 msgid "Printing process crashed"
 msgstr "תהליך ההדפסה קרס"
 
-#: core/document.cpp:4781
+#: core/document.cpp:4805
 #, kde-format
 msgid "Printing process could not start"
 msgstr "לא ניתן להתחיל את תהליך ההתחלה"
 
-#: core/document.cpp:4783
+#: core/document.cpp:4807
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ההדפסה לקובץ נכשלה"
 
-#: core/document.cpp:4785
+#: core/document.cpp:4809
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "המדפסת הייתה במצב לא תקין"
 
-#: core/document.cpp:4787
+#: core/document.cpp:4811
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "לא ניתן למצוא את הקובץ להדפסה"
 
-#: core/document.cpp:4789
+#: core/document.cpp:4813
 #, kde-format
 msgid "There was no file to print"
 msgstr "לא היה שום קובץ להדפסה"
 
-#: core/document.cpp:4791
+#: core/document.cpp:4815
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "לא נמצא קובץ בינרי מתאים להדפסה. נא לוודא שהבינרי של CUPS בשם lpr זמין"
 
-#: core/document.cpp:4793
+#: core/document.cpp:4817
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "גודל הדפסת העמוד שגוי"
 
-#: core/document.cpp:5449 part/part.cpp:1132
+#: core/document.cpp:5473 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "לא ניתן לפתוח את ‚%1’. הקובץ לא קיים"
 
-#: core/document.cpp:5958
+#: core/document.cpp:5982
 #, kde-format
 msgid "Title"
 msgstr "כותרת"
 
-#: core/document.cpp:5961
+#: core/document.cpp:5985
 #, kde-format
 msgid "Subject"
 msgstr "נושא"
 
-#: core/document.cpp:5964
+#: core/document.cpp:5988
 #, kde-format
 msgid "Description"
 msgstr "תיאור"
 
-#: core/document.cpp:5967
+#: core/document.cpp:5991
 #, kde-format
 msgid "Author"
 msgstr "מחבר"
 
-#: core/document.cpp:5970
+#: core/document.cpp:5994
 #, kde-format
 msgid "Creator"
 msgstr "יוצר"
 
-#: core/document.cpp:5973
+#: core/document.cpp:5997
 #, kde-format
 msgid "Producer"
 msgstr "מפיק"
 
-#: core/document.cpp:5976
+#: core/document.cpp:6000
 #, kde-format
 msgid "Copyright"
 msgstr "זכויות יוצרים"
 
-#: core/document.cpp:5979
+#: core/document.cpp:6003
 #, kde-format
 msgid "Pages"
 msgstr "עמודים"
 
-#: core/document.cpp:5982
+#: core/document.cpp:6006
 #, kde-format
 msgid "Created"
 msgstr "נוצר"
 
-#: core/document.cpp:5985
+#: core/document.cpp:6009
 #, kde-format
 msgid "Modified"
 msgstr "שונה"
 
-#: core/document.cpp:5988
+#: core/document.cpp:6012
 #, kde-format
 msgid "MIME Type"
 msgstr "טיפוס נתונים"
 
-#: core/document.cpp:5991
+#: core/document.cpp:6015
 #, kde-format
 msgid "Category"
 msgstr "קטגוריה"
 
-#: core/document.cpp:5994
+#: core/document.cpp:6018
 #, kde-format
 msgid "Keywords"
 msgstr "מילות מפתח"
 
-#: core/document.cpp:5997
+#: core/document.cpp:6021
 #, kde-format
 msgid "File Path"
 msgstr "נתיב הקובץ"
 
-#: core/document.cpp:6000
+#: core/document.cpp:6024
 #, kde-format
 msgid "File Size"
 msgstr "גודל הקובץ"
 
-#: core/document.cpp:6003
+#: core/document.cpp:6027
 #, kde-format
 msgid "Page Size"
 msgstr "גודל הדף"
@@ -1654,7 +1654,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "עמוד %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3177
+#: part/annotationmodel.cpp:324 part/part.cpp:3205
 #, kde-format
 msgid "Page %1"
 msgstr "עמוד %1"
@@ -1675,12 +1675,12 @@ msgid "&Open Pop-up Note"
 msgstr "&פתיחת הערה בחלונית"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2258 part/part.cpp:3183
+#: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "הסרת הסימנייה"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3185
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
 #, kde-format
 msgid "Add Bookmark"
 msgstr "הוספת סימנייה"
@@ -1712,7 +1712,7 @@ msgstr "ה־DRM אוסר העתקה"
 msgid "&Delete"
 msgstr "מ&חיקה"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:743
+#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:750
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
@@ -2306,12 +2306,12 @@ msgstr "הצגה לכל המסמכים"
 msgid "Search…"
 msgstr "חיפוש…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3165
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3193
 #, kde-format
 msgid "Expand All"
 msgstr "להרחיב הכול"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3166
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3194
 #, kde-format
 msgid "Collapse All"
 msgstr "לצמצם הכול"
@@ -2321,8 +2321,8 @@ msgstr "לצמצם הכול"
 msgid "Go to This Bookmark"
 msgstr "מעבר לסימנייה הזו"
 
-#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:685
-#: part/part.cpp:2453
+#: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:692
+#: part/part.cpp:2481
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "שינוי שם הסימנייה"
@@ -3618,23 +3618,23 @@ msgstr "מהדף הנוכחי"
 msgid "Find as you type"
 msgstr "איתור בזמן הקלדה"
 
-#: part/formwidgets.cpp:870
+#: part/formwidgets.cpp:874
 #, kde-format
 msgid "All Files (*)"
 msgstr "כל הקבצים (*)"
 
-#: part/formwidgets.cpp:1280
+#: part/formwidgets.cpp:1284
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "ממלא מקום חתימה (לחיצה לחתימה)"
 
-#: part/formwidgets.cpp:1346 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
 #, kde-format
 msgid "&Sign…"
 msgstr "&חתימה…"
 
-#: part/formwidgets.cpp:1350 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1354 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "מאפייני חתימה"
@@ -3656,7 +3656,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "ביטוי רגולרי"
 
-#: part/layers.cpp:33 part/part.cpp:2301
+#: part/layers.cpp:33 part/part.cpp:2329
 #, kde-format
 msgid "Layers"
 msgstr "שכבות"
@@ -3898,7 +3898,7 @@ msgstr[3] "טקסט (%1 תווים)"
 msgid "Copy to Clipboard"
 msgstr "העתקה ללוח הגזירים"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:834
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:841
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "העתקת טקסט (ללא ירידות השורה)"
@@ -3953,7 +3953,7 @@ msgstr "העתקת הטקסט"
 msgid "Go to '%1'"
 msgstr "מעבר אל ‚%1’"
 
-#: part/pageview.cpp:4205 part/part.cpp:3188
+#: part/pageview.cpp:4205 part/part.cpp:3216
 #, kde-format
 msgid "Fit Width"
 msgstr "התאמה לרוחב"
@@ -4321,212 +4321,220 @@ msgstr ""
 "מסמך זה מכיל קבצים משובצים. <a href=\"okular:/embeddedfiles\">ניתן ללחוץ כאן "
 "כדי לראות אותם</a> או לגשת לתפריט קובץ -> קבצים משובצים."
 
-#: part/part.cpp:473
+#: part/part.cpp:468
+#, kde-format
+msgctxt "This is a normal pdf feature, but can be abused by hostile parties"
+msgid ""
+"This document has elements that might be hidden or shown differently when "
+"printed. For important documents, please verify both."
+msgstr ""
+
+#: part/part.cpp:480
 #, kde-format
 msgid ""
 "Signing in progress. You can adjust the position and size of the signature"
 msgstr "מתבצעת חתימה. אפשר לכוון את מקום החתימה ואת גודלה"
 
-#: part/part.cpp:475
+#: part/part.cpp:482
 #, kde-format
 msgctxt "@action:button finish the signing process"
 msgid "Finish Signing"
 msgstr "סיום חתימה"
 
-#: part/part.cpp:648
+#: part/part.cpp:655
 #, kde-format
 msgctxt "Previous page"
 msgid "Previous"
 msgstr "הקודם"
 
-#: part/part.cpp:649
+#: part/part.cpp:656
 #, kde-format
 msgid "Go back to the Previous Page"
 msgstr "חזרה לדף הקודם"
 
-#: part/part.cpp:650
+#: part/part.cpp:657
 #, kde-format
 msgid "Moves to the previous page of the document"
 msgstr "מעבר לדף הקודם במסמך"
 
-#: part/part.cpp:657
+#: part/part.cpp:664
 #, kde-format
 msgctxt "Next page"
 msgid "Next"
 msgstr "הבא"
 
-#: part/part.cpp:658
+#: part/part.cpp:665
 #, kde-format
 msgid "Advance to the Next Page"
 msgstr "מעבר לדף הבא"
 
-#: part/part.cpp:659
+#: part/part.cpp:666
 #, kde-format
 msgid "Moves to the next page of the document"
 msgstr "מעבר לדף הבא במסמך"
 
-#: part/part.cpp:667
+#: part/part.cpp:674
 #, kde-format
 msgid "Beginning of the document"
 msgstr "תחילת המסמך"
 
-#: part/part.cpp:668
+#: part/part.cpp:675
 #, kde-format
 msgid "Moves to the beginning of the document"
 msgstr "מעבר לתחילת המסמך"
 
-#: part/part.cpp:672
+#: part/part.cpp:679
 #, kde-format
 msgid "End of the document"
 msgstr "סוף המסמך"
 
-#: part/part.cpp:673
+#: part/part.cpp:680
 #, kde-format
 msgid "Moves to the end of the document"
 msgstr "מעבר לסוף המסמך"
 
-#: part/part.cpp:687
+#: part/part.cpp:694
 #, kde-format
 msgid "Rename the current bookmark"
 msgstr "שינוי שם הסימנייה הנוכחית"
 
-#: part/part.cpp:691
+#: part/part.cpp:698
 #, kde-format
 msgid "Previous Bookmark"
 msgstr "הסימנייה הקודמת"
 
-#: part/part.cpp:693
+#: part/part.cpp:700
 #, kde-format
 msgid "Go to the previous bookmark"
 msgstr "מעבר לסימנייה הקודמת"
 
-#: part/part.cpp:697
+#: part/part.cpp:704
 #, kde-format
 msgid "Next Bookmark"
 msgstr "הסימנייה הבאה"
 
-#: part/part.cpp:699
+#: part/part.cpp:706
 #, kde-format
 msgid "Go to the next bookmark"
 msgstr "מעבר לסימנייה הבאה"
 
-#: part/part.cpp:729
+#: part/part.cpp:736
 #, kde-format
 msgid "Configure Okular…"
 msgstr "הגדרת Okular…"
 
-#: part/part.cpp:732
+#: part/part.cpp:739
 #, kde-format
 msgid "Configure Viewer…"
 msgstr "הגדרת המציג…"
 
-#: part/part.cpp:765
+#: part/part.cpp:772
 #, kde-format
 msgid "About Backend"
 msgstr "על המנגנון"
 
-#: part/part.cpp:770
+#: part/part.cpp:777
 #, kde-format
 msgid "Reloa&d"
 msgstr "&טעינה מחדש"
 
-#: part/part.cpp:772
+#: part/part.cpp:779
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "ריענון המסמך הנוכחי מהכונן."
 
-#: part/part.cpp:778
+#: part/part.cpp:785
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "סגירת &סרגל החיפוש"
 
-#: part/part.cpp:783
+#: part/part.cpp:790
 #, kde-format
 msgid "Page Number"
 msgstr "מספר העמוד"
 
-#: part/part.cpp:787
+#: part/part.cpp:794
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "הגדרת מצבי צבע…"
 
-#: part/part.cpp:826 part/part.cpp:3193
+#: part/part.cpp:833 part/part.cpp:3221
 #, kde-format
 msgid "Paste Annotation"
 msgstr "הדבקת פירוש"
 
-#: part/part.cpp:844
+#: part/part.cpp:851
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "בחירת כל הטקסט בעמוד הנוכחי"
 
-#: part/part.cpp:857
+#: part/part.cpp:864
 #, kde-format
 msgid "Show S&idebar"
 msgstr "הצגת סרגל &צד"
 
-#: part/part.cpp:866
+#: part/part.cpp:873
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "הצגת סרגל &עמוד"
 
-#: part/part.cpp:872
+#: part/part.cpp:879
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "הצגת לוח &חתימות"
 
-#: part/part.cpp:883
+#: part/part.cpp:890
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&קבצים משובצים"
 
-#: part/part.cpp:889
+#: part/part.cpp:896
 #, kde-format
 msgid "E&xport As"
 msgstr "יי&צוא כקובץ"
 
-#: part/part.cpp:901
+#: part/part.cpp:908
 #, kde-format
 msgid "S&hare"
 msgstr "&שיתוף"
 
-#: part/part.cpp:910
+#: part/part.cpp:917
 #, kde-format
 msgid "P&resentation"
 msgstr "&מצגת"
 
-#: part/part.cpp:917
+#: part/part.cpp:924
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "&פתיחת התיקייה המכילה"
 
-#: part/part.cpp:931
+#: part/part.cpp:938
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "יי&בוא PostScript כ־PDF…"
 
-#: part/part.cpp:935
+#: part/part.cpp:942
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "החלפת מצב מסך שחור"
 
-#: part/part.cpp:943
+#: part/part.cpp:950
 #, kde-format
 msgid "Erase Drawing"
 msgstr "מחיקת ציורים"
 
-#: part/part.cpp:948
+#: part/part.cpp:955
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "הגדרת פירושים…"
 
-#: part/part.cpp:953
+#: part/part.cpp:960
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "הצגת/השהיית מצגת"
 
-#: part/part.cpp:1109
+#: part/part.cpp:1116
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4536,69 +4544,69 @@ msgstr ""
 "ערכת את המסמך הפתוח אך לא ניתן לשמור סוג כזה של מסמך.\n"
 "השינויים ילכו לאיבוד עם סגירת Okular."
 
-#: part/part.cpp:1110
+#: part/part.cpp:1117
 #, kde-format
 msgid "Document can't be saved"
 msgstr "אי אפשר לשמור את המסמך"
 
-#: part/part.cpp:1139
+#: part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "לא ניתן לפתוח את ‚%1’ (%2) "
 
-#: part/part.cpp:1192
+#: part/part.cpp:1199
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "הטעינה של %1 בוטלה."
 
-#: part/part.cpp:1208
+#: part/part.cpp:1215
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "לא ניתן לפתוח את %1. הסיבה: %2"
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr "היישום „ps2pdf” לא נמצא, ולכן Okular לא יכול לייבא קובצי PS."
 
-#: part/part.cpp:1302
+#: part/part.cpp:1309
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf לא נמצא"
 
-#: part/part.cpp:1307
+#: part/part.cpp:1314
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "קובצי PostScript‏ (%1)"
 
-#: part/part.cpp:1323
+#: part/part.cpp:1330
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "ייבוא קובץ PS כקובץ PDF (יכול לארוך זמן מה)…"
 
-#: part/part.cpp:1455
+#: part/part.cpp:1462
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "נא למלא את הסיסמה כדי לקרוא את המסמך:"
 
-#: part/part.cpp:1457
+#: part/part.cpp:1464
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "סיסמה שגויה. נא לנסות שוב:"
 
-#: part/part.cpp:1468
+#: part/part.cpp:1475
 #, kde-format
 msgid "Document Password"
 msgstr "סיסמת המסמך"
 
-#: part/part.cpp:1591
+#: part/part.cpp:1598
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "במסמך הזה יש טופסי XFA, כרגע <b>אין תמיכה</b> בהם."
 
-#: part/part.cpp:1598
+#: part/part.cpp:1605
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4607,7 +4615,7 @@ msgstr ""
 "מסמך זה מכיל טפסים. ניתן ללחוץ על הלחצן כדי להשתמש בהם, או להשתמש בתפריט "
 "תצוגה -> הצגת טפסים."
 
-#: part/part.cpp:1615
+#: part/part.cpp:1622
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4616,7 +4624,7 @@ msgstr ""
 "כל יכולות העריכה והתפעול של המסמך הזה מושבתות. נא לשמור עותק ולפתוח אותו "
 "מחדש כדי לערוך את המסמך הזה."
 
-#: part/part.cpp:1713
+#: part/part.cpp:1741
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4625,27 +4633,27 @@ msgstr ""
 "המסמך רוצה למלא את המסך.\n"
 "לצאת מהמצב הרגיל ולעבור למצב מצגת?"
 
-#: part/part.cpp:1715
+#: part/part.cpp:1743
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "בקשה לשינוי מצב תצוגה"
 
-#: part/part.cpp:1716
+#: part/part.cpp:1744
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "כניסה למצב מצגת"
 
-#: part/part.cpp:1717
+#: part/part.cpp:1745
 #, kde-format
 msgid "Deny Request"
 msgstr "דחיית הבקשה"
 
-#: part/part.cpp:1807
+#: part/part.cpp:1835
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "לא ניתן לפתוח את %1. %2"
 
-#: part/part.cpp:1837
+#: part/part.cpp:1865
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4658,22 +4666,22 @@ msgstr ""
 "אחרת. טעינתו מחדש תחליף את השינויים שלא נשמרו בשינויים שנערכו בתוכנית השנייה."
 "<nl/><nl/>להמשיך לטעון את הקובץ מחדש?"
 
-#: part/part.cpp:1841 part/part.cpp:1851
+#: part/part.cpp:1869 part/part.cpp:1879
 #, kde-format
 msgid "File Changed"
 msgstr "קובץ נערך"
 
-#: part/part.cpp:1842
+#: part/part.cpp:1870
 #, kde-format
 msgid "Continue Reloading"
 msgstr "להמשיך לטעון מחדש"
 
-#: part/part.cpp:1843
+#: part/part.cpp:1871
 #, kde-format
 msgid "Abort Reloading"
 msgstr "ביטול טעינה מחדש"
 
-#: part/part.cpp:1847
+#: part/part.cpp:1875
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4686,93 +4694,93 @@ msgstr ""
 "אחרת. סגירתו תחליף את השינויים שלא נשמרו בשינויים שנערכו בתוכנית השנייה.<nl/"
 "><nl/>להמשיך לסגור את הקובץ?"
 
-#: part/part.cpp:1852
+#: part/part.cpp:1880
 #, kde-format
 msgid "Continue Closing"
 msgstr "להמשיך לסגור"
 
-#: part/part.cpp:1853
+#: part/part.cpp:1881
 #, kde-format
 msgid "Abort Closing"
 msgstr "ביטול סגירה"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "לשמור את השינויים שנערכו ב־„%1” או להשליך אותם?"
 
-#: part/part.cpp:1860
+#: part/part.cpp:1888
 #, kde-format
 msgid "Close Document"
 msgstr "סגירת מסמך"
 
-#: part/part.cpp:1992
+#: part/part.cpp:2020
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
 "the embedded viewer."
 msgstr "הקישור מצביע על פעולת סגירת מסמך, אשר לא עובדת בשימוש במציג המשובץ."
 
-#: part/part.cpp:1998
+#: part/part.cpp:2026
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
 "the embedded viewer."
 msgstr "הקישור מצביע על פעולת יציאה מיישום, אשר לא עובדת בשימוש במציג המשובץ."
 
-#: part/part.cpp:2090 part/part.cpp:2112
+#: part/part.cpp:2118 part/part.cpp:2140
 #, kde-format
 msgid "Reloading the document…"
 msgstr "המסמך נטען מחדש…"
 
-#: part/part.cpp:2281 part/toc.cpp:36
+#: part/part.cpp:2309 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "תכנים"
 
-#: part/part.cpp:2310 part/signaturepanel.cpp:45
+#: part/part.cpp:2338 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "חתימות"
 
-#: part/part.cpp:2337
+#: part/part.cpp:2365
 #, kde-format
 msgid "Go to Page"
 msgstr "מעבר לעמוד"
 
-#: part/part.cpp:2360
+#: part/part.cpp:2388
 #, kde-format
 msgid "&Page:"
 msgstr "&עמוד:"
 
-#: part/part.cpp:2453
+#: part/part.cpp:2481
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "נא למלא שם לסימנייה:"
 
-#: part/part.cpp:2499
+#: part/part.cpp:2527
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "שינוי שם הסימנייה הזאת"
 
-#: part/part.cpp:2502
+#: part/part.cpp:2530
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "הסרת הסימנייה"
 
-#: part/part.cpp:2588 part/part.cpp:2589 part/part.cpp:3505
+#: part/part.cpp:2616 part/part.cpp:2617 part/part.cpp:3533
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2596 part/revisionviewer.cpp:44
+#: part/part.cpp:2624 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "שמירה בשם"
 
-#: part/part.cpp:2613
+#: part/part.cpp:2641
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4780,18 +4788,18 @@ msgid ""
 msgstr ""
 "בחרת לשמור ארכיון Okular ללא שם קובץ שמסתיים ב־‚%1’. זה אסור, שנבחר שם חדש?"
 
-#: part/part.cpp:2614
+#: part/part.cpp:2642
 #, kde-format
 msgid "Unsupported extension"
 msgstr "סיומת קובץ לא נתמכת"
 
-#: part/part.cpp:2615
+#: part/part.cpp:2643
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "בחירת שם חדש"
 
-#: part/part.cpp:2658
+#: part/part.cpp:2686
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4802,17 +4810,17 @@ msgstr ""
 "הקובץ <filename>%1</filename> נערך בתוכנית אחרת. בחירה בשמירה כעת תוביל "
 "לאובדן השינויים שנערכו בתוכנית השנייה. להמשיך?"
 
-#: part/part.cpp:2661 part/part.cpp:2680 part/part.cpp:2732
+#: part/part.cpp:2689 part/part.cpp:2708 part/part.cpp:2760
 #, kde-format
 msgid "Save - Warning"
 msgstr "שמירה - אזהרה"
 
-#: part/part.cpp:2663
+#: part/part.cpp:2691
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "שמירת עותק במקום אחר"
 
-#: part/part.cpp:2679
+#: part/part.cpp:2707
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4822,12 +4830,12 @@ msgstr ""
 "המסמך הנוכחי מוגן בסיסמה.<br />כדי לשמור, יש לטעון את הקובץ מחדש. תופיע בקשה "
 "למילוי הסיסמה שוב והיסטוריית הביטול/שחזור שלך תלך לאיבוד.<br />להמשיך?"
 
-#: part/part.cpp:2706
+#: part/part.cpp:2734
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "לא ניתן לפתוח את הקובץ הזמני לשמירה."
 
-#: part/part.cpp:2719
+#: part/part.cpp:2747
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4837,7 +4845,7 @@ msgstr ""
 "לא ניתן לדרוס את <filename>%1</filename> כיוון שזה קובץ לקריאה בלבד. כדאי "
 "לנסות לשמור למקום אחר או לשנות את הרשאות הקובץ הזה."
 
-#: part/part.cpp:2731
+#: part/part.cpp:2759
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4846,22 +4854,22 @@ msgstr ""
 "לאחר שמירה, סוג המסמך הנוכחית דורש את טעינת הקובץ מחדש. היסטוריית "
 "הביטול/שחזור שלך תלך לאיבוד.<br />להמשיך?"
 
-#: part/part.cpp:2746 part/part.cpp:2815 part/part.cpp:2836 part/part.cpp:3520
+#: part/part.cpp:2774 part/part.cpp:2843 part/part.cpp:2864 part/part.cpp:3548
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "לא ניתן לשמור את הקובץ ב־'%1'. ניתן לנסות לשמור אותו במיקום אחר."
 
-#: part/part.cpp:2759
+#: part/part.cpp:2787
 #, kde-format
 msgid "Filled form contents"
 msgstr "תוכני הטופס שמולאו"
 
-#: part/part.cpp:2762
+#: part/part.cpp:2790
 #, kde-format
 msgid "User annotations"
 msgstr "פירושי משתמש"
 
-#: part/part.cpp:2767
+#: part/part.cpp:2795
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4871,17 +4879,17 @@ msgstr ""
 "פעולה זו תשמור את השינויים אך סוג הקובץ הנוכחי לא תומך בשמירת הרכיבים הבאים. "
 "נא להשתמש בסוג <i>ארכיון מסמכים של Okular</i> כדי לשמור אותם."
 
-#: part/part.cpp:2771 part/part.cpp:2793
+#: part/part.cpp:2799 part/part.cpp:2821
 #, kde-format
 msgid "Warning"
 msgstr "אזהרה"
 
-#: part/part.cpp:2772 part/part.cpp:2794
+#: part/part.cpp:2800 part/part.cpp:2822
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "שמירה כארכיון מסמכים של Okular…"
 
-#: part/part.cpp:2784
+#: part/part.cpp:2812
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4893,7 +4901,7 @@ msgstr ""
 "נא להשתמש בסוג <i>ארכיון מסמכים של Okular</i> כדי לשמור אותם. לחיצה על "
 "<i>המשך</i> תשמור את המסמך ותתעלם מהרכיבים האלה."
 
-#: part/part.cpp:2787
+#: part/part.cpp:2815
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4906,22 +4914,22 @@ msgstr ""
 "<i>המשך</i> תשמור את הקובץ, אך תגרום לאובדן הרכיבים האלה לרבות היסטוריית "
 "ביטול/שחזור."
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue"
 msgstr "להמשיך"
 
-#: part/part.cpp:2789
+#: part/part.cpp:2817
 #, kde-format
 msgid "Continue losing changes"
 msgstr "להמשיך על אף איבוד השינויים"
 
-#: part/part.cpp:2817
+#: part/part.cpp:2845
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "הקובץ לא ניתן לשמירה ב־'%1'. %2"
 
-#: part/part.cpp:2856
+#: part/part.cpp:2884
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4932,7 +4940,7 @@ msgstr ""
 "\n"
 "המסמך לא קיים יותר."
 
-#: part/part.cpp:2892
+#: part/part.cpp:2920
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4940,44 +4948,44 @@ msgid ""
 msgstr ""
 "לא ניתן לשמור את הקובץ ב־‚%1’. שגיאה: ‚%2’. ניתן לנסות לשמור אותו במקום אחר."
 
-#: part/part.cpp:3163
+#: part/part.cpp:3191
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "להרחיב את כל המקטע"
 
-#: part/part.cpp:3164
+#: part/part.cpp:3192
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "לצמצם את כל המקטע"
 
-#: part/part.cpp:3180
+#: part/part.cpp:3208
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "סנכרון תמונה ממוזערת עם העמוד"
 
-#: part/part.cpp:3212
+#: part/part.cpp:3240
 #, kde-format
 msgid "Tools"
 msgstr "כלים"
 
-#: part/part.cpp:3400
+#: part/part.cpp:3428
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "הקראה"
 
-#: part/part.cpp:3558
+#: part/part.cpp:3586
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "הדפסה"
 
-#: part/part.cpp:3621
+#: part/part.cpp:3649
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "הדפסת המסמך הזה אסורה."
 
-#: part/part.cpp:3634
+#: part/part.cpp:3662
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4985,7 +4993,7 @@ msgstr ""
 "לא ניתן להדפיס את המסמך. שגיאה לא ידועה. מומלץ לדווח זאת לאתר שבכתובת bugs."
 "kde.org"
 
-#: part/part.cpp:3636
+#: part/part.cpp:3664
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4994,17 +5002,17 @@ msgstr ""
 "לא ניתן להדפיס את המסמך. השגיאה המפורטת היא „%1”. מומלץ לדווח על זה מול bugs."
 "kde.org"
 
-#: part/part.cpp:3728
+#: part/part.cpp:3756
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "מעבר למיקום הקודם שהיית בו"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3760
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "מעבר למיקום הבא שהיית בו"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3785
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5013,7 +5021,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן ליצור קובץ זמני <nobr><strong>%1</"
 "strong></nobr>.</qt>"
 
-#: part/part.cpp:3769
+#: part/part.cpp:3797
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5022,7 +5030,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן לפתוח את הקובץ <nobr><strong>%1</"
 "strong></nobr> לפריסה. הקובץ לא יטען.</qt>"
 
-#: part/part.cpp:3773
+#: part/part.cpp:3801
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5034,7 +5042,7 @@ msgstr ""
 "לבדוק את הבעלות ואת ההרשאות בלחיצה ימנית על הקובץ במנהל הקבצים, לאחר מכן "
 "לבחור באפשרות ‚מאפיינים’ ואז בלשונית ‚הרשאות’ בחלון שנפתח.</qt>"
 
-#: part/part.cpp:3795
+#: part/part.cpp:3823
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5043,7 +5051,7 @@ msgstr ""
 "<qt><strong>שגיאת קובץ!</strong> לא ניתן לפרוש את הקובץ <nobr><strong>%1</"
 "strong></nobr>. הקובץ לא יטען.</qt>"
 
-#: part/part.cpp:3799
+#: part/part.cpp:3827
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5052,27 +5060,27 @@ msgstr ""
 "<qt>שגיאה זו מתרחשת בדרך כלל כשהקובץ פגום. על מנת לוודא זאת, ניתן לפרוש את "
 "הקובץ ידנית בעזרת כלי שורת־הפקודה.</qt>"
 
-#: part/part.cpp:3825
+#: part/part.cpp:3853
 #, kde-format
 msgid "No Bookmarks"
 msgstr "אין סימניות"
 
-#: part/part.cpp:3896
+#: part/part.cpp:3924
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "אירעה בעיה בשיתוף המסמך: %1"
 
-#: part/part.cpp:3896 part/part.cpp:3902
+#: part/part.cpp:3924 part/part.cpp:3930
 #, kde-format
 msgid "Share"
 msgstr "שיתוף"
 
-#: part/part.cpp:3900
+#: part/part.cpp:3928
 #, kde-format
 msgid "Document shared successfully"
 msgstr "המסמך שותף בהצלחה"
 
-#: part/part.cpp:3902
+#: part/part.cpp:3930
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "אפשר למצוא את המסמך המשותף תחת: <a href=\"%1\">%1</a>"

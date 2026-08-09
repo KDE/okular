@@ -5,7 +5,7 @@
 # Robert Gomulka <carramba@epf.pl>, 2007, 2008.
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2008.
 # Marta Rybczynska <kde-i18n@rybczynska.net>, 2009.
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2016, 2018, 2019, 2021, 2023, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011-2014, 2016, 2018-2019, 2021, 2023, 2025-2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Ignacy Kajdan <ignacy.kajdan@gmail.com>, 2020.
 #
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-11 02:37+0000\n"
-"PO-Revision-Date: 2025-11-01 10:11+0100\n"
+"PO-Revision-Date: 2026-08-08 12:41+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -41,10 +41,9 @@ msgid "Failed writing temporary file"
 msgstr "Nie udało się zapisać pliku tymczasowego."
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
+msgstr "Nie udało usunąć pliku"
 
 #: annots.cpp:607
 #, kde-format
@@ -197,10 +196,9 @@ msgid "&Load Signatures"
 msgstr "&Wczytaj podpisy"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
+msgstr "Nie udało się zmienić nazwy pliku tymczasowego %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -331,10 +329,9 @@ msgid "PDF Backend Configuration"
 msgstr "Ustawienia silnika PDF"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
+msgstr "Nie udało się zmienić nazwy pliku tymczasowego: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -378,11 +375,10 @@ msgid "Expiration date"
 msgstr "Data ważności"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Dostępne certyfikaty"
+msgstr "Wypisz certyfikaty"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

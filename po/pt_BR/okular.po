@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 02:39+0000\n"
-"PO-Revision-Date: 2026-07-11 06:40-0300\n"
+"PO-Revision-Date: 2026-08-08 07:52-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -4362,6 +4362,9 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Este documento contém elementos que podem ficar ocultos ou ser exibidos de "
+"forma diferente quando impressos. Para documentos importantes, verifique "
+"ambas as versões."
 
 #: part/part.cpp:480
 #, kde-format

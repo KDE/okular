@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 02:39+0000\n"
-"PO-Revision-Date: 2026-06-13 17:20+0200\n"
+"PO-Revision-Date: 2026-08-08 12:42+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 26.04.0\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -622,10 +622,9 @@ msgid "Signing cancelled by user"
 msgstr "Użytkownik przerwał podpisywanie"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Nie można podpisać. Zły podpis"
+msgstr "Nie udało się podpisać: Zły podpis"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -688,7 +687,7 @@ msgstr "Wystawiony dla"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "Identyfikator użytkownika"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -2402,12 +2401,10 @@ msgid "Validity"
 msgstr "Poprawność"
 
 #: part/certificateviewer.cpp:90
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "co "
+msgstr "Nigdy"
 
 #: part/certificateviewer.cpp:94
 #, kde-format
@@ -2425,11 +2422,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Odcisk palca SHA-256"
 
 #: part/certificateviewer.cpp:107
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Odciski palców"
+msgstr "Odcisk certyfikatu"
 
 #: part/certificateviewer.cpp:116
 #, kde-format
@@ -2447,10 +2443,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Gdzie chcesz zapisać ten certyfikat?"
 
 #: part/certificateviewer.cpp:182
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Plik certyfikatu (*.cer)"
+msgstr "Plik certyfikatu (*.asc)"
 
 #: part/certificateviewer.cpp:185
 #, kde-format
@@ -5717,7 +5712,7 @@ msgstr "Zapisz podpisany plik jako"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Nie można zastąpić pliku pierwotnego. Nadaj inną nazwę plikowi."
 
 #: part/signaturepartutils.h:62
 #, kde-format

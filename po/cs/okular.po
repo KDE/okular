@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 02:39+0000\n"
-"PO-Revision-Date: 2026-07-10 11:25+0200\n"
+"PO-Revision-Date: 2026-08-08 23:48+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -4352,6 +4352,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Tento dokument obsahuje prvky, které se při tisku mohou skrýt nebo zobrazit "
+"jinak. U důležitých dokumentů prosím zkontrolujte obě varianty."
 
 #: part/part.cpp:480
 #, kde-format

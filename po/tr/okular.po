@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 02:39+0000\n"
-"PO-Revision-Date: 2026-06-22 19:57+0300\n"
+"PO-Revision-Date: 2026-08-08 19:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -627,10 +627,9 @@ msgid "Signing cancelled by user"
 msgstr "İmzalama kullanıcı tarafından iptal edildi"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Yanlış parola verildiğinden imzalanamadı."
+msgstr "İmzalanamadı: Yanlış anahtar parolası"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -693,7 +692,7 @@ msgstr "Konu"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "Kullanıcı Kimliği"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -4351,6 +4350,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Bu belgede, yazdırıldığında gizlenen veya farklı görünen ögeler olabilir. "
+"Önemli belgeler söz konusuysa her ikisine de dikkatlice bakın."
 
 #: part/part.cpp:480
 #, kde-format
@@ -5710,7 +5711,7 @@ msgstr "İmzalı Dosyayı Farklı Kaydet"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Özgün dosyanın üzerine yazılamıyor. Lütfen başka bir dosya adı seçin."
 
 #: part/signaturepartutils.h:62
 #, kde-format

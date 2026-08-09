@@ -1882,9 +1882,10 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_p
 void PDFGenerator::addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
 {
     for (const Poppler::OutlineItem &outlineItem : outlineItems) {
-        QDomElement item = docSyn.createElement(outlineItem.name());
+        QDomElement item = docSyn.createElement(QStringLiteral("item"));
         parentDestination->appendChild(item);
 
+        item.setAttribute(QStringLiteral("Title"), outlineItem.name());
         item.setAttribute(QStringLiteral("ExternalFileName"), outlineItem.externalFileName());
         const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
         if (outlineDestination) {

@@ -70,7 +70,7 @@ TOCItem::TOCItem(TOCItem *_parent, const QDomElement &e)
 {
     parent->children.append(this);
     model = parent->model;
-    text = e.tagName();
+    text = e.attribute(QStringLiteral("Title"));
 
     // viewport loading
     if (e.hasAttribute(QStringLiteral("Viewport"))) {

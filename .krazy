@@ -1,1 +1,1 @@
-SKIP /generators/chm/kio-msits\|/generators/chm/lib\|/generators/dvi/\|/generators/plucker/unpluck/|/generators/poppler/synctex/
+SKIP /generators/dvi/|/core/synctex/

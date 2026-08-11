@@ -1614,6 +1614,8 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
     QXmlStreamReader xml;
     xml.addData(documentStructureFile->data());
 
+    QMap<int, Okular::DocumentSynopsis::Element> lastHierarchy;
+
     while (!xml.atEnd()) {
         xml.readNext();
 
@@ -1630,30 +1632,37 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 QXmlStreamAttributes attributes = xml.attributes();
                 int outlineLevel = attributes.value(QStringLiteral("OutlineLevel")).toString().toInt();
                 QString description = attributes.value(QStringLiteral("Description")).toString();
-                QDomElement synopsisElement = m_docStructure->createElement(description);
-                synopsisElement.setAttribute(QStringLiteral("OutlineLevel"), outlineLevel);
+                auto synopsisElement = Okular::DocumentSynopsis::Element(description);
                 QString target = attributes.value(QStringLiteral("OutlineTarget")).toString();
                 int hashPosition = target.lastIndexOf(QLatin1Char('#'));
                 target = target.mid(hashPosition + 1);
                 // qCWarning(OkularXpsDebug) << "target: " << target;
                 Okular::DocumentViewport viewport;
                 viewport.pageNumber = m_docStructurePageMap.value(target);
-                synopsisElement.setAttribute(QStringLiteral("Viewport"), viewport.toString());
+                synopsisElement.setViewPort(viewport.toString());
                 if (outlineLevel == 1) {
                     // qCWarning(OkularXpsDebug) << "Description: "
                     // << outlineEntryElement.attribute( "Description" );
-                    m_docStructure->appendChild(synopsisElement);
+                    m_docStructure->addChild(synopsisElement);
+                    lastHierarchy.clear();
+                    lastHierarchy.insert(1, synopsisElement);
                 } else {
                     // find the last next highest element (so it this is level 3, we need
                     // to find the most recent level 2 node)
-                    QDomNode maybeParentNode = m_docStructure->lastChild();
-                    while (!maybeParentNode.isNull()) {
-                        if (maybeParentNode.toElement().attribute(QStringLiteral("OutlineLevel")).toInt() == (outlineLevel - 1)) {
-                            // we have the right parent
-                            maybeParentNode.appendChild(synopsisElement);
+                    bool added = false;
+                    for (int i = 1 ; i < outlineLevel; i ++) {
+                        if (auto maybeParent = lastHierarchy.find(outlineLevel - i); maybeParent != lastHierarchy.end()) {
+                            maybeParent->addChild(synopsisElement);
+                            lastHierarchy.erase(lastHierarchy.upperBound(outlineLevel - i), lastHierarchy.end());
+                            lastHierarchy.insert(outlineLevel,synopsisElement);
+                            added = true;
                             break;
                         }
-                        maybeParentNode = maybeParentNode.lastChild();
+                    }
+                    if (!added) {
+                        // weird top level element that is not 1.
+                        m_docStructure->addChild(synopsisElement);
+                        lastHierarchy.insert(outlineLevel, synopsisElement);
                     }
                 }
             } else if (xml.name() == QStringLiteral("Story")) {

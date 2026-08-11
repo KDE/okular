@@ -1545,20 +1545,46 @@ public:
  * - URL: a URL to be open as destination; if set, no other Destination* or
  *      ExternalFileName entry is used
  */
-class OKULARCORE_EXPORT DocumentSynopsis : public QDomDocument
+class OKULARCORE_EXPORT DocumentSynopsis
 {
 public:
-    /**
-     * Creates a new document synopsis object.
-     */
-    DocumentSynopsis();
+    class Element {
+    public:
+        class OKULARCORE_NO_EXPORT ElementPrivate;
 
+        explicit Element(const QString& title);
+        ~Element();
+        void addChild(const Element& element);
+        void setViewPort(const QString& viewPort);
+        void setViewPortName(const QString& viewPortName);
+        std::optional<QString> viewPortName() const;
+        void setOpen(bool open);
+        std::optional<QString> viewPort() const;
+        bool isOpen() const;
+        void setUrl(const QString& url);
+        QString url() const;
+        QVector<Element> children() const;
+        QString title() const;
+        QString externalFileName() const;
+        void setExternalFileName(const QString &externalFileName);
+    private:
+        std::shared_ptr<ElementPrivate> d;
+
+    };
     /**
      * Creates a new document synopsis object with the given
-     * @p document as parent node.
      */
-    explicit DocumentSynopsis(const QDomDocument &document);
+    explicit DocumentSynopsis();
+    ~DocumentSynopsis();
+
+    void addChild(const Element& element);
+    QVector<Element> children() const;
+    class OKULARCORE_NO_EXPORT  DocumentSynopsisPrivate;
+private:
+    std::shared_ptr<DocumentSynopsisPrivate> d;
 };
+
+
 
 /**
  * @short An embedded file into the document.

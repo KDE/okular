@@ -128,8 +128,6 @@ protected:
 private:
     Okular::Document::OpenResult init(QList<Okular::Page *> &pagesVector, const QString &password);
 
-    // create the document synopsis hierarchy
-    void addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination);
     // fetch annotations from the pdf file and add they to the page
     void addAnnotations(Poppler::Page *popplerPage, Okular::Page *page);
     // fetch the transition information and add it to the page
@@ -151,10 +149,9 @@ private:
 
     // misc variables for document info and synopsis caching
     QString documentFilePath;
-    bool docSynopsisDirty;
     bool xrefReconstructed;
     bool hasVisibleOverprint;
-    Okular::DocumentSynopsis docSyn;
+    std::optional<Okular::DocumentSynopsis> docSyn;
     mutable bool docEmbeddedFilesDirty;
     mutable QList<Okular::EmbeddedFile *> docEmbeddedFiles;
     int nextFontPage;

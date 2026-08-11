@@ -50,6 +50,7 @@
 #include <core/textpage.h>
 #include <core/utils.h>
 
+#include "core/document.h"
 #include "pdfsettings.h"
 
 #include <poppler-media.h>
@@ -71,6 +72,8 @@ Q_DECLARE_METATYPE(Poppler::FontInfo)
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
+
+static Okular::DocumentSynopsis::Element addOutlineItem(const Poppler::OutlineItem &outlineItem);
 
 class PDFOptionsPage : public Okular::PrintOptionsWidget
 {
@@ -662,7 +665,6 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
 PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)
     , pdfdoc(nullptr)
-    , docSynopsisDirty(true)
     , xrefReconstructed(false)
     , hasVisibleOverprint(false)
     , docEmbeddedFilesDirty(true)
@@ -863,8 +865,7 @@ bool PDFGenerator::doCloseDocument()
     annotProxy = nullptr;
     pdfdoc = nullptr;
     userMutex()->unlock();
-    docSynopsisDirty = true;
-    docSyn.clear();
+    docSyn.reset();
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
@@ -1033,8 +1034,8 @@ Okular::DocumentInfo PDFGenerator::generateDocumentInfo(const QSet<Okular::Docum
 
 const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
 {
-    if (!docSynopsisDirty) {
-        return &docSyn;
+    if (docSyn.has_value()) {
+        return &docSyn.value();
     }
 
     if (!pdfdoc) {
@@ -1049,10 +1050,15 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
         return nullptr;
     }
 
-    addSynopsisChildren(outline, &docSyn);
+    docSyn = Okular::DocumentSynopsis();
 
-    docSynopsisDirty = false;
-    return &docSyn;
+    for (const Poppler::OutlineItem &outlineItem : outline) {
+        auto item = addOutlineItem(outlineItem);
+        docSyn->addChild(item);
+    }
+
+
+    return &docSyn.value();
 }
 
 static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType(Poppler::FontInfo::Type type)
@@ -1879,31 +1885,31 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_p
     return ktp;
 }
 
-void PDFGenerator::addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
-{
-    for (const Poppler::OutlineItem &outlineItem : outlineItems) {
-        QDomElement item = docSyn.createElement(outlineItem.name());
-        parentDestination->appendChild(item);
+static Okular::DocumentSynopsis::Element addOutlineItem(const Poppler::OutlineItem &outlineItem) {
+    Okular::DocumentSynopsis::Element element(outlineItem.name());
 
-        item.setAttribute(QStringLiteral("ExternalFileName"), outlineItem.externalFileName());
+    element.setExternalFileName(outlineItem.externalFileName());
         const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
         if (outlineDestination) {
             const QString destinationName = outlineDestination->destinationName();
             if (!destinationName.isEmpty()) {
-                item.setAttribute(QStringLiteral("ViewportName"), destinationName);
+                element.setViewPortName(destinationName);
             } else {
                 Okular::DocumentViewport vp;
                 fillViewportFromLinkDestination(vp, *outlineDestination);
-                item.setAttribute(QStringLiteral("Viewport"), vp.toString());
+                element.setViewPort(vp.toString());
             }
         }
-        item.setAttribute(QStringLiteral("Open"), outlineItem.isOpen());
-        item.setAttribute(QStringLiteral("URL"), outlineItem.uri());
-
+        element.setOpen(outlineItem.isOpen());
+        element.setUrl(outlineItem.uri());
         if (outlineItem.hasChildren()) {
-            addSynopsisChildren(outlineItem.children(), &item);
+            for (auto child : outlineItem.children()) {
+                element.addChild(addOutlineItem(child));
+            }
         }
-    }
+
+    return element;
+
 }
 
 void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page)

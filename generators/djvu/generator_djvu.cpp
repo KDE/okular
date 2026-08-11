@@ -28,30 +28,31 @@
 #include <QDir>
 #include <QTemporaryFile>
 
-static void recurseCreateTOC(QDomDocument &maindoc, const QDomNode &parent, QDomNode &parentDestination, KDjVu *djvu)
+template<typename TocElement>
+static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestination, KDjVu *djvu)
 {
     QDomNode n = parent.firstChild();
     while (!n.isNull()) {
         QDomElement el = n.toElement();
 
-        QDomElement newel = maindoc.createElement(el.attribute(QStringLiteral("title")));
-        parentDestination.appendChild(newel);
+        auto newel = Okular::DocumentSynopsis::Element(el.attribute(QStringLiteral("title")));
+        parentDestination.addChild(newel);
 
         QString dest;
         if (!(dest = el.attribute(QStringLiteral("PageNumber"))).isEmpty()) {
             Okular::DocumentViewport vp;
             vp.pageNumber = dest.toInt() - 1;
-            newel.setAttribute(QStringLiteral("Viewport"), vp.toString());
+            newel.setViewPort(vp.toString());
         } else if (!(dest = el.attribute(QStringLiteral("PageName"))).isEmpty()) {
             Okular::DocumentViewport vp;
             vp.pageNumber = djvu->pageNumber(dest);
-            newel.setAttribute(QStringLiteral("Viewport"), vp.toString());
+            newel.setViewPort(vp.toString());
         } else if (!(dest = el.attribute(QStringLiteral("URL"))).isEmpty()) {
-            newel.setAttribute(QStringLiteral("URL"), dest);
+            newel.setUrl(dest);
         }
 
         if (el.hasChildNodes()) {
-            recurseCreateTOC(maindoc, n, newel, djvu);
+            recurseCreateTOC(n, newel, djvu);
         }
         n = n.nextSibling();
     }
@@ -155,7 +156,7 @@ const Okular::DocumentSynopsis *DjVuGenerator::generateDocumentSynopsis()
     const QDomDocument *doc = m_djvu->documentBookmarks();
     if (doc) {
         m_docSyn = new Okular::DocumentSynopsis();
-        recurseCreateTOC(*m_docSyn, *doc, *m_docSyn, m_djvu);
+        recurseCreateTOC(*doc, *m_docSyn, m_djvu);
     }
     locker.unlock();
 

@@ -34,7 +34,8 @@ static void recurseCreateTOC(QDomDocument &maindoc, const QDomNode &parent, QDom
     while (!n.isNull()) {
         QDomElement el = n.toElement();
 
-        QDomElement newel = maindoc.createElement(el.attribute(QStringLiteral("title")));
+        QDomElement newel = maindoc.createElement(QStringLiteral("item"));
+        newel.setAttribute(QStringLiteral("Title"), el.attribute(QStringLiteral("title")));
         parentDestination.appendChild(newel);
 
         QString dest;

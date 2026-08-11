@@ -1630,7 +1630,8 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 QXmlStreamAttributes attributes = xml.attributes();
                 int outlineLevel = attributes.value(QStringLiteral("OutlineLevel")).toString().toInt();
                 QString description = attributes.value(QStringLiteral("Description")).toString();
-                QDomElement synopsisElement = m_docStructure->createElement(description);
+                QDomElement synopsisElement = m_docStructure->createElement(QStringLiteral("item"));
+                synopsisElement.setAttribute(QStringLiteral("Title"), description);
                 synopsisElement.setAttribute(QStringLiteral("OutlineLevel"), outlineLevel);
                 QString target = attributes.value(QStringLiteral("OutlineTarget")).toString();
                 int hashPosition = target.lastIndexOf(QLatin1Char('#'));

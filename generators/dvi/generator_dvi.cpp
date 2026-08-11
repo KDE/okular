@@ -322,7 +322,8 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
     QList<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
     QList<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
     for (; it != itEnd; ++it) {
-        QDomElement domel = m_docSynopsis->createElement((*it).title);
+        QDomElement domel = m_docSynopsis->createElement(QStringLiteral("item"));
+        domel.setAttribute(QStringLiteral("Title"), (*it).title);
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if (a.isValid()) {
             Okular::DocumentViewport vp;

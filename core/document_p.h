@@ -108,6 +108,7 @@ public:
         , m_docdataMigrationNeeded(false)
         , m_synctex_scanner(nullptr)
     {
+        QDomImplementation::setInvalidDataPolicy(QDomImplementation::AcceptInvalidChars);
         calculateMaxTextPages();
     }
 

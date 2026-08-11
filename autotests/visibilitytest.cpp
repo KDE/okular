@@ -116,7 +116,9 @@ void VisibilityTest::testSaveLoad()
     QVERIFY(saveFile.open());
     saveFile.close();
 
-    QVERIFY(m_document->saveChanges(saveFile.fileName()));
+    QString errorString;
+    QVERIFY(m_document->saveChanges(saveFile.fileName(), &errorString));
+    QVERIFY(errorString.isEmpty());
 
     auto newDoc = new Okular::Document(nullptr);
 

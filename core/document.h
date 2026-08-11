@@ -991,7 +991,7 @@ public:
      *
      * @since 0.7 (KDE 4.1)
      */
-    bool saveChanges(const QString &fileName);
+    OKULARCORE_DEPRECATED bool saveChanges(const QString &fileName);
 
     /**
      * Save the document and the optional changes to it to the specified

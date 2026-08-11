@@ -108,7 +108,9 @@ void DocumentTest::testDocdataMigration()
     QTemporaryFile migratedSaveFile(QStringLiteral("%1/okrXXXXXX.pdf").arg(QDir::tempPath()));
     QVERIFY(migratedSaveFile.open());
     migratedSaveFile.close();
-    QVERIFY(m_document->saveChanges(migratedSaveFile.fileName()));
+    QString errorString;
+    QVERIFY(m_document->saveChanges(migratedSaveFile.fileName(), &errorString));
+    QVERIFY(errorString.isEmpty());
     m_document->docdataMigrationDone();
     QVERIFY(!m_document->isDocdataMigrationNeeded());
     m_document->closeDocument();

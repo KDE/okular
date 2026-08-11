@@ -6042,16 +6042,92 @@ QString DocumentInfo::getKeyTitle(const QString &key) const
 }
 
 /** DocumentSynopsis **/
+class DocumentSynopsis::Element::ElementPrivate {
+public:
+    explicit ElementPrivate(const QString& _title) : title(_title) {}
+    QVector<DocumentSynopsis::Element> children;
+    QString title;
+    std::optional<QString> viewPort;
+    std::optional<QString> viewPortName;
+    QString url;
+    QString externalFileName;
+    bool open = false;
+};
 
-DocumentSynopsis::DocumentSynopsis()
-    : QDomDocument(QStringLiteral("DocumentSynopsis"))
+DocumentSynopsis::Element::Element(const QString& title) : d(std::make_shared<ElementPrivate>(title))
 {
-    // void implementation, only subclassed for naming
 }
 
-DocumentSynopsis::DocumentSynopsis(const QDomDocument &document)
-    : QDomDocument(document)
+DocumentSynopsis::Element::~Element() = default;
+
+void DocumentSynopsis::Element::addChild(const Element& element) {
+    d->children.push_back(element);
+}
+
+void DocumentSynopsis::Element::setViewPort(const QString& viewPort) {
+    d->viewPort = viewPort;
+}
+
+void DocumentSynopsis::Element::setUrl(const QString& url) {
+    d->url = url;
+}
+
+QString DocumentSynopsis::Element::url() const {
+    return d->url;
+}
+
+QString DocumentSynopsis::Element::title() const {
+    return d->title;
+}
+
+std::optional<QString> DocumentSynopsis::Element::viewPort() const {
+    return d->viewPort;
+}
+
+std::optional<QString> DocumentSynopsis::Element::viewPortName() const {
+    return d->viewPortName;
+}
+QVector<DocumentSynopsis::Element> DocumentSynopsis::Element::children() const {
+    return d->children;
+}
+
+QString DocumentSynopsis::Element::externalFileName() const {
+    return d->externalFileName;
+}
+
+void DocumentSynopsis::Element::setExternalFileName(const QString& externalFileName) {
+    d->externalFileName = externalFileName;
+}
+
+bool DocumentSynopsis::Element::isOpen() const {
+    return d->open;
+}
+
+void DocumentSynopsis::Element::setOpen(bool open) {
+    d->open = open;
+}
+
+void DocumentSynopsis::Element::setViewPortName(const QString &viewPortName) {
+    d->viewPortName = viewPortName;
+}
+
+class DocumentSynopsis::DocumentSynopsisPrivate {
+public:
+    QVector<DocumentSynopsis::Element> children;
+};
+
+DocumentSynopsis::DocumentSynopsis() : d(std::make_shared<DocumentSynopsisPrivate>())
 {
+}
+
+DocumentSynopsis::~DocumentSynopsis() = default;
+
+QVector<DocumentSynopsis::Element> DocumentSynopsis::children() const {
+    return d->children;
+}
+
+void DocumentSynopsis::addChild(const Element& element) {
+    d->children.push_back(element);
 }
 
 /** EmbeddedFile **/

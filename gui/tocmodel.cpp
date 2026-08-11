@@ -20,7 +20,7 @@ Q_DECLARE_METATYPE(QModelIndex)
 
 struct TOCItem {
     TOCItem();
-    TOCItem(TOCItem *parent, const QDomElement &e);
+    TOCItem(TOCItem *parent, const Okular::DocumentSynopsis::Element &e);
     ~TOCItem();
 
     TOCItem(const TOCItem &) = delete;
@@ -42,7 +42,7 @@ public:
     explicit TOCModelPrivate(TOCModel *qq);
     ~TOCModelPrivate();
 
-    void addChildren(const QDomNode &parentNode, TOCItem *parentItem);
+    void addChildren(const QVector<Okular::DocumentSynopsis::Element> &parentNode, TOCItem *parentItem);
     QModelIndex indexForItem(TOCItem *item) const;
     void findViewport(const Okular::DocumentViewport &viewport, TOCItem *item, QList<TOCItem *> &list) const;
 
@@ -64,29 +64,30 @@ TOCItem::TOCItem()
 {
 }
 
-TOCItem::TOCItem(TOCItem *_parent, const QDomElement &e)
+TOCItem::TOCItem(TOCItem *_parent, const Okular::DocumentSynopsis::Element &e)
     : highlight(false)
     , parent(_parent)
 {
     parent->children.append(this);
     model = parent->model;
-    text = e.tagName();
+    text = e.title();
 
     // viewport loading
-    if (e.hasAttribute(QStringLiteral("Viewport"))) {
+    if (auto viewportString = e.viewPort()) {
         // if the node has a viewport, set it
-        viewport = Okular::DocumentViewport(e.attribute(QStringLiteral("Viewport")));
-    } else if (e.hasAttribute(QStringLiteral("ViewportName"))) {
+        viewport = Okular::DocumentViewport(viewportString.value());
+    } else {
         // if the node references a viewport, get the reference and set it
-        const QString &page = e.attribute(QStringLiteral("ViewportName"));
-        QString viewport_string = model->document->metaData(QStringLiteral("NamedViewport"), page).toString();
+        if (const auto page = e.viewPortName()) {
+        QString viewport_string = model->document->metaData(QStringLiteral("NamedViewport"), page.value()).toString();
         if (!viewport_string.isEmpty()) {
             viewport = Okular::DocumentViewport(viewport_string);
         }
+        }
     }
 
-    extFileName = e.attribute(QStringLiteral("ExternalFileName"));
-    url = e.attribute(QStringLiteral("URL"));
+    extFileName = e.externalFileName();
+    url = e.url();
 }
 
 TOCItem::~TOCItem()
@@ -110,32 +111,22 @@ TOCModelPrivate::~TOCModelPrivate()
     delete m_oldModel;
 }
 
-void TOCModelPrivate::addChildren(const QDomNode &parentNode, TOCItem *parentItem)
+void TOCModelPrivate::addChildren(const QVector<Okular::DocumentSynopsis::Element>& nodes, TOCItem *parentItem)
 {
     TOCItem *currentItem = nullptr;
-    QDomNode n = parentNode.firstChild();
-    while (!n.isNull()) {
-        // convert the node to an element (sure it is)
-        QDomElement e = n.toElement();
-
+    for (const auto & child : nodes) {
         // insert the entry as top level (listview parented) or 2nd+ level
-        currentItem = new TOCItem(parentItem, e);
+        currentItem = new TOCItem(parentItem, child);
 
         // descend recursively and advance to the next node
-        if (e.hasChildNodes()) {
-            addChildren(n, currentItem);
-        }
+        addChildren(child.children(), currentItem);
 
         // open/keep close the item
-        bool isOpen = false;
-        if (e.hasAttribute(QStringLiteral("Open"))) {
-            isOpen = QVariant(e.attribute(QStringLiteral("Open"))).toBool();
-        }
+        bool isOpen = child.isOpen();
         if (isOpen) {
             itemsToOpen.append(currentItem);
         }
 
-        n = n.nextSibling();
         Q_EMIT q->countChanged();
     }
 }
@@ -336,7 +327,7 @@ void TOCModel::fill(const Okular::DocumentSynopsis *toc)
 
     clear();
     Q_EMIT layoutAboutToBeChanged();
-    d->addChildren(*toc, d->root);
+    d->addChildren(toc->children(), d->root);
     d->dirty = true;
     Q_EMIT layoutChanged();
     if (equals(d->m_oldModel)) {

@@ -49,11 +49,11 @@ void EpubGeneratorTest::testDocumentStructure()
     QCOMPARE(m_document->metaData(QStringLiteral("DocumentTitle")).toString(), QStringLiteral("Okular Test"));
 
     const Okular::DocumentSynopsis *docSyn = m_document->documentSynopsis();
-    QDomElement heading1 = docSyn->documentElement();
-    QCOMPARE(heading1.tagName(), QStringLiteral("Lorem ipsum Section 1"));
+    auto heading1 = docSyn->children().front();
+    QCOMPARE(heading1.title(), QStringLiteral("Lorem ipsum Section 1"));
 
-    QDomElement heading2 = heading1.nextSiblingElement();
-    QCOMPARE(heading2.tagName(), QStringLiteral("Lorem ipsum Section 2"));
+    auto heading2 = docSyn->children()[1];
+    QCOMPARE(heading2.title(), QStringLiteral("Lorem ipsum Section 2"));
 }
 
 void EpubGeneratorTest::testDocumentContent()

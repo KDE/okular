@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 00:42+0000\n"
-"PO-Revision-Date: 2026-07-15 18:59+0400\n"
+"PO-Revision-Date: 2026-08-10 18:19+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4343,6 +4343,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"تحتوي هذه الوثيقة على عناصر قد تكون مخفية أو تظهر بشكل مختلف عند طباعتها. "
+"بالنسبة للوثائق المهمة، يرجى التحقق من كلا الحالتين."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4866,7 +4868,7 @@ msgid ""
 "Try saving to another location or changing that file's permissions."
 msgstr ""
 "تعذر الكتابة فوق <filename>%1</filename> بسبب أنه للقراءة فقط. حاول حفظه في "
-"مكان أخر أو غير أذونات الملف."
+"مكان أخر أو غير أذون الملف."
 
 #: part/part.cpp:2759
 #, kde-format
@@ -5057,9 +5059,9 @@ msgid ""
 "the file in the Dolphin file manager, then choose the 'Properties' option, "
 "and select 'Permissions' tab in the opened window.</qt>"
 msgstr ""
-"<qt>يحدث هذا الخطأ إذا لم يكن لديك الصلاحيّات الكافية لقراءة الملف. يمكنك فحص "
+"<qt>يحدث هذا الخطأ إذا لم يكن لديك الأذون الكافية لقراءة الملف. يمكنك فحص "
 "الملكية والصلاحيات إذا ضغطت بالزر الأيمن على الملف في مدير الملفات دولفين ثم "
-"اختر لسان `الأذونات`</qt>"
+"اختر لسان 'الأذون'</qt>"
 
 #: part/part.cpp:3823
 #, kde-format

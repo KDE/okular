@@ -143,7 +143,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
             connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
         }
 
-        action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy"));
+        action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18nc("@action", "Copy"));
         action->setEnabled(onlyOne && annotationSupportsCopy(pair.annotation));
         connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
 
@@ -210,7 +210,7 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
                 connect(action, &QAction::triggered, menu, [this, pair] { doAddAnnotationBookmark(pair); });
             }
 
-            action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy"));
+            action = menu->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18nc("@action", "Copy"));
             action->setEnabled(annotationSupportsCopy(pair.annotation));
             connect(action, &QAction::triggered, menu, [this, pair] { doCopyAnnotation(pair); });
 

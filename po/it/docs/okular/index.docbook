@@ -87,9 +87,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2022-02-19</date>
+>2026-02-23</date>
 		<releaseinfo
->22.04</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -666,7 +666,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Se vuoi usare un archivio di certificati personalizzato puoi farlo impostandolo nella sezione <link linkend="config-pdf-digital-signatures"
 >Configurazione del backend &PDF;</link
 > della finestra di dialogo <link linkend="configure-backends"
->Configura backend...</link
+>Configura Okular...</link
 >. </para>
 				<note>
 					<para
@@ -3256,246 +3256,9 @@ Context menu actions like Rename Bookmarks etc.)
 > sul fondo dell'area del documento per risparmiare spazio verticale nella finestra di &okular;. Nota come i numeri di pagina verranno mostrati comunque nella barra degli strumenti predefinita.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Impostazioni</guimenu
-> <guimenuitem
->Configura backend..</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Apre la finestra di <link linkend="configure-backends"
->configurazione backend</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Configurazione dei backend di &okular;</title>
-	  <para
->Puoi configurare i backend di &okular; scegliendo <menuchoice
-> <guimenu
->Impostazioni</guimenu
-> <guimenuitem
->Configura backend...</guimenuitem
-> </menuchoice
->. Attualmente sono disponibili delle opzioni di configurazione solo per i backend EPub, &PostScript;, FictionBook, Txt (testo), OpenDocument Text e &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->La finestra di configurazione dei backend</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->La finestra di configurazione dei backend</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Usando le pagine di configurazione dei backend per EPub, FictionBook, Mobipocket, Markdown, TXT e OpenDocument Text puoi definire il tipo di carattere per visualizzare il documento nel formato corrispondente. Il pulsante <guibutton
->Scegli...</guibutton
-> in queste pagine apre la finestra standard di configurazione dei caratteri di &kde;. Fai riferimento al documento dei <ulink url="help:/fundamentals/fonts.html"
->Fondamentali di &kde;</ulink
-> per maggiori dettagli. </para>
-	  <para
->La descrizione delle pagine di configurazione dei backend Markdown, &PostScript; e &PDF; può essere consultata di seguito. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Configurazione del backend Markdown</title>
-	    <para
->Puoi configurare il backend Markdown di visualizzazione per &okular; basato su <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> scegliendo <guilabel
->Markdown</guilabel
-> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. Un'ulteriore opzione configurabile è descritta di seguito. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Abilita la formattazione SmartyPants</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Quando è selezionata, questa opzione permette ad &okular; di elaborare la formattazione <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->. Tale formattazione può causare problemi nei testi tecnici per delle sostituzioni non volute (&eg; sostituisce <literal
->(C)</literal
-> con un simbolo di copyright). Questa opzione è abilitata come impostazione predefinita. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Configurazione del backend &PostScript;</title>
-	    <para
->Puoi configurare il backend &PostScript; di visualizzazione per &okular; basato su <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> scegliendo <guilabel
->Ghostscript</guilabel
-> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. L'unica opzione configurabile è descritta di seguito. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Usa i caratteri della piattaforma</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Questa opzione determina se Ghostscript è autorizzato a usare i caratteri della piattaforma; se non marcata è permesso l'uso dei soli caratteri inseriti nel documento. L'opzione è attiva in modo predefinito. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Configurazione del backend &PDF;</title>
-	    <para
->Puoi configurare il backend &PDF; di visualizzazione per &okular; basato su <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> scegliendo <guilabel
->&PDF;</guilabel
-> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. L'unica opzione configurabile è descritta di seguito. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Ottimizza linee sottili</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Il disegno delle linee in &okular; è implementato in due passi: la generazione del tracciato di ritaglio ed il suo riempimento. Quando la linea nel documento originale è più stretta di un pixel l'esecuzione di questi due passi può causare dei problemi. Per queste linee il tracciato di ritaglio è riempito con un colore di riempimento legato allo spessore della parte della linea all'interno dell'area di ritaglio. Se la parte della linea dentro l'area di ritaglio diventa molto piccola, il contrasto tra la figura e il colore di sfondo può diventare troppo basso perché la linea sia riconoscibile. Le griglie di queste linee assumono quindi un aspetto poco gradevole. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Linea sottile (rossa), il relativo tracciato di ritaglio (linea tratteggiata) e i confini dei pixel (linee piene nere)</entry>
-			    <entry
->Linea sottile mostrata a basso contrasto</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Per migliorare l'aspetto delle linee sottili &okular; implementa due opzioni. </para>
-		    <para
->La prima opzione è <guimenuitem
->Pieno</guimenuitem
->. Con questa opzione &okular; aggiusta il tracciato di ritaglio e la posizione della linea in modo tale che il tracciato di ritaglio e la linea condividano il confine dei pixel, &ie; &okular; ingrandisce la linea sottile ad un pixel sul dispositivo di output. Questo modo è simile alla modalità <guilabel
->Ottimizza linee sottili</guilabel
-> in <trademark class="registered"
->Adobe </trademark
-> <trademark class="registered"
->Reader</trademark
->. Se questa opzione viene selezionata, le linee sottili sono sempre allargate. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Linea sottile con ottimizzazione <guimenuitem
->Pieno</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Linea sottile con ottimizzazione <guimenuitem
->Pieno</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->La seconda opzione è <guimenuitem
->Figura</guimenuitem
->. Con questa opzione il tracciato di ritaglio e la linea sono ugualmente aggiustati al confine del pixel, ma l'intensità della linea è corretta in base alla sua larghezza. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Linea sottile con ottimizzazione <guimenuitem
->Figura</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Linea sottile con ottimizzazione <guimenuitem
->Figura</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->L'impostazione predefinita è non migliorare le linee sottili (opzione <guimenuitem
->No</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->&PDF; Certificati per le firme digitali dei &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Questa sezione ti permette di impostare un archivio di certificati personalizzato da usare per aggiungere delle firme digitali a file &PDF;. </para>
-			<para
->Elenca inoltre i certificati disponibili nell'archivio di certificati attuale (se presente). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3563,13 +3326,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->In base ai backend installati, la voce di menu <menuchoice
-><guimenu
->Impostazioni</guimenu
-> <guimenuitem
->Configura backend...</guimenuitem
-></menuchoice
-> potrebbe essere abilitata o meno. Questa particolare finestra mantiene le impostazioni dei backend che possono essere configurati. </para>
+>In base ai motori attualmente installati, la finestra di dialogo contiene anche un elenco dei motori per cui sono disponibili delle opzioni di configurazione. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -3754,6 +3511,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Continua con l'ultima pagina visualizzata</guilabel
+></term>
+					<listitem>
+						<para
+>Se salvare e ripristinare l'ultima pagina visualizzata per ogni documento tra i dati memorizzati della pagina. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Quando utilizzi lo strumento Sfoglia, riporta il cursore ai bordi dello schermo</guilabel
 ></term>
 					<listitem>
@@ -3763,6 +3530,17 @@ Context menu actions like Rename Bookmarks etc.)
 >. Se abilitata, il cursore del mouse si sposta all'estremità opposta dello schermo quando tocca i bordi durante il trascinamento del documento. Questa funzione è supportata solo su X11. </para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Elementi nella cronologia recente</guilabel
+></term>
+					<listitem>
+						<para
+>Permette di configurare la grandezza dell'elenco della cronologia memorizzata. </para>
+					</listitem>
+				</varlistentry>
+
 				<varlistentry>
 					<term
 ><guilabel
@@ -4388,6 +4166,214 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Configurazione dei backend di &okular;</title>
+	  <para
+>Puoi configurare i backend di &okular; scegliendo <menuchoice
+> <guimenu
+>Impostazioni</guimenu
+> <guimenuitem
+>Configura Okular...</guimenuitem
+> </menuchoice
+>. Attualmente sono disponibili delle opzioni di configurazione solo per i backend EPub, &PostScript;, FictionBook, Txt (testo), OpenDocument Text e &PDF;. </para>
+	  <para
+>Usando le pagine di configurazione dei backend per EPub, FictionBook, Mobipocket, Markdown, TXT e OpenDocument Text puoi definire il tipo di carattere per visualizzare il documento nel formato corrispondente. Il pulsante <guibutton
+>Scegli...</guibutton
+> in queste pagine apre la finestra standard di configurazione dei caratteri di &kde;. Fai riferimento al documento dei <ulink url="help:/fundamentals/fonts.html"
+>Fondamentali di &kde;</ulink
+> per maggiori dettagli. </para>
+	  <para
+>La descrizione delle pagine di configurazione dei backend Markdown, &PostScript; e &PDF; può essere consultata di seguito. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Configurazione del backend Markdown</title>
+	    <para
+>Puoi configurare il backend Markdown di visualizzazione per &okular; basato su <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> scegliendo <guilabel
+>Markdown</guilabel
+> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. Un'ulteriore opzione configurabile è descritta di seguito. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Abilita la formattazione SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Quando è selezionata, questa opzione permette ad &okular; di elaborare la formattazione <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Tale formattazione può causare problemi nei testi tecnici per delle sostituzioni non volute (&eg; sostituisce <literal
+>(C)</literal
+> con un simbolo di copyright). Questa opzione è abilitata come impostazione predefinita. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Configurazione del backend &PostScript;</title>
+	    <para
+>Puoi configurare il backend &PostScript; di visualizzazione per &okular; basato su <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> scegliendo <guilabel
+>Ghostscript</guilabel
+> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. L'unica opzione configurabile è descritta di seguito. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Usa i caratteri della piattaforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Questa opzione determina se Ghostscript è autorizzato a usare i caratteri della piattaforma; se non marcata è permesso l'uso dei soli caratteri inseriti nel documento. L'opzione è attiva in modo predefinito. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Configurazione del backend &PDF;</title>
+	    <para
+>Puoi configurare il backend &PDF; di visualizzazione per &okular; basato su <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> scegliendo <guilabel
+>&PDF;</guilabel
+> dell'elenco nella parte sinistra della finestra di dialogo di configurazione. L'unica opzione configurabile è descritta di seguito. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Ottimizza linee sottili</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Il disegno delle linee in &okular; è implementato in due passi: la generazione del tracciato di ritaglio ed il suo riempimento. Quando la linea nel documento originale è più stretta di un pixel l'esecuzione di questi due passi può causare dei problemi. Per queste linee il tracciato di ritaglio è riempito con un colore di riempimento legato allo spessore della parte della linea all'interno dell'area di ritaglio. Se la parte della linea dentro l'area di ritaglio diventa molto piccola, il contrasto tra la figura e il colore di sfondo può diventare troppo basso perché la linea sia riconoscibile. Le griglie di queste linee assumono quindi un aspetto poco gradevole. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Linea sottile (rossa), il relativo tracciato di ritaglio (linea tratteggiata) e i confini dei pixel (linee piene nere)</entry>
+			    <entry
+>Linea sottile mostrata a basso contrasto</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Per migliorare l'aspetto delle linee sottili &okular; implementa due opzioni. </para>
+		    <para
+>La prima opzione è <guimenuitem
+>Pieno</guimenuitem
+>. Con questa opzione &okular; aggiusta il tracciato di ritaglio e la posizione della linea in modo tale che il tracciato di ritaglio e la linea condividano il confine dei pixel, &ie; &okular; ingrandisce la linea sottile ad un pixel sul dispositivo di output. Questo modo è simile alla modalità <guilabel
+>Ottimizza linee sottili</guilabel
+> in <trademark class="registered"
+>Adobe </trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Se questa opzione viene selezionata, le linee sottili sono sempre allargate. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linea sottile con ottimizzazione <guimenuitem
+>Pieno</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linea sottile con ottimizzazione <guimenuitem
+>Pieno</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>La seconda opzione è <guimenuitem
+>Figura</guimenuitem
+>. Con questa opzione il tracciato di ritaglio e la linea sono ugualmente aggiustati al confine del pixel, ma l'intensità della linea è corretta in base alla sua larghezza. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linea sottile con ottimizzazione <guimenuitem
+>Figura</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linea sottile con ottimizzazione <guimenuitem
+>Figura</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>L'impostazione predefinita è non migliorare le linee sottili (opzione <guimenuitem
+>No</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>&PDF; Certificati per le firme digitali dei &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Questa sezione ti permette di impostare un archivio di certificati personalizzato da usare per aggiungere delle firme digitali a file &PDF;. </para>
+			<para
+>Elenca inoltre i certificati disponibili nell'archivio di certificati attuale (se presente). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

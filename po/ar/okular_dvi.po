@@ -276,9 +276,9 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt>أُجهِض توليد الخط باستخدام <em>kpsewhich</em> (معطياً رمز الخطأ %1، والخطأ "
+"<qt>أُجهِض توليد الخط باستخدام <em>kpsewhich</em> (معطيًا رمز الخطأ %1، والخطأ "
 "%2). نتيجة لذلك، فإن بعض ملفات الخطوط تعذر إيجاد مكانها، وقد لا يكون مستندك "
-"قابلاً للقراءة.</qt>"
+"قابلًا للقراءة.</qt>"
 
 #: fontpool.cpp:467
 #, kde-format

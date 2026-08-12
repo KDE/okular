@@ -235,7 +235,7 @@ msgstr "أوقِف الفِلم"
 #: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
-msgstr "أوقف الفلم مؤقتاً"
+msgstr "أوقف الفلم مؤقتًا"
 
 #: core/action.cpp:560
 #, kde-format
@@ -478,7 +478,7 @@ msgstr "أضف شرحا"
 #, kde-format
 msgctxt "Remove an annotation from the page"
 msgid "remove annotation"
-msgstr "أزِل شرحاً"
+msgstr "أزِل شرحًا"
 
 #: core/documentcommands.cpp:155
 #, kde-format
@@ -910,12 +910,12 @@ msgstr "تعذر فتح \"%1\" للكتابة. الملف لم يحفظ."
 #: gui/signatureguiutils.cpp:42
 #, kde-format
 msgid "The signature is cryptographically valid."
-msgstr "التوقيع صالح تشفيرياً."
+msgstr "التوقيع صالح تشفيريًا."
 
 #: gui/signatureguiutils.cpp:44
 #, kde-format
 msgid "The signature is cryptographically invalid."
-msgstr "التوقيع غير صالح تشفيرياً."
+msgstr "التوقيع غير صالح تشفيريًا."
 
 #: gui/signatureguiutils.cpp:46
 #, kde-format
@@ -1123,20 +1123,20 @@ msgstr "يحتوي هذا المستند على حقول العناصر النا
 #: gui/signatureguiutils.cpp:215
 #, kde-format
 msgid "This document is digitally signed."
-msgstr "هذا المستند موقع رقمياً."
+msgstr "هذا المستند موقع رقميًا."
 
 #: gui/signatureguiutils.cpp:217
 #, kde-format
 msgid ""
 "This document is digitally signed. There have been changes since last signed."
-msgstr "هذا المستند موقع رقمياً. حصلت تغييرات عليه منذ أخر توقيع."
+msgstr "هذا المستند موقع رقميًا. حصلت تغييرات عليه منذ أخر توقيع."
 
 #: gui/signatureguiutils.cpp:220
 #, kde-format
 msgid ""
 "This document is digitally signed. Some of the signatures could not be "
 "validated properly."
-msgstr "هذا المستند موقع رقمياً. لا يمكن التحقق من صحة بعض التواقيع بشكل صحيح."
+msgstr "هذا المستند موقع رقميًا. لا يمكن التحقق من صحة بعض التواقيع بشكل صحيح."
 
 #: gui/signaturemodel.cpp:141
 #, kde-format
@@ -1458,7 +1458,7 @@ msgstr "لون مخصّص…"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select color"
-msgstr "اختر لوناً"
+msgstr "اختر لونًا"
 
 #: part/annotationactionhandler.cpp:551
 #, kde-format
@@ -1665,7 +1665,7 @@ msgstr[0] "شرح"
 msgstr[1] "شرح واحد"
 msgstr[2] "شرحين"
 msgstr[3] "%1 شروح"
-msgstr[4] "%1 شرحاً"
+msgstr[4] "%1 شرحًا"
 msgstr[5] "%1 شرح"
 
 #: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
@@ -2577,7 +2577,7 @@ msgstr "مضيء أخضر"
 #: part/data/toolsQuick.xml:24
 #, kde-format
 msgid "Insert Text"
-msgstr "أدرج نصاً"
+msgstr "أدرج نصًا"
 
 #: part/dlgaccessibility.cpp:38
 #, kde-format
@@ -3047,7 +3047,7 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
-"يُحدِّد وضع التقريب المبدئيّ للملفات التي لم تُفتَح قبلاً.للملفات المفتوحة قَبلاً "
+"يُحدِّد وضع التقريب المبدئيّ للملفات التي لم تُفتَح قبلًا.للملفات المفتوحة قَبلًا "
 "يطبق التقريب السابِق."
 
 #: part/dlggeneral.cpp:246
@@ -3828,7 +3828,7 @@ msgstr "أدوات التحديد"
 #: part/pageview.cpp:737
 #, kde-format
 msgid "Digitally &Sign…"
-msgstr "&وقع رقمياً…"
+msgstr "&وقع رقميًا…"
 
 #: part/pageview.cpp:743
 #, kde-format
@@ -4057,7 +4057,7 @@ msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
 "Esc to clear."
 msgstr ""
-"ارسم مستطيلاً حول الجدول، ثم انقر بالفأرة بالقرب من الحافة لتُقَسِّم؛ اضغط Esc "
+"ارسم مستطيلًا حول الجدول، ثم انقر بالفأرة بالقرب من الحافة لتُقَسِّم؛ اضغط Esc "
 "للإلغاء."
 
 #: part/pageview.cpp:5356 part/pageview.cpp:5364
@@ -4151,7 +4151,7 @@ msgid ""
 msgstr ""
 "قد يكون توقيع بهذا الحجم صغيرًا جدًا بحيث لا يمكن قراءته. إذا كنت ترغب في "
 "إنشاء توقيع يحتمل أن يكون أكثر قابلية للقراءة، فاضغط على <interface> ابدأ من "
-"جديد </interface> وارسم مستطيلاً أكبر."
+"جديد </interface> وارسم مستطيلًا أكبر."
 
 #: part/pageviewannotator.cpp:492
 #, kde-format
@@ -4215,7 +4215,7 @@ msgstr "رسم مضلع (انقر على النقطة الأولى لإغلاق�
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a rectangle"
-msgstr "ارسم مستطيلاً"
+msgstr "ارسم مستطيلًا"
 
 #: part/pageviewannotator.cpp:1413
 #, kde-format
@@ -4233,7 +4233,7 @@ msgstr "ضع رمز ختم"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Draw a straight line"
-msgstr "ارسم خطًّا مستقيماً"
+msgstr "ارسم خطًّا مستقيمًا"
 
 #: part/pageviewannotator.cpp:1419
 #, kde-format
@@ -4549,7 +4549,7 @@ msgstr "اضبط الشروح…"
 #: part/part.cpp:960
 #, kde-format
 msgid "Play/Pause Presentation"
-msgstr "اعرض أو أوقف العرض مؤقتاً"
+msgstr "اعرض أو أوقف العرض مؤقتًا"
 
 #: part/part.cpp:1116
 #, kde-format
@@ -5078,8 +5078,8 @@ msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
 "sure, try to decompress the file manually using command-line tools.</qt>"
 msgstr ""
-"<qt>يحدث هذا الخطأ عادة إذا كان الملف معطوباً. إذا أردت أن تتأكد ،ا فحاول فك "
-"ضغط الملف يدياً باستخدام أدوات سطر الأوام.</qt>"
+"<qt>يحدث هذا الخطأ عادة إذا كان الملف معطوبًا. إذا أردت أن تتأكد ،ا فحاول فك "
+"ضغط الملف يديًا باستخدام أدوات سطر الأوام.</qt>"
 
 #: part/part.cpp:3853
 #, kde-format
@@ -5263,7 +5263,7 @@ msgstr "انقر للبدء"
 #, kde-format
 msgctxt "For Presentation"
 msgid "Pause"
-msgstr "أوقف مؤقتاً"
+msgstr "أوقف مؤقتًا"
 
 #: part/presentationwidget.cpp:524
 #, kde-format

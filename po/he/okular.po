@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 00:42+0000\n"
-"PO-Revision-Date: 2026-07-10 10:25+0300\n"
+"PO-Revision-Date: 2026-08-11 08:41+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Launchpad-Export-Date: 2010-12-24 00:32+0000\n"
-"X-Generator: Lokalize 26.04.1\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4328,6 +4328,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"במסמך הזה יש רכיבים שעלולים להיות מוסתרים או להופיע אחרת כשהם יודפסו. "
+"למסמכים חשובים, חשוב לוודא ששתי הצורות תקינות."
 
 #: part/part.cpp:480
 #, kde-format

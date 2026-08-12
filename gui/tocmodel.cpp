@@ -79,9 +79,9 @@ TOCItem::TOCItem(TOCItem *_parent, const Okular::DocumentSynopsis::Element &e)
     } else {
         // if the node references a viewport, get the reference and set it
         if (const auto page = e.viewPortName()) {
-        QString viewport_string = model->document->metaData(QStringLiteral("NamedViewport"), page.value()).toString();
-        if (!viewport_string.isEmpty()) {
-            viewport = Okular::DocumentViewport(viewport_string);
+        Okular::DocumentViewport namedviewport = model->document->metaData(QStringLiteral("NamedViewport"), page.value()).value<Okular::DocumentViewport>();
+        if (namedviewport.isValid()) {
+            viewport = namedviewport;
         }
         }
     }

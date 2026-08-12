@@ -1639,7 +1639,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 // qCWarning(OkularXpsDebug) << "target: " << target;
                 Okular::DocumentViewport viewport;
                 viewport.pageNumber = m_docStructurePageMap.value(target);
-                synopsisElement.setViewPort(viewport.toString());
+                synopsisElement.setViewPort(viewport);
                 if (outlineLevel == 1) {
                     // qCWarning(OkularXpsDebug) << "Description: "
                     // << outlineEntryElement.attribute( "Description" );

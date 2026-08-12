@@ -1009,7 +1009,7 @@ DocumentViewport DocumentPrivate::nextDocumentViewport() const
 {
     DocumentViewport ret = m_nextDocumentViewport;
     if (!m_nextDocumentDestination.isEmpty() && m_generator) {
-        DocumentViewport vp(m_parent->metaData(QStringLiteral("NamedViewport"), m_nextDocumentDestination).toString());
+        DocumentViewport vp = m_parent->metaData(QStringLiteral("NamedViewport"), m_nextDocumentDestination).value<DocumentViewport>();
         if (vp.isValid()) {
             ret = vp;
         }
@@ -3129,7 +3129,7 @@ QVariant Document::metaData(const QString &key, const QVariant &option) const
                     view.rePos.enabled = true;
                     view.rePos.pos = Okular::DocumentViewport::Center;
 
-                    return view.toString();
+                    return QVariant::fromValue(view);
                 }
             }
         }
@@ -6047,7 +6047,7 @@ public:
     explicit ElementPrivate(const QString& _title) : title(_title) {}
     QVector<DocumentSynopsis::Element> children;
     QString title;
-    std::optional<QString> viewPort;
+    std::optional<DocumentViewport> viewPort;
     std::optional<QString> viewPortName;
     QString url;
     QString externalFileName;
@@ -6064,7 +6064,7 @@ void DocumentSynopsis::Element::addChild(const Element& element) {
     d->children.push_back(element);
 }
 
-void DocumentSynopsis::Element::setViewPort(const QString& viewPort) {
+void DocumentSynopsis::Element::setViewPort(const DocumentViewport& viewPort) {
     d->viewPort = viewPort;
 }
 
@@ -6080,7 +6080,7 @@ QString DocumentSynopsis::Element::title() const {
     return d->title;
 }
 
-std::optional<QString> DocumentSynopsis::Element::viewPort() const {
+std::optional<DocumentViewport> DocumentSynopsis::Element::viewPort() const {
     return d->viewPort;
 }
 

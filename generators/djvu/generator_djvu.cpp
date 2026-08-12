@@ -42,11 +42,11 @@ static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestinati
         if (!(dest = el.attribute(QStringLiteral("PageNumber"))).isEmpty()) {
             Okular::DocumentViewport vp;
             vp.pageNumber = dest.toInt() - 1;
-            newel.setViewPort(vp.toString());
+            newel.setViewPort(vp);
         } else if (!(dest = el.attribute(QStringLiteral("PageName"))).isEmpty()) {
             Okular::DocumentViewport vp;
             vp.pageNumber = djvu->pageNumber(dest);
-            newel.setViewPort(vp.toString());
+            newel.setViewPort(vp);
         } else if (!(dest = el.attribute(QStringLiteral("URL"))).isEmpty()) {
             newel.setUrl(dest);
         }

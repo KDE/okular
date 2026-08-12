@@ -27,6 +27,7 @@
 #include <QStringList>
 #include <QTextStream>
 #include <QtGlobal>
+#include <QDomImplementation>
 
 #define HAVE_STYLE_MANAGER __has_include(<KStyleManager>)
 #if HAVE_STYLE_MANAGER
@@ -75,6 +76,7 @@ int main(int argc, char **argv)
     QCoreApplication::setAttribute(Qt::AA_CompressTabletEvents);
 
     QApplication app(argc, argv);
+    QDomImplementation::setInvalidDataPolicy(QDomImplementation::AcceptInvalidChars);
 
     /**
      * Install event filter to handle macOS file opening.

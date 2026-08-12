@@ -330,7 +330,7 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             const Okular::Page *p = document()->page(static_cast<quint16>(a.page) - 1);
 
             fillViewportFromAnchor(vp, a, (int)p->width(), (int)p->height());
-            domel.setViewPort(vp.toString());
+            domel.setViewPort(vp);
         }
         if (stack.isEmpty()) {
             m_docSynopsis->addChild(domel);
@@ -512,7 +512,7 @@ QVariant DviGenerator::metaData(const QString &key, const QVariant &option) cons
             Okular::DocumentViewport viewport;
             fillViewportFromAnchor(viewport, anchor, page);
             if (viewport.isValid()) {
-                return viewport.toString();
+                return QVariant::fromValue(viewport);
             }
         }
     }

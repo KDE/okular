@@ -216,7 +216,7 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
         Okular::DocumentViewport viewport = TextDocumentUtils::calculateViewport(mDocument, position.block);
 
         auto item = DocumentSynopsis::Element(position.title);
-        item.setViewPort(viewport.toString());
+        item.setViewPort(viewport);
 
         int headingLevel = position.level;
 

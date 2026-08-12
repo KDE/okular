@@ -183,7 +183,8 @@ int JSDocument::getPageRotation(int nPage) const
 // Document.gotoNamedDest()
 void JSDocument::gotoNamedDest(const QString &cName) const
 {
-    DocumentViewport viewport(m_doc->m_generator->metaData(QStringLiteral("NamedViewport"), cName).toString());
+    QVariant vp = m_doc->m_generator->metaData(QStringLiteral("NamedViewport"), cName);
+    DocumentViewport viewport = vp.value<DocumentViewport>();
     if (viewport.isValid()) {
         m_doc->m_parent->setViewport(viewport);
     }

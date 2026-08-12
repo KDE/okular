@@ -1548,18 +1548,18 @@ public:
 class OKULARCORE_EXPORT DocumentSynopsis
 {
 public:
+    class OKULARCORE_NO_EXPORT ElementPrivate;
     class Element {
     public:
-        class OKULARCORE_NO_EXPORT ElementPrivate;
 
         explicit Element(const QString& title);
         ~Element();
         void addChild(const Element& element);
-        void setViewPort(const QString& viewPort);
+        void setViewPort(const DocumentViewport& viewPort);
         void setViewPortName(const QString& viewPortName);
         std::optional<QString> viewPortName() const;
         void setOpen(bool open);
-        std::optional<QString> viewPort() const;
+        std::optional<DocumentViewport> viewPort() const;
         bool isOpen() const;
         void setUrl(const QString& url);
         QString url() const;

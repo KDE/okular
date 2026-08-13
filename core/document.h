@@ -1549,27 +1549,36 @@ class OKULARCORE_EXPORT DocumentSynopsis
 {
 public:
     class OKULARCORE_NO_EXPORT ElementPrivate;
+    class ElementBuilder;
     class Element {
     public:
-
-        explicit Element(const QString& title);
+        Element(const ElementBuilder& builder);
         ~Element();
-        void addChild(const Element& element);
-        void setViewPort(const DocumentViewport& viewPort);
-        void setViewPortName(const QString& viewPortName);
+
         std::optional<QString> viewPortName() const;
-        void setOpen(bool open);
         std::optional<DocumentViewport> viewPort() const;
         bool isOpen() const;
-        void setUrl(const QString& url);
         QString url() const;
-        QVector<Element> children() const;
         QString title() const;
         QString externalFileName() const;
-        void setExternalFileName(const QString &externalFileName);
+        QVector<Element> children() const;
     private:
         std::shared_ptr<ElementPrivate> d;
 
+    };
+    class ElementBuilder {
+    public:
+        friend class Element;
+        explicit ElementBuilder(const QString& title);
+        ~ElementBuilder();
+        void addChild(const Element& element);
+        void setViewPort(const DocumentViewport& viewPort);
+        void setViewPortName(const QString& viewPortName);
+        void setOpen(bool open);
+        void setExternalFileName(const QString &externalFileName);
+        void setUrl(const QString& url);
+    private:
+        std::shared_ptr<ElementPrivate> d;
     };
     /**
      * Creates a new document synopsis object with the given
@@ -1577,7 +1586,7 @@ public:
     explicit DocumentSynopsis();
     ~DocumentSynopsis();
 
-    void addChild(const Element& element);
+    void addChild(const ElementBuilder& element);
     QVector<Element> children() const;
     class OKULARCORE_NO_EXPORT  DocumentSynopsisPrivate;
 private:

@@ -206,16 +206,16 @@ QList<TextDocumentGeneratorPrivate::AnnotationInfo> TextDocumentGeneratorPrivate
 
 void TextDocumentGeneratorPrivate::generateTitleInfos()
 {
-    QStack<QPair<int, DocumentSynopsis::Element>> parentNodeStack;
+    QStack<QPair<int, DocumentSynopsis::ElementBuilder>> parentNodeStack;
 
 
     for (int i = 0; i < mTitlePositions.count(); ++i) {
         const TitlePosition &position = mTitlePositions[i];
-        std::optional<DocumentSynopsis::Element> parentNode;
+        std::optional<DocumentSynopsis::ElementBuilder> parentNode;
 
         Okular::DocumentViewport viewport = TextDocumentUtils::calculateViewport(mDocument, position.block);
 
-        auto item = DocumentSynopsis::Element(position.title);
+        auto item = DocumentSynopsis::ElementBuilder(position.title);
         item.setViewPort(viewport);
 
         int headingLevel = position.level;

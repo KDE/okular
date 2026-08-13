@@ -1614,7 +1614,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
     QXmlStreamReader xml;
     xml.addData(documentStructureFile->data());
 
-    QMap<int, Okular::DocumentSynopsis::Element> lastHierarchy;
+    QMap<int, Okular::DocumentSynopsis::ElementBuilder> lastHierarchy;
 
     while (!xml.atEnd()) {
         xml.readNext();
@@ -1632,7 +1632,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 QXmlStreamAttributes attributes = xml.attributes();
                 int outlineLevel = attributes.value(QStringLiteral("OutlineLevel")).toString().toInt();
                 QString description = attributes.value(QStringLiteral("Description")).toString();
-                auto synopsisElement = Okular::DocumentSynopsis::Element(description);
+                auto synopsisElement = Okular::DocumentSynopsis::ElementBuilder(description);
                 QString target = attributes.value(QStringLiteral("OutlineTarget")).toString();
                 int hashPosition = target.lastIndexOf(QLatin1Char('#'));
                 target = target.mid(hashPosition + 1);

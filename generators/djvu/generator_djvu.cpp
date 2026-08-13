@@ -35,7 +35,7 @@ static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestinati
     while (!n.isNull()) {
         QDomElement el = n.toElement();
 
-        auto newel = Okular::DocumentSynopsis::Element(el.attribute(QStringLiteral("title")));
+        auto newel = Okular::DocumentSynopsis::ElementBuilder(el.attribute(QStringLiteral("title")));
         parentDestination.addChild(newel);
 
         QString dest;

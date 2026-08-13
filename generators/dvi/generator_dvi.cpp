@@ -317,12 +317,12 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         return m_docSynopsis;
     }
 
-    QStack<Okular::DocumentSynopsis::Element> stack;
+    QStack<Okular::DocumentSynopsis::ElementBuilder> stack;
 
     QList<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
     QList<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
     for (; it != itEnd; ++it) {
-        auto domel = Okular::DocumentSynopsis::Element((*it).title);
+        auto domel = Okular::DocumentSynopsis::ElementBuilder((*it).title);
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if (a.isValid()) {
             Okular::DocumentViewport vp;

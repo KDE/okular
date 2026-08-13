@@ -6042,7 +6042,7 @@ QString DocumentInfo::getKeyTitle(const QString &key) const
 }
 
 /** DocumentSynopsis **/
-class DocumentSynopsis::Element::ElementPrivate {
+class DocumentSynopsis::ElementPrivate {
 public:
     explicit ElementPrivate(const QString& _title) : title(_title) {}
     QVector<DocumentSynopsis::Element> children;
@@ -6054,23 +6054,41 @@ public:
     bool open = false;
 };
 
-DocumentSynopsis::Element::Element(const QString& title) : d(std::make_shared<ElementPrivate>(title))
+DocumentSynopsis::ElementBuilder::ElementBuilder(const QString& title) : d(std::make_shared<ElementPrivate>(title)) {
+}
+
+DocumentSynopsis::ElementBuilder::~ElementBuilder() = default;
+
+void DocumentSynopsis::ElementBuilder::addChild(const Element& element) {
+    d->children.push_back(element);
+}
+
+void DocumentSynopsis::ElementBuilder::setViewPort(const DocumentViewport& viewPort) {
+    d->viewPort = viewPort;
+}
+void DocumentSynopsis::ElementBuilder::setUrl(const QString& url) {
+    d->url = url;
+}
+
+void DocumentSynopsis::ElementBuilder::setExternalFileName(const QString& externalFileName) {
+    d->externalFileName = externalFileName;
+}
+
+void DocumentSynopsis::ElementBuilder::setOpen(bool open) {
+    d->open = open;
+}
+
+void DocumentSynopsis::ElementBuilder::setViewPortName(const QString &viewPortName) {
+    d->viewPortName = viewPortName;
+}
+
+
+DocumentSynopsis::Element::Element(const ElementBuilder& builder) : d(builder.d)
 {
 }
 
 DocumentSynopsis::Element::~Element() = default;
 
-void DocumentSynopsis::Element::addChild(const Element& element) {
-    d->children.push_back(element);
-}
-
-void DocumentSynopsis::Element::setViewPort(const DocumentViewport& viewPort) {
-    d->viewPort = viewPort;
-}
-
-void DocumentSynopsis::Element::setUrl(const QString& url) {
-    d->url = url;
-}
 
 QString DocumentSynopsis::Element::url() const {
     return d->url;
@@ -6095,21 +6113,10 @@ QString DocumentSynopsis::Element::externalFileName() const {
     return d->externalFileName;
 }
 
-void DocumentSynopsis::Element::setExternalFileName(const QString& externalFileName) {
-    d->externalFileName = externalFileName;
-}
-
 bool DocumentSynopsis::Element::isOpen() const {
     return d->open;
 }
 
-void DocumentSynopsis::Element::setOpen(bool open) {
-    d->open = open;
-}
-
-void DocumentSynopsis::Element::setViewPortName(const QString &viewPortName) {
-    d->viewPortName = viewPortName;
-}
 
 class DocumentSynopsis::DocumentSynopsisPrivate {
 public:
@@ -6126,8 +6133,8 @@ QVector<DocumentSynopsis::Element> DocumentSynopsis::children() const {
     return d->children;
 }
 
-void DocumentSynopsis::addChild(const Element& element) {
-    d->children.push_back(element);
+void DocumentSynopsis::addChild(const ElementBuilder& element) {
+    d->children.push_back(Element{element});
 }
 
 /** EmbeddedFile **/

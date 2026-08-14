@@ -16,15 +16,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-08 00:42+0000\n"
-"PO-Revision-Date: 2026-04-14 22:48+0200\n"
-"Last-Translator: Alexander Becker <alex-at-kde-l10n-de@freenet.de>\n"
+"PO-Revision-Date: 2026-08-12 01:15+0200\n"
+"Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -621,10 +621,9 @@ msgid "Signing cancelled by user"
 msgstr "Signieren durch Benutzer abgebrochen"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Signieren fehlgeschlagen. Falsche Passphrase"
+msgstr "Signieren fehlgeschlagen: Falsche Passphrase"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -688,7 +687,7 @@ msgstr "Inhaber"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "Benutzerkennung"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -1712,15 +1711,14 @@ msgid "Add Bookmark"
 msgstr "Lesezeichen hinzufügen"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Copyright"
+msgstr "Kopieren"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Einfügen"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -2255,15 +2253,14 @@ msgstr ""
 "Klicken Sie hier, um diesen zu verarbeiten."
 
 #: part/annotwindow.cpp:250 part/annotwindow.cpp:272
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Unbekannte Schrift"
+msgstr "Unbekannter Autor"
 
 #: part/annotwindow.cpp:253 part/annotwindow.cpp:275
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Kein Datum erkannt"
 
 #: part/annotwindow.cpp:562
 #, kde-format
@@ -2410,12 +2407,10 @@ msgid "Validity"
 msgstr "Gültigkeit"
 
 #: part/certificateviewer.cpp:90
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "alle "
+msgstr "Nie"
 
 #: part/certificateviewer.cpp:94
 #, kde-format
@@ -2433,11 +2428,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256-Fingerabdruck"
 
 #: part/certificateviewer.cpp:107
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Fingerabdrücke"
+msgstr "Fingerabdruck"
 
 #: part/certificateviewer.cpp:116
 #, kde-format
@@ -2455,10 +2449,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Wo möchten Sie dieses Zertifikat speichern?"
 
 #: part/certificateviewer.cpp:182
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Zertifikatsdatei (*.cer)"
+msgstr "Zertifikatsdatei (*.asc)"
 
 #: part/certificateviewer.cpp:185
 #, kde-format
@@ -3540,7 +3533,7 @@ msgstr "Ansicht"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
 
 #: part/embeddedfilesdialog.cpp:74
 #, kde-format
@@ -3585,12 +3578,10 @@ msgid "&View…"
 msgstr "&Ansicht …"
 
 #: part/embeddedfilesdialog.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to open"
-#| msgid "&Open '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "„%1“ öff&nen …"
+msgstr "Öff&nen …"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4381,6 +4372,9 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Dieses Dokument enthält Elemente, die beim Ausdrucken möglicherweise "
+"ausgeblendet oder anders dargestellt werden. Bei wichtigen Dokumenten "
+"sollten Sie daher beide Varianten überprüfen."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4515,11 +4509,9 @@ msgid "Configure Color Modes…"
 msgstr "Farbmodi einrichten …"
 
 #: part/part.cpp:833 part/part.cpp:3221
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "Anmerkung anpassen"
+msgstr "Anmerkung einfügen"
 
 #: part/part.cpp:851
 #, kde-format
@@ -4600,7 +4592,7 @@ msgid ""
 msgstr ""
 "Sie haben das offene Dokument verändert, aber dieser Dateityp kann nicht "
 "gespeichert werden.\n"
-"Alle Änderungen gehen verloren wenn Okular geschlossen wird."
+"Alle Änderungen gehen verloren, wenn Okular geschlossen wird."
 
 #: part/part.cpp:1117
 #, kde-format
@@ -5763,6 +5755,8 @@ msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
+"Die Originaldatei kann nicht überschrieben werden. Bitte wählen Sie einen "
+"anderen Dateinamen."
 
 #: part/signaturepartutils.h:62
 #, kde-format

@@ -541,6 +541,7 @@ private:
 class OKULARCORE_EXPORT CertificateStore
 {
 public:
+    // TODO: BIC please add QWidget* parent's to the methods for showing a dialog
     /**
      * Destructor
      */

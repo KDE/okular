@@ -8,8 +8,9 @@
 
 #include "popplerversion.h"
 #include <KLocalizedString>
+#include <KPasswordDialog>
 #include <QDebug>
-#include <QInputDialog>
+#include <QPointer>
 
 static Okular::CertificateInfo::KeyUsageExtensions fromPoppler(Poppler::CertificateInfo::KeyUsageExtensions popplerKu)
 {
@@ -230,10 +231,20 @@ QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(bool
 
     if (isNSS) {
         auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
-            bool ok;
-            const QString pwd = QInputDialog::getText(nullptr, i18n("Enter Password"), i18n("Enter password to open %1:", QString::fromUtf8(element)), QLineEdit::Password, QString(), &ok);
-            *userCancelled = !ok;
-            return ok ? strdup(pwd.toUtf8().constData()) : nullptr;
+            QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr);
+            dialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
+            dialog->setPrompt(i18n("Enter password to open: %1", QString::fromUtf8(element)));
+            if (!dialog->exec()) {
+                *userCancelled = true;
+                delete dialog;
+                return nullptr;
+            }
+            if (dialog) {
+                const QString password = dialog->password();
+                delete dialog;
+                return strdup(password.toUtf8().constData());
+            }
+            return nullptr;
         };
         Poppler::setNSSPasswordCallback(PDFGeneratorNSSPasswordCallback);
     }

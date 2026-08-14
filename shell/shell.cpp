@@ -577,6 +577,8 @@ void Shell::setupActions()
     m_showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenubar()), actionCollection());
     m_fullScreenAction = KStandardAction::fullScreen(this, SLOT(slotUpdateFullScreen()), this, actionCollection());
 
+    actionCollection()->setDefaultShortcuts(m_fullScreenAction, {QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), QKeySequence(Qt::Key_F11)});
+
     m_nextTabAction = actionCollection()->addAction(QStringLiteral("tab-next"));
     m_nextTabAction->setText(i18n("Next Tab"));
     actionCollection()->setDefaultShortcuts(m_nextTabAction, KStandardShortcut::tabNext());

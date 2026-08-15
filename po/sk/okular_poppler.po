@@ -35,10 +35,9 @@ msgid "Failed writing temporary file"
 msgstr "Failed writing temporary file"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "Failed renaming temporary file"
+msgstr "Nepodarilo sa odstrániť súbor"
 
 #: annots.cpp:607
 #, kde-format
@@ -193,10 +192,9 @@ msgid "&Load Signatures"
 msgstr "Načítať podpisy"
 
 #: formfields.cpp:561
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file %1:"
-msgstr "Failed renaming temporary file"
+msgstr "Nepodarilo sa premenovať dočasný súbor %1:"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -327,10 +325,9 @@ msgid "PDF Backend Configuration"
 msgstr "Nastavenie PDF backendu"
 
 #: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed renaming temporary file: %1"
-msgstr "Failed renaming temporary file"
+msgstr "Nepodarilo sa premenovať dočasný súbor: %1"
 
 #: generator_pdf.cpp:2258
 #, kde-format
@@ -375,11 +372,10 @@ msgid "Expiration date"
 msgstr "Dátum vypršania platnosti"
 
 #: pdfsettingswidget.cpp:153
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Dostupné certifikáty"
+msgstr "Vypísať certifikáty"
 
 #: pdfsettingswidget.cpp:175
 #, kde-format

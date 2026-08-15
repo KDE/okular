@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-02-11 18:22-0600\n"
 "Last-Translator: A S Alam <aman@punlinux.org>\n"
 "Language-Team: pa\n"
@@ -1708,6 +1708,7 @@ msgstr "ਬੁੱਕਮਾਰਕ ਜੋੜੋ"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, fuzzy, kde-format
 #| msgid "Copyright"
+msgctxt "@action"
 msgid "Copy"
 msgstr "ਕਾਪੀਰਾਈਟ"
 
@@ -5967,62 +5968,62 @@ msgid ""
 msgstr ""
 "ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰੋ</b> ਜਾਂ ਤਾਜ਼ੀ ਫਾਇਲ ਖੋਲ੍ਹਣ ਲਈ <b>ਕਲਿੱਕ ਕਰਕੇ ਫੜੀ ਰੱਖੋ</b>"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "ਟੈਬ ਅੱਗੇ"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "ਟੈਬ ਪਿੱਛੇ"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "ਬੰਦ ਟੈਬ ਵਾਪਿਸ ਲਵੋ"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ਬਾਹੀ ਲਾਕ ਕਰੋ"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "ਸਭ ਫਾਇਲਾਂ (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ਸਾਰੀਆਂ ਸਹਾਇਕ ਫਾਇਲਾਂ (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "ਦਸਤਾਵੇਜ਼ ਨੂੰ ਖੋਲ੍ਹੋ"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "ਬੰਦ ਕਰਨ ਦੀ ਪੁਸ਼ਟੀ"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "ਟੈਬਾਂ ਬੰਦ ਕਰੋ"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "ਤੁਸੀਂ %1 ਟੈਬਾਂ ਬੰਦ ਕਰਨ ਵਾਲੇ ਹੋ। ਕੀ ਤੁਸੀਂ ਜਾਰੀ ਰੱਖਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "ਜਦੋਂ ਮੈਂ ਕਈ ਟੈਬਾਂ ਬੰਦ ਕਰਾਂ ਤਾਂ ਮੈਨੂੰ ਸਾਵਧਾਨ ਕਰੋ"

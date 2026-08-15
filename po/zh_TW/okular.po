@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-22 01:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1680,7 +1680,9 @@ msgid "Add Bookmark"
 msgstr "新增書籤"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "@action"
 msgid "Copy"
 msgstr "複製"
 
@@ -5894,62 +5896,62 @@ msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>點選</b>以開啟檔案，或是<b>點選並按住</b>以選擇最近開啟的檔案。"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "下一個分頁"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "前一個分頁"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "切換到分頁 %1"
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "還原關閉分頁"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "鎖定側邊欄"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "所有檔案 (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "所有支援的檔案 (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "開啟文件"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "確認關閉"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "關閉分頁"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "您將要關閉 %1 個分頁。您確定要繼續嗎？"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "當我嘗試關閉多個分頁時警告我"

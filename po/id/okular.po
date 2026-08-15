@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -1729,6 +1729,7 @@ msgstr "Tambah Markah"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, fuzzy, kde-format
 #| msgid "Copyright"
+msgctxt "@action"
 msgid "Copy"
 msgstr "Hak Cipta"
 
@@ -6113,62 +6114,62 @@ msgstr ""
 "<b>Klik</b> untuk membuka sebuah file atau <b>Klik dan tahan</b> untuk "
 "memilih sebuah file yang terkini"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "Tab Selanjutnya"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "Tab Sebelumnya"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "Urung penutupan tab"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Kunci Bilah Samping"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "Semua file (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Semua file didukung (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "Buka Dokumen"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "Konfirmasi Penutupan"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "Tutup Tab"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Anda akan menutup %1 tab. Apakah Anda yakin ingin melanjutkan?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Ingatkan saya ketika saya berusaha menutup beberapa tab"

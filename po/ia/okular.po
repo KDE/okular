@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-17 15:59+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1698,7 +1698,9 @@ msgid "Add Bookmark"
 msgstr "Adde marcator de libro"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "@action"
 msgid "Copy"
 msgstr "Copia"
 
@@ -6007,62 +6009,62 @@ msgstr ""
 "<b>Pulsa</b> pro aperir un file o <b>Pulsa e mentene</b> pro seliger un file "
 "recente"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "Proxime scheda"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "Previe scheda"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Passa  a scheda %1"
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "Annulla operation de clauder scheda"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloca Barra lateral"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "Omne files (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Omne files supportate (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "Aperi documento "
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirma Clausura"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "Claude schedas"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Tu es per clauder %1 schedas. Tu es secur que tu vole continuar?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Adverte  me quando on cerca clauder multiple schedas"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-11 10:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -194,10 +194,12 @@ msgstr "Certificats disponibles"
 msgid "&Load Signatures"
 msgstr "&Carrega signatures"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "Ha fallat en canviar de nom el fitxer temporal %1:"
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "Ha fallat en canviar de nom el fitxer temporal: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -327,11 +329,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Configuració del dorsal de PDF"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "Ha fallat en canviar de nom el fitxer temporal: %1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -416,3 +413,6 @@ msgstr "Introduïu la contrasenya"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Introduïu la contrasenya per a obrir %1:"
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "Ha fallat en canviar de nom el fitxer temporal %1:"

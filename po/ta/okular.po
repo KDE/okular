@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -1685,7 +1685,9 @@ msgid "Add Bookmark"
 msgstr "நினைவுக்குறியை சேர்"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "@action"
 msgid "Copy"
 msgstr "நகலெடு"
 
@@ -5977,62 +5979,62 @@ msgstr ""
 "கோப்பைத் திறக்க <b>க்ளிக்</b> செய்யுங்கள், அல்லது சமீப கோப்பைத் திறக்க <b>க்ளிக் செய்து "
 "பிடித்திருங்கள்</b>."
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "அடுத்த கீற்று"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "முந்தைய கீற்று"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "%1 கீற்றுக்கு தாவு"
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "கீற்றை மூடியதை செயல்நீக்கு"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ஓரப்பட்டையைப் பூட்டு"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "அனைத்து கோப்புகள் (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "ஆதரிக்கப்படும் அனைத்து கோப்புகள் (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "ஆவணத்தைத் திறத்தல்"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "மூடுவதை உறுதிசெய்க"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "கீற்றுகளை மூடு"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 கீற்றுகளை மூடப் போகிறீர்கள். உறுதியாக தொடர வேண்டுமா?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "பல கீற்றுகளை மூட முயற்சிக்கும்போது என்னை எச்சரி"

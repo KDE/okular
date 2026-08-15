@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2007-08-20 12:25+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1764,6 +1764,7 @@ msgstr "पुस्तकचिनो थप्नुहोस्"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, fuzzy, kde-format
 #| msgid "Speak Text"
+msgctxt "@action"
 msgid "Copy"
 msgstr "पाठ उच्चारण गर्नुहोस्"
 
@@ -6186,60 +6187,60 @@ msgstr ""
 "<b>फाइल खोल्न</b>क्लिक गर्नुहोस् वा <b>हालैको फाइल चयन गर्न</b> क्लिक गर्नुहोस् र होल्ड "
 "गर्नुहोस्"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, fuzzy, kde-format
 msgid "Next Tab"
 msgstr "पृष्ठ ठीक पार्नुहोस्"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, fuzzy, kde-format
 #| msgid "Remove Bookmark"
 msgid "Previous Tab"
 msgstr "पुस्तकचिनो हटाउनुहोस्"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "स्क्रोलपट्टी देखाउनुहोस्"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr ""
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, fuzzy, kde-format
 #| msgid "Current mantainer"
 msgid "Open Document"
 msgstr "हालको सम्भारकर्ता"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr ""
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -6248,7 +6249,7 @@ msgstr ""
 "\"%1\" नाम गरिएको फाइल पहिलेनै अवस्थित छ । के तपाईँ यसमा अधिलेखन गर्ने चाहानामा "
 "निश्चित हुनुहुन्छ?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

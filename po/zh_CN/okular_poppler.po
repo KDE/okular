@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -185,10 +185,12 @@ msgstr "可用证书"
 msgid "&Load Signatures"
 msgstr "加载签名(&L)"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "重命名临时文件失败：%1："
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "重命名临时文件失败：%1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -315,11 +317,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF 后端程序配置"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "重命名临时文件失败：%1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -398,3 +395,6 @@ msgstr "输入密码"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "输入密码以打开 %1："
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "重命名临时文件失败：%1："

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2025-03-15 10:38+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
@@ -189,9 +189,10 @@ msgstr "Disponeblaj Atestiloj"
 msgid "&Load Signatures"
 msgstr "Ŝargi &Subskribojn"
 
-#: formfields.cpp:561
+#: formfields.cpp:561 generator_pdf.cpp:2238
 #, kde-format
-msgid "Failed renaming temporary file %1:"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
 msgstr ""
 
 #: generator_pdf.cpp:85
@@ -321,11 +322,6 @@ msgstr "PDF"
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF Backend Agordo"
-
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr ""
 
 #: generator_pdf.cpp:2258
 #, kde-format

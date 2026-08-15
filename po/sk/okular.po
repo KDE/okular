@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2024-03-24 11:41+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -617,10 +617,9 @@ msgid "Signing cancelled by user"
 msgstr "Signing cancelled by user"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Could not sign. Wrong passphrase"
+msgstr "Podpisovanie zlyhalo: nesprávne heslo"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -683,7 +682,7 @@ msgstr "Predmet"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "ID používateľa"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -1702,7 +1701,9 @@ msgid "Add Bookmark"
 msgstr "Pridať záložku"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy"
+msgctxt "@action"
 msgid "Copy"
 msgstr "Kopírovať"
 
@@ -2401,12 +2402,10 @@ msgid "Validity"
 msgstr "Platnosť"
 
 #: part/certificateviewer.cpp:90
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "každých "
+msgstr "Nikdy"
 
 #: part/certificateviewer.cpp:94
 #, kde-format
@@ -2424,11 +2423,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "Odtlačok SHA-256"
 
 #: part/certificateviewer.cpp:107
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Odtlačky"
+msgstr "Odtlačok"
 
 #: part/certificateviewer.cpp:116
 #, kde-format
@@ -2446,10 +2444,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Kde chcete uložiť tento certifikát?"
 
 #: part/certificateviewer.cpp:182
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Súbor certifikátu (*.cer)"
+msgstr "Súbor certifikátu (*.asc)"
 
 #: part/certificateviewer.cpp:185
 #, kde-format
@@ -4355,6 +4352,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Tento dokument obsahuje prvky, ktoré môžu byť pri tlači skryté alebo "
+"zobrazené inak. Pri dôležitých dokumentoch overte oboje."
 
 #: part/part.cpp:480
 #, kde-format
@@ -5712,7 +5711,7 @@ msgstr "Uložiť podpísaný súbor ako"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Pôvodný súbor sa nedá prepísať. Vyberte prosím iný názov súboru."
 
 #: part/signaturepartutils.h:62
 #, kde-format
@@ -5989,62 +5988,62 @@ msgstr ""
 "<b>Kliknite</b> pre otvorenie súboru alebo <b>Kliknite a podržte </b> pre "
 "otvorenie nedávno otvoreného súboru"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, kde-format
 msgid "Next Tab"
 msgstr "Ďalšia karta"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, kde-format
 msgid "Previous Tab"
 msgstr "Predošlá karta"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Switch to Tab %1"
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr "Vrátiť zatvorenie karty"
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Zamknúť bočný panel"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, kde-format
 msgid "All files (*)"
 msgstr "Všetky súbory (*)"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Všetky podporované súbory (%1)"
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "Otvoriť dokument"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potvrdiť zatvorenie"
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zavrieť karty"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Chystáte sa zatvoriť %1 kariet. Ste si istý, že chcete pokračovať?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Upozorniť ma keď sa pokúsim zatvoriť naraz niekoľko kariet"

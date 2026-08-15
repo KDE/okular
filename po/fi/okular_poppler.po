@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2025-07-13 23:11+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -200,10 +200,11 @@ msgstr "Saatavilla olevat varmenteet"
 msgid "&Load Signatures"
 msgstr "&Lataa allekirjoitukset"
 
-#: formfields.cpp:561
+#: formfields.cpp:561 generator_pdf.cpp:2238
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
-msgid "Failed renaming temporary file %1:"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
 msgstr "Väliaikaistiedoston nimen muuttaminen epäonnistui"
 
 #: generator_pdf.cpp:85
@@ -334,12 +335,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF-taustaosan asetukset"
 
-#: generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
-msgid "Failed renaming temporary file: %1"
-msgstr "Väliaikaistiedoston nimen muuttaminen epäonnistui"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -422,6 +417,11 @@ msgstr "Anna salasana"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Avaa %1 antamalla salasana:"
+
+#, fuzzy
+#~| msgid "Failed renaming temporary file"
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "Väliaikaistiedoston nimen muuttaminen epäonnistui"
 
 #~ msgid "Not Available"
 #~ msgstr "Ei käytettävissä"

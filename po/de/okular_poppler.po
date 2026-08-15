@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-08-12 00:55+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -193,9 +193,11 @@ msgstr "Verfügbare Zertifikate"
 msgid "&Load Signatures"
 msgstr "Signaturen &laden"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
 msgstr "Umbenennen der temporären Datei fehlgeschlagen: %1"
 
 #: generator_pdf.cpp:85
@@ -327,11 +329,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Einstellungen zum PDF-Modul"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "Umbenennen der temporären Datei fehlgeschlagen: %1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -414,6 +411,9 @@ msgstr "Passwort eingeben"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Geben Sie das Passwort zum Öffnen von „%1“ ein:"
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "Umbenennen der temporären Datei fehlgeschlagen: %1"
 
 #~ msgid "Not Available"
 #~ msgstr "Nicht verfügbar"

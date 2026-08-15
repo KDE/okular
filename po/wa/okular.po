@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -1817,6 +1817,7 @@ msgstr "Radjouter ene rimarke"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, fuzzy, kde-format
 #| msgid "Copyright"
+msgctxt "@action"
 msgid "Copy"
 msgstr "Copyright"
 
@@ -6361,62 +6362,62 @@ msgstr ""
 "<b>Clitchîz</b> po drovi on fitchî oudonbén <b>Clitchîz eyet wårdez tchôkî</"
 "b> po drovi on fitchî eployî dierinnmint"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "Pådje shuvante"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "Pådje di dvant"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "Mostrer les &acinceus"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, fuzzy, kde-format
 #| msgid "*|All Files"
 msgid "All files (*)"
 msgstr "*|Tos les fitchîs"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, kde-format
 msgid "Open Document"
 msgstr "Drovi on documint"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Clôre"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
@@ -6424,7 +6425,7 @@ msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "On fitchî « %1 » egzistêye dedja. Estoz seur(e) ki vos l' voloz spotchî?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

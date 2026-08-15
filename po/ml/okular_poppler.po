@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2019-12-12 21:10+0000\n"
 "Last-Translator: Vivek KJ Pazhedath <vivekkj2004@gmail.com>\n"
 "Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
@@ -184,9 +184,10 @@ msgstr ""
 msgid "&Load Signatures"
 msgstr ""
 
-#: formfields.cpp:561
+#: formfields.cpp:561 generator_pdf.cpp:2238
 #, kde-format
-msgid "Failed renaming temporary file %1:"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
 msgstr ""
 
 #: generator_pdf.cpp:85
@@ -304,11 +305,6 @@ msgstr ""
 #: generator_pdf.cpp:1744
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr ""
-
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
 msgstr ""
 
 #: generator_pdf.cpp:2258

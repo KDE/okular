@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-22 01:10+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -191,10 +191,12 @@ msgstr "可用的憑證"
 msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "重新命名暫存檔 %1 失敗："
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "重新命名暫存檔失敗：%1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -322,11 +324,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF 後端介面設定"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "重新命名暫存檔失敗：%1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -405,6 +402,9 @@ msgstr "輸入密碼"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "輸入密碼以開啟 %1："
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "重新命名暫存檔 %1 失敗："
 
 #~ msgid "Not Available"
 #~ msgstr "尚不能用"

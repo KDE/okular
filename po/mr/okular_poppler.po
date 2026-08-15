@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2013-03-28 12:46+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -183,9 +183,10 @@ msgstr ""
 msgid "&Load Signatures"
 msgstr ""
 
-#: formfields.cpp:561
+#: formfields.cpp:561 generator_pdf.cpp:2238
 #, kde-format
-msgid "Failed renaming temporary file %1:"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
 msgstr ""
 
 #: generator_pdf.cpp:85
@@ -308,11 +309,6 @@ msgstr "पीडीएफ"
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "पीडीएफ बॅकएन्ड संयोजना"
-
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr ""
 
 #: generator_pdf.cpp:2258
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-11 05:24+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -191,10 +191,12 @@ msgstr "ხელმისაწვდომი სერთიფიკატ�
 msgid "&Load Signatures"
 msgstr "ხელმოწერების &ჩატვირთვა"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "დროებითი ფაილის %1 სახელის გადარქმევა ჩავარდა:"
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -324,11 +326,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "PDF უკანაბოლოს მორგება"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "დროებითი ფაილის სახელის გადარქმევა ჩავარდა: %1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -412,6 +409,9 @@ msgstr "შეიყვანე პაროლი"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "შეიყვანეთ პაროლი %1- ის გასახსნელად:"
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "დროებითი ფაილის %1 სახელის გადარქმევა ჩავარდა:"
 
 #~ msgid "Not Available"
 #~ msgstr "მიუწვდომელია"

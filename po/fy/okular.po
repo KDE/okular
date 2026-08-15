@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-08 00:42+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2007-08-05 16:45+0100\n"
 "Last-Translator: Douwe VDM <dvandermeulen@hetnet.nl>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -1784,6 +1784,7 @@ msgstr "Blêdwizer taheakje"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, fuzzy, kde-format
 #| msgid "Copyright"
+msgctxt "@action"
 msgid "Copy"
 msgstr "Copyright"
 
@@ -6234,70 +6235,70 @@ msgstr ""
 "<b>Klik</b> om in triem te iepenjen, <b>hâld de mûsknop yndrukt</b> om in "
 "koartlyn iepene triem te iepenjen"
 
-#: shell/shell.cpp:581
+#: shell/shell.cpp:583
 #, fuzzy, kde-format
 #| msgid "Next Page"
 msgid "Next Tab"
 msgstr "Neikommende side"
 
-#: shell/shell.cpp:587
+#: shell/shell.cpp:589
 #, fuzzy, kde-format
 #| msgid "Previous Page"
 msgid "Previous Tab"
 msgstr "Foarrige side"
 
-#: shell/shell.cpp:595
+#: shell/shell.cpp:597
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:611
+#: shell/shell.cpp:613
 #, kde-format
 msgid "Undo close tab"
 msgstr ""
 
-#: shell/shell.cpp:620
+#: shell/shell.cpp:622
 #, fuzzy, kde-format
 #| msgid "Show scroll&bars"
 msgid "Lock Sidebar"
 msgstr "Sko&balken toane"
 
-#: shell/shell.cpp:720
+#: shell/shell.cpp:722
 #, fuzzy, kde-format
 #| msgid "All files"
 msgid "All files (*)"
 msgstr "Alle triemmen"
 
-#: shell/shell.cpp:721
+#: shell/shell.cpp:723
 #, kde-format
 msgid "All supported files (%1)"
 msgstr ""
 
-#: shell/shell.cpp:725
+#: shell/shell.cpp:727
 #, fuzzy, kde-format
 #| msgid "Open a document"
 msgid "Open Document"
 msgstr "Aktuele ûnderhâlder"
 
-#: shell/shell.cpp:839
+#: shell/shell.cpp:841
 #, kde-format
 msgid "Confirm Close"
 msgstr ""
 
-#: shell/shell.cpp:843
+#: shell/shell.cpp:845
 #, fuzzy, kde-format
 #| msgid "Close"
 msgid "Close Tabs"
 msgstr "Slute"
 
-#: shell/shell.cpp:850
+#: shell/shell.cpp:852
 #, fuzzy, kde-format
 #| msgid ""
 #| "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "In triem mei de namme \"%1\" bestiet al. Wolle jo it oerskriuwe?"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr ""

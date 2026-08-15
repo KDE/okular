@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-17 15:59+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -190,10 +190,12 @@ msgstr "Certificatos disponibile"
 msgid "&Load Signatures"
 msgstr "Car&ga Signaturas"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "Il falleva a renominar file temporanee %1:"
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "Il falleva a renominar file temporanee: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -323,11 +325,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Configuration de Retro-administration de PDF"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "Il falleva a renominar file temporanee: %1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -412,6 +409,9 @@ msgstr "Inserta contrasigno"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Inserta contrasigno per aperir %1:"
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "Il falleva a renominar file temporanee %1:"
 
 #~ msgid "Not Available"
 #~ msgstr "Non disponibile"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 00:41+0000\n"
+"POT-Creation-Date: 2026-08-15 00:43+0000\n"
 "PO-Revision-Date: 2026-07-11 12:18+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -195,10 +195,12 @@ msgstr "Razpoložljiva potrdila"
 msgid "&Load Signatures"
 msgstr "Naloži podpise"
 
-#: formfields.cpp:561
-#, kde-format
-msgid "Failed renaming temporary file %1:"
-msgstr "Neuspelo preimenovanje začasne datoteke %1:"
+#: formfields.cpp:561 generator_pdf.cpp:2238
+#, fuzzy, kde-format
+#| msgid "Failed renaming temporary file: %1"
+msgctxt "%1 is an error message"
+msgid "Failed renaming temporary file: %1"
+msgstr "Neuspelo preimenovanje začasne datoteke: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -328,11 +330,6 @@ msgstr "PDF"
 msgid "PDF Backend Configuration"
 msgstr "Nastavitve zaledja za PDF"
 
-#: generator_pdf.cpp:2238
-#, kde-format
-msgid "Failed renaming temporary file: %1"
-msgstr "Neuspelo preimenovanje začasne datoteke: %1"
-
 #: generator_pdf.cpp:2258
 #, kde-format
 msgid ""
@@ -415,6 +412,9 @@ msgstr "Vnesite geslo"
 #, kde-format
 msgid "Enter password to open %1:"
 msgstr "Vnesite geslo za odprtje %1:"
+
+#~ msgid "Failed renaming temporary file %1:"
+#~ msgstr "Neuspelo preimenovanje začasne datoteke %1:"
 
 #~ msgid "Not Available"
 #~ msgstr "Ni na voljo"

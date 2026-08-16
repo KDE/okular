@@ -1701,8 +1701,7 @@ msgid "Add Bookmark"
 msgstr "Pridať záložku"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Kopírovať"

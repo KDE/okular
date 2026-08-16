@@ -192,8 +192,7 @@ msgid "&Load Signatures"
 msgstr "Načítať podpisy"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Nepodarilo sa premenovať dočasný súbor: %1"

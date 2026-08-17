@@ -24,6 +24,7 @@
 #include "../part/toc.h"
 #include "../settings.h"
 #include "closedialoghelper.h"
+#include "config-okular.h"
 
 #include <KActionCollection>
 #include <KActionMenu>
@@ -217,6 +218,9 @@ void PartTest::testTOCReload()
 
 void PartTest::testForwardPDF()
 {
+#if HAVE_SYNCTEX == 0
+    QSKIP("Built without synctex support");
+#endif
     QFETCH(QString, dir);
 
     QVariantList dummyArgs;

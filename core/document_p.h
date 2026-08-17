@@ -8,10 +8,13 @@
 #ifndef _OKULAR_DOCUMENT_P_H_
 #define _OKULAR_DOCUMENT_P_H_
 
+#include "config-okular.h"
 #include "document.h"
 #include "script/event_p.h"
 
+#if HAVE_SYNCTEX
 #include "synctex/synctex_parser.h"
+#endif
 #include <memory>
 
 // qt/kde/system includes
@@ -106,7 +109,9 @@ public:
         , m_annotationBeingModified(false)
         , m_undoStack(nullptr)
         , m_docdataMigrationNeeded(false)
+#if HAVE_SYNCTEX
         , m_synctex_scanner(nullptr)
+#endif
     {
         QDomImplementation::setInvalidDataPolicy(QDomImplementation::AcceptInvalidChars);
         calculateMaxTextPages();
@@ -212,7 +217,9 @@ public:
     bool isNormalizedRectangleFullyVisible(const Okular::NormalizedRect &rectOfInterest, int rectPage);
 
     // For sync files
+#if HAVE_SYNCTEX
     void loadSyncFile(const QString &filePath);
+#endif
 
     void clearAndWaitForRequests();
 
@@ -324,7 +331,9 @@ public:
     // for the current document contains any annotation or form.
     bool m_docdataMigrationNeeded;
 
+#if HAVE_SYNCTEX
     synctex_scanner_p m_synctex_scanner;
+#endif
 
     QString m_openError;
 

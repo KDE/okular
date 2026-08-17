@@ -24,3 +24,6 @@
 
 /* Defines whether we are building with dbus enabled */
 #cmakedefine01 HAVE_DBUS
+
+/* Defines if we have synctex */
+#cmakedefine01 HAVE_SYNCTEX

@@ -11,7 +11,7 @@
 #include <QStringList>
 #include <QTest>
 
-#include "../generator.h"
+#include "../core/generator.h"
 
 class GeneratorsTest : public QObject
 {

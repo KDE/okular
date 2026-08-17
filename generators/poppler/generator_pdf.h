@@ -11,8 +11,6 @@
 #ifndef _OKULAR_GENERATOR_PDF_H_
 #define _OKULAR_GENERATOR_PDF_H_
 
-// #include "synctex/synctex_parser.h"
-
 #include <poppler-qt6.h>
 #include <poppler-version.h>
 

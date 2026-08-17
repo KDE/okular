@@ -2034,6 +2034,7 @@ struct pdfsyncpoint {
     int page;
 };
 
+#if HAVE_SYNCTEX
 void DocumentPrivate::loadSyncFile(const QString &filePath)
 {
     QFile f(filePath + QLatin1String("sync"));
@@ -2136,6 +2137,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
         }
     }
 }
+#endif
 
 void DocumentPrivate::clearAndWaitForRequests()
 {
@@ -2448,12 +2450,14 @@ Document::OpenResult Document::openDocument(const QString &docFile, const QUrl &
         return openResult;
     }
 
+#if HAVE_SYNCTEX
     // no need to check for the existence of a synctex file, no parser will be
     // created if none exists
     d->m_synctex_scanner = synctex_scanner_new_with_output_file(QFile::encodeName(docFile).constData(), nullptr, 1);
     if (!d->m_synctex_scanner && QFile::exists(docFile + QLatin1String("sync"))) {
         d->loadSyncFile(docFile);
     }
+#endif
 
     d->m_generatorName = offer.pluginId();
     d->m_pageController = new PageController();
@@ -2633,10 +2637,12 @@ void Document::closeDocument()
         d->m_generator->closeDocument();
     }
 
+#if HAVE_SYNCTEX
     if (d->m_synctex_scanner) {
         synctex_scanner_free(d->m_synctex_scanner);
         d->m_synctex_scanner = nullptr;
     }
+#endif
 
     // stop timers
     if (d->m_memCheckTimer) {
@@ -3076,6 +3082,7 @@ QVariant Document::metaData(const QString &key, const QVariant &option) const
 {
     // if option starts with "src:" assume that we are handling a
     // source reference
+#if HAVE_SYNCTEX
     if (key == QLatin1String("NamedViewport") && option.toString().startsWith(QLatin1String("src:"), Qt::CaseInsensitive) && d->m_synctex_scanner) {
         const QString reference = option.toString();
 
@@ -3134,6 +3141,7 @@ QVariant Document::metaData(const QString &key, const QVariant &option) const
             }
         }
     }
+#endif
     return d->m_generator ? d->m_generator->metaData(key, option) : QVariant();
 }
 
@@ -4732,6 +4740,7 @@ void Document::processSourceReference(const SourceReference &ref)
 
 const SourceReference *Document::dynamicSourceReference(int pageNr, double absX, double absY)
 {
+#if HAVE_SYNCTEX
     if (!d->m_synctex_scanner) {
         return nullptr;
     }
@@ -4753,6 +4762,11 @@ const SourceReference *Document::dynamicSourceReference(int pageNr, double absX,
             return new Okular::SourceReference(QFile::decodeName(name), line, col);
         }
     }
+#else
+    Q_UNUSED(pageNr);
+    Q_UNUSED(absX);
+    Q_UNUSED(absY);
+#endif
     return nullptr;
 }
 
@@ -5008,6 +5022,7 @@ bool Document::swapBackingFile(const QString &newFileName, const QUrl &url)
         d->m_documentInfo = DocumentInfo();
         d->m_documentInfoAskedKeys.clear();
 
+#if HAVE_SYNCTEX
         if (d->m_synctex_scanner) {
             synctex_scanner_free(d->m_synctex_scanner);
             d->m_synctex_scanner = synctex_scanner_new_with_output_file(QFile::encodeName(newFileName).constData(), nullptr, 1);
@@ -5015,6 +5030,7 @@ bool Document::swapBackingFile(const QString &newFileName, const QUrl &url)
                 d->loadSyncFile(newFileName);
             }
         }
+#endif
 
         foreachObserver(notifySetup(d->m_pagesVector, DocumentObserver::UrlChanged));
 

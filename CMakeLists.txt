@@ -34,7 +34,7 @@ include(ECMSetupQtPluginMacroNames)
 include(ECMAddAndroidApk)
 
 if (ANDROID AND (FORCE_NOT_REQUIRED_DEPENDENCIES STREQUAL ""))
-    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;DjVuLibre;EPub;Discount;")
+    set(FORCE_NOT_REQUIRED_DEPENDENCIES "KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;DjVuLibre;EPub;Discount;Synctex")
 endif()
 
 function(set_okular_optional_package_properties _name _props)

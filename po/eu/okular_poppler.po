@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:43+0000\n"
-"PO-Revision-Date: 2026-07-15 23:43+0200\n"
+"PO-Revision-Date: 2026-08-16 13:36+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -196,11 +196,10 @@ msgid "&Load Signatures"
 msgstr "&Zamatu sinadurak"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
-msgstr "Aldi baterako %1 fitxategia berrizendatzean huts egin du: %1"
+msgstr "Aldi baterako fitxategia berrizendatzeak huts egin du: %1"
 
 #: generator_pdf.cpp:85
 #, kde-format

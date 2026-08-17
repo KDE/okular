@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:43+0000\n"
-"PO-Revision-Date: 2026-08-08 12:42+0200\n"
+"PO-Revision-Date: 2026-08-16 16:50+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -1702,8 +1702,7 @@ msgid "Add Bookmark"
 msgstr "Dodaj zakładkę"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Skopiuj"
@@ -4355,6 +4354,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Ten dokument zawiera elementy, które mogą być ukryte lub wyglądać inaczej po "
+"wydrukowaniu. Dla ważnych dokumentów, sprawdź obie wersje."
 
 #: part/part.cpp:480
 #, kde-format

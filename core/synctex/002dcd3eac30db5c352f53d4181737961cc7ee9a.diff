@@ -1,0 +1,98 @@
+2026-02-23  Norbert Preining  <norbert@preining.info>
+
+	* synctex_parser.c: Fix use after free
+	Reported by Fatih Çelik (tlsecurity, 2026-02-15)
+
+	Fixes:
+	- In _synctex_post_process_ref, ensure the ref's sibling
+	  pointer is reset before freeing, so even if __synctex_replace_ref
+	  failed to detach it, _synctex_free_leaf won't chase stale sibling
+	  pointers into the live tree.
+	- Make _synctex_free_node, _synctex_free_leaf, and _synctex_free_input
+	  reset their sibling/child pointers before recursively freeing,
+	  preventing cascading damage from any code path
+	  that frees a partially-detached node.
+
+	The crash occurs in _synctex_post_process_ref() at
+	synctex_parser.c:5799. Here's the precise mechanism:
+	 1. __synctex_replace_ref(ref) (line 5789) attempts to
+	    replace a ref node with a proxy in the tree. As part
+	    of this, it detaches ref from the sibling chain - but
+	    only if ref has a parent (line 5741).
+	 2. If _synctex_tree_parent(ref) returns NULL (easily
+	    triggered by malformed synctex input from fuzzing),
+	    the error path at line 5771 is taken. The ref's sibling 
+	    pointer is never reset.
+	 3. synctex_node_free(ref) is then called unconditionally at line 5799.
+	 4. This invokes _synctex_free_leaf(ref) (line 964-971),
+	    which calls synctex_node_free(__synctex_tree_sibling(node))
+	    - recursively freeing the sibling chain that still belongs
+	    to the live tree.
+	 5. When those prematurely-freed nodes are later accessed during
+	    tree traversal or destruction, the UAF fires.
+
+
+ 2025-11-10  Karl Berry  <karl@freefriends.org>
+ 
+ 	* synctex.c: typo.
+diff --git a/synctex_parser.c b/texk/web2c/synctexdir/synctex_parser.c
+index deb02c8fce..0b4a16a9ea 100644
+--- a/synctex_parser.c
++++ b/synctex_parser.c
+@@ -902,10 +902,14 @@ SYNCTEX_INLINE static void _synctex_will_free(synctex_node_p node) {
+  */
+ static void _synctex_free_node(synctex_node_p node) {
+     if (node) {
++        synctex_node_p sibling;
++        synctex_node_p child;
+         SYNCTEX_SCANNER_REMOVE_HANDLE_TO(node);
+         SYNCTEX_WILL_FREE(node);
+-        synctex_node_free(__synctex_tree_sibling(node));
+-        synctex_node_free(_synctex_tree_child(node));
++        sibling = __synctex_tree_reset_sibling(node);
++        child = _synctex_tree_reset_child(node);
++        synctex_node_free(sibling);
++        synctex_node_free(child);
+         _synctex_free(node);
+     }
+     return;
+@@ -963,9 +967,11 @@ static void _synctex_free_handle(synctex_node_p handle) {
+  */
+ static void _synctex_free_leaf(synctex_node_p node) {
+     if (node) {
++        synctex_node_p sibling;
+         SYNCTEX_SCANNER_REMOVE_HANDLE_TO(node);
+         SYNCTEX_WILL_FREE(node);
+-        synctex_node_free(__synctex_tree_sibling(node));
++        sibling = __synctex_tree_reset_sibling(node);
++        synctex_node_free(sibling);
+         _synctex_free(node);
+     }
+     return;
+@@ -1229,9 +1235,11 @@ static synctex_node_p _synctex_new_input(synctex_scanner_p scanner) {
+ 
+ static void _synctex_free_input(synctex_node_p node){
+     if (node) {
++        synctex_node_p sibling;
+         SYNCTEX_SCANNER_REMOVE_HANDLE_TO(node);
+         SYNCTEX_WILL_FREE(node);
+-        synctex_node_free(__synctex_tree_sibling(node));
++        sibling = __synctex_tree_reset_sibling(node);
++        synctex_node_free(sibling);
+         _synctex_free(_synctex_data_name(node));
+         _synctex_free(node);
+     }
+@@ -5796,6 +5804,13 @@ SYNCTEX_INLINE static synctex_ns_s _synctex_post_process_ref(synctex_node_p ref)
+             synctex_tree_set_friend(sub_ns.node,ns.node);
+             ns.node = sub_ns.node;
+         }
++        /*  Ensure ref is fully detached before freeing,
++         *  even if __synctex_replace_ref did not detach it
++         *  (e.g. because the ref had no parent).
++         *  Otherwise _synctex_free_leaf would chase the
++         *  stale sibling pointer into the live tree.  */
++        __synctex_tree_reset_sibling(ref);
++        __synctex_tree_reset_parent(ref);
+         synctex_node_free(ref);
+         ref = next_ref;
+     }

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
-"PO-Revision-Date: 2026-07-15 18:59+0400\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
+"PO-Revision-Date: 2026-08-17 19:30+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -193,8 +193,7 @@ msgid "&Load Signatures"
 msgstr "&حمّل التوقيعات"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "فشل في إعادة تسمية ملف مؤقت: %1"
@@ -398,15 +397,14 @@ msgstr "يلزم إعادة التشغيل"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "تحتاج إلى إعادة تشغيل أوكلار بعد تغيير إعدادات دليل NSS"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "أدخل كلمة السر"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "يرجي إدخال كلمة السر لفتح %1:"
+
+#~ msgid "Enter Password"
+#~ msgstr "أدخل كلمة السر"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "فشلَ في إعادة تسمية الملف المؤقت %1:"

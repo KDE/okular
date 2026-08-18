@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2026-07-17 15:59+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -400,15 +400,14 @@ msgstr ""
 "Tu necessita reinitiar Okular postea modificar le preferentias de directorio "
 "NSS."
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Inserta contrasigno"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Inserta contrasigno per aperir %1:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Inserta contrasigno"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Il falleva a renominar file temporanee %1:"

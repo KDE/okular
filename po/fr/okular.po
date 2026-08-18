@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:43+0000\n"
-"PO-Revision-Date: 2026-08-09 09:36+0200\n"
+"PO-Revision-Date: 2026-08-16 14:50+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.07.90\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -41,7 +41,7 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Cédric Pasteur, Nicolas Ternisien, Alain Rpnpif, Mickaël Sibelle, Peter "
-"Potrowl, Simon Depiets, Xavier Besnard, Thomas Vergnaud"
+"Potrowl, Simon Depiets, Xavier Besnard, Thomas Vergnaud, moeenio"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -49,7 +49,7 @@ msgid "Your emails"
 msgstr ""
 "cedric.pasteur@free.fr, nicolas.ternisien@gmail.com, rpnpif@free.fr, "
 "kimael@gmail.com, peter.potrowl@gmail.com, sdepiets@gmail.com, xavier."
-"besnard@kde.org, thomas.vergnaud@mailo.eu"
+"besnard@kde.org, thomas.vergnaud@mailo.eu, moeenio@disroot.org"
 
 #: aboutdata.h:19 part/annotationwidgets.cpp:431
 #, kde-format
@@ -166,7 +166,7 @@ msgstr "Se déplacer à la page %1"
 #: core/action.cpp:137
 #, kde-format
 msgid "Open external file"
-msgstr "Ouvre un fichier externe"
+msgstr "Ouvrir un fichier externe"
 
 #: core/action.cpp:197
 #, kde-format
@@ -216,7 +216,7 @@ msgstr "Démarrer une présentation"
 #: core/action.cpp:310
 #, kde-format
 msgid "End Presentation"
-msgstr "Terminer une présentation"
+msgstr "Terminer la présentation"
 
 #: core/action.cpp:312
 #, kde-format
@@ -251,23 +251,23 @@ msgstr "Lire un film"
 #: core/action.cpp:556
 #, kde-format
 msgid "Stop movie"
-msgstr "Arrêter un film"
+msgstr "Arrêter le film"
 
 #: core/action.cpp:558
 #, kde-format
 msgid "Pause movie"
-msgstr "Mettre en pause un film"
+msgstr "Mettre en pause le film"
 
 #: core/action.cpp:560
 #, kde-format
 msgid "Resume movie"
-msgstr "Reprendre un film"
+msgstr "Reprendre le film"
 
 #: core/audioplayer.cpp:315
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""
-"Cette version de Okular a été compilée dans la prise en charge de l'audio"
+"Cette version de Okular a été compilée sans la prise en charge de l'audio"
 
 #: core/chooseenginedialog.cpp:22
 #, kde-format
@@ -321,7 +321,7 @@ msgstr "Suite de la recherche à partir du début du fichier"
 #: core/document.cpp:1675
 #, kde-format
 msgid "Continuing search from bottom"
-msgstr "Continuer la recherche à partir du bas du fichier ?"
+msgstr "Suite de la recherche à partir du bas du fichier"
 
 #: core/document.cpp:2396
 #, kde-format
@@ -1366,7 +1366,7 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (No annotation "
 "selected)"
 msgstr ""
-"Contraindre le ration de profil à 1:1 ou l'angle de ligne à des pas de 15° "
+"Contraindre le ratio des formes à 1:1 ou l'angle de ligne à des pas de 15° "
 "(Aucune annotation sélectionnée)"
 
 #: part/annotationactionhandler.cpp:302
@@ -1447,7 +1447,7 @@ msgstr "Contraindre à un angle de ligne à des pas de 15°"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Constrain shape ratio to 1:1"
-msgstr "Contraindre le ration de profil à 1:1"
+msgstr "Contraindre le ratio des formes à 1:1"
 
 #: part/annotationactionhandler.cpp:337
 #, kde-format
@@ -1456,7 +1456,7 @@ msgid ""
 "Constrain shape ratio to 1:1 or line angle to 15° steps (Not supported by "
 "current annotation)"
 msgstr ""
-"Contraindre le ration de profil à 1:1 ou l'angle de ligne à des pas de 15° "
+"Contraindre le ratio des formes à 1:1 ou l'angle de ligne à des pas de 15° "
 "(Non pris en charge par l'annotation courante)"
 
 #: part/annotationactionhandler.cpp:340
@@ -1522,7 +1522,7 @@ msgstr "Cacher"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Afficher plus d'outils d'animations"
+msgstr "Afficher plus d'outils d'annotation"
 
 #: part/annotationactionhandler.cpp:556
 #, kde-format
@@ -1715,13 +1715,13 @@ msgstr[1] "%1 annotations"
 #: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
 #, kde-format
 msgid "&Open Pop-up Note"
-msgstr "&Ouvrir une note épinglée"
+msgstr "&Ouvrir la note épinglée"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
 #: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
 #, kde-format
 msgid "Remove Bookmark"
-msgstr "Supprimer un signet"
+msgstr "Supprimer le signet"
 
 #: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
 #, kde-format
@@ -1729,8 +1729,7 @@ msgid "Add Bookmark"
 msgstr "Ajouter un signet"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Copier"
@@ -2143,7 +2142,7 @@ msgstr "Flèche ouverte vers la droite"
 #: part/annotationwidgets.cpp:517
 #, kde-format
 msgid "Right Closed Arrow"
-msgstr "Flèche ferlée vers la droite"
+msgstr "Flèche fermée vers la droite"
 
 #: part/annotationwidgets.cpp:518
 #, kde-format
@@ -2363,7 +2362,7 @@ msgstr "Aller à ce signet"
 #: part/part.cpp:2481
 #, kde-format
 msgid "Rename Bookmark"
-msgstr "Renommer un signet"
+msgstr "Renommer le signet"
 
 #: part/bookmarklist.cpp:297
 #, kde-format
@@ -3862,7 +3861,7 @@ msgstr "Sélection de t&ableau"
 #: part/pageview.cpp:702
 #, kde-format
 msgid "&Magnifier"
-msgstr "&Magnifier"
+msgstr "&Loupe"
 
 #: part/pageview.cpp:711
 #, kde-format
@@ -4077,7 +4076,7 @@ msgstr ""
 #: part/pageview.cpp:5292
 #, kde-format
 msgid "Click to see the magnified view."
-msgstr "Cliquez pour voir la vue magnifiée."
+msgstr "Cliquez pour voir la vue agrandie."
 
 #: part/pageview.cpp:5309
 #, kde-format
@@ -5777,8 +5776,8 @@ msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
-"Le fichier original ne peut pas être écrasé. Veuillez sélectionner un autre "
-"nom de fichier."
+"Il est impossible d'écraser le fichier original. Veuillez sélectionner un "
+"autre nom de fichier."
 
 #: part/signaturepartutils.h:62
 #, kde-format

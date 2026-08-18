@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
-"PO-Revision-Date: 2026-07-18 22:11+0300\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
+"PO-Revision-Date: 2026-08-17 12:53+0300\n"
 "Last-Translator: Liudas <liudas.alisauskas@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -194,8 +194,7 @@ msgid "&Load Signatures"
 msgstr "Įke&lti parašus"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Nepavyko pervadinti laikinojo failo: %1"
@@ -401,15 +400,14 @@ msgstr "Reikia paleisti iš naujo"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Pakeitę NSS katalogo nuostatas, turite paleisti Okular iš naujo"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Įveskite slaptažodį"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Norėdami atverti %1, įveskite slaptažodį:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Įveskite slaptažodį"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Nepavyko pervadinti laikinojo failo %1:"

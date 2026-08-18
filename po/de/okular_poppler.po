@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2026-08-12 00:55+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -402,15 +402,14 @@ msgstr "Neustart erforderlich"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Okular muss nach Änderungen des NSS-Ordners neu gestartet werden"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Passwort eingeben"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Geben Sie das Passwort zum Öffnen von „%1“ ein:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Passwort eingeben"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Umbenennen der temporären Datei fehlgeschlagen: %1"

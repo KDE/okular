@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2026-08-15 17:32+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -401,15 +401,14 @@ msgstr ""
 "U moet Okular opnieuw starten na het wijzigen van de instelling van de NSS-"
 "map"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Wachtwoord invoeren"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Wachtwoord invoeren om %1 te openen:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Wachtwoord invoeren"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Hernoemen tijdelijk bestand %1 is mislukt:"

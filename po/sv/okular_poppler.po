@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2026-08-15 08:35+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -397,15 +397,14 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Du måste starta om Okular efter att ha ändrat kataloginställningar för NSS"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Ange lösenord"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Ange lösenord för att öppna %1:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Ange lösenord"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Misslyckades byta namn på tillfällig fil %1:"

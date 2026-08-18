@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2025-10-23 14:57+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -403,15 +403,14 @@ msgstr "Það þarf að endurræsa"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Það þarf að endurræsa Okular þegar NSS-möppustillingum er breytt"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Sláðu inn lykilorð"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Sláðu inn lykilorð til að opna %1:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Sláðu inn lykilorð"
 
 #, fuzzy
 #~| msgid "Failed renaming temporary file"

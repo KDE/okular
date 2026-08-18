@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-18 00:43+0000\n"
 "PO-Revision-Date: 2026-07-15 11:49+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -409,15 +409,14 @@ msgstr ""
 "Требуется перезапустить Okular чтобы вступили в силу изменения расположения "
 "каталога NSS"
 
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter Password"
-msgstr "Ввод пароля"
-
-#: pdfsignatureutils.cpp:234
-#, kde-format
-msgid "Enter password to open %1:"
+#: pdfsignatureutils.cpp:236
+#, fuzzy, kde-format
+#| msgid "Enter password to open %1:"
+msgid "Enter password to open: %1"
 msgstr "Введите пароль для открытия %1:"
+
+#~ msgid "Enter Password"
+#~ msgstr "Ввод пароля"
 
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "Ошибка переименования временного файла %1:"

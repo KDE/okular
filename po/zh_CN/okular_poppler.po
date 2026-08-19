@@ -186,8 +186,7 @@ msgid "&Load Signatures"
 msgstr "加载签名(&L)"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "重命名临时文件失败：%1"
@@ -387,13 +386,6 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "更改 NSS 目录设置后，您需要重启 Okular"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "输入密码以打开 %1："
-
-#~ msgid "Enter Password"
-#~ msgstr "输入密码"
-
-#~ msgid "Failed renaming temporary file %1:"
-#~ msgstr "重命名临时文件失败：%1："
+msgstr ""

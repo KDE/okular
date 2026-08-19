@@ -69,6 +69,15 @@ QTextDocument *Converter::convert(const QString &fileName)
 
     for (auto linkIt = internalLinks.constBegin(); linkIt != internalLinks.constEnd(); ++linkIt) {
         auto anchorIt = documentAnchors.constFind(linkIt.key());
+        if (anchorIt == documentAnchors.constEnd()) {
+            // not found. try capitalizing the linkIt.key to match the probably capitalized document anchor
+            QStringList words = linkIt.key().split(u' ', Qt::SkipEmptyParts);
+            for (QString &word : words) {
+                word.front() = word.front().toUpper();
+            }
+            const QString key = words.join(u' ');
+            anchorIt = documentAnchors.constFind(key);
+        }
         if (anchorIt != documentAnchors.constEnd()) {
             const Okular::DocumentViewport viewport = calculateViewport(doc, anchorIt.value());
             Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);

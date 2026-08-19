@@ -1678,7 +1678,7 @@ msgstr "添加书签"
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
 #, kde-format
 msgid "Copy"
-msgstr "复制"
+msgstr ""
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
@@ -4289,6 +4289,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"本文档中包含一些在打印时可能会隐藏或显示效果发生变化的元素。如果这是重要文"
+"档，请认真核对这些内容的一致性。"
 
 #: part/part.cpp:480
 #, kde-format

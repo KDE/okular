@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 13:38+0300\n"
+"PO-Revision-Date: 2026-08-18 13:52+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -406,10 +406,9 @@ msgstr ""
 "перезапустити Okular"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Введіть пароль для відкриття %1:"
+msgstr "Введіть пароль для відкриття %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "Введіть пароль"

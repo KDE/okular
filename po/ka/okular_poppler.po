@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 04:32+0200\n"
+"PO-Revision-Date: 2026-08-18 08:16+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -400,10 +400,9 @@ msgstr ""
 "NSS-ის საქაღალდის პარამეტრების ცვლილების შემდეგ საჭიროა Okular-ის გადატვირთვა"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "შეიყვანეთ პაროლი %1- ის გასახსნელად:"
+msgstr "გასახსნელად შეიყვანეთ პაროლი: %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "შეიყვანე პაროლი"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 08:08-0300\n"
+"PO-Revision-Date: 2026-08-18 06:50-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -404,10 +404,9 @@ msgstr ""
 "Você precisa reiniciar o Okular após alterar as configurações da pasta NSS"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Digite a senha para abrir %1:"
+msgstr "Digite a senha para abrir: %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "Digite a senha"

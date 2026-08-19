@@ -406,9 +406,3 @@ msgstr ""
 #| msgid "Enter password to open %1:"
 msgid "Enter password to open: %1"
 msgstr "Skriv inn passord for å opna %1:"
-
-#~ msgid "Enter Password"
-#~ msgstr "Skriv inn passord"
-
-#~ msgid "Failed renaming temporary file %1:"
-#~ msgstr "Klarte ikkje endra namn på mellombels fil %1:"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 12:26+0200\n"
+"PO-Revision-Date: 2026-08-18 10:18+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -403,10 +403,6 @@ msgstr ""
 "Cal que reinicieu Okular després de canviar la configuració del directori NSS"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Introduïu la contrasenya per a obrir %1:"
-
-#~ msgid "Enter Password"
-#~ msgstr "Introduïu la contrasenya"
+msgstr "Introduïu la contrasenya per a obrir: %1"

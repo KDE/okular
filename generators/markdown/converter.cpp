@@ -167,6 +167,15 @@ void Converter::extractLinks(QTextFrame *parent, QHash<QString, QTextFragment> &
     }
 }
 
+static QString uncapitalize(QString text)
+{
+    // Make sure the first character is not upper-case
+    if (!text.isEmpty()) {
+        text[0] = text[0].toLower();
+    }
+    return text;
+}
+
 void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors)
 {
     for (QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it) {
@@ -176,7 +185,9 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
             if (textCharFormat.isAnchor()) {
                 const QString href = textCharFormat.anchorHref();
                 if (href.startsWith(QLatin1Char('#'))) { // It's an internal link, store it and we'll resolve it at the end
-                    internalLinks.insert(href.mid(1), textFragment);
+                    // some (all?) markdown flavors require all lowercase internal links.
+                    // we're nicer and only require not capitalized.
+                    internalLinks.insert(uncapitalize(href.mid(1)), textFragment);
                 } else {
                     Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(textCharFormat.anchorHref()));
                     Q_EMIT addAction(action, textFragment.position(), textFragment.position() + textFragment.length());
@@ -184,7 +195,8 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
 
                 const QStringList anchorNames = textCharFormat.anchorNames();
                 for (const QString &anchorName : anchorNames) {
-                    documentAnchors.insert(anchorName, parent);
+                    // un-capitalize to help match against internal links that are also un-capitalized.
+                    documentAnchors.insert(uncapitalize(anchorName), parent);
                 }
             }
         }

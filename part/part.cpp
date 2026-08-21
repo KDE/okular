@@ -761,6 +761,8 @@ void Part::setupViewerActions()
     m_exportAsText = nullptr;
     m_exportAsDocArchive = nullptr;
 
+    m_pasteAnnotation = nullptr;
+
 #if HAVE_PURPOSE
     m_share = nullptr;
     m_shareMenu = nullptr;

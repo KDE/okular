@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-07-13 18:08+0200\n"
+"PO-Revision-Date: 2026-08-18 15:30+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -197,8 +197,7 @@ msgid "&Load Signatures"
 msgstr "Carica &firme"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Impossibile rinominare il file temporaneo: %1"
@@ -407,10 +406,9 @@ msgstr ""
 "NSS"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Digita la password per aprire %1:"
+msgstr "Digita la password per aprire: %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "Inserisci password"

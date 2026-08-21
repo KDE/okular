@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-16 09:02+0200\n"
+"PO-Revision-Date: 2026-08-19 08:41+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -412,10 +412,9 @@ msgstr ""
 "« NSS »."
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Veuillez saisir le mot de passe pour ouvrir %1 :"
+msgstr "Veuillez saisir le mot de passe pour ouverture de : %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "Veuillez saisir le mot de passe"

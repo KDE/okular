@@ -50,6 +50,7 @@ private:
     FILE *m_markdownFile;
     QDir m_fileDir;
     bool m_isFancyPantsEnabled;
+    int m_id = 0; // a unique identifier to deal with multiple in-page links to the same anchor
 };
 
 namespace detail

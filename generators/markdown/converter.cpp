@@ -68,7 +68,7 @@ QTextDocument *Converter::convert(const QString &fileName)
     extractLinks(doc->rootFrame(), internalLinks, documentAnchors);
 
     for (auto linkIt = internalLinks.constBegin(); linkIt != internalLinks.constEnd(); ++linkIt) {
-        auto anchorIt = documentAnchors.constFind(linkIt.key());
+        auto anchorIt = documentAnchors.constFind(linkIt.key().split(u'-').first()); // remove the internal link id
         if (anchorIt != documentAnchors.constEnd()) {
             const Okular::DocumentViewport viewport = calculateViewport(doc, anchorIt.value());
             Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
@@ -187,7 +187,13 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
                 if (href.startsWith(QLatin1Char('#'))) { // It's an internal link, store it and we'll resolve it at the end
                     // some (all?) markdown flavors require all lowercase internal links.
                     // we're nicer and only require not capitalized.
-                    internalLinks.insert(uncapitalize(href.mid(1)), textFragment);
+                    QString linkName = uncapitalize(href.mid(1));
+                    if (internalLinks.contains(linkName)) {
+                        // We've already seen this internal link so we need to create a unique key
+                        // otherwise the QHash will replace the previous entry.
+                        linkName = QStringLiteral("%1-%2").arg(linkName, QString::number(m_id++));
+                    }
+                    internalLinks.insert(linkName, textFragment);
                 } else {
                     Okular::BrowseAction *action = new Okular::BrowseAction(QUrl(textCharFormat.anchorHref()));
                     Q_EMIT addAction(action, textFragment.position(), textFragment.position() + textFragment.length());

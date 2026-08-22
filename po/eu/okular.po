@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-22 00:43+0000\n"
 "PO-Revision-Date: 2026-08-16 13:35+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -389,7 +389,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Orriaren inprimatze neurria baliogabea da"
 
-#: core/document.cpp:5473 part/part.cpp:1139
+#: core/document.cpp:5473 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Ezin da '%1' ireki. Fitxategia ez dago"
@@ -1670,7 +1670,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1 orria (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3205
+#: part/annotationmodel.cpp:324 part/part.cpp:3207
 #, kde-format
 msgid "Page %1"
 msgstr "%1 orria"
@@ -1689,12 +1689,12 @@ msgid "&Open Pop-up Note"
 msgstr "&Ireki ohar gainerakorra"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
+#: part/bookmarklist.cpp:263 part/part.cpp:2288 part/part.cpp:3213
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Kendu laster-marka"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3215
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Gehitu laster-marka"
@@ -2314,12 +2314,12 @@ msgstr "Erakutsi dokumentu guztietarako"
 msgid "Search…"
 msgstr "Bilatu..."
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3193
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3195
 #, kde-format
 msgid "Expand All"
 msgstr "Zabaldu dena"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3194
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3196
 #, kde-format
 msgid "Collapse All"
 msgstr "Tolestu dena"
@@ -2330,7 +2330,7 @@ msgid "Go to This Bookmark"
 msgstr "Joan laster-marka honetara"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:692
-#: part/part.cpp:2481
+#: part/part.cpp:2483
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Berrizendatu laster-marka"
@@ -3676,7 +3676,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Adierazpen erregularra"
 
-#: part/layers.cpp:33 part/part.cpp:2329
+#: part/layers.cpp:33 part/part.cpp:2331
 #, kde-format
 msgid "Layers"
 msgstr "Geruzak"
@@ -3914,7 +3914,7 @@ msgstr[1] "Testua (%1 karaktere)"
 msgid "Copy to Clipboard"
 msgstr "Kopiatu arbelera"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:841
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:843
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopiatu testua (Lerro jauzirik gabe)"
@@ -3969,7 +3969,7 @@ msgstr "Kopiatu testua"
 msgid "Go to '%1'"
 msgstr "Joan '%1'(e)ra"
 
-#: part/pageview.cpp:4205 part/part.cpp:3216
+#: part/pageview.cpp:4205 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "Doitu zabalera"
@@ -4452,113 +4452,113 @@ msgstr "Konfiguratu Okular..."
 msgid "Configure Viewer…"
 msgstr "Konfiguratu erakuslea…"
 
-#: part/part.cpp:772
+#: part/part.cpp:774
 #, kde-format
 msgid "About Backend"
 msgstr "Bizkarraldekoari buruz"
 
-#: part/part.cpp:777
+#: part/part.cpp:779
 #, kde-format
 msgid "Reloa&d"
 msgstr "Birzama&tu"
 
-#: part/part.cpp:779
+#: part/part.cpp:781
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "Birzamatu uneko dokumentua diskotik."
 
-#: part/part.cpp:785
+#: part/part.cpp:787
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "Itxi &bilatzeko-barra"
 
-#: part/part.cpp:790
+#: part/part.cpp:792
 #, kde-format
 msgid "Page Number"
 msgstr "Orrialde zenbakia"
 
-#: part/part.cpp:794
+#: part/part.cpp:796
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Konfiguratu kolore-moduak..."
 
-#: part/part.cpp:833 part/part.cpp:3221
+#: part/part.cpp:835 part/part.cpp:3223
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Itsatsi idatzoharra"
 
-#: part/part.cpp:851
+#: part/part.cpp:853
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Hautatu uneko orrialdeko testu guztia"
 
-#: part/part.cpp:864
+#: part/part.cpp:866
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Erakutsi a&lboko barra"
 
-#: part/part.cpp:873
+#: part/part.cpp:875
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Erakutsi &Orrialde barra"
 
-#: part/part.cpp:879
+#: part/part.cpp:881
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Erakutsi &sinadura panela"
 
-#: part/part.cpp:890
+#: part/part.cpp:892
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&Kapsulatutako fitxategiak"
 
-#: part/part.cpp:896
+#: part/part.cpp:898
 #, kde-format
 msgid "E&xport As"
 msgstr "E&sportatu honela"
 
-#: part/part.cpp:908
+#: part/part.cpp:910
 #, kde-format
 msgid "S&hare"
 msgstr "&Partekatu"
 
-#: part/part.cpp:917
+#: part/part.cpp:919
 #, kde-format
 msgid "P&resentation"
 msgstr "Au&rkezpena"
 
-#: part/part.cpp:924
+#: part/part.cpp:926
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Ireki hau &barnean duen karpeta"
 
-#: part/part.cpp:938
+#: part/part.cpp:940
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "&Inportatu PostScript PDF gisa..."
 
-#: part/part.cpp:942
+#: part/part.cpp:944
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Aldatu pantaila-beltz modura"
 
-#: part/part.cpp:950
+#: part/part.cpp:952
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Ezabatu marrazkia"
 
-#: part/part.cpp:955
+#: part/part.cpp:957
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "Konfiguratu idatzoharrak..."
 
-#: part/part.cpp:960
+#: part/part.cpp:962
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Jo/eten aurkezpena"
 
-#: part/part.cpp:1116
+#: part/part.cpp:1118
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4569,27 +4569,27 @@ msgstr ""
 "gorde.\n"
 "Aldaketa oro galduko da Okular ixtean."
 
-#: part/part.cpp:1117
+#: part/part.cpp:1119
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Dokumentua ezin du gorde"
 
-#: part/part.cpp:1146
+#: part/part.cpp:1148
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Ezin izan da '%1' (%2) ireki"
 
-#: part/part.cpp:1199
+#: part/part.cpp:1201
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 zamatzea galarazi da."
 
-#: part/part.cpp:1215
+#: part/part.cpp:1217
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Ezin izan da %1 ireki. Arrazoia: %2"
 
-#: part/part.cpp:1309
+#: part/part.cpp:1311
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4598,42 +4598,42 @@ msgstr ""
 "\"ps2pdf\" programa ez da aurkitu, beraz, Okularrek ezingo du PS "
 "fitxategirik inportatu hura erabiliz."
 
-#: part/part.cpp:1309
+#: part/part.cpp:1311
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf ez da aurkitu"
 
-#: part/part.cpp:1314
+#: part/part.cpp:1316
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript fitxategiak (%1)"
 
-#: part/part.cpp:1330
+#: part/part.cpp:1332
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS fitxategia PDF gisa inportatzen (denbora pixka bat iraun dezake)..."
 
-#: part/part.cpp:1462
+#: part/part.cpp:1464
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "Sartu dokumentua irakurtzeko pasahitza:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1466
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "Pasahitz okerra. Saiatu berriz:"
 
-#: part/part.cpp:1475
+#: part/part.cpp:1477
 #, kde-format
 msgid "Document Password"
 msgstr "Dokumentuaren pasahitza"
 
-#: part/part.cpp:1598
+#: part/part.cpp:1600
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "Dokumentu honek XFA inprimakiak ditu, jada <b>ez dira onartzen</b>."
 
-#: part/part.cpp:1605
+#: part/part.cpp:1607
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4642,7 +4642,7 @@ msgstr ""
 "Dokumentu honek inprimakiak ditu. Klik egin botoian haiekin aritzeko, edo "
 "erabili  «Ikuspegia -> Erakutsi inprimakiak»  menutik."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1624
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4651,7 +4651,7 @@ msgstr ""
 "Dokumentu hau editatzeko eta elkarreragiteko eginbide guztiak ezgaituta "
 "daude. Gorde kopia bat eta berrireki dokumentua editatzeko."
 
-#: part/part.cpp:1741
+#: part/part.cpp:1743
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4660,27 +4660,27 @@ msgstr ""
 "Dokumentu honek pantaila-betean erakutsia izan nahi du.\n"
 "Modu arrunta utzi eta aurkezpen moduan sartu?"
 
-#: part/part.cpp:1743
+#: part/part.cpp:1745
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Eskatu ikusteko modua aldatzea"
 
-#: part/part.cpp:1744
+#: part/part.cpp:1746
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Sartu aurkezpen moduan"
 
-#: part/part.cpp:1745
+#: part/part.cpp:1747
 #, kde-format
 msgid "Deny Request"
 msgstr "Ukatu eskaera"
 
-#: part/part.cpp:1835
+#: part/part.cpp:1837
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Ezin izan da ireki %1. %2"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1867
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4694,22 +4694,22 @@ msgstr ""
 "programan egindakoekin ordeztuko dira.<nl/><nl/>Fitxategia birzamatzen "
 "jarraitu nahi duzu?"
 
-#: part/part.cpp:1869 part/part.cpp:1879
+#: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
 msgid "File Changed"
 msgstr "Fitxategia aldatu da"
 
-#: part/part.cpp:1870
+#: part/part.cpp:1872
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Jarraia birzamatuta"
 
-#: part/part.cpp:1871
+#: part/part.cpp:1873
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Galarazi birzamatzea"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4722,27 +4722,27 @@ msgstr ""
 "programa batek aldatu du. Itxiz gero, gorde gabeko aldaketak beste programan "
 "egindakoekin ordeztuko dira.<nl/><nl/>Fitxategia ixten jarraitu nahi duzu?"
 
-#: part/part.cpp:1880
+#: part/part.cpp:1882
 #, kde-format
 msgid "Continue Closing"
 msgstr "Jarraitu ixtea"
 
-#: part/part.cpp:1881
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Closing"
 msgstr "Galarazi ixtea"
 
-#: part/part.cpp:1888
+#: part/part.cpp:1890
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Zure aldaketak \"%1\"(e)ra gorde edo baztertu nahi dituzu?"
 
-#: part/part.cpp:1888
+#: part/part.cpp:1890
 #, kde-format
 msgid "Close Document"
 msgstr "Itxi dokumentua"
 
-#: part/part.cpp:2020
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4751,7 +4751,7 @@ msgstr ""
 "Esteka hau dokumentua ixteko ekintza bati lotuta dago eta eginbide hau ezin "
 "da erabili erakusle kapsulatua darabilgunean."
 
-#: part/part.cpp:2026
+#: part/part.cpp:2028
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4760,59 +4760,59 @@ msgstr ""
 "Esteka hau aplikazioa irteteko ekintza bati lotuta dago eta eginbide hau "
 "ezin da erabili erakusle kapsulatua darabilgunean."
 
-#: part/part.cpp:2118 part/part.cpp:2140
+#: part/part.cpp:2120 part/part.cpp:2142
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Dokumentua birzamatzen..."
 
-#: part/part.cpp:2309 part/toc.cpp:36
+#: part/part.cpp:2311 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Edukia"
 
-#: part/part.cpp:2338 part/signaturepanel.cpp:45
+#: part/part.cpp:2340 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Sinadurak"
 
-#: part/part.cpp:2365
+#: part/part.cpp:2367
 #, kde-format
 msgid "Go to Page"
 msgstr "Joan orrialdera"
 
-#: part/part.cpp:2388
+#: part/part.cpp:2390
 #, kde-format
 msgid "&Page:"
 msgstr "&Orria:"
 
-#: part/part.cpp:2481
+#: part/part.cpp:2483
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Sartu laster-markaren izen berria:"
 
-#: part/part.cpp:2527
+#: part/part.cpp:2529
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Berrizendatu laster-marka hau"
 
-#: part/part.cpp:2530
+#: part/part.cpp:2532
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
-#: part/part.cpp:2616 part/part.cpp:2617 part/part.cpp:3533
+#: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2624 part/revisionviewer.cpp:44
+#: part/part.cpp:2626 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Gorde honela"
 
-#: part/part.cpp:2641
+#: part/part.cpp:2643
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4821,18 +4821,18 @@ msgstr ""
 "Okular artxibo bat '%1' luzapenarekin amaitu gabe gordetzea hautatu duzu."
 "Halakorik ez da onartzen, izen berri bat hautatu nahi duzu?"
 
-#: part/part.cpp:2642
+#: part/part.cpp:2644
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Onartu gabeko luzapena"
 
-#: part/part.cpp:2643
+#: part/part.cpp:2645
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Hautatu izen berria"
 
-#: part/part.cpp:2686
+#: part/part.cpp:2688
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4844,17 +4844,17 @@ msgstr ""
 "gordetzen baduzu, programan egindako aldaketak galduko dira. Ziur zaude "
 "jarraitu nahi duzula?"
 
-#: part/part.cpp:2689 part/part.cpp:2708 part/part.cpp:2760
+#: part/part.cpp:2691 part/part.cpp:2710 part/part.cpp:2762
 #, kde-format
 msgid "Save - Warning"
 msgstr "Gorde - Abisua"
 
-#: part/part.cpp:2691
+#: part/part.cpp:2693
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Gorde kopia bat beste nonbait"
 
-#: part/part.cpp:2707
+#: part/part.cpp:2709
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4865,12 +4865,12 @@ msgstr ""
 "fitxategia birzamatu egin behar da. Berriz eskatuko zaizu pasahitza eta zure "
 "desegite/berregite historia galduko da.<br />Jarraitu nahi duzu?"
 
-#: part/part.cpp:2734
+#: part/part.cpp:2736
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Ezin izan da aldi baterako fitxategia gordetzeko ireki."
 
-#: part/part.cpp:2747
+#: part/part.cpp:2749
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4881,7 +4881,7 @@ msgstr ""
 "soilik delako. Saia zaitez beste kokaleku batean gordetzen edo fitxategi "
 "horren baimenak aldatzen."
 
-#: part/part.cpp:2759
+#: part/part.cpp:2761
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4890,24 +4890,24 @@ msgstr ""
 "Gorde ondoren, uneko dokumentuaren formatuak fitxategia birzamatzea eskatzen "
 "du. Zure desegite/berregite historia galduko da.<br />Jarraitu nahi duzu?"
 
-#: part/part.cpp:2774 part/part.cpp:2843 part/part.cpp:2864 part/part.cpp:3548
+#: part/part.cpp:2776 part/part.cpp:2845 part/part.cpp:2866 part/part.cpp:3550
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Fitxategia ezin izan da gorde '%1'(e)n. Saiatu beste kokaleku batean "
 "gordetzen."
 
-#: part/part.cpp:2787
+#: part/part.cpp:2789
 #, kde-format
 msgid "Filled form contents"
 msgstr "Betetako inprimakiaren edukia"
 
-#: part/part.cpp:2790
+#: part/part.cpp:2792
 #, kde-format
 msgid "User annotations"
 msgstr "Erabiltzailearen idatzoharrak"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4918,17 +4918,17 @@ msgstr ""
 "onartzen ondoko elementuak gordetzea. Erabili <i>Okular dokumentu artxibo</"
 "i> formatua haiek ez galtzeko."
 
-#: part/part.cpp:2799 part/part.cpp:2821
+#: part/part.cpp:2801 part/part.cpp:2823
 #, kde-format
 msgid "Warning"
 msgstr "Abisua"
 
-#: part/part.cpp:2800 part/part.cpp:2822
+#: part/part.cpp:2802 part/part.cpp:2824
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Gorde Okular dokumentu artxibo gisa..."
 
-#: part/part.cpp:2812
+#: part/part.cpp:2814
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4941,7 +4941,7 @@ msgstr ""
 "i> formatua haiek ez galtzeko. Klik egin <i>Jarraitu</i> dokumentua gorde "
 "eta elementu hauek baztertzeko."
 
-#: part/part.cpp:2815
+#: part/part.cpp:2817
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4954,22 +4954,22 @@ msgstr ""
 "i> formatua haiek ez galtzeko. Klik egin <i>Jarraitu</i> gordetzeko, baino "
 "elementu hauek galduko dituzu baita desegiteko/berregiteko historia ere."
 
-#: part/part.cpp:2817
+#: part/part.cpp:2819
 #, kde-format
 msgid "Continue"
 msgstr "Jarraitu"
 
-#: part/part.cpp:2817
+#: part/part.cpp:2819
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Jarraitu aldaketak galduta"
 
-#: part/part.cpp:2845
+#: part/part.cpp:2847
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Fitxategia ezin izan da '%1'-(e)n gorde. %2"
 
-#: part/part.cpp:2884
+#: part/part.cpp:2886
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4980,7 +4980,7 @@ msgstr ""
 "\n"
 "Dokumentua betirako joan da."
 
-#: part/part.cpp:2920
+#: part/part.cpp:2922
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4989,44 +4989,44 @@ msgstr ""
 "Fitxategia ezin izan da '%1'-(e)n gorde. Errorea: '%2'. Saiatu beste "
 "kokaleku batean gordetzen."
 
-#: part/part.cpp:3191
+#: part/part.cpp:3193
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Zabaldu atal osoa"
 
-#: part/part.cpp:3192
+#: part/part.cpp:3194
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Tolestu atal osoa"
 
-#: part/part.cpp:3208
+#: part/part.cpp:3210
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinkronizatu koadro txikia orriarekin"
 
-#: part/part.cpp:3240
+#: part/part.cpp:3242
 #, kde-format
 msgid "Tools"
 msgstr "Tresnak"
 
-#: part/part.cpp:3428
+#: part/part.cpp:3430
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Mintzatu"
 
-#: part/part.cpp:3586
+#: part/part.cpp:3588
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Inprimatu"
 
-#: part/part.cpp:3649
+#: part/part.cpp:3651
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Dokumentu hau inprimatzea ez da onartzen."
 
-#: part/part.cpp:3662
+#: part/part.cpp:3664
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5034,7 +5034,7 @@ msgstr ""
 "Ezin izan da dokumentua inprimatu. Errore ezezaguna. Mesedez honen berri "
 "eman hemen: bugs.kde.org"
 
-#: part/part.cpp:3664
+#: part/part.cpp:3666
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5043,17 +5043,17 @@ msgstr ""
 "Ezin izan da dokumentua inprimatu. Errore zehatza \"%1\" da. Mesedez honen "
 "berri eman hemen: bugs.kde.org"
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Joan lehen zeunden lekura"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3762
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Joan ondoren zeunden lekura"
 
-#: part/part.cpp:3785
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5062,7 +5062,7 @@ msgstr ""
 "<qt><strong>Fitxategi errorea!</strong> Ezin izan da aldi baterako "
 "<nobr><strong>%1</strong></nobr> fitxategia sortu.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5072,7 +5072,7 @@ msgstr ""
 "strong></nobr> fitxategia deskonprimitzeko ireki. Fitxategia ez da zamatuko."
 "</qt>"
 
-#: part/part.cpp:3801
+#: part/part.cpp:3803
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5085,7 +5085,7 @@ msgstr ""
 "kudeatzailean fitxategiari eskuin-klik egin, 'Propietatek' aukera hautatu, "
 "eta irekitzen den leihoan 'Baimenak' fitxara joanda.</qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5094,7 +5094,7 @@ msgstr ""
 "<qt><strong>Fitxategi errorea!</strong> ezin izan da <nobr><strong>%1</"
 "strong></nobr> fitxategia deskonprimitu. Fitxategia ez da zamatuko.</qt>"
 
-#: part/part.cpp:3827
+#: part/part.cpp:3829
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5104,27 +5104,27 @@ msgstr ""
 "baduzu, saiatu fitxategia eskuz deskonprimitzen komando-erroko tresnak "
 "erabiliz.</qt>"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3855
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Laster-markarik ez"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Arazoa bat egon da dokumentua partekatzean: %1"
 
-#: part/part.cpp:3924 part/part.cpp:3930
+#: part/part.cpp:3926 part/part.cpp:3932
 #, kde-format
 msgid "Share"
 msgstr "Partekatu"
 
-#: part/part.cpp:3928
+#: part/part.cpp:3930
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentu partekatze arrakastatsua"
 
-#: part/part.cpp:3930
+#: part/part.cpp:3932
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Partekatutako dokumentua hemen aurkituko duzu: <a href=\"%1\">%1</a>"

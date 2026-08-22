@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-22 00:43+0000\n"
 "PO-Revision-Date: 2026-05-26 21:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -382,7 +382,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "인쇄 용지 크기가 잘못됨"
 
-#: core/document.cpp:5473 part/part.cpp:1139
+#: core/document.cpp:5473 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1'을(를) 열 수 없습니다. 파일이 없습니다"
@@ -1652,7 +1652,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1쪽(%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3205
+#: part/annotationmodel.cpp:324 part/part.cpp:3207
 #, kde-format
 msgid "Page %1"
 msgstr "%1쪽"
@@ -1670,12 +1670,12 @@ msgid "&Open Pop-up Note"
 msgstr "팝업 노트 열기(&O)"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2286 part/part.cpp:3211
+#: part/bookmarklist.cpp:263 part/part.cpp:2288 part/part.cpp:3213
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "책갈피 삭제"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3213
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3215
 #, kde-format
 msgid "Add Bookmark"
 msgstr "책갈피에 추가"
@@ -2291,12 +2291,12 @@ msgstr "모든 문서에 표시"
 msgid "Search…"
 msgstr "찾기…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3193
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3195
 #, kde-format
 msgid "Expand All"
 msgstr "모두 펴기"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3194
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3196
 #, kde-format
 msgid "Collapse All"
 msgstr "모두 접기"
@@ -2307,7 +2307,7 @@ msgid "Go to This Bookmark"
 msgstr "이 책갈피로 가기"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:692
-#: part/part.cpp:2481
+#: part/part.cpp:2483
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "책갈피 이름 바꾸기"
@@ -3642,7 +3642,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "정규 표현식"
 
-#: part/layers.cpp:33 part/part.cpp:2329
+#: part/layers.cpp:33 part/part.cpp:2331
 #, kde-format
 msgid "Layers"
 msgstr "레이어"
@@ -3878,7 +3878,7 @@ msgstr[0] "텍스트 (%1자)"
 msgid "Copy to Clipboard"
 msgstr "클립보드에 복사"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:841
+#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:843
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "문자열을 클립보드에 복사(줄 바꿈 없이)"
@@ -3933,7 +3933,7 @@ msgstr "텍스트 복사"
 msgid "Go to '%1'"
 msgstr "'%1'(으)로 가기"
 
-#: part/pageview.cpp:4205 part/part.cpp:3216
+#: part/pageview.cpp:4205 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "폭 맞춤"
@@ -4408,113 +4408,113 @@ msgstr "Okular 설정…"
 msgid "Configure Viewer…"
 msgstr "뷰어 설정…"
 
-#: part/part.cpp:772
+#: part/part.cpp:774
 #, kde-format
 msgid "About Backend"
 msgstr "백엔드 정보..."
 
-#: part/part.cpp:777
+#: part/part.cpp:779
 #, kde-format
 msgid "Reloa&d"
 msgstr "새로 고침(&D)"
 
-#: part/part.cpp:779
+#: part/part.cpp:781
 #, kde-format
 msgid "Reload the current document from disk."
 msgstr "현재 문서를 디스크에서 새로 읽어옵니다."
 
-#: part/part.cpp:785
+#: part/part.cpp:787
 #, kde-format
 msgid "Close &Find Bar"
 msgstr "검색 바 닫기(&F)"
 
-#: part/part.cpp:790
+#: part/part.cpp:792
 #, kde-format
 msgid "Page Number"
 msgstr "쪽 번호"
 
-#: part/part.cpp:794
+#: part/part.cpp:796
 #, kde-format
 msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "색상 모드 설정…"
 
-#: part/part.cpp:833 part/part.cpp:3221
+#: part/part.cpp:835 part/part.cpp:3223
 #, kde-format
 msgid "Paste Annotation"
 msgstr "주석 붙여넣기"
 
-#: part/part.cpp:851
+#: part/part.cpp:853
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "현재 쪽의 모든 텍스트 선택"
 
-#: part/part.cpp:864
+#: part/part.cpp:866
 #, kde-format
 msgid "Show S&idebar"
 msgstr "사이드바 표시(&I)"
 
-#: part/part.cpp:873
+#: part/part.cpp:875
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "페이지 표시줄 표시(&P)"
 
-#: part/part.cpp:879
+#: part/part.cpp:881
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "서명 패널 표시(&S)"
 
-#: part/part.cpp:890
+#: part/part.cpp:892
 #, kde-format
 msgid "&Embedded Files"
 msgstr "첨부된 파일(&E)"
 
-#: part/part.cpp:896
+#: part/part.cpp:898
 #, kde-format
 msgid "E&xport As"
 msgstr "다음으로 내보내기(&X)"
 
-#: part/part.cpp:908
+#: part/part.cpp:910
 #, kde-format
 msgid "S&hare"
 msgstr "공유(&H)"
 
-#: part/part.cpp:917
+#: part/part.cpp:919
 #, kde-format
 msgid "P&resentation"
 msgstr "프레젠테이션(&R)"
 
-#: part/part.cpp:924
+#: part/part.cpp:926
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "포함하는 폴더 열기(&T)"
 
-#: part/part.cpp:938
+#: part/part.cpp:940
 #, kde-format
 msgid "&Import PostScript as PDF…"
 msgstr "포스트스크립트를 PDF로 불러오기(&I)…"
 
-#: part/part.cpp:942
+#: part/part.cpp:944
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "화면 검게 바꾸기"
 
-#: part/part.cpp:950
+#: part/part.cpp:952
 #, kde-format
 msgid "Erase Drawing"
 msgstr "그리기 삭제"
 
-#: part/part.cpp:955
+#: part/part.cpp:957
 #, kde-format
 msgid "Configure Annotations…"
 msgstr "주석 설정…"
 
-#: part/part.cpp:960
+#: part/part.cpp:962
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "프레젠테이션 재생/일시 정지"
 
-#: part/part.cpp:1116
+#: part/part.cpp:1118
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4524,69 +4524,69 @@ msgstr ""
 "열린 문서를 수정했으나 이 형식의 문서를 저장할 수는 없습니다.\n"
 "Okular를 닫으면 변경 사항이 손실됩니다."
 
-#: part/part.cpp:1117
+#: part/part.cpp:1119
 #, kde-format
 msgid "Document can't be saved"
 msgstr "문서를 저장할 수 없음"
 
-#: part/part.cpp:1146
+#: part/part.cpp:1148
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "'%1'을(를) 열 수 없음(%2)"
 
-#: part/part.cpp:1199
+#: part/part.cpp:1201
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "%1 불러오기가 취소되었습니다."
 
-#: part/part.cpp:1215
+#: part/part.cpp:1217
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "%1을(를) 열 수 없습니다. 이유: %2"
 
-#: part/part.cpp:1309
+#: part/part.cpp:1311
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
 "using it."
 msgstr "프로그램 \"ps2pdf\"를 찾을 수 없어서 PS 파일을 불러올 수 없습니다."
 
-#: part/part.cpp:1309
+#: part/part.cpp:1311
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "ps2pdf를 찾을 수 없음"
 
-#: part/part.cpp:1314
+#: part/part.cpp:1316
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "포스트스크립트 파일(%1)"
 
-#: part/part.cpp:1330
+#: part/part.cpp:1332
 #, kde-format
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS 파일을 PDF로 불러오는 중 (이 작업은 시간이 걸릴 수 있습니다)…"
 
-#: part/part.cpp:1462
+#: part/part.cpp:1464
 #, kde-format
 msgid "Please enter the password to read the document:"
 msgstr "문서를 읽으려면 암호를 입력하십시오:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1466
 #, kde-format
 msgid "Incorrect password. Try again:"
 msgstr "암호가 잘못되었습니다. 다시 시도하십시오:"
 
-#: part/part.cpp:1475
+#: part/part.cpp:1477
 #, kde-format
 msgid "Document Password"
 msgstr "문서 암호"
 
-#: part/part.cpp:1598
+#: part/part.cpp:1600
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr "이 문서에는 현재 <b>지원되지 않는</b> XFA 양식이 있습니다."
 
-#: part/part.cpp:1605
+#: part/part.cpp:1607
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4595,7 +4595,7 @@ msgstr ""
 "이 문서에는 양식이 있습니다. 양식을 편집하려면 단추를 누르시거나, 보기 -> 양"
 "식 표시를 클릭하십시오."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1624
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4604,7 +4604,7 @@ msgstr ""
 "이 문서에서 편집 및 인터랙티브 기능이 비활성화되었습니다. 문서를 편집하려면 "
 "복사본을 저장한 후 다시 여십시오."
 
-#: part/part.cpp:1741
+#: part/part.cpp:1743
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4613,27 +4613,27 @@ msgstr ""
 "이 문서에서 전체 화면으로 볼 것을 요구했습니다.\n"
 "일반 모드를 벗어나서 프레젠테이션 모드를 사용하시겠습니까?"
 
-#: part/part.cpp:1743
+#: part/part.cpp:1745
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "보기 모드 전환 요청"
 
-#: part/part.cpp:1744
+#: part/part.cpp:1746
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "프레젠테이션 모드 진입"
 
-#: part/part.cpp:1745
+#: part/part.cpp:1747
 #, kde-format
 msgid "Deny Request"
 msgstr "요청 거부"
 
-#: part/part.cpp:1835
+#: part/part.cpp:1837
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "%1을(를) 열 수 없습니다. %2"
 
-#: part/part.cpp:1865
+#: part/part.cpp:1867
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4646,22 +4646,22 @@ msgstr ""
 "에서 변경했습니다. 파일을 새로 고치면 다른 프로그램에서의 변경 사항을 불러 옵"
 "니다.<nl/><nl/>그래도 이 파일을 새로 고치시겠습니까?"
 
-#: part/part.cpp:1869 part/part.cpp:1879
+#: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
 msgid "File Changed"
 msgstr "파일 변경됨"
 
-#: part/part.cpp:1870
+#: part/part.cpp:1872
 #, kde-format
 msgid "Continue Reloading"
 msgstr "새로 고침 계속"
 
-#: part/part.cpp:1871
+#: part/part.cpp:1873
 #, kde-format
 msgid "Abort Reloading"
 msgstr "새로 고침 중단"
 
-#: part/part.cpp:1875
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4674,27 +4674,27 @@ msgstr ""
 "에서 변경했습니다. 파일을 닫으면 다른 프로그램에서의 변경 사항만이 저장됩니"
 "다.<nl/><nl/>그래도 이 파일을 닫으시겠습니까?"
 
-#: part/part.cpp:1880
+#: part/part.cpp:1882
 #, kde-format
 msgid "Continue Closing"
 msgstr "닫기 계속"
 
-#: part/part.cpp:1881
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Closing"
 msgstr "닫기 중단"
 
-#: part/part.cpp:1888
+#: part/part.cpp:1890
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "\"%1\"의 변경 사항을 저장하거나 무시하겠습니까?"
 
-#: part/part.cpp:1888
+#: part/part.cpp:1890
 #, kde-format
 msgid "Close Document"
 msgstr "문서 닫기"
 
-#: part/part.cpp:2020
+#: part/part.cpp:2022
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4703,7 +4703,7 @@ msgstr ""
 "이 링크는 임베드된 뷰어를 사용할 때 작동하지 않는 문서 닫기 동작을 가리킵니"
 "다."
 
-#: part/part.cpp:2026
+#: part/part.cpp:2028
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4711,59 +4711,59 @@ msgid ""
 msgstr ""
 "이 링크는 임베드된 뷰어를 사용할 때 작동하지 않는 앱 종료 동작을 가리킵니다."
 
-#: part/part.cpp:2118 part/part.cpp:2140
+#: part/part.cpp:2120 part/part.cpp:2142
 #, kde-format
 msgid "Reloading the document…"
 msgstr "문서 새로 읽는 중…"
 
-#: part/part.cpp:2309 part/toc.cpp:36
+#: part/part.cpp:2311 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "내용"
 
-#: part/part.cpp:2338 part/signaturepanel.cpp:45
+#: part/part.cpp:2340 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "서명"
 
-#: part/part.cpp:2365
+#: part/part.cpp:2367
 #, kde-format
 msgid "Go to Page"
 msgstr "쪽으로 가기"
 
-#: part/part.cpp:2388
+#: part/part.cpp:2390
 #, kde-format
 msgid "&Page:"
 msgstr "쪽(&P):"
 
-#: part/part.cpp:2481
+#: part/part.cpp:2483
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "책갈피의 새로운 이름을 입력하십시오:"
 
-#: part/part.cpp:2527
+#: part/part.cpp:2529
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "이 책갈피 이름 바꾸기"
 
-#: part/part.cpp:2530
+#: part/part.cpp:2532
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "이 책갈피 삭제"
 
-#: part/part.cpp:2616 part/part.cpp:2617 part/part.cpp:3533
+#: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
 #: part/signaturepartutils.cpp:261
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2624 part/revisionviewer.cpp:44
+#: part/part.cpp:2626 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "다른 이름으로 저장"
 
-#: part/part.cpp:2641
+#: part/part.cpp:2643
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4772,18 +4772,18 @@ msgstr ""
 "Okular 문서 압축 파일에 '%1' 확장자를 사용하지 않고 저장하려고 했습니다. 그 "
 "이름으로는 저장할 수 없습니다. 다른 이름으로 변경하시겠습니까?"
 
-#: part/part.cpp:2642
+#: part/part.cpp:2644
 #, kde-format
 msgid "Unsupported extension"
 msgstr "지원하지 않는 확장 기능"
 
-#: part/part.cpp:2643
+#: part/part.cpp:2645
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "새 이름 선택"
 
-#: part/part.cpp:2686
+#: part/part.cpp:2688
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4794,17 +4794,17 @@ msgstr ""
 "다른 프로그램에서 <filename>%1</filename> 파일을 수정했습니다. 지금 저장하면 "
 "다른 프로그램에서의 변경 사항이 손실됩니다. 계속 진행하시겠습니까?"
 
-#: part/part.cpp:2689 part/part.cpp:2708 part/part.cpp:2760
+#: part/part.cpp:2691 part/part.cpp:2710 part/part.cpp:2762
 #, kde-format
 msgid "Save - Warning"
 msgstr "저장 - 경고"
 
-#: part/part.cpp:2691
+#: part/part.cpp:2693
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "다른 곳에 복사본 저장"
 
-#: part/part.cpp:2707
+#: part/part.cpp:2709
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4815,12 +4815,12 @@ msgstr ""
 "와야 합니다. 다시 한 번 암호를 입력해야 하며 실행 취소/다시 실행 기록이 지워"
 "집니다.<br />계속 진행하시겠습니까?"
 
-#: part/part.cpp:2734
+#: part/part.cpp:2736
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "임시 파일에 저장하려고 열 수 없습니다."
 
-#: part/part.cpp:2747
+#: part/part.cpp:2749
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4830,7 +4830,7 @@ msgstr ""
 "<filename>%1</filename> 파일이 읽기 전용이므로 덮어쓸 수 없습니다. 다른 위치"
 "에 저장하거나 권한을 변경하십시오."
 
-#: part/part.cpp:2759
+#: part/part.cpp:2761
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4839,22 +4839,22 @@ msgstr ""
 "현재 문서 형식은 문서를 저장한 후 다시 불러와야 합니다. 실행 취소/다시 실행 "
 "기록이 지워집니다.<br />계속 진행하시겠습니까?j"
 
-#: part/part.cpp:2774 part/part.cpp:2843 part/part.cpp:2864 part/part.cpp:3548
+#: part/part.cpp:2776 part/part.cpp:2845 part/part.cpp:2866 part/part.cpp:3550
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "파일이 '%1' 안에 저장될 수 없습니다. 다른 경로에 저장해 보십시오."
 
-#: part/part.cpp:2787
+#: part/part.cpp:2789
 #, kde-format
 msgid "Filled form contents"
 msgstr "채워 넣은 양식 내용"
 
-#: part/part.cpp:2790
+#: part/part.cpp:2792
 #, kde-format
 msgid "User annotations"
 msgstr "사용자 주석"
 
-#: part/part.cpp:2795
+#: part/part.cpp:2797
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4864,17 +4864,17 @@ msgstr ""
 "현재 문서 파일 형식에서 다음 구성 요소 저장을 지원하지 않습니다. 구성 요소를 "
 "보존하려면 <i>Okular 문서 압축 파일</i>로 저장하십시오."
 
-#: part/part.cpp:2799 part/part.cpp:2821
+#: part/part.cpp:2801 part/part.cpp:2823
 #, kde-format
 msgid "Warning"
 msgstr "경고"
 
-#: part/part.cpp:2800 part/part.cpp:2822
+#: part/part.cpp:2802 part/part.cpp:2824
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Okular 문서 압축 파일로 저장…"
 
-#: part/part.cpp:2812
+#: part/part.cpp:2814
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4886,7 +4886,7 @@ msgstr ""
 "보존하려면 <i>Okular 문서 압축 파일</i>로 저장하십시오. <i>계속</i>을 클릭하"
 "면 같은 파일 형식으로 저장하지만 해당 구성 요소는 저장하지 않습니다."
 
-#: part/part.cpp:2815
+#: part/part.cpp:2817
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -4899,22 +4899,22 @@ msgstr ""
 "면 같은 파일 형식으로 저장하지만 해당 구성 요소는 저장하지 않으며 실행 취소/"
 "다시 실행 기록이 초기화됩니다."
 
-#: part/part.cpp:2817
+#: part/part.cpp:2819
 #, kde-format
 msgid "Continue"
 msgstr "계속"
 
-#: part/part.cpp:2817
+#: part/part.cpp:2819
 #, kde-format
 msgid "Continue losing changes"
 msgstr "변경 사항을 지우고 계속"
 
-#: part/part.cpp:2845
+#: part/part.cpp:2847
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "파일을 '%1' 안에 저장할 수 없습니다. %2"
 
-#: part/part.cpp:2884
+#: part/part.cpp:2886
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -4925,7 +4925,7 @@ msgstr ""
 "\n"
 "문서가 더 이상 없습니다."
 
-#: part/part.cpp:2920
+#: part/part.cpp:2922
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -4933,44 +4933,44 @@ msgid ""
 msgstr ""
 "파일을 '%1' 안에 저장할 수 없습니다. 오류: '%2'. 다른 경로에 저장해 보십시오."
 
-#: part/part.cpp:3191
+#: part/part.cpp:3193
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "전체 장 펼치기"
 
-#: part/part.cpp:3192
+#: part/part.cpp:3194
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "전체 장 접기"
 
-#: part/part.cpp:3208
+#: part/part.cpp:3210
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "섬네일과 쪽 동기화"
 
-#: part/part.cpp:3240
+#: part/part.cpp:3242
 #, kde-format
 msgid "Tools"
 msgstr "도구"
 
-#: part/part.cpp:3428
+#: part/part.cpp:3430
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "말하기"
 
-#: part/part.cpp:3586
+#: part/part.cpp:3588
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "인쇄"
 
-#: part/part.cpp:3649
+#: part/part.cpp:3651
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "이 문서를 인쇄하는 것이 허가되어 있지 않습니다."
 
-#: part/part.cpp:3662
+#: part/part.cpp:3664
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -4978,7 +4978,7 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 알 수 없는 오류입니다. bugs.kde.org에 버그를 보"
 "고하십시오."
 
-#: part/part.cpp:3664
+#: part/part.cpp:3666
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -4987,17 +4987,17 @@ msgstr ""
 "이 문서를 인쇄할 수 없습니다. 오류 정보: \"%1\". bugs.kde.org에 버그를 보고하"
 "십시오."
 
-#: part/part.cpp:3756
+#: part/part.cpp:3758
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "이전에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3760
+#: part/part.cpp:3762
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "이후에 있었던 장소로 갑니다"
 
-#: part/part.cpp:3785
+#: part/part.cpp:3787
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5006,7 +5006,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 임시 파일 <nobr><strong>%1</strong></nobr>을"
 "(를) 만들 수 없습니다.</qt>"
 
-#: part/part.cpp:3797
+#: part/part.cpp:3799
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5015,7 +5015,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제하려고 열 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3801
+#: part/part.cpp:3803
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5028,7 +5028,7 @@ msgstr ""
 "션을 선택한 다음 대화 상자의 권한 탭에서 소유권과 권한을 확인해 보십시오.</"
 "qt>"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3825
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5037,7 +5037,7 @@ msgstr ""
 "<qt><strong>파일 오류!</strong> 파일 <nobr><strong>%1</strong></nobr>의 압축"
 "을 해제할 수 없습니다. 파일을 불러올 수 없습니다.</qt>"
 
-#: part/part.cpp:3827
+#: part/part.cpp:3829
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5046,27 +5046,27 @@ msgstr ""
 "<qt>이 오류는 파일이 잘못되었을 때 발생합니다. 만약 확인해 보고 싶으면, 명령"
 "행 유틸리티를 사용해서 압축을 풀어 보십시오.</qt>"
 
-#: part/part.cpp:3853
+#: part/part.cpp:3855
 #, kde-format
 msgid "No Bookmarks"
 msgstr "책갈피 없음"
 
-#: part/part.cpp:3924
+#: part/part.cpp:3926
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "문서 공유 중 문제 발생: %1"
 
-#: part/part.cpp:3924 part/part.cpp:3930
+#: part/part.cpp:3926 part/part.cpp:3932
 #, kde-format
 msgid "Share"
 msgstr "공유"
 
-#: part/part.cpp:3928
+#: part/part.cpp:3930
 #, kde-format
 msgid "Document shared successfully"
 msgstr "문서를 성공적으로 공유함"
 
-#: part/part.cpp:3930
+#: part/part.cpp:3932
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "다음에서 공유된 문서를 확인할 수 있습니다: <a href=\"%1\">%1</a>"

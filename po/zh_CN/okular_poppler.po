@@ -388,4 +388,4 @@ msgstr "更改 NSS 目录设置后，您需要重启 Okular"
 #: pdfsignatureutils.cpp:236
 #, kde-format
 msgid "Enter password to open: %1"
-msgstr ""
+msgstr "输入密码以打开：%1"

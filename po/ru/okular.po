@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-22 02:40+0000\n"
-"PO-Revision-Date: 2026-07-15 11:47+0300\n"
+"PO-Revision-Date: 2026-08-25 12:12+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -4374,6 +4374,9 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"В этом документе есть элементы, которые при печати могут быть скрыты или "
+"показаны иначе. При работе с важными документами следует проверить оба "
+"варианта."
 
 #: part/part.cpp:480
 #, kde-format

@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-22 00:43+0000\n"
-"PO-Revision-Date: 2026-07-15 11:47+0300\n"
+"PO-Revision-Date: 2026-08-25 12:14+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -1714,8 +1714,7 @@ msgid "Add Bookmark"
 msgstr "Добавить закладку"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Копировать"
@@ -4376,6 +4375,9 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"В этом документе есть элементы, которые при печати могут быть скрыты или "
+"показаны иначе. При работе с важными документами следует проверить оба "
+"варианта."
 
 #: part/part.cpp:480
 #, kde-format

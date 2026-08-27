@@ -486,6 +486,7 @@ void Shell::openUrl(const QUrl &url, const QString &serializedOptions)
         if (!isstdin) {
             if (openOk) {
                 m_recent->addUrl(url);
+                saveRecents();
             } else {
                 m_recent->removeUrl(url);
                 closeTab(activeTab);
@@ -554,6 +555,7 @@ void Shell::writeSettings()
 void Shell::saveRecents()
 {
     m_recent->saveEntries(KSharedConfig::openConfig()->group(RecentFilesGroupKey()));
+    KSharedConfig::openConfig()->sync();
 }
 
 void Shell::setupActions()
@@ -967,6 +969,7 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
         if (tabIndex >= 0) {
             setActiveTab(tabIndex);
             m_recent->addUrl(url);
+            saveRecents();
             return;
         }
     }
@@ -995,6 +998,7 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
 
     if (part->openUrl(url)) {
         m_recent->addUrl(url);
+        saveRecents();
     } else {
         setActiveTab(previousActiveTab);
         closeTab(m_tabs.size() - 1);

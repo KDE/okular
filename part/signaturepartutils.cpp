@@ -39,6 +39,7 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KPasswordDialog>
 #include <KSharedConfig>
 namespace
 {
@@ -221,14 +222,25 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
         }
     }
 
-    // I could not find any case in which i need to enter a password to use the certificate, seems that once you unlcok the firefox/NSS database
-    // you don't need a password anymore, but still there's code to do that in NSS so we have code to ask for it if needed. What we do is
-    // ask if the empty password is fine, if it is we don't ask the user anything, if it's not, we ask for a password
+    // In the case of a certificate on a token, you need one password to list the certificates on the token(s).
+    // but you might need a different password to access the certificate on the token.
+    // It is at least in some tokens called 'token password' for listing the certificate and certificate pin
+    // for the actual signind
     bool passok = cert.checkPassword(password);
     while (!passok) {
-        const QString title = i18n("Enter password (if any) to unlock certificate: %1", cert.nickName());
-        bool ok;
-        password = QInputDialog::getText(pageView, i18n("Enter certificate password"), title, QLineEdit::Password, QString(), &ok);
+        const QString title = i18n("Enter password/pin (if any) to unlock certificate: %1", cert.nickName());
+        bool ok = false;
+        QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr);
+        dialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
+        dialog->setPrompt(title);
+        if (!dialog->exec()) {
+            delete dialog;
+        }
+        if (dialog) {
+            password = dialog->password();
+            ok = true;
+            delete dialog;
+        }
         if (ok) {
             passok = cert.checkPassword(password);
         } else {

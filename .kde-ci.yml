@@ -4,28 +4,27 @@
 Dependencies:
   - 'on': ['@all']
     'require':
-      'frameworks/kbookmarks': '@latest-kf6'
-      'frameworks/threadweaver': '@latest-kf6'
-      'frameworks/kcolorscheme': '@latest-kf6'
-      'frameworks/ki18n': '@latest-kf6'
-      'frameworks/kio': '@latest-kf6'
-      'frameworks/karchive': '@latest-kf6'
-      'frameworks/kparts': '@latest-kf6'
-      'frameworks/ktextwidgets': '@latest-kf6'
-      'frameworks/kwidgetsaddons': '@latest-kf6'
-      'frameworks/kxmlgui': '@latest-kf6'
-      'libraries/phonon': '@latest-kf6'
+      'frameworks/kbookmarks': 'Frameworks/6.24'
+      'frameworks/threadweaver': 'Frameworks/6.24'
+      'frameworks/kcolorscheme': 'Frameworks/6.24'
+      'frameworks/ki18n': 'Frameworks/6.24'
+      'frameworks/kio': 'Frameworks/6.24'
+      'frameworks/karchive': 'Frameworks/6.24'
+      'frameworks/kparts': 'Frameworks/6.24'
+      'frameworks/ktextwidgets': 'Frameworks/6.24'
+      'frameworks/kwidgetsaddons': 'Frameworks/6.24'
+      'frameworks/kxmlgui': 'Frameworks/6.24'
       'graphics/kdegraphics-mobipocket': '@same'
 
   - 'on': ['Linux', 'FreeBSD', 'Windows']
     'require':
-      'frameworks/purpose': '@latest-kf6'
-      'frameworks/breeze-icons': '@latest-kf6'
+      'frameworks/purpose': 'Frameworks/6.24'
+      'frameworks/breeze-icons': 'Frameworks/6.24'
       'graphics/libkexiv2': '@same'
 
   - 'on': ['Android']
     'require':
-      'frameworks/kirigami': '@latest-kf6'
+      'frameworks/kirigami': 'Frameworks/6.24'
 
 Options:
   require-passing-tests-on: ['Linux', 'FreeBSD']

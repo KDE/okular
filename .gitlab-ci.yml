@@ -5,12 +5,8 @@ variables:
 include:
  - project: sysadmin/ci-utilities
    file:
-    - /gitlab-templates/android-qt6.yml
+    - /gitlab-templates/linux-qt6-lts.yml
     - /gitlab-templates/flatpak.yml
-    - /gitlab-templates/linux-qt6.yml
-    - /gitlab-templates/linux-qt6-next.yml
-    - /gitlab-templates/freebsd-qt6.yml
-    - /gitlab-templates/windows-qt6.yml
     - /gitlab-templates/cppcheck.yml
     - /gitlab-templates/xml-lint.yml
     - /gitlab-templates/yaml-lint.yml

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2026-08-16 16:50+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -4805,7 +4805,7 @@ msgid "Remove this Bookmark"
 msgstr "Usuń tę zakładkę"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5669,48 +5669,44 @@ msgstr "Zwiń wszystkie elementy"
 msgid "Properties"
 msgstr "Właściwości"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Obrazy (%1)"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Select background image"
 msgstr "Wybierz obraz tła"
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget image"
 msgstr "Zapomnij o obrazie"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, kde-format
 msgid "Forget all images"
 msgstr "Zapomnij o wszystkich obrazach"
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
+#: part/signaturepartutils.cpp:231
+#, fuzzy, kde-format
+#| msgid "Enter password (if any) to unlock certificate: %1"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Wpisz hasło (jeśli jest), aby odblokować certyfikat: %1"
 
-#: part/signaturepartutils.cpp:231
-#, kde-format
-msgid "Enter certificate password"
-msgstr "Wpisz hasło certyfikatu"
-
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgid "Enter document password"
 msgstr "Wpisz hasło dokumentu"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Zapisz podpisany plik jako"
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""
@@ -6114,6 +6110,9 @@ msgstr "Zapomnij o wszystkich"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ukryj ekran powitalny"
+
+#~ msgid "Enter certificate password"
+#~ msgstr "Wpisz hasło certyfikatu"
 
 #~ msgid "Configure Viewer Backends…"
 #~ msgstr "Ustawienia silników przeglądarki…"

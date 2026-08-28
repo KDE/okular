@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2026-03-20 18:28+0000\n"
 "Last-Translator: charlotte <altronic25@protonmail.com>\n"
 "Language-Team: Irish\n"
@@ -4841,7 +4841,7 @@ msgid "Remove this Bookmark"
 msgstr "Bain an Leabharmharc seo"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5712,49 +5712,45 @@ msgstr "Laghdaigh na heilimintí go léir"
 msgid "Properties"
 msgstr "Airíonna"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Íomhánna (%1)"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Select background image"
 msgstr "Roghnaigh íomhá chúlra"
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget image"
 msgstr "Déan dearmad ar an íomhá"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, kde-format
 msgid "Forget all images"
 msgstr "Déan dearmad ar na híomhánna go léir"
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
+#: part/signaturepartutils.cpp:231
+#, fuzzy, kde-format
+#| msgid "Enter password (if any) to unlock certificate: %1"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr ""
 "Cuir isteach focal faire (más ann dó) chun an teastas a dhíghlasáil: %1"
 
-#: part/signaturepartutils.cpp:231
-#, kde-format
-msgid "Enter certificate password"
-msgstr "Cuir isteach focal faire an deimhnithe"
-
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgid "Enter document password"
 msgstr "Cuir isteach focal faire an doiciméid"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Sábháil Comhad Sínithe Mar"
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""
@@ -6162,6 +6158,9 @@ msgstr "Déan dearmad ar gach rud"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Folaigh an scáileán fáilte"
+
+#~ msgid "Enter certificate password"
+#~ msgstr "Cuir isteach focal faire an deimhnithe"
 
 #~ msgid "Configure Viewer Backends…"
 #~ msgstr "Cumraigh Cúlchríocha an Amharcóra…"

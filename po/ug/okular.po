@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2026-06-01 16:30-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -4780,7 +4780,7 @@ msgid "Remove this Bookmark"
 msgstr "بۇ خەتكۈشنى چىقىرىۋېتىدۇ"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5641,48 +5641,44 @@ msgstr "ھەممە ئېلېمېنتنى يىغ"
 msgid "Properties"
 msgstr "خاسلىق"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "سۈرەت (%1)"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Select background image"
 msgstr "تەگلىك سۈرەت تاللىنىدۇ"
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget image"
 msgstr "سۈرەتنى ئۇنتۇ"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, kde-format
 msgid "Forget all images"
 msgstr "ھەممە سۈرەتنى ئۇنتۇ"
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
+#: part/signaturepartutils.cpp:231
+#, fuzzy, kde-format
+#| msgid "Enter password (if any) to unlock certificate: %1"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "گۇۋاھنامە قۇلۇپىنى ئېچىش ئۈچۈن ئىم (ئەگەر بولسا) كىرگۈزۈلىدۇ: %1"
 
-#: part/signaturepartutils.cpp:231
-#, kde-format
-msgid "Enter certificate password"
-msgstr "گۇۋاھنامە ئىم كىرگۈزۈلىدۇ"
-
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgid "Enter document password"
 msgstr "پۈتۈك ئىم كىرگۈزۈلىدۇ"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr "ئىمزالىق ھۆججەتنى باشقا ئاتتا ساقلا"
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""
@@ -6082,6 +6078,9 @@ msgstr "ھەممىنى ئۇنتۇ"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "مەرھابا ئېكرانىنى يوشۇر"
+
+#~ msgid "Enter certificate password"
+#~ msgstr "گۇۋاھنامە ئىم كىرگۈزۈلىدۇ"
 
 #~ msgid "Configure Viewer Backends…"
 #~ msgstr "كۆرگۈچ ئارقا ئۇچ سەپلە…"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2026-08-16 13:35+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -4801,7 +4801,7 @@ msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5666,48 +5666,44 @@ msgstr "Tolestu elementu guztiak"
 msgid "Properties"
 msgstr "Propietateak"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Irudiak (%1)"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Select background image"
 msgstr "Hautatu atzeko planoko irudia"
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget image"
 msgstr "Ahaztu irudia"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, kde-format
 msgid "Forget all images"
 msgstr "Ahaztu irudi guztiak"
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
+#: part/signaturepartutils.cpp:231
+#, fuzzy, kde-format
+#| msgid "Enter password (if any) to unlock certificate: %1"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Sartu ziurtagiria desblokeatzeko pasahitza (baldin badago): %1"
 
-#: part/signaturepartutils.cpp:231
-#, kde-format
-msgid "Enter certificate password"
-msgstr "Sartu ziurtagiriaren pasahitza"
-
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgid "Enter document password"
 msgstr "Sartu dokumentuaren pasahitza"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Gorde sinatutako fitxategia honela"
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""
@@ -6114,6 +6110,9 @@ msgstr "Ahaztu denak"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ezkutatu ongietorri pantaila"
+
+#~ msgid "Enter certificate password"
+#~ msgstr "Sartu ziurtagiriaren pasahitza"
 
 #~ msgid "Configure Viewer Backends…"
 #~ msgstr "Konfiguratu erakuslearen bizkarraldekoak…"

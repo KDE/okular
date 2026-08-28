@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -4898,7 +4898,7 @@ msgid "Remove this Bookmark"
 msgstr "Buang Markah ini"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5773,53 +5773,49 @@ msgstr "Kecilkan semua elemen"
 msgid "Properties"
 msgstr "Properti"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Halaman: %1"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, kde-format
 msgid "Select background image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget image"
 msgstr "Lupakan Semuanya"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, fuzzy, kde-format
 #| msgctxt "on welcome screen (recent document list)"
 #| msgid "Forget All"
 msgid "Forget all images"
 msgstr "Lupakan Semuanya"
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
+#: part/signaturepartutils.cpp:231
+#, fuzzy, kde-format
+#| msgid "Enter password (if any) to unlock certificate: %1"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Masukkan sandi (jika ada) untuk membuka kunci sertifikat: %1"
 
-#: part/signaturepartutils.cpp:231
-#, kde-format
-msgid "Enter certificate password"
-msgstr "Masukkan sandi sertifikat"
-
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, kde-format
 msgid "Enter document password"
 msgstr "Masukkan sandi dokumen"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Simpan File Yang Ditandatangani Sebagai"
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""
@@ -6228,6 +6224,9 @@ msgstr "Lupakan Semuanya"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Sembunyikan layar selamat datang"
+
+#~ msgid "Enter certificate password"
+#~ msgstr "Masukkan sandi sertifikat"
 
 #, fuzzy
 #~| msgid "Configure Viewer Backends"

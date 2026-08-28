@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-22 00:43+0000\n"
+"POT-Creation-Date: 2026-08-28 00:43+0000\n"
 "PO-Revision-Date: 2012-07-11 10:26+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -5119,7 +5119,7 @@ msgid "Remove this Bookmark"
 msgstr "ប្ដូរ​ឈ្មោះ​ចំណាំ​នេះ"
 
 #: part/part.cpp:2618 part/part.cpp:2619 part/part.cpp:3535
-#: part/signaturepartutils.cpp:261
+#: part/signaturepartutils.cpp:273
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5993,52 +5993,47 @@ msgstr ""
 msgid "Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ"
 
-#: part/signaturepartutils.cpp:180
+#: part/signaturepartutils.cpp:181
 #, fuzzy, kde-format
 #| msgid "Pages: %1"
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "ទំព័រ ៖ %1"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:182
 #, fuzzy, kde-format
 #| msgid "Enable &background generation"
 msgid "Select background image"
 msgstr "បិទ​ការ​បង្កើត​ផ្ទៃ​ខាង​ក្រោយ"
 
-#: part/signaturepartutils.cpp:186
+#: part/signaturepartutils.cpp:187
 #, kde-format
 msgid "Forget image"
 msgstr ""
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:188
 #, kde-format
 msgid "Forget all images"
 msgstr ""
 
-#: part/signaturepartutils.cpp:229
-#, kde-format
-msgid "Enter password (if any) to unlock certificate: %1"
-msgstr ""
-
 #: part/signaturepartutils.cpp:231
 #, kde-format
-msgid "Enter certificate password"
+msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr ""
 
-#: part/signaturepartutils.cpp:244
+#: part/signaturepartutils.cpp:256
 #, fuzzy, kde-format
 #| msgctxt "A document format, Okular-specific"
 #| msgid "Document Archive"
 msgid "Enter document password"
 msgstr "ប័ណ្ណសារ​ឯកសារ"
 
-#: part/signaturepartutils.cpp:271
+#: part/signaturepartutils.cpp:283
 #, kde-format
 msgid "Save Signed File As"
 msgstr ""
 
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:285
 #, kde-format
 msgctxt "Error message"
 msgid ""

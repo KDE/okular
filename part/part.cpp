@@ -1461,9 +1461,9 @@ Document::OpenResult Part::doOpenFile(const QMimeType &mimeA, const QString &fil
             if (password.isNull()) {
                 QString prompt;
                 if (firstInput) {
-                    prompt = i18n("Please enter the password to read the document:");
+                    prompt = i18nc("%1 is filename of the file to open", "Please enter the password to read the document: %1", url().fileName());
                 } else {
-                    prompt = i18n("Incorrect password. Try again:");
+                    prompt = i18nc("%1 is filename of the file to open", "Incorrect password. Try again: %1", url().fileName());
                 }
                 firstInput = false;
 

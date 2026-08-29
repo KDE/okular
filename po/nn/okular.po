@@ -6100,6 +6100,3 @@ msgstr "Gløym alle"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Gøym velkomstbiletet"
-
-#~ msgid "Enter certificate password"
-#~ msgstr "Skriv inn sertifikatpassord"

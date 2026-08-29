@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 04:32+0200\n"
+"PO-Revision-Date: 2026-08-28 07:04+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5683,10 +5683,9 @@ msgid "Forget all images"
 msgstr "ყველა გამოსახულების დავიწყება"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "შეიყვანეთ პაროლი (თუ არსებობს) სერტიფიკატის განსაბლოკად: %1"
+msgstr "შეიყვანეთ პაროლი/PIN-კოდი (თუ არსებობს) სერტიფიკატის განსაბლოკად: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-16 00:40+0100\n"
+"PO-Revision-Date: 2026-08-28 16:14+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1292,7 +1292,7 @@ msgstr "Anchura %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1665,7 +1665,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:322
 #, kde-format
@@ -1884,7 +1884,7 @@ msgstr "&Color:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%v %"
+msgstr "%v %"
 
 #: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -3030,7 +3030,7 @@ msgstr "%v %"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100 %"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:238
 #, kde-format
@@ -3174,7 +3174,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Carga y mantiene todo en memoria. Precarga todas las páginas (usará como "
-"máximo el 50 % de la memoria total o de la memoria libre, la que sea mayor)."
+"máximo el 50 % de la memoria total o de la memoria libre, la que sea mayor)."
 
 #: part/dlgpresentation.cpp:38
 #, kde-format
@@ -3699,7 +3699,7 @@ msgstr "Ampliación"
 #: part/pageview.cpp:545
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Ampliar al 100 %"
+msgstr "Ampliar al 100 %"
 
 #: part/pageview.cpp:556
 #, kde-format
@@ -3995,7 +3995,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1 %"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4511
 #, kde-format
@@ -5700,11 +5700,10 @@ msgid "Forget all images"
 msgstr "Olvidar todas las imágenes"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr ""
-"Introduzca la contraseña (si existe) para desbloquear el certificado: %1"
+"Introduzca la contraseña/pin (si existe) para desbloquear el certificado: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format
@@ -6119,6 +6118,3 @@ msgstr "Olvidar todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar la pantalla de bienvenida"
-
-#~ msgid "Enter certificate password"
-#~ msgstr "Introduzca la contraseña del certificado"

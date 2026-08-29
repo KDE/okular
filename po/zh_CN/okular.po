@@ -5601,10 +5601,9 @@ msgid "Forget all images"
 msgstr "忘记所有图像"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "输入密码 (如果需要) 以解锁证书： %1"
+msgstr ""
 
 #: part/signaturepartutils.cpp:256
 #, kde-format
@@ -6007,6 +6006,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgid "Enter certificate password"
-#~ msgstr "输入证书密码"

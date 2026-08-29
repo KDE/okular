@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 13:38+0300\n"
+"PO-Revision-Date: 2026-08-28 12:37+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5727,10 +5727,10 @@ msgid "Forget all images"
 msgstr "Забути усі зображення"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "Введіть пароль (якщо такий є) для розблокування сертифіката: %1"
+msgstr ""
+"Введіть пароль або pin-код (якщо такий є) для розблокування сертифіката: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

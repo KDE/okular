@@ -15,6 +15,7 @@ namespace Okular
 {
 class Action;
 class FormField;
+class PagePrivate;
 
 class FormFieldPrivate
 {
@@ -35,7 +36,7 @@ public:
     Action *m_activateAction;
     QHash<int, Action *> m_additionalActions;
     QHash<int, Action *> m_additionalAnnotActions;
-    Page *m_page = nullptr;
+    PagePrivate *m_page = nullptr;
     QString m_committedValue;
     QString m_committedFormattedValue;
 

@@ -6,6 +6,7 @@
 
 #include "form.h"
 #include "form_p.h"
+#include "page_p.h"
 
 // qt includes
 #include <QVariant>
@@ -139,7 +140,7 @@ QList<Action *> FormField::additionalActions() const
 Page *FormField::page() const
 {
     Q_D(const FormField);
-    return d->m_page;
+    return d->m_page ? d->m_page->m_page : nullptr;
 }
 
 QString FormField::committedValue() const

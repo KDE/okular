@@ -8,8 +8,10 @@
 
 #include "../settings_core.h"
 #include "core/document.h"
+#include <QDir>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QTemporaryFile>
 #include <core/form.h>
 #include <core/page.h>
 
@@ -31,6 +33,7 @@ private Q_SLOTS:
     void testComboEditForm();
     void testListSingleEdit();
     void testListMultiEdit();
+    void testEditAfterSwapBackingFile();
 
     // helper methods
     void verifyRadioButtonStates(bool state1, bool state2, bool state3);
@@ -412,6 +415,92 @@ void EditFormsTest::verifyTextForm(Okular::FormFieldText *form)
     QCOMPARE(form->text(), QLatin1String(""));
     QVERIFY(!m_document->canUndo());
     QVERIFY(m_document->canRedo());
+}
+
+static Okular::FormFieldButton *findCheckBoxByName(const QList<Okular::FormField *> &fields, const QString &name)
+{
+    for (Okular::FormField *ff : fields) {
+        if (ff->type() == Okular::FormField::FormButton && ff->name() == name) {
+            return static_cast<Okular::FormFieldButton *>(ff);
+        }
+    }
+    return nullptr;
+}
+
+void EditFormsTest::testEditAfterSwapBackingFile()
+{
+    // Check a checkbox, save, then uncheck it and save again.
+    //
+    // Regression test for:
+    // * https://bugs.kde.org/show_bug.cgi?id=477153
+    // * https://bugs.kde.org/show_bug.cgi?id=505130
+    const QString checkBoxName = m_checkBoxForms[0]->name();
+    m_document->editFormButtons(0, QList<Okular::FormFieldButton *>() << m_checkBoxForms[0], QList<bool>() << true);
+
+    QVERIFY(m_document->canSwapBackingFile());
+
+    QTemporaryFile saveFile1(QStringLiteral("%1/editformstestXXXXXX.pdf").arg(QDir::tempPath()));
+    QVERIFY(saveFile1.open());
+    saveFile1.close();
+    QString errorText;
+    QVERIFY(m_document->saveChanges(saveFile1.fileName(), &errorText));
+    QVERIFY(errorText.isEmpty());
+    QVERIFY(m_document->swapBackingFile(saveFile1.fileName(), QUrl::fromLocalFile(saveFile1.fileName())));
+
+    // The Page objects survive the swap, so the swapped-in form fields
+    // must point at them, not at the pages that were just deleted
+    const Okular::Page *page = m_document->page(0);
+    const QList<Okular::FormField *> newFields = page->formFields();
+    QVERIFY(!newFields.isEmpty());
+    for (const Okular::FormField *ff : newFields) {
+        QCOMPARE(ff->page(), page);
+    }
+
+    // The swap also replaces the form fields, so look the checkbox up
+    // again and uncheck it. This used to crash in the
+    // EditFormButtonsCommand constructor
+    Okular::FormFieldButton *checkBox = findCheckBoxByName(newFields, checkBoxName);
+    QVERIFY(checkBox);
+    QVERIFY(checkBox->state());
+    m_document->editFormButtons(0, QList<Okular::FormFieldButton *>() << checkBox, QList<bool>() << false);
+    QVERIFY(!checkBox->state());
+
+    // Saving again used to crash in refreshInternalPageReferences when
+    // the undo stack was refreshed with a garbage page number
+    QTemporaryFile saveFile2(QStringLiteral("%1/editformstestXXXXXX.pdf").arg(QDir::tempPath()));
+    QVERIFY(saveFile2.open());
+    saveFile2.close();
+    QVERIFY(m_document->saveChanges(saveFile2.fileName(), &errorText));
+    QVERIFY(errorText.isEmpty());
+    QVERIFY(m_document->swapBackingFile(saveFile2.fileName(), QUrl::fromLocalFile(saveFile2.fileName())));
+
+    const Okular::Page *pageAfterSecondSave = m_document->page(0);
+    const QList<Okular::FormField *> fieldsAfterSecondSave = pageAfterSecondSave->formFields();
+    QVERIFY(!fieldsAfterSecondSave.isEmpty());
+    for (const Okular::FormField *ff : fieldsAfterSecondSave) {
+        QCOMPARE(ff->page(), pageAfterSecondSave);
+    }
+
+    // Both saves refreshed the undo stack to point at the newest form
+    // fields; make sure undo and redo still act on them
+    checkBox = findCheckBoxByName(fieldsAfterSecondSave, checkBoxName);
+    QVERIFY(checkBox);
+    QVERIFY(!checkBox->state());
+
+    // Undo the uncheck
+    m_document->undo();
+    QVERIFY(checkBox->state());
+    QVERIFY(m_document->canUndo());
+
+    // Undo the original check
+    m_document->undo();
+    QVERIFY(!checkBox->state());
+    QVERIFY(!m_document->canUndo());
+    QVERIFY(m_document->canRedo());
+
+    // Redo the check
+    m_document->redo();
+    QVERIFY(checkBox->state());
 }
 
 QTEST_MAIN(EditFormsTest)

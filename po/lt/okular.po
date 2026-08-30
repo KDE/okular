@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-17 12:51+0300\n"
+"PO-Revision-Date: 2026-08-29 22:43+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -5714,10 +5714,10 @@ msgid "Forget all images"
 msgstr "Išvalyti visus paveikslus"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "Įveskite slaptažodį (jeigu yra), kad atrakintumėte liudijimą: %1"
+msgstr ""
+"Įveskite slaptažodį/pin kodą (jeigu yra), kad atrakintumėte liudijimą: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

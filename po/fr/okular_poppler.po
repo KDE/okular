@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-18 00:43+0000\n"
-"PO-Revision-Date: 2026-08-19 08:41+0200\n"
+"PO-Revision-Date: 2026-08-29 20:31+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 26.07.90\n"
+"X-Generator: Lokalize 26.08.0\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -352,7 +352,7 @@ msgid ""
 "based backend activated"
 msgstr ""
 "Ces signatures ne fonctionnent qu'entre les versions récentes de Okular "
-"ayant  le moteur reposant sur GnuPG activé"
+"ayant le moteur reposant sur GnuPG activé"
 
 #: pdfsettingswidget.cpp:118
 #, kde-format

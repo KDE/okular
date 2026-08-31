@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 12:27+0200\n"
+"PO-Revision-Date: 2026-08-28 10:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -3302,13 +3302,13 @@ msgstr "Apaga horitzontalment"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
-msgstr "Quadro cap endins"
+msgstr "Quadro cap a dins"
 
 #: part/dlgpresentation.cpp:106
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
-msgstr "Quadro cap enfora"
+msgstr "Quadro cap a fora"
 
 #: part/dlgpresentation.cpp:107
 #, kde-format
@@ -5711,11 +5711,10 @@ msgid "Forget all images"
 msgstr "Oblida totes les imatges"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr ""
-"Introduïu la contrasenya (si n'hi ha) per a desblocar el certificat: %1"
+"Introduïu la contrasenya/PIN (si n'hi ha) per a desblocar el certificat: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format
@@ -6137,6 +6136,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgid "Enter certificate password"
-#~ msgstr "Introduïu la contrasenya del certificat"

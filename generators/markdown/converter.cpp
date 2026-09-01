@@ -8,6 +8,7 @@
 
 #include <KLocalizedString>
 
+#include <QRegularExpression>
 #include <QTextCursor>
 #include <QTextDocument>
 #include <QTextFrame>
@@ -68,7 +69,9 @@ QTextDocument *Converter::convert(const QString &fileName)
     extractLinks(doc->rootFrame(), internalLinks, documentAnchors);
 
     for (auto linkIt = internalLinks.constBegin(); linkIt != internalLinks.constEnd(); ++linkIt) {
-        auto anchorIt = documentAnchors.constFind(linkIt.key().split(u'-').first()); // remove the internal link id
+        static QRegularExpression rx(QStringLiteral(",\\[\\d{1,5}\\]$"));
+        const QString key = linkIt.key().split(rx).first();
+        auto anchorIt = documentAnchors.constFind(key); // remove the internal link id
         if (anchorIt != documentAnchors.constEnd()) {
             const Okular::DocumentViewport viewport = calculateViewport(doc, anchorIt.value());
             Okular::GotoAction *action = new Okular::GotoAction(QString(), viewport);
@@ -191,7 +194,7 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
                     if (internalLinks.contains(linkName)) {
                         // We've already seen this internal link so we need to create a unique key
                         // otherwise the QHash will replace the previous entry.
-                        linkName = QStringLiteral("%1-%2").arg(linkName, QString::number(m_id++));
+                        linkName = QStringLiteral("%1,[%2]").arg(linkName, QString::number(m_id++));
                     }
                     internalLinks.insert(linkName, textFragment);
                 } else {

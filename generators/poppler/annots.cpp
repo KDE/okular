@@ -21,6 +21,7 @@
 #include <core/annotations.h>
 #include <core/area.h>
 
+#include "core/signatureutils.h"
 #include "debug_pdf.h"
 #include "generator_pdf.h"
 #include "imagescaling.h"
@@ -512,6 +513,10 @@ static Okular::SigningResult popplerToOkular(Poppler::SignatureAnnotation::Signi
 #if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     case Poppler::SignatureAnnotation::BadPassphrase:
         return Okular::BadPassphrase;
+#endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 07, 0)
+    case Poppler::SignatureAnnotation::UnsupportedSignatureType:
+        return Okular::UnsupportedSignatureType;
 #endif
     }
     return Okular::GenericSigningError;

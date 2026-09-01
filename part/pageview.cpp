@@ -70,6 +70,7 @@
 #include "annotwindow.h"
 #include "colormodemenu.h"
 #include "core/annotations.h"
+#include "core/signatureutils.h"
 #include "cursorwraphelper.h"
 #include "formwidgets.h"
 #include "gui/debug_ui.h"
@@ -5728,6 +5729,7 @@ PageView::FinishSigningResult PageView::finishSigning()
     data.setLocation(d->signingInfo.location);
     data.setLeftFontSize(d->signatureAnnotation->leftFontSize());
     data.setFontSize(d->signatureAnnotation->fontSize());
+    data.setRequestedSignatureType(d->signingInfo.type);
 
     std::pair<Okular::SigningResult, QString> result = d->signatureAnnotation->sign(data, newFilePath);
     switch (result.first) {
@@ -5738,6 +5740,7 @@ PageView::FinishSigningResult PageView::finishSigning()
     case Okular::FieldAlreadySigned: // We should not end up here
     case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
     case Okular::InternalSigningError:
+    case Okular::UnsupportedSignatureType:
         KMessageBox::detailedError(this, errorString(result.first, static_cast<int>(result.first)), result.second);
         return Failed;
     case Okular::GenericSigningError:

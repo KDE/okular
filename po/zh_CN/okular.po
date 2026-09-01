@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:43+0000\n"
+"POT-Creation-Date: 2026-09-01 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -4551,13 +4551,17 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "正在将 PS 文件导入为 PDF (可能需要一些时间)…"
 
 #: part/part.cpp:1464
-#, kde-format
-msgid "Please enter the password to read the document:"
+#, fuzzy, kde-format
+#| msgid "Please enter the password to read the document:"
+msgctxt "%1 is filename of the file to open"
+msgid "Please enter the password to read the document: %1"
 msgstr "请输入文档的读取密码："
 
 #: part/part.cpp:1466
-#, kde-format
-msgid "Incorrect password. Try again:"
+#, fuzzy, kde-format
+#| msgid "Incorrect password. Try again:"
+msgctxt "%1 is filename of the file to open"
+msgid "Incorrect password. Try again: %1"
 msgstr "密码错误。请重试："
 
 #: part/part.cpp:1477

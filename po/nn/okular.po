@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:43+0000\n"
+"POT-Creation-Date: 2026-09-01 00:43+0000\n"
 "PO-Revision-Date: 2026-07-17 10:36+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -4609,13 +4609,17 @@ msgstr "Importerer PS-fil som PDF (dette kan ta ei stund) …"
 
 # Dette er «Skriv inn» + «passordet for å lesa dokumentet», ikkje «Skriv inn passordet» + «for å lesa dokumentet». Det er med andre ord eit spesielt passord som vert brukt for å lesa dokumentet (i motsetning til passordet ein brukar for å redigera det).
 #: part/part.cpp:1464
-#, kde-format
-msgid "Please enter the password to read the document:"
+#, fuzzy, kde-format
+#| msgid "Please enter the password to read the document:"
+msgctxt "%1 is filename of the file to open"
+msgid "Please enter the password to read the document: %1"
 msgstr "Skriv inn passordet for å lesa dokumentet:"
 
 #: part/part.cpp:1466
-#, kde-format
-msgid "Incorrect password. Try again:"
+#, fuzzy, kde-format
+#| msgid "Incorrect password. Try again:"
+msgctxt "%1 is filename of the file to open"
+msgid "Incorrect password. Try again: %1"
 msgstr "Feil passord. Prøv igjen:"
 
 #: part/part.cpp:1477

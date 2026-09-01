@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:43+0000\n"
+"POT-Creation-Date: 2026-09-01 00:43+0000\n"
 "PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -4606,13 +4606,17 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS கோப்பு PDF-ஆக இறக்குமதி செய்யப்படுகிறது (இதற்கு நேரம் ஆகலாம்)…"
 
 #: part/part.cpp:1464
-#, kde-format
-msgid "Please enter the password to read the document:"
+#, fuzzy, kde-format
+#| msgid "Please enter the password to read the document:"
+msgctxt "%1 is filename of the file to open"
+msgid "Please enter the password to read the document: %1"
 msgstr "ஆவணத்தை படிக்க கடவுச்சொல்லை உள்ளிடுங்கள்:"
 
 #: part/part.cpp:1466
-#, kde-format
-msgid "Incorrect password. Try again:"
+#, fuzzy, kde-format
+#| msgid "Incorrect password. Try again:"
+msgctxt "%1 is filename of the file to open"
+msgid "Incorrect password. Try again: %1"
 msgstr "தவறான கடவுச்சொல். மறுபடியும் முயற்சியுங்கள்:"
 
 #: part/part.cpp:1477

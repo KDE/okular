@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:43+0000\n"
-"PO-Revision-Date: 2026-08-15 08:35+0200\n"
+"POT-Creation-Date: 2026-09-01 00:43+0000\n"
+"PO-Revision-Date: 2026-08-31 18:34+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4600,13 +4600,17 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importerar Postscript-fil som PDF (det kan ta en stund)…"
 
 #: part/part.cpp:1464
-#, kde-format
-msgid "Please enter the password to read the document:"
+#, fuzzy, kde-format
+#| msgid "Please enter the password to read the document:"
+msgctxt "%1 is filename of the file to open"
+msgid "Please enter the password to read the document: %1"
 msgstr "Ange lösenordet för att läsa dokumentet:"
 
 #: part/part.cpp:1466
-#, kde-format
-msgid "Incorrect password. Try again:"
+#, fuzzy, kde-format
+#| msgid "Incorrect password. Try again:"
+msgctxt "%1 is filename of the file to open"
+msgid "Incorrect password. Try again: %1"
 msgstr "Felaktigt lösenord. Försök igen:"
 
 #: part/part.cpp:1477
@@ -5669,10 +5673,10 @@ msgid "Forget all images"
 msgstr "Glöm alla bilder"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "Ange lösenord (om det behövs) för att låsa upp certifikat: %1"
+msgstr ""
+"Ange lösenord eller PIN-kod (om det behövs) för att låsa upp certifikat: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

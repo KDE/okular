@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:43+0000\n"
+"POT-Creation-Date: 2026-09-01 00:43+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -4941,12 +4941,14 @@ msgstr "PS ගොනු PDF ලෙස ආනයනය කරන්න (මෙය
 #: part/part.cpp:1464
 #, fuzzy, kde-format
 #| msgid "Moves to the end of the document"
-msgid "Please enter the password to read the document:"
+msgctxt "%1 is filename of the file to open"
+msgid "Please enter the password to read the document: %1"
 msgstr "ලේඛනයේ අවසානයට ගෙනයයි"
 
 #: part/part.cpp:1466
 #, kde-format
-msgid "Incorrect password. Try again:"
+msgctxt "%1 is filename of the file to open"
+msgid "Incorrect password. Try again: %1"
 msgstr ""
 
 #: part/part.cpp:1477

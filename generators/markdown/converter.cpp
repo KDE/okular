@@ -170,15 +170,6 @@ void Converter::extractLinks(QTextFrame *parent, QHash<QString, QTextFragment> &
     }
 }
 
-static QString uncapitalize(QString text)
-{
-    // Make sure the first character is not upper-case
-    if (!text.isEmpty()) {
-        text[0] = text[0].toLower();
-    }
-    return text;
-}
-
 void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragment> &internalLinks, QHash<QString, QTextBlock> &documentAnchors)
 {
     for (QTextBlock::iterator it = parent.begin(); !it.atEnd(); ++it) {
@@ -189,8 +180,7 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
                 const QString href = textCharFormat.anchorHref();
                 if (href.startsWith(QLatin1Char('#'))) { // It's an internal link, store it and we'll resolve it at the end
                     // some (all?) markdown flavors require all lowercase internal links.
-                    // we're nicer and only require not capitalized.
-                    QString linkName = uncapitalize(href.mid(1));
+                    QString linkName = href.mid(1).toLower();
                     if (internalLinks.contains(linkName)) {
                         // We've already seen this internal link so we need to create a unique key
                         // otherwise the QHash will replace the previous entry.
@@ -203,9 +193,25 @@ void Converter::extractLinks(const QTextBlock &parent, QHash<QString, QTextFragm
                 }
 
                 const QStringList anchorNames = textCharFormat.anchorNames();
+                // libDiscount auto-generates anchor names from section headings like so:
+                // - case is not changed. i.e there is no conversion to all lower-case
+                // - each space is replaced with one dash '-'
+                // - punctuation handling (importantly, punctuation is /not/ removed)
+                //    Most non-alphabetic characters ('-', ',', '*', ';') are replaced by
+                //    their hex ASCII equivalent, bracketed by the '-' char. For example,
+                //    the dash '-' is replaced by "-2d-" and star '*' is replaced by "-2a-".
+                //    Other punctuation chars (like ':' and '.') are not replaced.
+                //
+                // Many markdown variants assume auto-generated anchor names follow these rules:
+                // - convert to lowercase
+                // - replace spaces with hyphens (not sure if each space is replaced or squeezed down to 1 space)
+                // - strip punctuation (but keep dashes)
+                //
+                // By lower-casing the anchor and link names we can improve in-page links for many markdown variations.
+                // For best results, documents should avoid non-alphabetic chars in their headings (except ':' and '.')
                 for (const QString &anchorName : anchorNames) {
-                    // un-capitalize to help match against internal links that are also un-capitalized.
-                    documentAnchors.insert(uncapitalize(anchorName), parent);
+                    // lower-case to help match against internal links that are also all lower-case.
+                    documentAnchors.insert(anchorName.toLower(), parent);
                 }
             }
         }

@@ -46,6 +46,20 @@ public:
     enum PublicKeyType { RsaKey, DsaKey, EcKey, OtherKey };
 
     /**
+     * Suppoted smime signature types for the given key.
+     * 'none' is a bit special and is used for non-smime *and* 'default' type
+     * \since 26.12
+     */
+    enum class SupportedSMimeSignatures {
+        none, /* nothing specified; do something sane, probably adbe_pkcs7_detached - this comes either from 'older software versions' or via a g10c_pgp_signature_detached signature*/
+        adbe_pkcs7_detached,
+        ETSI_CAdES_B,   // Simplest cades
+        ETSI_CAdES_T,   // B + Time stamp
+        ETSI_CAdES_LT,  // T + Long term validation
+        ETSI_CAdES_LTA, // LT + support for periodical timestamping
+    };
+
+    /**
      * Certificate types
      * @since 25.04
      */
@@ -289,6 +303,18 @@ public:
      * @since 23.08
      */
     void setBackend(Backend backend);
+
+    /**
+     * The supported S/Mime signature types
+     * \since 26.12
+     */
+    QVector<SupportedSMimeSignatures> supportedSMimeSignatures() const;
+
+    /**
+     * sets the supported S/Mime signature types
+     * \since 26.12
+     */
+    void setSupportedSMimeSignatures(const QVector<SupportedSMimeSignatures> &supported);
 
     /**
      * Checks if the given password is the correct one for this certificate
@@ -576,14 +602,15 @@ private:
  * \since 24.12
  */
 enum SigningResult {
-    SigningSuccess,       ///< everything ok
-    FieldAlreadySigned,   ///< couldn't sign because already signed
-    GenericSigningError,  ///< generic (catch-all) error
-    InternalSigningError, ///< Internal signing error. This is likely a application or poppler bug \since 25.04
-    KeyMissing,           ///< requested key not found \since 25.04
-    SignatureWriteFailed, ///< writing error \since 25.04
-    UserCancelled,        ///< user aborted \since 25.04
-    BadPassphrase,        ///< bad passphrase \since 25.04
+    SigningSuccess,           ///< everything ok
+    FieldAlreadySigned,       ///< couldn't sign because already signed
+    GenericSigningError,      ///< generic (catch-all) error
+    InternalSigningError,     ///< Internal signing error. This is likely a application or poppler bug \since 25.04
+    KeyMissing,               ///< requested key not found \since 25.04
+    SignatureWriteFailed,     ///< writing error \since 25.04
+    UserCancelled,            ///< user aborted \since 25.04
+    BadPassphrase,            ///< bad passphrase \since 25.04
+    UnsupportedSignatureType, ///< Requested signature type is not supported by backend
 };
 
 /**

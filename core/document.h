@@ -1538,7 +1538,7 @@ public:
  * attributes. Here follows the list of tag attributes with meaning:
  * - Destination: A string description of the referred viewport
  * - DestinationName: A 'named reference' to the viewport that must be converted
- *      using metaData( "NamedViewport", viewport_name )
+ *      using metaData(m "NamedViewport", viewport_name )
  * - ExternalFileName: A document to be opened, whose destination is specified
  *      with Destination or DestinationName
  * - Open: a boolean saying whether its TOC branch is open or not (default: false)
@@ -1710,6 +1710,11 @@ public:
 
     /// @since 25.04
     void setLeftFontSize(double fontSize);
+
+    /// @since 26.12
+    void setRequestedSignatureType(CertificateInfo::SupportedSMimeSignatures type);
+    /// @since 26.12
+    CertificateInfo::SupportedSMimeSignatures requestedSignatureType() const;
 
 private:
     NewSignatureDataPrivate *const d;

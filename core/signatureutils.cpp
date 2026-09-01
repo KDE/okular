@@ -5,6 +5,7 @@
 */
 
 #include "signatureutils.h"
+#include "gui/certificatemodel.h"
 #include <KLocalizedString>
 
 using namespace Okular;
@@ -49,6 +50,7 @@ public:
     bool isSelfSigned = false;
     QByteArray certificateData;
     CertificateInfo::Backend backend = CertificateInfo::Backend::Unknown;
+    QVector<CertificateInfo::SupportedSMimeSignatures> supportedSMimeSignatures = {CertificateInfo::SupportedSMimeSignatures::none};
     CertificateInfo::KeyLocation keyLocation = CertificateInfo::KeyLocation::Unknown;
     CertificateInfo::CertificateType certificateType = CertificateInfo::CertificateType::X509;
     bool isQualified = false;
@@ -287,6 +289,16 @@ void CertificateInfo::setBackend(Backend backend)
     d->backend = backend;
 }
 
+QVector<CertificateInfo::SupportedSMimeSignatures> CertificateInfo::supportedSMimeSignatures() const
+{
+    return d->supportedSMimeSignatures;
+}
+
+void CertificateInfo::setSupportedSMimeSignatures(const QVector<SupportedSMimeSignatures> &supported)
+{
+    d->supportedSMimeSignatures = supported;
+}
+
 bool CertificateInfo::checkPassword(const QString &password) const
 {
     if (d->checkPasswordFunction) {
@@ -516,6 +528,8 @@ QString Okular::errorString(SigningResult result, const QVariant &additionalMess
         return i18n("Signing failed: Wrong passphrase");
     case SignatureWriteFailed:
         return xi18nc("%1 is a filename with path", "Could not write the signed document to <filename>%1</filename>, please ensure you have selected a folder with write permission", additionalMessage.toString());
+    case UnsupportedSignatureType:
+        return i18nc("Unlikely error; user can choose a signature/key-combo and everything possible should be valid combinations", "Unsupported signature type for current certificate");
     }
     return i18n("Unknown signing error");
 }

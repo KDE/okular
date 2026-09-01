@@ -11,6 +11,7 @@
 #include <KPasswordDialog>
 #include <QDebug>
 #include <QPointer>
+#include <poppler-form.h>
 
 static Okular::CertificateInfo::KeyUsageExtensions fromPoppler(Poppler::CertificateInfo::KeyUsageExtensions popplerKu)
 {
@@ -87,6 +88,44 @@ static Okular::CertificateInfo::CertificateType fromPoppler(Poppler::Certificate
 }
 #endif
 
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 07, 0)
+
+std::optional<Okular::CertificateInfo::SupportedSMimeSignatures> fromPoppler(Poppler::SupportedSMimeSignatureTypes type)
+{
+    switch (type) {
+    case Poppler::SupportedSMimeSignatureTypes::none:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::none;
+    case Poppler::SupportedSMimeSignatureTypes::adbe_pkcs7_detached:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::adbe_pkcs7_detached;
+    case Poppler::SupportedSMimeSignatureTypes::ETSI_CAdES_B:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_B;
+    case Poppler::SupportedSMimeSignatureTypes::ETSI_CAdES_T:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_T;
+    case Poppler::SupportedSMimeSignatureTypes::ETSI_CAdES_LT:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_LT;
+    case Poppler::SupportedSMimeSignatureTypes::ETSI_CAdES_LTA:
+        return Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_LTA;
+    }
+    return std::nullopt;
+}
+
+QVector<Okular::CertificateInfo::SupportedSMimeSignatures> fromPoppler(const QVector<Poppler::SupportedSMimeSignatureTypes> &types)
+{
+    QVector<Okular::CertificateInfo::SupportedSMimeSignatures> converted;
+    for (auto element : types) {
+        auto convert = fromPoppler(element);
+        if (convert) {
+            converted.push_back(convert.value());
+        }
+    }
+    if (converted.empty()) {
+        converted.push_back(Okular::CertificateInfo::SupportedSMimeSignatures::none);
+    }
+
+    return converted;
+}
+#endif
+
 Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
 {
     Okular::CertificateInfo oInfo;
@@ -111,6 +150,9 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setSelfSigned(pInfo.isSelfSigned());
     oInfo.setCertificateData(pInfo.certificateData());
     oInfo.setKeyLocation(fromPoppler(pInfo.keyLocation()));
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 07, 0)
+    oInfo.setSupportedSMimeSignatures(fromPoppler(pInfo.supportedSMimeSignatureTypes()));
+#endif
     oInfo.setCheckPasswordFunction([pInfo](const QString &password) {
         auto backend = Poppler::activeCryptoSignBackend();
         if (!backend) {

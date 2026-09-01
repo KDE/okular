@@ -8,6 +8,7 @@
 
 #include "signaturepartutils.h"
 
+#include "core/signatureutils.h"
 #include "signaturepartutilsimageitemdelegate.h"
 #include "signaturepartutilskconfig.h"
 #include "signaturepartutilskeydelegate.h"
@@ -48,6 +49,25 @@ namespace
 namespace SignaturePartUtils
 {
 
+QString signatureTypeText(Okular::CertificateInfo::SupportedSMimeSignatures type)
+{
+    switch (type) {
+    case Okular::CertificateInfo::SupportedSMimeSignatures::none:
+        return i18nc("This string is describing a default entry that generally shouldn't be shown to the user. To a point where it would be a coding bug somewhere to have it", "NONE");
+    case Okular::CertificateInfo::SupportedSMimeSignatures::adbe_pkcs7_detached:
+        return i18nc("Signature type", "Adobe PKCS7 signature");
+    case Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_B:
+        return i18nc("Signature type", "Basic eIDAS signature");
+    case Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_T:
+        return i18nc("Signature type", "eIDAS signature with timestamp");
+    case Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_LT:
+        return i18nc("Signature type", "eIDAS signature with timestamp for long term validation");
+    case Okular::CertificateInfo::SupportedSMimeSignatures::ETSI_CAdES_LTA:
+        return i18nc("Signature type", "eIDAS signature with timestamp for long term validation and support for re-validation");
+    }
+    return QString();
+}
+
 std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *pageView, Okular::Document *doc, SigningInformationOptions opts)
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
@@ -79,12 +99,6 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     QFontMetrics fm = dialog.fontMetrics();
     dialog.ui->list->setMinimumWidth(fm.averageCharWidth() * (minWidth + 5));
     dialog.ui->list->setModel(&certificateModel);
-    auto current = certificateModel.mapFromSource(certificateModelUnderlying.indexForNick(lastNick));
-    if (current.isValid()) {
-        dialog.ui->list->setCurrentIndex(current);
-    } else {
-        dialog.ui->list->setCurrentIndex(dialog.ui->list->model()->index(0, 0));
-    }
     if (certificateModelUnderlying.types() == SignaturePartUtils::CertificateType::SMime) {
         // Only one type of certificates, no need to show filters
         for (int i = 0; i < dialog.ui->toggleTypes->count(); i++) {
@@ -125,7 +139,33 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
         // leave the selection empty, so better prevent the OK button
         // from being usable
         dialog->ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(dialog->ui->list->selectionModel()->hasSelection());
+        auto current = dialog->ui->list->currentIndex();
+        if (current.isValid()) {
+            auto currentCert = dialog->ui->list->currentIndex().data(CertRole).value<Okular::CertificateInfo>();
+            const auto supportedTypes = currentCert.supportedSMimeSignatures();
+            if (supportedTypes.size() > 1) {
+                dialog->ui->signatureTypeComboBox->clear();
+                for (auto type : supportedTypes) {
+                    dialog->ui->signatureTypeComboBox->addItem(signatureTypeText(type), QVariant::fromValue(type));
+                }
+                dialog->ui->signatureTypeComboBox->setVisible(true);
+                dialog->ui->signatureTypeLabel->setVisible(true);
+            } else {
+                dialog->ui->signatureTypeComboBox->setVisible(false);
+                dialog->ui->signatureTypeLabel->setVisible(false);
+            }
+
+        } else {
+            dialog->ui->signatureTypeComboBox->setVisible(false);
+            dialog->ui->signatureTypeLabel->setVisible(false);
+        }
     });
+    auto current = certificateModel.mapFromSource(certificateModelUnderlying.indexForNick(lastNick));
+    if (current.isValid()) {
+        dialog.ui->list->setCurrentIndex(current);
+    } else {
+        dialog.ui->list->setCurrentIndex(dialog.ui->list->model()->index(0, 0));
+    }
 
     RecentImagesModel imagesModel;
     if (!(opts & SigningInformationOption::BackgroundImage)) {
@@ -257,10 +297,17 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     }
 
     if (passok) {
+        Okular::CertificateInfo::SupportedSMimeSignatures requestedType = Okular::CertificateInfo::SupportedSMimeSignatures::none;
+        const auto supportedTypes = cert.supportedSMimeSignatures();
+        if (supportedTypes.size() > 1) {
+            requestedType = dialog.ui->signatureTypeComboBox->currentData().value<Okular::CertificateInfo::SupportedSMimeSignatures>();
+        } else if (supportedTypes.size() == 1) {
+            requestedType = supportedTypes.front();
+        }
         config->group(ConfigGroup()).writeEntry(ConfigLastKeyNick(), cert.nickName());
         config->group(ConfigGroup()).writeEntry(ConfigLastReason(), dialog.ui->reasonInput->text());
         config->group(ConfigGroup()).writeEntry(ConfigLastLocation(), dialog.ui->locationInput->text());
-        return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword, dialog.ui->reasonInput->text(), dialog.ui->locationInput->text(), backGroundImage};
+        return SigningInformation {std::make_unique<Okular::CertificateInfo>(std::move(cert)), password, documentPassword, dialog.ui->reasonInput->text(), dialog.ui->locationInput->text(), backGroundImage, requestedType};
     }
     return std::nullopt;
 }
@@ -308,6 +355,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
     data.setDocumentPassword(signingInfo->documentPassword);
     data.setReason(signingInfo->reason);
     data.setLocation(signingInfo->location);
+    data.setRequestedSignatureType(signingInfo->type);
 
     const QString newFilePath = getFileNameForNewSignedFile(pageView, doc);
 
@@ -318,6 +366,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
             Q_EMIT pageView->requestOpenNewlySignedFile(newFilePath, form->page()->number() + 1);
             break;
         }
+        case Okular::UnsupportedSignatureType:
         case Okular::FieldAlreadySigned: // We should not end up here
         case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
         case Okular::InternalSigningError:

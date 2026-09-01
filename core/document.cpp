@@ -6086,6 +6086,7 @@ struct Okular::NewSignatureDataPrivate {
     double leftFontSize = 20;
     int page = -1;
     NormalizedRect boundingRectangle;
+    CertificateInfo::SupportedSMimeSignatures requestedType = CertificateInfo::SupportedSMimeSignatures::none;
 };
 
 NewSignatureData::NewSignatureData()
@@ -6126,6 +6127,16 @@ QString NewSignatureData::password() const
 void NewSignatureData::setPassword(const QString &password)
 {
     d->password = password;
+}
+
+void NewSignatureData::setRequestedSignatureType(CertificateInfo::SupportedSMimeSignatures type)
+{
+    d->requestedType = type;
+}
+
+CertificateInfo::SupportedSMimeSignatures NewSignatureData::requestedSignatureType() const
+{
+    return d->requestedType;
 }
 
 int NewSignatureData::page() const

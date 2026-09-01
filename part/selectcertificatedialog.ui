@@ -64,14 +64,14 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="reasonLabel">
        <property name="text">
         <string>Reason:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="reasonInput">
        <property name="placeholderText">
         <string>optional</string>
@@ -81,14 +81,14 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="locationLabel">
        <property name="text">
         <string>Location:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="3" column="1">
       <widget class="QLineEdit" name="locationInput">
        <property name="placeholderText">
         <string>optional</string>
@@ -98,14 +98,14 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="backgroundLabel">
        <property name="text">
         <string>Background:</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="backgroundInput">
@@ -123,13 +123,14 @@
           <string>Choose...</string>
          </property>
          <property name="icon">
-          <iconset theme="folder-image"/>
+          <iconset theme="folder-image">
+           <normaloff>.</normaloff>.</iconset>
          </property>
         </widget>
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="recentLabel">
        <property name="text">
         <string>Recent backgrounds:</string>
@@ -142,8 +143,18 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="5" column="1">
       <widget class="QListView" name="recentBackgrounds"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="signatureTypeLabel">
+       <property name="text">
+        <string>Signature Type</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="signatureTypeComboBox"/>
      </item>
     </layout>
    </item>

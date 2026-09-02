@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-08-28 12:37+0300\n"
+"PO-Revision-Date: 2026-09-01 21:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4642,18 +4642,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Імпортування файла PS як PDF (це може зайняти трохи часу)…"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Будь ласка, введіть пароль для читання документа:"
+msgstr "Будь ласка, введіть пароль для читання документа: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Помилковий пароль. Повторіть спробу:"
+msgstr "Помилковий пароль. Повторіть спробу: %1"
 
 #: part/part.cpp:1477
 #, kde-format

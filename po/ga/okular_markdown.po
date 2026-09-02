@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-09-02 00:41+0000\n"
 "PO-Revision-Date: 2026-01-10 12:45+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish Gaelic <kde-i18n-doc@kde.org>\n"
@@ -28,12 +28,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "aindriu80@gmail.com"
 
-#: converter.cpp:59 converter.cpp:93
+#: converter.cpp:60 converter.cpp:96
 #, kde-format
 msgid "Failed to open the document"
 msgstr "Theip ar oscailt an cháipéise"
 
-#: converter.cpp:106 converter.cpp:124
+#: converter.cpp:109 converter.cpp:127
 #, kde-format
 msgid "Failed to compile the Markdown document."
 msgstr "Theip ar an doiciméad Markdown a thiomsú."

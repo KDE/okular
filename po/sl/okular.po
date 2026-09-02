@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-08-28 07:17+0200\n"
+"PO-Revision-Date: 2026-09-01 06:38+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4616,18 +4616,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Uvažanje datoteke PS kot PDF (to lahko traja nekaj časa) …"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Pred branjem dokumenta je potrebno vnesti geslo:"
+msgstr "Vnesite geslo za branje dokumenta: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Napačno geslo. Poskusite znova:"
+msgstr "Napačno geslo. Poskusite znova: %1"
 
 #: part/part.cpp:1477
 #, kde-format

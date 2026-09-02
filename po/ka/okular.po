@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-08-28 07:04+0200\n"
+"PO-Revision-Date: 2026-09-01 04:29+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4606,18 +4606,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS ფაილის შემოტანა PDF ფაილი სახით (ამას დიდი დრო შეიძლება დასჭირდეს)…"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "შეიყვანეთ პაროლი დოკუმენტის წასაკითხად:"
+msgstr "შეიყვანეთ პაროლი დოკუმენტის წასაკითხად: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "არასწორი პაროლი. თავიდან სცადეთ:"
+msgstr "არასწორი პაროლი. თავიდან სცადეთ: %1"
 
 #: part/part.cpp:1477
 #, kde-format

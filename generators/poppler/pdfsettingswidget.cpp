@@ -61,7 +61,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 {
     m_pdfsw.setupUi(this);
 
-    m_pdfsw.kcfg_OverprintPreviewEnabled->hide();
 #if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(25, 02, 90)
     m_pdfsw.kcfg_EnablePgp->hide();
 #endif

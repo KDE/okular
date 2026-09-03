@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-07-17 15:59+0200\n"
+"PO-Revision-Date: 2026-09-02 16:04+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1698,8 +1698,7 @@ msgid "Add Bookmark"
 msgstr "Adde marcator de libro"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Copia"
@@ -4350,6 +4349,9 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Iste documento ha elementos que pote esser celate o monstrate "
+"differentemente quando imprimite. Pro documentos importante,  per favor "
+"verifica ambes."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4613,18 +4615,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importante file PS como PDF (isto pote prender del tempore)…"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Pro favor inserta le contrasigno per leger le documento:"
+msgstr "Pro favor inserta le contrasigno per leger le documento: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Contrasigno incorrecte. Essaya de nove:"
+msgstr "Contrasigno incorrecte. Essaya de nove: %1"
 
 #: part/part.cpp:1477
 #, kde-format
@@ -5701,8 +5701,7 @@ msgid "Forget all images"
 msgstr "Oblida Omne Imagines"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Inserta contrasigno ( si ulle) per disblocar certificato: %1"
 

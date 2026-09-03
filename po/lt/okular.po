@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-08-29 22:43+0300\n"
+"PO-Revision-Date: 2026-09-03 01:44+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -4636,18 +4636,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importuojamas PS failas kaip PDF (tai gali užtrukti)…"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Norėdami skaityti dokumentą, įveskite slaptažodį:"
+msgstr "Įveskite slaptažodį norėdami skaityti dokumentą: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Neteisingas slaptažodis. Bandykite dar kartą:"
+msgstr "Neteisingas slaptažodis. Bandykite dar kartą: %1"
 
 #: part/part.cpp:1477
 #, kde-format

@@ -1,10 +1,10 @@
 # Translation of okular.po to Catalan (Valencian)
 # Copyright (C) 2003-2026 This_file_is_part_of_KDE
 #
-# SPDX-FileCopyrightText: 2004, 2005, 2007 Albert Astals Cid <aacid@kde.org>
+# SPDX-FileCopyrightText: 2004-2005, 2007 Albert Astals Cid <aacid@kde.org>
 # SPDX-FileCopyrightText: 2005 Sebastià Pla i Sanz <sps@sastia.com>
 # SPDX-FileCopyrightText: 2011 Manuel Tortosa <manutortosa@chakra-project.org>
-# SPDX-FileCopyrightText: 2012, 2013, 2014, 2017, 2018, 2019, 2020, 2022, 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
+# SPDX-FileCopyrightText: 2012-2014, 2017-2020, 2022-2023 Antoni Bella Pérez <antonibella5@yahoo.com>
 # SPDX-FileCopyrightText: 2003-2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
@@ -3301,13 +3301,13 @@ msgstr "Apaga horitzontalment"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box in"
-msgstr "Quadro cap endins"
+msgstr "Quadro cap a dins"
 
 #: part/dlgpresentation.cpp:106
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, transitions"
 msgid "Box out"
-msgstr "Quadro cap enfora"
+msgstr "Quadro cap a fora"
 
 #: part/dlgpresentation.cpp:107
 #, kde-format

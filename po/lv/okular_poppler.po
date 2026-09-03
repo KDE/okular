@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 02:37+0000\n"
+"POT-Creation-Date: 2026-09-03 03:25+0000\n"
 "PO-Revision-Date: 2025-08-21 15:00+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -345,7 +345,7 @@ msgstr ""
 "Dokumentā ir atrastas kļūdas, „Okular“ var rasties grūtības dokumentu "
 "pareizi atveidot"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:116
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -355,37 +355,37 @@ msgstr ""
 "Šie paraksti darbojas tikai starp modernam „Okular“ versijām ar ieslēgtu "
 "„GnuPG“ balstītu aizmugursistēmu"
 
-#: pdfsettingswidget.cpp:118
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Ieslēgt PGP parakstus"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Izdots"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgid "E-mail"
 msgstr "E-pasts"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Derīgs līdz"
 
-#: pdfsettingswidget.cpp:153
+#: pdfsettingswidget.cpp:152
 #, fuzzy, kde-format
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
 msgstr "Pieejamie sertifikāti"
 
-#: pdfsettingswidget.cpp:175
+#: pdfsettingswidget.cpp:174
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -394,18 +394,18 @@ msgstr ""
 "Jūs izmantojat „Poppler“ bibliotēka, kas ir būvēta bez NSS atbalsta.\n"
 "Šī iemesla dēļ digitālo parakstu pievienošana nav pieejama"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:198
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "mūžīgi"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "Restart needed"
 msgstr "Nepieciešams pārstartēt"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "„Okular“ ir jāpārstartē pēc NSS direktorija iestatījumu izmaiņām"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 02:37+0000\n"
+"POT-Creation-Date: 2026-09-03 03:25+0000\n"
 "PO-Revision-Date: 2026-05-02 19:42+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -345,7 +345,7 @@ msgstr ""
 "Belgede bazı hatalar bulundu, Okular içeriği doğru bir biçimde "
 "görüntülemeyebilir"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:116
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -355,37 +355,37 @@ msgstr ""
 "Bu imzalar yalnızca GnuPG arka ucu etkinleştirilmiş güncel Okular sürümleri "
 "ile doğrulanabilir."
 
-#: pdfsettingswidget.cpp:118
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "PGP İmzalarını Etkinleştir"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Verilen"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgid "E-mail"
 msgstr "E-posta"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Son Kullanım Tarihi"
 
-#: pdfsettingswidget.cpp:153
+#: pdfsettingswidget.cpp:152
 #, fuzzy, kde-format
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
 msgstr "Kullanılabilir Sertifikalar"
 
-#: pdfsettingswidget.cpp:175
+#: pdfsettingswidget.cpp:174
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -394,18 +394,18 @@ msgstr ""
 "NSS desteği olmadan yapılmış bir Poppler kitaplığı kullanıyorsunuz.\n"
 "Bu nedenden dolayı sayısal imza ekleme desteği bulunmamaktadır."
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:198
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "sonsuza dek"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "Restart needed"
 msgstr "Yeniden başlatma gerekli"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""

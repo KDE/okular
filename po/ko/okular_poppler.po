@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-11 02:37+0000\n"
+"POT-Creation-Date: 2026-09-03 03:25+0000\n"
 "PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -334,7 +334,7 @@ msgstr ""
 "문서에서 일부 오류를 발견했습니다. Okular에서 내용을 올바르게 표시하지 못할 "
 "수도 있습니다"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:116
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -343,37 +343,37 @@ msgid ""
 msgstr ""
 "이 서명은 GnuPG 기반 백엔드가 활성화된 Okular 버전에서만 사용할 수 있습니다"
 
-#: pdfsettingswidget.cpp:118
+#: pdfsettingswidget.cpp:117
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "PGP 서명 활성화"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "발급 대상"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgid "E-mail"
 msgstr "이메일"
 
-#: pdfsettingswidget.cpp:148
+#: pdfsettingswidget.cpp:147
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "만료 날짜"
 
-#: pdfsettingswidget.cpp:153
+#: pdfsettingswidget.cpp:152
 #, fuzzy, kde-format
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
 msgstr "사용 가능한 인증서"
 
-#: pdfsettingswidget.cpp:175
+#: pdfsettingswidget.cpp:174
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -382,18 +382,18 @@ msgstr ""
 "Poppler 라이브러리에서 NSS를 지원하지 않도록 빌드되었습니다.\n"
 "디지털 서명을 추가할 수 없습니다"
 
-#: pdfsettingswidget.cpp:199
+#: pdfsettingswidget.cpp:198
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "영구"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "Restart needed"
 msgstr "다시 시작 필요함"
 
-#: pdfsettingswidget.cpp:223
+#: pdfsettingswidget.cpp:222
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"

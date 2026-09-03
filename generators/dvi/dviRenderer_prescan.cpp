@@ -8,6 +8,8 @@
 
 #include <config.h>
 
+#include <limits>
+
 #include "TeXFont.h"
 #include "debug_dvi.h"
 #include "dvi.h"
@@ -796,6 +798,10 @@ void dviRenderer::prescan(parseSpecials specialParser)
             quint8 *beginningOfSpecialCommand = command_pointer - 1;
             quint32 a = readUINT(ch - XXX1 + 1);
             if (a > 0) {
+                if (a == std::numeric_limits<quint32>::max() || a > end_pointer - command_pointer) {
+                    errorMsg = i18n("The DVI file contains an invalid special command.");
+                    return;
+                }
                 char *cmd = new char[a + 1];
                 strncpy(cmd, reinterpret_cast<char *>(command_pointer), a);
                 command_pointer += a;

@@ -35,6 +35,8 @@
 
 #include <config.h>
 
+#include <limits>
+
 #include "debug_dvi.h"
 #include "dvi.h"
 #include "dviFile.h"
@@ -500,22 +502,27 @@ void dviRenderer::draw_part(double current_dimconv, bool is_vfmacro)
             case XXX1:
             case XXX2:
             case XXX3:
-            case XXX4:
+            case XXX4: {
                 if (is_vfmacro == false) {
                     word_boundary_encountered = true;
                     line_boundary_encountered = true;
                     space_encountered = true;
                 }
-                a = readUINT(ch - XXX1 + 1);
-                if (a > 0) {
-                    char *cmd = new char[a + 1];
-                    strncpy(cmd, (char *)command_pointer, a);
-                    command_pointer += a;
-                    cmd[a] = '\0';
+                const quint32 specialLength = readUINT(ch - XXX1 + 1);
+                if (specialLength > 0) {
+                    if (specialLength == std::numeric_limits<quint32>::max() || specialLength > end_pointer - command_pointer) {
+                        errorMsg = i18n("The DVI file contains an invalid special command.");
+                        return;
+                    }
+                    char *cmd = new char[specialLength + 1];
+                    strncpy(cmd, (char *)command_pointer, specialLength);
+                    command_pointer += specialLength;
+                    cmd[specialLength] = '\0';
                     applicationDoSpecial(cmd);
                     delete[] cmd;
                 }
                 break;
+            }
 
             case FNTDEF1:
             case FNTDEF2:

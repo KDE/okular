@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-22 00:41+0000\n"
+"POT-Creation-Date: 2026-09-05 02:43+0000\n"
 "PO-Revision-Date: 2025-07-12 01:48+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -193,51 +193,56 @@ msgstr ""
 "Okular no ha podido localizar el lugar del archivo DVI que corresponde a la "
 "línea %1 del archivo TeX %2."
 
-#: dviRenderer_draw.cpp:239
+#: dviRenderer_draw.cpp:241
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "El código DVI establece un carácter de un tipo de letra desconocido."
 
-#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:268 dviRenderer_prescan.cpp:669
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr ""
 "El código DVI hace referencia al tipo de letra #%1, que no ha sido definida "
 "previamente."
 
-#: dviRenderer_draw.cpp:349
+#: dviRenderer_draw.cpp:351
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "La pila no estaba vacía cuando se ha encontrado la orden EOP."
 
-#: dviRenderer_draw.cpp:361
+#: dviRenderer_draw.cpp:363
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "La pila estaba vacía cuando se ha encontrado una orden POP."
 
-#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
+#: dviRenderer_draw.cpp:487 dviRenderer_draw.cpp:496
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr ""
 "El código DVI referencia un tipo de letra que no ha sido definido "
 "previamente."
 
-#: dviRenderer_draw.cpp:535
+#: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
+#, kde-format
+msgid "The DVI file contains an invalid special command."
+msgstr ""
+
+#: dviRenderer_draw.cpp:542
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "Se ha encontrado una orden ilegal."
 
-#: dviRenderer_draw.cpp:540
+#: dviRenderer_draw.cpp:547
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "Se ha encontrado el código de operación desconocido %1."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:89
 #, kde-format
 msgid "Embedding %1"
 msgstr "Empotrando %1"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -246,7 +251,7 @@ msgstr ""
 "Página %1: el archivo PDF <strong>%2</strong> no puede ser convertido a "
 "PostScript.<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:109
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
@@ -254,7 +259,7 @@ msgstr ""
 "Página %1: no se puede encontrar el archivo PostScript <strong>%2</strong>."
 "<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:263
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "No se puede analizar el dato «%1» del tamaño del papel."

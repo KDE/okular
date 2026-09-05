@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-22 00:41+0000\n"
+"POT-Creation-Date: 2026-09-05 02:43+0000\n"
 "PO-Revision-Date: 2025-07-20 01:33+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -180,47 +180,52 @@ msgstr ""
 "Okular에서 TeX 파일 %2의 %1번째 줄에 해당하는 DVI 파일의 위치를 찾을 수 없습"
 "니다."
 
-#: dviRenderer_draw.cpp:239
+#: dviRenderer_draw.cpp:241
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI 코드에서 알 수 없는 글꼴의 문자를 설정했습니다."
 
-#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:268 dviRenderer_prescan.cpp:669
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI 코드에서 정의되지 않은 글꼴 #%1을(를) 참조했습니다."
 
-#: dviRenderer_draw.cpp:349
+#: dviRenderer_draw.cpp:351
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "EOP 명령을 실행했을 때 스택이 비어 있지 않습니다."
 
-#: dviRenderer_draw.cpp:361
+#: dviRenderer_draw.cpp:363
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "POP 명령을 실행했을 때 스택이 비었습니다."
 
-#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
+#: dviRenderer_draw.cpp:487 dviRenderer_draw.cpp:496
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr "DVI 코드에서 정의되지 않은 글꼴을 참고합니다."
 
-#: dviRenderer_draw.cpp:535
+#: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
+#, kde-format
+msgid "The DVI file contains an invalid special command."
+msgstr ""
+
+#: dviRenderer_draw.cpp:542
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "잘못된 명령어를 만났습니다."
 
-#: dviRenderer_draw.cpp:540
+#: dviRenderer_draw.cpp:547
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "알 수 없는 OP 코드 %1을(를) 만났습니다."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:89
 #, kde-format
 msgid "Embedding %1"
 msgstr "%1 임베드 중"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -229,13 +234,13 @@ msgstr ""
 "%1쪽: PDF 파일 <strong>%2</strong>을(를) 포스트스크립트 파일로 변환할 수 없습"
 "니다."
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:109
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "%1쪽: 포스트스크립트 파일 <strong>%2</strong>을(를) 찾을 수 없습니다."
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:263
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "종이 크기 데이터 '%1'을(를) 해석할 수 없습니다."

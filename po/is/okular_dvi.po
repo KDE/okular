@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-22 00:41+0000\n"
+"POT-Creation-Date: 2026-09-05 02:43+0000\n"
 "PO-Revision-Date: 2025-10-23 14:58+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -190,47 +190,52 @@ msgstr ""
 "Okular tókst ekki að finna staðinn í DVI-skránni sem samsvarar línu %1 í TeX-"
 "skránni %2."
 
-#: dviRenderer_draw.cpp:239
+#: dviRenderer_draw.cpp:241
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
 msgstr "DVI-kóði setti tákn af óþekktri leturgerð."
 
-#: dviRenderer_draw.cpp:266 dviRenderer_prescan.cpp:667
+#: dviRenderer_draw.cpp:268 dviRenderer_prescan.cpp:669
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
 msgstr "DVI kóðinn vísaði í leturgerð #%1 sem hefur ekki verið skilgreind."
 
-#: dviRenderer_draw.cpp:349
+#: dviRenderer_draw.cpp:351
 #, kde-format
 msgid "The stack was not empty when the EOP command was encountered."
 msgstr "Staflinn var ekki tómur þegar komið var að EOP-skipuninni."
 
-#: dviRenderer_draw.cpp:361
+#: dviRenderer_draw.cpp:363
 #, kde-format
 msgid "The stack was empty when a POP command was encountered."
 msgstr "Staflinn var tómur þegar komið var að POP-skipuninni."
 
-#: dviRenderer_draw.cpp:485 dviRenderer_draw.cpp:494
+#: dviRenderer_draw.cpp:487 dviRenderer_draw.cpp:496
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
 msgstr "DVI-kóðinn vísaði í leturgerð sem hefur ekki verið skilgreind."
 
-#: dviRenderer_draw.cpp:535
+#: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
+#, kde-format
+msgid "The DVI file contains an invalid special command."
+msgstr ""
+
+#: dviRenderer_draw.cpp:542
 #, kde-format
 msgid "An illegal command was encountered."
 msgstr "Ólögleg skipun fundin."
 
-#: dviRenderer_draw.cpp:540
+#: dviRenderer_draw.cpp:547
 #, kde-format
 msgid "The unknown op-code %1 was encountered."
 msgstr "Óþekkti op-kóðinn %1 fannst."
 
-#: dviRenderer_prescan.cpp:87
+#: dviRenderer_prescan.cpp:89
 #, kde-format
 msgid "Embedding %1"
 msgstr "Felli inn %1"
 
-#: dviRenderer_prescan.cpp:105
+#: dviRenderer_prescan.cpp:107
 #, kde-format
 msgid ""
 "Page %1: The PDF file <strong>%2</strong> could not be converted to "
@@ -239,13 +244,13 @@ msgstr ""
 "Síða %1: Ekki tókst að umbreyta PDF-skránni <strong>%2</strong> í PostScript."
 "<br>"
 
-#: dviRenderer_prescan.cpp:107
+#: dviRenderer_prescan.cpp:109
 #, kde-format
 msgid ""
 "Page %1: The PostScript file <strong>%2</strong> could not be found.<br>"
 msgstr "Síða %1: PostScript-skráin <strong>%2</strong> fannst ekki.<br>"
 
-#: dviRenderer_prescan.cpp:261
+#: dviRenderer_prescan.cpp:263
 #, kde-format
 msgid "The papersize data '%1' could not be parsed."
 msgstr "Ekki tókst að þátta pappírsstærðargögnin '%1'."

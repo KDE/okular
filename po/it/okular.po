@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-08-30 16:35+0200\n"
+"PO-Revision-Date: 2026-09-01 15:19+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -4622,18 +4622,16 @@ msgstr ""
 "Importazione di file PS come PDF (potrebbe richiedere un po' di tempo)…"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Inserisci la password per leggere il documento:"
+msgstr "Inserisci la password per leggere il documento: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Password non corretta. Riprova:"
+msgstr "Password non corretta. Riprova: %1"
 
 #: part/part.cpp:1477
 #, kde-format

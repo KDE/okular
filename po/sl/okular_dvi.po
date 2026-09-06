@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-05 02:43+0000\n"
-"PO-Revision-Date: 2025-07-11 07:35+0200\n"
+"PO-Revision-Date: 2026-09-05 15:39+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -215,7 +215,7 @@ msgstr "Koda DVI se je navezovala na pisavo, ki prej še ni bila določena."
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "Datoteka DVI vsebuje neveljaven poseben ukaz."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format

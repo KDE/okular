@@ -1,22 +1,22 @@
 # Spanish translations for okular_dvi.po package.
-# Copyright (C) 2007-2025 This file is copyright:
+# Copyright (C) 2007-2026 This file is copyright:
 # This file is distributed under the same license as the okular package.
 #
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2013, 2014, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2007-2009, 2013-2014, 2024-2026 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2013 Javier Viñal <fjvinal@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-05 02:43+0000\n"
-"PO-Revision-Date: 2025-07-12 01:48+0100\n"
+"PO-Revision-Date: 2026-09-05 16:23+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -225,7 +225,7 @@ msgstr ""
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "El archivo DVI contiene una orden especial no válida."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format
@@ -513,51 +513,3 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Byte de orden incorrecto encontrado en la lista de macros VF: %1"
-
-#~ msgid ""
-#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-#~ "computer. This program is essential for the export function to work. You "
-#~ "can, however, convert the DVI-file to PDF using the print function of "
-#~ "Okular, but that will often produce documents which print okay, but are "
-#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
-#~ "upgrade to a more recent version of your TeX distribution which includes "
-#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
-#~ "administrator: Okular uses the PATH environment variable when looking for "
-#~ "programs.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Okular no puede localizar el programa <em>dvipdfm</em> en su "
-#~ "equipo. Este programa es esencial para que funcione la función de "
-#~ "exportar. No obstante, puede convertir el archivo DVI a PDF usando la "
-#~ "función de impresión de Okular, aunque esto suele generar documentos que "
-#~ "se imprimen correctamente, serán de inferior calidad si se visualizan con "
-#~ "Acrobat Reader. Sería recomendable que se actualizara a una versión más "
-#~ "reciente del paquete TeX, que incluye el programa <em>dvipdfm</em>.</"
-#~ "p><p>Consejo para el administrador del sistema sorprendido: Okular usa la "
-#~ "variable de entorno PATH para buscar programas.</p></qt>"
-
-#~ msgid ""
-#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
-#~ "reported an error. You might wish to look at the <strong>document info "
-#~ "dialog</strong> which you will find in the File-Menu for a precise error "
-#~ "report.</qt>"
-#~ msgstr ""
-#~ "<qt>El programa externo «dvipdfm» que se ha usado para exportar el "
-#~ "archivo ha informado de un error. Tal vez quiera comprobarlo en el "
-#~ "<strong>diálogo de información del documento</strong> (que encontrará en "
-#~ "el menú Archivo), donde encontrará un informe más preciso sobre este "
-#~ "error.</qt>"
-
-#~ msgid "%1 × %2"
-#~ msgstr "%1 × %2"
-
-#~ msgid "%1 × %2 mm"
-#~ msgstr "%1 × %2 mm"
-
-#~ msgid "%1 × %2 in"
-#~ msgstr "%1 × %2 pulgadas"
-
-#~ msgid "portrait"
-#~ msgstr "retrato"
-
-#~ msgid "landscape"
-#~ msgstr "paisaje"

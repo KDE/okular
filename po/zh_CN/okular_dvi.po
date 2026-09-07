@@ -202,7 +202,7 @@ msgstr "DVI 代码指定了一个此前没有定义过的字体。"
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "此 DVI 文件包含无效的特殊命令。"
 
 #: dviRenderer_draw.cpp:542
 #, kde-format

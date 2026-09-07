@@ -2596,7 +2596,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 ><action
 >Canvia l'ampliació</action
-> de la vista del document a un valor que, depenent de la relació de mida entre la pàgina i l'àrea de la vista, de forma automàtica o bé fa les pàgines d'una amplada igual que l'amplada de la vista del document (com ajusta a l'amplada), l'alçada de les pàgines igual que l'alçada de la vista del document (com ajusta a l'alçada), o tota la pàgina visible (com ajust de pàgina).</para>
+> de la vista del document a un valor que, depenent de la relació de mida entre la pàgina i l'àrea de la vista, de forma automàtica o bé fa les pàgines d'una amplada igual que l'amplada de la vista del document (com ajusta a l'amplada), l'altura de les pàgines igual que l'altura de la vista del document (com ajusta a l'altura), o tota la pàgina visible (com ajust de pàgina).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

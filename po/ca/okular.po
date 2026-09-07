@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:43+0000\n"
-"PO-Revision-Date: 2026-09-01 10:14+0200\n"
+"PO-Revision-Date: 2026-09-06 17:42+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -842,7 +842,7 @@ msgstr "Segell"
 #: gui/guiutils.cpp:106
 #, kde-format
 msgid "Freehand Line with Comment"
-msgstr "Línia a ma alçada amb comentari"
+msgstr "Línia a mà alçada amb comentari"
 
 #: gui/guiutils.cpp:106 part/editannottooldialog.cpp:90
 #: part/pageviewannotator.cpp:1484
@@ -1814,7 +1814,7 @@ msgstr "Propietats del segell"
 #: part/annotationpropertiesdialog.cpp:134
 #, kde-format
 msgid "Freehand Line Properties"
-msgstr "Propietats de la línia a ma alçada"
+msgstr "Propietats de la línia a mà alçada"
 
 #: part/annotationpropertiesdialog.cpp:137
 #, kde-format

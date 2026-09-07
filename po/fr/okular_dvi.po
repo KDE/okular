@@ -5,14 +5,14 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008.
 # Alain Rpnpif <rpnpif@free.fr>, 2008.
 # Peter Potrowl <peter.potrowl@gmail.com>, 2013, 2014.
-# SPDX-FileCopyrightText: 2013, 2021, 2024, 2025, 2026 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2013, 2021, 2024-2026 Xavier Besnard <xavier.besnard@kde.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-05 00:43+0000\n"
-"PO-Revision-Date: 2026-04-03 19:48+0200\n"
+"PO-Revision-Date: 2026-09-05 12:59+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -241,7 +241,7 @@ msgstr ""
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "Le fichier « DVI » contient une commande spéciale non valable."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format

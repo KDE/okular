@@ -230,16 +230,16 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
     while (!passok) {
         const QString title = i18n("Enter password/pin (if any) to unlock certificate: %1", cert.nickName());
         bool ok = false;
-        QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr);
-        dialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
-        dialog->setPrompt(title);
-        if (!dialog->exec()) {
-            delete dialog;
+        QPointer<KPasswordDialog> passwordDialog = new KPasswordDialog(nullptr);
+        passwordDialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
+        passwordDialog->setPrompt(title);
+        if (!passwordDialog->exec()) {
+            delete passwordDialog;
         }
-        if (dialog) {
-            password = dialog->password();
+        if (passwordDialog) {
+            password = passwordDialog->password();
             ok = true;
-            delete dialog;
+            delete passwordDialog;
         }
         if (ok) {
             passok = cert.checkPassword(password);

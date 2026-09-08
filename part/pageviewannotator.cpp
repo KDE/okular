@@ -410,10 +410,6 @@ public:
 
         m_creationCompleted = false;
         clicked = false;
-        // safety check
-        if (!ann) {
-            return QList<Okular::Annotation *>();
-        }
 
         ann->setLeftText(nameToShow);
         ann->setText(signatureText);

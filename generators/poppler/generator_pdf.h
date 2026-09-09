@@ -171,6 +171,7 @@ private:
     bool documentHasPassword = false;
     QHash<int, Okular::Action *> m_additionalDocumentActions;
     void setAdditionalDocumentAction(Okular::Document::DocumentAdditionalActionType type, Okular::Action *action);
+    std::shared_ptr<void> m_signatureSettingsHandle;
 };
 
 #endif

@@ -1528,22 +1528,13 @@ public:
 };
 
 /**
- * @short A DOM tree that describes the Table of Contents.
+ * @short Document synopsis or Table of contents.
  *
  * The Synopsis (TOC or Table Of Contents for friends) is represented via
- * a dom tree where each node has an internal name (displayed in the TOC)
- * and one or more attributes.
+ * a tree of objects.
  *
- * In the tree the tag name is the 'screen' name of the entry. A tag can have
- * attributes. Here follows the list of tag attributes with meaning:
- * - Destination: A string description of the referred viewport
- * - DestinationName: A 'named reference' to the viewport that must be converted
- *      using metaData( "NamedViewport", viewport_name )
- * - ExternalFileName: A document to be opened, whose destination is specified
- *      with Destination or DestinationName
- * - Open: a boolean saying whether its TOC branch is open or not (default: false)
- * - URL: a URL to be open as destination; if set, no other Destination* or
- *      ExternalFileName entry is used
+ * \since 26.12
+ *
  */
 class OKULARCORE_EXPORT DocumentSynopsis
 {
@@ -1552,13 +1543,21 @@ public:
     class ElementBuilder;
     class Element {
     public:
-        Element(const ElementBuilder& builder);
+        explicit Element(const ElementBuilder& builder);
         ~Element();
-
+        /* A named reference that must be converted by the generator using
+         *      using metaData( "NamedViewport", viewport_name )
+         */
         std::optional<QString> viewPortName() const;
+        /* The viewport (if available where this element is located) */
         std::optional<DocumentViewport> viewPort() const;
+        /*If this branch is open or not*/
         bool isOpen() const;
+        /* - URL: a URL to be open as destination; if set, no other Destination* or
+       ExternalFileName entry is used*/
         QString url() const;
+        /* The title or header
+         */
         QString title() const;
         QString externalFileName() const;
         QVector<Element> children() const;
@@ -1572,7 +1571,9 @@ public:
         explicit ElementBuilder(const QString& title);
         ~ElementBuilder();
         void addChild(const Element& element);
+        /* A The viewport is a 'cheap' location that can be directly derived*/
         void setViewPort(const DocumentViewport& viewPort);
+        /* A The viewportname is an 'expensive' location that can be calculated if needed*/
         void setViewPortName(const QString& viewPortName);
         void setOpen(bool open);
         void setExternalFileName(const QString &externalFileName);
@@ -1580,9 +1581,6 @@ public:
     private:
         std::shared_ptr<ElementPrivate> d;
     };
-    /**
-     * Creates a new document synopsis object with the given
-     */
     explicit DocumentSynopsis();
     ~DocumentSynopsis();
 

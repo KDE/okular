@@ -1650,18 +1650,18 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                     // find the last next highest element (so it this is level 3, we need
                     // to find the most recent level 2 node)
                     bool added = false;
-                    for (int i = 1 ; i < outlineLevel; i ++) {
+                    for (int i = 1; i < outlineLevel; i++) {
                         if (auto maybeParent = lastHierarchy.find(outlineLevel - i); maybeParent != lastHierarchy.end()) {
                             maybeParent->addChild(Okular::DocumentSynopsis::Element {synopsisElement});
                             lastHierarchy.erase(lastHierarchy.upperBound(outlineLevel - i), lastHierarchy.end());
-                            lastHierarchy.insert(outlineLevel,synopsisElement);
+                            lastHierarchy.insert(outlineLevel, synopsisElement);
                             added = true;
                             break;
                         }
                     }
                     if (!added) {
                         // weird top level element that is not 1.
-                        m_docStructure->addChild(Okular::DocumentSynopsis::Element{ synopsisElement });
+                        m_docStructure->addChild(Okular::DocumentSynopsis::Element {synopsisElement});
                         lastHierarchy.insert(outlineLevel, synopsisElement);
                     }
                 }

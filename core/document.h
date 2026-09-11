@@ -1541,9 +1541,10 @@ class OKULARCORE_EXPORT DocumentSynopsis
 public:
     class OKULARCORE_NO_EXPORT ElementPrivate;
     class ElementBuilder;
-    class Element {
+    class Element
+    {
     public:
-        explicit Element(const ElementBuilder& builder);
+        explicit Element(const ElementBuilder &builder);
         ~Element();
         /* A named reference that must be converted by the generator using
          *      using metaData( "NamedViewport", viewport_name )
@@ -1561,37 +1562,38 @@ public:
         QString title() const;
         QString externalFileName() const;
         QVector<Element> children() const;
+
     private:
         std::shared_ptr<ElementPrivate> d;
-
     };
-    class ElementBuilder {
+    class ElementBuilder
+    {
     public:
         friend class Element;
-        explicit ElementBuilder(const QString& title);
+        explicit ElementBuilder(const QString &title);
         ~ElementBuilder();
-        void addChild(const Element& element);
+        void addChild(const Element &element);
         /* A The viewport is a 'cheap' location that can be directly derived*/
-        void setViewPort(const DocumentViewport& viewPort);
+        void setViewPort(const DocumentViewport &viewPort);
         /* A The viewportname is an 'expensive' location that can be calculated if needed*/
-        void setViewPortName(const QString& viewPortName);
+        void setViewPortName(const QString &viewPortName);
         void setOpen(bool open);
         void setExternalFileName(const QString &externalFileName);
-        void setUrl(const QString& url);
+        void setUrl(const QString &url);
+
     private:
         std::shared_ptr<ElementPrivate> d;
     };
     explicit DocumentSynopsis();
     ~DocumentSynopsis();
 
-    void addChild(const Element& element);
+    void addChild(const Element &element);
     QVector<Element> children() const;
-    class OKULARCORE_NO_EXPORT  DocumentSynopsisPrivate;
+    class OKULARCORE_NO_EXPORT DocumentSynopsisPrivate;
+
 private:
     std::shared_ptr<DocumentSynopsisPrivate> d;
 };
-
-
 
 /**
  * @short An embedded file into the document.

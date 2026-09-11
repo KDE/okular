@@ -79,10 +79,10 @@ TOCItem::TOCItem(TOCItem *_parent, const Okular::DocumentSynopsis::Element &e)
     } else {
         // if the node references a viewport, get the reference and set it
         if (const auto page = e.viewPortName()) {
-        Okular::DocumentViewport namedviewport = model->document->metaData(QStringLiteral("NamedViewport"), page.value()).value<Okular::DocumentViewport>();
-        if (namedviewport.isValid()) {
-            viewport = namedviewport;
-        }
+            Okular::DocumentViewport namedviewport = model->document->metaData(QStringLiteral("NamedViewport"), page.value()).value<Okular::DocumentViewport>();
+            if (namedviewport.isValid()) {
+                viewport = namedviewport;
+            }
         }
     }
 
@@ -111,10 +111,10 @@ TOCModelPrivate::~TOCModelPrivate()
     delete m_oldModel;
 }
 
-void TOCModelPrivate::addChildren(const QVector<Okular::DocumentSynopsis::Element>& nodes, TOCItem *parentItem)
+void TOCModelPrivate::addChildren(const QVector<Okular::DocumentSynopsis::Element> &nodes, TOCItem *parentItem)
 {
     TOCItem *currentItem = nullptr;
-    for (const auto & child : nodes) {
+    for (const auto &child : nodes) {
         // insert the entry as top level (listview parented) or 2nd+ level
         currentItem = new TOCItem(parentItem, child);
 

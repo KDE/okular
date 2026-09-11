@@ -6042,9 +6042,13 @@ QString DocumentInfo::getKeyTitle(const QString &key) const
 }
 
 /** DocumentSynopsis **/
-class DocumentSynopsis::ElementPrivate {
+class DocumentSynopsis::ElementPrivate
+{
 public:
-    explicit ElementPrivate(const QString& _title) : title(_title) {}
+    explicit ElementPrivate(const QString &_title)
+        : title(_title)
+    {
+    }
     QVector<DocumentSynopsis::Element> children;
     QString title;
     std::optional<DocumentViewport> viewPort;
@@ -6054,86 +6058,103 @@ public:
     bool open = false;
 };
 
-DocumentSynopsis::ElementBuilder::ElementBuilder(const QString& title) : d(std::make_shared<ElementPrivate>(title)) {
+DocumentSynopsis::ElementBuilder::ElementBuilder(const QString &title)
+    : d(std::make_shared<ElementPrivate>(title))
+{
 }
 
 DocumentSynopsis::ElementBuilder::~ElementBuilder() = default;
 
-void DocumentSynopsis::ElementBuilder::addChild(const Element& element) {
+void DocumentSynopsis::ElementBuilder::addChild(const Element &element)
+{
     d->children.push_back(element);
 }
 
-void DocumentSynopsis::ElementBuilder::setViewPort(const DocumentViewport& viewPort) {
+void DocumentSynopsis::ElementBuilder::setViewPort(const DocumentViewport &viewPort)
+{
     d->viewPort = viewPort;
 }
-void DocumentSynopsis::ElementBuilder::setUrl(const QString& url) {
+void DocumentSynopsis::ElementBuilder::setUrl(const QString &url)
+{
     d->url = url;
 }
 
-void DocumentSynopsis::ElementBuilder::setExternalFileName(const QString& externalFileName) {
+void DocumentSynopsis::ElementBuilder::setExternalFileName(const QString &externalFileName)
+{
     d->externalFileName = externalFileName;
 }
 
-void DocumentSynopsis::ElementBuilder::setOpen(bool open) {
+void DocumentSynopsis::ElementBuilder::setOpen(bool open)
+{
     d->open = open;
 }
 
-void DocumentSynopsis::ElementBuilder::setViewPortName(const QString &viewPortName) {
+void DocumentSynopsis::ElementBuilder::setViewPortName(const QString &viewPortName)
+{
     d->viewPortName = viewPortName;
 }
 
-
-DocumentSynopsis::Element::Element(const ElementBuilder& builder) : d(builder.d)
+DocumentSynopsis::Element::Element(const ElementBuilder &builder)
+    : d(builder.d)
 {
 }
 
 DocumentSynopsis::Element::~Element() = default;
 
-
-QString DocumentSynopsis::Element::url() const {
+QString DocumentSynopsis::Element::url() const
+{
     return d->url;
 }
 
-QString DocumentSynopsis::Element::title() const {
+QString DocumentSynopsis::Element::title() const
+{
     return d->title;
 }
 
-std::optional<DocumentViewport> DocumentSynopsis::Element::viewPort() const {
+std::optional<DocumentViewport> DocumentSynopsis::Element::viewPort() const
+{
     return d->viewPort;
 }
 
-std::optional<QString> DocumentSynopsis::Element::viewPortName() const {
+std::optional<QString> DocumentSynopsis::Element::viewPortName() const
+{
     return d->viewPortName;
 }
-QVector<DocumentSynopsis::Element> DocumentSynopsis::Element::children() const {
+QVector<DocumentSynopsis::Element> DocumentSynopsis::Element::children() const
+{
     return d->children;
 }
 
-QString DocumentSynopsis::Element::externalFileName() const {
+QString DocumentSynopsis::Element::externalFileName() const
+{
     return d->externalFileName;
 }
 
-bool DocumentSynopsis::Element::isOpen() const {
+bool DocumentSynopsis::Element::isOpen() const
+{
     return d->open;
 }
 
-
-class DocumentSynopsis::DocumentSynopsisPrivate {
+class DocumentSynopsis::DocumentSynopsisPrivate
+{
 public:
     QVector<DocumentSynopsis::Element> children;
 };
 
-DocumentSynopsis::DocumentSynopsis() : d(std::make_shared<DocumentSynopsisPrivate>())
+DocumentSynopsis::DocumentSynopsis()
+    : d(std::make_shared<DocumentSynopsisPrivate>())
 {
 }
 
 DocumentSynopsis::~DocumentSynopsis() = default;
 
-QVector<DocumentSynopsis::Element> DocumentSynopsis::children() const {
+QVector<DocumentSynopsis::Element> DocumentSynopsis::children() const
+{
     return d->children;
 }
 
-void DocumentSynopsis::addChild(const Element& element) {
+void DocumentSynopsis::addChild(const Element &element)
+{
     d->children.push_back(element);
 }
 

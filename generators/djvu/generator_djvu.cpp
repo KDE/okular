@@ -28,15 +28,14 @@
 #include <QDir>
 #include <QTemporaryFile>
 
-template<typename TocElement>
-static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestination, KDjVu *djvu)
+template<typename TocElement> static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestination, KDjVu *djvu)
 {
     QDomNode n = parent.firstChild();
     while (!n.isNull()) {
         QDomElement el = n.toElement();
 
         auto newel = Okular::DocumentSynopsis::ElementBuilder(el.attribute(QStringLiteral("title")));
-        parentDestination.addChild(Okular::DocumentSynopsis::Element{newel});
+        parentDestination.addChild(Okular::DocumentSynopsis::Element {newel});
 
         QString dest;
         if (!(dest = el.attribute(QStringLiteral("PageNumber"))).isEmpty()) {

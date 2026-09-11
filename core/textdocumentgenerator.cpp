@@ -208,7 +208,6 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
 {
     QStack<QPair<int, DocumentSynopsis::ElementBuilder>> parentNodeStack;
 
-
     for (int i = 0; i < mTitlePositions.count(); ++i) {
         const TitlePosition &position = mTitlePositions[i];
         std::optional<DocumentSynopsis::ElementBuilder> parentNode;

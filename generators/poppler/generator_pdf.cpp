@@ -1054,9 +1054,8 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
 
     for (const Poppler::OutlineItem &outlineItem : outline) {
         auto item = addOutlineItem(outlineItem);
-        docSyn->addChild(Okular::DocumentSynopsis::Element{item});
+        docSyn->addChild(Okular::DocumentSynopsis::Element {item});
     }
-
 
     return &docSyn.value();
 }
@@ -1886,32 +1885,32 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_p
     return ktp;
 }
 
-static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::OutlineItem &outlineItem) {
+static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::OutlineItem &outlineItem)
+{
     Okular::DocumentSynopsis::ElementBuilder element(outlineItem.name());
 
     element.setExternalFileName(outlineItem.externalFileName());
-        const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
-        if (outlineDestination) {
-            const QString destinationName = outlineDestination->destinationName();
-            if (!destinationName.isEmpty()) {
-                element.setViewPortName(destinationName);
-            } else {
-                Okular::DocumentViewport vp;
-                fillViewportFromLinkDestination(vp, *outlineDestination);
-                element.setViewPort(vp);
-            }
+    const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
+    if (outlineDestination) {
+        const QString destinationName = outlineDestination->destinationName();
+        if (!destinationName.isEmpty()) {
+            element.setViewPortName(destinationName);
+        } else {
+            Okular::DocumentViewport vp;
+            fillViewportFromLinkDestination(vp, *outlineDestination);
+            element.setViewPort(vp);
         }
-        element.setOpen(outlineItem.isOpen());
-        element.setUrl(outlineItem.uri());
-        if (outlineItem.hasChildren()) {
-            const auto children = outlineItem.children();
-            for (const auto& child : children) {
-                element.addChild(Okular::DocumentSynopsis::Element {addOutlineItem(child)} );
-            }
+    }
+    element.setOpen(outlineItem.isOpen());
+    element.setUrl(outlineItem.uri());
+    if (outlineItem.hasChildren()) {
+        const auto children = outlineItem.children();
+        for (const auto &child : children) {
+            element.addChild(Okular::DocumentSynopsis::Element {addOutlineItem(child)});
         }
+    }
 
     return element;
-
 }
 
 void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page)

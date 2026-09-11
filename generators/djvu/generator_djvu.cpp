@@ -36,7 +36,7 @@ static void recurseCreateTOC(const QDomNode &parent, TocElement &parentDestinati
         QDomElement el = n.toElement();
 
         auto newel = Okular::DocumentSynopsis::ElementBuilder(el.attribute(QStringLiteral("title")));
-        parentDestination.addChild(newel);
+        parentDestination.addChild(Okular::DocumentSynopsis::Element{newel});
 
         QString dest;
         if (!(dest = el.attribute(QStringLiteral("PageNumber"))).isEmpty()) {

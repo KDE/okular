@@ -333,9 +333,9 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             domel.setViewPort(vp);
         }
         if (stack.isEmpty()) {
-            m_docSynopsis->addChild(domel);
+            m_docSynopsis->addChild(Okular::DocumentSynopsis::Element{domel});
         } else {
-            stack.top().addChild(domel);
+            stack.top().addChild(Okular::DocumentSynopsis::Element{domel});
             stack.pop();
         }
         for (int i = 0; i < (*it).noOfChildren; ++i) {

@@ -1643,7 +1643,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                 if (outlineLevel == 1) {
                     // qCWarning(OkularXpsDebug) << "Description: "
                     // << outlineEntryElement.attribute( "Description" );
-                    m_docStructure->addChild(synopsisElement);
+                    m_docStructure->addChild(Okular::DocumentSynopsis::Element {synopsisElement});
                     lastHierarchy.clear();
                     lastHierarchy.insert(1, synopsisElement);
                 } else {
@@ -1652,7 +1652,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                     bool added = false;
                     for (int i = 1 ; i < outlineLevel; i ++) {
                         if (auto maybeParent = lastHierarchy.find(outlineLevel - i); maybeParent != lastHierarchy.end()) {
-                            maybeParent->addChild(synopsisElement);
+                            maybeParent->addChild(Okular::DocumentSynopsis::Element {synopsisElement});
                             lastHierarchy.erase(lastHierarchy.upperBound(outlineLevel - i), lastHierarchy.end());
                             lastHierarchy.insert(outlineLevel,synopsisElement);
                             added = true;
@@ -1661,7 +1661,7 @@ void XpsDocument::parseDocumentStructure(const QString &documentStructureFileNam
                     }
                     if (!added) {
                         // weird top level element that is not 1.
-                        m_docStructure->addChild(synopsisElement);
+                        m_docStructure->addChild(Okular::DocumentSynopsis::Element{ synopsisElement });
                         lastHierarchy.insert(outlineLevel, synopsisElement);
                     }
                 }

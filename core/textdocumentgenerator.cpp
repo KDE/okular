@@ -234,9 +234,9 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
             }
         }
         if (parentNode) {
-            parentNode->addChild(item);
+            parentNode->addChild(Okular::DocumentSynopsis::Element {item});
         } else {
-            mDocumentSynopsis.addChild(item);
+            mDocumentSynopsis.addChild(Okular::DocumentSynopsis::Element {item});
         }
         parentNodeStack.push(qMakePair(headingLevel, item));
     }

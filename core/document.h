@@ -1584,7 +1584,7 @@ public:
     explicit DocumentSynopsis();
     ~DocumentSynopsis();
 
-    void addChild(const ElementBuilder& element);
+    void addChild(const Element& element);
     QVector<Element> children() const;
     class OKULARCORE_NO_EXPORT  DocumentSynopsisPrivate;
 private:

@@ -1054,7 +1054,7 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
 
     for (const Poppler::OutlineItem &outlineItem : outline) {
         auto item = addOutlineItem(outlineItem);
-        docSyn->addChild(item);
+        docSyn->addChild(Okular::DocumentSynopsis::Element{item});
     }
 
 
@@ -1904,8 +1904,9 @@ static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::Ou
         element.setOpen(outlineItem.isOpen());
         element.setUrl(outlineItem.uri());
         if (outlineItem.hasChildren()) {
-            for (auto child : outlineItem.children()) {
-                element.addChild(addOutlineItem(child));
+            const auto children = outlineItem.children();
+            for (const auto& child : children) {
+                element.addChild(Okular::DocumentSynopsis::Element {addOutlineItem(child)} );
             }
         }
 

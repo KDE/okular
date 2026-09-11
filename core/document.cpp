@@ -6133,8 +6133,8 @@ QVector<DocumentSynopsis::Element> DocumentSynopsis::children() const {
     return d->children;
 }
 
-void DocumentSynopsis::addChild(const ElementBuilder& element) {
-    d->children.push_back(Element{element});
+void DocumentSynopsis::addChild(const Element& element) {
+    d->children.push_back(element);
 }
 
 /** EmbeddedFile **/

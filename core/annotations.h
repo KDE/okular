@@ -86,7 +86,6 @@ public:
      *
      * @since 21.12
      */
-    OKULARCORE_DEPRECATED static QPixmap loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio = true);
     static QPixmap loadStamp(const QString &nameOrPath, QSize size, Qt::AspectRatioMode aspectRatio = Qt::KeepAspectRatio);
 };
 

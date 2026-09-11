@@ -32,7 +32,6 @@ public:
     ActionPrivate(const ActionPrivate &) = delete;
     ActionPrivate &operator=(const ActionPrivate &) = delete;
 
-    QVariant m_nativeId;
     std::shared_ptr<const void> m_nativeHandle;
     QList<Action *> m_nextActions;
 };
@@ -50,18 +49,6 @@ Action::~Action()
 QString Action::actionTip() const
 {
     return QLatin1String("");
-}
-
-void Action::setNativeId(const QVariant &id)
-{
-    Q_D(Action);
-    d->m_nativeId = id;
-}
-
-QVariant Action::nativeId() const
-{
-    Q_D(const Action);
-    return d->m_nativeId;
 }
 
 QList<Action *> Action::nextActions() const

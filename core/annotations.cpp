@@ -171,11 +171,6 @@ QRect AnnotationUtils::annotationGeometry(const Annotation *annotation, double s
     return rect;
 }
 
-QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, int size, bool keepAspectRatio)
-{
-    return loadStamp(nameOrPath, QSize(size, size), keepAspectRatio ? Qt::KeepAspectRatioByExpanding : Qt::IgnoreAspectRatio);
-}
-
 QPixmap AnnotationUtils::loadStamp(const QString &nameOrPath, QSize size, Qt::AspectRatioMode keepAspectRatio)
 {
     const QString name = nameOrPath.toLower();

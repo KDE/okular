@@ -3908,12 +3908,6 @@ void Document::redo()
     d->m_undoStack->redo();
 }
 
-void Document::editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos)
-{
-    QUndoCommand *uc = new EditFormTextCommand(this->d, form, pageNumber, newContents, newCursorPos, form->text(), prevCursorPos, prevAnchorPos);
-    d->m_undoStack->push(uc);
-}
-
 void Document::editFormText(int pageNumber, Okular::FormFieldText *form, const QString &newContents, int newCursorPos, int prevCursorPos, int prevAnchorPos, const QString &oldContents)
 {
     QUndoCommand *uc = new EditFormTextCommand(this->d, form, pageNumber, newContents, newCursorPos, oldContents, prevCursorPos, prevAnchorPos);
@@ -4274,11 +4268,6 @@ void Document::processAction(const Action *action)
     }
 }
 
-void Document::processFormatAction(const Action *action, Okular::FormFieldText *fft)
-{
-    processFormatAction(action, static_cast<FormField *>(fft));
-}
-
 void Document::processFormatAction(const Action *action, Okular::FormField *ff)
 {
     if (action->actionType() != Action::Script) {
@@ -4424,18 +4413,6 @@ void Document::processKeystrokeAction(const Action *action, Okular::FormField *f
     }
 }
 
-void Document::processKeystrokeAction(const Action *action, Okular::FormFieldText *fft, const QVariant &newValue)
-{
-    // use -1 as default
-    processKeystrokeAction(action, fft, newValue, -1, -1);
-}
-
-void Document::processKeystrokeCommitAction(const Action *action, Okular::FormFieldText *fft)
-{
-    bool returnCode = false;
-    processKeystrokeCommitAction(action, fft, returnCode);
-}
-
 void Document::processKeystrokeCommitAction(const Action *action, Okular::FormField *ff, bool &returnCode)
 {
     if (action->actionType() != Action::Script) {
@@ -4487,11 +4464,6 @@ void Document::processFocusAction(const Action *action, Okular::FormField *field
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, *linkscript);
-}
-
-void Document::processValidateAction(const Action *action, Okular::FormFieldText *fft, bool &returnCode)
-{
-    processValidateAction(action, static_cast<FormField *>(fft), returnCode);
 }
 
 void Document::processValidateAction(const Action *action, Okular::FormField *ff, bool &returnCode)
@@ -4652,18 +4624,6 @@ void Document::processFormMouseScriptAction(const Action *action, Okular::FormFi
     const ScriptAction *linkscript = static_cast<const ScriptAction *>(action);
 
     d->executeScriptEvent(event, *linkscript);
-}
-
-void Document::processFormMouseUpScripAction(const Action *action, Okular::FormField *ff)
-{
-    processFormMouseScriptAction(action, ff, FieldMouseUp);
-}
-
-void Document::processSourceReference(const SourceReference *ref)
-{
-    if (ref) {
-        processSourceReference(*ref);
-    }
 }
 
 void Document::processSourceReference(const SourceReference &ref)
@@ -4874,17 +4834,6 @@ KPluginMetaData Document::generatorInfo() const
     auto genIt = d->m_loadedGenerators.constFind(d->m_generatorName);
     Q_ASSERT(genIt != d->m_loadedGenerators.constEnd());
     return genIt.value().metadata;
-}
-
-int Document::configurableGenerators() const
-{
-    int configurableGenerators = 0;
-    for (auto generator : std::as_const(d->m_loadedGenerators)) {
-        if (d->generatorConfig(generator)) {
-            configurableGenerators++;
-        }
-    }
-    return configurableGenerators;
 }
 
 QStringList Document::supportedMimeTypes() const
@@ -5099,12 +5048,6 @@ bool Document::canSaveChanges(SaveCapability cap) const
     }
 
     return false;
-}
-
-bool Document::saveChanges(const QString &fileName)
-{
-    QString errorText;
-    return saveChanges(fileName, &errorText);
 }
 
 bool Document::saveChanges(const QString &fileName, QString *errorText)

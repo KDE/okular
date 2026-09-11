@@ -75,27 +75,6 @@ public:
     virtual QString actionTip() const;
 
     /**
-     * Sets the "native" @p id of the action.
-     *
-     * This is for use of the Generator, that can optionally store an
-     * handle (a pointer, an identifier, etc) of the "native" action
-     * object, if any.
-     *
-     * @note Okular makes no use of this
-     * @deprecated use @ref setNativeHandle
-     * @since 0.15 (KDE 4.9)
-     */
-    OKULARCORE_DEPRECATED void setNativeId(const QVariant &id);
-
-    /**
-     * Returns the "native" id of the action.
-     *
-     * @since 0.15 (KDE 4.9)
-     *
-     */
-    OKULARCORE_DEPRECATED QVariant nativeId() const;
-
-    /**
      * Sets "native" handle for the action
      *
      * This is a opaque datapointer used for the action by the

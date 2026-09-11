@@ -482,7 +482,7 @@ if (TARGET Qt6::Qml)
     target_link_libraries(okularcore PRIVATE Qt6::Qml)
 endif()
 
-set_target_properties(okularcore PROPERTIES VERSION 4.0.0 SOVERSION 4 OUTPUT_NAME Okular6Core EXPORT_NAME Core)
+set_target_properties(okularcore PROPERTIES VERSION 5.0.0 SOVERSION 5 OUTPUT_NAME Okular6Core EXPORT_NAME Core)
 
 install(TARGETS okularcore EXPORT Okular6Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

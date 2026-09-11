@@ -42,7 +42,7 @@ public:
     explicit TOCModelPrivate(TOCModel *qq);
     ~TOCModelPrivate();
 
-    void addChildren(const QVector<Okular::DocumentSynopsis::Element> &parentNode, TOCItem *parentItem);
+    void addChildren(const QVector<Okular::DocumentSynopsis::Element> &nodes, TOCItem *parentItem);
     QModelIndex indexForItem(TOCItem *item) const;
     void findViewport(const Okular::DocumentViewport &viewport, TOCItem *item, QList<TOCItem *> &list) const;
 

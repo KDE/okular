@@ -1541,7 +1541,7 @@ class OKULARCORE_EXPORT DocumentSynopsis
 public:
     class OKULARCORE_NO_EXPORT ElementPrivate;
     class ElementBuilder;
-    class Element
+    class OKULARCORE_EXPORT Element
     {
     public:
         explicit Element(const ElementBuilder &builder);
@@ -1566,7 +1566,7 @@ public:
     private:
         std::shared_ptr<ElementPrivate> d;
     };
-    class ElementBuilder
+    class OKULARCORE_EXPORT ElementBuilder
     {
     public:
         friend class Element;

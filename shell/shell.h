@@ -30,6 +30,7 @@
 #include "welcomescreen.h"
 
 class Sidebar;
+class KActionMenu;
 class KRecentFilesAction;
 class KToggleAction;
 class QTabWidget;
@@ -136,6 +137,7 @@ private Q_SLOTS:
     void closeTab(int tab);
     void activateNextTab();
     void activatePrevTab();
+    void showTabList();
     void undoCloseTab();
     void moveTabData(int from, int to);
 
@@ -160,6 +162,9 @@ private:
     int findTabIndex(QObject *sender) const;
     int findTabIndex(const QUrl &url) const;
     void readRecentFilesSettings();
+    void insertTabListActionInToolbar();
+    void rebuildTabListMenu();
+    void updateTabListAction();
 
 private:
     void reloadAllXML();
@@ -196,6 +201,7 @@ private:
     QList<QUrl> m_closedTabUrls;
     QAction *m_nextTabAction;
     QAction *m_prevTabAction;
+    KActionMenu *m_showTabListAction;
     QAction *m_undoCloseTab;
     QAction *m_showSidebarAction = nullptr;
     QAction *m_lockSidebarAction = nullptr;

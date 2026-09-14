@@ -19,6 +19,7 @@
 #include "shell.h"
 
 // qt/kde includes
+#include <KActionMenu>
 #include <KActionCollection>
 #include <KConfigGroup>
 #include <KIO/Global>
@@ -45,6 +46,7 @@
 #include <QDragMoveEvent>
 #include <QFileDialog>
 #include <QJsonArray>
+#include <QMenu>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QObject>
@@ -53,6 +55,7 @@
 #include <QTabBar>
 #include <QTabWidget>
 #include <QTimer>
+#include <QToolButton>
 
 // local includes
 #include "../interfaces/viewerinterface.h"
@@ -591,6 +594,17 @@ void Shell::setupActions()
     m_prevTabAction->setEnabled(false);
     connect(m_prevTabAction, &QAction::triggered, this, &Shell::activatePrevTab);
 
+    m_showTabListAction = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-list-tree")),
+                                          i18nc("@action:inmenu", "Show Tab List"),
+                                          this);
+    actionCollection()->addAction(QStringLiteral("show-tab-list"), m_showTabListAction);
+    actionCollection()->setDefaultShortcut(m_showTabListAction,
+                                           QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_L));
+    m_showTabListAction->setPopupMode(QToolButton::InstantPopup);
+    m_showTabListAction->setToolTip(i18n("Show a list of open tabs"));
+    connect(m_showTabListAction->menu(), &QMenu::aboutToShow, this, &Shell::rebuildTabListMenu);
+    connect(m_showTabListAction, &QAction::triggered, this, &Shell::showTabList);
+
     // add shortcuts for Shift+Alt+1 to Shift+Alt+9 to switch tabs(browser logic- Shift+Alt+9 is always going to be last tab)
     for (int i = 1; i <= 9; ++i) {
         QAction *action = actionCollection()->addAction(QStringLiteral("tab-switch-%1").arg(i));
@@ -622,6 +636,8 @@ void Shell::setupActions()
     m_lockSidebarAction->setText(i18n("Lock Sidebar"));
     connect(m_lockSidebarAction, &QAction::triggered, m_sidebar, &Sidebar::setLocked);
     m_sidebar->addAction(m_lockSidebarAction);
+
+    updateTabListAction();
 }
 
 void Shell::saveProperties(KConfigGroup &group)
@@ -882,6 +898,10 @@ bool Shell::queryClose()
 
 void Shell::setActiveTab(int tab)
 {
+    if (tab < 0 || tab >= m_tabs.size()) {
+        return;
+    }
+
     if (m_showSidebarAction) {
         m_showSidebarAction->disconnect(m_sidebar);
     }
@@ -892,6 +912,7 @@ void Shell::setActiveTab(int tab)
     // to save and restore it
     const bool isSidebarVisible = m_sidebar->isVisible();
     createGUI(m_tabs[tab].part);
+    insertTabListActionInToolbar();
     m_sidebar->setVisible(isSidebarVisible);
 
     // dock KPart's sidebar if new and make it current
@@ -914,6 +935,7 @@ void Shell::setActiveTab(int tab)
 
     m_printAction->setEnabled(m_tabs[tab].printEnabled);
     m_closeAction->setEnabled(m_tabs[tab].closeEnabled);
+    updateTabListAction();
 }
 
 void Shell::closeTab(int tab)
@@ -944,6 +966,7 @@ void Shell::closeTab(int tab)
             m_nextTabAction->setEnabled(false);
             m_prevTabAction->setEnabled(false);
         }
+        updateTabListAction();
     } else if (closeSuccess && m_tabs.count() == 1) {
         // Show welcome screen when the last tab is closed.
 
@@ -995,6 +1018,7 @@ void Shell::openNewTab(const QUrl &url, const QString &serializedOptions)
 
     if (part->openUrl(url)) {
         m_recent->addUrl(url);
+        updateTabListAction();
     } else {
         setActiveTab(previousActiveTab);
         closeTab(m_tabs.size() - 1);
@@ -1088,6 +1112,24 @@ void Shell::activatePrevTab()
     setActiveTab(prevTab);
 }
 
+void Shell::showTabList()
+{
+    if (!m_showTabListAction || m_tabs.size() < 2) {
+        return;
+    }
+
+    rebuildTabListMenu();
+
+    QWidget *anchorWidget = toolBar() ? toolBar()->widgetForAction(m_showTabListAction) : nullptr;
+
+    QMenu *menu = m_showTabListAction->menu();
+    if (anchorWidget) {
+        menu->popup(anchorWidget->mapToGlobal(QPoint(0, anchorWidget->height())));
+    } else {
+        menu->popup(mapToGlobal(rect().center()));
+    }
+}
+
 void Shell::undoCloseTab()
 {
     if (m_closedTabUrls.isEmpty()) {
@@ -1127,6 +1169,36 @@ int Shell::findTabIndex(const QUrl &url) const
     return (it != m_tabs.end()) ? std::distance(m_tabs.begin(), it) : -1;
 }
 
+void Shell::insertTabListActionInToolbar()
+{
+    if (!m_showTabListAction || m_tabs.isEmpty()) {
+        return;
+    }
+
+    KToolBar *mainToolBar = toolBar();
+    if (!mainToolBar) {
+        return;
+    }
+
+    mainToolBar->removeAction(m_showTabListAction);
+
+    KParts::ReadWritePart *const currentPart = m_tabs[m_tabWidget->currentIndex()].part;
+    QAction *annotationFavoritesAction = currentPart->actionCollection()->action(QStringLiteral("annotation_favorites"));
+    if (!annotationFavoritesAction) {
+        mainToolBar->addAction(m_showTabListAction);
+        return;
+    }
+
+    const QList<QAction *> toolbarActions = mainToolBar->actions();
+    const int annotationActionIndex = toolbarActions.indexOf(annotationFavoritesAction);
+    QAction *beforeAction = nullptr;
+    if (annotationActionIndex != -1 && annotationActionIndex + 1 < toolbarActions.size()) {
+        beforeAction = toolbarActions.at(annotationActionIndex + 1);
+    }
+
+    mainToolBar->insertAction(beforeAction, m_showTabListAction);
+}
+
 void Shell::handleDroppedUrls(const QList<QUrl> &urls)
 {
     for (const QUrl &url : urls) {
@@ -1137,6 +1209,40 @@ void Shell::handleDroppedUrls(const QList<QUrl> &urls)
 void Shell::moveTabData(int from, int to)
 {
     m_tabs.move(from, to);
+}
+
+void Shell::rebuildTabListMenu()
+{
+    QMenu *menu = m_showTabListAction->menu();
+    menu->clear();
+
+    for (int i = 0; i < m_tabs.size(); ++i) {
+        QString title = m_tabWidget->tabText(i);
+        if (title.isEmpty()) {
+            title = i18nc("@item:inmenu", "Untitled");
+        }
+
+        QAction *action = menu->addAction(i18nc("@item:inmenu", "%1. %2", i + 1, title));
+        action->setCheckable(true);
+        action->setChecked(i == m_tabWidget->currentIndex());
+
+        const QUrl url = m_tabs[i].part->url();
+        if (!url.isEmpty()) {
+            action->setToolTip(url.toDisplayString(QUrl::PreferLocalFile));
+        }
+
+        connect(action, &QAction::triggered, this, [this, index = i]() {
+            setActiveTab(index);
+        });
+    }
+}
+
+void Shell::updateTabListAction()
+{
+    if (m_showTabListAction) {
+        m_showTabListAction->setEnabled(m_tabs.size() > 1
+                                        && m_centralStackedWidget->currentWidget() == m_tabWidget);
+    }
 }
 
 void Shell::slotFitWindowToPage(const QSize pageViewSize, const QSize pageSize)
@@ -1153,6 +1259,7 @@ void Shell::hideWelcomeScreen()
     m_centralStackedWidget->setCurrentWidget(m_tabWidget);
     m_sidebar->setVisible(m_showSidebarAction->isChecked());
     m_showSidebarAction->setEnabled(true);
+    updateTabListAction();
 }
 
 void Shell::showWelcomeScreen()
@@ -1160,6 +1267,7 @@ void Shell::showWelcomeScreen()
     m_showSidebarAction->setEnabled(false);
     m_centralStackedWidget->setCurrentWidget(m_welcomeScreen);
     m_sidebar->setVisible(false);
+    updateTabListAction();
 
     refreshRecentsOnWelcomeScreen();
 }

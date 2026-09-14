@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-05 00:43+0000\n"
-"PO-Revision-Date: 2026-03-10 23:19+0100\n"
+"PO-Revision-Date: 2026-09-11 16:25+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -225,7 +225,7 @@ msgstr ""
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "Die DVI-Datei enthält einen ungültigen Sonderbefehl."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format
@@ -350,7 +350,7 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
-"Fehlerhafter Parameter in EPSF Spezial-Befehl.\n"
+"Fehlerhafter Parameter im EPSF Sonderbefehl.\n"
 "Es wird in %2 ein float nach %1 erwartet."
 
 #: special.cpp:446
@@ -374,7 +374,7 @@ msgstr ""
 #: special.cpp:714
 #, kde-format
 msgid "The special command '%1' is not implemented."
-msgstr "Die spezielle Anweisung „%1“ ist noch nicht implementiert."
+msgstr "Der Sonderbefehl „%1“ ist nicht implementiert."
 
 #: TeXFont_PFB.cpp:43
 #, kde-format

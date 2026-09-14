@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-09 00:44+0000\n"
-"PO-Revision-Date: 2026-08-12 01:15+0200\n"
+"PO-Revision-Date: 2026-09-10 21:22+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1711,8 +1711,7 @@ msgid "Add Bookmark"
 msgstr "Lesezeichen hinzufügen"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Kopieren"
@@ -4641,18 +4640,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS-Datei wird als PDF importiert (dies kann eine Weile dauern) …"
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Bitte geben Sie das Passwort zum Lesen des Dokuments ein:"
+msgstr "Bitte geben Sie das Passwort ein, um das Dokument zu lesen: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Falsches Passwort, bitte versuchen Sie es erneut:"
+msgstr "Falsches Passwort, bitte versuchen Sie es erneut: %1"
 
 #: part/part.cpp:1477
 #, kde-format
@@ -5734,12 +5731,11 @@ msgid "Forget all images"
 msgstr "Alle Bilder vergessen"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr ""
-"Geben Sie ein Passwort, falls vorhanden, zum Entsperren des Zertifikats ein "
-"%1"
+"Geben Sie das Passwort/die PIN ein (falls vorhanden), um das Zertifikat zu "
+"entsperren: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

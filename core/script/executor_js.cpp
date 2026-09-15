@@ -58,7 +58,7 @@ public:
     QThread m_watchdogThread;
     QTimer *m_watchdogTimer = nullptr;
 
-    QStack<Event *> m_events;
+    QStack<std::shared_ptr<Event>> m_events;
 };
 
 void ExecutorJSPrivate::initTypes()
@@ -82,7 +82,7 @@ void ExecutorJSPrivate::initTypes()
 void ExecutorJSPrivate::updateEvent()
 {
     if (!m_events.isEmpty()) {
-        Event *event = m_events.top();
+        std::shared_ptr<Event> event = m_events.top();
         const auto eventVal = event ? m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
         m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);
     } else {
@@ -102,7 +102,7 @@ ExecutorJS::~ExecutorJS()
     delete d;
 }
 
-void ExecutorJS::execute(const QString &script, Event *event)
+void ExecutorJS::execute(const QString &script, const std::shared_ptr<Event> &event)
 {
     d->m_events.push(event);
     d->updateEvent();

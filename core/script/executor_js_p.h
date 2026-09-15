@@ -8,6 +8,7 @@
 #define OKULAR_SCRIPT_EXECUTOR_JS_P_H
 
 class QString;
+#include <memory>
 
 namespace Okular
 {
@@ -24,7 +25,7 @@ public:
     ExecutorJS(const ExecutorJS &) = delete;
     ExecutorJS &operator=(const ExecutorJS &) = delete;
 
-    void execute(const QString &script, Event *event);
+    void execute(const QString &script, const std::shared_ptr<Event> &event);
 
 private:
     friend class ExecutorJSPrivate;

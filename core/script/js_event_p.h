@@ -31,7 +31,7 @@ class JSEvent : public QObject
     Q_PROPERTY(int selEnd READ selEnd CONSTANT)
 
 public:
-    explicit JSEvent(Event *event, QObject *parent = nullptr);
+    explicit JSEvent(const std::shared_ptr<Event> &event, QObject *parent = nullptr);
     ~JSEvent() override;
 
     QString name() const;
@@ -51,7 +51,7 @@ public:
     int selEnd() const;
 
 private:
-    Event *m_event = nullptr;
+    std::shared_ptr<Event> m_event;
 };
 
 }

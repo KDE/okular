@@ -8,6 +8,7 @@
 #define OKULAR_SCRIPTER_H
 
 #include "global.h"
+#include <memory>
 
 class QString;
 
@@ -29,7 +30,7 @@ public:
     Scripter(const Scripter &) = delete;
     Scripter &operator=(const Scripter &) = delete;
 
-    void execute(Event *event, ScriptType type, const QString &script);
+    void execute(const std::shared_ptr<Event> &event, ScriptType type, const QString &script);
 
     static bool canExecuteScripts();
 

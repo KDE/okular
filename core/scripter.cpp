@@ -43,7 +43,7 @@ Scripter::~Scripter()
     delete d;
 }
 
-void Scripter::execute(Event *event, ScriptType type, const QString &script)
+void Scripter::execute(const std::shared_ptr<Event> &event, ScriptType type, const QString &script)
 {
     qCDebug(OkularCoreDebug) << "executing the script:" << script;
 #if HAVE_JS

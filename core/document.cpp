@@ -2193,7 +2193,7 @@ void DocumentPrivate::executeScriptEvent(const std::shared_ptr<Event> &event, Sc
     if (!m_scripter) {
         m_scripter = new Scripter(this);
     }
-    m_scripter->execute(event.get(), type, script);
+    m_scripter->execute(event, type, script);
 }
 
 Document::Document(QWidget *widget)

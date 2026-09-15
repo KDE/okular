@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-09 00:44+0000\n"
-"PO-Revision-Date: 2024-03-24 11:41+0100\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"PO-Revision-Date: 2026-09-14 20:10+0200\n"
+"Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -4613,18 +4613,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Importovanie PS súboru ako PDF (môže to chvíľu trvať)..."
 
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Prosím zadajte heslo pre zobrazenie dokumentu:"
+msgstr "Zadajte, prosím, heslo na prečítanie dokumentu: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Nesprávne heslo. Skúste znovu:"
+msgstr "Nesprávne heslo. Skúste znovu: %1"
 
 #: part/part.cpp:1477
 #, kde-format
@@ -5690,10 +5688,9 @@ msgid "Forget all images"
 msgstr "Zabudnúť všetky obrázky"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "Ak chcete odomknúť certifikát, zadajte heslo (ak existuje): %1"
+msgstr "Ak chcete odomknúť certifikát, zadajte heslo/PIN (ak existuje): %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

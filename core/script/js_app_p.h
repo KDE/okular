@@ -8,6 +8,7 @@
 #ifndef OKULAR_SCRIPT_JS_APP_P_H
 #define OKULAR_SCRIPT_JS_APP_P_H
 
+#include <QHash>
 #include <QJSValue>
 #include <QObject>
 #include <QPoint>
@@ -36,7 +37,6 @@ class JSApp : public QObject
 public:
     explicit JSApp(DocumentPrivate *doc, QTimer *watchdogTimer, QObject *parent = nullptr);
     ~JSApp() override;
-    static void clearCachedFields();
 
     int formsVersion() const;
     QString language() const;
@@ -67,6 +67,7 @@ private:
 
     DocumentPrivate *m_doc = nullptr;
     QTimer *m_watchdogTimer = nullptr;
+    mutable QHash<int, QTimer *> m_timerCache;
 };
 
 }

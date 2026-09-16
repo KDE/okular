@@ -27,9 +27,6 @@ using namespace Okular;
 
 #define OKULAR_TIMERID QStringLiteral("okular_timerID")
 
-typedef QHash<int, QTimer *> TimerCache;
-Q_GLOBAL_STATIC(TimerCache, g_timerCache)
-
 // the acrobat version we fake
 static const double fake_acroversion = 8.00;
 
@@ -299,10 +296,10 @@ QJSValue JSApp::setInterval(const QString &cExpr, int nMilliseconds)
 void JSApp::clearInterval(const QJSValue &oInterval)
 {
     const int timerId = oInterval.property(OKULAR_TIMERID).toInt();
-    QTimer *timer = g_timerCache->value(timerId);
+    QTimer *timer = m_timerCache.value(timerId);
     if (timer != nullptr) {
         timer->stop();
-        g_timerCache->remove(timerId);
+        m_timerCache.remove(timerId);
         delete timer;
     }
 }
@@ -324,11 +321,11 @@ QJSValue JSApp::setTimeOut(const QString &cExpr, int nMilliseconds)
 void JSApp::clearTimeOut(const QJSValue &oTime)
 {
     const int timerId = oTime.property(OKULAR_TIMERID).toInt();
-    QTimer *timer = g_timerCache->value(timerId);
+    QTimer *timer = m_timerCache.value(timerId);
 
     if (timer != nullptr) {
         timer->stop();
-        g_timerCache->remove(timerId);
+        m_timerCache.remove(timerId);
         delete timer;
     }
 }
@@ -388,22 +385,17 @@ JSApp::JSApp(DocumentPrivate *doc, QTimer *watchdogTimer, QObject *parent)
 {
 }
 
-JSApp::~JSApp() = default;
+JSApp::~JSApp()
+{
+    qDeleteAll(m_timerCache);
+}
 
 QJSValue JSApp::wrapTimer(QTimer *timer) const
 {
     QJSValue timerObject = qjsEngine(this)->newObject();
     timerObject.setProperty(OKULAR_TIMERID, timer->timerId());
 
-    g_timerCache->insert(timer->timerId(), timer);
+    m_timerCache.insert(timer->timerId(), timer);
 
     return timerObject;
-}
-
-void JSApp::clearCachedFields()
-{
-    if (g_timerCache) {
-        qDeleteAll(g_timerCache->begin(), g_timerCache->end());
-        g_timerCache->clear();
-    }
 }

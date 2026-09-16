@@ -52,12 +52,25 @@ public:
     void updateEvent();
 
     DocumentPrivate *m_doc;
+    std::unique_ptr<JSApp> m_jsapp;
+    std::unique_ptr<JSDocument> m_jsdocument;
+    std::unique_ptr<JSDisplay> m_jsdisplay;
+    std::unique_ptr<JSSpell> m_jsspell;
+    std::unique_ptr<JSUtil> m_jsutil;
+    std::unique_ptr<JSGlobal> m_jsglobal;
     QJSEngine m_interpreter;
 
     QThread m_watchdogThread;
     QTimer *m_watchdogTimer = nullptr;
 
     QStack<std::shared_ptr<Event>> m_events;
+
+    void installGlobalCppProperty(const QString &name, QObject *value)
+    {
+        auto jsValue = m_interpreter.newQObject(value);
+        QJSEngine::setObjectOwnership(value, QJSEngine::CppOwnership);
+        m_interpreter.globalObject().setProperty(name, jsValue);
+    }
 };
 
 void ExecutorJSPrivate::initTypes()
@@ -70,12 +83,18 @@ void ExecutorJSPrivate::initTypes()
     QObject::connect(m_watchdogTimer, &QTimer::timeout, &m_interpreter, [this]() { m_interpreter.setInterrupted(true); }, Qt::DirectConnection);
     m_interpreter.installExtensions(QJSEngine::ConsoleExtension);
 
-    m_interpreter.globalObject().setProperty(QStringLiteral("app"), m_interpreter.newQObject(new JSApp(m_doc, m_watchdogTimer)));
-    m_interpreter.globalObject().setProperty(QStringLiteral("Doc"), m_interpreter.newQObject(new JSDocument(m_doc)));
-    m_interpreter.globalObject().setProperty(QStringLiteral("display"), m_interpreter.newQObject(new JSDisplay));
-    m_interpreter.globalObject().setProperty(QStringLiteral("spell"), m_interpreter.newQObject(new JSSpell));
-    m_interpreter.globalObject().setProperty(QStringLiteral("util"), m_interpreter.newQObject(new JSUtil));
-    m_interpreter.globalObject().setProperty(QStringLiteral("global"), m_interpreter.newQObject(new JSGlobal));
+    m_jsapp = std::make_unique<JSApp>(m_doc, m_watchdogTimer);
+    installGlobalCppProperty(QStringLiteral("app"), m_jsapp.get());
+    m_jsdocument = std::make_unique<JSDocument>(m_doc);
+    installGlobalCppProperty(QStringLiteral("Doc"), m_jsdocument.get());
+    m_jsdisplay = std::make_unique<JSDisplay>();
+    installGlobalCppProperty(QStringLiteral("display"), m_jsdisplay.get());
+    m_jsspell = std::make_unique<JSSpell>();
+    installGlobalCppProperty(QStringLiteral("spell"), m_jsspell.get());
+    m_jsutil = std::make_unique<JSUtil>();
+    installGlobalCppProperty(QStringLiteral("util"), m_jsutil.get());
+    m_jsglobal = std::make_unique<JSGlobal>();
+    installGlobalCppProperty(QStringLiteral("global"), m_jsglobal.get());
 }
 
 void ExecutorJSPrivate::updateEvent()

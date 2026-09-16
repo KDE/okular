@@ -127,7 +127,6 @@ ExecutorJS::ExecutorJS(DocumentPrivate *doc)
 
 ExecutorJS::~ExecutorJS()
 {
-    JSApp::clearCachedFields();
     delete d;
 }
 

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-22 02:40+0000\n"
-"PO-Revision-Date: 2026-07-22 01:10+0900\n"
+"PO-Revision-Date: 2026-09-15 16:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4296,6 +4296,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"這個文件有列印時可能會隱藏或以不同方式顯示的元素。如果這個文件是重要的，請記"
+"得兩者都檢查。"
 
 #: part/part.cpp:480
 #, kde-format

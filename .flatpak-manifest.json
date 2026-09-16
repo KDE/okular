@@ -116,8 +116,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/Orc/discount/archive/v3.0.1.3.tar.gz",
-                    "sha256": "ec04f366cd0a5036598c6a0bf4f7f2582d8ff04b31e81121314b8fde6db6899d",
+                    "url": "https://github.com/Orc/discount/archive/v3.0.2.0.tar.gz",
+                    "sha256": "99f6db36d3fff6c99acd21d4c6096176d4ac8785eab319d0faf77ad995b8b7c5",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 12139,
@@ -229,8 +229,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10071/ghostscript-10.07.1.tar.gz",
-                    "sha256": "2fc74362f9be6fae1b0a65d38fdcfd4f0b518cc3b07c5581fb661eb4d2e15251",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10080/ghostscript-10.08.0.tar.gz",
+                    "sha256": "caf199e3f233f1290b27d0972d636f66c303355f2353309b7bfddf1edda06b3d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -339,8 +339,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz",
-                    "sha256": "ea51b0609f58a9afa063b60daa1539948b62247721e154f4fff0ad3aec9f9756",
+                    "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.9.tar.gz",
+                    "sha256": "700b76b97695b2fab4ef8c79619c68ae57d09e0c130724791cafbd39e0eb4aef",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 769,
@@ -361,8 +361,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/26.04.3/src/libkexiv2-26.04.3.tar.xz",
-                    "sha256": "dd5ddbf107dd9a51454ae83b0537ca80ce31e65da649c0a8db745e356d0d0064",
+                    "url": "https://download.kde.org/stable/release-service/26.08.1/src/libkexiv2-26.08.1.tar.xz",
+                    "sha256": "d50cc3e641d1d9dd6a0f2ea5cd8e0e210e7386f11ba2729b0ade2785400b0e31",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,
@@ -383,8 +383,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.kde.org/stable/release-service/26.04.3/src/kdegraphics-mobipocket-26.04.3.tar.xz",
-                    "sha256": "26cf058d441ec1a23768a47026960a0b7b77ca40dc7de51c89a9b4d463851f92",
+                    "url": "https://download.kde.org/stable/release-service/26.08.1/src/kdegraphics-mobipocket-26.08.1.tar.xz",
+                    "sha256": "69ec5076b02332f23d96cfd7b560ae716726bfab2984ce0285e0a67c1270522a",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 8763,

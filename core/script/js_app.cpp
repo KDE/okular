@@ -310,10 +310,10 @@ void JSApp::clearInterval(const QJSValue &oInterval)
 // app.setTimeOut()
 QJSValue JSApp::setTimeOut(const QString &cExpr, int nMilliseconds)
 {
-    QTimer *timer = new QTimer();
+    QTimer *timer = new QTimer(this);
     timer->setSingleShot(true);
 
-    QObject::connect(timer, &QTimer::timeout, m_doc->m_parent, [=, this]() { m_doc->executeScript(cExpr); });
+    QObject::connect(timer, &QTimer::timeout, this, [=, this]() { m_doc->executeScript(cExpr); });
 
     timer->start(nMilliseconds);
 

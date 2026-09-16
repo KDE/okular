@@ -14,6 +14,7 @@
 namespace Okular
 {
 class DocumentPrivate;
+class JSFieldCache;
 
 class JSDocument : public QObject
 {
@@ -39,7 +40,7 @@ class JSDocument : public QObject
     Q_PROPERTY(QString subject READ subject CONSTANT)
 
 public:
-    explicit JSDocument(DocumentPrivate *doc, QObject *parent = nullptr);
+    explicit JSDocument(DocumentPrivate *doc, const std::shared_ptr<JSFieldCache> &fieldCache, QObject *parent = nullptr);
     ~JSDocument() override;
 
     int numPages() const;
@@ -72,6 +73,7 @@ public:
 
 private:
     DocumentPrivate *m_doc = nullptr;
+    std::shared_ptr<JSFieldCache> m_fieldCache;
 };
 
 }

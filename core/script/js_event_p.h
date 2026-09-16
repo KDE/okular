@@ -13,6 +13,7 @@
 namespace Okular
 {
 class Event;
+class JSFieldCache;
 
 class JSEvent : public QObject
 {
@@ -31,7 +32,7 @@ class JSEvent : public QObject
     Q_PROPERTY(int selEnd READ selEnd CONSTANT)
 
 public:
-    explicit JSEvent(const std::shared_ptr<Event> &event, QObject *parent = nullptr);
+    explicit JSEvent(const std::shared_ptr<Event> &event, const std::shared_ptr<JSFieldCache> &fieldCache, QObject *parent = nullptr);
     ~JSEvent() override;
 
     QString name() const;
@@ -52,6 +53,7 @@ public:
 
 private:
     std::shared_ptr<Event> m_event;
+    std::shared_ptr<JSFieldCache> m_fieldCache;
 };
 
 }

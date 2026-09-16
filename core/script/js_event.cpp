@@ -49,7 +49,7 @@ QJSValue JSEvent::source() const
     if (m_event->eventType() == Event::FieldCalculate) {
         FormField *src = m_event->source();
         if (src) {
-            return JSField::wrapField(qjsEngine(this), src, m_event->sourcePage());
+            return JSField::wrapField(qjsEngine(this), src, m_event->sourcePage(), m_fieldCache);
         }
     }
     return QJSValue(QJSValue::UndefinedValue);
@@ -70,7 +70,7 @@ QJSValue JSEvent::target() const
     case Event::FieldMouseExit: {
         FormField *targetField = static_cast<FormField *>(m_event->target());
         if (targetField) {
-            return JSField::wrapField(qjsEngine(this), targetField, m_event->targetPage());
+            return JSField::wrapField(qjsEngine(this), targetField, m_event->targetPage(), m_fieldCache);
         }
         break;
     }
@@ -136,9 +136,10 @@ int JSEvent::selEnd() const
     return m_event->selEnd();
 }
 
-JSEvent::JSEvent(const std::shared_ptr<Event> &event, QObject *parent)
+JSEvent::JSEvent(const std::shared_ptr<Event> &event, const std::shared_ptr<JSFieldCache> &fieldCache, QObject *parent)
     : QObject(parent)
     , m_event(event)
+    , m_fieldCache(fieldCache)
 {
 }
 

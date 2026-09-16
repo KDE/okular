@@ -161,7 +161,7 @@ QJSValue JSDocument::getField(const QString &cName) const
         const QList<Okular::FormField *> pageFields = (*pIt)->formFields();
         for (FormField *form : pageFields) {
             if (form->fullyQualifiedName() == cName) {
-                return JSField::wrapField(qjsEngine(this), form, *pIt);
+                return JSField::wrapField(qjsEngine(this), form, *pIt, m_fieldCache);
             }
         }
     }
@@ -236,9 +236,10 @@ QJSValue JSDocument::getOCGs([[maybe_unused]] int nPage) const
     return array;
 }
 
-JSDocument::JSDocument(DocumentPrivate *doc, QObject *parent)
+JSDocument::JSDocument(DocumentPrivate *doc, const std::shared_ptr<JSFieldCache> &cache, QObject *parent)
     : QObject(parent)
     , m_doc(doc)
+    , m_fieldCache(cache)
 {
 }
 

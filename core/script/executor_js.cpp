@@ -58,6 +58,7 @@ public:
     std::unique_ptr<JSSpell> m_jsspell;
     std::unique_ptr<JSUtil> m_jsutil;
     std::unique_ptr<JSGlobal> m_jsglobal;
+    std::shared_ptr<JSFieldCache> m_fieldCache = std::make_shared<JSFieldCache>();
     QJSEngine m_interpreter;
 
     QThread m_watchdogThread;
@@ -73,10 +74,10 @@ public:
     }
 };
 
-static std::pair<std::shared_ptr<Event>, std::unique_ptr<JSEvent>> wrapEvent(const std::shared_ptr<Event> &event)
+static std::pair<std::shared_ptr<Event>, std::unique_ptr<JSEvent>> wrapEvent(const std::shared_ptr<Event> &event, const std::shared_ptr<JSFieldCache> &cache)
 {
     if (event) {
-        return std::make_pair(event, std::make_unique<JSEvent>(event));
+        return std::make_pair(event, std::make_unique<JSEvent>(event, cache));
     }
     return std::make_pair(event, std::unique_ptr<JSEvent>());
 }
@@ -93,7 +94,7 @@ void ExecutorJSPrivate::initTypes()
 
     m_jsapp = std::make_unique<JSApp>(m_doc, m_watchdogTimer);
     installGlobalCppProperty(QStringLiteral("app"), m_jsapp.get());
-    m_jsdocument = std::make_unique<JSDocument>(m_doc);
+    m_jsdocument = std::make_unique<JSDocument>(m_doc, m_fieldCache);
     installGlobalCppProperty(QStringLiteral("Doc"), m_jsdocument.get());
     m_jsdisplay = std::make_unique<JSDisplay>();
     installGlobalCppProperty(QStringLiteral("display"), m_jsdisplay.get());
@@ -126,14 +127,13 @@ ExecutorJS::ExecutorJS(DocumentPrivate *doc)
 
 ExecutorJS::~ExecutorJS()
 {
-    JSField::clearCachedFields();
     JSApp::clearCachedFields();
     delete d;
 }
 
 void ExecutorJS::execute(const QString &script, const std::shared_ptr<Event> &event)
 {
-    d->m_events.push(wrapEvent(event));
+    d->m_events.push(wrapEvent(event, d->m_fieldCache));
     d->updateEvent();
 
     QMetaObject::invokeMethod(d->m_watchdogTimer, qOverload<>(&QTimer::start));

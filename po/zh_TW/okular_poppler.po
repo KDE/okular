@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-03 00:41+0000\n"
-"PO-Revision-Date: 2026-07-22 01:10+0900\n"
+"PO-Revision-Date: 2026-09-15 16:36+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -192,8 +192,7 @@ msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "重新命名暫存檔失敗：%1"
@@ -394,10 +393,9 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "修改 NSS 目錄設定後您需要重新啟動 Okular"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "輸入密碼以開啟 %1："
+msgstr "輸入密碼以開啟：%1"
 
 #~ msgid "Enter Password"
 #~ msgstr "輸入密碼"

@@ -23,15 +23,9 @@ using namespace Okular;
 
 #define OKULAR_NAME QStringLiteral("okular_name")
 
-typedef QHash<FormField *, Page *> FormCache;
-Q_GLOBAL_STATIC(FormCache, g_fieldCache)
-typedef QHash<QString, FormField *> ButtonCache;
-Q_GLOBAL_STATIC(ButtonCache, g_buttonCache)
-
 // Helper for modified fields
-static void updateField(FormField *field)
+static void updateField(FormField *field, Page *page)
 {
-    Page *page = g_fieldCache->value(field);
     if (page) {
         Document *doc = PagePrivate::get(page)->m_doc->m_parent;
         const int pageNumber = page->number();
@@ -40,6 +34,51 @@ static void updateField(FormField *field)
     } else {
         qWarning() << "Could not get page of field" << field;
     }
+}
+
+static void syncRadioGroupVisibility(FormField *field, const std::shared_ptr<JSFieldCache> &fieldCache)
+{
+    if (!field || field->type() != FormField::FormButton) {
+        return;
+    }
+
+    FormFieldButton *button = static_cast<FormFieldButton *>(field);
+
+    if (button->buttonType() != FormFieldButton::Radio) {
+        return;
+    }
+
+    Page *page = fieldCache->pageForField(field);
+    if (!page) {
+        return;
+    }
+
+    const QString groupName = field->name();
+    const bool visible = field->isVisible();
+    const bool printable = field->isPrintable();
+
+    const QList<FormField *> fields = page->formFields();
+
+    for (FormField *other : fields) {
+        if (other == field || other->type() != FormField::FormButton) {
+            continue;
+        }
+
+        FormFieldButton *otherButton = static_cast<FormFieldButton *>(other);
+
+        if (otherButton->buttonType() != FormFieldButton::Radio || other->name() != groupName) {
+            continue;
+        }
+
+        other->setVisible(visible);
+        other->setPrintable(printable);
+
+        fieldCache->insertForm(other, page);
+
+        updateField(other, page);
+    }
+
+    updateField(field, page);
 }
 
 // Field.doc
@@ -65,7 +104,7 @@ void JSField::setReadonly(bool readonly)
 {
     m_field->setReadOnly(readonly);
 
-    updateField(m_field);
+    updateField(m_field, m_fieldCache->pageForField(m_field));
 }
 
 static QString fieldGetTypeHelper(const FormField *field)
@@ -183,16 +222,16 @@ void JSField::setValue(const QJSValue &value)
         const QString text = value.toString();
         if (text == QStringLiteral("Yes")) {
             button->setState(true);
-            updateField(m_field);
+            updateField(m_field, m_fieldCache->pageForField(m_field));
         } else if (text == QStringLiteral("Off")) {
             button->setState(false);
-            updateField(m_field);
+            updateField(m_field, m_fieldCache->pageForField(m_field));
         }
         break;
     }
     case FormField::FormText: {
         FormFieldText *textField = static_cast<FormFieldText *>(m_field);
-        Page *page = g_fieldCache->value(m_field);
+        Page *page = m_fieldCache->pageForField(m_field);
         if (page) {
             Document *document = PagePrivate::get(page)->m_doc->m_parent;
             const QString text = value.toString();
@@ -209,7 +248,7 @@ void JSField::setValue(const QJSValue &value)
         FormFieldChoice *choice = static_cast<FormFieldChoice *>(m_field);
         if (choice->choiceType() == FormFieldChoice::ComboBox) {
             const QString text = value.toString();
-            Page *page = g_fieldCache->value(m_field);
+            Page *page = m_fieldCache->pageForField(m_field);
             if (page) {
                 Document *document = PagePrivate::get(page)->m_doc->m_parent;
                 const int idx = choice->choices().indexOf(text);
@@ -250,8 +289,8 @@ bool JSField::hidden() const
 void JSField::setHidden(bool hidden)
 {
     m_field->setVisible(!hidden);
-
-    updateField(m_field);
+    syncRadioGroupVisibility(m_field, m_fieldCache);
+    updateField(m_field, m_fieldCache->pageForField(m_field));
 }
 
 // Field.display (getter)
@@ -285,7 +324,8 @@ void JSField::setDisplay(int display)
         m_field->setPrintable(true);
         break;
     }
-    updateField(m_field);
+    syncRadioGroupVisibility(m_field, m_fieldCache);
+    updateField(m_field, m_fieldCache->pageForField(m_field));
 }
 
 QJSValue JSField::numItems() const
@@ -336,7 +376,7 @@ void JSField::setCurrentValueIndices(const QJSValue &value)
         }
         const QList<int> choiceList = tempChoiceList;
         choice->setCurrentChoices(choiceList);
-        updateField(choice);
+        updateField(choice, m_fieldCache->pageForField(choice));
     }
 }
 
@@ -345,7 +385,7 @@ QJSValue JSField::buttonGetIcon([[maybe_unused]] int nFace) const
 {
     QJSValue fieldObject = qjsEngine(this)->newObject();
     fieldObject.setProperty(OKULAR_NAME, m_field->fullyQualifiedName());
-    g_buttonCache->insert(m_field->fullyQualifiedName(), m_field);
+    m_fieldCache->insertButton(m_field->fullyQualifiedName(), m_field);
 
     return fieldObject;
 }
@@ -359,42 +399,32 @@ void JSField::buttonSetIcon(const QJSValue &oIcon, [[maybe_unused]] int nFace)
 
     if (m_field->type() == Okular::FormField::FormButton) {
         FormFieldButton *button = static_cast<FormFieldButton *>(m_field);
-        const auto formField = g_buttonCache->value(fieldName);
+        const auto formField = m_fieldCache->buttonForName(fieldName);
         if (formField) {
             button->setIcon(formField);
         }
     }
 
-    updateField(m_field);
+    updateField(m_field, m_fieldCache->pageForField(m_field));
 }
 
-JSField::JSField(FormField *field, QObject *parent)
+JSField::JSField(FormField *field, const std::shared_ptr<JSFieldCache> &fieldCache, QObject *parent)
     : QObject(parent)
     , m_field(field)
+    , m_fieldCache(fieldCache)
 {
 }
 
 JSField::~JSField() = default;
 
-QJSValue JSField::wrapField(QJSEngine *engine, FormField *field, Page *page)
+QJSValue JSField::wrapField(QJSEngine *engine, FormField *field, Page *page, const std::shared_ptr<JSFieldCache> &fieldCache)
 {
     // ### cache unique wrapper
-    QJSValue f = engine->newQObject(new JSField(field, engine));
+    QJSValue f = engine->newQObject(new JSField(field, fieldCache, engine));
     QJSEngine::setObjectOwnership(f.toQObject(), QJSEngine::CppOwnership);
     f.setProperty(QStringLiteral("page"), page->number());
-    g_fieldCache->insert(field, page);
+    fieldCache->insertForm(field, page);
     return f;
-}
-
-void JSField::clearCachedFields()
-{
-    if (g_fieldCache.exists()) {
-        g_fieldCache->clear();
-    }
-
-    if (g_buttonCache.exists()) {
-        g_buttonCache->clear();
-    }
 }
 
 QJSValue JSField::getItemAt(int nIdx, bool bExportValue)

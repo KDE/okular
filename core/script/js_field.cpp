@@ -425,7 +425,8 @@ JSField::~JSField() = default;
 QJSValue JSField::wrapField(QJSEngine *engine, FormField *field, Page *page)
 {
     // ### cache unique wrapper
-    QJSValue f = engine->newQObject(new JSField(field));
+    QJSValue f = engine->newQObject(new JSField(field, engine));
+    QJSEngine::setObjectOwnership(f.toQObject(), QJSEngine::CppOwnership);
     f.setProperty(QStringLiteral("page"), page->number());
     g_fieldCache->insert(field, page);
     return f;

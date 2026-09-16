@@ -26,9 +26,9 @@
 
 #include <QDebug>
 #include <QJSEngine>
-#include <QStack>
 #include <QThread>
 #include <QTimer>
+#include <stack>
 
 using namespace Okular;
 
@@ -63,7 +63,7 @@ public:
     QThread m_watchdogThread;
     QTimer *m_watchdogTimer = nullptr;
 
-    QStack<std::shared_ptr<Event>> m_events;
+    std::stack<std::pair<std::shared_ptr<Event>, std::unique_ptr<JSEvent>>> m_events;
 
     void installGlobalCppProperty(const QString &name, QObject *value)
     {
@@ -72,6 +72,14 @@ public:
         m_interpreter.globalObject().setProperty(name, jsValue);
     }
 };
+
+static std::pair<std::shared_ptr<Event>, std::unique_ptr<JSEvent>> wrapEvent(const std::shared_ptr<Event> &event)
+{
+    if (event) {
+        return std::make_pair(event, std::make_unique<JSEvent>(event));
+    }
+    return std::make_pair(event, std::unique_ptr<JSEvent>());
+}
 
 void ExecutorJSPrivate::initTypes()
 {
@@ -99,10 +107,13 @@ void ExecutorJSPrivate::initTypes()
 
 void ExecutorJSPrivate::updateEvent()
 {
-    if (!m_events.isEmpty()) {
-        std::shared_ptr<Event> event = m_events.top();
-        const auto eventVal = event ? m_interpreter.newQObject(new JSEvent(event)) : QJSValue(QJSValue::UndefinedValue);
-        m_interpreter.globalObject().setProperty(QStringLiteral("event"), eventVal);
+    if (!m_events.empty()) {
+        const auto &top = m_events.top();
+        if (top.first) {
+            installGlobalCppProperty(QStringLiteral("event"), top.second.get());
+        } else {
+            m_interpreter.globalObject().setProperty(QStringLiteral("event"), QJSValue(QJSValue::UndefinedValue));
+        }
     } else {
         m_interpreter.globalObject().setProperty(QStringLiteral("event"), QJSValue(QJSValue::UndefinedValue));
     }
@@ -122,7 +133,7 @@ ExecutorJS::~ExecutorJS()
 
 void ExecutorJS::execute(const QString &script, const std::shared_ptr<Event> &event)
 {
-    d->m_events.push(event);
+    d->m_events.push(wrapEvent(event));
     d->updateEvent();
 
     QMetaObject::invokeMethod(d->m_watchdogTimer, qOverload<>(&QTimer::start));

@@ -7,6 +7,7 @@
 
 #include "js_document_p.h"
 
+#include <qjsengine.h>
 #include <qwidget.h>
 
 #include <QDebug>
@@ -83,7 +84,8 @@ QJSValue JSDocument::dataObjects() const
     if (files) {
         QList<EmbeddedFile *>::ConstIterator it = files->begin(), itEnd = files->end();
         for (int i = 0; it != itEnd; ++it, ++i) {
-            QJSValue newdata = qjsEngine(this)->newQObject(new JSData(*it));
+            QJSValue newdata = qjsEngine(this)->newQObject(new JSData(*it, qjsEngine(this)));
+            QJSEngine::setObjectOwnership(newdata.toQObject(), QJSEngine::CppOwnership);
             dataObjects.setProperty(i, newdata);
         }
     }
@@ -222,7 +224,8 @@ QJSValue JSDocument::getOCGs([[maybe_unused]] int nPage) const
         for (int j = 0; j < model->columnCount(); ++j) {
             const QModelIndex index = model->index(i, j);
 
-            QJSValue item = qjsEngine(this)->newQObject(new JSOCG(model, i, j));
+            QJSValue item = qjsEngine(this)->newQObject(new JSOCG(model, i, j, qjsEngine(this)));
+            QJSEngine::setObjectOwnership(item.toQObject(), QJSEngine::CppOwnership);
             item.setProperty(QStringLiteral("name"), model->data(index, Qt::DisplayRole).toString());
             item.setProperty(QStringLiteral("initState"), model->data(index, Qt::CheckStateRole).toBool());
 

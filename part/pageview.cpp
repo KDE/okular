@@ -4041,6 +4041,7 @@ static double parseZoomString(QString z)
     // kdelibs4 sometimes adds accelerators to actions' text directly :(
     z.remove(QLatin1Char('&'));
     z.remove(QLatin1Char('%'));
+    z.remove(QChar(u'٪'));
     return QLocale().toDouble(z) / 100.0;
 }
 

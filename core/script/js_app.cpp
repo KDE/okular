@@ -285,7 +285,7 @@ QJSValue JSApp::setInterval(const QString &cExpr, int nMilliseconds)
 {
     QTimer *timer = new QTimer();
 
-    QObject::connect(timer, &QTimer::timeout, m_doc->m_parent, [=, this]() { m_doc->executeScript(cExpr); });
+    QObject::connect(timer, &QTimer::timeout, this, [=, this]() { m_doc->executeScript(cExpr); });
 
     timer->start(nMilliseconds);
 

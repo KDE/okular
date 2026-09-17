@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2026-09-02 16:57+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -3683,7 +3683,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Espace réservé de signature (Veuillez cliquer pour signer)"
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "&Signer..."
@@ -5724,7 +5724,7 @@ msgstr "Déplier toutes les éléments"
 msgid "Collapse all elements"
 msgstr "Replier tous les éléments"
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, kde-format
 msgid "Properties"
 msgstr "Propriétés"

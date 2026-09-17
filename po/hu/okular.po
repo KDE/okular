@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3672,7 +3672,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Aláírás helykitöltő (kattintson az aláíráshoz)"
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
 #| msgctxt "@action:button"
 #| msgid "Sign"
@@ -5706,7 +5706,7 @@ msgstr "Minden elem kibontása"
 msgid "Collapse all elements"
 msgstr "Minden elem összecsukása"
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, kde-format
 msgid "Properties"
 msgstr "Tulajdonságok"

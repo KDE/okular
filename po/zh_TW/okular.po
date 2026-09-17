@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2026-09-15 16:44+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3608,7 +3608,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "簽名佔位欄位（點擊以簽名）"
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "簽署(&S)…"
@@ -5578,7 +5578,7 @@ msgstr "展開所有元素"
 msgid "Collapse all elements"
 msgstr "收縮所有元素"
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, kde-format
 msgid "Properties"
 msgstr "屬性"

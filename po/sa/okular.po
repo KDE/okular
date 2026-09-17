@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3671,7 +3671,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "अहस्ताक्षरितहस्ताक्षरक्षेत्रम् (हस्ताक्षरं कर्तुं क्लिक् कुर्वन्तु)"
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
 #| msgctxt "@action:button"
 #| msgid "Sign"
@@ -5691,7 +5691,7 @@ msgstr "सर्वाणि तत्त्वानि विस्तार�
 msgid "Collapse all elements"
 msgstr "सर्वाणि तत्त्वानि संकुचयन्तु"
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, kde-format
 msgid "Properties"
 msgstr "गुणाः"

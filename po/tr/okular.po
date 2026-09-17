@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2026-09-02 14:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3647,7 +3647,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "İmza yeri (imzalamak için tıklayın)"
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "İ&mzala…"
@@ -5663,7 +5663,7 @@ msgstr "Tüm Ögeleri Genişlet"
 msgid "Collapse all elements"
 msgstr "Tüm Ögeleri Daralt"
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, kde-format
 msgid "Properties"
 msgstr "Özellikler"

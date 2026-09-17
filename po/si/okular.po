@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:42+0000\n"
 "PO-Revision-Date: 2011-08-18 18:18+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -3921,7 +3921,7 @@ msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:95
+#: part/formwidgets.cpp:1350 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr ""
@@ -5996,7 +5996,7 @@ msgstr ""
 msgid "Collapse all elements"
 msgstr ""
 
-#: part/signaturepanel.cpp:99
+#: part/signaturepanel.cpp:101
 #, fuzzy, kde-format
 #| msgid "&Properties"
 msgid "Properties"

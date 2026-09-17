@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-05 02:43+0000\n"
-"PO-Revision-Date: 2026-09-07 12:54+0300\n"
+"PO-Revision-Date: 2026-09-16 14:54+0300\n"
 "Last-Translator: Liudas Ališauskas <liudas.alisauskas@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -218,7 +218,7 @@ msgstr "DVI kodas nurodė į šriftą, kuris anksčiau nebuvo apibrėžtas."
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "DVI faile yra netinkama specialioji komanda."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format

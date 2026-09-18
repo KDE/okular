@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 02:40+0000\n"
+"POT-Creation-Date: 2026-09-18 02:39+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3994,22 +3994,22 @@ msgstr "पाठं प्रतिलिपितु"
 msgid "Go to '%1'"
 msgstr "'%1' इत्यत्र गच्छन्तु।"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4206 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "फिट चौड़ाई"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "फिट पेज"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "ऑटो फिट"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4018,68 +4018,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' इत्यनेन सह अन्वेष्टुम्"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4526
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "जालशॉर्टकट् विन्यस्तं कुर्वन्तु..."
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "अस्य लिङ्कस्य अनुसरणं कुर्वन्तु"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "एतत् ध्वनिं वादयन्तु"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "ध्वनिं स्थगयतु"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "लिङ्क पता प्रतिलिपि कुर्वन्तु"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "अस्मिन् दस्तावेजे '%1' इति अन्वेष्टुम्"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Welcome"
 msgstr "स्वागतम्‌"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5278
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "जूमिंग क्षेत्रं चिनोतु। जूम आउट् कर्तुं राइट्-क्लिक् कुर्वन्तु ।"
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5293
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "वर्धितं दृश्यं द्रष्टुं क्लिक् कुर्वन्तु ।"
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5310
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "प्रतिलिपिं कर्तुं पाठस्य/चित्रस्य परितः आयतं आकर्षयन्तु ।"
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Select text"
 msgstr "पाठं चिनोतु"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5342
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4088,26 +4088,26 @@ msgstr ""
 "सारणीयाः परितः आयतं आकर्षयन्तु, ततः विभक्तुं किनारेषु समीपे क्लिक् कुर्वन्तु; स्वच्छं कर्तुं Esc "
 "नुदन्तु।"
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5357 part/pageview.cpp:5365
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5358
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5359 part/pageview.cpp:5374
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "प्रमाणपत्रप्रबन्धके पश्यन्तु"
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5370
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4121,13 +4121,13 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5373 part/pageview.cpp:5385
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5383
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4137,17 +4137,17 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5408
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "भवतः अरक्षिताः परिवर्तनाः सन्ति । कृपया दस्तावेजं हस्ताक्षरं कर्तुं पूर्वं रक्षन्तु।"
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5431
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "हस्ताक्षरक्षेत्रं सम्मिलितुं आयतं आकर्षयन्तु"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5581
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"

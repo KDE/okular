@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 02:40+0000\n"
+"POT-Creation-Date: 2026-09-18 02:39+0000\n"
 "PO-Revision-Date: 2026-08-12 22:18+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -3957,22 +3957,22 @@ msgstr "Копиране на текст"
 msgid "Go to '%1'"
 msgstr "Отиване до „%1“"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4206 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "До широчината на страницата"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "До височината на страницата"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автоматично напасване"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3981,70 +3981,70 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Търсене на „%1“ с"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4526
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Настройки на уеб-препратки…"
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "Към връзката"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "Пусни този звук"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "Спиране на звука"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Копиране адреса на връзката"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Търсене на „%1“ в този документ"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Welcome"
 msgstr "Добре дошли"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5278
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Маркирайте желаната част от документа. За намаляване щракнете с десния бутон "
 "на мишката."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5293
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Щракнете, за да видите увеличения изглед."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5310
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr ""
 "Изчертайте правоъгълник около текста/изображението, което искате да копирате."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Select text"
 msgstr "Избиране на текст"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5342
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4053,7 +4053,7 @@ msgstr ""
 "Начертайте правоъгълник около таблицата, след това щракнете в близост до "
 "ръбовете, за да разделите; натиснете Esc, за да изчистите."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5357 part/pageview.cpp:5365
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4062,17 +4062,17 @@ msgstr ""
 "Всички ваши сертификати за подписване са невалидни. В случай, че "
 "подписването е работило преди, моля, проверете датите им на валидност."
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5358
 #, kde-format
 msgid "No valid certificates"
 msgstr "Няма валидни сертификати"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5359 part/pageview.cpp:5374
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Отваряне на мениджъра за сертификати"
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5370
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4084,12 +4084,12 @@ msgstr ""
 "информация, моля вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</"
 "a> в ръководството."
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5373 part/pageview.cpp:5385
 #, kde-format
 msgid "No certificates found"
 msgstr "Няма намерени сертификати"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5383
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4100,18 +4100,18 @@ msgstr ""
 "вижте раздела за <a href=„%1“>Добавяне на цифрови подписи</a> в "
 "ръководството."
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5408
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Имате незаписани промени. Моля, запишете документа, преди да го подпишете."
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5431
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Начертайте правоъгълник, за да вмъкнете полето за подпис"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5581
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

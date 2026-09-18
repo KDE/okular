@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 02:40+0000\n"
+"POT-Creation-Date: 2026-09-18 02:39+0000\n"
 "PO-Revision-Date: 2026-08-17 08:10+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3961,22 +3961,22 @@ msgstr "ტექსტის კოპირება"
 msgid "Go to '%1'"
 msgstr "%1-ზე გადასვლა"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4206 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "სიგანის ჩატევა"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "გვერდის ჩატევა"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "ავტომატური ჩატევა"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3985,67 +3985,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1'-ის მოძებნა მოხდება"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4526
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "ვებ-მალსახმობების მორგება…"
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "ამ ბმულის მიყოლა"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "ამ ხმის დაკვრა"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "ხმის გაჩერება"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ბმულის მისამართის კოპირება"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "'%1'-ის მოძებნა ამ დოკუმენტში"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Welcome"
 msgstr "კეთილი იყოს თქვენი მობრძანება"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5278
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "აირჩიეთ გასადიდებელი ადგილი. მარჯვენა წკაპი დასაპატარავებლად."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5293
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "დააწკაპუნეთ გადიდებული ხედის სანახავად."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5310
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "დახატეთ მართკუთხედი ტექსტის/გრაფიკის გარშემო, მის დასაკოპირებლად."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Select text"
 msgstr "ტექსტის მონიშვნა"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5342
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4054,7 +4054,7 @@ msgstr ""
 "დახატეთ მართკუთხედი ცხრილის გარშემო, შემდეგ დააწკაპუნეთ წიბოებთან, რომ "
 "გაყოთ. დააწექით Esc-ს გასასუფთავებლად."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5357 part/pageview.cpp:5365
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4063,17 +4063,17 @@ msgstr ""
 "ყველა თქვენი ხელმოწერის სერტიფიკატი არასწორია. თუ ხელმოწერა ადრე მუშაობდა, "
 "შეამოწმეთ მათი ვარგისობის ვადა."
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5358
 #, kde-format
 msgid "No valid certificates"
 msgstr "სწორი სერტიფიკატების გარეშე"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5359 part/pageview.cpp:5374
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "სერტიფიკატების მმართველის გახსნა"
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5370
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4085,12 +4085,12 @@ msgstr ""
 "ინფორმაციისთვის სახელმძღვანელოში იხილეთ სექცია <a href=\"%1\">ციფრული "
 "ხელმოწერების დამატება</a>."
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5373 part/pageview.cpp:5385
 #, kde-format
 msgid "No certificates found"
 msgstr "სერტიფიკატები აღმოჩენილი არაა"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5383
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4100,18 +4100,18 @@ msgstr ""
 "ხელმოწერის სერტიფიკატები ვერ ვიპოვე.<br/>მეტი ინფორმაციისთვის იხილეთ სექცია "
 "<a href=\"%1\">ციფრული ხელმოწერების დამატებაზე</a> სახელმძღვანელოში."
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5408
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "გაქვთ შეუნახავი ცვლილებები. შეინახეთ დოკუმენტი, სანამ მას ხელს მოაწერთ."
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5431
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "დახატეთ მართკუთხედი ხელმოწერის ველის ჩასასმელად"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5581
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "დახატეთ მართკუთხედი იმ გვერდის გარშემო, რომელიც გნებავთ, ხილული დარჩეს"

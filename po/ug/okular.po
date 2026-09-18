@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 02:40+0000\n"
+"POT-Creation-Date: 2026-09-18 02:39+0000\n"
 "PO-Revision-Date: 2026-06-01 16:30-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -3949,22 +3949,22 @@ msgstr "تېكىست كۆچۈر"
 msgid "Go to '%1'"
 msgstr "«%1» غا يۆتكەل"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4206 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "كەڭلىككە سىغدۇر"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "بەتكە سىغدۇر"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "ئۆزلۈكىدىن سىغدۇر"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3973,67 +3973,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "«%1» نى ئىزدەش ئۇسۇلى"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4526
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "تور تېزلەتمىسىنى سەپلەش…"
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "بۇ ئۇلانمىغا ئەگەش"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "بۇ ئاۋازنى ياڭرات"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "ئاۋازنى توختات"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ئۇلانما ئادرېسىنى كۆچۈر"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "بۇ پۈتۈكتىكى «%1» نى ئىزدە"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5152
 #, kde-format
 msgid "Welcome"
 msgstr "مەرھابا"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5278
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "چوڭايتىدىغان دائىرىنى تاللاڭ. چاشقىنەك ئوڭ چېكىلسە كىچىكلىتىدۇ."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5293
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "چوڭايتىپ كۆرۈشتە چېكىلىدۇ."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5310
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "كۆچۈرىدىغان تېكىست/گىرافىك ئەتراپىدا تىك تۆت تەرەپلىك سىزىلىدۇ."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5326
 #, kde-format
 msgid "Select text"
 msgstr "تېكىست تاللا"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5342
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4042,7 +4042,7 @@ msgstr ""
 "جەدۋەلنىڭ ئەتراپىدا تىك تۆت تەرەپلىكتىن بىرنى سىزىپ ئاندىن بۆلۈش ئۈچۈن "
 "گىرۋەككە يېقىن جاي چېكىلىدۇ؛ Esc بېسىلسا تازىلايدۇ."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5357 part/pageview.cpp:5365
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4051,17 +4051,17 @@ msgstr ""
 "بارلىق ئىمزالىق گۇۋاھنامىڭىز ئىناۋەتسىز. ئەگەر ئىلگىرى ئىمزا قويۇش "
 "ئادەتتىكىدەك ئىشلىگەن بولسا، گۇۋاھنامىنىڭ ئىناۋەتلىك ۋاقتىنى تەكشۈرۈڭ."
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5358
 #, kde-format
 msgid "No valid certificates"
 msgstr "ئىناۋەتلىك گۇۋاھنامە يوق"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5359 part/pageview.cpp:5374
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "گۇۋاھنامە باشقۇرغۇچنى ئاچ"
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5370
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4073,12 +4073,12 @@ msgstr ""
 "كۆرۈش ئۈچۈن قوللانمىدىكى <a href=\"%1\">رەقەملىك ئىمزا قوشۇش</a> قا ئائىت "
 "بۆلەكنى كۆرۈڭ."
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5373 part/pageview.cpp:5385
 #, kde-format
 msgid "No certificates found"
 msgstr "ھېچقانداق گۇۋاھنامە تېپىلمىدى"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5383
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4089,18 +4089,18 @@ msgstr ""
 "كۆرۈش ئۈچۈن قوللانمىدىكى <a href=\"%1\">رەقەملىك ئىمزا قوشۇش</a> قا ئائىت "
 "بۆلەكنى كۆرۈڭ."
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5408
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "ساقلىمىغان ئۆزگەرتىشلىرىڭىز بار. پۈتۈككە ئىمزا قويۇشتىن ئىلگىرى ئۇنى ساقلاڭ."
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5431
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ئىمزا بۆلىكى قىستۇرۇش ئۈچۈن تىك تۆت تەرەپلىك سىزىلىدۇ"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5581
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

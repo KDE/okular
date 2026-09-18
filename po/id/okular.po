@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 00:42+0000\n"
+"POT-Creation-Date: 2026-09-18 00:43+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -4042,22 +4042,22 @@ msgstr "Salin Teks"
 msgid "Go to '%1'"
 msgstr "Menuju ke '%1'"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4207 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "Pas Lebar"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Fit Page"
 msgstr "Pas Halaman"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Auto Fit"
 msgstr "Auto Pas"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4230
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox"
 #| msgid "%1%"
@@ -4068,68 +4068,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4513
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Pencarian untuk '%1% dengan"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4527
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "Konfigurasikan Pintasan Web..."
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4553
 #, kde-format
 msgid "Follow This Link"
 msgstr "Ikuti Tautan Ini"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4556
 #, kde-format
 msgid "Play this Sound"
 msgstr "Bunyikan Suara ini"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4558
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hentikan Suara"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4564
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Salin Alamat Tautan"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4621
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Mencari '%1' dalam dokumen ini"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "Selamat Datang"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5279
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Pilih area pengezooman. Klik kanan untuk mengezoom perkecil."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5294
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik untuk melihat tinjauan diperbesar."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Gambari sebuah persegi di sekitar teks/grafik untuk menyalin."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5327
 #, kde-format
 msgid "Select text"
 msgstr "Pilih teks"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5343
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4138,26 +4138,26 @@ msgstr ""
 "Gambari sebuah persegi di sekitar tabel, kemudian klik dekat pinggiran untuk "
 "membaginya; tekan Esc untuk membersihkan."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5358 part/pageview.cpp:5366
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5359
 #, fuzzy, kde-format
 #| msgid "Certificates:"
 msgid "No valid certificates"
 msgstr "Sertifikat:"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5360 part/pageview.cpp:5375
 #, fuzzy, kde-format
 #| msgid "View Certificate..."
 msgid "Open Certificate Manager"
 msgstr "Tampilan Sertifikat..."
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5371
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4172,13 +4172,13 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5374 part/pageview.cpp:5386
 #, fuzzy, kde-format
 #| msgid "Certificates:"
 msgid "No certificates found"
 msgstr "Sertifikat:"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5384
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4189,19 +4189,19 @@ msgstr ""
 "lebih lanjut, silakan lihat bagian tentang <a href=\"%1\"> Menambahkan "
 "Tandatangan Digital</a> dalam manual."
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5409
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Anda memiliki perubahan yang tak disimpan. Mohon simpan dokumen sebelum "
 "menandatanganinya."
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5432
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Gambari sebuah persegi untuk menyisipkan bidang tandatangan"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5582
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 00:42+0000\n"
+"POT-Creation-Date: 2026-09-18 00:43+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -4284,22 +4284,22 @@ msgstr "Copyî tecse"
 msgid "Go to '%1'"
 msgstr "Potchî al pådje %1"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4207 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "Al lårdjeur del pådje"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Fit Page"
 msgstr "Forrimpli l' pådje"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Auto Fit"
 msgstr ""
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4230
 #, fuzzy, kde-format
 #| msgid "%1:"
 msgctxt ""
@@ -4309,71 +4309,71 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1:"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4513
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Dji cwire '%1' avou"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4527
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "Configure Web Shortcuts…"
 msgstr "Apontyî l' håyneu..."
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4553
 #, kde-format
 msgid "Follow This Link"
 msgstr "Shuvoz ciste hårdêye"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4556
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play this Sound"
 msgstr "Djouwer son..."
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4558
 #, fuzzy, kde-format
 #| msgid "Sound"
 msgid "Stop Sound"
 msgstr "Son"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4564
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Copyî l' adresse del hårdêye"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4621
 #, fuzzy, kde-format
 #| msgid "Search for '%1' with"
 msgid "Search for '%1' in this document"
 msgstr "Dji cwire '%1' avou"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "Wilicome"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5279
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Tchoezixhoz l' redjon d' zoumaedje. Clitchîz droet po diszoumer."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5294
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr ""
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Dessinez on rectangue åtoû do tecse/di l' imådje a copyî."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5327
 #, kde-format
 msgid "Select text"
 msgstr "Tchoezi tecse"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5343
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid ""
@@ -4381,26 +4381,26 @@ msgid ""
 "Esc to clear."
 msgstr "Dessinez on rectangue åtoû do tecse/di l' imådje a copyî."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5358 part/pageview.cpp:5366
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5359
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "No valid certificates"
 msgstr "Apontyî l' håyneu..."
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5360 part/pageview.cpp:5375
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "Open Certificate Manager"
 msgstr "Apontyî l' håyneu..."
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5371
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4408,13 +4408,13 @@ msgid ""
 "section about <a href=\"%1\">Adding Digital Signatures</a> in the manual."
 msgstr ""
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5374 part/pageview.cpp:5386
 #, fuzzy, kde-format
 #| msgid "Configure Viewer..."
 msgid "No certificates found"
 msgstr "Apontyî l' håyneu..."
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5384
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4422,17 +4422,17 @@ msgid ""
 "the manual."
 msgstr ""
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5409
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5432
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr ""
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5582
 #, fuzzy, kde-format
 #| msgid "Draw a rectangle around the text/graphics to copy."
 msgid "Draw a rectangle around the page area you wish to keep visible"

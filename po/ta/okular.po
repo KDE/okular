@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 00:42+0000\n"
+"POT-Creation-Date: 2026-09-18 00:43+0000\n"
 "PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -3963,22 +3963,22 @@ msgstr "உரையை நகலெடு"
 msgid "Go to '%1'"
 msgstr "'%1' என்பதற்கு செல்"
 
-#: part/pageview.cpp:4205 part/part.cpp:3218
+#: part/pageview.cpp:4207 part/part.cpp:3218
 #, kde-format
 msgid "Fit Width"
 msgstr "அகலம் படி"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Fit Page"
 msgstr "பக்க அளவுபடி"
 
-#: part/pageview.cpp:4205
+#: part/pageview.cpp:4207
 #, kde-format
 msgid "Auto Fit"
 msgstr "தானியக்கம்"
 
-#: part/pageview.cpp:4228
+#: part/pageview.cpp:4230
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -3987,69 +3987,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4511
+#: part/pageview.cpp:4513
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' என்பதற்கு இதைக்கொண்டு தேடு"
 
-#: part/pageview.cpp:4525
+#: part/pageview.cpp:4527
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "இணைய சுருக்குவழிகளை அமை…"
 
-#: part/pageview.cpp:4551
+#: part/pageview.cpp:4553
 #, kde-format
 msgid "Follow This Link"
 msgstr "இந்த இணைப்புக்கு செல்"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4556
 #, kde-format
 msgid "Play this Sound"
 msgstr "இந்த ஒலியை இயக்கு"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4558
 #, kde-format
 msgid "Stop Sound"
 msgstr "ஒலியை நிறுத்து"
 
-#: part/pageview.cpp:4562
+#: part/pageview.cpp:4564
 #, kde-format
 msgid "Copy Link Address"
 msgstr "இணைப்பின் முகவரியை நகலெடு"
 
-#: part/pageview.cpp:4619
+#: part/pageview.cpp:4621
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "'%1' என்பதற்கு இந்த ஆவணத்தில் தேடு"
 
-#: part/pageview.cpp:5151
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "நல்வரவு"
 
-#: part/pageview.cpp:5277
+#: part/pageview.cpp:5279
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "பெரிதாக்க வேண்டிய பரப்பை தேர்ந்தெடுங்கள். உருப்பெருக்கத்தை ரத்து செய்ய வலது-க்ளிக் "
 "செய்யுங்கள்."
 
-#: part/pageview.cpp:5292
+#: part/pageview.cpp:5294
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "பெரிதாக்கப்பட்ட காட்சியைக் காண க்ளிக் செய்யுங்கள்."
 
-#: part/pageview.cpp:5309
+#: part/pageview.cpp:5311
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "உரை/படங்களை நகலெடுக்க, அவற்றைச் சுற்றி ஒரு செவ்வகத்தை வரையுங்கள்."
 
-#: part/pageview.cpp:5325
+#: part/pageview.cpp:5327
 #, kde-format
 msgid "Select text"
 msgstr "உரையைத் தேர்ந்தெடு"
 
-#: part/pageview.cpp:5341
+#: part/pageview.cpp:5343
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4058,7 +4058,7 @@ msgstr ""
 "அட்டவணையைச் சுற்றி ஒரு செவ்வகத்தை வரைந்து, அதை பிரிக்க ஓரங்களில் க்ளிக் செய்யுங்கள்; "
 "நிராகரிக்க Esc விசையை அழுத்துங்கள்."
 
-#: part/pageview.cpp:5356 part/pageview.cpp:5364
+#: part/pageview.cpp:5358 part/pageview.cpp:5366
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4067,17 +4067,17 @@ msgstr ""
 "உங்கள் கையொப்ப சான்றிதழ்கள் அனைத்தும் செல்லுபடியாகாதவை. இதற்கு முன்னர் நீங்கள் வெற்றிகரமாக "
 "கையொப்பமிட்டிருந்தால், உங்கள் சான்றிதழ்கள் காலாவதியாகியுள்ளனவா என பார்க்கவும்."
 
-#: part/pageview.cpp:5357
+#: part/pageview.cpp:5359
 #, kde-format
 msgid "No valid certificates"
 msgstr "செல்லுபடியாகும் சான்றிதழ்கள் இல்லை"
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5373
+#: part/pageview.cpp:5360 part/pageview.cpp:5375
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "சான்றிதழ் மேலாளியைத் திற"
 
-#: part/pageview.cpp:5369
+#: part/pageview.cpp:5371
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4088,12 +4088,12 @@ msgstr ""
 "சான்றிதழ் மேலாளியைத் திறக்கவும்.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியைப் பார்க்கவும்."
 
-#: part/pageview.cpp:5372 part/pageview.cpp:5384
+#: part/pageview.cpp:5374 part/pageview.cpp:5386
 #, kde-format
 msgid "No certificates found"
 msgstr "எந்த சான்றிதழும் கண்டுபிடிக்கப்படவில்லை"
 
-#: part/pageview.cpp:5382
+#: part/pageview.cpp:5384
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4103,17 +4103,17 @@ msgstr ""
 "கையொப்ப சான்றிதழ்கள் எதுவும் இல்லை.<br/>மேலும் விவரங்களுக்கு,கையேட்டின் <a href="
 "\"%1\">டிஜிட்டலாக கையொப்பமிடல்</a> என்ற பகுதியை பாருங்கள்."
 
-#: part/pageview.cpp:5407
+#: part/pageview.cpp:5409
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "சேமிக்கப்படாத மாற்றங்கள் உள்ளன. கையொப்பம் இடுவதற்கு முன் ஆவணத்தை சேமியுங்கள்."
 
-#: part/pageview.cpp:5430
+#: part/pageview.cpp:5432
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "கையொப்பப் புலத்தை நுழைக்க ஒரு செவ்வகத்தை வரையுங்கள்"
 
-#: part/pageview.cpp:5580
+#: part/pageview.cpp:5582
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""

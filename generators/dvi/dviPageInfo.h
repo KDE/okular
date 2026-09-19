@@ -42,6 +42,7 @@ public:
 };
 
 /* quick&dirty hack to cheat the dviRenderer class... */
-#define RenderedDviPagePixmap dviPageInfo
-#define RenderedDocumentPagePixmap dviPageInfo
+using RenderedDviPagePixmap = dviPageInfo;
+using RenderedDocumentPagePixmap = dviPageInfo;
+
 #endif

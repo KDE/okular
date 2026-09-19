@@ -69,9 +69,11 @@ void PageItem::setFlickable(QQuickItem *flickable)
     m_flickable = flickable;
 
     if (flickable) {
+        // NOLINTBEGIN(clazy-old-style-connect);
         // QQuickFlickable is not exported so we need the old-style connects here
         connect(flickable, SIGNAL(contentXChanged()), this, SLOT(contentXChanged())); // clazy:exclude=old-style-connect
         connect(flickable, SIGNAL(contentYChanged()), this, SLOT(contentYChanged())); // clazy:exclude=old-style-connect
+        // NOLINTEND(clazy-old-style-connect);
     }
 
     Q_EMIT flickableChanged();

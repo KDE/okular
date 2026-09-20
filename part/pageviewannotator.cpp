@@ -1183,7 +1183,7 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
                         break;
                     }
                     case Okular::FieldAlreadySigned: // We should not end up here
-                    case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+                    case Okular::KeyMissing:
                     case Okular::InternalSigningError:
                         KMessageBox::detailedError(m_pageView, errorString(result.first, static_cast<int>(result.first)), result.second);
                         break;

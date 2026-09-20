@@ -5738,7 +5738,7 @@ PageView::FinishSigningResult PageView::finishSigning()
         return Success;
     }
     case Okular::FieldAlreadySigned: // We should not end up here
-    case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+    case Okular::KeyMissing:
     case Okular::InternalSigningError:
         KMessageBox::detailedError(this, errorString(result.first, static_cast<int>(result.first)), result.second);
         return Failed;

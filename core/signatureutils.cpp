@@ -504,8 +504,9 @@ QString Okular::errorString(SigningResult result, const QVariant &additionalMess
     switch (result) {
     case SigningSuccess:
         return {};
+    case KeyMissing:
+        return i18nc("signing error", "Signing certificate not found. If you are using a smartcard, it might have been removed or the signature store changed");
     case FieldAlreadySigned: // We should not end up here, code should have caught it earlier and not allowed signature
-    case KeyMissing:         // Given we provide a key id back to poppler, this should only be able to happen if the user removes the key underneath us
     case InternalSigningError:
         return i18nc("%1 is a error code", "Internal signing error. Please report a bug with the steps to reproduce it. Error code %1", additionalMessage.toInt());
     case GenericSigningError:

@@ -319,7 +319,7 @@ void signUnsignedSignature(const Okular::FormFieldSignature *form, PageView *pag
             break;
         }
         case Okular::FieldAlreadySigned: // We should not end up here
-        case Okular::KeyMissing:         // unless the user modified the key store after opening the dialog, this should not happen
+        case Okular::KeyMissing:
         case Okular::InternalSigningError:
             KMessageBox::detailedError(pageView, errorString(success.first, static_cast<int>(success.first)), success.second);
             break;

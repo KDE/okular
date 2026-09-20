@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-18 00:43+0000\n"
-"PO-Revision-Date: 2026-07-17 10:36+0200\n"
+"PO-Revision-Date: 2026-09-19 17:11+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.11.70\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -1700,8 +1700,7 @@ msgid "Add Bookmark"
 msgstr "Legg til bokmerke"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Kopier"
@@ -4345,6 +4344,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Dokumentet inneheld element som kan verta usynlege eller sjå annleis ut ved "
+"utskrift. For viktige dokument bør du sjekka begge."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4609,18 +4610,16 @@ msgstr "Importerer PS-fil som PDF (dette kan ta ei stund) …"
 
 # Dette er «Skriv inn» + «passordet for å lesa dokumentet», ikkje «Skriv inn passordet» + «for å lesa dokumentet». Det er med andre ord eit spesielt passord som vert brukt for å lesa dokumentet (i motsetning til passordet ein brukar for å redigera det).
 #: part/part.cpp:1464
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "Skriv inn passordet for å lesa dokumentet:"
+msgstr "Skriv inn passordet for å lesa dokumentet: %1"
 
 #: part/part.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "Feil passord. Prøv igjen:"
+msgstr "Feil passord. Prøv igjen: %1"
 
 #: part/part.cpp:1477
 #, kde-format
@@ -5686,10 +5685,10 @@ msgid "Forget all images"
 msgstr "Gløym alle bileta"
 
 #: part/signaturepartutils.cpp:231
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "Skriv inn passordet (om aktuelt) for å låsa opp sertifikatet: %1"
+msgstr ""
+"Skriv inn passordet/PIN-koden (om aktuelt) for å låsa opp sertifikatet: %1"
 
 #: part/signaturepartutils.cpp:256
 #, kde-format

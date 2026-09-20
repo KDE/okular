@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-03 00:41+0000\n"
-"PO-Revision-Date: 2026-07-17 10:36+0200\n"
+"PO-Revision-Date: 2026-09-19 17:10+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.11.70\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -193,8 +193,7 @@ msgid "&Load Signatures"
 msgstr "&Last inn signaturar"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file: %1"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Klarte ikkje endra namn på mellombels fil: %1"
@@ -402,7 +401,6 @@ msgstr ""
 "Du må starta Okular på nytt etter endring av innstillingar for NSS-katalogen"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgid "Enter password to open: %1"
-msgstr "Skriv inn passord for å opna %1:"
+msgstr "Skriv inn passord for å opna: %1"

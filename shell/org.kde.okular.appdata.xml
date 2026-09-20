@@ -3,7 +3,6 @@
   <id>org.kde.okular.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+ and GFDL-1.3</project_license>
-  <developer_name translate="no">KDE</developer_name>
   <name>Okular</name>
   <name xml:lang="ar">اوكلار</name>
   <name xml:lang="ast">Okular</name>
@@ -415,10 +414,17 @@
       <image>https://cdn.kde.org/screenshots/okular/okular.png</image>
     </screenshot>
   </screenshots>
+  <developer id="org.kde">
+    <name>KDE</name>
+    <url>https://kde.org</url>
+  </developer>
   <url type="homepage">https://okular.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=okular</url>
   <url type="help">https://docs.kde.org/?application=okular</url>
   <url type="donation">https://www.kde.org/community/donations/?app=okular&amp;source=appdata</url>
+  <url type="translate">https://community.kde.org/Get_Involved/translation</url>
+  <url type="vcs-browser">https://invent.kde.org/graphics/okular</url>
+  <url type="contribute">https://community.kde.org/Get_Involved</url>
   <branding>
     <color type="primary" scheme_preference="light">#4ba2ff</color>
     <color type="primary" scheme_preference="dark">#1363b3</color>

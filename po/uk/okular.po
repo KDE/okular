@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-20 12:51+0000\n"
-"PO-Revision-Date: 2026-09-01 21:00+0300\n"
+"PO-Revision-Date: 2026-09-20 19:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -603,6 +603,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"Не знайдено сертифіката для підписування. Якщо ви користуєтеся карткою "
+"пам'яті, її могло бути вийнято або змінилося сховище для зберігання підписів"
 
 #: core/signatureutils.cpp:511
 #, kde-format

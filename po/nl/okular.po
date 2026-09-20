@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-20 12:51+0000\n"
-"PO-Revision-Date: 2026-09-01 11:42+0200\n"
+"PO-Revision-Date: 2026-09-20 18:07+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -610,6 +610,9 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"Ondertekeningscertificaat niet gevonden. Als u een smartcard gebruikt, is "
+"deze mogelijk verwijderd of is de opslaglocatie voor handtekeningen "
+"gewijzigd."
 
 #: core/signatureutils.cpp:511
 #, kde-format

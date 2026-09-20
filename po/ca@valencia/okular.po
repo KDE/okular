@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-09-06 17:42+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -594,7 +594,15 @@ msgstr "No tornes a mostrar este missatge"
 msgid "Not Available"
 msgstr "No disponible"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -604,23 +612,23 @@ msgstr ""
 "S'ha produït un error intern de signatura. Informeu l'error amb els passos "
 "per a reproduir-lo. Codi d'error %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "No s'ha pogut signar el document: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Signatura cancel·lada per l'usuari"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Ha fallat la signatura: Frase de pas incorrecta"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -630,7 +638,7 @@ msgstr ""
 "No s'ha pogut escriure el document signat a <filename>%1</filename>. "
 "Assegureu-vos que heu seleccionat una carpeta amb permís d'escriptura"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "S'ha produït un error desconegut de signatura"

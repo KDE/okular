@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2011-01-17 21:56+0100\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux@walon.org>\n"
@@ -627,7 +627,15 @@ msgstr "Clôre ci messaedje"
 msgid "Not Available"
 msgstr "Nou discrijhaedje."
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -635,23 +643,23 @@ msgid ""
 "Error code %1"
 msgstr ""
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr ""
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr ""
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr ""
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, fuzzy, kde-kuit-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgctxt "%1 is a filename with path"
@@ -662,7 +670,7 @@ msgstr ""
 "Dji n' a savou schaper l' fitchî dins « %1 ». Sayîz del schaper a ene ôte "
 "plaece."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, fuzzy, kde-format
 #| msgid "Unknown File"
 msgid "Unknown signing error"

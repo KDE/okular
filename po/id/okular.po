@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2024-10-03 20:41+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -597,7 +597,15 @@ msgstr "Jangan tampilkan pesan ini lagi"
 msgid "Not Available"
 msgstr "Tidak tersedia"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -605,7 +613,7 @@ msgid ""
 "Error code %1"
 msgstr ""
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid "Could not load the file <filename>%1</filename>"
@@ -613,17 +621,17 @@ msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Tidak bisa memuat file <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr ""
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr ""
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid ""
@@ -637,7 +645,7 @@ msgstr ""
 "Tidak dapat menimpa <filename>%1</filename> karena file itu hanya-baca. Coba "
 "simpan ke lokasi yang lain atau ubah izin file itu."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, fuzzy, kde-format
 #| msgid "Unknown File"
 msgid "Unknown signing error"

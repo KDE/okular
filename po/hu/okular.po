@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -593,7 +593,15 @@ msgstr "Ne jelenjen meg többet ez az üzenet"
 msgid "Not Available"
 msgstr "Nem érhető el"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -603,24 +611,24 @@ msgstr ""
 "Belső aláírási hiba. Jelezze ezt a hibát a reprodukálás lépéseivel együtt. "
 "Hibakód: %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Nem sikerült aláírni a(z) <filename>%1</filename> dokumentumot"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "A felhasználó megszakította az aláírást"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "Nem sikerült aláírni. Hibás jelszó"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -630,7 +638,7 @@ msgstr ""
 "Nem sikerült az aláírt dokumentum írása a(z) <filename>%1</filename> fájlba, "
 "ellenőrizze, hogy van írási jogosultsága a kiválasztott mappához."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Ismeretlen aláírás hiba"

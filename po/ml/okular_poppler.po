@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-03 00:41+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2019-12-12 21:10+0000\n"
 "Last-Translator: Vivek KJ Pazhedath <vivekkj2004@gmail.com>\n"
 "Language-Team: Swathanthra|സ്വതന്ത്ര Malayalam|മലയാളം Computing|കമ്പ്യൂട്ടിങ്ങ് <smc."
@@ -376,6 +376,8 @@ msgstr ""
 
 #: pdfsignatureutils.cpp:236
 #, kde-format
+msgctxt ""
+"%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
 msgstr ""
 

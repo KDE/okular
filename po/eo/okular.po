@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -595,7 +595,15 @@ msgstr "Ne montri ĉi tiun mesaĝon denove"
 msgid "Not Available"
 msgstr "Ne disponebla"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -605,25 +613,25 @@ msgstr ""
 "Interna subskrib-eraro. Bonvolu raporti cimon kun la paŝoj por reprodukti "
 "ĝin. Erarkodo %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, fuzzy, kde-kuit-format
 #| msgid "Could not sign document with location: <filename>%1</filename>"
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Ne eblis ŝargi la dosieron <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Subskribado nuligita per uzanto"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "Ne eblis subskribi. Malĝusta pasfrazo"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, fuzzy, kde-kuit-format
 #| msgid ""
 #| "Could not write signed document at <filename>%1</filename>, please ensure "
@@ -636,7 +644,7 @@ msgstr ""
 "Ne eblis skribi subskribitan dokumenton ĉe <filename>%1</filename>, bonvolu "
 "certigi ke vi elektis dosierujon kun skribpermeso."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Nekonata subskrib-eraro"

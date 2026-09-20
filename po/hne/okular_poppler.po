@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-03 00:41+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2009-02-26 16:59+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -381,6 +381,8 @@ msgstr ""
 #: pdfsignatureutils.cpp:236
 #, fuzzy, kde-format
 #| msgid "Document Password"
+msgctxt ""
+"%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
 msgstr "कागद पासवर्ड"
 

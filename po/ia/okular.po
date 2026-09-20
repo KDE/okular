@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-09-02 16:04+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -589,7 +589,15 @@ msgstr "Non monstra iste message de nove"
 msgid "Not Available"
 msgstr "Non disponibile"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -599,23 +607,23 @@ msgstr ""
 "Error interne a signar. Pro favor tu reporta un bug con le passos per "
 "reproducer lo.Codice de error %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Non poteva signar le documento:  <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Signar cancellate per le usator"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Signar falleva:  Phrase de contrasigno errate"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -625,7 +633,7 @@ msgstr ""
 "Non poteva scriber le documento signate a <filename>%1</filename>, pro "
 "favor  tu assecura te que tu ha seligite un dossier con permission a scriber"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Error de signar Incognite"

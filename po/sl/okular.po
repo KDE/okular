@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-09-01 06:38+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -592,7 +592,15 @@ msgstr "Ne kaži tega sporočila več"
 msgid "Not Available"
 msgstr "Ni na voljo"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -602,23 +610,23 @@ msgstr ""
 "Notranja napaka pri podpisovanju. Prijavite napako s koraki za njeno "
 "reprodukcijo. Koda napake %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Ni bilo mogoče podpisati dokumenta: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Podpisovanje je preklical uporabnik"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Neuspešno podpisovanje: Napačna geselna fraza"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -628,7 +636,7 @@ msgstr ""
 "Ni bilo mogoče zapisati podpisanega dokumenta v <filename>%1</filename>, "
 "zagotovite, da ste izbrali mapo z dovoljenjem za pisanje"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Neznana napaka pri podpisovanju"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-09-19 17:11+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -592,7 +592,15 @@ msgstr "Ikkje vis denne meldinga igjen"
 msgid "Not Available"
 msgstr "Ikkje tilgjengeleg"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -602,23 +610,23 @@ msgstr ""
 "Intern signeringsfeil. Meld frå om feilen og korleis ein kan gjenskapa han. "
 "Feilkode %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Klarte ikkje signera dokumentet: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Signering avbroten av brukar"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Feil ved signering: feil passfrase"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -628,7 +636,7 @@ msgstr ""
 "Klarte ikkje lagra det signerte dokumentet til <filename>%1</filename>. Sjå "
 "til at du har valt ei mappe der du har skriveløyve."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Ukjend signeringsfeil"

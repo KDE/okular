@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-03-01 19:37+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -620,7 +620,15 @@ msgstr "Älä näytä tätä viestiä uudelleen"
 msgid "Not Available"
 msgstr "Ei saatavilla"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -630,24 +638,24 @@ msgstr ""
 "Sisäinen allekirjoitusvirhe. Ilmoita ohjelmavirheestä ja kerro miten tämän "
 "voi toistaa. Virhekoodi %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Tiedostoa ei voitu allekirjoittaa: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Käyttäjä perui allekirjoittamisen"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "Ei voitu allekirjoittaa. Väärä salasana"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -657,7 +665,7 @@ msgstr ""
 "Allekirjoitettua tiedostoa ei voitu kirjoittaa kansioon <filename>%1</"
 "filename>: varmista, että kansioon on kirjoitusoikeus"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Tuntematon allekirjoittamisvirhe"

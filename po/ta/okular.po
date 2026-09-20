@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -586,7 +586,15 @@ msgstr "இந்த செய்தியை மறுபடியும் க
 msgid "Not Available"
 msgstr "கிட்டவில்லை"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -596,24 +604,24 @@ msgstr ""
 "உள்ளக கையொப்ப சிக்கல். இதைத் தூண்டும் முறையை விவரிக்கும் பிழையறிக்கையை சமர்பிக்கவும். "
 "சிக்கல் எண்: %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "இக்கோப்பிற்கு கையொப்பமிட முடியவில்லை: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "கையொப்பமிடுவதை பயனர் ரத்து செய்தார்"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "கையொப்பமிட முடியவில்லை. தவறான கடவுச்சொல்"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -623,7 +631,7 @@ msgstr ""
 "<filename>%1</filename> என்ற இடத்தில் கையொப்பமிட்ட ஆவணத்தை சேமிக்க முடியவில்லை. "
 "அவ்வடைவில் எழுதும் அனுமதி உள்ளதா என சரிபார்க்கவும்."
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "கையொப்பமிடுவதில் தெரியாத சிக்கல்"

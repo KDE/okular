@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-06-01 16:30-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -588,7 +588,15 @@ msgstr "بۇ ئۇچۇرنى قايتا كۆرسەتمە"
 msgid "Not Available"
 msgstr "ئىشلەتكىلى بولمايدۇ"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -598,24 +606,24 @@ msgstr ""
 "ئىچكى ئىمزا خاتالىقى. كەمتۈك دوكلاتى يوللاپ خاتالىق كۆرۈلگەن قەدەم باسقۇچنى "
 "قوشۇڭ. خاتالىق كودى %1"
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "پۈتۈككە ئىمزا قويالمايدۇ: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "ئىشلەتكۈچى ئىمزانى بىكار قىلدى"
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "ئىمزا قويالمايدۇ. ئىم ئىبارە خاتا"
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -625,7 +633,7 @@ msgstr ""
 "ئىمزالىق پۈتۈكنى <filename>%1</filename> غا يازالمايدۇ، يېزىش ئىجازىتى بار "
 "قىسقۇچ تاللىغانلىقىڭىزنى جەزملەڭ"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, kde-format
 msgid "Unknown signing error"
 msgstr "يوچۇن ئىمزا خاتالىقى"

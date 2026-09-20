@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-18 00:43+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -591,7 +591,15 @@ msgstr "पुनः एतत् सन्देशं न दर्शयत�
 msgid "Not Available"
 msgstr "न उपलब्धम्"
 
-#: core/signatureutils.cpp:510
+#: core/signatureutils.cpp:508
+#, kde-format
+msgctxt "signing error"
+msgid ""
+"Signing certificate not found. If you are using a smartcard, it might have "
+"been removed or the signature store changed"
+msgstr ""
+
+#: core/signatureutils.cpp:511
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -599,7 +607,7 @@ msgid ""
 "Error code %1"
 msgstr ""
 
-#: core/signatureutils.cpp:512
+#: core/signatureutils.cpp:513
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid "Could not load the file <filename>%1</filename>"
@@ -607,17 +615,17 @@ msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "<filename>%1</filename> इति सञ्चिकां लोड् कर्तुं न शक्यते"
 
-#: core/signatureutils.cpp:514
+#: core/signatureutils.cpp:515
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr ""
 
-#: core/signatureutils.cpp:516
+#: core/signatureutils.cpp:517
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr ""
 
-#: core/signatureutils.cpp:518
+#: core/signatureutils.cpp:519
 #, fuzzy, kde-kuit-format
 #| msgctxt "@info"
 #| msgid ""
@@ -631,7 +639,7 @@ msgstr ""
 "<filename>%1</filename> इत्यस्य अधिलेखनं कर्तुं न शक्यते यतः सा सञ्चिका केवलं पठनीयः "
 "अस्ति । अन्यस्मिन् स्थाने रक्षितुं वा तस्याः सञ्चिकायाः अनुमतिं परिवर्तयितुं वा प्रयतस्व ।"
 
-#: core/signatureutils.cpp:520
+#: core/signatureutils.cpp:521
 #, fuzzy, kde-format
 #| msgid "Unknown File"
 msgid "Unknown signing error"

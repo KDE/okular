@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-03 00:41+0000\n"
+"POT-Creation-Date: 2026-09-20 12:51+0000\n"
 "PO-Revision-Date: 2026-09-19 17:10+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -401,6 +401,9 @@ msgstr ""
 "Du må starta Okular på nytt etter endring av innstillingar for NSS-katalogen"
 
 #: pdfsignatureutils.cpp:236
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Enter password to open: %1"
+msgctxt ""
+"%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
 msgstr "Skriv inn passord for å opna: %1"

@@ -233,7 +233,7 @@ QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(bool
         auto PDFGeneratorNSSPasswordCallback = [&userCancelled](const char *element) -> char * {
             QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr);
             dialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
-            dialog->setPrompt(i18n("Enter password to open: %1", QString::fromUtf8(element)));
+            dialog->setPrompt(i18nc("%1 is the thing to open (hardware or software token, certificate DB,...)", "Enter password to open: %1", QString::fromUtf8(element)));
             if (!dialog->exec()) {
                 *userCancelled = true;
                 delete dialog;

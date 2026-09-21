@@ -59,11 +59,9 @@ build_clazy_clang_tidy:
   - mkdir -p /tmp/okular_build
   - cd /tmp/okular_build
   - cmake -DOKULAR_UI=both -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja -DCMAKE_INSTALL_PREFIX=$CI_PROJECT_DIR/_install -DFORCE_NOT_REQUIRED_DEPENDENCIES=KF6DocTools -DKF6DocTools_FOUND=false $CI_PROJECT_DIR
-  - cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$CI_PROJECT_DIR"'"))]' > compile_commands.aux.json
-  - cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json
   - cp "$CI_PROJECT_DIR/.clang-tidy" .
   - CLAZY_IGNORE_DIRS="settings_core.[cpp|h]|settings.[cpp.h]|pdfsettings.h|gssettings.h|ui_selectcertificatedialog.h|okularplugin_qmltyperegistrations.cpp|okularkirigami_qmltyperegistrations.cpp|okularkirigami_qmlcache_loader.cpp|okularplugin_qmlcache_loader.cpp|mobile/components/.rcc/qmlcache/|mobile/app/.rcc/qmlcache" ninja -k 0
-  - run-clang-tidy
+  - run-clang-tidy -source-filter="^$CI_PROJECT_DIR/(?!core/synctex/)"
  artifacts: null
 
 clang_format:

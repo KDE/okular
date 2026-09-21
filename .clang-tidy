@@ -36,8 +36,8 @@ Checks:   >
     -performance-unnecessary-copy-initialization,
     -performance-enum-size
 WarningsAsErrors: '*'
-HeaderFilterRegex: '.*/okular/.*'
-ExcludeHeaderFilterRegex: '.*/moc_.*\.cpp$'
+# Exclude all moc files
+HeaderFilterRegex: '^(?!.*\/moc_.*\.cpp$)'
 FormatStyle:     none
 User:            user
 CheckOptions:

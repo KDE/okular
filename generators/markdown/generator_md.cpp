@@ -63,3 +63,4 @@ void MarkdownGenerator::addPages(KConfigDialog *dlg)
 Q_LOGGING_CATEGORY(OkularMdDebug, "org.kde.okular.generators.md", QtWarningMsg)
 
 #include "generator_md.moc"
+#include "moc_generator_md.cpp"

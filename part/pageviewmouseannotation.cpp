@@ -671,3 +671,5 @@ void MouseAnnotation::processAction(const AnnotationDescription &ad)
         }
     }
 }
+
+#include "moc_pageviewmouseannotation.cpp"

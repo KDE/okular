@@ -123,3 +123,5 @@ void GSRendererThread::run()
         }
     }
 }
+
+#include "moc_rendererthread.cpp"

@@ -56,3 +56,5 @@ JSData::JSData(EmbeddedFile *f, QObject *parent)
 }
 
 JSData::~JSData() = default;
+
+#include "moc_js_data_p.cpp"

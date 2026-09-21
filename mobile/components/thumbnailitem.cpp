@@ -15,3 +15,5 @@ ThumbnailItem::ThumbnailItem(QQuickItem *parent)
 ThumbnailItem::~ThumbnailItem()
 {
 }
+
+#include "moc_thumbnailitem.cpp"

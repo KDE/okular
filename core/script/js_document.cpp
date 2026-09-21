@@ -240,3 +240,5 @@ JSDocument::JSDocument(DocumentPrivate *doc, QObject *parent)
 }
 
 JSDocument::~JSDocument() = default;
+
+#include "moc_js_document_p.cpp"

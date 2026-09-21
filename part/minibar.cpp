@@ -471,3 +471,5 @@ void PagesEdit::wheelEvent(QWheelEvent *e)
         m_miniBar->slotEmitPrevPage();
     }
 }
+
+#include "moc_minibar.cpp"

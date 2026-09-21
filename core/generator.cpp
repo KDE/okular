@@ -832,3 +832,5 @@ QDebug operator<<(QDebug str, const Okular::PixmapRequest &req)
     str << "- force:" << (reqPriv->mForce ? "true" : "false");
     return str;
 }
+
+#include "moc_generator.cpp"

@@ -67,3 +67,5 @@ QSize ImageItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
 }
 
 } // namespace SignaturePartUtils
+
+#include "moc_signaturepartutilsimageitemdelegate.cpp"

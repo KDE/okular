@@ -137,3 +137,5 @@ void ColorModeMenu::slotChanged()
         a->setEnabled(enabled);
     }
 }
+
+#include "moc_colormodemenu.cpp"

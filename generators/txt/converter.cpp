@@ -36,3 +36,5 @@ QTextDocument *Converter::convert(const QString &fileName)
 
     return textDocument;
 }
+
+#include "moc_converter.cpp"

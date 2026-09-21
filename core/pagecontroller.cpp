@@ -39,3 +39,5 @@ void PageController::imageRotationDone(const ThreadWeaver::JobPointer &j)
         Q_EMIT rotationFinished(job->page()->m_number, job->page()->m_page);
     }
 }
+
+#include "moc_pagecontroller_p.cpp"

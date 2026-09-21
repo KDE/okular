@@ -401,3 +401,4 @@ Okular::Annotation *DjVuGenerator::convertKDjVuAnnotation(int w, int h, KDjVu::A
 }
 
 #include "generator_djvu.moc"
+#include "moc_generator_djvu.cpp"

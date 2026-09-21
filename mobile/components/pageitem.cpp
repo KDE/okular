@@ -404,3 +404,5 @@ void PageItem::setIsThumbnail(bool thumbnail)
     m_redrawTimer->setSingleShot(true);
     */
 }
+
+#include "moc_pageitem.cpp"

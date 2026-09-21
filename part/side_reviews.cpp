@@ -364,4 +364,5 @@ QAbstractItemModel *Reviews::annotationsModel() const
     return m_model;
 }
 
+#include "moc_side_reviews.cpp"
 #include "side_reviews.moc"

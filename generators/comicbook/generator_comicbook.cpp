@@ -87,3 +87,4 @@ Okular::Document::PrintError ComicBookGenerator::print(QPrinter &printer)
 }
 
 #include "generator_comicbook.moc"
+#include "moc_generator_comicbook.cpp"

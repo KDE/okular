@@ -127,3 +127,5 @@ void RecentImagesModel::saveBack()
 }
 
 } // namespace SignaturePartUtils
+
+#include "moc_signaturepartutilsrecentimagesmodel.cpp"

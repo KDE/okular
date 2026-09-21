@@ -101,3 +101,4 @@ Okular::Document::PrintError FaxGenerator::print(QPrinter &printer)
 }
 
 #include "generator_fax.moc"
+#include "moc_generator_fax.cpp"

@@ -53,3 +53,5 @@ int ChooseEngineDialog::selectedGenerator() const
 {
     return m_widget->engineList->currentIndex();
 }
+
+#include "moc_chooseenginedialog_p.cpp"

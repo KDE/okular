@@ -143,3 +143,5 @@ void RecentItemsModel::setMaxItems(const int maxItems)
 {
     m_maxItems = maxItems;
 }
+
+#include "moc_recentitemsmodel.cpp"

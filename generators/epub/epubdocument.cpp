@@ -162,3 +162,5 @@ QVariant EpubDocument::loadResource(int type, const QUrl &name)
 
     return resource;
 }
+
+#include "moc_epubdocument.cpp"

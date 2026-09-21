@@ -6212,3 +6212,4 @@ void Okular::NewSignatureData::setLeftFontSize(double fontSize)
 #undef foreachObserverD
 
 #include "document.moc"
+#include "moc_document.cpp"

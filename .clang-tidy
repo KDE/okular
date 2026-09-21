@@ -37,6 +37,7 @@ Checks:   >
     -performance-enum-size
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*/okular/.*'
+ExcludeHeaderFilterRegex: '.*/moc_.*\.cpp$'
 FormatStyle:     none
 User:            user
 CheckOptions:

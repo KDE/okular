@@ -141,3 +141,5 @@ void EditDrawingToolDialog::loadTool(const QDomElement &toolElement)
         m_name->setText(toolElement.attribute(QStringLiteral("name")));
     }
 }
+
+#include "moc_editdrawingtooldialog.cpp"

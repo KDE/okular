@@ -166,3 +166,4 @@ Okular::DocumentInfo KIMGIOGenerator::generateDocumentInfo(const QSet<Okular::Do
 }
 
 #include "generator_kimgio.moc"
+#include "moc_generator_kimgio.cpp"

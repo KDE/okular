@@ -222,3 +222,5 @@ void PDFSettingsWidget::warnRestartNeeded()
         QMessageBox::information(this, i18n("Restart needed"), i18n("You need to restart Okular after changing the NSS directory settings"));
     }
 }
+
+#include "moc_pdfsettingswidget.cpp"

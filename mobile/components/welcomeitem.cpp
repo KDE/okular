@@ -45,3 +45,5 @@ void WelcomeItem::urlOpened(const QUrl &url)
     cg.writePathEntry(QStringLiteral("File%1").arg(numRows + 1), url.toDisplayString(QUrl::PreferLocalFile));
     cg.writePathEntry(QStringLiteral("Name%1").arg(numRows + 1), shortName);
 }
+
+#include "moc_welcomeitem.cpp"

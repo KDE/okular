@@ -610,3 +610,4 @@ void AnnotWindow::slotHandleContentsChangedByUndoRedo(Okular::Annotation *annot,
 }
 
 #include "annotwindow.moc"
+#include "moc_annotwindow.cpp"

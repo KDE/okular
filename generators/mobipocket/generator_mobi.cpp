@@ -26,3 +26,4 @@ void MobiGenerator::addPages(KConfigDialog *dlg)
 }
 
 #include "generator_mobi.moc"
+#include "moc_generator_mobi.cpp"

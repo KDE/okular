@@ -1802,3 +1802,5 @@ void PageViewAnnotator::slotAdvancedSettings()
     saveBuiltinAnnotationTools();
     selectLastTool();
 }
+
+#include "moc_pageviewannotator.cpp"

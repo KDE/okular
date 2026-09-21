@@ -5902,3 +5902,5 @@ void PageView::highlightSignatureFormWidget(const Okular::FormFieldSignature *fo
 }
 
 // END private SLOTS
+
+#include "moc_pageview.cpp"

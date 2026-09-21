@@ -280,3 +280,5 @@ void Unrar::writeToProcess(const QByteArray &data)
 
     mProcess->write(data);
 }
+
+#include "moc_unrar.cpp"

@@ -245,3 +245,4 @@ void DrawingToolActions::createToolAction(const QString &text, const QString &to
 }
 
 #include "drawingtoolactions.moc"
+#include "moc_drawingtoolactions.cpp"

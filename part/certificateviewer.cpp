@@ -192,3 +192,5 @@ void CertificateViewer::exportCertificate()
         }
     }
 }
+
+#include "moc_certificateviewer.cpp"

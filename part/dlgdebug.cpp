@@ -28,3 +28,5 @@ DlgDebug::DlgDebug(QWidget *parent)
 
     lay->addItem(new QSpacerItem(5, 5, QSizePolicy::Fixed, QSizePolicy::MinimumExpanding));
 }
+
+#include "moc_dlgdebug.cpp"

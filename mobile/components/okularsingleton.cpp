@@ -35,3 +35,5 @@ QStringList OkularSingleton::nameFilters() const
 
     return supportedPatterns;
 }
+
+#include "moc_okularsingleton.cpp"

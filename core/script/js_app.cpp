@@ -407,3 +407,5 @@ void JSApp::clearCachedFields()
         g_timerCache->clear();
     }
 }
+
+#include "moc_js_app_p.cpp"

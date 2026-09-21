@@ -49,3 +49,5 @@ void CloseDialogHelper::closeDialog()
     m_clicked = true;
 }
 }
+
+#include "moc_closedialoghelper.cpp"

@@ -26,3 +26,4 @@ void TxtGenerator::addPages(KConfigDialog *dlg)
 }
 
 #include "generator_txt.moc"
+#include "moc_generator_txt.cpp"

@@ -31,3 +31,5 @@ bool DefaultPrintOptionsWidget::ignorePrintMargins() const
 }
 
 }
+
+#include "moc_printoptionswidget.cpp"

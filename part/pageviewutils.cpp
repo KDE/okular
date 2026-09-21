@@ -383,3 +383,5 @@ void PageViewMessage::mousePressEvent(QMouseEvent * /*e*/)
     }
     hide();
 }
+
+#include "moc_pageviewutils.cpp"

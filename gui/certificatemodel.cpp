@@ -215,3 +215,5 @@ bool CertificateModel::exportCertificateTo(const QString &path)
     }
     return false;
 }
+
+#include "moc_certificatemodel.cpp"

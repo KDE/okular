@@ -78,3 +78,5 @@ void PreferencesDialog::switchToAnnotationsPage()
         setCurrentPage(m_annotationsPage);
     }
 }
+
+#include "moc_preferencesdialog.cpp"

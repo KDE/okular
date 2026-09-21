@@ -450,3 +450,5 @@ QTextDocument *Converter::convert(const QString &fileName)
 
     return mTextDocument;
 }
+
+#include "moc_converter.cpp"

@@ -40,3 +40,5 @@ void JSFullscreen::setTimeDelay(int time)
 {
     SettingsCore::setSlidesAdvanceTime(time);
 }
+
+#include "moc_js_fullscreen_p.cpp"

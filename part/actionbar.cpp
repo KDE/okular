@@ -129,3 +129,4 @@ void ActionBar::recreateWidgets()
 }
 
 #include "actionbar.moc"
+#include "moc_actionbar.cpp"

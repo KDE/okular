@@ -1135,3 +1135,5 @@ bool Converter::convertTableCellHelper(const QDomElement &element, QTextTable &t
     column += colspan;
     return true;
 }
+
+#include "moc_converter.cpp"

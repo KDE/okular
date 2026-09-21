@@ -219,3 +219,5 @@ int PreferredScreenSelector::preferredScreen() const
         return currentIndex() - k_specialScreenCount;
     }
 }
+
+#include "moc_dlgpresentation.cpp"

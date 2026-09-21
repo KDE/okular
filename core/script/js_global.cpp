@@ -14,3 +14,4 @@ JSGlobal::JSGlobal(QObject *parent)
 }
 
 JSGlobal::~JSGlobal() = default;
+#include "moc_js_global_p.cpp"

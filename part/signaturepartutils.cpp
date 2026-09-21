@@ -346,3 +346,5 @@ SelectCertificateDialog::SelectCertificateDialog(QWidget *parent)
 }
 SelectCertificateDialog::~SelectCertificateDialog() = default;
 }
+
+#include "moc_signaturepartutils.cpp"

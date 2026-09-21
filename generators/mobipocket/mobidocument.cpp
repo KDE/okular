@@ -112,3 +112,5 @@ QString MobiDocument::fixMobiMarkup(const QString &data)
 
     return ret;
 }
+
+#include "moc_mobidocument.cpp"

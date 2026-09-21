@@ -264,3 +264,5 @@ void DVIExportToPS::abort_process_impl()
 
     DVIExport::abort_process_impl();
 }
+
+#include "moc_dviexport.cpp"

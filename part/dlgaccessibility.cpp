@@ -195,3 +195,5 @@ void DlgAccessibility::slotColorModeSelected(int mode)
         m_colorModeConfigStack->setCurrentIndex(0);
     }
 }
+
+#include "moc_dlgaccessibility.cpp"

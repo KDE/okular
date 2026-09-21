@@ -66,3 +66,5 @@ void KeyDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 }
 
 } // namespace SignaturePartUtils
+
+#include "moc_signaturepartutilskeydelegate.cpp"

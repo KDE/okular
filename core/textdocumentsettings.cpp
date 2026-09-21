@@ -68,3 +68,6 @@ QFont TextDocumentSettings::font() const
     Q_D(const TextDocumentSettings);
     return d->mFont;
 }
+
+#include "moc_textdocumentsettings.cpp"
+#include "moc_textdocumentsettings_p.cpp"

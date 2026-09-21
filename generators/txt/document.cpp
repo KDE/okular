@@ -44,3 +44,5 @@ QString Document::toUnicode(const QByteArray &array)
 }
 
 Q_LOGGING_CATEGORY(OkularTxtDebug, "org.kde.okular.generators.txt", QtWarningMsg)
+
+#include "moc_document.cpp"

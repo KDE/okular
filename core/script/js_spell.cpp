@@ -13,3 +13,5 @@ bool JSSpell::available() const
 {
     return false;
 }
+
+#include "moc_js_spell_p.cpp"

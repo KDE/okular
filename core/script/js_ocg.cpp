@@ -37,3 +37,5 @@ JSOCG::JSOCG(QAbstractItemModel *model, int i, int j, QObject *parent)
 }
 
 JSOCG::~JSOCG() = default;
+
+#include "moc_js_ocg_p.cpp"

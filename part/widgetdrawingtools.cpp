@@ -201,3 +201,5 @@ void WidgetDrawingTools::slotEdit()
     updateButtons();
     Q_EMIT changed();
 }
+
+#include "moc_widgetdrawingtools.cpp"

@@ -53,3 +53,5 @@ DlgAnnotations::DlgAnnotations(QWidget *parent)
     layout->addRow(kcfg_QuickAnnotationTools);
     // END Quick annotation tools section
 }
+
+#include "moc_dlgannotations.cpp"

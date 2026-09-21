@@ -245,3 +245,5 @@ QStringList JSUtil::getMonths() const
     }
     return monthNames;
 }
+
+#include "moc_js_util_p.cpp"

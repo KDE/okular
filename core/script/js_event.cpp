@@ -143,3 +143,5 @@ JSEvent::JSEvent(const std::shared_ptr<Event> &event, QObject *parent)
 }
 
 JSEvent::~JSEvent() = default;
+
+#include "moc_js_event_p.cpp"

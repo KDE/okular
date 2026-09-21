@@ -523,3 +523,4 @@ Q_LOGGING_CATEGORY(OkularDviDebug, "org.kde.okular.generators.dvi.core", QtWarni
 Q_LOGGING_CATEGORY(OkularDviShellDebug, "org.kde.okular.generators.dvi.shell", QtWarningMsg)
 
 #include "generator_dvi.moc"
+#include "moc_generator_dvi.cpp"

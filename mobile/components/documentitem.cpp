@@ -297,3 +297,5 @@ void Observer::notifyPageChanged(int page, int flags)
 {
     Q_EMIT pageChanged(page, flags);
 }
+
+#include "moc_documentitem.cpp"

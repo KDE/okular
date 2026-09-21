@@ -171,3 +171,5 @@ void WidgetAnnotTools::slotAdd()
     updateButtons();
     Q_EMIT changed();
 }
+
+#include "moc_widgetannottools.cpp"

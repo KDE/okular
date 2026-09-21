@@ -152,3 +152,5 @@ void FilterSigningCertificateTypeListModel::setAllowedTypes(SignaturePartUtils::
         invalidateRowsFilter();
     }
 }
+
+#include "moc_signingcertificatelistmodel.cpp"

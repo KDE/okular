@@ -31,3 +31,4 @@ void EPubGenerator::addPages(KConfigDialog *dlg)
 }
 
 #include "generator_epub.moc"
+#include "moc_generator_epub.cpp"

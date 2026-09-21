@@ -34,3 +34,5 @@ int JSDisplay::noPrint() const
 {
     return FormDisplay::FormNoPrint;
 }
+
+#include "moc_js_display_p.cpp"

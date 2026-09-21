@@ -98,3 +98,5 @@ void DlgEditor::editorChanged(int which)
         }
     }
 }
+
+#include "moc_dlgeditor.cpp"

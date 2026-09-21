@@ -124,3 +124,5 @@ void OkularTTS::slotConfigChanged()
         }
     }
 }
+
+#include "moc_tts.cpp"

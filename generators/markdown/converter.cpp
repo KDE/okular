@@ -286,3 +286,5 @@ void Converter::setImageSize(QTextImageFormat &format, const qreal specifiedWidt
     format.setWidth(width);
     format.setHeight(height);
 }
+
+#include "moc_converter.cpp"

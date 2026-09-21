@@ -79,3 +79,5 @@ void Layers::saveSearchOptions()
     Okular::Settings::setLayersSearchCaseSensitive(m_searchLine->caseSensitivity() == Qt::CaseSensitive ? true : false);
     Okular::Settings::self()->save();
 }
+
+#include "moc_layers.cpp"

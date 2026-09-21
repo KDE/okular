@@ -43,3 +43,5 @@ void EditDrawingToolDialogTest::shouldHaveDefaultValues()
 }
 
 QTEST_MAIN(EditDrawingToolDialogTest)
+
+#include "moc_editdrawingtooldialogtest.cpp"

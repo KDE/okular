@@ -88,3 +88,5 @@ void DlgPerformance::slotMemoryLevelSelected(int which)
         break;
     }
 }
+
+#include "moc_dlgperformance.cpp"

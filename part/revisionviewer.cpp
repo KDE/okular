@@ -80,4 +80,5 @@ void RevisionViewer::viewRevision()
     previewdlg.exec();
 }
 
+#include "moc_revisionviewer.cpp"
 #include "revisionviewer.moc"

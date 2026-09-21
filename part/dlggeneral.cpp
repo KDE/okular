@@ -250,3 +250,5 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     });
     // END View options section
 }
+
+#include "moc_dlggeneral.cpp"

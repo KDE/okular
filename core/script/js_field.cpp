@@ -463,3 +463,5 @@ QJSValue JSField::getItemAt(int nIdx, bool bExportValue)
     }
     return result;
 }
+
+#include "moc_js_field_p.cpp"

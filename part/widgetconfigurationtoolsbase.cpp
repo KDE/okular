@@ -96,3 +96,5 @@ void WidgetConfigurationToolsBase::slotMoveDown()
     updateButtons();
     Q_EMIT changed();
 }
+
+#include "moc_widgetconfigurationtoolsbase.cpp"

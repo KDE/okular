@@ -735,3 +735,4 @@ KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) co
 #undef foreachObserverD
 
 #include "bookmarkmanager.moc"
+#include "moc_bookmarkmanager.cpp"

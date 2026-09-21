@@ -487,3 +487,5 @@ void EditAnnotToolDialog::slotDataChanged()
 
     updateDefaultNameAndIcon();
 }
+
+#include "moc_editannottooldialog.cpp"

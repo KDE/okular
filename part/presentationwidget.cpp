@@ -2342,4 +2342,5 @@ void PresentationWidget::slotTogglePlayPause()
     }
 }
 
+#include "moc_presentationwidget.cpp"
 #include "presentationwidget.moc"

@@ -17,6 +17,7 @@
 #include "annotationpropertiesdialog.h"
 
 #include "core/annotations.h"
+#include "core/audioplayer.h"
 #include "core/bookmarkmanager.h"
 #include "core/document.h"
 #include "core/page.h"
@@ -246,6 +247,18 @@ void AnnotationPopup::addActionsToMenu(QMenu *menu)
                     menu->addSeparator();
                     action = menu->addAction(QIcon::fromTheme(QStringLiteral("document-save")), saveText);
                     connect(action, &QAction::triggered, menu, [this, pair] { doSaveEmbeddedFile(pair); });
+                }
+            }
+
+            if (pair.annotation->subType() == Okular::Annotation::ASound) {
+                auto *soundAnnotation = dynamic_cast<const Okular::SoundAnnotation *>(pair.annotation);
+                if (soundAnnotation->sound()) {
+                    action = menu->addAction(i18n("Play this Sound"));
+                    connect(action, &QAction::triggered, [soundAnnotation]() { Okular::AudioPlayer::instance()->playSound(soundAnnotation->sound()); });
+                    if (Okular::AudioPlayer::instance()->state() == Okular::AudioPlayer::PlayingState) {
+                        QAction *actStopSound = menu->addAction(i18n("Stop Sound"));
+                        connect(actStopSound, &QAction::triggered, []() { Okular::AudioPlayer::instance()->stopPlaybacks(); });
+                    }
                 }
             }
         }

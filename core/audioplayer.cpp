@@ -10,14 +10,15 @@
 
 // qt/kde includes
 #include <KLocalizedString>
-#if HAVE_MULTIMEDIA
-#include <QAudioOutput>
-#endif
 #include <QBuffer>
 #include <QDebug>
 #include <QDir>
 #if HAVE_MULTIMEDIA
+#include <QAudioFormat>
+#include <QAudioOutput>
+#include <QAudioSink>
 #include <QMediaPlayer>
+#include <QtProcessorDetection>
 #endif
 #include <QRandomGenerator>
 
@@ -95,15 +96,25 @@ public:
 
     void play()
     {
-        m_player->play();
+        if (m_sink) {
+            Q_ASSERT(!m_player);
+            m_sink->start(m_buffer);
+        } else {
+            m_player->play();
+        }
     }
 
     ~PlayData()
     {
         // Block signals so stateChanged wont get called from stop()
-        m_player->blockSignals(true);
-        m_player->stop();
-        m_player->deleteLater();
+        if (m_sink) {
+            Q_ASSERT(!m_player);
+            m_sink->stop();
+        } else {
+            m_player->blockSignals(true);
+            m_player->stop();
+            m_player->deleteLater();
+        }
     }
 
     PlayData(const PlayData &) = delete;
@@ -111,6 +122,9 @@ public:
 
     QMediaPlayer *m_player;
     SoundInfo m_info;
+
+    std::unique_ptr<QAudioSink> m_sink;
+    QBuffer *m_buffer = nullptr; // We do not own this, only used for m_sink
 };
 
 AudioPlayerPrivate::AudioPlayerPrivate(AudioPlayer *qq)
@@ -165,13 +179,51 @@ bool AudioPlayerPrivate::play(const SoundInfo &si)
     case Sound::Embedded: {
         QByteArray filedata = si.sound->data();
         qCDebug(OkularCoreDebug) << "Embedded," << filedata.length();
+
+        if (si.sound->soundEncoding() == Sound::Raw || si.sound->soundEncoding() == Sound::Signed) {
+            QAudioFormat audioFormat;
+            audioFormat.setChannelCount(si.sound->channels());
+            audioFormat.setSampleRate(si.sound->samplingRate());
+            if (si.sound->bitsPerSample() == 8) {
+                audioFormat.setSampleFormat(QAudioFormat::UInt8);
+            } else if (si.sound->bitsPerSample() == 16) {
+                audioFormat.setSampleFormat(QAudioFormat::Int16);
+            } else {
+                qWarning() << "Unsupported sound please share the file with us";
+            }
+
+            data->m_sink = std::make_unique<QAudioSink>(audioFormat);
+            data->m_sink->setVolume(data->m_info.volume);
+
+            delete data->m_player;
+            data->m_player = nullptr;
+
+            // QAudioSink expects data in host platform endianness, PDF sound data is big endian
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+            if (si.sound->bitsPerSample() == 16) {
+                for (int i = 0; i + 1 < filedata.length(); i += 2) {
+                    qSwap(filedata[i], filedata[i + 1]);
+                }
+            }
+#endif
+        }
+
         if (!filedata.isEmpty()) {
             int newid = newId();
-            QObject::connect(data->m_player, &QMediaPlayer::playbackStateChanged, q, [this, newid](QMediaPlayer::PlaybackState state) { playbackStateChanged(newid, state); });
             QBuffer *buffer = new QBuffer();
             buffer->setData(filedata);
             buffer->open(QBuffer::ReadOnly);
-            data->m_player->setSourceDevice(buffer);
+            if (data->m_sink) {
+                data->m_buffer = buffer;
+                QObject::connect(data->m_sink.get(), &QAudioSink::stateChanged, q, [this, newid](QtAudio::State state) {
+                    if (state == QtAudio::IdleState)
+                        playbackStateChanged(newid, QMediaPlayer::StoppedState);
+                });
+
+            } else {
+                QObject::connect(data->m_player, &QMediaPlayer::playbackStateChanged, q, [this, newid](QMediaPlayer::PlaybackState state) { playbackStateChanged(newid, state); });
+                data->m_player->setSourceDevice(buffer);
+            }
             m_playing.insert(newid, data);
             m_buffers.append(buffer);
             valid = true;

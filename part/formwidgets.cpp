@@ -44,7 +44,6 @@ FormWidgetsController::FormWidgetsController(Okular::Document *doc)
 
     // connect form modification signals to and from document
     // connect to the newer editFormText method and not the deprecated one
-    using EditFormTextType = void (Okular::Document::*)(int, Okular::FormFieldText *, const QString &, int, int, int, const QString &);
     connect(this, &FormWidgetsController::formTextChangedByWidget, doc, qOverload<int, Okular::FormFieldText *, const QString &, int, int, int, const QString &>(&Okular::Document::editFormText));
     connect(doc, &Okular::Document::formTextChangedByUndoRedo, this, &FormWidgetsController::formTextChangedByUndoRedo);
 

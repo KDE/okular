@@ -13,6 +13,7 @@
 #include "documentcommands_p.h"
 
 #include <algorithm>
+#include <kpluginmetadata.h>
 #include <limits.h>
 #include <memory>
 #ifdef Q_OS_WIN
@@ -923,7 +924,36 @@ Document::OpenResult DocumentPrivate::openDocumentInternal(const KPluginMetaData
 
     Document::OpenResult openResult = Document::OpenError;
     if (!isstdin) {
-        openResult = m_generator->loadDocumentWithPassword(docFile, m_pagesVector, password);
+        auto includeInContentLookup = [](const KPluginMetaData &md) {
+            QJsonObject rawJson = md.rawData();
+            auto value = rawJson.constFind(QStringLiteral("X-KDE-okular-content-lookup"));
+            if (value == rawJson.constEnd()) {
+                return true;
+            }
+            return value->toBool();
+        };
+
+        bool willOpen = true;
+        if (!includeInContentLookup(offer)) {
+            QMimeDatabase db;
+            const auto fileMimes = db.mimeTypesForFileName(docFile);
+            const auto offeredMimes = offer.mimeTypes();
+            willOpen = false;
+            for (const auto& fileMime : fileMimes) {
+                for (const auto& offeredMime : offeredMimes) {
+                    if (fileMime.inherits(offeredMime)) {
+                        willOpen = true;
+                        break;
+                    }
+                }
+                if (willOpen) {
+                    break;
+                }
+            }
+        }
+        if (willOpen) {
+            openResult = m_generator->loadDocumentWithPassword(docFile, m_pagesVector, password);
+        }
     } else if (!filedata.isEmpty()) {
         if (m_generator->hasFeature(Generator::ReadRawData)) {
             openResult = m_generator->loadDocumentFromDataWithPassword(filedata, m_pagesVector, password);

@@ -21,5 +21,3 @@ Status main(const QStringList &paths, const QString &serializedOptions);
 }
 
 #endif
-
-/* kate: replace-tabs on; indent-width 4; */

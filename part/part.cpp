@@ -4018,5 +4018,3 @@ QAbstractItemModel *Part::annotationsModel() const
 } // namespace Okular
 
 #include "part.moc"
-
-/* kate: replace-tabs on; indent-width 4; */

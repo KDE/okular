@@ -238,5 +238,3 @@ SmoothPath SmoothPathEngine::endSmoothPath()
 
     return SmoothPath(points, QPen(color, width), opacity, compositionMode);
 }
-
-/* kate: replace-tabs on; indent-width 4; */

@@ -5902,5 +5902,3 @@ void PageView::highlightSignatureFormWidget(const Okular::FormFieldSignature *fo
 }
 
 // END private SLOTS
-
-/* kate: replace-tabs on; indent-width 4; */

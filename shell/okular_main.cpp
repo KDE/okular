@@ -247,5 +247,3 @@ Status main(const QStringList &paths, const QString &serializedOptions)
 }
 
 }
-
-/* kate: replace-tabs on; indent-width 4; */

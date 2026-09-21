@@ -511,5 +511,3 @@ QStringList FilePrinter::optionCupsProperties(QPrinter &printer)
 
     return cupsOpts;
 }
-
-/* kate: replace-tabs on; indent-width 4; */

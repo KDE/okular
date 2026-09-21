@@ -1018,5 +1018,3 @@ ThumbnailController::ThumbnailController(QWidget *parent, ThumbnailList *list)
 }
 
 #include "thumbnaillist.moc"
-
-/* kate: replace-tabs on; indent-width 4; */

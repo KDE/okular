@@ -471,5 +471,3 @@ void PagesEdit::wheelEvent(QWheelEvent *e)
         m_miniBar->slotEmitPrevPage();
     }
 }
-
-/* kate: replace-tabs on; indent-width 4; */

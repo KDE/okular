@@ -511,5 +511,3 @@ int PageSizesModel::rowCount(const QModelIndex &parent) const
 }
 
 #include "moc_propertiesdialog.cpp"
-
-/* kate: replace-tabs on; indent-width 4; */

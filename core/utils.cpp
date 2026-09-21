@@ -166,5 +166,3 @@ QTransform Okular::buildRotationMatrix(Rotation rotation)
 
     return matrix;
 }
-
-/* kate: replace-tabs on; indent-width 4; */

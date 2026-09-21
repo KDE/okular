@@ -1802,5 +1802,3 @@ void PageViewAnnotator::slotAdvancedSettings()
     saveBuiltinAnnotationTools();
     selectLastTool();
 }
-
-/* kate: replace-tabs on; indent-width 4; */

@@ -123,5 +123,3 @@ void GSRendererThread::run()
         }
     }
 }
-
-/* kate: replace-tabs on; indent-width 4; */

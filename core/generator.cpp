@@ -832,5 +832,3 @@ QDebug operator<<(QDebug str, const Okular::PixmapRequest &req)
     str << "- force:" << (reqPriv->mForce ? "true" : "false");
     return str;
 }
-
-/* kate: replace-tabs on; indent-width 4; */

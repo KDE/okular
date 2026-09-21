@@ -73,5 +73,3 @@ void EpubGeneratorTest::testDocumentContent()
 
 QTEST_MAIN(EpubGeneratorTest)
 #include "epubgeneratortest.moc"
-
-/* kate: replace-tabs on; tab-width 4; */

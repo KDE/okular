@@ -1204,5 +1204,3 @@ void Shell::readRecentFilesSettings()
 }
 
 #include "shell.moc"
-
-/* kate: replace-tabs on; indent-width 4; */

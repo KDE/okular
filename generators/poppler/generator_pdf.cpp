@@ -2262,5 +2262,3 @@ void PDFGenerator::xrefReconstructionHandler()
 #include "generator_pdf.moc"
 
 Q_LOGGING_CATEGORY(OkularPdfDebug, "org.kde.okular.generators.pdf", QtWarningMsg)
-
-/* kate: replace-tabs on; indent-width 4; */

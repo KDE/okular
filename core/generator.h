@@ -834,5 +834,3 @@ OKULARCORE_EXPORT QDebug operator<<(QDebug str, const Okular::PixmapRequest &req
 #endif
 
 #endif
-
-/* kate: replace-tabs on; indent-width 4; */

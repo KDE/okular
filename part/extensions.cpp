@@ -33,5 +33,3 @@ void BrowserExtension::print()
 }
 
 #include "moc_extensions.cpp"
-
-/* kate: replace-tabs on; indent-width 4; */

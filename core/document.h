@@ -1721,5 +1721,3 @@ Q_DECLARE_METATYPE(Okular::DocumentInfo::Key)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Okular::Document::PixmapRequestFlags)
 
 #endif
-
-/* kate: replace-tabs on; indent-width 4; */

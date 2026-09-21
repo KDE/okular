@@ -6212,5 +6212,3 @@ void Okular::NewSignatureData::setLeftFontSize(double fontSize)
 #undef foreachObserverD
 
 #include "document.moc"
-
-/* kate: replace-tabs on; indent-width 4; */

@@ -174,5 +174,3 @@ private:
 };
 
 #endif
-
-/* kate: replace-tabs on; indent-width 4; */

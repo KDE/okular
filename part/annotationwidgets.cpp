@@ -273,7 +273,7 @@ void AnnotationWidget::addOpacitySpinBox(QWidget *widget, QFormLayout *formlayou
     m_opacity->setValue((int)(m_ann->style().opacity() * 100));
     KLocalization::setupSpinBoxFormatString(m_opacity, ki18nc("@label:spinbox Suffix for the opacity level, e.g. '80%'", "%v%"));
     formlayout->addRow(i18n("&Opacity:"), m_opacity);
-    connect(m_opacity, QOverload<int>::of(&QSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_opacity, &QSpinBox::valueChanged, this, &AnnotationWidget::dataChanged);
 }
 
 void AnnotationWidget::addVerticalSpacer(QFormLayout *formlayout)
@@ -396,7 +396,7 @@ void TextAnnotationWidget::addTextAlignComboBox(QWidget *widget, QFormLayout *fo
     m_textAlign->addItem(i18n("Center"));
     m_textAlign->addItem(i18n("Right"));
     m_textAlign->setCurrentIndex(m_textAnn->inplaceAlignment());
-    connect(m_textAlign, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_textAlign, &KComboBox::currentIndexChanged, this, &AnnotationWidget::dataChanged);
 }
 
 void TextAnnotationWidget::addWidthSpinBox(QWidget *widget, QFormLayout *formlayout)
@@ -406,7 +406,7 @@ void TextAnnotationWidget::addWidthSpinBox(QWidget *widget, QFormLayout *formlay
     m_spinWidth->setRange(0, 100);
     m_spinWidth->setValue(m_textAnn->style().width());
     m_spinWidth->setSingleStep(0.1);
-    connect(m_spinWidth, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_spinWidth, &QDoubleSpinBox::valueChanged, this, &AnnotationWidget::dataChanged);
 }
 
 const QList<QPair<QString, QString>> &StampAnnotationWidget::defaultStamps()
@@ -491,7 +491,7 @@ void LineAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     m_spinSize->setRange(1, 100);
     m_spinSize->setValue(m_lineAnn->style().width());
 
-    connect(m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged);
+    connect(m_spinSize, &QDoubleSpinBox::valueChanged, this, &LineAnnotationWidget::dataChanged);
 
     // Straight line
     if (m_lineType == 0) {
@@ -537,10 +537,10 @@ void LineAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
         m_spinLLE->setRange(0, 500);
         m_spinLLE->setValue(m_lineAnn->lineLeadingBackwardPoint());
 
-        connect(m_startStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged);
-        connect(m_endStyleCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineAnnotationWidget::dataChanged);
-        connect(m_spinLL, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged);
-        connect(m_spinLLE, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineAnnotationWidget::dataChanged);
+        connect(m_startStyleCombo, &QComboBox::currentIndexChanged, this, &LineAnnotationWidget::dataChanged);
+        connect(m_endStyleCombo, &QComboBox::currentIndexChanged, this, &LineAnnotationWidget::dataChanged);
+        connect(m_spinLL, &QDoubleSpinBox::valueChanged, this, &LineAnnotationWidget::dataChanged);
+        connect(m_spinLLE, &QDoubleSpinBox::valueChanged, this, &LineAnnotationWidget::dataChanged);
     } else if (m_lineType == 1) // Polygon
     {
         QHBoxLayout *colorlay = new QHBoxLayout();
@@ -626,7 +626,7 @@ void InkAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     m_spinSize->setRange(1, 100);
     m_spinSize->setValue(m_inkAnn->style().width());
 
-    connect(m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_spinSize, &QDoubleSpinBox::valueChanged, this, &AnnotationWidget::dataChanged);
 }
 
 void InkAnnotationWidget::applyChanges()
@@ -660,7 +660,7 @@ void HighlightAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     addColorButton(widget, formlayout);
     addOpacitySpinBox(widget, formlayout);
 
-    connect(m_typeCombo, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_typeCombo, &KComboBox::currentIndexChanged, this, &AnnotationWidget::dataChanged);
 }
 
 void HighlightAnnotationWidget::applyChanges()
@@ -709,11 +709,11 @@ void GeomAnnotationWidget::createStyleWidget(QFormLayout *formlayout)
     m_spinSize->setRange(0, 100);
     m_spinSize->setValue(m_geomAnn->style().width());
 
-    connect(m_typeCombo, QOverload<int>::of(&KComboBox::currentIndexChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_typeCombo, &KComboBox::currentIndexChanged, this, &AnnotationWidget::dataChanged);
     connect(m_innerColor, &KColorButton::changed, this, &AnnotationWidget::dataChanged);
     connect(m_useColor, &QAbstractButton::toggled, this, &AnnotationWidget::dataChanged);
     connect(m_useColor, &QCheckBox::toggled, m_innerColor, &KColorButton::setEnabled);
-    connect(m_spinSize, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AnnotationWidget::dataChanged);
+    connect(m_spinSize, &QDoubleSpinBox::valueChanged, this, &AnnotationWidget::dataChanged);
 }
 
 void GeomAnnotationWidget::applyChanges()

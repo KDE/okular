@@ -134,7 +134,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     // Setup controls enabled states:
     colorMode->setCurrentIndex(0);
     slotColorModeSelected(0);
-    connect(colorMode, qOverload<int>(&QComboBox::currentIndexChanged), this, &DlgAccessibility::slotColorModeSelected);
+    connect(colorMode, &QComboBox::currentIndexChanged, this, &DlgAccessibility::slotColorModeSelected);
 
     enableChangeColors->setChecked(false);
     colorMode->setEnabled(false);
@@ -157,7 +157,7 @@ DlgAccessibility::DlgAccessibility(QWidget *parent)
     m_ttsEngineBox->setObjectName(QStringLiteral("kcfg_ttsEngine"));
     layout->addRow(i18nc("@label:listbox Config dialog, accessibility page", "Text-to-speech engine:"), m_ttsEngineBox);
 
-    connect(m_ttsEngineBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &DlgAccessibility::slotTTSEngineChanged);
+    connect(m_ttsEngineBox, &QComboBox::currentIndexChanged, this, &DlgAccessibility::slotTTSEngineChanged);
 
     m_ttsVoiceBox = new QComboBox(this);
     m_ttsVoiceBox->setProperty("kcfg_property", QByteArray("currentText"));

@@ -39,7 +39,7 @@ fontMap::fontMap()
     // other way than to try both options one after another. We use the
     // teTeX 3.0 format first.
     QProcess kpsewhich;
-    kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=map") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
+    kpsewhich.start(kpsewhichFullPath, {QStringLiteral("--format=map"), QStringLiteral("ps2pk.map")}, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
         qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started.";
@@ -53,7 +53,7 @@ fontMap::fontMap()
     if (map_fileName.isEmpty()) {
         // Map file not found? Then we try the teTeX < 3.0 way of finding
         // the file.
-        kpsewhich.start(kpsewhichFullPath, QStringList() << QStringLiteral("--format=dvips config") << QStringLiteral("ps2pk.map"), QIODevice::ReadOnly | QIODevice::Text);
+        kpsewhich.start(kpsewhichFullPath, {QStringLiteral("--format=dvips config"), QStringLiteral("ps2pk.map")}, QIODevice::ReadOnly | QIODevice::Text);
         if (!kpsewhich.waitForStarted()) {
             qCCritical(OkularDviDebug) << "fontMap::fontMap(): kpsewhich could not be started.";
             return;

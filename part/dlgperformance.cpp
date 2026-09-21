@@ -44,7 +44,7 @@ DlgPerformance::DlgPerformance(QWidget *parent)
     layout->addRow(m_memoryExplanationLabel);
     m_memoryLevel->setCurrentIndex(0);
     slotMemoryLevelSelected(0);
-    connect(m_memoryLevel, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DlgPerformance::slotMemoryLevelSelected);
+    connect(m_memoryLevel, &QComboBox::currentIndexChanged, this, &DlgPerformance::slotMemoryLevelSelected);
     // END Radio buttons: memory usage
 
     layout->addRow(new QLabel(this));

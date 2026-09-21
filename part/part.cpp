@@ -343,7 +343,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(this, &KParts::ReadOnlyPart::started, this, &Part::slotJobStarted);
 
     // connect the completed signal so we can put the window caption when loading remote files
-    connect(this, QOverload<>::of(&Part::completed), this, &Part::setWindowTitleFromDocument);
+    connect(this, &Part::completed, this, &Part::setWindowTitleFromDocument);
     connect(this, &KParts::ReadOnlyPart::canceled, this, &Part::loadCancelled);
 
     // create browser extension (for printing when embedded into browser)
@@ -518,7 +518,7 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_pageNumberTool = new MiniBar(nullptr, m_miniBarLogic);
 
     connect(m_findBar, &FindBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
-    connect(m_findBar, &FindBar::onCloseButtonPressed, m_pageView, QOverload<>::of(&PageView::setFocus));
+    connect(m_findBar, &FindBar::onCloseButtonPressed, m_pageView, qOverload<>(&PageView::setFocus));
     connect(m_miniBar, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
     connect(m_pageView.data(), &PageView::escPressed, m_findBar, &FindBar::resetSearch);
     connect(m_pageNumberTool, &MiniBar::forwardKeyPressEvent, m_pageView, &PageView::externalKeyPressEvent);
@@ -1330,7 +1330,7 @@ bool Part::slotImportPSFile()
         QProcess *p = new QProcess();
         args << url.toLocalFile() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)…"));
-        connect(p, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &Part::psTransformEnded);
+        connect(p, &QProcess::finished, this, &Part::psTransformEnded);
         p->start(app, args);
         return true;
     }
@@ -2385,7 +2385,7 @@ public:
         slider->setTickInterval(max / 10);
 
         connect(slider, &QSlider::valueChanged, spinbox, &QSpinBox::setValue);
-        connect(spinbox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), slider, &QSlider::setValue);
+        connect(spinbox, &QSpinBox::valueChanged, slider, &QSlider::setValue);
 
         QLabel *label = new QLabel(i18n("&Page:"), this);
         label->setBuddy(spinbox);

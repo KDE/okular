@@ -352,7 +352,7 @@ public:
         ann->setBoundingRectangle(rect);
 
         // return annotation
-        return QList<Okular::Annotation *>() << ann;
+        return {ann};
     }
 
 protected:
@@ -433,7 +433,7 @@ public:
         }
         ann->setBoundingRectangle(rect);
 
-        return QList<Okular::Annotation *>() << ann;
+        return {ann};
     }
 
     bool isAccepted() const
@@ -717,7 +717,7 @@ public:
         }
         // return annotation
 
-        return QList<Okular::Annotation *>() << ann;
+        return {ann};
     }
 
 private:
@@ -864,7 +864,7 @@ public:
         }
 
         // return annotations
-        return QList<Okular::Annotation *>() << ann;
+        return {ann};
     }
 
     QCursor cursor() const override
@@ -1602,7 +1602,7 @@ QPixmap PageViewAnnotator::makeToolPixmap(const QDomElement &toolElement)
         p.drawRect(2, 7, 21, 14);
     } else if (annotType == QLatin1String("squiggly")) {
         QPen pen(engineColor, 1);
-        pen.setDashPattern(QList<qreal>() << 1 << 1);
+        pen.setDashPattern({1, 1});
         p.setPen(pen);
         p.drawLine(1, 13, 16, 13);
         p.drawLine(2, 14, 15, 14);

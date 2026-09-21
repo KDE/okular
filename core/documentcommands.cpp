@@ -542,7 +542,7 @@ EditFormComboCommand::EditFormComboCommand(Okular::DocumentPrivate *docPriv, For
 void EditFormComboCommand::undo()
 {
     if (m_prevIndex != -1) {
-        m_form->setCurrentChoices(QList<int>() << m_prevIndex);
+        m_form->setCurrentChoices({m_prevIndex});
     } else {
         m_form->setEditChoice(m_prevContents);
     }
@@ -553,7 +553,7 @@ void EditFormComboCommand::undo()
 void EditFormComboCommand::redo()
 {
     if (m_newIndex != -1) {
-        m_form->setCurrentChoices(QList<int>() << m_newIndex);
+        m_form->setCurrentChoices({m_newIndex});
     } else {
         m_form->setEditChoice(m_newContents);
     }

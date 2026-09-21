@@ -71,7 +71,7 @@ DlgEditor::DlgEditor(QWidget *parent)
     // Set up the logic
     m_editors = Okular::buildEditorsMap();
 
-    connect(m_editorChooser, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DlgEditor::editorChanged);
+    connect(m_editorChooser, &QComboBox::currentIndexChanged, this, &DlgEditor::editorChanged);
 }
 
 DlgEditor::~DlgEditor()

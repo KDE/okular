@@ -5173,7 +5173,7 @@ void PageView::slotHandleWebShortcutAction()
 
 void PageView::slotConfigureWebShortcuts()
 {
-    auto *job = new KIO::CommandLauncherJob(QStringLiteral("kcmshell6"), QStringList() << QStringLiteral("webshortcuts"));
+    auto *job = new KIO::CommandLauncherJob(QStringLiteral("kcmshell6"), {QStringLiteral("webshortcuts")});
     job->start();
 }
 

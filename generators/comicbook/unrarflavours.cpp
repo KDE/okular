@@ -54,12 +54,12 @@ QString NonFreeUnrarFlavour::name() const
 
 ProcessArgs NonFreeUnrarFlavour::processListArgs(const QString &fileName) const
 {
-    return ProcessArgs(QStringList() << QStringLiteral("lb") << fileName, false);
+    return ProcessArgs({QStringLiteral("lb"), fileName}, false);
 }
 
 ProcessArgs NonFreeUnrarFlavour::processOpenArchiveArgs(const QString &fileName, const QString &path) const
 {
-    return ProcessArgs(QStringList() << QStringLiteral("e") << fileName << path + QLatin1Char('/'), false);
+    return ProcessArgs({QStringLiteral("e"), fileName, path + QLatin1Char('/')}, false);
 }
 
 FreeUnrarFlavour::FreeUnrarFlavour()
@@ -117,10 +117,10 @@ QString UnarFlavour::name() const
 
 ProcessArgs UnarFlavour::processListArgs(const QString &fileName) const
 {
-    return ProcessArgs(QStringList() << fileName, true);
+    return ProcessArgs({fileName}, true);
 }
 
 ProcessArgs UnarFlavour::processOpenArchiveArgs(const QString &fileName, const QString &path) const
 {
-    return ProcessArgs(QStringList() << fileName << QStringLiteral("-o") << path + QLatin1Char('/'), false);
+    return ProcessArgs({fileName, QStringLiteral("-o"), path + QLatin1Char('/')}, false);
 }

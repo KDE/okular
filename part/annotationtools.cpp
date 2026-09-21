@@ -224,7 +224,7 @@ QList<Okular::Annotation *> SmoothPathEngine::end()
     }
 
     // return annotation
-    return QList<Okular::Annotation *>() << ann;
+    return {ann};
 }
 
 SmoothPath SmoothPathEngine::endSmoothPath()

@@ -39,7 +39,7 @@ fontEncoding::fontEncoding(const QString &encName)
         return;
     }
 
-    kpsewhich.start(fullPath, QStringList() << encName, QIODevice::ReadOnly | QIODevice::Text);
+    kpsewhich.start(fullPath, {encName}, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!kpsewhich.waitForStarted()) {
         qCCritical(OkularDviDebug) << "fontEncoding::fontEncoding(...): kpsewhich could not be started.";

@@ -241,11 +241,11 @@ QStringList FilePrinter::printArguments(QPrinter &printer,
 QStringList FilePrinter::destination(QPrinter &printer, const QString &version)
 {
     if (version == QLatin1String("lp")) {
-        return QStringList(QStringLiteral("-d")) << printer.printerName();
+        return {QStringLiteral("-d"), printer.printerName()};
     }
 
     if (version.startsWith(QLatin1String("lpr"))) {
-        return QStringList(QStringLiteral("-P")) << printer.printerName();
+        return {QStringLiteral("-P"), printer.printerName()};
     }
 
     return QStringList();
@@ -256,11 +256,11 @@ QStringList FilePrinter::copies(QPrinter &printer, const QString &version)
     int cp = printer.copyCount();
 
     if (version == QLatin1String("lp")) {
-        return QStringList(QStringLiteral("-n")) << QStringLiteral("%1").arg(cp);
+        return {QStringLiteral("-n"), QStringLiteral("%1").arg(cp)};
     }
 
     if (version.startsWith(QLatin1String("lpr"))) {
-        return QStringList() << QStringLiteral("-#%1").arg(cp);
+        return {QStringLiteral("-#%1").arg(cp)};
     }
 
     return QStringList();
@@ -270,12 +270,12 @@ QStringList FilePrinter::jobname(QPrinter &printer, const QString &version)
 {
     if (!printer.docName().isEmpty()) {
         if (version == QLatin1String("lp")) {
-            return QStringList(QStringLiteral("-t")) << printer.docName();
+            return {QStringLiteral("-t"), printer.docName()};
         }
 
         if (version.startsWith(QLatin1String("lpr"))) {
             const QString shortenedDocName = QString::fromUtf8(printer.docName().toUtf8().left(255));
-            return QStringList(QStringLiteral("-J")) << shortenedDocName;
+            return {QStringLiteral("-J"), shortenedDocName};
         }
     }
 
@@ -296,21 +296,21 @@ QStringList FilePrinter::pages(QPrinter &printer, PageSelectPolicy pageSelectPol
     if (pageSelectPolicy == FilePrinter::SystemSelectsPages) {
         if (printer.printRange() == QPrinter::Selection && !pageRange.isEmpty()) {
             if (version == QLatin1String("lp")) {
-                return QStringList(QStringLiteral("-P")) << pageRange;
+                return {QStringLiteral("-P"), pageRange};
             }
 
             if (version.startsWith(QLatin1String("lpr")) && useCupsOptions) {
-                return QStringList(QStringLiteral("-o")) << QStringLiteral("page-ranges=%1").arg(pageRange);
+                return {QStringLiteral("-o"), QStringLiteral("page-ranges=%1").arg(pageRange)};
             }
         }
 
         if (printer.printRange() == QPrinter::PageRange) {
             if (version == QLatin1String("lp")) {
-                return QStringList(QStringLiteral("-P")) << QStringLiteral("%1-%2").arg(printer.fromPage()).arg(printer.toPage());
+                return {QStringLiteral("-P"), QStringLiteral("%1-%2").arg(printer.fromPage()).arg(printer.toPage())};
             }
 
             if (version.startsWith(QLatin1String("lpr")) && useCupsOptions) {
-                return QStringList(QStringLiteral("-o")) << QStringLiteral("page-ranges=%1-%2").arg(printer.fromPage()).arg(printer.toPage());
+                return {QStringLiteral("-o"), QStringLiteral("page-ranges=%1-%2").arg(printer.fromPage()).arg(printer.toPage())};
             }
         }
     }
@@ -354,15 +354,15 @@ QStringList FilePrinter::cupsOptions(QPrinter &printer, QPageLayout::Orientation
 QStringList FilePrinter::optionMedia(QPrinter &printer)
 {
     if (!mediaPageSize(printer).isEmpty() && !mediaPaperSource(printer).isEmpty()) {
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("media=%1,%2").arg(mediaPageSize(printer), mediaPaperSource(printer));
+        return {QStringLiteral("-o"), QStringLiteral("media=%1,%2").arg(mediaPageSize(printer), mediaPaperSource(printer))};
     }
 
     if (!mediaPageSize(printer).isEmpty()) {
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("media=%1").arg(mediaPageSize(printer));
+        return {QStringLiteral("-o"), QStringLiteral("media=%1").arg(mediaPageSize(printer))};
     }
 
     if (!mediaPaperSource(printer).isEmpty()) {
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("media=%1").arg(mediaPaperSource(printer));
+        return {QStringLiteral("-o"), QStringLiteral("media=%1").arg(mediaPaperSource(printer))};
     }
 
     return QStringList();
@@ -423,10 +423,10 @@ QStringList FilePrinter::optionOrientation(QPrinter &printer, QPageLayout::Orien
     // portrait option so that the document is not rotated additionally
     if (printer.pageLayout().orientation() == documentOrientation) {
         // the user wants the document printed as is
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("portrait");
+        return {QStringLiteral("-o"), QStringLiteral("portrait")};
     } else {
         // the user expects the document being rotated by 90 degrees
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("landscape");
+        return {QStringLiteral("-o"), QStringLiteral("landscape")};
     }
 }
 
@@ -434,17 +434,17 @@ QStringList FilePrinter::optionDoubleSidedPrinting(QPrinter &printer)
 {
     switch (printer.duplex()) {
     case QPrinter::DuplexNone:
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=one-sided");
+        return {QStringLiteral("-o"), QStringLiteral("sides=one-sided")};
     case QPrinter::DuplexAuto:
         if (printer.pageLayout().orientation() == QPageLayout::Landscape) {
-            return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-short-edge");
+            return {QStringLiteral("-o"), QStringLiteral("sides=two-sided-short-edge")};
         } else {
-            return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-long-edge");
+            return {QStringLiteral("-o"), QStringLiteral("sides=two-sided-long-edge")};
         }
     case QPrinter::DuplexLongSide:
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-long-edge");
+        return {QStringLiteral("-o"), QStringLiteral("sides=two-sided-long-edge")};
     case QPrinter::DuplexShortSide:
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("sides=two-sided-short-edge");
+        return {QStringLiteral("-o"), QStringLiteral("sides=two-sided-short-edge")};
     }
     return QStringList(); // Use printer default
 }
@@ -452,17 +452,17 @@ QStringList FilePrinter::optionDoubleSidedPrinting(QPrinter &printer)
 QStringList FilePrinter::optionPageOrder(QPrinter &printer)
 {
     if (printer.pageOrder() == QPrinter::LastPageFirst) {
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("outputorder=reverse");
+        return {QStringLiteral("-o"), QStringLiteral("outputorder=reverse")};
     }
-    return QStringList(QStringLiteral("-o")) << QStringLiteral("outputorder=normal");
+    return {QStringLiteral("-o"), QStringLiteral("outputorder=normal")};
 }
 
 QStringList FilePrinter::optionCollateCopies(QPrinter &printer)
 {
     if (printer.collateCopies()) {
-        return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=True");
+        return {QStringLiteral("-o"), QStringLiteral("Collate=True")};
     }
-    return QStringList(QStringLiteral("-o")) << QStringLiteral("Collate=False");
+    return {QStringLiteral("-o"), QStringLiteral("Collate=False")};
 }
 
 QStringList FilePrinter::optionPageMargins(QPrinter &printer, ScaleMode scaleMode)

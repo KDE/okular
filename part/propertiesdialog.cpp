@@ -178,7 +178,7 @@ PropertiesDialog::PropertiesDialog(QWidget *parent, Okular::Document *doc)
     // KPageDialog is a bit buggy, it doesn't fix its own sizeHint, so we have to manually resize
     resize(layout->sizeHint());
 
-    connect(pageWidget(), QOverload<KPageWidgetItem *, KPageWidgetItem *>::of(&KPageWidget::currentPageChanged), this, &PropertiesDialog::pageChanged);
+    connect(pageWidget(), &KPageWidget::currentPageChanged, this, &PropertiesDialog::pageChanged);
 }
 
 PropertiesDialog::~PropertiesDialog()

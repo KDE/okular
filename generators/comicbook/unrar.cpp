@@ -37,7 +37,7 @@ static UnrarFlavour *detectUnrar(const QString &unrarPath, const QString &versio
 {
     UnrarFlavour *kind = nullptr;
     QProcess proc;
-    proc.start(unrarPath, QStringList() << versionCommand);
+    proc.start(unrarPath, {versionCommand});
     bool ok = proc.waitForFinished(-1);
     Q_UNUSED(ok)
     static const QRegularExpression regex(QStringLiteral("[\r\n]"));
@@ -253,7 +253,7 @@ int Unrar::startSyncProcess(const ProcessArgs &args)
     mProcess = new QProcess(this);
     connect(mProcess, &QProcess::readyReadStandardOutput, this, &Unrar::readFromStdout);
     connect(mProcess, &QProcess::readyReadStandardError, this, &Unrar::readFromStderr);
-    connect(mProcess, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &Unrar::finished);
+    connect(mProcess, &QProcess::finished, this, &Unrar::finished);
 
     if (helper->kind->name() == QLatin1String("unar") && args.useLsar) {
         mProcess->start(helper->lsarPath, args.appArgs, QIODevice::ReadWrite | QIODevice::Unbuffered);

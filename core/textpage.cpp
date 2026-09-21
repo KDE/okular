@@ -1593,7 +1593,7 @@ TextEntity::List addNecessarySpace(RegionTextList tree, int pageWidth, int pageH
                     const QRect rect(QPoint(left, top), QPoint(right, bottom));
                     const NormalizedRect entRect(rect, pageWidth, pageHeight);
                     TextEntity ent1 = TextEntity(spaceStr, entRect);
-                    WordWithCharacters word(ent1, QList<TextEntity>() << ent1);
+                    WordWithCharacters word(ent1, {ent1});
 
                     list.insert(k + 1, word);
 

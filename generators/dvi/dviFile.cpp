@@ -395,7 +395,7 @@ QString dvifile::convertPDFtoPS(const QString &PDFFilename, QString *converrorms
     // Use pdf2ps to do the conversion
     QProcess pdf2ps;
     pdf2ps.setProcessChannelMode(QProcess::MergedChannels);
-    pdf2ps.start(fullPath, QStringList() << PDFFilename << convertedFileName, QIODevice::ReadOnly | QIODevice::Text);
+    pdf2ps.start(fullPath, {PDFFilename, convertedFileName}, QIODevice::ReadOnly | QIODevice::Text);
 
     if (!pdf2ps.waitForStarted()) {
         pdf2psNotFound(PDFFilename, converrorms);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-01-08 11:19+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: okular (generated) <http://weblate.amgelocalnet.duckdns.org/"
@@ -271,7 +271,7 @@ msgstr ""
 "dhoiciméad a léamh.</p><p><small><b>COSÁN:</b> %1</small></p><p><small>%2</"
 "small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -287,7 +287,7 @@ msgstr ""
 "chonair chuardaigh reatha.</p><p><small><b>COSÁN:</b> %1</small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -298,7 +298,7 @@ msgstr ""
 "%1, earráid %2). Mar thoradh air sin, níorbh fhéidir roinnt comhad clónna a "
 "aimsiú, agus d'fhéadfadh sé nach mbeadh do dhoiciméad inléite.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Ag giniúint %1 ag %2 dpi faoi láthair…"
@@ -313,7 +313,7 @@ msgstr "Gineadóir/Dáta"
 msgid "Font file not found"
 msgstr "Comhad cló gan aimsiú"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

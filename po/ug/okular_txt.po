@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_txt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2026-06-01 16:31-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -31,7 +31,7 @@ msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 #: generator_txt.cpp:25
 #, kde-format
 msgid "Txt"
-msgstr "Txt"
+msgstr ""
 
 #: generator_txt.cpp:25
 #, kde-format

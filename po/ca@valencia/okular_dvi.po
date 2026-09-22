@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-09-05 10:59+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -272,7 +272,7 @@ msgstr ""
 "per a mostrar el fitxer DVI actual. El document pot ser illegible.</"
 "p><p><small><b>CAMÍ:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -288,7 +288,7 @@ msgstr ""
 "de busca actual.</p><p><small><b>CAMÍ:</b> %1</small></p><p><small>%2</"
 "small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -299,7 +299,7 @@ msgstr ""
 "(codi d'eixida %1, error %2). Com a resultat, alguns fitxers de fonts no es "
 "poden localitzar, i el document pot ser illegible.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Actualment s'està generant %1 a %2 ppp…"
@@ -314,7 +314,7 @@ msgstr "Generador/Data"
 msgid "Font file not found"
 msgstr "No s'ha trobat el fitxer de fonts"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

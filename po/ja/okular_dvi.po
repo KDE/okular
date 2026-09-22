@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2011-04-16 17:52-0700\n"
 "Last-Translator: Fumiaki Okushi <okushi@kde.gr.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -304,7 +304,7 @@ msgstr ""
 "<qt><p>Okular は現在の DVI ファイルの表示に必要なすべてのフォントファイルを見"
 "つけられませんでした。文書は読めないかもしれません。</p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -314,7 +314,7 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, "
@@ -329,7 +329,7 @@ msgstr ""
 "ラー %2)。このため、フォントファイルがたらず、文書が読めないかもしれません。"
 "</p></qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -345,7 +345,7 @@ msgstr "ジェネレータ/日付"
 msgid "Font file not found"
 msgstr "フォントファイルが見つかりません"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>The version of Ghostview that is installed on this computer does not "

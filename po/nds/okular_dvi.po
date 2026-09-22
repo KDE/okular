@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2014-05-13 17:46+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -269,7 +269,7 @@ msgstr ""
 "villicht nich lesen.</p><p><small><b>PATH:</b> %1</small></p><p><small>%2</"
 "small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -285,7 +285,7 @@ msgstr ""
 "PATH-Variabel finnen.</p><p><small><b>PATH:</b> %1</small></p><p><small>%2</"
 "small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -296,7 +296,7 @@ msgstr ""
 "(Utstieg-Kode: %1, Fehler: %2). As Resultaat laat sik en en poor Schriftoort-"
 "Dateien nich finnen, Dien Dokment mag nich leesbor wesen.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi..."
 msgid "Currently generating %1 at %2 dpi…"
@@ -312,7 +312,7 @@ msgstr "Opsteller/Datum"
 msgid "Font file not found"
 msgstr "Schriftoortdatei lett sik nich finnen"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

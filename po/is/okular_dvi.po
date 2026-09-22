@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2025-10-23 14:58+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
@@ -266,7 +266,7 @@ msgstr ""
 "þessa DVI-skrá. Skjalið þitt gæti verið ólesanlegt.</p><p><small><b>SLÓÐ:</"
 "b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -281,7 +281,7 @@ msgstr ""
 "tölvunni eða að það finnst ekki á núverandi leitarslóð.</p><p><small><b>SLÓÐ:"
 "</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -292,7 +292,7 @@ msgstr ""
 "villa %2). Þar af leiðandi fundust ekki sumar leturskrárnar og skjalið "
 "þittgæti verið ólesanlegt.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Bý nú til %1 í %2 pát…"
@@ -307,7 +307,7 @@ msgstr "Myndunarforrit/dagsetning"
 msgid "Font file not found"
 msgstr "Leturskrá fannst ekki"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

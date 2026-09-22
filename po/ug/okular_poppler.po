@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-20 12:51+0000\n"
-"PO-Revision-Date: 2026-06-01 16:31-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
-"Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
+"Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,10 +35,9 @@ msgid "Failed writing temporary file"
 msgstr "ۋاقىتلىق ھۆججەت يازالمىدى"
 
 #: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "ۋاقىتلىق ھۆججەت ئاتىنى ئۆزگەرتەلمىدى"
+msgstr ""
 
 #: annots.cpp:607
 #, kde-format
@@ -193,11 +192,10 @@ msgid "&Load Signatures"
 msgstr "ئىمزا يۈكلە(&L)"
 
 #: formfields.cpp:561 generator_pdf.cpp:2238
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
-msgstr "ۋاقىتلىق ھۆججەت ئاتىنى ئۆزگەرتەلمىدى"
+msgstr ""
 
 #: generator_pdf.cpp:85
 #, kde-format
@@ -220,8 +218,6 @@ msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
-"بېسىلغان پۈتۈكتە ئىزاھات بولىدۇ. ئەگەر ئىزاھات يوق ئەسلى  پۈتۈكنى باسماقچى "
-"بولسىڭىزۇ، بۇ تاللانمىنى چەكلەڭ."
 
 #: generator_pdf.cpp:91
 #, kde-format
@@ -240,9 +236,6 @@ msgid ""
 "usually gives somewhat worse results, but is useful when printing documents "
 "that appear to print incorrectly."
 msgstr ""
-"ھەر بىر بەتنى مەجبۇرىي نۇر شادىسىلاشتۇرۇلغان سۈرەتكە ئايلاندۇرۇپ ئاندىن "
-"باسىدۇ. بۇ ئادەتتە سۈرەت سۈپىتىنىڭ ئازراق تۆۋەنلىشىنى كەلتۈرۈپ چىقىرىدۇ "
-"ئەمما بەزى پۈتۈكنى بېسىشتىكى خاتالىققا تاقابىل تۇرالايدۇ."
 
 #: generator_pdf.cpp:103
 #, kde-format
@@ -258,7 +251,7 @@ msgstr "نىسبەت ھالىتى:"
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
-msgstr "PDF v. %1.%2"
+msgstr ""
 
 #: generator_pdf.cpp:1022
 #, kde-format
@@ -320,7 +313,7 @@ msgstr ""
 #: generator_pdf.cpp:1744
 #, kde-format
 msgid "PDF"
-msgstr "PDF"
+msgstr ""
 
 #: generator_pdf.cpp:1744
 #, kde-format
@@ -370,11 +363,10 @@ msgid "Expiration date"
 msgstr "ئاخىرلىشىش ۋاقتى"
 
 #: pdfsettingswidget.cpp:152
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "ئىشلىتىلىشچان گۇۋاھنامە"
+msgstr ""
 
 #: pdfsettingswidget.cpp:174
 #, kde-format
@@ -382,8 +374,6 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
-"پىروگرامما Poppler ئامبىرىنى ئىشلىتىپ قۇرغاندا NSS قوللاشنى قوزغاتمىغان.\n"
-"شۇ سەۋەبتىن رەقەملىك ئىمزا قوشقىلى بولمايدۇ"
 
 #: pdfsettingswidget.cpp:198
 #, kde-format
@@ -404,17 +394,15 @@ msgstr ""
 "قوزغىتىشىڭىز كېرەك"
 
 #: pdfsignatureutils.cpp:236
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
-msgstr "%1 نى ئېچىشتا ئىم كىرگۈزۈلىدۇ:"
+msgstr ""
 
 #~ msgid "Enter Password"
 #~ msgstr "ئىم كىرگۈزۈلىدۇ"
 
-#, fuzzy
 #~| msgid "Failed renaming temporary file"
 #~ msgid "Failed renaming temporary file %1:"
 #~ msgstr "ۋاقىتلىق ھۆججەت ئاتىنى ئۆزگەرتەلمىدى"

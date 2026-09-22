@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-09-09 22:01+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -267,7 +267,7 @@ msgstr ""
 "необходими за показване на текущия DVI файл. Документът ви може да е нечетим."
 "</p><p><small><b> PATH: </b> %1 </small></p><p><small> %2 </small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -283,7 +283,7 @@ msgstr ""
 "текущата пътека за търсене.</p><p><small><b> PATH: </b> %1 </small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -294,7 +294,7 @@ msgstr ""
 "код %1, грешка %2). В резултат на това някои шрифтови файлове не можаха да "
 "бъдат намерени и документът ви може да бъде нечетим.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "В момента се генерира %1 при %2 dpi…"
@@ -309,7 +309,7 @@ msgstr "Генератор/Дата"
 msgid "Font file not found"
 msgstr "Файлът с шрифтовете не е открит"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

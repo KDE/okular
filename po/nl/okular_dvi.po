@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-09-05 16:24+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -272,7 +272,7 @@ msgstr ""
 "onleesbaar.</p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></"
 "p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -288,7 +288,7 @@ msgstr ""
 "niet gevonden worden in het huidige zoekpad.</p><p><small><b>PATH:</b> %1</"
 "small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -299,7 +299,7 @@ msgstr ""
 "(uitgangscode %1, fout %2). Het resultaat is dat enige lettertypebestanden "
 "niet gelokaliseerd konden worden en dat uw document onleesbaar kan zijn.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Momenteel bezig met genereren van %1 op %2 dpi…"
@@ -314,7 +314,7 @@ msgstr "Generator/datum"
 msgid "Font file not found"
 msgstr "Lettertypebestand niet gevonden"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2025-07-13 23:11+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -262,7 +262,7 @@ msgstr ""
 "tarpeellisia fonttitiedostoja. Tiedosto voi olla lukukelvoton.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -277,7 +277,7 @@ msgstr ""
 "asennettuna järjestelmään tai sitä ei löydy nykyisestä hakupolusta.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -288,7 +288,7 @@ msgstr ""
 "(lopetuskoodi %1, virhe %2). Tämän tuloksena joitain fonttitiedostoja ei "
 "löydetty ja tiedosto voi olla lukukelvoton.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Generoidaan %1 tarkkuudella %2 dpi…"
@@ -303,7 +303,7 @@ msgstr "Generoija/Päivämäärä"
 msgid "Font file not found"
 msgstr "Fonttitiedostoa ei löytynyt"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

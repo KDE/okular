@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2014-03-09 16:17+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -297,7 +297,7 @@ msgstr ""
 "Sti: %1\n"
 "kpswhich: %2"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, fuzzy, kde-format
 #| msgid ""
 #| "There were problems running 'kpsewhich'. As a result, some font files "
@@ -320,7 +320,7 @@ msgstr ""
 "Sti: %1\n"
 "kpswhich: %2"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, fuzzy, kde-format
 #| msgid ""
 #| "The font generation by 'kpsewhich' was aborted (exit code %1, error %2). "
@@ -335,7 +335,7 @@ msgstr ""
 "fejl %2). Som resultat heraf kan nogle skrifttypefiler ikke findes, og dit "
 "dokument kan måske være ulæseligt."
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -351,7 +351,7 @@ msgstr "Producent/Dato"
 msgid "Font file not found"
 msgstr "Skrifttypefil ikke fundet"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

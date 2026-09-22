@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -262,7 +262,7 @@ msgstr ""
 "प्रदर्शयितुं आवश्यकाः सन्ति । भवतः दस्तावेजः अपठनीयः भवितुम् अर्हति ।</p><p> "
 "<small><b>पथः</b> %1</small></p><p> <small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -276,7 +276,7 @@ msgstr ""
 "em> कार्यक्रमः सम्भवतः भवतः प्रणाल्यां न संस्थापितः, अथवा वर्तमान अन्वेषणमार्गे न प्राप्यते ।"
 "</p><p> <small><b>पथः</b> %1</small></p><p> <small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -287,7 +287,7 @@ msgstr ""
 "। फलतः केचन फन्ट् सञ्चिकाः ज्ञातुं न शक्तवन्तः, भवतः दस्तावेजः अपठनीयः भवितुम् अर्हति ।</"
 "qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi..."
 msgid "Currently generating %1 at %2 dpi…"
@@ -303,7 +303,7 @@ msgstr "जनरेटर/तिथि"
 msgid "Font file not found"
 msgstr "फन्ट् सञ्चिका न प्राप्ता"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

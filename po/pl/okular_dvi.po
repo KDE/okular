@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2025-11-01 10:12+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -276,7 +276,7 @@ msgstr ""
 "się odczytać.</p><p><small><b>ŚCIEŻKA (PATH):</b> %1</small></p><p><small>"
 "%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -292,7 +292,7 @@ msgstr ""
 "ścieżce PATH.</p><p><small><b>ŚCIEŻKA (PATH):</b> %1</small></p><p><small>"
 "%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -304,7 +304,7 @@ msgstr ""
 "plików czcionek. Możliwe, że tego dokumentu nie będzie dało się odczytać.</"
 "qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Obecnie tworzenie %1 przy %2 dpi…"
@@ -319,7 +319,7 @@ msgstr "Twórca/data"
 msgid "Font file not found"
 msgstr "Nie odnaleziono pliku czcionek"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

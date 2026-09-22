@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2014-07-18 05:17+0300\n"
 "Last-Translator: Marek Laane <bald@smail.ee>\n"
 "Language-Team: Estonian <kde-et@linux.ee>\n"
@@ -260,7 +260,7 @@ msgstr ""
 "faili näitamiseks. Seetõttu võib dokument olla loetamatu.</"
 "p><p><small><b>OTSINGUTEE:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -275,7 +275,7 @@ msgstr ""
 "paigaldatud või siis ei leitud seda kehtivalt otsinguteelt.</"
 "p><p><small><b>OTSINGUTEE:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -286,7 +286,7 @@ msgstr ""
 "viga %2). Seepärast ei suudetud tuvastada mõningaid fondifaile ning dokument "
 "ei pruugi olla loetav.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi..."
 msgid "Currently generating %1 at %2 dpi…"
@@ -302,7 +302,7 @@ msgstr "Autor/Kuupäev"
 msgid "Font file not found"
 msgstr "Fondifaili ei leitud"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

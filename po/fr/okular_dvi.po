@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-09-05 12:59+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -291,7 +291,7 @@ msgstr ""
 "l'affichage du fichier « DVI » actuel. Votre document peut être illisible.</"
 "p> <p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -307,7 +307,7 @@ msgstr ""
 "se trouve pas dans l'emplacement de recherche actuel.</p> <p><small><b>PATH:"
 "</b> %1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -318,7 +318,7 @@ msgstr ""
 "fermeture %1, erreur %2). En conséquence, il est probable que certaines "
 "polices soient manquantes et que votre document soit illisible.</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "Génération en cours de %1 à %2 dpi..."
@@ -333,7 +333,7 @@ msgstr "Générateur / Date"
 msgid "Font file not found"
 msgstr "Impossible de trouver un fichier de police"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2026-09-15 16:40+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -249,7 +249,7 @@ msgstr ""
 "<qt><p>Okular 無法找到完整的字型來顯示這個 DVI 檔。您的文件有可能沒辦法閱讀。"
 "</p><p><small><b>路徑：</b>%1</small></p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, kde-format
 msgid ""
 "<qt><p>There were problems running <em>kpsewhich</em>. As a result, some "
@@ -263,7 +263,7 @@ msgstr ""
 "是在目前的執行路徑上找不到。</p><p><small><b>路徑：</b>%1</small></"
 "p><p><small>%2</small></p></qt>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, kde-format
 msgid ""
 "<qt>The font generation by <em>kpsewhich</em> was aborted (exit code %1, "
@@ -273,7 +273,7 @@ msgstr ""
 "<qt><em>kpsewhich</em> 的產生字型功能已被中止（離開代碼 %1，錯誤 %2）。因此，"
 "無法定位某些字型檔，您的文件可能無法讀取。</qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
 msgstr "以 %2 dpi 產生 %1 中…"
@@ -288,7 +288,7 @@ msgstr "產生器/日期"
 msgid "Font file not found"
 msgstr "找不到檔案"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, kde-format
 msgid ""
 "The version of Ghostview that is installed on this computer does not contain "

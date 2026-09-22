@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2009-05-26 10:18+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -290,7 +290,7 @@ msgstr ""
 "<qt><p>​Okular មិន​អាច​បម្រុង​ទុក​ឯកសារ​ពុម្ពអក្សរ​ទាំងអស់​ដែល​ចាំបាច់​ដើម្បីបង្ហាញ​ឯកសារ DVI បច្ចុប្បន្ន​"
 "បានទេ ។ ឯកសារ​របស់​អ្នក​ប្រហែល​ជា​មិនអាច​អាន​បាន ។</p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>There were problems running <b>kpsewhich</b>. As a result, some font "
@@ -319,7 +319,7 @@ msgstr ""
 "បានដំឡើង សូម​ព្យាយាម​ប្រើ​​កម្មវិធី kpsewhich ពី​បន្ទាត់​ពាក្យ​បញ្ជា​ដើម្បី​ពិនិត្យ​ប្រសិន​បើ​វា​ពិត​ជា​"
 "ដំណើរការ ។</p>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, "
@@ -333,7 +333,7 @@ msgstr ""
 "<qt><p>ការ​បង្កើត​ពុម្ពអក្សរ​ដោយ <b>kpsewhich</b> ត្រូវ​បានបោះបង់ (កូដ​ចេញ %1កំហុស %2) ។ ជា​"
 "លទ្ធផល ឯកសារ​ពុម្ពអក្សរ​មួយ​ចំនួន​មិនអាច​ត្រូវ​បាន​កំណត់​ទីតាំង​ឯកសារ​របស់អ្នក​ទេ អាច​​អាន​បាន ។</p></qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -349,7 +349,7 @@ msgstr "ឧបករណ៍​បង្កើត/កាលបរិច្ឆេ�
 msgid "Font file not found"
 msgstr "រក​មិន​ឃើញ​ឯកសារ​​ពុម្ពអក្សរ​"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>The version of Ghostview that is installed on this computer does not "

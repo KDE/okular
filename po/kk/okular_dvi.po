@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-05 00:43+0000\n"
+"POT-Creation-Date: 2026-09-22 15:58+0000\n"
 "PO-Revision-Date: 2013-06-28 02:44+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -296,7 +296,7 @@ msgstr ""
 "<qt><p>Okular DVI файлыңызды көсетуге қажет қаріптерді түгелдеп ала алмады. "
 "Құжатыңыз оқылмайтындай болу мүмкін.</p></qt>"
 
-#: fontpool.cpp:269
+#: fontpool.cpp:273
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>There were problems running <b>kpsewhich</b>. As a result, some font "
@@ -325,7 +325,7 @@ msgstr ""
 "texlive) орнатып алыңыз. Егер TeX орнатылғанын білсеңіз, істейтінін тексеру "
 "үшін kpsewhich бағдарламасын команда жолынан жегіп көріңіз.</p>"
 
-#: fontpool.cpp:290
+#: fontpool.cpp:294
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The font generation by <b>kpsewhich</b> was aborted (exit code %1, "
@@ -340,7 +340,7 @@ msgstr ""
 "%1, қатесі %2).  Салдары: кейбір қаріп файлдар жетіспейді, сондықтан "
 "құжатыңыз оқуға жарамауы мүмкін.</p></qt>"
 
-#: fontpool.cpp:467
+#: fontpool.cpp:471
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi"
 msgid "Currently generating %1 at %2 dpi…"
@@ -356,7 +356,7 @@ msgstr "Құрушысы/Құрылған кезі"
 msgid "Font file not found"
 msgstr "Қаріптің файлы табылмады"
 
-#: psgs.cpp:286
+#: psgs.cpp:285
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>The version of Ghostview that is installed on this computer does not "

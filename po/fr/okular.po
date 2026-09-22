@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
 "PO-Revision-Date: 2026-09-02 16:57+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -263,7 +263,7 @@ msgstr "Mettre en pause le film"
 msgid "Resume movie"
 msgstr "Reprendre le film"
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""
@@ -5870,30 +5870,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "Afficher uniquement les pages en signet"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "Lecture"
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "Pause"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "Arrêt"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "Les vidéos ne sont pas prises en charge dans cette version de Okular."
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "Les vidéos ne sont pas prises en charge dans cette version de Okular."

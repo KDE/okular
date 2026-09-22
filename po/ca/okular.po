@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
-"PO-Revision-Date: 2026-09-06 17:42+0200\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
+"PO-Revision-Date: 2026-09-21 10:00+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -243,7 +243,7 @@ msgstr "Fa pausa a la pel·lícula"
 msgid "Resume movie"
 msgstr "Continua la pel·lícula"
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Aquest Okular s'ha construït sense suport d'àudio"
@@ -601,6 +601,9 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"No s'ha trobat el certificat de signatura. Si esteu utilitzant una targeta "
+"intel·ligent, pot ser que s'hagi tret o que hagi canviat l'emmagatzematge de "
+"signatures"
 
 #: core/signatureutils.cpp:511
 #, kde-format
@@ -5823,30 +5826,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "Mostra només les pàgines amb un punt"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "Reprodueix"
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "Pausa"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "Atura"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "En aquest Okular no s'han implementat els vídeos"
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "En aquest Okular no s'han implementat els vídeos"

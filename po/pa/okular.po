@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
 "PO-Revision-Date: 2026-02-11 18:22-0600\n"
 "Last-Translator: A S Alam <aman@punlinux.org>\n"
 "Language-Team: pa\n"
@@ -245,7 +245,7 @@ msgstr "ਮੂਵੀ ਵਿਰਾਮ"
 msgid "Resume movie"
 msgstr "ਮੂਵੀ ਮੁੜ-ਚਾਲੂ"
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "ਓਕੁਲਾਰ ਨੂੰ ਬਿਨਾਂ ਆਡੀਓ ਸਹਿਯੋਗ ਦੇ ਬਣਾਇਆ ਗਿਆ ਹੈ"
@@ -5791,30 +5791,30 @@ msgstr ""
 msgid "Show bookmarked pages only"
 msgstr "ਸਿਰਫ਼ ਬੁੱਕਮਾਰਕ ਸਫ਼ੇ ਹੀ ਵੇਖੋ"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "ਚਲਾਓ"
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "ਵਿਰਾਮ"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "ਰੋਕੋ"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "ਵੀਡੀਓ ਇਸ ਓਕੁਲਾਰ ਵਿੱਚ ਸਹਾਇਕ ਨਹੀਂ ਹਨ"
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "ਵੀਡੀਓ ਇਸ ਓਕੁਲਾਰ ਵਿੱਚ ਸਹਾਇਕ ਨਹੀਂ ਹਨ"

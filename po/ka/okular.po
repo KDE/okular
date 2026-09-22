@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
-"PO-Revision-Date: 2026-09-01 04:29+0200\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
+"PO-Revision-Date: 2026-09-21 04:11+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -240,7 +240,7 @@ msgstr "ფილმის შეჩერება"
 msgid "Resume movie"
 msgstr "ფილმის გაგრძელება"
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Okular-ის ეს ვერსია აუდიოს მხარდაჭერის გარეშეა აგებული"
@@ -597,6 +597,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"ხელმოწერის სერტიფიკატი აღმოჩენილი არაა. თუ იყენებთ smart ბარათს, ის "
+"შეიძლება, გამოერთებულია, ან ხელმოწერის საცავი შეიცვალა"
 
 #: core/signatureutils.cpp:511
 #, kde-format
@@ -5800,30 +5802,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "მხოლოდ, სანიშნეებში ჩამატებული გვერდების ჩვენება"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "დაკვრა"
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "შეჩერება"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "შეჩერება"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "ამ Okular-ში ვიდეოები მხარდაჭერილი არაა"
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "ამ Okular-ში ვიდეოები მხარდაჭერილი არაა"

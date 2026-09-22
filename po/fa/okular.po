@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
 "PO-Revision-Date: 2007-07-31 19:48+0330\n"
 "Last-Translator: Nazanin Kazemi <kazemi@itland.ir>\n"
 "Language-Team: Persian <kde-i18n-fa@kde.org>\n"
@@ -242,7 +242,7 @@ msgstr "پخش فیلم..."
 msgid "Resume movie"
 msgstr ""
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr ""
@@ -5970,32 +5970,32 @@ msgstr ""
 msgid "Show bookmarked pages only"
 msgstr "فقط نمایش صفحه‌های چوب الف شده"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr ""
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "صفحه‌ها"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, fuzzy, kde-format
 #| msgid "Stamp"
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "مهر"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr ""
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr ""

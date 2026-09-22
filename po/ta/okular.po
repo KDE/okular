@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-22 00:43+0000\n"
 "PO-Revision-Date: 2026-05-10 15:19+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -238,7 +238,7 @@ msgstr "ஒளிக்காட்சியை இடைநிறுத்த�
 msgid "Resume movie"
 msgstr "ஒளிக்காட்சியைத் தொடர்"
 
-#: core/audioplayer.cpp:315
+#: core/audioplayer.cpp:313
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "இந்த ஆக்குலர், ஒலி ஆதரவு இல்லாமல் தொகுக்கப்பட்டுள்ளது"
@@ -5797,30 +5797,30 @@ msgstr "PGP"
 msgid "Show bookmarked pages only"
 msgstr "நினைவுக்குறியிட்ட பக்கங்களை மட்டும் காட்டு"
 
-#: part/videowidget.cpp:143
+#: part/videowidget.cpp:179
 #, kde-format
 msgctxt "start the movie playback"
 msgid "Play"
 msgstr "இயக்கு"
 
-#: part/videowidget.cpp:146
+#: part/videowidget.cpp:182
 #, kde-format
 msgctxt "pause the movie playback"
 msgid "Pause"
 msgstr "பொறு"
 
-#: part/videowidget.cpp:252
+#: part/videowidget.cpp:312
 #, kde-format
 msgctxt "stop the movie playback"
 msgid "Stop"
 msgstr "நிறுத்து"
 
-#: part/videowidget.cpp:501
+#: part/videowidget.cpp:561
 #, kde-format
 msgid "Videos not supported in this okular"
 msgstr "இந்த ஆக்குலரில் ஒளிக்காட்சிகள் ஆதரிக்கப்படா"
 
-#: part/videowidget.cpp:505
+#: part/videowidget.cpp:565
 #, kde-format
 msgid "Videos not supported in this Okular"
 msgstr "இந்த ஆக்குலரில் ஒளிக்காட்சிகள் ஆதரிக்கப்படா"

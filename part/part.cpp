@@ -1326,9 +1326,8 @@ bool Part::slotImportPSFile()
         tf.close();
 
         setLocalFilePath(url.toLocalFile());
-        QStringList args;
+        const QStringList args {url.toLocalFile(), m_temporaryLocalFile};
         QProcess *p = new QProcess();
-        args << url.toLocalFile() << m_temporaryLocalFile;
         m_pageView->displayMessage(i18n("Importing PS file as PDF (this may take a while)…"));
         connect(p, &QProcess::finished, this, &Part::psTransformEnded);
         p->start(app, args);

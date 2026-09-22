@@ -217,11 +217,15 @@ void fontPool::locateFonts(bool makePK, bool locateTFMonly, bool *virtualFontsFo
 
     // Now generate the command line for the kpsewhich
     // program. Unfortunately, this can be rather long and involved...
-    QStringList kpsewhich_args;
-    kpsewhich_args << QStringLiteral("--dpi") << QStringLiteral("1200") << QStringLiteral("--mode") << QStringLiteral("lexmarks");
-
-    // Disable automatic pk-font generation.
-    kpsewhich_args << QString::fromLocal8Bit(makePK ? "--mktex" : "--no-mktex") << QStringLiteral("pk");
+    QStringList kpsewhich_args {
+        QStringLiteral("--dpi"),
+        QStringLiteral("1200"),
+        QStringLiteral("--mode"),
+        QStringLiteral("lexmarks"),
+        // Disable automatic pk-font generation.
+        QString::fromLocal8Bit(makePK ? "--mktex" : "--no-mktex"),
+        QStringLiteral("pk"),
+    };
 
     // Names of fonts that shall be located
     quint16 numFontsInJob = 0;

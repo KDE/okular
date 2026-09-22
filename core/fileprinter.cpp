@@ -478,9 +478,16 @@ QStringList FilePrinter::optionPageMargins(QPrinter &printer, ScaleMode scaleMod
             r = marginsf.right();
             b = marginsf.bottom();
         }
-        QStringList marginOptions;
-        marginOptions << (QStringLiteral("-o")) << QStringLiteral("page-left=%1").arg(l) << QStringLiteral("-o") << QStringLiteral("page-top=%1").arg(t) << QStringLiteral("-o") << QStringLiteral("page-right=%1").arg(r)
-                      << QStringLiteral("-o") << QStringLiteral("page-bottom=%1").arg(b);
+        QStringList marginOptions {
+            (QStringLiteral("-o")),
+            QStringLiteral("page-left=%1").arg(l),
+            QStringLiteral("-o"),
+            QStringLiteral("page-top=%1").arg(t),
+            QStringLiteral("-o"),
+            QStringLiteral("page-right=%1").arg(r),
+            QStringLiteral("-o"),
+            QStringLiteral("page-bottom=%1").arg(b),
+        };
         if (scaleMode == ScaleMode::FitToPrintArea) {
             marginOptions << QStringLiteral("-o") << QStringLiteral("fit-to-page");
         }

@@ -238,8 +238,7 @@ void ghostscript_interface::gs_generate_graphics_file(const quint16 page, const 
     QFile::remove(filename);
     KProcess proc;
     proc.setOutputChannelMode(KProcess::SeparateChannels);
-    QStringList argus;
-    argus << gsFullPath;
+    QStringList argus {gsFullPath};
     argus << QStringLiteral("-dSAFER") << QStringLiteral("-dPARANOIDSAFER") << QStringLiteral("-dDELAYSAFER") << QStringLiteral("-dNOPAUSE") << QStringLiteral("-dBATCH");
     argus << QStringLiteral("-sDEVICE=%1").arg(*gsDevice);
     argus << QStringLiteral("-sOutputFile=%1").arg(filename);

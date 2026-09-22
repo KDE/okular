@@ -3443,10 +3443,7 @@ bool Document::canModifyPageAnnotation(const Annotation *annotation) const
     case Annotation::AInk:
         return true;
     case Annotation::AWidget:
-#if HAVE_NEW_SIGNATURE_API
         return dynamic_cast<const SignatureAnnotation *>(annotation);
-#endif
-        return false;
     default:
         return false;
     }

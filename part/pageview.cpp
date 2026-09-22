@@ -287,9 +287,7 @@ public:
     // The remaining scroll from the previous zoom event
     QPointF remainingScroll;
     SignaturePartUtils::SigningInformation signingInfo;
-#if HAVE_NEW_SIGNATURE_API
     Okular::SignatureAnnotation *signatureAnnotation = nullptr;
-#endif
 };
 
 PageViewPrivate::PageViewPrivate(PageView *qq)
@@ -5395,13 +5393,11 @@ Okular::Document *PageView::document() const
     return d->document;
 }
 
-#if HAVE_NEW_SIGNATURE_API
 void PageView::startSigning(Okular::SignatureAnnotation *signatureAnnotation)
 {
     d->signatureAnnotation = signatureAnnotation;
     Q_EMIT signingStarted();
 }
-#endif
 
 void PageView::slotSignature()
 {
@@ -5712,7 +5708,6 @@ void PageView::externalKeyPressEvent(QKeyEvent *e)
     keyPressEvent(e);
 }
 
-#if HAVE_NEW_SIGNATURE_API
 PageView::FinishSigningResult PageView::finishSigning()
 {
     const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(this, d->document);
@@ -5758,7 +5753,6 @@ PageView::FinishSigningResult PageView::finishSigning()
     Q_ASSERT(false);
     return Failed;
 }
-#endif
 
 void PageView::slotProcessMovieAction(const Okular::MovieAction *action)
 {

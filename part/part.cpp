@@ -472,7 +472,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     m_signatureMessage->setWordWrap(true);
     m_signatureMessage->setPosition(KMessageWidget::Position::Header);
     rightLayout->addWidget(m_signatureMessage);
-#if HAVE_NEW_SIGNATURE_API
     m_signatureInProgressMessage = new KMessageWidget(rightContainer);
     m_signatureInProgressMessage->setCloseButtonVisible(false);
     m_signatureInProgressMessage->setVisible(false);
@@ -483,7 +482,6 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(finishSigningAction, &QAction::triggered, this, &Part::finishSigning);
     m_signatureInProgressMessage->addAction(finishSigningAction);
     rightLayout->addWidget(m_signatureInProgressMessage);
-#endif
     m_pageView = new PageView(rightContainer, m_document);
     rightContainer->setFocusProxy(m_pageView);
     QMetaObject::invokeMethod(m_pageView, "setFocus", Qt::QueuedConnection); // usability setting
@@ -541,13 +539,11 @@ Part::Part(QObject *parent, const QVariantList &args)
     connect(m_document->bookmarkManager(), &BookmarkManager::saved, this, &Part::slotRebuildBookmarkMenu);
 
     setupViewerActions();
-#if HAVE_NEW_SIGNATURE_API
     connect(m_pageView.data(), &PageView::signingStarted, this, [this] {
         m_signatureInProgressMessage->setVisible(true);
         m_saveAs->setEnabled(false);
         m_save->setEnabled(false);
     });
-#endif
 
     if (m_embedMode != ViewerWidgetMode) {
         setupActions();
@@ -1107,11 +1103,7 @@ void Part::setModified(bool modified)
 {
     KParts::ReadWritePart::setModified(modified);
 
-    if (modified && !m_save->isEnabled()
-#if HAVE_NEW_SIGNATURE_API
-        && !m_signatureInProgressMessage->isVisible()
-#endif
-    ) {
+    if (modified && !m_save->isEnabled() && !m_signatureInProgressMessage->isVisible()) {
         if (!m_warnedAboutModifyingUnsaveableDocument) {
             m_warnedAboutModifyingUnsaveableDocument = true;
             KMessageBox::information(widget(),
@@ -2133,9 +2125,7 @@ bool Part::slotAttemptReload(bool oneShot, const QUrl &newUrl)
         m_toc->finishReload();
     }
 
-#if HAVE_NEW_SIGNATURE_API
     m_signatureInProgressMessage->setVisible(false);
-#endif
 
     // inform the user about the operation in progress
     m_pageView->displayMessage(i18n("Reloading the document…"));
@@ -3732,7 +3722,6 @@ void Part::moveSplitter(int sideWidgetSize)
     m_sidebar->moveSplitter(sideWidgetSize);
 }
 
-#if HAVE_NEW_SIGNATURE_API
 void Part::finishSigning()
 {
     if (m_pageView->finishSigning() != PageView::FinishSigningResult::Cancelled) {
@@ -3742,7 +3731,6 @@ void Part::finishSigning()
         actionCollection()->action(QStringLiteral("add_digital_signature"))->setEnabled(true);
     }
 }
-#endif
 
 void Part::unsetDummyMode()
 {

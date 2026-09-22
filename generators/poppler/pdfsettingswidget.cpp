@@ -61,10 +61,6 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
 {
     m_pdfsw.setupUi(this);
 
-#if POPPLER_VERSION_MACRO < QT_VERSION_CHECK(25, 02, 90)
-    m_pdfsw.kcfg_EnablePgp->hide();
-#endif
-
     auto backends = Poppler::availableCryptoSignBackends();
     auto currentBackend = settingStringToPopplerEnum(PDFSettings::self()->signatureBackend());
     if (!backends.empty()) {
@@ -100,15 +96,12 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             }
             Poppler::setActiveCryptoSignBackend(backendEnum.value());
             m_pdfsw.certDBGroupBox->setVisible(backendEnum == Poppler::CryptoSignBackend::NSS);
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
             m_pdfsw.kcfg_EnablePgp->setVisible(backendEnum == Poppler::CryptoSignBackend::GPG);
-#endif
             m_certificatesAsked = false;
             m_listCertsButton->setVisible(backendEnum == Poppler::CryptoSignBackend::NSS);
             m_tree->setVisible(backendEnum != Poppler::CryptoSignBackend::NSS);
             update();
         });
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
         connect(m_pdfsw.kcfg_EnablePgp, &QAbstractButton::toggled, this, [this](bool checked) {
             bool wasAllowed = Poppler::arePgpSignaturesAllowed();
             if (!wasAllowed && checked) {
@@ -121,11 +114,8 @@ PDFSettingsWidget::PDFSettingsWidget(QWidget *parent)
             m_certificatesAsked = false;
             update();
         });
-#endif
 
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
         m_pdfsw.kcfg_EnablePgp->setVisible(currentBackend == Poppler::CryptoSignBackend::GPG);
-#endif
         m_pdfsw.certDBGroupBox->setVisible(currentBackend == Poppler::CryptoSignBackend::NSS);
 
         m_pdfsw.loadSignaturesButton->hide();

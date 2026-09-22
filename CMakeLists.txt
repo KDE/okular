@@ -8,8 +8,8 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 
 project(okular VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_REQUIRED_VERSION "6.6.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
-set(KF_REQUIRED_VERSION "5.240.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
+set(QT_REQUIRED_VERSION "6.10.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
+set(KF_REQUIRED_VERSION "6.24.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
@@ -195,11 +195,7 @@ if (BUILD_MOBILE)
 endif()
 
 if(NOT WIN32 AND NOT ANDROID AND NOT APPLE AND NOT HAIKU)
-    if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
-        find_package(Qt6GuiPrivate ${QT_REQUIRED_VERSION} REQUIRED)
-    else()
-        find_package(Qt6Gui REQUIRED COMPONENTS Private)
-    endif()
+    find_package(Qt6GuiPrivate ${QT_REQUIRED_VERSION} REQUIRED)
     set(HAVE_X11 TRUE)
 else()
     set(HAVE_X11 FALSE)
@@ -219,7 +215,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "24.08.0" COMPONENTS Qt6)
+find_package(Poppler "26.01.0" COMPONENTS Qt6)
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
@@ -248,7 +244,7 @@ set_okular_optional_package_properties(KExiv2Qt6 PROPERTIES
         URL "https://commits.kde.org/libkexiv2"
         PURPOSE "Support for exif rotation in image files.")
 
-find_package(DjVuLibre "3.5.28")
+find_package(DjVuLibre "3.5.29")
 set_okular_optional_package_properties(DjVuLibre PROPERTIES
         DESCRIPTION  "A library for dealing with DjVu formatted files"
         URL "https://djvulibre.djvuzone.org"
@@ -273,20 +269,8 @@ set_okular_optional_package_properties(Discount PROPERTIES
         PURPOSE "Support for Markdown documents in Okular.")
 
 add_definitions(-DTRANSLATION_DOMAIN="okular")
-add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060600)
-add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x05F000)
-
-if (Poppler_VERSION VERSION_LESS 24.10.0)
-    add_definitions(-DHAVE_NEW_SIGNATURE_API=0)
-else()
-    add_definitions(-DHAVE_NEW_SIGNATURE_API=1)
-endif()
-
-if (Poppler_VERSION VERSION_LESS 24.12.0)
-    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=0)
-else()
-    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=1)
-endif()
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060A00)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x061800)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} core/synctex ${CMAKE_BINARY_DIR}/core)
 

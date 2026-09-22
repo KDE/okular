@@ -489,7 +489,6 @@ static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Ok
     return pStampAnnotation;
 }
 
-#if HAVE_NEW_SIGNATURE_API
 static Okular::SigningResult popplerToOkular(Poppler::SignatureAnnotation::SigningResult pResult)
 {
     switch (pResult) {
@@ -499,7 +498,6 @@ static Okular::SigningResult popplerToOkular(Poppler::SignatureAnnotation::Signi
         return Okular::FieldAlreadySigned;
     case Poppler::SignatureAnnotation::GenericSigningError:
         return Okular::GenericSigningError;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
     case Poppler::SignatureAnnotation::InternalError:
         return Okular::InternalSigningError;
     case Poppler::SignatureAnnotation::KeyMissing:
@@ -508,11 +506,8 @@ static Okular::SigningResult popplerToOkular(Poppler::SignatureAnnotation::Signi
         return Okular::SignatureWriteFailed;
     case Poppler::SignatureAnnotation::UserCancelled:
         return Okular::UserCancelled;
-#endif
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     case Poppler::SignatureAnnotation::BadPassphrase:
         return Okular::BadPassphrase;
-#endif
     }
     return Okular::GenericSigningError;
 }
@@ -586,11 +581,7 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
         if (!tf.open()) {
             return {Okular::SignatureWriteFailed, i18n("Failed writing temporary file")};
         }
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
         auto result = std::pair<Okular::SigningResult, QString> {popplerToOkular(signatureAnnotation->sign(tf.fileName(), pData)), signatureAnnotation->lastSigningErrorDetails().data.toString()};
-#else
-        auto result = std::pair<Okular::SigningResult, QString> {popplerToOkular(signatureAnnotation->sign(tf.fileName(), pData)), QString {}};
-#endif
         if (result.first != Okular::SigningSuccess) {
             tf.remove();
             return result;
@@ -611,7 +602,6 @@ static std::unique_ptr<Poppler::Annotation> createPopplerAnnotationFromOkularAnn
 
     return pSignatureAnnotation;
 }
-#endif
 
 static Poppler::Annotation *createPopplerAnnotationFromOkularAnnotation(const Okular::InkAnnotation *oInkAnnotation)
 {
@@ -676,7 +666,6 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
     case Okular::Annotation::ACaret:
         ppl_ann = createPopplerAnnotationFromOkularAnnotation(static_cast<Okular::CaretAnnotation *>(okl_ann));
         break;
-#if HAVE_NEW_SIGNATURE_API
     case Okular::Annotation::AWidget: {
         if (auto signatureAnnt = dynamic_cast<Okular::SignatureAnnotation *>(okl_ann)) {
             signatureAnnt->setPage(page);
@@ -687,7 +676,6 @@ void PopplerAnnotationProxy::notifyAddition(Okular::Annotation *okl_ann, int pag
 
         break;
     }
-#endif
 
     default:
         qWarning() << "Unsupported annotation type" << okl_ann->subType();
@@ -775,9 +763,7 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
         updatePopplerAnnotationFromOkularAnnotation(okl_inkann, ppl_inkann);
         break;
     }
-    case Poppler::Annotation::AWidget:
-#if HAVE_NEW_SIGNATURE_API
-    {
+    case Poppler::Annotation::AWidget: {
         if (auto signature = dynamic_cast<const Okular::SignatureAnnotation *>(okl_ann)) {
             auto helper = static_cast<const SignatureImageHelper *>(signature->nativeData());
 
@@ -795,8 +781,6 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
             break;
         }
     }
-#endif
-        [[fallthrough]];
     default:
         qCDebug(OkularPdfDebug) << "Type-specific property modification is not implemented for this annotation type";
         break;

@@ -600,11 +600,9 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
         auto popplerLinkResetForm = toSharedPointer<const Poppler::LinkResetForm>(std::move(uniquePopplerLink));
         link->setNativeHandle(popplerLinkResetForm);
     } break;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 10, 0)
     case Poppler::Link::SubmitForm: {
         // TODO
     } break;
-#endif
     }
 
     if (link) {
@@ -699,9 +697,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     if (activeBackend == Poppler::CryptoSignBackend::GPG) {
         setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
     }
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     Poppler::setPgpSignaturesAllowed(PDFSettings::enablePgp());
-#endif
 }
 
 PDFGenerator::~PDFGenerator()
@@ -2145,7 +2141,6 @@ bool PDFGenerator::canSign() const
     return !Poppler::availableCryptoSignBackends().empty();
 }
 
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
 static Okular::SigningResult fromPoppler(Poppler::PDFConverter::SigningResult result)
 {
     switch (result) {
@@ -2168,7 +2163,6 @@ static Okular::SigningResult fromPoppler(Poppler::PDFConverter::SigningResult re
     }
     return Okular::GenericSigningError;
 }
-#endif
 
 std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSignatureData &oData, const QString &rFilename)
 {
@@ -2220,11 +2214,7 @@ std::pair<Okular::SigningResult, QString> PDFGenerator::sign(const Okular::NewSi
     bool result = converter->sign(pData);
     if (!result) {
         tf.remove();
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
         return {fromPoppler(converter->lastSigningResult()), converter->lastSigningErrorDetails().data.toString()};
-#else
-        return {Okular::GenericSigningError, QString {}};
-#endif
     }
 
     // now copy over old file

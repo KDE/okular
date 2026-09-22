@@ -20,18 +20,17 @@ include:
     - /gitlab-templates/craft-macos-arm64-qt6.yml
     - /gitlab-templates/craft-macos-x86-64-qt6.yml
 
-# Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
-build_ubuntu_24_10:
+# We want people to be able to use "LTS" versions of things (yes yes we know)
+# Update 3 months after the previous Ubuntu LTS has been released
+build_ubuntu_26_04:
  stage: build
- image: ubuntu:24.10
+ image: ubuntu:26.04
  tags:
   - Linux
  only:
   - merge_requests
  before_script:
-  - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-  - sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
-  - sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list.d/ubuntu.sources
+  - "sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources"
   - apt-get update
   - apt-get install --yes eatmydata
   - eatmydata apt-get build-dep --yes --no-install-recommends okular

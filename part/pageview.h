@@ -158,9 +158,7 @@ public Q_SLOTS:
     void slotFormChanged(int pageNumber);
 
     void externalKeyPressEvent(QKeyEvent *e);
-#if HAVE_NEW_SIGNATURE_API
     PageView::FinishSigningResult finishSigning();
-#endif
 
 Q_SIGNALS:
     void rightClick(const Okular::Page *, const QPoint);

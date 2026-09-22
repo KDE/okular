@@ -486,10 +486,8 @@ PopplerFormFieldSignature::SignatureType PopplerFormFieldSignature::signatureTyp
         return Okular::FormFieldSignature::UnsignedSignature;
     case Poppler::FormFieldSignature::UnknownSignatureType:
         return Okular::FormFieldSignature::UnknownType;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     case Poppler::FormFieldSignature::G10cPgpSignatureDetached:
         return Okular::FormFieldSignature::G10cPgpSignatureDetached;
-#endif
     }
     return Okular::FormFieldSignature::UnknownType;
 }
@@ -508,7 +506,6 @@ Okular::SigningResult fromPoppler(Poppler::FormFieldSignature::SigningResult r)
         return Okular::SigningResult::GenericSigningError;
     case Poppler::FormFieldSignature::SigningSuccess:
         return Okular::SigningResult::SigningSuccess;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 12, 0)
     case Poppler::FormFieldSignature::InternalError:
         return Okular::SigningResult::InternalSigningError;
     case Poppler::FormFieldSignature::KeyMissing:
@@ -517,11 +514,8 @@ Okular::SigningResult fromPoppler(Poppler::FormFieldSignature::SigningResult r)
         return Okular::SigningResult::UserCancelled;
     case Poppler::FormFieldSignature::WriteFailed:
         return Okular::SigningResult::SignatureWriteFailed;
-#endif
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 03, 12)
     case Poppler::FormFieldSignature::BadPassphrase:
         return Okular::SigningResult::BadPassphrase;
-#endif
     }
     return Okular::SigningResult::GenericSigningError;
 }
@@ -540,11 +534,7 @@ std::pair<Okular::SigningResult, QString> PopplerFormFieldSignature::sign(const 
     pData.setFontSize(0);
     pData.setLeftFontSize(0);
     auto result = fromPoppler(m_field->sign(tf.fileName(), pData));
-#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(25, 06, 0)
     QString errorDetails = m_field->lastSigningErrorDetails().data.toString();
-#else
-    QString errorDetails;
-#endif
     if (result != Okular::SigningSuccess) {
         tf.remove();
         return {result, errorDetails};

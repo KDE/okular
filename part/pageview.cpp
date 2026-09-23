@@ -1281,6 +1281,9 @@ void PageView::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
                 w->setVisibility(false);
                 w->setCanBeFilled(allowfillforms);
                 item->formWidgets().insert(w);
+                if (ff->type() == Okular::FormField::FormText && ff->isReadOnly()) {
+                    continue;
+                }
                 hasformwidgets = true;
             }
         }

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 15:58+0000\n"
-"PO-Revision-Date: 2026-09-14 21:41+0400\n"
+"PO-Revision-Date: 2026-09-23 17:27+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -594,6 +594,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"لم يعثر على شهادة التوقيع. إذا كنت تستخدم بطاقة ذكية، فربما أزيلت أو تغير "
+"مخزن التوقيعات"
 
 #: core/signatureutils.cpp:511
 #, kde-format

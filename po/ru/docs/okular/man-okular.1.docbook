@@ -150,7 +150,7 @@
 ></term>
 <listitem>
 <para
->Запустить поиск заданной строки.</para>
+>Найти и выделить в документе заданную строку. Работает, только если в качестве аргумента команды okular указан один документ.</para>
 </listitem>
 </varlistentry>
 
@@ -220,9 +220,9 @@
 ></userinput
 >).</member>
 <member
->kf5options(7)</member>
+>kf6options(7)</member>
 <member
->qt5options(7)</member>
+>qt6options(7)</member>
 <member
 >Дополнительная информация находится на веб-сайте <ulink url="https://okular.kde.org/"
 >https://okular.kde.org/</ulink

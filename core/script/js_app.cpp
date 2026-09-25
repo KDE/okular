@@ -283,7 +283,7 @@ void JSApp::goForward()
 // app.setInterval()
 QJSValue JSApp::setInterval(const QString &cExpr, int nMilliseconds)
 {
-    QTimer *timer = new QTimer();
+    QTimer *timer = new QTimer(this);
 
     QObject::connect(timer, &QTimer::timeout, this, [=, this]() { m_doc->executeScript(cExpr); });
 

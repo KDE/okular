@@ -372,7 +372,7 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl
                 it = knownFiles.insert(url, bg.address());
                 found = true;
                 if (result) {
-                    *result = bg;
+                    *result = std::move(bg);
                 }
                 break;
             }
@@ -385,7 +385,7 @@ QHash<QUrl, QString>::iterator BookmarkManager::Private::bookmarkFind(const QUrl
             newbg.setUrl(url);
             it = knownFiles.insert(url, newbg.address());
             if (result) {
-                *result = newbg;
+                *result = std::move(newbg);
             }
         }
     } else if (result) {
@@ -723,7 +723,7 @@ KBookmark BookmarkManager::previousBookmark(const DocumentViewport &viewport) co
         KBookmark bm = *(it - 1);
         DocumentViewport vp(bm.url().fragment(QUrl::FullyDecoded));
         if (vp < viewport) {
-            prevBm = bm;
+            prevBm = std::move(bm);
             break;
         }
     }

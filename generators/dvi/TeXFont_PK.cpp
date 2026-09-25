@@ -296,7 +296,7 @@ glyph *TeXFont_PK::getGlyph(quint16 ch, bool generateCharacterPixmap, const QCol
             }
         }
 
-        g->shrunkenCharacter = im32;
+        g->shrunkenCharacter = std::move(im32);
     }
     return g;
 }

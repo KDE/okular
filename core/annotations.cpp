@@ -943,7 +943,7 @@ void Annotation::setAnnotationProperties(const QDomNode &node)
 
     // Restore internal properties
     d_ptr->m_page = p;
-    d_ptr->m_nativeId = nativeID;
+    d_ptr->m_nativeId = std::move(nativeID);
     d_ptr->m_flags = d_ptr->m_flags | internalFlags;
     d_ptr->m_disposeFunc = disposeFunc;
 

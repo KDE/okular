@@ -28,6 +28,8 @@ Checks:   >
     -bugprone-incorrect-roundings,
     -bugprone-suspicious-include,
     -bugprone-reserved-identifier,
+    -bugprone-signed-bitwise,
+    -bugprone-unhandled-code-paths,
     -performance-no-automatic-move,
     -bugprone-suspicious-enum-usage,
     -bugprone-easily-swappable-parameters,

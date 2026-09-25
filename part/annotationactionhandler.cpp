@@ -514,7 +514,7 @@ void AnnotationActionHandlerPrivate::slotSelectAnnotationFont()
     bool ok;
     QFont selectedFont = QFontDialog::getFont(&ok, currentFont);
     if (ok) {
-        currentFont = selectedFont;
+        currentFont = std::move(selectedFont);
         annotator->setAnnotationFont(currentFont);
     }
 }

@@ -5249,7 +5249,7 @@ ArchiveData *DocumentPrivate::unpackDocumentArchive(const QString &archivePath)
         return nullptr;
     }
 
-    archiveData->originalFileName = documentFileName;
+    archiveData->originalFileName = std::move(documentFileName);
 
     {
         std::unique_ptr<QIODevice> docEntryDevice(static_cast<const KZipFileEntry *>(docEntry)->createDevice());

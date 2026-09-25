@@ -191,7 +191,7 @@ static std::pair<std::optional<std::string_view>, std::pair<std::string, std::st
             // we have reached end of string, but never an actual ", so error out
             return {};
         }
-        dnPair.second = value;
+        dnPair.second = std::move(value);
     } else {
         std::string value;
         bool stop = false;
@@ -262,7 +262,7 @@ static std::pair<std::optional<std::string_view>, std::pair<std::string, std::st
             }
         }
         if (lastAddedEscapedSpace) {
-            dnPair.second = value;
+            dnPair.second = std::move(value);
         } else {
             dnPair.second = std::string {removeTrailingSpaces(value)};
         }

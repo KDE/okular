@@ -93,7 +93,7 @@ DVI_SourceFileSplitter::DVI_SourceFileSplitter(const QString &srclink, const QSt
         }
 
         if (found) {
-            m_fileInfo = tempInfo;
+            m_fileInfo = std::move(tempInfo);
             linepart = linepart.left(maxindex - index);
         }
     }

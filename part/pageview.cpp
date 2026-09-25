@@ -3925,7 +3925,7 @@ void PageView::updateSelection(const QPoint pos)
         for (int p : std::as_const(pagesWithSelectionSet)) {
             d->document->setPageTextSelection(p, std::move(selections[p - first]), palette().color(QPalette::Active, QPalette::Highlight));
         }
-        d->pagesWithTextSelection = pagesWithSelectionSet;
+        d->pagesWithTextSelection = std::move(pagesWithSelectionSet);
     }
 }
 

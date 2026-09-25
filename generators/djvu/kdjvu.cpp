@@ -76,7 +76,7 @@ static void wait_for_ddjvu_message(ddjvu_context_t *ctx, ddjvu_message_tag_t mid
 {
     ddjvu_message_wait(ctx);
     const ddjvu_message_t *msg;
-    while ((msg = ddjvu_message_peek(ctx)) && msg && (msg->m_any.tag != mid)) {
+    while ((msg = ddjvu_message_peek(ctx)) && msg && (msg->m_any.tag != mid)) { // NOLINT(bugprone-assignment-in-selection-statement)
         which_ddjvu_message(msg);
         ddjvu_message_pop(ctx);
     }

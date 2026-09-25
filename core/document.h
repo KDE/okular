@@ -1711,6 +1711,11 @@ public:
     /// @since 25.04
     void setLeftFontSize(double fontSize);
 
+    /// @since 26.12
+    void setRequestedSignatureType(CertificateInfo::SMimeSignatureType type);
+    /// @since 26.12
+    CertificateInfo::SMimeSignatureType requestedSignatureType() const;
+
 private:
     NewSignatureDataPrivate *const d;
 };

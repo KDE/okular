@@ -522,6 +522,10 @@ Okular::SigningResult fromPoppler(Poppler::FormFieldSignature::SigningResult r)
     case Poppler::FormFieldSignature::BadPassphrase:
         return Okular::SigningResult::BadPassphrase;
 #endif
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 9, 50)
+    case Poppler::FormFieldSignature::UnsupportedSignatureType:
+        return Okular::SigningResult::UnsupportedSignatureType;
+#endif
     }
     return Okular::SigningResult::GenericSigningError;
 }

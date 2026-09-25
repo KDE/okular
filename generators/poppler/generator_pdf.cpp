@@ -6,6 +6,7 @@
 
     Work sponsored by the LiMux project of the city of Munich:
     SPDX-FileCopyrightText: 2017 Klarälvdalens Datakonsult AB a KDAB Group company <info@kdab.com>
+    SPDX-FileCopyrightText: 2026  Sune Stolborg Vuorela <sune@vuorela.dk>, work sponsored by the Direction Interministérielle du Numérique
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -1479,6 +1480,27 @@ QByteArray PDFGenerator::requestFontData(const Okular::FontInfo &font)
     return pdfdoc->fontData(fi);
 }
 
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 9, 50)
+Poppler::SMimeSignatureType toPoppler(Okular::CertificateInfo::SMimeSignatureType type)
+{
+    switch (type) {
+    case Okular::CertificateInfo::SMimeSignatureType::none:
+        return Poppler::SMimeSignatureType::none;
+    case Okular::CertificateInfo::SMimeSignatureType::adbe_pkcs7_detached:
+        return Poppler::SMimeSignatureType::adbe_pkcs7_detached;
+    case Okular::CertificateInfo::SMimeSignatureType::ETSI_CAdES_B:
+        return Poppler::SMimeSignatureType::ETSI_CAdES_B;
+    case Okular::CertificateInfo::SMimeSignatureType::ETSI_CAdES_T:
+        return Poppler::SMimeSignatureType::ETSI_CAdES_T;
+    case Okular::CertificateInfo::SMimeSignatureType::ETSI_CAdES_LT:
+        return Poppler::SMimeSignatureType::ETSI_CAdES_LT;
+    case Okular::CertificateInfo::SMimeSignatureType::ETSI_CAdES_LTA:
+        return Poppler::SMimeSignatureType::ETSI_CAdES_LTA;
+    }
+    return Poppler::SMimeSignatureType::none;
+}
+#endif
+
 void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Poppler::PDFConverter::NewSignatureData *pData)
 {
     pData->setCertNickname(oData.certNickname());
@@ -1497,6 +1519,9 @@ void PDFGenerator::okularToPoppler(const Okular::NewSignatureData &oData, Popple
     pData->setLocation(oData.location());
     pData->setDocumentOwnerPassword(oData.documentPassword().toLatin1());
     pData->setDocumentUserPassword(oData.documentPassword().toLatin1());
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 9, 50)
+    pData->setRequestedSignatureType(toPoppler(oData.requestedSignatureType()));
+#endif
 }
 
 #define DUMMY_QPRINTER_COPY
@@ -2165,6 +2190,10 @@ static Okular::SigningResult fromPoppler(Poppler::PDFConverter::SigningResult re
         return Okular::SignatureWriteFailed;
     case Poppler::PDFConverter::SigningSuccess:
         return Okular::SigningSuccess;
+#if POPPLER_VERSION_MACRO > QT_VERSION_CHECK(26, 9, 50)
+    case Poppler::PDFConverter::UnsupportedSignatureType:
+        return Okular::UnsupportedSignatureType;
+#endif
     }
     return Okular::GenericSigningError;
 }

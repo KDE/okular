@@ -7,6 +7,7 @@ Dependencies:
       'frameworks/kbookmarks': '@latest-kf6'
       'frameworks/threadweaver': '@latest-kf6'
       'frameworks/kcolorscheme': '@latest-kf6'
+      'frameworks/kcrash': '@latest-kf6'
       'frameworks/ki18n': '@latest-kf6'
       'frameworks/kio': '@latest-kf6'
       'frameworks/karchive': '@latest-kf6'

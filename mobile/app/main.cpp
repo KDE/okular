@@ -4,9 +4,12 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include <QApplication>
+#include "aboutdata.h"
 
+#include <KCrash>
 #include <KLocalizedContext>
+
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
 #include <QDir>
@@ -17,8 +20,6 @@
 #include <QQmlEngine>
 #include <QStandardPaths>
 #include <QTimer>
-
-#include "aboutdata.h"
 
 #ifdef __ANDROID__
 #include "android.h"
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
     KAboutData::setApplicationData(aboutData);
 
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("okular")));
+
+    KCrash::initialize();
 
     QCommandLineParser parser;
     // parser.setApplicationDescription(i18n("Okular mobile"));

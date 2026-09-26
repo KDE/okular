@@ -109,6 +109,7 @@ find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS
     Config
     ConfigWidgets
     CoreAddons
+    Crash
     I18n
     KIO
     ThreadWeaver
@@ -154,7 +155,7 @@ if (BUILD_DESKTOP)
         set(HAVE_DBUS 1)
     endif()
 
-    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme Crash IconThemes TextWidgets WidgetsAddons)
+    find_package(KF6 ${KF_REQUIRED_VERSION} REQUIRED COMPONENTS Parts ColorScheme IconThemes TextWidgets WidgetsAddons)
 
     find_package(KF6Purpose)
     set_okular_optional_package_properties(KF6Purpose PROPERTIES

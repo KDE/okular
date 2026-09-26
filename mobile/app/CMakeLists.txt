@@ -5,7 +5,13 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}/../../
 )
 add_executable(okularkirigami main.cpp)
-target_link_libraries(okularkirigami PRIVATE Qt6::Widgets Qt6::Qml KF6::I18n KF6::CoreAddons)
+target_link_libraries(okularkirigami PRIVATE
+    Qt6::Widgets
+    Qt6::Qml
+    KF6::I18n
+    KF6::CoreAddons
+    KF6::Crash
+)
 
 ecm_add_qml_module(okularkirigami
     URI "org.kde.okular.app"

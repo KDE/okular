@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-22 15:58+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2026-09-22 21:42+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -605,12 +605,12 @@ msgstr "Масштаб:"
 msgid "Do not show this message again"
 msgstr "Не показывать это сообщение снова"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:34
+#: core/signatureutils.cpp:21 part/signaturepropertiesdialog.cpp:34
 #, kde-format
 msgid "Not Available"
 msgstr "Недоступно"
 
-#: core/signatureutils.cpp:508
+#: core/signatureutils.cpp:521
 #, kde-format
 msgctxt "signing error"
 msgid ""
@@ -620,7 +620,7 @@ msgstr ""
 "Сертификат подписи не найден. Если используется смарт-карта, возможно, она "
 "была извлечена или изменилось хранилище подписей"
 
-#: core/signatureutils.cpp:511
+#: core/signatureutils.cpp:524
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -630,23 +630,23 @@ msgstr ""
 "Внутренняя ошибка подписания. Просьба сообщить разработчикам об этой ошибке "
 "(с указанием шагов, позволяющих её воспроизвести). Код ошибки: %1"
 
-#: core/signatureutils.cpp:513
+#: core/signatureutils.cpp:526
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Не удалось подписать документ: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:515
+#: core/signatureutils.cpp:528
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Подписание отменено пользователем"
 
-#: core/signatureutils.cpp:517
+#: core/signatureutils.cpp:530
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Не удалось подписать. Неверная парольная фраза"
 
-#: core/signatureutils.cpp:519
+#: core/signatureutils.cpp:532
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -656,7 +656,15 @@ msgstr ""
 "Не удалось сохранить подписанный документ по адресу <filename>%1</filename>, "
 "убедитесь в наличии права записи в выбранную папку"
 
-#: core/signatureutils.cpp:521
+#: core/signatureutils.cpp:534
+#, kde-format
+msgctxt ""
+"Unlikely error; user can choose a signature/key-combo and everything "
+"possible should be valid combinations"
+msgid "Unsupported signature type for current certificate"
+msgstr ""
+
+#: core/signatureutils.cpp:536
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Неизвестная ошибка подписания"
@@ -1740,8 +1748,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Копировать текст в буфер обмена"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2588 part/pageview.cpp:2940 part/pageview.cpp:2942
-#: part/pageview.cpp:3102 part/pageview.cpp:3163 part/pageview.cpp:3165
+#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
+#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Копирование запрещено DRM"
@@ -3716,210 +3724,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "из"
 
-#: part/pageview.cpp:533
+#: part/pageview.cpp:534
 #, kde-format
 msgid "Zoom"
 msgstr "Масштаб"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Масштаб 100%"
 
-#: part/pageview.cpp:556
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Rotate &Right"
 msgstr "По &часовой стрелке"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:558
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "По часовой стрелке"
 
-#: part/pageview.cpp:561
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Left"
 msgstr "П&ротив часовой стрелки"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Против часовой стрелки"
 
-#: part/pageview.cpp:566
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Original Orientation"
 msgstr "Исходная ориентация"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:573
 #, kde-format
 msgid "&Trim View"
 msgstr "Об&резать"
 
-#: part/pageview.cpp:576
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Обр&езать поля"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Обрезать по в&ыделению"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:590
 #, kde-format
 msgid "Fit &Width"
 msgstr "По &ширине страницы"
 
-#: part/pageview.cpp:593
+#: part/pageview.cpp:594
 #, kde-format
 msgid "Fit &Page"
 msgstr "Страница &целиком"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:598
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Автоматическая подгонка"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:602
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "О&кно по размеру страницы"
 
-#: part/pageview.cpp:608
+#: part/pageview.cpp:609
 #, kde-format
 msgid "&View Mode"
 msgstr "Ре&жим просмотра"
 
-#: part/pageview.cpp:620
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Одна страница"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Развороты"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:623
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Развороты (&первая страница отдельно)"
 
-#: part/pageview.cpp:625
+#: part/pageview.cpp:626
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "О&бзор"
 
-#: part/pageview.cpp:637
+#: part/pageview.cpp:638
 #, kde-format
 msgid "&Continuous"
 msgstr "&Рулоном"
 
-#: part/pageview.cpp:644
+#: part/pageview.cpp:645
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Чтение справа налево"
 
-#: part/pageview.cpp:653
+#: part/pageview.cpp:654
 #, kde-format
 msgid "&Browse"
 msgstr "&Перетаскивание"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Zoom"
 msgstr "&Масштаб"
 
-#: part/pageview.cpp:681
+#: part/pageview.cpp:682
 #, kde-format
 msgid "Area &Selection"
 msgstr "Выделение &области"
 
-#: part/pageview.cpp:688
+#: part/pageview.cpp:689
 #, kde-format
 msgid "&Text Selection"
 msgstr "Выделение &текста"
 
-#: part/pageview.cpp:695
+#: part/pageview.cpp:696
 #, kde-format
 msgid "T&able Selection"
 msgstr "Выделение &таблиц"
 
-#: part/pageview.cpp:702
+#: part/pageview.cpp:703
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Лупа"
 
-#: part/pageview.cpp:711
+#: part/pageview.cpp:712
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Инструменты выделения"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Цифровая &подпись…"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:744
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Зачитать весь документ"
 
-#: part/pageview.cpp:748
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Зачитать начиная с текущей страницы"
 
-#: part/pageview.cpp:753
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Зачитать текущую страницу"
 
-#: part/pageview.cpp:758
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Прекратить зачитывание"
 
-#: part/pageview.cpp:763
+#: part/pageview.cpp:764
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Приостановить / продолжить зачитывание"
 
-#: part/pageview.cpp:775
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Up"
 msgstr "Автоматическая прокрутка вверх"
 
-#: part/pageview.cpp:781
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Down"
 msgstr "Автоматическая прокрутка вниз"
 
-#: part/pageview.cpp:787
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Прокрутить на страницу вверх"
 
-#: part/pageview.cpp:793
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Прокрутить на страницу вниз"
 
-#: part/pageview.cpp:799
+#: part/pageview.cpp:800
 #, kde-format
 msgid "Show Forms"
 msgstr "Показывать формы"
 
-#: part/pageview.cpp:1311
+#: part/pageview.cpp:1312
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -3928,12 +3936,12 @@ msgstr[1] " Загружен документ (%1 страницы)."
 msgstr[2] " Загружен документ (%1 страниц)."
 msgstr[3] " Загружен документ (%1 страница)."
 
-#: part/pageview.cpp:2582
+#: part/pageview.cpp:2583
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Копировать таблицу в буфер обмена"
 
-#: part/pageview.cpp:2932
+#: part/pageview.cpp:2933
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -3942,82 +3950,82 @@ msgstr[1] "Текст (%1 символа)"
 msgstr[2] "Текст (%1 символов)"
 msgstr[3] "Текст (%1 символ)"
 
-#: part/pageview.cpp:2933 part/pageview.cpp:2955
+#: part/pageview.cpp:2934 part/pageview.cpp:2956
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Копировать в буфер обмена"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:843
+#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:843
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Копировать текст (без разрывов строк)"
 
-#: part/pageview.cpp:2946 part/pageview.cpp:3158
+#: part/pageview.cpp:2947 part/pageview.cpp:3159
 #, kde-format
 msgid "Speak Text"
 msgstr "Зачитать текст"
 
-#: part/pageview.cpp:2954
+#: part/pageview.cpp:2955
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Изображение (%1 х %2 точек)"
 
-#: part/pageview.cpp:2956
+#: part/pageview.cpp:2957
 #, kde-format
 msgid "Save to File…"
 msgstr "Сохранить в файл…"
 
-#: part/pageview.cpp:2976
+#: part/pageview.cpp:2977
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Изображение %1×%2 скопировано в буфер обмена."
 
-#: part/pageview.cpp:2979
+#: part/pageview.cpp:2980
 #, kde-format
 msgid "Save file"
 msgstr "Сохранение изображения в файл"
 
-#: part/pageview.cpp:2979
+#: part/pageview.cpp:2980
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Изображения (*.png *.jpeg)"
 
-#: part/pageview.cpp:2981
+#: part/pageview.cpp:2982
 #, kde-format
 msgid "File not saved."
 msgstr "Файл не сохранён."
 
-#: part/pageview.cpp:2992
+#: part/pageview.cpp:2993
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Изображение %1×%2 сохранено в файл «%3»."
 
-#: part/pageview.cpp:3153
+#: part/pageview.cpp:3154
 #, kde-format
 msgid "Copy Text"
 msgstr "Копировать текст"
 
-#: part/pageview.cpp:3176
+#: part/pageview.cpp:3177
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Перейти на страницу %1"
 
-#: part/pageview.cpp:4207 part/part.cpp:3217
+#: part/pageview.cpp:4208 part/part.cpp:3217
 #, kde-format
 msgid "Fit Width"
 msgstr "По ширине страницы"
 
-#: part/pageview.cpp:4207
+#: part/pageview.cpp:4208
 #, kde-format
 msgid "Fit Page"
 msgstr "Страница целиком"
 
-#: part/pageview.cpp:4207
+#: part/pageview.cpp:4208
 #, kde-format
 msgid "Auto Fit"
 msgstr "Автоматическая подгонка"
 
-#: part/pageview.cpp:4230
+#: part/pageview.cpp:4231
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4026,68 +4034,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4513
+#: part/pageview.cpp:4514
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Поиск «%1» в"
 
-#: part/pageview.cpp:4527
+#: part/pageview.cpp:4528
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Настроить веб-сокращения…"
 
-#: part/pageview.cpp:4553
+#: part/pageview.cpp:4554
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перейти по ссылке"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Play this Sound"
 msgstr "Воспроизвести этот звук"
 
-#: part/pageview.cpp:4558
+#: part/pageview.cpp:4559
 #, kde-format
 msgid "Stop Sound"
 msgstr "Остановить звук"
 
-#: part/pageview.cpp:4564
+#: part/pageview.cpp:4565
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Скопировать адрес ссылки"
 
-#: part/pageview.cpp:4621
+#: part/pageview.cpp:4622
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Искать «%1» в этом документе"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5154
 #, kde-format
 msgid "Welcome"
 msgstr "Добро пожаловать"
 
-#: part/pageview.cpp:5279
+#: part/pageview.cpp:5280
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Выберите область для увеличения. Щелчок правой кнопкой мыши уменьшит масштаб."
 
-#: part/pageview.cpp:5294
+#: part/pageview.cpp:5295
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Щелкните мышью для просмотра увеличения."
 
-#: part/pageview.cpp:5311
+#: part/pageview.cpp:5312
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Выделите прямоугольную область с текстом или графикой для копирования."
 
-#: part/pageview.cpp:5327
+#: part/pageview.cpp:5328
 #, kde-format
 msgid "Select text"
 msgstr "Выделить текст"
 
-#: part/pageview.cpp:5343
+#: part/pageview.cpp:5344
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4096,7 +4104,7 @@ msgstr ""
 "Выделите прямоугольную область с таблицей, затем щёлкайте у краёв для "
 "разлиновки; нажмите Esc для очистки."
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5366
+#: part/pageview.cpp:5359 part/pageview.cpp:5367
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4105,17 +4113,17 @@ msgstr ""
 "Все ваши сертификаты для создания подписей недействительны. Если они ранее "
 "использовались для подписания, проверьте срок их действия."
 
-#: part/pageview.cpp:5359
+#: part/pageview.cpp:5360
 #, kde-format
 msgid "No valid certificates"
 msgstr "Нет ни одного действительного действующего сертификата"
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5375
+#: part/pageview.cpp:5361 part/pageview.cpp:5376
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Открыть диспетчер сертификатов"
 
-#: part/pageview.cpp:5371
+#: part/pageview.cpp:5372
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4128,12 +4136,12 @@ msgstr ""
 "пользователя программы в разделе <a href=\"%1\">Добавление цифровых "
 "подписей</a>."
 
-#: part/pageview.cpp:5374 part/pageview.cpp:5386
+#: part/pageview.cpp:5375 part/pageview.cpp:5387
 #, kde-format
 msgid "No certificates found"
 msgstr "Не найдено ни одного сертификата"
 
-#: part/pageview.cpp:5384
+#: part/pageview.cpp:5385
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4144,18 +4152,18 @@ msgstr ""
 "Дополнительная информация приведена в руководстве пользователя программы в "
 "разделе <a href=\"%1\">Добавление цифровых подписей</a>."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5410
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Имеются несохранённые изменения, необходимо сохранить их до подписания."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5433
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Для вставки поля подписи нарисуйте прямоугольник"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5583
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Выделите прямоугольную область, которая останется видимой"
@@ -4842,7 +4850,7 @@ msgid "Remove this Bookmark"
 msgstr "Удалить эту закладку"
 
 #: part/part.cpp:2617 part/part.cpp:2618 part/part.cpp:3534
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:321
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5664,10 +5672,17 @@ msgid "Choose..."
 msgstr "Выбрать…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:135
+#: part/selectcertificatedialog.ui:136
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Последние фоны:"
+
+#. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
+#: part/selectcertificatedialog.ui:152
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgid "Signature Type"
+msgstr "Тип подписи: %1"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5708,50 +5723,94 @@ msgstr "Свернуть все элементы"
 msgid "Properties"
 msgstr "Свойства"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:57
+#, kde-format
+msgctxt ""
+"This string is describing a default entry that generally shouldn't be shown "
+"to the user. To a point where it would be a coding bug somewhere to have it"
+msgid "NONE"
+msgstr ""
+
+#: part/signaturepartutils.cpp:59
+#, fuzzy, kde-format
+#| msgctxt "Digital signature type"
+#| msgid "Adobe PKCS7 Sha1"
+msgctxt "Signature type"
+msgid "Adobe PKCS7 signature"
+msgstr "Adobe PKCS7 Sha1"
+
+#: part/signaturepartutils.cpp:61
+#, fuzzy, kde-format
+#| msgctxt "Signature type"
+#| msgid "Unsigned signature"
+msgctxt "Signature type"
+msgid "Basic eIDAS signature"
+msgstr "Неподписанная подпись"
+
+#: part/signaturepartutils.cpp:63
+#, kde-format
+msgctxt "Signature type"
+msgid "eIDAS signature with timestamp"
+msgstr ""
+
+#: part/signaturepartutils.cpp:65
+#, kde-format
+msgctxt "Signature type"
+msgid "eIDAS signature with timestamp for long term validation"
+msgstr ""
+
+#: part/signaturepartutils.cpp:67
+#, kde-format
+msgctxt "Signature type"
+msgid ""
+"eIDAS signature with timestamp for long term validation and support for re-"
+"validation"
+msgstr ""
+
+#: part/signaturepartutils.cpp:222
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Изображения (%1)"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:223
 #, kde-format
 msgid "Select background image"
 msgstr "Выбор фонового изображения"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:228
 #, kde-format
 msgid "Forget image"
 msgstr "Удалить изображение"
 
-#: part/signaturepartutils.cpp:188
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Forget all images"
 msgstr "Удалить все изображения"
 
-#: part/signaturepartutils.cpp:231
+#: part/signaturepartutils.cpp:272
 #, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Введите пароль (если используется) для разблокирования сертификата: %1"
 
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:297
 #, kde-format
 msgid "Enter document password"
 msgstr "Введите пароль к документу"
 
-#: part/signaturepartutils.cpp:283
+#: part/signaturepartutils.cpp:331
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Сохранение подписанного файла"
 
-#: part/signaturepartutils.cpp:285
+#: part/signaturepartutils.cpp:333
 #, kde-format
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr "Невозможно перезаписать исходный файл. Выберите другое имя файла."
 
-#: part/signaturepartutils.h:62
+#: part/signaturepartutils.h:63
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -6239,10 +6298,6 @@ msgstr "Не использовать экран приветствия"
 #~ msgctxt "Signature type"
 #~ msgid "Unknown"
 #~ msgstr "Неизвестно"
-
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "Неподписанная подпись"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

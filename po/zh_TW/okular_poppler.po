@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2026-09-22 00:17+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -33,18 +33,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "franklin@goodhorse.idv.tw, mail@kisaragi-hiu.com"
 
-#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
-#: generator_pdf.cpp:2211
+#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2213
+#: generator_pdf.cpp:2241
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "寫入暫存檔失敗"
 
-#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
 #, kde-format
 msgid "Failed removing file"
 msgstr "移除檔案失敗"
 
-#: annots.cpp:607
+#: annots.cpp:612
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "重新命名暫存檔失敗"
@@ -80,7 +80,7 @@ msgid "Enhance thin lines:"
 msgstr "加強細線："
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1024
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
 #, kde-format
 msgid "No"
 msgstr "否"
@@ -104,19 +104,19 @@ msgid "Default scaling mode when printing:"
 msgstr "列印時的預設縮放模式："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr "縮放到可印區塊大小"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr "縮放到整頁大小"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr "無；列印原始大小"
@@ -191,28 +191,28 @@ msgstr "可用的憑證"
 msgid "&Load Signatures"
 msgstr "載入簽章(&L)"
 
-#: formfields.cpp:561 generator_pdf.cpp:2238
+#: formfields.cpp:565 generator_pdf.cpp:2268
 #, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "重新命名暫存檔失敗：%1"
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF 選項"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr "列印註記"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "在列印的文件中包含註記"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -220,17 +220,17 @@ msgid ""
 msgstr ""
 "在列印的文件中包含註記。如果您只要列印原始未註記的文件，您可以關閉此選項。"
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "強制光柵化（rasterization）"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "列印前在圖片上強制光柵化（rasterization）"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -240,53 +240,53 @@ msgstr ""
 "在每一頁的圖片列印前強制光柵化（rasterization）。通常結果會變差，但是若某些文"
 "件列印結果不正確時，此選項可能有用。"
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "列印頁面的比例模式"
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr "比例模式："
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Format"
 msgstr "格式"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Encrypted"
 msgstr "已加密"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Unencrypted"
 msgstr "已解密"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Security"
 msgstr "安全性"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Yes"
 msgstr "是"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Optimized"
 msgstr "最佳化"
 
-#: generator_pdf.cpp:1488
+#: generator_pdf.cpp:1511
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -297,12 +297,12 @@ msgstr ""
 "\n"
 "日期：%2"
 
-#: generator_pdf.cpp:1707
+#: generator_pdf.cpp:1733
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "使用 Poppler %1"
 
-#: generator_pdf.cpp:1709
+#: generator_pdf.cpp:1735
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -313,17 +313,17 @@ msgstr ""
 "\n"
 "為 Poppler %2 構建"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF 後端介面設定"
 
-#: generator_pdf.cpp:2258
+#: generator_pdf.cpp:2288
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -392,7 +392,7 @@ msgstr "需要重新啟動"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "修改 NSS 目錄設定後您需要重新啟動 Okular"
 
-#: pdfsignatureutils.cpp:236
+#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
 #, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"

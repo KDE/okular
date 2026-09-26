@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-22 15:58+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -588,12 +588,12 @@ msgstr "Méretezés mód:"
 msgid "Do not show this message again"
 msgstr "Ne jelenjen meg többet ez az üzenet"
 
-#: core/signatureutils.cpp:19 part/signaturepropertiesdialog.cpp:34
+#: core/signatureutils.cpp:21 part/signaturepropertiesdialog.cpp:34
 #, kde-format
 msgid "Not Available"
 msgstr "Nem érhető el"
 
-#: core/signatureutils.cpp:508
+#: core/signatureutils.cpp:521
 #, kde-format
 msgctxt "signing error"
 msgid ""
@@ -601,7 +601,7 @@ msgid ""
 "been removed or the signature store changed"
 msgstr ""
 
-#: core/signatureutils.cpp:511
+#: core/signatureutils.cpp:524
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -611,24 +611,24 @@ msgstr ""
 "Belső aláírási hiba. Jelezze ezt a hibát a reprodukálás lépéseivel együtt. "
 "Hibakód: %1"
 
-#: core/signatureutils.cpp:513
+#: core/signatureutils.cpp:526
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Nem sikerült aláírni a(z) <filename>%1</filename> dokumentumot"
 
-#: core/signatureutils.cpp:515
+#: core/signatureutils.cpp:528
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "A felhasználó megszakította az aláírást"
 
-#: core/signatureutils.cpp:517
+#: core/signatureutils.cpp:530
 #, fuzzy, kde-format
 #| msgid "Could not sign. Wrong passphrase"
 msgid "Signing failed: Wrong passphrase"
 msgstr "Nem sikerült aláírni. Hibás jelszó"
 
-#: core/signatureutils.cpp:519
+#: core/signatureutils.cpp:532
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -638,7 +638,15 @@ msgstr ""
 "Nem sikerült az aláírt dokumentum írása a(z) <filename>%1</filename> fájlba, "
 "ellenőrizze, hogy van írási jogosultsága a kiválasztott mappához."
 
-#: core/signatureutils.cpp:521
+#: core/signatureutils.cpp:534
+#, kde-format
+msgctxt ""
+"Unlikely error; user can choose a signature/key-combo and everything "
+"possible should be valid combinations"
+msgid "Unsupported signature type for current certificate"
+msgstr ""
+
+#: core/signatureutils.cpp:536
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Ismeretlen aláírás hiba"
@@ -1733,8 +1741,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Szöveg másolása a vágólapra"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2588 part/pageview.cpp:2940 part/pageview.cpp:2942
-#: part/pageview.cpp:3102 part/pageview.cpp:3163 part/pageview.cpp:3165
+#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
+#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM-korlátozás miatt nem lehet másolni"
@@ -3720,306 +3728,306 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "/"
 
-#: part/pageview.cpp:533
+#: part/pageview.cpp:534
 #, kde-format
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: part/pageview.cpp:545
+#: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Nagyítás 100%-ra"
 
-#: part/pageview.cpp:556
+#: part/pageview.cpp:557
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Forgatás &jobbra"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:558
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Jobbra"
 
-#: part/pageview.cpp:561
+#: part/pageview.cpp:562
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Forgatás &balra"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:563
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Balra"
 
-#: part/pageview.cpp:566
+#: part/pageview.cpp:567
 #, kde-format
 msgid "Original Orientation"
 msgstr "Eredeti tájolás"
 
-#: part/pageview.cpp:572
+#: part/pageview.cpp:573
 #, kde-format
 msgid "&Trim View"
 msgstr "Né&zet levágása"
 
-#: part/pageview.cpp:576
+#: part/pageview.cpp:577
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Szegélyek levá&gása"
 
-#: part/pageview.cpp:583
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Levágás &kijelölésre"
 
-#: part/pageview.cpp:589
+#: part/pageview.cpp:590
 #, kde-format
 msgid "Fit &Width"
 msgstr "Te&ljes szélesség"
 
-#: part/pageview.cpp:593
+#: part/pageview.cpp:594
 #, kde-format
 msgid "Fit &Page"
 msgstr "Teljes ol&dal"
 
-#: part/pageview.cpp:597
+#: part/pageview.cpp:598
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Automatikus igazítás"
 
-#: part/pageview.cpp:601
+#: part/pageview.cpp:602
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Oldalméretnyi a&blak"
 
-#: part/pageview.cpp:608
+#: part/pageview.cpp:609
 #, kde-format
 msgid "&View Mode"
 msgstr "Né&zetmód"
 
-#: part/pageview.cpp:620
+#: part/pageview.cpp:621
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&Egy oldal"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:622
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Sze&mközti oldalak"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:623
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Két oldal (első oldal &középre)"
 
-#: part/pageview.cpp:625
+#: part/pageview.cpp:626
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Á&ttekintés"
 
-#: part/pageview.cpp:637
+#: part/pageview.cpp:638
 #, kde-format
 msgid "&Continuous"
 msgstr "&Folyamatos"
 
-#: part/pageview.cpp:644
+#: part/pageview.cpp:645
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Jobbról-balra olvasási irány használata"
 
-#: part/pageview.cpp:653
+#: part/pageview.cpp:654
 #, kde-format
 msgid "&Browse"
 msgstr "&Böngészés"
 
-#: part/pageview.cpp:661
+#: part/pageview.cpp:662
 #, kde-format
 msgid "&Zoom"
 msgstr "Na&gyítás"
 
-#: part/pageview.cpp:681
+#: part/pageview.cpp:682
 #, kde-format
 msgid "Area &Selection"
 msgstr "Területkijelölé&s"
 
-#: part/pageview.cpp:688
+#: part/pageview.cpp:689
 #, kde-format
 msgid "&Text Selection"
 msgstr "S&zövegkijelölés"
 
-#: part/pageview.cpp:695
+#: part/pageview.cpp:696
 #, kde-format
 msgid "T&able Selection"
 msgstr "Tábláz&atkijelölés"
 
-#: part/pageview.cpp:702
+#: part/pageview.cpp:703
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Nagyító"
 
-#: part/pageview.cpp:711
+#: part/pageview.cpp:712
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Kijelölő eszközök"
 
-#: part/pageview.cpp:737
+#: part/pageview.cpp:738
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
 msgid "Digitally &Sign…"
 msgstr "Digitális aláírá&s…"
 
-#: part/pageview.cpp:743
+#: part/pageview.cpp:744
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Felolvasás (a teljes dokumentumot)"
 
-#: part/pageview.cpp:748
+#: part/pageview.cpp:749
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Felolvasás a jelenlegi oldaltól"
 
-#: part/pageview.cpp:753
+#: part/pageview.cpp:754
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Felolvasás (a jelenlegi oldalt)"
 
-#: part/pageview.cpp:758
+#: part/pageview.cpp:759
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Állj"
 
-#: part/pageview.cpp:763
+#: part/pageview.cpp:764
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Felolvasás szüneteltetése/folytatása"
 
-#: part/pageview.cpp:775
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Up"
 msgstr "Gördítés felfelé"
 
-#: part/pageview.cpp:781
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Down"
 msgstr "Gördítés lefelé"
 
-#: part/pageview.cpp:787
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Egy oldallal feljebb görgetés"
 
-#: part/pageview.cpp:793
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Egy oldallal lejjebb görgetés"
 
-#: part/pageview.cpp:799
+#: part/pageview.cpp:800
 #, kde-format
 msgid "Show Forms"
 msgstr "Űrlapok megjelenítése"
 
-#: part/pageview.cpp:1311
+#: part/pageview.cpp:1312
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Betöltve egy 1 oldalas dokumentum."
 msgstr[1] " Betöltve egy %1 oldalas dokumentum."
 
-#: part/pageview.cpp:2582
+#: part/pageview.cpp:2583
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Táblázat tartalmának másolása a vágólapra"
 
-#: part/pageview.cpp:2932
+#: part/pageview.cpp:2933
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Szöveg (1 karakter)"
 msgstr[1] "Szöveg (%1 karakter)"
 
-#: part/pageview.cpp:2933 part/pageview.cpp:2955
+#: part/pageview.cpp:2934 part/pageview.cpp:2956
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Másolás a vágólapra"
 
-#: part/pageview.cpp:2935 part/pageview.cpp:3154 part/part.cpp:843
+#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:843
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "Szöveg másolása a vágólapra"
 
-#: part/pageview.cpp:2946 part/pageview.cpp:3158
+#: part/pageview.cpp:2947 part/pageview.cpp:3159
 #, kde-format
 msgid "Speak Text"
 msgstr "Szöveg felolvasása"
 
-#: part/pageview.cpp:2954
+#: part/pageview.cpp:2955
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Kép (%1 × %2 képpont)"
 
-#: part/pageview.cpp:2956
+#: part/pageview.cpp:2957
 #, kde-format
 msgid "Save to File…"
 msgstr "Mentés fájlba…"
 
-#: part/pageview.cpp:2976
+#: part/pageview.cpp:2977
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Egy kép [%1 × %2] kimásolva a vágólapra."
 
-#: part/pageview.cpp:2979
+#: part/pageview.cpp:2980
 #, kde-format
 msgid "Save file"
 msgstr "Fájl mentése"
 
-#: part/pageview.cpp:2979
+#: part/pageview.cpp:2980
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Képek (*.png *.jpeg)"
 
-#: part/pageview.cpp:2981
+#: part/pageview.cpp:2982
 #, kde-format
 msgid "File not saved."
 msgstr "A fájl nincs elmentve."
 
-#: part/pageview.cpp:2992
+#: part/pageview.cpp:2993
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Egy kép [%1 × %2] elmentve ebbe a fájlba: %3."
 
-#: part/pageview.cpp:3153
+#: part/pageview.cpp:3154
 #, kde-format
 msgid "Copy Text"
 msgstr "Szöveg másolása"
 
-#: part/pageview.cpp:3176
+#: part/pageview.cpp:3177
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Ugrás erre: „%1”"
 
-#: part/pageview.cpp:4207 part/part.cpp:3217
+#: part/pageview.cpp:4208 part/part.cpp:3217
 #, kde-format
 msgid "Fit Width"
 msgstr "Teljes szélességre"
 
-#: part/pageview.cpp:4207
+#: part/pageview.cpp:4208
 #, kde-format
 msgid "Fit Page"
 msgstr "Teljes oldal"
 
-#: part/pageview.cpp:4207
+#: part/pageview.cpp:4208
 #, kde-format
 msgid "Auto Fit"
 msgstr "Automatikus igazítás"
 
-#: part/pageview.cpp:4230
+#: part/pageview.cpp:4231
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4028,68 +4036,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4513
+#: part/pageview.cpp:4514
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "„%1” keresése ezzel:"
 
-#: part/pageview.cpp:4527
+#: part/pageview.cpp:4528
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "Keresőazonosítók beállítása…"
 
-#: part/pageview.cpp:4553
+#: part/pageview.cpp:4554
 #, kde-format
 msgid "Follow This Link"
 msgstr "A link követése"
 
-#: part/pageview.cpp:4556
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Play this Sound"
 msgstr "Hang lejátszása"
 
-#: part/pageview.cpp:4558
+#: part/pageview.cpp:4559
 #, kde-format
 msgid "Stop Sound"
 msgstr "Hang leállítása"
 
-#: part/pageview.cpp:4564
+#: part/pageview.cpp:4565
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Hivatkozás címének másolása"
 
-#: part/pageview.cpp:4621
+#: part/pageview.cpp:4622
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "„%1” keresése a dokumentumban"
 
-#: part/pageview.cpp:5153
+#: part/pageview.cpp:5154
 #, kde-format
 msgid "Welcome"
 msgstr "Üdvözöljük"
 
-#: part/pageview.cpp:5279
+#: part/pageview.cpp:5280
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Válassza ki a kinagyítandó területet. Kicsinyítés: jobb kattintással."
 
-#: part/pageview.cpp:5294
+#: part/pageview.cpp:5295
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kattintson a nagyított nézet megtekintéséhez."
 
-#: part/pageview.cpp:5311
+#: part/pageview.cpp:5312
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Húzzon keretet a másolandó szöveg vagy grafika köré."
 
-#: part/pageview.cpp:5327
+#: part/pageview.cpp:5328
 #, kde-format
 msgid "Select text"
 msgstr "Szöveg kijelölése"
 
-#: part/pageview.cpp:5343
+#: part/pageview.cpp:5344
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4098,7 +4106,7 @@ msgstr ""
 "Rajzoljon egy téglalapot a táblázat köré, majd kattintson a sarkok közelébe "
 "a felosztáshoz; nyomja meg az Esc gombot a törléshez."
 
-#: part/pageview.cpp:5358 part/pageview.cpp:5366
+#: part/pageview.cpp:5359 part/pageview.cpp:5367
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4107,17 +4115,17 @@ msgstr ""
 "Az összes aláírási tanúsítványa érvénytelen. Amennyiben az aláírás korábban "
 "működött, ellenőrizze az érvényességi dátumokat."
 
-#: part/pageview.cpp:5359
+#: part/pageview.cpp:5360
 #, kde-format
 msgid "No valid certificates"
 msgstr "Nincsenek érvényes tanúsítványok"
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5375
+#: part/pageview.cpp:5361 part/pageview.cpp:5376
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Tanúsítványkezelő megnyitása"
 
-#: part/pageview.cpp:5371
+#: part/pageview.cpp:5372
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4128,12 +4136,12 @@ msgstr ""
 "tanúsítványok importálásához vagy kezeléséhez<br/>További információkért "
 "lásd a kézikönyv <a href=\"%1\">Digitális aláírások</a> fejezetét."
 
-#: part/pageview.cpp:5374 part/pageview.cpp:5386
+#: part/pageview.cpp:5375 part/pageview.cpp:5387
 #, kde-format
 msgid "No certificates found"
 msgstr "Nem találhatók tanúsítványok"
 
-#: part/pageview.cpp:5384
+#: part/pageview.cpp:5385
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4143,18 +4151,18 @@ msgstr ""
 "Nincsenek aláíró tanúsítványok.<br/>További információkért lásd a kézikönyv "
 "<a href=\"%1\">Digitális aláírások</a> fejezetét."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5410
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Nem mentett módosításai vannak. Mentse a dokumentumot, mielőtt aláírja."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5433
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Rajzoljon egy téglalapot aláírásmező beszúrásához"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5583
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Húzzon egy keretet a láthatóvá tenni kívánt oldalterület köré"
@@ -4851,7 +4859,7 @@ msgid "Remove this Bookmark"
 msgstr "Könyvjelző eltávolítása"
 
 #: part/part.cpp:2617 part/part.cpp:2618 part/part.cpp:3534
-#: part/signaturepartutils.cpp:273
+#: part/signaturepartutils.cpp:321
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
@@ -5674,10 +5682,17 @@ msgid "Choose..."
 msgstr "Választás…"
 
 #. i18n: ectx: property (text), widget (QLabel, recentLabel)
-#: part/selectcertificatedialog.ui:135
+#: part/selectcertificatedialog.ui:136
 #, kde-format
 msgid "Recent backgrounds:"
 msgstr "Legutóbbi hátterek:"
+
+#. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
+#: part/selectcertificatedialog.ui:152
+#, fuzzy, kde-format
+#| msgid "Signature Type: %1"
+msgid "Signature Type"
+msgstr "Aláírástípus: %1"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5719,51 +5734,94 @@ msgstr "Minden elem összecsukása"
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: part/signaturepartutils.cpp:181
+#: part/signaturepartutils.cpp:57
+#, kde-format
+msgctxt ""
+"This string is describing a default entry that generally shouldn't be shown "
+"to the user. To a point where it would be a coding bug somewhere to have it"
+msgid "NONE"
+msgstr ""
+
+#: part/signaturepartutils.cpp:59
+#, fuzzy, kde-format
+#| msgctxt "Digital signature type"
+#| msgid "Adobe PKCS7 Sha1"
+msgctxt "Signature type"
+msgid "Adobe PKCS7 signature"
+msgstr "Adobe PKCS7 Sha1"
+
+#: part/signaturepartutils.cpp:61
+#, fuzzy, kde-format
+#| msgid "Unsigned Signature %1"
+msgctxt "Signature type"
+msgid "Basic eIDAS signature"
+msgstr "Üres aláírás %1"
+
+#: part/signaturepartutils.cpp:63
+#, kde-format
+msgctxt "Signature type"
+msgid "eIDAS signature with timestamp"
+msgstr ""
+
+#: part/signaturepartutils.cpp:65
+#, kde-format
+msgctxt "Signature type"
+msgid "eIDAS signature with timestamp for long term validation"
+msgstr ""
+
+#: part/signaturepartutils.cpp:67
+#, kde-format
+msgctxt "Signature type"
+msgid ""
+"eIDAS signature with timestamp for long term validation and support for re-"
+"validation"
+msgstr ""
+
+#: part/signaturepartutils.cpp:222
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
 msgstr "Képek (%1)"
 
-#: part/signaturepartutils.cpp:182
+#: part/signaturepartutils.cpp:223
 #, kde-format
 msgid "Select background image"
 msgstr "Válasszon háttérképet"
 
-#: part/signaturepartutils.cpp:187
+#: part/signaturepartutils.cpp:228
 #, kde-format
 msgid "Forget image"
 msgstr "Kép elfelejtése"
 
-#: part/signaturepartutils.cpp:188
+#: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Forget all images"
 msgstr "Összes kép elfelejtése"
 
-#: part/signaturepartutils.cpp:231
+#: part/signaturepartutils.cpp:272
 #, fuzzy, kde-format
 #| msgid "Enter password (if any) to unlock certificate: %1"
 msgid "Enter password/pin (if any) to unlock certificate: %1"
 msgstr "Adja meg a jelszót (ha van) a tanúsítvány feloldásához: %1"
 
-#: part/signaturepartutils.cpp:256
+#: part/signaturepartutils.cpp:297
 #, kde-format
 msgid "Enter document password"
 msgstr "Adja meg a dokumentumjelszót"
 
-#: part/signaturepartutils.cpp:283
+#: part/signaturepartutils.cpp:331
 #, kde-format
 msgid "Save Signed File As"
 msgstr "Aláírt fájl mentése másként"
 
-#: part/signaturepartutils.cpp:285
+#: part/signaturepartutils.cpp:333
 #, kde-format
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
 msgstr ""
 
-#: part/signaturepartutils.h:62
+#: part/signaturepartutils.h:63
 #, kde-format
 msgctxt ""
 "Used when suggesting a new name for a digitally signed file. %1 is the old "
@@ -6251,12 +6309,6 @@ msgstr "Kezdőképernyő elrejtése"
 #~ msgctxt "Signature type"
 #~ msgid "Unknown"
 #~ msgstr "Ismeretlen"
-
-#, fuzzy
-#~| msgid "Unsigned Signature %1"
-#~ msgctxt "Signature type"
-#~ msgid "Unsigned signature"
-#~ msgstr "Üres aláírás %1"
 
 #~ msgctxt "Suffix for the opacity level, eg '80%'"
 #~ msgid "%"

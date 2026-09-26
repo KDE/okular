@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2026-08-08 12:41+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -34,18 +34,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "carramba@epf.pl, lukasz.wojnilowicz@gmail.com,ignacy.kajdan@gmail.com"
 
-#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
-#: generator_pdf.cpp:2211
+#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2213
+#: generator_pdf.cpp:2241
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Nie udało się zapisać pliku tymczasowego."
 
-#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
 #, kde-format
 msgid "Failed removing file"
 msgstr "Nie udało usunąć pliku"
 
-#: annots.cpp:607
+#: annots.cpp:612
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
@@ -81,7 +81,7 @@ msgid "Enhance thin lines:"
 msgstr "Polepsz cienkie linie:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1024
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
 #, kde-format
 msgid "No"
 msgstr "Nie"
@@ -105,19 +105,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Domyślny tryb skalowania przy drukowaniu"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Dopasuj do obszaru wydruku"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr "Dopasuj na pełną stronę"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr "Brak; wydrukuj w pierwotnym rozmiarze"
@@ -195,29 +195,29 @@ msgstr "Dostępne certyfikaty"
 msgid "&Load Signatures"
 msgstr "&Wczytaj podpisy"
 
-#: formfields.cpp:561 generator_pdf.cpp:2238
+#: formfields.cpp:565 generator_pdf.cpp:2268
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file: %1"
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Nie udało się zmienić nazwy pliku tymczasowego: %1"
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "Ustawienia PDF"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr "Drukuj przypisy"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Uwzględnij przypisy w drukowanym dokumencie"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -226,17 +226,17 @@ msgstr ""
 "Uwzględnia przypisy w drukowanym dokumencie. Możesz to wyłączyć, jeśli "
 "chcesz wydrukować oryginalny dokument bez przypisów."
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "Wymuś rasteryzację"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Rasteryzuj do obrazka przed drukowaniem"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -247,53 +247,53 @@ msgstr ""
 "daje to trochę gorsze rezultaty, ale jest użyteczne przy pracy z "
 "dokumentami, które wyglądają na drukowane niepoprawnie."
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Tryb skalowania dla drukowanych stron"
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr "Tryb skalowania:"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v%1.%2"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Encrypted"
 msgstr "Tak"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nie"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Security"
 msgstr "Zaszyfrowany"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Yes"
 msgstr "Tak"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Optimized"
 msgstr "Zoptymalizowany"
 
-#: generator_pdf.cpp:1488
+#: generator_pdf.cpp:1511
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -304,12 +304,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1707
+#: generator_pdf.cpp:1733
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "W użyciu Poppler %1"
 
-#: generator_pdf.cpp:1709
+#: generator_pdf.cpp:1735
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -320,17 +320,17 @@ msgstr ""
 "\n"
 "Zbudowany przy użyciu Poppler %2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Ustawienia silnika PDF"
 
-#: generator_pdf.cpp:2258
+#: generator_pdf.cpp:2288
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -402,7 +402,7 @@ msgstr "Wymagane ponowne uruchomienie"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Po zmianie ustawień katalogu NSS, musisz uruchomić Okulara ponownie"
 
-#: pdfsignatureutils.cpp:236
+#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

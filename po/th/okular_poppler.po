@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2010-12-17 21:59+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -28,18 +28,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "donga.nb@gmail.com"
 
-#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
-#: generator_pdf.cpp:2211
+#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2213
+#: generator_pdf.cpp:2241
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr ""
 
-#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
 #, kde-format
 msgid "Failed removing file"
 msgstr ""
 
-#: annots.cpp:607
+#: annots.cpp:612
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr ""
@@ -75,7 +75,7 @@ msgid "Enhance thin lines:"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1024
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
 #, kde-format
 msgid "No"
 msgstr "ไม่ใช่"
@@ -99,19 +99,19 @@ msgid "Default scaling mode when printing:"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr ""
@@ -184,45 +184,45 @@ msgstr ""
 msgid "&Load Signatures"
 msgstr ""
 
-#: formfields.cpp:561 generator_pdf.cpp:2238
+#: formfields.cpp:565 generator_pdf.cpp:2268
 #, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr ""
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "ตัวเลือก PDF"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr ""
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr ""
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
 "want to print the original unannotated document."
 msgstr ""
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "บังคับการแสดงผลแบบราสเตอร์"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "แปลงเป็นภาพแบบราสเตอร์ก่อนทำการพิมพ์"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -232,17 +232,17 @@ msgstr ""
 "บังคับการแสดงผลแต่ละหน้าเป็นแบบราสเตอร์ก่อนทำการพิมพ์ วิธีการนี้จะให้คุณภาพของผลลัพธ์ที่แย่ "
 "แต่เหมาะกับการพิมพ์เอกสารที่ผิดเพี้ยนเมื่อทำการพิมพ์ปกติั"
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr ""
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr ""
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, fuzzy, kde-format
 #| msgctxt "PDF v. <version>"
 #| msgid "PDF v. %1"
@@ -250,37 +250,37 @@ msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "เอกสาร PDF รุ่น %1"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Format"
 msgstr "รูปแบบ"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Encrypted"
 msgstr "มีการเข้ารหัส"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Unencrypted"
 msgstr "ไม่มีการเข้ารหัส"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Security"
 msgstr "ความปลอดภัย"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Yes"
 msgstr "ใช่"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Optimized"
 msgstr "ปรับแต่งแล้ว"
 
-#: generator_pdf.cpp:1488
+#: generator_pdf.cpp:1511
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -288,12 +288,12 @@ msgid ""
 "Date: %2"
 msgstr ""
 
-#: generator_pdf.cpp:1707
+#: generator_pdf.cpp:1733
 #, kde-format
 msgid "Using Poppler %1"
 msgstr ""
 
-#: generator_pdf.cpp:1709
+#: generator_pdf.cpp:1735
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -301,18 +301,18 @@ msgid ""
 "Built against Poppler %2"
 msgstr ""
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF"
 msgstr ""
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, fuzzy, kde-format
 #| msgid "PDF Backend"
 msgid "PDF Backend Configuration"
 msgstr "แบ็กเอนด์แสดงเอกสาร PDF"
 
-#: generator_pdf.cpp:2258
+#: generator_pdf.cpp:2288
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -379,7 +379,7 @@ msgstr ""
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 
-#: pdfsignatureutils.cpp:236
+#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
 #, fuzzy, kde-format
 #| msgid "Document Password"
 msgctxt ""

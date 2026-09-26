@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:51+0000\n"
+"POT-Creation-Date: 2026-09-26 00:43+0000\n"
 "PO-Revision-Date: 2026-09-20 19:09+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -31,18 +31,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "fr.ivan@ukrainian-orthodox.org,yurchor@ukr.net"
 
-#: annots.cpp:587 formfields.cpp:535 generator_pdf.cpp:2183
-#: generator_pdf.cpp:2211
+#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2213
+#: generator_pdf.cpp:2241
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Не вдалося записати тимчасовий файл"
 
-#: annots.cpp:603 formfields.cpp:557 generator_pdf.cpp:2234
+#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
 #, kde-format
 msgid "Failed removing file"
 msgstr "Не вдалося вилучити файл"
 
-#: annots.cpp:607
+#: annots.cpp:612
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Не вдалося перейменувати тимчасовий файл"
@@ -78,7 +78,7 @@ msgid "Enhance thin lines:"
 msgstr "Покращення тонких ліній:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1024
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
 #, kde-format
 msgid "No"
 msgstr "Без оптимізації"
@@ -102,19 +102,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Типовий режим масштабування при друці:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:100
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
 #, kde-format
 msgid "Fit to printable area"
 msgstr "За областю друку"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
 #, kde-format
 msgid "Fit to full page"
 msgstr "За цілою сторінкою"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
 #, kde-format
 msgid "None; print original size"
 msgstr "Немає, друкувати початковий розмір"
@@ -194,28 +194,28 @@ msgstr "Доступні сертифікати"
 msgid "&Load Signatures"
 msgstr "З&авантажити підписи"
 
-#: formfields.cpp:561 generator_pdf.cpp:2238
+#: formfields.cpp:565 generator_pdf.cpp:2268
 #, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Не вдалося перейменувати тимчасовий файл: %1"
 
-#: generator_pdf.cpp:85
+#: generator_pdf.cpp:86
 #, kde-format
 msgid "PDF Options"
 msgstr "Параметри PDF"
 
-#: generator_pdf.cpp:87
+#: generator_pdf.cpp:88
 #, kde-format
 msgid "Print annotations"
 msgstr "Надрукувати анотації"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Включити анотації до надрукованого документа"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:90
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -225,17 +225,17 @@ msgstr ""
 "пункту, якщо вам потрібно надрукувати початковий незмінений документ без "
 "анотацій."
 
-#: generator_pdf.cpp:91
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Force rasterization"
 msgstr "Перетворити на растрове зображення"
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:93
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Перетворювати на растрове зображення перед друком"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:94
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -247,53 +247,53 @@ msgstr ""
 "прийнятним для друку документів. Може знадобитися для документів, під час "
 "друку яких виникають проблеми."
 
-#: generator_pdf.cpp:103
+#: generator_pdf.cpp:104
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Режим масштабування для друкованих сторінок"
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:105
 #, kde-format
 msgid "Scale mode:"
 msgstr "Режим масштабування:"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF вер. %1.%2"
 
-#: generator_pdf.cpp:1022
+#: generator_pdf.cpp:1024
 #, kde-format
 msgid "Format"
 msgstr "Формат"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Encrypted"
 msgstr "Зашифровано"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Unencrypted"
 msgstr "Не зашифровано"
 
-#: generator_pdf.cpp:1023
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Security"
 msgstr "Захист"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Yes"
 msgstr "Так"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Optimized"
 msgstr "Оптимізовано"
 
-#: generator_pdf.cpp:1488
+#: generator_pdf.cpp:1511
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -304,12 +304,12 @@ msgstr ""
 "\n"
 "Дата: %2"
 
-#: generator_pdf.cpp:1707
+#: generator_pdf.cpp:1733
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Вжито Poppler %1"
 
-#: generator_pdf.cpp:1709
+#: generator_pdf.cpp:1735
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -320,17 +320,17 @@ msgstr ""
 "\n"
 "Зібрано з Poppler %2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1770
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Налаштовування модуля PDF"
 
-#: generator_pdf.cpp:2258
+#: generator_pdf.cpp:2288
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -405,7 +405,7 @@ msgstr ""
 "Для набуття чинності внесеними змінами до параметрів каталогу NSS вам слід "
 "перезапустити Okular"
 
-#: pdfsignatureutils.cpp:236
+#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
 #, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"

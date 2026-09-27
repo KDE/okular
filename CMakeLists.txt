@@ -179,8 +179,8 @@ endif()
 
 if (BUILD_MOBILE)
     find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick)
-    find_package(KF6Kirigami2)
-    set_package_properties(KF6Kirigami2 PROPERTIES
+    find_package(KF6Kirigami)
+    set_package_properties(KF6Kirigami PROPERTIES
         DESCRIPTION "A QtQuick based components set"
         PURPOSE "Required at runtime by the mobile app"
         TYPE RUNTIME

@@ -4,20 +4,20 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.15
-import QtQuick.Controls 2.15 as QQC2
-import org.kde.kirigami 2.17 as Kirigami
-import org.kde.okular 2.0 as Okular
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls as QQC2
+import org.kde.kirigami as Kirigami
+import org.kde.okular as Okular
+import QtQuick.Layouts
 
 
 Kirigami.OverlayDrawer {
     id: root
 
-    bottomPadding: 0
-    topPadding: 0
-    leftPadding: 0
-    rightPadding: 0
+    bottomPadding: parent.SafeArea.margins.bottom
+    topPadding: parent.SafeArea.margins.top
+    leftPadding: root.edge === Qt.LeftEdge ? parent.SafeArea.margins.left : 0
+    rightPadding: root.edge === Qt.RightEdge ? parent.SafeArea.margins.right : 0
 
     edge: Qt.application.layoutDirection == Qt.RightToLeft ? Qt.LeftEdge : Qt.RightEdge
     contentItem: ColumnLayout {

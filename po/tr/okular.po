@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-18 02:39+0000\n"
-"PO-Revision-Date: 2026-08-08 19:58+0300\n"
+"PO-Revision-Date: 2026-09-26 20:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.04.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -130,7 +130,7 @@ msgstr "Eugene Trounev"
 #: aboutdata.h:36
 #, kde-format
 msgid "Annotations artwork"
-msgstr "Bilgi notu sanatsal çalışmaları"
+msgstr "Ek açıklamalar için sanatsal çalışmalar"
 
 #: aboutdata.h:37
 #, kde-format
@@ -150,7 +150,7 @@ msgstr "Fabio D’Urso"
 #: aboutdata.h:38
 #, kde-format
 msgid "Annotation improvements"
-msgstr "Bilgi notu geliştirmeleri"
+msgstr "Ek açıklama geliştirmeleri"
 
 #: core/action.cpp:137
 #, kde-format
@@ -332,7 +332,7 @@ msgstr "Bu belge türü için imzalama henüz gerçeklenmemiş"
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
-msgstr "bilgi notlarını kaldır"
+msgstr "ek açıklamaları kaldır"
 
 #: core/document.cpp:4119 core/document.cpp:4125
 #, kde-format
@@ -491,25 +491,25 @@ msgstr "Sayfa boyutu"
 #, kde-format
 msgctxt "Add an annotation to the page"
 msgid "add annotation"
-msgstr "bilgi notu ekle"
+msgstr "ek açıklama ekle"
 
 #: core/documentcommands.cpp:108
 #, kde-format
 msgctxt "Remove an annotation from the page"
 msgid "remove annotation"
-msgstr "bilgi notunu kaldır"
+msgstr "ek açıklamayı kaldır"
 
 #: core/documentcommands.cpp:155
 #, kde-format
 msgctxt "Modify an annotation's internal properties (Color, line-width, etc.)"
 msgid "modify annotation properties"
-msgstr "bilgi notu özelliklerini değiştir"
+msgstr "ek açıklama özelliklerini değiştir"
 
 #: core/documentcommands.cpp:190
 #, kde-format
 msgctxt "Translate an annotation's position on the page"
 msgid "translate annotation"
-msgstr "bilgi notunu çevir"
+msgstr "ek açıklamayı çevir"
 
 #: core/documentcommands.cpp:263
 #, kde-format
@@ -527,7 +527,7 @@ msgstr "metni düzenle"
 #, kde-format
 msgctxt "Edit an annotation's text contents"
 msgid "edit annotation contents"
-msgstr "metin içeriğini düzenle"
+msgstr "ek açıklama içeriğini düzenle"
 
 #: core/documentcommands.cpp:447
 #, kde-format
@@ -902,7 +902,7 @@ msgstr "Zengin Ortam"
 #: gui/guiutils.cpp:144
 #, kde-format
 msgid "Annotation"
-msgstr "Bilgi Notu"
+msgstr "Ek Açıklama"
 
 #: gui/guiutils.cpp:172
 #, kde-format
@@ -1308,31 +1308,31 @@ msgstr "%%1"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (No annotation selected)"
-msgstr "Bilgi notu çizgi genişliği (bir bilgi notu seçili değil)"
+msgstr "Ek açıklama çizgi genişliği (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:296
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color (No annotation selected)"
-msgstr "Bilgi notu rengi (bir bilgi notu seçili değil)"
+msgstr "Ek açıklama rengi (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:297
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (No annotation selected)"
-msgstr "Bilgi notu dolgu rengi (bir bilgi notu seçili değil)"
+msgstr "Ek açıklama dolgu rengi (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:298
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity (No annotation selected)"
-msgstr "Bilgi notu matlığı (bir bilgi notu seçili değil)"
+msgstr "Ek açıklama matlığı (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:299
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Bilgi notu yazıtipi (bir bilgi notu seçili değil)"
+msgstr "Ek açıklama yazıtipi (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
@@ -1340,7 +1340,8 @@ msgctxt "@info:tooltip"
 msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
-msgstr "Geçerli bilgi notunu tez bilgi notları menüsüne ekle (seçili not yok)"
+msgstr ""
+"Geçerli ek açıklamayı, tez ek açıklama menüsüne ekle (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1350,7 +1351,7 @@ msgid ""
 "selected)"
 msgstr ""
 "Şekil oranını 1:1 olarak veya çizgi açısını 15 derecelik adımlara kısıtla "
-"(bir bilgi notu seçili değil)"
+"(açıklama seçili değil)"
 
 #: part/annotationactionhandler.cpp:302
 #, kde-format
@@ -1358,62 +1359,61 @@ msgctxt "@info:tooltip"
 msgid ""
 "Advanced settings for the current annotation tool (No annotation selected)"
 msgstr ""
-"Geçerli bilgi notu aracı için gelişmiş seçenekler (bir bilgi notu seçili "
-"değil)"
+"Geçerli ek açıklama aracı için gelişmiş seçenekler (açıklama seçili değil)"
 
 #: part/annotationactionhandler.cpp:307
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width"
-msgstr "Bilgi notu genişliği"
+msgstr "Ek açıklama çizgisi genişliği"
 
 #: part/annotationactionhandler.cpp:309
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
-msgstr "Bilgi notu çizgi genişliği (geçerli bilgi notunda çizgi genişliği yok)"
+msgstr "Ek açıklama çizgisi genişliği (geçerli açıklamada çizgi genişliği yok)"
 
 #: part/annotationactionhandler.cpp:313
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation text color"
-msgstr "Bilgi notu metin rengi"
+msgstr "Ek açıklama metin rengi"
 
 #: part/annotationactionhandler.cpp:315
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation border color"
-msgstr "Bilgi notu kenar rengi"
+msgstr "Ek açıklama kenar rengi"
 
 #: part/annotationactionhandler.cpp:317
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation color"
-msgstr "Bilgi notu rengi"
+msgstr "Ek açıklama rengi"
 
 #: part/annotationactionhandler.cpp:321
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color"
-msgstr "Bilgi notu dolgu rengi"
+msgstr "Ek açıklama dolgu rengi"
 
 #: part/annotationactionhandler.cpp:323
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation fill color (Current annotation has no fill color)"
-msgstr "Bilgi notu dolgu rengi (geçerli bilgi notunda bir dolgu rengi yok)"
+msgstr "Ek açıklama dolgu rengi (geçerli açıklamada dolgu rengi yok)"
 
 #: part/annotationactionhandler.cpp:327
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Bilgi notu yazıtipi"
+msgstr "Ek açıklama yazıtipi"
 
 #: part/annotationactionhandler.cpp:329
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr "Bilgi notu yazıtipi (geçerli bilgi notunda bir yazıtipi yok)"
+msgstr "Ek açıklama yazıtipi (geçerli açıklamada yazıtipi yok)"
 
 #: part/annotationactionhandler.cpp:333
 #, kde-format
@@ -1435,25 +1435,25 @@ msgid ""
 "current annotation)"
 msgstr ""
 "Şekil oranını 1:1 olarak veya çizgi açısını 15 derecelik adımlara kısıtla "
-"(geçerli bilgi notu tarafından desteklenmiyor)"
+"(geçerli açıklama tarafından desteklenmiyor)"
 
 #: part/annotationactionhandler.cpp:340
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation opacity"
-msgstr "Bilgi notu matlığı"
+msgstr "Ek açıklama matlığı"
 
 #: part/annotationactionhandler.cpp:341
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add the current annotation to the quick annotations menu"
-msgstr "Geçerli bilgi notunu tez bilgi notları menüsüne ekle"
+msgstr "Geçerli ek açıklamayı, tez ek açıklama menüsüne ekle"
 
 #: part/annotationactionhandler.cpp:342
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Advanced settings for the current annotation tool"
-msgstr "Geçerli bilgi notu aracı için gelişmiş seçenekler"
+msgstr "Geçerli ek açıklama aracı için gelişmiş seçenekler"
 
 #: part/annotationactionhandler.cpp:431
 #, kde-format
@@ -1488,7 +1488,7 @@ msgstr "Renk seç"
 #: part/annotationactionhandler.cpp:551
 #, kde-format
 msgid "&Annotations"
-msgstr "Bilgi &Notları"
+msgstr "&Ek Açıklamalar"
 
 #: part/annotationactionhandler.cpp:552
 #, kde-format
@@ -1500,7 +1500,7 @@ msgstr "Gizle"
 #, kde-format
 msgctxt "@action:intoolbar Show the builtin annotation toolbar"
 msgid "Show more annotation tools"
-msgstr "Daha Çok Bilgi Notu Aracı Göster"
+msgstr "Daha Çok Ek Açıklama Aracı Göster"
 
 #: part/annotationactionhandler.cpp:556
 #, kde-format
@@ -1596,25 +1596,25 @@ msgstr "Damga"
 #, kde-format
 msgctxt "@action:intoolbar Show list of quick annotation tools"
 msgid "Quick Annotations"
-msgstr "Tez Bilgi Notları"
+msgstr "Tez Ek Açıklamalar"
 
 #: part/annotationactionhandler.cpp:640
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Choose an annotation tool from the quick annotations"
-msgstr "Tez bilgi notlarından bir not aracı seçin"
+msgstr "Tez ek açıklamalardan bir açıklama aracı seçin"
 
 #: part/annotationactionhandler.cpp:650
 #, kde-format
 msgid "Quick Annotation Bar"
-msgstr "Tez Bilgi Notları Çubuğu"
+msgstr "Tez Ek Açıklama Çubuğu"
 
 #: part/annotationactionhandler.cpp:664
 #, kde-format
 msgctxt ""
 "@action:intoolbar Add current annotation tool to the quick annotations list"
 msgid "Add to Quick Annotations"
-msgstr "Tez Bilgi Notlarına Ekle"
+msgstr "Tez Ek Açıklamalara Ekle"
 
 #: part/annotationactionhandler.cpp:667
 #, kde-format
@@ -1628,7 +1628,7 @@ msgstr "Etkin Tut"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Keep the annotation tool active after use"
-msgstr "Kullanımdan sonra bilgi notu aracını etkin tut"
+msgstr "Kullanımdan sonra ek açıklama aracını etkin tut"
 
 #: part/annotationactionhandler.cpp:673
 #, kde-format
@@ -1636,7 +1636,7 @@ msgctxt ""
 "@action When checked, line annotations are constrained to 15° steps, shape "
 "annotations to 1:1 ratio"
 msgid "Constrain Ratio and Angle of Annotation Tools"
-msgstr "Bilgi Notu Araçlarının Oran ve Şeklini Kısıtla"
+msgstr "Ek Açıklama Araçlarının Oran ve Şeklini Kısıtla"
 
 #: part/annotationactionhandler.cpp:679
 #, kde-format
@@ -1648,7 +1648,7 @@ msgstr "Yazıtipi"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation advanced settings"
 msgid "Annotation Settings"
-msgstr "Bilgi Seçenekleri"
+msgstr "Ek Açıklama Seçenekleri"
 
 #: part/annotationactionhandler.cpp:683
 #, kde-format
@@ -1686,8 +1686,8 @@ msgstr "Sayfa %1"
 msgctxt "Menu title"
 msgid "Annotation"
 msgid_plural "%1 Annotations"
-msgstr[0] "Bilgi Notu"
-msgstr[1] "%1 Bilgi Notu"
+msgstr[0] "Ek Açıklama"
+msgstr[1] "%1 Ek Açıklama"
 
 #: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
 #, kde-format
@@ -1843,7 +1843,7 @@ msgstr "Film Özellikleri"
 #: part/annotationpropertiesdialog.cpp:149
 #, kde-format
 msgid "Annotation Properties"
-msgstr "Bilgi Notu Özellikleri"
+msgstr "Ek Açıklama Özellikleri"
 
 #: part/annotationwidgets.cpp:57
 #, kde-format
@@ -2244,7 +2244,7 @@ msgid ""
 "This annotation may contain LaTeX code.\n"
 "Click here to render."
 msgstr ""
-"Bu bilgi notu LaTeX kodu içeriyor olabilir.\n"
+"Bu ek açıklama, LaTeX kodu içeriyor olabilir.\n"
 "Sunmak için buraya tıklayın."
 
 #: part/annotwindow.cpp:250 part/annotwindow.cpp:272
@@ -2708,19 +2708,19 @@ msgstr "Konuşma sesi:"
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Full Annotation Toolbar"
-msgstr "Tam bilgi notu araç çubuğu"
+msgstr "Tam ek açıklama araç çubuğu"
 
 #: part/dlgannotations.cpp:26
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Quick Annotation Toolbar"
-msgstr "Tez bilgi notu araç çubuğu"
+msgstr "Tez ek açıklama araç çubuğu"
 
 #: part/dlgannotations.cpp:28
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "Annotation toolbar:"
-msgstr "Bilgi notu araç çubuğu:"
+msgstr "Ek açıklama araç çubuğu:"
 
 #: part/dlgannotations.cpp:34
 #, kde-format
@@ -2736,8 +2736,8 @@ msgid ""
 "information is saved in annotated documents, and so will be transmitted "
 "together with the document."
 msgstr ""
-"<b>Not:</b> Buradaki bilgi, yalnızca bilgi notları için kullanılır. Bilgi, "
-"bilgi notu eklenmiş belgelerde saklanır ve belgeyle birlikte iletilir."
+"<b>Not:</b> Buradaki bilgi, yalnızca ek açıklamalar için kullanılır. Bilgi, "
+"ek açıklama eklenmiş belgelerde saklanır ve belgeyle birlikte iletilir."
 
 #: part/dlgannotations.cpp:48
 #, kde-format
@@ -2745,7 +2745,7 @@ msgctxt ""
 "@label Config dialog, annotations page, heading line for Quick Annotations "
 "tool manager"
 msgid "<h3>Quick Annotation Tools</h3>"
-msgstr "<h3>Tez Bilgi Notu Araçları</h3>"
+msgstr "<h3>Tez Ek Açıklama Araçları</h3>"
 
 #: part/dlgeditor.cpp:28
 #, kde-format
@@ -3462,12 +3462,12 @@ msgstr "Geometrik Şekil"
 #: part/editannottooldialog.cpp:101
 #, kde-format
 msgid "Create annotation tool"
-msgstr "Bilgi Notu Aracı Oluştur"
+msgstr "Ek Açıklama Aracı Oluştur"
 
 #: part/editannottooldialog.cpp:103
 #, kde-format
 msgid "Edit annotation tool"
-msgstr "Düzenle"
+msgstr "Ek Açıklama Aracını Düzenle"
 
 #: part/editdrawingtooldialog.cpp:51
 #, kde-format
@@ -4177,7 +4177,7 @@ msgstr "Yazar adı"
 #: part/pageviewannotator.cpp:1338
 #, kde-format
 msgid "Author name for the annotation:"
-msgstr "Bilgi notları için yazar adı:"
+msgstr "Ek açıklamalar için yazar adı:"
 
 #: part/pageviewannotator.cpp:1399
 #, kde-format
@@ -4201,8 +4201,7 @@ msgstr "Serbest çizim çizgisi çiz"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Inline Text Annotation (drag to select a zone)"
-msgstr ""
-"İç Metin Bilgi Notu (bir alan seçmek için fare işaretçisini sürükleyin)"
+msgstr "İç Metin Açıklama (bir alan seçmek için fare işaretçisini sürükleyin)"
 
 #: part/pageviewannotator.cpp:1407
 #, kde-format
@@ -4256,7 +4255,7 @@ msgstr "Metnin altını çiz"
 #, kde-format
 msgctxt "Annotation tool"
 msgid "Typewriter Annotation (drag to select a zone)"
-msgstr "Daktilo Bilgi Notu (bir alan seçmek için sürükleyin)"
+msgstr "Daktilo Açıklama (bir alan seçmek için sürükleyin)"
 
 #: part/pageviewannotator.cpp:1482
 #, kde-format
@@ -4266,12 +4265,12 @@ msgstr "Vurgulayıcı"
 #: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Add favorite annotation"
-msgstr "Favori Ekle"
+msgstr "Favori Açıklama Ekle"
 
 #: part/pageviewannotator.cpp:1779
 #, kde-format
 msgid "Custom annotation name:"
-msgstr "Özel bilgi notu adı:"
+msgstr "Özel ek açıklama adı:"
 
 #. i18n: ectx: Menu (file)
 #: part/part-viewermode.rc:6 part/part.rc:5
@@ -4318,7 +4317,7 @@ msgstr "Küçük Görseller"
 #: part/part.cpp:412 part/preferencesdialog.cpp:50 part/side_reviews.cpp:97
 #, kde-format
 msgid "Annotations"
-msgstr "Bilgi Notları"
+msgstr "Ek Açıklamalar"
 
 #: part/part.cpp:436
 #, kde-format
@@ -4328,10 +4327,10 @@ msgid ""
 "<br/>Please save to a file in order to move them if you want to continue to "
 "edit the document."
 msgstr ""
-"Bu belge, Okular’ın daha eski bir sürümünde içsel olarak kaydedilen bilgi "
-"notları veya form verisi içeriyor. İçsel depolama <b>artık desteklenmiyor</"
-"b>.<br/>Dosyayı düzenlemeyi sürdürmek için kurtarma amaçlı olarak onları "
-"lütfen bir dosyaya kaydedin."
+"Bu belge, Okular’ın daha eski bir sürümünde içsel olarak kaydedilen ek "
+"açıklamalar veya form verisi içeriyor. İçsel depolama <b>artık "
+"desteklenmiyor</b>.<br/>Dosyayı düzenlemeyi sürdürmek için kurtarma amaçlı "
+"olarak onları lütfen bir dosyaya kaydedin."
 
 #: part/part.cpp:444
 #, kde-format
@@ -4486,7 +4485,7 @@ msgstr "Renk Kiplerini Yapılandır…"
 #: part/part.cpp:835 part/part.cpp:3223
 #, kde-format
 msgid "Paste Annotation"
-msgstr "Bilgi Notunu Yapıştır"
+msgstr "Ek Açıklamayı Yapıştır"
 
 #: part/part.cpp:853
 #, kde-format
@@ -4551,7 +4550,7 @@ msgstr "Çizimi Sil"
 #: part/part.cpp:957
 #, kde-format
 msgid "Configure Annotations…"
-msgstr "Bilgi Notlarını Yapılandır…"
+msgstr "Ek Açıklamaları Yapılandır…"
 
 #: part/part.cpp:962
 #, kde-format
@@ -4905,7 +4904,7 @@ msgstr "Doldurulan form içeriği"
 #: part/part.cpp:2792
 #, kde-format
 msgid "User annotations"
-msgstr "Kullanıcı bilgi notları"
+msgstr "Kullanıcı ek açıklamaları"
 
 #: part/part.cpp:2797
 #, kde-format
@@ -5161,13 +5160,13 @@ msgstr "Ana Araç Çubuğu"
 #: part/part.rc:125
 #, kde-format
 msgid "Annotation Toolbar"
-msgstr "Bilgi Notu Araç Çubuğu"
+msgstr "Ek Açıklama Araç Çubuğu"
 
 #. i18n: ectx: ToolBar (quickAnnotationToolBar)
 #: part/part.rc:149
 #, kde-format
 msgid "Quick Annotation Toolbar"
-msgstr "Tez Bilgi Notu Araç Çubuğu"
+msgstr "Tez Ek Açıklama Araç Çubuğu"
 
 #: part/preferencesdialog.cpp:41
 #, kde-format
@@ -5212,7 +5211,7 @@ msgstr "Sunum Kipi Seçenekleri"
 #: part/preferencesdialog.cpp:50
 #, kde-format
 msgid "Annotation Options"
-msgstr "Bilgi Notu Seçenekleri"
+msgstr "Ek Açıklama Seçenekleri"
 
 #: part/preferencesdialog.cpp:53 part/preferencesdialog.cpp:59
 #, kde-format
@@ -5631,8 +5630,8 @@ msgid ""
 "<div align=center><h3>No annotations</h3>To create new annotations press F6 "
 "or select <i>Tools -&gt; Annotations</i> from the menu.</div>"
 msgstr ""
-"<div align=center><h3>Bilgi notu yok</h3>Yeni bilgi notu oluşturmak için F6 "
-"düğmesine basın veya menüden <i>Araçlar → Bilgi Notları</i> seçeneğine "
+"<div align=center><h3>Ek açıklama yok</h3>Yeni ek açıklama oluşturmak için "
+"F6 düğmesine basın veya menüden <i>Araçlar → Ek Açıklamalar</i> seçeneğine "
 "tıklayın.</div>"
 
 #: part/side_reviews.cpp:140
@@ -5648,7 +5647,7 @@ msgstr "Yazara Göre Grupla"
 #: part/side_reviews.cpp:153
 #, kde-format
 msgid "Show annotations for current page only"
-msgstr "Yalnızca geçerli sayfa için bilgi notlarını göster"
+msgstr "Yalnızca geçerli sayfa için olan ek açıklamaları göster"
 
 #: part/side_reviews.cpp:163
 #, kde-format

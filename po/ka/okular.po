@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-09-21 04:11+0200\n"
+"PO-Revision-Date: 2026-09-26 08:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -642,7 +642,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "მხარდაუჭერელი ხელმოწერის ტიპი მიმდინარე სერტიფიკატისთვის"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5643,10 +5643,9 @@ msgstr "ბოლო ფონი:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "ხელმოწერის ტიპი: %1"
+msgstr "ხელმოწერის ტიპი"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5694,35 +5693,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "არცერთი"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "Adobe PKCS7 ხელმოწერა"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Unsigned signature"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "ხელმოუწერელი ხელმოწერა"
+msgstr "საბაზისო eIDAS ხელმოწერა"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "eIDAS ხელმოწერა დროის შტამპით"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "eIDAS ხელმოწერა დროის შტამპით გრძელვადიანი გადამოწმებისთვის"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5731,6 +5726,8 @@ msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
 msgstr ""
+"eIDAS ხელმოწერა დროის შტამპით გრძელვადიანი გადამოწმებისთვის და თავიდან "
+"გადამოწმების მხარდაჭერა"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

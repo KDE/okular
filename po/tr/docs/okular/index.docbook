@@ -95,14 +95,14 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >mobipocket</keyword>
 			<keyword
->bilgi notu</keyword>
+>ek açıklama</keyword>
 		</keywordset>
 	</bookinfo>
 	<chapter id="introduction">
 		<title
 >Giriş</title>
 		<para
->&okular;, &kpdf; uygulamasının kodu üzerine temellindirilmiş, çok amaçlı bir &kde; belge görüntüleyicisidir. &kpdf;’yi temel almış olmasına rağmen; genel görünüm kipi, iyileştirilmiş sunum ve bilgi notu desteği gibi kendine has özellikleri vardır. </para>
+>&okular;, &kpdf; uygulamasının kodu üzerine temellendirilmiş, çok amaçlı bir &kde; belge görüntüleyicisidir. &kpdf;’yi temel almış olmasına rağmen; genel görünüm kipi, iyileştirilmiş sunum ve ek açıklama desteği gibi kendine has özellikleri vardır. </para>
 		<para
 >&okular;; &PDF;, &PostScript;, Tiff, DjVU, Görseller (png, jpg, &etc;) XPS, Fiction Books, Comic Book, Plucker, EPub, Fax ve Markdown gibi birçok farklı biçimi destekler. Desteklenen tüm biçimleri ve özelliklerini görmek için <ulink url="https://okular.kde.org/formats.php"
 > &okular; Belge Biçimi İşleyicileri</ulink
@@ -249,8 +249,8 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para
 >Belgede ek açıklamalar varsa <guilabel
->Bilgi Notları</guilabel
-> görünümünü etkinleştirip ve ek açıklamalara tıklayın veya bunları &Up; ve &Down; kullanarak seçin ve ilgili sayfaya gitmek için &Enter; düğmesine basın. </para>
+>Ek Açıklamalar</guilabel
+> görünümünü etkinleştirip ek açıklamalara tıklayın veya bunları &Up; ve &Down; kullanarak seçin; ilgili sayfaya gitmek içinse &Enter; düğmesine basın. </para>
 				</listitem>
 			</itemizedlist>
 			<para
@@ -650,24 +650,24 @@ Context menu actions like Rename Bookmarks etc.)
 		</sect1>
 		<sect1 id="annotations">
 			<title
->Bilgi Notları</title>
+>Ek Açıklamalar</title>
 			<para
->&okular;, belgelerinizi gözden geçirmenize ve bilgi notları eklemenize olanak tanır. </para>
+>&okular;, belgelerinizi gözden geçirmenize ve ek açıklamalar eklemenize olanak tanır. </para>
 			<screenshot>
 			<screeninfo
->&okular;’ın Bilgi Notları</screeninfo>
+>&okular;’da Ek Açıklamalar</screeninfo>
 			<mediaobject>
 			<imageobject>
 			<imagedata fileref="annotations.png" format="PNG"/>
 			</imageobject>
 			<textobject>
 			<phrase
->&okular;’ın Bilgi Notları</phrase>
+>&okular;’da Ek Açıklamalar</phrase>
 			</textobject>
 			</mediaobject>
 			</screenshot>
 			<para
->&okular;’da iki tür bilgi notu vardır:</para>
+>&okular;’da iki tür ek açıklama vardır:</para>
 			<para
 >Metin içeren belgeler için <guilabel
 >Sarı Vurgulayıcı</guilabel
@@ -695,18 +695,18 @@ Context menu actions like Rename Bookmarks etc.)
 >Elips</guilabel
 > ve <guilabel
 >Daktilo</guilabel
-> gibi grafiksel bilgi notları.</para>
+> gibi grafiksel ek açıklamalar.</para>
 			  <para
->Grafiksel bilgi notları &PDF; dosyalarıyla sınırlı değildirler; &okular;’ın desteklediği herhangi bir dosyada kullanılabilirler.</para>
+>Grafiksel ek açıklamalar, &PDF; dosyalarıyla sınırlı değildirler; &okular;’ın desteklediği herhangi bir dosyada kullanılabilirler.</para>
 			<para
 ><guilabel
->Bilgi Notları</guilabel
+>Ek Açıklamalar</guilabel
 > menüsünü kullanarak, yorumlar eklemek veya düzenlemek için <guilabel
 >Açılır Not</guilabel
-> veya başka bir tür bilgi notu ekleyebilirsiniz.</para>
+> veya başka bir tür açıklama ekleyebilirsiniz.</para>
 
 			<para
->&okular;’da bu “belge arşivleme” özelliği vardır. Bu, belgeyi ve belgeyle ilişkili çeşitli üst veriyi taşımak için &okular;’a özel bir biçimdir (şu anda yalnızca bilgi notlarını destekler). <menuchoice
+>&okular;’da bu “belge arşivleme” özelliği vardır. Bu, belgeyi ve belgeyle ilişkili çeşitli üst veriyi taşımak için &okular;’a özel bir biçimdir (şu anda yalnızca ek açıklamaları destekler). <menuchoice
 ><guimenu
 >Dosya</guimenu
 ><guisubmenu
@@ -722,7 +722,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 ><emphasis
 >Ayrıca</emphasis
->, bilgi notlarını doğrudan &PDF; dosyalarının içine kaydedebilirsiniz. Geçerli dosyanın üzerine kaydetmek için <menuchoice
+>, ek açıklamaları doğrudan &PDF; dosyalarının içine kaydedebilirsiniz. Geçerli dosyanın üzerine kaydetmek için <menuchoice
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
@@ -737,12 +737,12 @@ Context menu actions like Rename Bookmarks etc.)
 > ögesini kullanın. </para>
 				<note>
 					<para
->DRM kullanan dosyalarda bilgi notu eklenmesi, onların düzenlenmesi veya kaldırılması geçerli olamaz. </para>
+>DRM kullanan dosyalara ek açıklamak eklemek, onları düzenlemek veya bu dosyalardan kaldırmak olanaklı değildir. </para>
 				</note>
 				<note>
 				  <para
->Bir bilgi notunu, <guimenu
->Edit</guimenu
+>Bir ek açıklamayı, <guimenu
+>Düzen</guimenu
 > menüsünden <link linkend="edit-undo"
 >Geri Al</link
 > veya <link linkend="edit-redo"
@@ -758,30 +758,30 @@ Context menu actions like Rename Bookmarks etc.)
 > yaparak yinelemek olanaklıdır. </para>
 				</note>
 			<para
->Her bir bilgi notu aracının öntanımlı özelliklerini ve görünüşünü yapılandırabilirsiniz. Lütfen belgelendirmenin <link linkend="configannotations"
+>Her bir ek açıklama aracının öntanımlı özelliklerini ve görünüşünü yapılandırabilirsiniz. Lütfen belgelendirmenin <link linkend="configannotations"
 >ilgili bölümüne</link
 > bir göz atın. </para>
 			<sect2 id="annotations-add">
 				<title
->Bilgi notları eklemek</title>
+>Ek açıklamalar eklemek</title>
 				<para
->Belgeye bilgi notları eklemek için ana &okular; araç çubuğundaki <guilabel
->Tez Bilgi Notları</guilabel
-> düğmesini kullanabilir veya bilgi notu araç çubuğunu etkinleştirebilirsiniz. Bu, <menuchoice
+>Belgeye ek açıklamalar eklemek için ana &okular; araç çubuğundaki <guilabel
+>Tez Ek Açıklamalar</guilabel
+> düğmesini kullanabilir veya ek açıklama araç çubuğunu etkinleştirebilirsiniz. Bu, <menuchoice
 ><guimenu
 >Araçlar</guimenu
 ><guimenuitem
->Bilgi Notları</guimenuitem
+>Ek Açıklamalar</guimenuitem
 ></menuchoice
 > yolunu izleyerek veya <keycap
 >F6</keycap
-> düğmesine basılarak yapılır. Bilgi notları araç çubuğu gösterildiğinde herhangi bir notu kullanmak için düğmelerinden birine basın veya klavye kısayollarını kullanın (<keycap
+> düğmesine basılarak yapılır. Ek açıklamalar araç çubuğu gösterildiğinde herhangi bir açıklamayı kullanmak için düğmelerinden birine basın veya klavye kısayollarını kullanın (<keycap
 >1</keycap
 > ile <keycap
 >9</keycap
 > arası düğmeler). </para>
 				<para
->Bilgi notu araç çubuğu çizimler, şekiller ve metin iletileriyle ek açıklamalar oluşturmanıza yardımcı olur. Bir belgeyi işaretlemek için bilgi notu araç çubuğunu kullanabilirsiniz (örneğin; çizgiler, elipsler, çokgenler, damgalar, vurgular, alt çizgiler vb. eklemek için). Aşağıdaki tablo, öntanımlı bilgi notu araç çubuğu düğmeleri kümesinin tam olarak ne yaptığını açıklamaktadır. </para>
+>Ek açıklama araç çubuğu; çizimler, şekiller ve metin iletileriyle ek açıklamalar oluşturmanıza yardımcı olur. Bir belgeyi işaretlemek için ek açıklama araç çubuğunu kullanabilirsiniz (örneğin; çizgiler, elipsler, çokgenler, damgalar, vurgular, alt çizgiler vb. eklemek için). Aşağıdaki tablo, öntanımlı ek açıklama araç çubuğu düğmeleri kümesinin tam olarak ne yaptığını açıklamaktadır. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1325,12 +1325,12 @@ Context menu actions like Rename Bookmarks etc.)
 				    </tgroup>
 				  </informaltable>
                                   <para
->Bunlar &okular; tarafından sağlanan öntanımlı bilgi notlarıdır. Yapılandırma iletişim kutusunun <link linkend="configannotations"
->Bilgi Notları</link
+>Bunlar &okular; tarafından sağlanan öntanımlı ek açıklamaladır. Yapılandırma iletişim kutusunun <link linkend="configannotations"
+>Ek Açıklamalar</link
 > sayfasını kullanarak, bölgeleri vb. vurgulamak için özel damgalar, metin işaretlemesi veya iç renkli geometrik şekil gibi kendi açıklamalarınızı ekleyebilirsiniz. </para>
                                   <note>
                                       <para
->Bilgi notları metnine &latex; kodları eklemek olanaklıdır. Bunu yapmak için bilgi notu metnine <userinput
+>Ek açıklama metnine &latex; kodları eklemek olanaklıdır. Bunu yapmak için metne <userinput
 >$$<replaceable
 >kod</replaceable
 >$$</userinput
@@ -1339,7 +1339,7 @@ Context menu actions like Rename Bookmarks etc.)
 > yerine herhangi bir geçerli &latex; denklemini girebilirsiniz. Sisteminizde kurulu bir &latex; dağıtımını kullanarak oluşturmak için ekranda görünecek yönergeleri izleyin. </para>
                                   </note>
 				<para
->Bilgi Notları araç çubuğunun kendisini kullanarak seçilen aracı yapılandırmak olanaklıdır: </para>
+>Ek Açıklamalar araç çubuğunun kendisini kullanarak seçilen aracı yapılandırmak olanaklıdır: </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1389,11 +1389,11 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Bilgi notu rengi </para>
+>Ek açıklama rengi </para>
 					</entry>
 					<entry>
 					  <para
->Bilgi notu metninin veya kenarlığının rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
+>Ek açıklama metninin veya kenarlığının rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
 >Özel Renk…</guimenuitem
 > ögesine tıklayabilirsiniz. </para>
 					</entry>
@@ -1410,11 +1410,11 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Bilgi notu dolgu rengi </para>
+>Ek açıklama dolgu rengi </para>
 					</entry>
 					<entry>
 					  <para
->Bilgi notu dolgu rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
+>Ek açıklama dolgu rengini seçmek için bu düğmeye tıklayın. Önceden tanımlanmış renklerden birini seçebilir veya renk seçimi iletişim kutusunu açmak için <guimenuitem
 >Özel Renk…</guimenuitem
 > ögesine tıklayabilirsiniz. </para>
 					</entry>
@@ -1431,12 +1431,12 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Bilgi notu matlığı </para>
+>Ek açıklama matlığı </para>
 					</entry>
 					<entry>
 					  <para
->Açılır listeden bilgi notu matlığını seçmek için bu düğmeye tıklayın (<guimenuitem
->%​100</guimenuitem
+>Açılır listeden ek açıklama matlığını seçmek için bu düğmeye tıklayın (<guimenuitem
+>%100</guimenuitem
 >, mat ek açıklamalar oluşturur). </para>
 					</entry>
 				      </row>
@@ -1452,7 +1452,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Bilgi notu yazıtipi </para>
+>Ek açıklama yazıtipi </para>
 					</entry>
 					<entry>
 					  <para
@@ -1471,18 +1471,18 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Geçerli bilgi notu aracı için gelişmiş ayarlar </para>
+>Geçerli ek açıklama aracı için gelişmiş ayarlar </para>
 					</entry>
 					<entry>
 					  <para
->Bilgi notu için genel yapılandırma iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
+>Ek açıklama için genel yapılandırma iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->Bilgi notu araç çubuğunda üç adet ek izlence düğmesi vardır: </para>
+>Ek açıklama araç çubuğunda üç adet ek izlence düğmesi vardır: </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1506,12 +1506,12 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Geçerli bilgi notunu ana araç çubuğundaki <guilabel
->Tez Bilgi Notları</guilabel
+>Geçerli ek açıklamayı, ana araç çubuğundaki <guilabel
+>Tez Ek Açıklamalar</guilabel
 > menüsüne ekleyin. </para>
 					  <note>
 						  <para
->Bilgi notu araç çubuğu gizli olsa bile <keycombo action="simul"
+>Ek açıklama araç çubuğu gizli olsa bile <keycombo action="simul"
 >&Alt;<keycap
 >9</keycap
 ></keycombo
@@ -1519,7 +1519,7 @@ Context menu actions like Rename Bookmarks etc.)
 >&Alt;<keycap
 >0</keycap
 ></keycombo
-> arasındaki kısayollarla istediğiniz tez bilgi notu aracını seçebilirsiniz. </para>
+> arasındaki kısayollarla istediğiniz tez ek açıklama aracını seçebilirsiniz. </para>
 					  </note>
 					</entry>
 				      </row>
@@ -1535,7 +1535,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->İşaretlendiğinde, geçerli bilgi notu aracını kullanım sonrasında etkin tutarsınız. </para>
+>İşaretlendiğinde, geçerli ek açıklama aracını kullanım sonrasında etkin tutarsınız. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1550,46 +1550,46 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Bilgi notu araç çubuğunu gizleyin. </para>
+>Ek açıklama araç çubuğunu gizleyin. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				  <para
->&Shift; düğmesini basılı tutarak, çizgi ve çokgen bilgi notu araçlarının açısını ve şekil bilgi notlarının (örneğin, Dörtgen, Elips) açısını 15° adımlara kısıtlayabilirsiniz. Ayrıca, <ulink url="help:/fundamentals/config.html#toolbars"
+>&Shift; düğmesini basılı tutarak, çizgi ve çokgen ek açıklama araçlarının açısını ve şekil ek açıklamalarının (örneğin, Dörtgen, Elips) açısını 15° adımlara kısıtlayabilirsiniz. Ayrıca, <ulink url="help:/fundamentals/config.html#toolbars"
 >Araç Çubuklarını Yapılandır…</ulink
 > ile araç çubuğu düğmeleri koyabilirsiniz. </para>
 				  <para
 ><guilabel
->Tez Bilgi Notları</guilabel
+>Tez Ek Açıklamalar</guilabel
 > menüsünün içeriği, <link linkend="configannotations"
->&okular; yapılandırma iletişim kutusunun bilgi notları sayfası</link
+>&okular; yapılandırma iletişim kutusunun ek açıklamalar sayfası</link
 > kullanılarak yapılandırılabilir. Bu sayfayı açmak için <guilabel
->Tez Bilgi Notları</guilabel
+>Tez Ek Açıklamalar</guilabel
 > düğmesine basın, sonrasında açılır menüden <guimenuitem
->Bilgi Notlarını Yapılandır…</guimenuitem
+>Ek Açıklamaları Yapılandır…</guimenuitem
 > ögesini seçin. </para>
 				<note>
 					<para
->Bilgi notu araç çubuğunu etkinleştirmek, kendiliğinden Göz At kipine geçilmesine neden olur. </para>
+>Ek açıklama araç çubuğunu etkinleştirmek, kendiliğinden Göz At kipine geçilmesine neden olur. </para>
 				</note>
 				<para
->Kullandığınız bilgi notu düğmesine yeniden veya &Esc; düğmesine basarak not eklemeyi istediğiniz zaman durdurabilirsiniz. </para>
+>Kullandığınız ek açıklama düğmesine yeniden veya &Esc; düğmesine basarak, açıklama eklemeyi istediğiniz zaman durdurabilirsiniz. </para>
 				<para
->Yeni oluşturulan bilgi notunun yazarı, &okular; yapılandırma iletişim kutusunun <link linkend="configannotations"
+>Yeni oluşturulan açıklamanın yazarı, &okular; yapılandırma iletişim kutusunun <link linkend="configannotations"
 ><guilabel
->Bilgi Notları</guilabel
+>Ek Açıklamalar</guilabel
 > sayfasında</link
 > ayarlanan kişiye (size) ayarlanır. <guilabel
->Bilgi Notları</guilabel
-> sayfası aynı zamanda, bilgi notları araç çubuğunun içeriğini ayarlamak için de kullanılabilir. </para>
+>Ek Açıklamalar</guilabel
+> sayfası aynı zamanda, ek açıklama araç çubuğunun içeriğini ayarlamak için de kullanılabilir. </para>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title
->Bilgi notlarını kaldırmak</title>
+>Ek açıklamaları kaldırmak</title>
 				<para
->Bir bilgi notunu kaldırmak için önce Göz At aracını seçin (<menuchoice
+>Bir ek açıklamayı kaldırmak için önce Göz At aracını seçin (<menuchoice
 ><guimenu
 >Araçlar</guimenu
 ><guimenuitem
@@ -1597,42 +1597,42 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 >), sonrasında &RMB; ile tıklayın ve <guimenuitem
 >Sil</guimenuitem
->’i seçin veya bir bilgi notunu &LMB; ile seçip klavyede &Del; düğmesine basın. </para>
+>’i seçin veya bir açıklamayı &LMB; ile seçip klavyede &Del; düğmesine basın. </para>
 				<para
->Bilgi notunu kaldırırken, penceresi açıksa kapatılır. </para>
+>Ek açıklamayı kaldırırken, penceresi açıksa kapatılır. </para>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
->Bilgi notlarını düzenlemek</title>
+>Ek açıklamaları düzenlemek</title>
 				<para
->Bir bilgi notunu düzenlemek için önce Göz At aracını seçin (<menuchoice
+>Bir ek açıklamayı düzenlemek için önce Göz At aracını seçin (<menuchoice
 ><guimenu
 >Araçlar</guimenu
 ><guimenuitem
 >Göz At</guimenuitem
 ></menuchoice
->), sonrasında &RMB; ile bir bilgi notunun üzerine tıklayın ve <guimenuitem
+>), sonrasında &RMB; ile bir açıklamanın üzerine tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
->’i seçin. Genel bilgi notu ayarlarını (renk, matlık, yazar vb.) ve o bilgi notu türüne özel ayarları içeren bir iletişim kutusu açılacaktır. </para>
+>’i seçin. Genel ek açıklama ayarlarını (renk, matlık, yazar vb.) ve o ek açıklama türüne özel ayarları içeren bir iletişim kutusu açılacaktır. </para>
 				<screenshot>
 				<screeninfo
->Bilgi Notu Özellikleri İletişim Kutusu</screeninfo>
+>Ek Açıklama Özellikleri İletişim Kutusu</screeninfo>
 				<mediaobject>
 				<imageobject>
 				<imagedata fileref="annotation-properties.png" format="PNG"/>
 				</imageobject>
 				<textobject>
 				<phrase
->Bilgi Notu Özellikleri İletişim Kutusu</phrase>
+>Ek Açıklama Özellikleri İletişim Kutusu</phrase>
 				</textobject>
 				</mediaobject>
 				</screenshot>
 				<para
->Bir bilgi notunu taşımak için &Ctrl; düğmesini basılı tutun, üzerinde fare işaretçisini hareket ettirin ve &LMB; ile sürüklemeye başlayın. </para>
+>Bir ek açıklamayı taşımak için &Ctrl; düğmesini basılı tutun, üzerinde fare işaretçisini hareket ettirin ve &LMB; ile sürüklemeye başlayın. </para>
 				<para
->Bir bilgi notuna &LMB; ile tıklarsanız seçilir. Seçim dikdörtgeninde yeniden boyutlandırma tutaçları görünür. İmleç köşelerdeki veya kenarlardaki 8 yeniden boyutlandırma tutacından birinin üzerine getirildiğinde, imlecin şekli yeniden boyutlandırma kipini gösterecek şekilde değişir. Notu taşımak için başka bir yere tıklayın. &Esc; düğmesine basmak veya bilgi notunun dışındaki bir alanı tıklatmak seçimi iptal eder. </para>
+>Bir ek açıklamaya &LMB; ile tıklarsanız seçilir. Seçim dikdörtgeninde yeniden boyutlandırma tutaçları görünür. İmleç köşelerdeki veya kenarlardaki 8 yeniden boyutlandırma tutacından birinin üzerine getirildiğinde, imlecin şekli yeniden boyutlandırma kipini gösterecek şekilde değişir. Açıklamayı taşımak için başka bir yere tıklayın. &Esc; düğmesine basmak veya ek açıklamanın dışındaki bir alana tıklamak, seçimi iptal eder. </para>
 				<para
->Yeniden boyutlandırma yalnızc İç Not, Daktilo, Damga ve Elips bilgi notu türleri için kullanılabilirdir.</para>
+>Yeniden boyutlandırma yalnızca İç Not, Daktilo, Damga ve Elips ek açıklama türleri için kullanılabilirdir.</para>
 
 				<note>
 					<para
@@ -2053,7 +2053,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 					  <para
->Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (bilgi notları, formlar vb.) <action
+>Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (ek açıklamalar, formlar vb.) <action
 >kaydeder</action
 >. Arka uç bu değişiklikleri desteklemiyorsa bu değişikliklerden vazgeçmek veya belgeyi bir &okular; belge arşivi olarak kaydetmek seçeneği sunulur.</para>
 					</listitem>
@@ -2076,7 +2076,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 					  <para
->Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (bilgi notları, formlar vb.) yeni bir adla bir kopyaya <action
+>Belge arka ucu desteklediği sürece, belgedeki tüm değişiklikleri (ek açıklamalar, formlar vb.) yeni bir adla bir kopyaya <action
 >kaydeder</action
 >. Arka uç bu değişiklikleri desteklemiyorsa bu değişikliklerden vazgeçmek veya belgeyi bir &okular; belge arşivi olarak kaydetmek seçeneği sunulur.</para>
                                         <note>
@@ -2132,7 +2132,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></guibutton
 > ve sonrasında <guilabel
 >&PDF; Seçenekleri</guilabel
-> ile ulaşabilirsiniz. Bazı sembollerin yazdırılmasında sorun yaşıyorsanız veya ölçek kipini değiştirmeniz gerekiyorsa bilgi notlarınızı yazdırmak veya rasterleştirme kipini yapılandırmak için bu seçenekleri kullanın. </para>
+> ile ulaşabilirsiniz. Bazı sembollerin yazdırılmasında sorun yaşıyorsanız veya ölçek kipini değiştirmeniz gerekiyorsa ek açıklamalarınızı yazdırmak veya rasterleştirme kipini yapılandırmak için bu seçenekleri kullanın. </para>
                                                 <note>
                                                     <para
 >Ölçek kipi seçenekleri yalnızca <guilabel
@@ -2225,7 +2225,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >İkinci girdi ise <guimenuitem
 >Belge Arşivi</guimenuitem
->’dir. Bu biçim, belgeyi notlarınızla birlikte &okular;’a özel bir arşiv biçimine kaydetmenize olanak tanır. Böylece başka &okular; kullanıcılarıyla özgün belgeyi kolaylıkla paylaşabilir veya üzerinde birlikte çalışabilirsiniz.</para>
+>’dir. Bu biçim, belgeyi açıklamalarınızla birlikte &okular;’a özel bir arşiv biçimine kaydetmenize olanak tanır. Böylece başka &okular; kullanıcılarıyla özgün belgeyi kolaylıkla paylaşabilir veya üzerinde birlikte çalışabilirsiniz.</para>
 					</listitem>
 				</varlistentry>
 
@@ -2291,9 +2291,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Son bilgi notu düzenleme komutunu <action
+>Son ek açıklama düzenleme komutunu <action
 >geri alın</action
-> (bilgi notlarının oluşturulması ve kaldırılması, isteğe bağlı not özelliklerinin düzenlenmesi, notların &Ctrl;+sürükle ile yeniden konumlandırılması ve metin içeriğinin düzenlenmesi vb.).</para>
+> (ek açıklamaların oluşturulması ve kaldırılması, isteğe bağlı açıklama özelliklerinin düzenlenmesi, açıklamaların &Ctrl;+sürükle ile yeniden konumlandırılması ve metin içeriğinin düzenlenmesi vb.).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -2314,7 +2314,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 					  <para
->Bilgi notlarını düzenlerken son geri alma adımını <action
+>Ek açıklamaları düzenlerken son geri alma adımını <action
 >yeniden yapın</action
 >.</para>
 					</listitem>
@@ -3105,15 +3105,15 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Araçlar</guimenu
 > <guimenuitem
->Bilgi Notları</guimenuitem
+>Ek Açıklamalar</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
 ><action
->Bilgi notu araç çubuğunu açar</action
->. Bilgi notu araç çubuğu, okuduğunuz belgeye notlar eklemenize olanak tanır. Daha fazla bilgi için <link linkend="annotations"
->Bilgi Notları</link
+>Ek açıklama araç çubuğunu açar</action
+>. Ek açıklama araç çubuğu, okuduğunuz belgeye notlar eklemenize olanak tanır. Daha fazla bilgi için <link linkend="annotations"
+>Ek Açıklamalar</link
 > ile ilgili bölüme bakın.</para>
 					</listitem>
 				</varlistentry>
@@ -3276,7 +3276,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<listitem>
 					<para
 ><link linkend="configannotations"
->Bilgi Notları</link
+>Ek Açıklamalar</link
 ></para>
 				</listitem>
 				<listitem>
@@ -3945,17 +3945,17 @@ Context menu actions like Rename Bookmarks etc.)
 		</sect1>
 		<sect1 id="configannotations">
 			<title
->Bilgi Notları</title>
+>Ek Açıklamalar</title>
 			<screenshot>
 				<screeninfo
->Yapılandırma iletişim kutusunun bilgi notları sayfası</screeninfo>
+>Yapılandırma iletişim kutusunun ek açıklamalar sayfası</screeninfo>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="configure-annotations.png" format="PNG"/>
 					</imageobject>
 					<textobject>
 						<phrase
->Yapılandırma iletişim kutusunun bilgi notları sayfası</phrase>
+>Yapılandırma iletişim kutusunun ek açıklamalar sayfası</phrase>
 					</textobject>
 				</mediaobject>
 			</screenshot>
@@ -3963,16 +3963,16 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Bilgi notu araç çubuğu</guilabel
+>Ek açıklama araç çubuğu</guilabel
 ></term>
 					<listitem>
                                             <para
 ><guimenuitem
->Tam Bilgi Notu Araç Çubuğu</guimenuitem
+>Tam Ek Açıklama Araç Çubuğu</guimenuitem
 > (&okular; penceresinin üst kısmındaki <link linkend="annotations-add"
 >öntanımlı araç çubuğu</link
 >) ve <guimenuitem
->Tez Bilgi Notu Araç Çubuğu</guimenuitem
+>Tez Ek Açıklama Araç Çubuğu</guimenuitem
 > (belge bölmesinin sağ kısmında favori araçlarınızın bulunduğu kayan araç çubuğu) arasında geçiş yapılmasına izin verir.</para>
 					</listitem>
 				</varlistentry>
@@ -3993,12 +3993,12 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Bilgi notu araçları</guilabel
+>Ek açıklama araçları</guilabel
 ></term>
 					<listitem>
 					  <para
 >Bu bölme, <link linkend="annotations-add"
->bilgi notu araç çubuğunuzu</link
+>ek açıklama araç çubuğunuzu</link
 > yapılandırmak için kullanılır. </para>
 					  <para
 >Araç çubuğunu yapılandırmak için kullanılan beş adet düğme (<guibutton
@@ -4011,7 +4011,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Yukarı Taşı</guibutton
 >, <guibutton
 >Aşağı Taşı</guibutton
->) ve (geçerli bilgi notu araç çubuğunun içeriğini listeleyen) bir liste kutusu vardır. </para>
+>) ve (geçerli ek açıklama araç çubuğunun içeriğini listeleyen) bir liste kutusu vardır. </para>
 					  <para
 >Araç çubuğuna bir düğme eklemeniz gerekiyorsa <guibutton
 >Ekle</guibutton
@@ -4024,14 +4024,14 @@ Context menu actions like Rename Bookmarks etc.)
 > kalemlerini yapılandırabilirsiniz. </para>
 					  <note>
 					    <para
->&okular;’daki bilgi notu araçlarının son derece yapılandırılabilir olduğunu lütfen unutmayın. Örneğin, aynı aracın farklı renklerde iki düğmesine sahip olabilirsiniz. İş akışınıza tam olarak uyarlanmış düğme kümesini seçmeyi denemekten çekinmeyin. </para>
+>&okular;’daki ek açıklama araçlarının son derece yapılandırılabilir olduğunu lütfen unutmayın. Örneğin, aynı aracın farklı renklerde iki düğmesine sahip olabilirsiniz. İş akışınıza tam olarak uyarlanmış düğme kümesini seçmeyi denemekten çekinmeyin. </para>
 					  </note>
 					  <para
 >Liste kutusundaki bir ögeye tıklayın ve ardından ögeyi düzenlemek, kaldırmak, yukarı veya aşağı taşımak için sayfanın sağ kısmındaki ilgili düğmeye tıklayın. Aracın klavye kısayolu (<keycap
 >1</keycap
 > ile <keycap
 >9</keycap
->), bilgi notu araç çubuğu listesindeki konumuna bağlıdır. </para>
+>), ek açıklama araç çubuğu listesindeki konumuna bağlıdır. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>

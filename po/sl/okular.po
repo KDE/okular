@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-09-20 20:23+0200\n"
+"PO-Revision-Date: 2026-09-26 08:38+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -599,8 +599,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
-"Potrdilo za podpisovanje ni bilo najdeno. Če uporabljate pametno kartico, je "
-"bila morda odstranjena ali pa je bilo spremenjeno skladišče podpisov."
+"Potrdila za podpisovanje ni bilo najdenega. Če uporabljate pametno kartico, "
+"je bila morda odstranjena ali pa je bilo spremenjeno skladišče podpisov"
 
 #: core/signatureutils.cpp:524
 #, kde-format
@@ -644,7 +644,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "Nepodprta vrsta podpisa za trenutno potrdilo"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5654,10 +5654,9 @@ msgstr "Nedavna ozadja:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "Vrsta podpisa: %1"
+msgstr "Vrsta podpisa"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5704,35 +5703,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "NONE"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "Podpis Adobe PKCS7"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Unsigned signature"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "Nepodpisan podpis"
+msgstr "Osnovni podpis eIDAS"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "Podpis eIDAS s časovnim žigom"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "Podpis eIDAS z časovnim žigom za dolgoročno preverjanje veljavnosti"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5741,6 +5736,8 @@ msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
 msgstr ""
+"Podpis eIDAS z časovnim žigom za dolgoročno preverjanje veljavnosti in "
+"podporo za ponovno preverjanje veljavnosti"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

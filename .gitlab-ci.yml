@@ -9,8 +9,6 @@ include:
     - /gitlab-templates/cppcheck.yml
     - /gitlab-templates/xml-lint.yml
     - /gitlab-templates/yaml-lint.yml
-    - /gitlab-templates/craft-windows-x86-64-qt6.yml
-    - /gitlab-templates/craft-windows-appx-qt6.yml
 
 # Ideally should be LTS but there's no Ubuntu LTS that can build Okular yet
 build_ubuntu_24_10:

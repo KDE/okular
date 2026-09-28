@@ -18,6 +18,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQmlEngine>
+#include <QQuickStyle>
 #include <QStandardPaths>
 #include <QTimer>
 
@@ -29,6 +30,9 @@ Q_DECL_EXPORT
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+#ifdef Q_OS_ANDROID
+    QQuickStyle::setStyle(QStringLiteral("org.kde.breeze"));
+#endif
     app.setApplicationName(QStringLiteral("okularkirigami"));
 
     KLocalizedString::setApplicationDomain("org.kde.active.documentviewer");

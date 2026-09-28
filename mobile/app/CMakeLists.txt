@@ -8,6 +8,7 @@ add_executable(okularkirigami main.cpp)
 target_link_libraries(okularkirigami PRIVATE
     Qt6::Widgets
     Qt6::Qml
+    Qt::QuickControls2
     KF6::I18n
     KF6::CoreAddons
     KF6::Crash

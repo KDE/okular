@@ -178,7 +178,7 @@ if (BUILD_DESKTOP)
 endif()
 
 if (BUILD_MOBILE)
-    find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick)
+    find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED COMPONENTS Qml Quick QuickControls2)
     find_package(KF6Kirigami)
     set_package_properties(KF6Kirigami PROPERTIES
         DESCRIPTION "A QtQuick based components set"

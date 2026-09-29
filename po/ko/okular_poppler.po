@@ -1,14 +1,14 @@
 # translation of okular_poppler.po to Korean
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdegraphics package.
-# SPDX-FileCopyrightText: 2007, 2009, 2010, 2012, 2013, 2019, 2020, 2021, 2023, 2025 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2012, 2013, 2019, 2020, 2021, 2023, 2025, 2026 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2025-07-20 01:33+0200\n"
+"PO-Revision-Date: 2026-09-29 00:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -35,10 +35,9 @@ msgid "Failed writing temporary file"
 msgstr "임시 파일에 기록할 수 없음"
 
 #: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgid "Failed removing file"
-msgstr "임시 파일의 이름을 변경할 수 없음"
+msgstr "파일을 삭제할 수 없음"
 
 #: annots.cpp:612
 #, kde-format
@@ -188,11 +187,10 @@ msgid "&Load Signatures"
 msgstr "서명 불러오기(&L)"
 
 #: formfields.cpp:565 generator_pdf.cpp:2268
-#, fuzzy, kde-format
-#| msgid "Failed renaming temporary file"
+#, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
-msgstr "임시 파일의 이름을 변경할 수 없음"
+msgstr "임시 파일의 이름을 변경할 수 없음: %1"
 
 #: generator_pdf.cpp:86
 #, kde-format
@@ -362,11 +360,10 @@ msgid "Expiration date"
 msgstr "만료 날짜"
 
 #: pdfsettingswidget.cpp:152
-#, fuzzy, kde-format
-#| msgid "Available Certificates"
+#, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr "사용 가능한 인증서"
+msgstr "인증서 표시"
 
 #: pdfsettingswidget.cpp:174
 #, kde-format
@@ -394,12 +391,11 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "NSS 디렉터리 설정을 변경한 후 Okular를 다시 시작해야 적용됨"
 
 #: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
-#, fuzzy, kde-format
-#| msgid "Enter password to open %1:"
+#, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
-msgstr "%1을 열려면 암호를 입력하십시오:"
+msgstr "다음을 열기 위한 암호를 입력하십시오: %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "암호 입력"

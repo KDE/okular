@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-09-23 15:01+0300\n"
+"PO-Revision-Date: 2026-09-28 17:11+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -643,7 +643,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "Nepalaikomas parašo tipas dabartiniam liudijimui"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5674,10 +5674,9 @@ msgstr "Paskiausiai naudoti fonai:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "Parašo tipas: %1"
+msgstr "Parašo tipas"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5725,34 +5724,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "NĖRA"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "Adobe PKCS7 parašas"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgid "Unsigned Signature %1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "Nepasirašytas parašas %1"
+msgstr "Pagrindinis eIDAS parašas"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "eIDAS parašas su laiko žyma"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "eIDAS parašas su laiko žyma, skirtas ilgalaikiam patvirtinimui"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5761,6 +5757,8 @@ msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
 msgstr ""
+"eIDAS parašas su laiko žyma, skirtas ilgalaikiam patvirtinimui ir "
+"palaikantis pakartotinį patvirtinimą"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

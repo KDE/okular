@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-05-26 21:34+0200\n"
+"PO-Revision-Date: 2026-09-29 00:16+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -592,6 +592,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"서명용 인증서를 찾을 수 없습니다. 스마트카드를 사용하고 있다면 해당 카드가 제"
+"거되었거나 인증서 저장소가 변경되었을 수도 있습니다"
 
 #: core/signatureutils.cpp:524
 #, kde-format
@@ -615,10 +617,9 @@ msgid "Signing cancelled by user"
 msgstr "사용자가 서명을 취소함"
 
 #: core/signatureutils.cpp:530
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "서명할 수 없습니다. 암구호가 잘못되었습니다"
+msgstr "서명할 수 없음: 암구호가 잘못됨"
 
 #: core/signatureutils.cpp:532
 #, kde-kuit-format
@@ -636,7 +637,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "현재 인증서의 지원하지 않는 서명 형식"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -689,7 +690,7 @@ msgstr "발급 대상"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "사용자 ID"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -1697,8 +1698,7 @@ msgid "Add Bookmark"
 msgstr "책갈피에 추가"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copy"
+#, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "복사"
@@ -2390,12 +2390,10 @@ msgid "Validity"
 msgstr "유효 기간"
 
 #: part/certificateviewer.cpp:90
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "매 "
+msgstr "하지 않음"
 
 #: part/certificateviewer.cpp:94
 #, kde-format
@@ -2413,8 +2411,7 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256 지문"
 
 #: part/certificateviewer.cpp:107
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
 msgstr "지문"
@@ -2435,10 +2432,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "인증서를 어디에 저장하시겠습니까?"
 
 #: part/certificateviewer.cpp:182
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "인증서 파일 (*.cer)"
+msgstr "인증서 파일 (*.asc)"
 
 #: part/certificateviewer.cpp:185
 #, kde-format
@@ -4324,6 +4320,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"이 문서에는 인쇄되었을 때 숨겨지거나 다르게 표시되는 내용이 포함되어 있습니"
+"다. 중요한 문서라면 화면에 표시된 내용과 인쇄본을 둘 다 확인하십시오."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4583,18 +4581,16 @@ msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "PS 파일을 PDF로 불러오는 중 (이 작업은 시간이 걸릴 수 있습니다)…"
 
 #: part/part.cpp:1463
-#, fuzzy, kde-format
-#| msgid "Please enter the password to read the document:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
-msgstr "문서를 읽으려면 암호를 입력하십시오:"
+msgstr "다음 문서를 읽으려면 암호를 입력하십시오: %1"
 
 #: part/part.cpp:1465
-#, fuzzy, kde-format
-#| msgid "Incorrect password. Try again:"
+#, kde-format
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
-msgstr "암호가 잘못되었습니다. 다시 시도하십시오:"
+msgstr "암호가 잘못되었습니다. 다시 시도하십시오: %1"
 
 #: part/part.cpp:1476
 #, kde-format
@@ -5592,10 +5588,9 @@ msgstr "최근 배경:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "서명 형식: %1"
+msgstr "서명 형식"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5642,35 +5637,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "없음"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 SHA1"
+msgstr "Adobe PKCS7 서명"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Unsigned signature"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "서명되지 않은 서명"
+msgstr "기본 eIDAS 서명"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "eIDAS 서명, 타임스탬프 포함"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "eIDAS 서명, 장기 유효성 검증을 위한 타임스탬프 포함"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5678,7 +5669,7 @@ msgctxt "Signature type"
 msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
-msgstr ""
+msgstr "eIDAS 서명, 장기 유효성 검증을 위한 타임스탬프 포함, 재검증 지원"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format
@@ -5702,10 +5693,9 @@ msgid "Forget all images"
 msgstr "모든 이미지 잊기"
 
 #: part/signaturepartutils.cpp:272
-#, fuzzy, kde-format
-#| msgid "Enter password (if any) to unlock certificate: %1"
+#, kde-format
 msgid "Enter password/pin (if any) to unlock certificate: %1"
-msgstr "인증서 잠금을 해제할 암호 입력(존재하는 경우): %1"
+msgstr "인증서 잠금을 해제할 암호나 PIN 입력(존재하는 경우): %1"
 
 #: part/signaturepartutils.cpp:297
 #, kde-format
@@ -5722,7 +5712,7 @@ msgstr "서명된 파일 다른 이름으로 저장"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "원본 파일에 덮어쓸 수 없습니다. 다른 파일 이름을 지정하십시오."
 
 #: part/signaturepartutils.h:63
 #, kde-format

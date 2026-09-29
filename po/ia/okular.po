@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-09-21 12:13+0200\n"
+"PO-Revision-Date: 2026-09-28 12:04+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -641,7 +641,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "Typo sde signatura non supportate per le certificato currente"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5659,10 +5659,9 @@ msgstr "Fundos recente:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "Typo de signatura: %1"
+msgstr "Typo de signatura"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5710,35 +5709,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "Necun"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "Signatura de Adobe PKCS7 "
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Unsigned signature"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "Signatura non signate "
+msgstr "Signatura  basic de elDAS"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "Signatura de elDAS con marca temporal"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "Signatura de elDAS con marca temporal per validation de longe termine"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5747,6 +5742,8 @@ msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
 msgstr ""
+"Signatura de elDAS con marca temporal per validation de longe termine e "
+"supporto per revalidation"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

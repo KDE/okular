@@ -444,7 +444,7 @@ Context menu actions like Rename Bookmarks etc.)
 		</itemizedlist>
 
 		<para
->Amb aquesta característica de l'&okular;, el fer un clic del ratolí mentre premeu &Maj; al document &DVI; o &PDF; resultarà en obrir l'editor amb el document de &latex; corresponent i intentarà anar a la línia corresponent. Recordeu de dir-li a l'&okular; que utilitzi l'editor adequat, a l'element de menú <menuchoice
+>Amb aquesta característica de l'&okular;, el fer un clic del ratolí mentre premeu &Maj; al document &DVI; o &PDF; provocarà l'obertura de l'editor amb el document de &latex; corresponent i intentarà anar a la línia que pertoqui. Recordeu de dir-li a l'&okular; que utilitzi l'editor adequat, a l'element de menú <menuchoice
 ><guimenu
 >Arranjament</guimenu
 ><guimenuitem
@@ -3597,7 +3597,7 @@ Context menu actions like Rename Bookmarks etc.)
 								<para
 ><action
 >Converteix</action
-> el document a blanc i negre. Podeu establir el llindar i el contrast. Ajustant el llindar a un valor major movent-lo cap a la dreta resultarà en l'ús de grisos més clars.</para>
+> el document a blanc i negre. Podeu establir el llindar i el contrast. Ajustant el llindar a un valor major movent-lo cap a la dreta donarà com a resultat l'ús de grisos més clars.</para>
 								</listitem>
 						</varlistentry>
 						<varlistentry>

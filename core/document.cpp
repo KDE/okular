@@ -1169,7 +1169,7 @@ void DocumentPrivate::recalculateForms()
                 for (FormField *form : forms) {
                     if (form->id() == formId) {
                         const Action *action = form->additionalAction(FormField::CalculateField);
-                        if (action) {
+                        if (action && action->actionType() == Action::Script) {
                             std::shared_ptr<Event> event;
                             if (dynamic_cast<FormFieldText *>(form) || dynamic_cast<FormFieldChoice *>(form)) {
                                 // Prepare text calculate event

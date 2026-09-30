@@ -59,9 +59,9 @@ Context menu actions like Rename Bookmarks etc.)
 		<legalnotice
 >&FDLNotice;</legalnotice>
 		<date
->2021-05-31</date>
+>2026-02-23</date>
 		<releaseinfo
->21.08</releaseinfo>
+>26.04</releaseinfo>
 		<!-- Abstract about this handbook -->
 		<abstract>
 			<para
@@ -85,8 +85,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >dvi</keyword>
 			<keyword
->chm</keyword>
-			<keyword
 >xps</keyword>
 			<keyword
 >ComicBook</keyword>
@@ -97,8 +95,6 @@ Context menu actions like Rename Bookmarks etc.)
 			<keyword
 >mobipocket</keyword>
 			<keyword
->Plucker</keyword>
-			<keyword
 >Anmerkung</keyword>
 		</keywordset>
 	</bookinfo>
@@ -108,7 +104,7 @@ Context menu actions like Rename Bookmarks etc.)
 		<para
 >&okular; ist ein &kde;-Betrachter für alle Dokumente auf der Grundlage des Quelltextes von &kpdf;. &okular; hat im Vergleich zu &kpdf; jedoch zusätzliche Eigenschaften wie einen Übersichtmodus, einen verbesserten Präsentationsmodus und Unterstützung für Anmerkungen. </para>
 		<para
->&okular; unterstützt eine große Zahl von Formaten wie &PDF;, &PostScript;, Tiff, CHM, DjVU, Images (png, jpg, &etc;) XPS, Open Document (ODT), Fiction Books, Comic Book, Plucker, EPub, Fax und Markdown. Informationen über alle unterstützten Formate und deren Funktionen finden Sie auf der Seite <ulink url="https://okular.kde.org/formats.php"
+>&okular; unterstützt eine große Zahl von Formaten wie &PDF;, &PostScript;, Tiff, DjVU, Bilder (png, jpg &etc;), XPS, Fiction Books, Comic Book, Plucker, EPub, Fax und Markdown. Informationen über alle unterstützten Formate und deren Funktionen finden Sie auf der Seite <ulink url="https://okular.kde.org/formats.php"
 >&okular;-Dokumentformate</ulink
 >. </para>
 		<screenshot>
@@ -132,13 +128,13 @@ Context menu actions like Rename Bookmarks etc.)
 			<title
 >Dateien öffnen</title>
 			<para
->Um eine Datei in &okular; anzusehen, wählen Sie <menuchoice
+>Um eine Datei in &okular; zu öffnen, wählen Sie <menuchoice
 ><guimenu
 >Datei</guimenu
 ><guimenuitem
->Öffnen ...</guimenuitem
+>Öffnen …</guimenuitem
 ></menuchoice
->, dann im Dialogfenster eine Datei in einem der unterstützten Formate und drücken <guibutton
+>, dann im Dialogfenster eine Datei in einem der unterstützten Formate und klicken <guibutton
 >Öffnen</guibutton
 >. Ihre Datei wird nun im Hauptfenster angezeigt. </para>
 			<important>
@@ -182,7 +178,7 @@ Context menu actions like Rename Bookmarks etc.)
 > </menuchoice
 > aus dem Kontextmenü in der Dateiverwaltung. </para>
 			<para
->Nachdem Sie eine Datei geöffnet haben, wollen Sie sie vermutlich lesen und daher im Text blättern. Im <link linkend="navigating"
+>Nachdem Sie eine Datei geöffnet haben, möchten Sie sie vermutlich lesen und daher im Text blättern. Im <link linkend="navigating"
 >nächsten Abschnitt</link
 > lernen Sie mehr darüber. </para>
 		</sect1>
@@ -192,9 +188,9 @@ Context menu actions like Rename Bookmarks etc.)
 			<para
 >Dieser Abschnitt erklärt, wie Sie sich in &okular; in einem Dokument bewegen können.</para>
 			<para
->Es gibt mehrere Möglichkeiten, im Dokument zu blättern. Sie können den Ansichtsbereich mit den Tasten &Up; und &Down; verschieben. Dazu können Sie auch die Bildlaufleisten, das Mausrad oder die Tasten &PgUp; und &PgDn; benutzen. </para>
+>Es gibt mehrere Möglichkeiten, im Dokument zu blättern. Sie können den Ansichtsbereich mit den Tasten &Up; und &Down; verschieben. Dazu können Sie auch die Bildlaufleisten, das Mausrad oder die Tasten &PgUp; und &PgDn; verwenden. </para>
 			<para
->Benutzen Sie Navigationstasten wie im Programm <application
+>Verwenden Sie Navigationstasten wie im Programm <application
 >vim</application
 >, und zwar <keycap
 >H</keycap
@@ -210,7 +206,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Extras</guimenu
 ><guimenuitem
->Durchsuchen</guimenuitem
+>Blättern</guimenuitem
 ></menuchoice
 > ausgewählt haben. </para>
 			<note>
@@ -224,7 +220,7 @@ Context menu actions like Rename Bookmarks etc.)
 >&Shift;&Down;</keycombo
 > oder <keycombo action="simul"
 >&Shift;&Up;</keycombo
->. Benutzen Sie dann diese Tasten, um die Geschwindigkeit des Blättern zu ändern. Mit der &Shift;-Taste können Sie das automatische Blättern vorübergehend anhalten und wieder starten. Drücken Sie auf eine beliebige andere Tasten, um diese Funktion abzuschalten. </para>
+>. Verwenden Sie dann diese Tasten, um die Geschwindigkeit des Blättern zu ändern. Mit der &Shift;-Taste können Sie das automatische Blättern vorübergehend anhalten und wieder starten. Drücken Sie auf eine beliebige andere Tasten, um diese Funktion abzuschalten. </para>
 			<para
 >Weiterhin gibt es die Möglichkeit, in einem mehrseitigen Dokument mit dem Mauszeiger zu blättern. Halten Sie dazu die linke Maustaste gedrückt und ziehen Sie dann den Mauszeiger nach oben oder unten und setzen diese Bewegung auch über den oberen oder unteren Rand des Bildschirms fort. Überschreiten Sie den Rand der Seite, erscheint der Mauszeiger wieder unten oder oben auf dem Bildschirm und Sie können das Blättern in der gewünschten Richtung  fortsetzen. </para>
 			<para
@@ -264,7 +260,7 @@ Context menu actions like Rename Bookmarks etc.)
 			<important>
 			  <para
 >Interne Verknüpfungen im Dokument funktionieren nur im <link linkend="menutools"
->Durchsuchen-Modus</link
+>Blättern-Modus</link
 >. </para>
 			</important>
 			<para
@@ -409,7 +405,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Navigation</link
 > blättern. </para>
 			<para
->Benutzen Sie <guilabel
+>Verwenden Sie <guilabel
 >Anhalten/Wiedergeben</guilabel
 > in der oberen Leiste, um die Wiedergabe der Präsentation anzuhalten und wieder zu starten. </para>
 			<para
@@ -423,7 +419,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Zeichnungen löschen</guilabel
 > in der Werkzeugleiste können Sie Ihre Linien auch auf der aktuell angezeigten Seite löschen. </para>
 			<para
->Im Präsentationsmodus können Sie auch mehrere Bildschirme benutzen, sofern vorhanden und eingerichtet, Dann erscheint ein zusätzlicher Knopf in der Leiste am oberen Bildschirmrand mit dem Symbol eines Bildschirms. Hier können Sie einen der vorhandenen Bildschirme zur Anzeige der Präsentation wählen. </para>
+>Im Präsentationsmodus können Sie auch mehrere Bildschirme verwenden, sofern vorhanden und eingerichtet, Dann erscheint ein zusätzlicher Knopf in der Leiste am oberen Bildschirmrand mit dem Symbol eines Bildschirms. Hier können Sie einen der vorhandenen Bildschirme zur Anzeige der Präsentation wählen. </para>
 			<para
 >Der Präsentationsmodus hat einige Einstellungsoptionen, die Sie unter <link linkend="configpresentation"
 >&okular; einrichten ...</link
@@ -451,11 +447,11 @@ Context menu actions like Rename Bookmarks etc.)
 ></listitem>
 			<listitem
 ><para
->Die inverse Suche funktioniert nur im Durchsuchen-Modus, den Sie im Menü <menuchoice
+>Die inverse Suche funktioniert nur im Blättern-Modus, den Sie im Menü <menuchoice
 ><guimenu
 >Extras</guimenu
 ><guimenuitem
->Durchsuchen</guimenuitem
+>Blättern</guimenuitem
 ></menuchoice
 > einschalten können.</para
 ></listitem>
@@ -613,7 +609,7 @@ Context menu actions like Rename Bookmarks etc.)
 >PKCS</acronym
 >-Signaturzertifikat auf Ihrem System vorhanden sein. &okular; kann solche Zertifikate nicht erstellen, da sie von Zertifizierungsstellen ausgestellt werden müssen, um die Gültigkeitsprüfung &etc; zu ermöglichen. </para>
 				<para
->Es wird die Poppler-Bibliothek für das Signieren von &PDF; Dokumenten benutzt. Poppler verwendet die NSS-Bibliothek zur Verarbeitung von Zertifikaten. Zurzeit versucht Poppler, einen der folgenden NSS-Zertifikatsspeicher der Reihe nach zu benutzen und verwendet den ersten gefundenen Zertifikatsspeicher: </para>
+>Es wird die Poppler-Bibliothek für das Signieren von &PDF; Dokumenten verwendet. Poppler verwendet die NSS-Bibliothek zur Verarbeitung von Zertifikaten. Zurzeit versucht Poppler, einen der folgenden NSS-Zertifikatsspeicher der Reihe nach zu verwenden und verwendet den ersten gefundenen Zertifikatsspeicher: </para>
 				<itemizedlist>
 					<listitem
 ><para
@@ -633,10 +629,10 @@ Context menu actions like Rename Bookmarks etc.)
 ></listitem>
 				</itemizedlist>
 				<para
->Wenn Sie einen benutzerdefinierten Zertifikatspeicher verwenden möchten, können Sie diesen  im Abschnitt <link linkend="config-pdf-digital-signatures"
+>Wenn Sie einen benutzerdefinierten Zertifikatsspeicher verwenden möchten, können Sie diesen im Abschnitt <link linkend="config-pdf-digital-signatures"
 >&PDF;-Anzeigemodul</link
 > im Dialog <link linkend="configure-backends"
->Anzeigemodule einrichten ...</link
+>Okular einrichten …</link
 > einstellen. </para>
 				<note>
 					<para
@@ -671,7 +667,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Gelbe Textmarker</guilabel
 > und <guilabel
 >Schwarz unterstrichen</guilabel
-> für Dateien mit Text wie &eg; &PDF;-Dateien.</para>
+> können für Dateien, die Text enthalten (wie &eg; &PDF;-Dateien), verwendet werden.</para>
 		      <para
 >Grafik-Anmerkungen wie <guilabel
 >Notiz</guilabel
@@ -693,15 +689,16 @@ Context menu actions like Rename Bookmarks etc.)
 >Ellipse</guilabel
 > und <guilabel
 >Textkommentar</guilabel
-> für alle von &okular; unterstützen Dateiformate.</para>
+>.</para>
+			  <para
+>Grafik-Anmerkungen sind nicht auf Dateien im &PDF;-Format begrenzt, sondern können in allen Formaten, die &okular; unterstützt, eingegeben werden.</para>
 			<para
->Benutzen Sie das Kontextmenü in der Ansicht <guilabel
+>Verwenden Sie das <guilabel
 >Anmerkungen</guilabel
-> in der Seitenleiste oder im Hauptfenster, um für jede Art von Anmerkungen eine <guilabel
+>-Menü, um eine <guilabel
 >Haftnotiz</guilabel
-> zu öffnen und Kommentare einzugeben oder zu ändern.</para>
-			<para
->Anmerkungen können nicht nur für Dateien im &PDF;-Format eingegeben werden, sondern für alle Formate, die &okular; unterstützt.</para>
+> oder Anmerkungen jeglicher Art hinzuzufügen oder zu ändern.</para>
+
 			<para
 >&okular; kann „Dokumentarchive“ erstellen. Diese Archive haben ein eigenes nur von &okular; verwendetes Format und enthalten das Dokument sowie zugehörige Metadaten, zurzeit nur Anmerkungen. Um ein geöffnetes Dokument als Archiv zu speichern, wählen Sie <menuchoice
 ><guimenu
@@ -734,35 +731,35 @@ Context menu actions like Rename Bookmarks etc.)
 > in einer neuen Datei. </para>
 				<note>
 					<para
->Bei Dateien mit DRM-Einschränkungen (&eg; häufig bei &PDF;-Dokumenten) ist es manchmal nicht möglich, Eigenschaften  hinzuzufügen oder zu bearbeiten oder Anmerkungen zu entfernen. </para>
+>Beachten Sie, dass das Hinzufügen, Bearbeiten oder Löschen von Anmerkungen in Dateien mit aktivierter digitaler Rechteverwaltung (DRM) evtl. nicht möglich ist. </para>
 				</note>
 				<note>
 				  <para
->Alle Aktionen für Anmerkungen (Erstellen, Löschen, Ändern beliebiger Eigenschaften, Verschieben mit &Ctrl;+&LMB; und Bearbeitung des Inhalts) können <link linkend="edit-undo"
->zurückgenommen</link
+>Alle Aktionen für Anmerkungen können <link linkend="edit-undo"
+>rückgängig gemacht</link
 > oder <link linkend="edit-redo"
 >wiederhergestellt</link
-> werden. Benutzen Sie dazu die entsprechenden Einträge im Menü <guimenu
+> werden. Verwenden Sie dazu die entsprechenden Einträge im Menü <guimenu
 >Bearbeiten</guimenu
->. Außerdem können Sie auch die Kurzbefehle <keycombo
+>. Alternativ können Sie dazu auch die Kurzbefehle <keycombo
 >&Ctrl;<keycap
 >Z</keycap
 ></keycombo
-> für das Zurücknehmen und <keycombo
+> für das Rückgängigmachen und <keycombo
 >&Ctrl;&Shift;<keycap
 >Z</keycap
 ></keycombo
 > für das Wiederherstellen drücken. </para>
 				</note>
 			<para
->Sie können die Voreinstellungen der Eigenschaften und des Erscheinungsbilds jeder einzelnen Anmerkung ändern. Weitere Details dazu finden Sie in <link linkend="configannotations"
+>Sie können die Voreinstellungen der Eigenschaften und des Erscheinungsbilds jedes einzelnen Werkzeugs für Anmerkungen ändern. Weitere Details dazu finden Sie in <link linkend="configannotations"
 >diesem Kapitel des Handbuchs</link
 >. </para>
 			<sect2 id="annotations-add">
 				<title
 >Anmerkungen hinzufügen</title>
 				<para
->Um Anmerkungen zum Dokument hinzuzufügen, benutzen Sie die Knöpfe in den <guilabel
+>Um Anmerkungen zum Dokument hinzuzufügen, verwenden Sie die Knöpfe in den <guilabel
 >Schnell-Anmerkungen</guilabel
 > in der Hauptwerkzeugleiste von &okular; oder aktivieren Sie die Werkzeugleiste dafür, indem Sie entweder  <menuchoice
 ><guimenu
@@ -770,15 +767,15 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenuitem
 >Anmerkungen</guimenuitem
 ></menuchoice
-> wählen oder die Taste <keycap
+> wählen, oder die Taste <keycap
 >F6</keycap
 > drücken. Drücken Sie dann einen der Knöpfe oder die Kurzbefehle von <keycap
 >1</keycap
 > bis <keycap
 >9</keycap
-> auf der Leiste, um mit dieser Anmerkung zu beginnen. </para>
+> auf der Leiste, um diese Anmerkung zu verwenden. </para>
 				<para
->Diese Werkzeugleiste hilft Ihnen beim Anlegen von Anmerkungen für Zeichnungen, Objekte und Textdokumente. Sie können Markierungen &eg; Linien, Ellipsen, Vielecke, Stempel, Hervorhebungen. Unterstreichungen &etc; in ein Dokument einfügen. Die folgende Tabelle beschreibt  genau, wie die Standardanmerkungen funktionieren. </para>
+>Die Werkzeugleiste für Anmerkungen hilft Ihnen beim Erstellen von Anmerkungen mit Zeichnungen, Objekten und Textnotizen. Sie können Markierungen, &eg; Linien, Ellipsen, Vielecke, Stempel, Hervorhebungen, Unterstreichungen &etc; in ein Dokument einfügen. Die folgende Tabelle beschreibt genau, welche Funktionen die Knöpfe der Werkzeugleiste für Anmerkungen standardmäßig haben. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -808,9 +805,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Hervorhebung von Text im Dokument mit der eingestellten Hintergrundfarbe. </para>
+>Hebt Text im Dokument mit der eingestellten Hintergrundfarbe hervor. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der gedrückten &LMBn; auf den Beginn des hervorzuhebenden Textes, ziehen Sie dann, um den Text zu markieren. </para>
+>Klicken Sie auf den Werkzeugknopf und ziehen Sie dann mit der gedrückten &LMBn;, um einen Textabschnitt hervorzuheben. </para>
 					  <para
 >Sie können den <guilabel
 >Typ</guilabel
@@ -847,9 +844,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Unterstreichen von Text. </para>
+>Unterstreicht Text mit einer geraden Linie. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der gedrückten &LMBn; auf den Beginn des zu unterstreichenden Textes, ziehen Sie dann, um Text zu unterstreichen. </para>
+>Klicken Sie auf den Werkzeugknopf und ziehen Sie dann mit der gedrückten &LMBn;, um einen Textabschnitt zu unterstreichen. </para>
 					  <para
 >Sie können den <guilabel
 >Typ</guilabel
@@ -886,9 +883,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Unterstreichen von Text mit einer geschnörkelten Linie. </para>
+>Unterstreicht Text mit einer geschnörkelten Linie. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der gedrückten &LMBn; auf den Beginn des zu unterstreichenden Textes, ziehen Sie dann, um Text zu unterstreichen. </para>
+>Klicken Sie auf den Werkzeugknopf und ziehen Sie dann mit der gedrückten &LMBn;, um einen Textabschnitt mit einer geschnörkelten Linie zu unterstreichen. </para>
 					  <para
 >Sie können den <guilabel
 >Typ</guilabel
@@ -925,9 +922,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Durchstreichen von Text. </para>
+>Streicht Text durch. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der gedrückten &LMBn; auf den Beginn des zu unterstreichenden Textes, ziehen Sie dann, um Text zu unterstreichen. </para>
+>Klicken Sie auf den Werkzeugknopf und ziehen Sie dann mit der gedrückten &LMBn;, um einen Textabschnitt mit einer geschnörkelten Linie durchzustreichen. </para>
 					  <para
 >Sie können den <guilabel
 >Typ</guilabel
@@ -964,15 +961,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Textkommentare sind deckende Zeichen auf transparentem Hintergrund, damit können Sie zum Beispiel nicht interaktive Formulare ausfüllen. </para>
+>Text auf einem transparenten Hintergrund hinzufügen. Das erleichtert das Ausfüllen von Formularen, die keine bearbeitbaren Textfelder bereitstellen. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf, klicken Sie dann mit der &LMBn; für die obere linke Ecke der Notiz, halten den Mausknopf gedrückt und ziehen den Mauszeiger zur rechten unteren Ecke der Notiz. Geben Sie den Text für die Notiz ein, klicken Sie dann auf <guibutton
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie dann die &LMB; an der oberen linken Ecke der Notiz gedrückt und ziehen Sie den Mauszeiger zur rechten unteren Ecke der Notiz. Jetzt können Sie den Text für die Notiz eingeben. Klicken Sie dann auf <guibutton
 >OK</guibutton
 > zum Speichern, auf <guibutton
->Abbrechen</guibutton
-> zum Beenden der Eingabe oder auf <guibutton
 >Löschen</guibutton
->, um den Text der Notiz zu löschen. </para>
+>, um den Text der Notiz zu löschen und neu zu beginnen oder auf <guibutton
+>Abbrechen</guibutton
+>, um die Eingabe abzubrechen. </para>
 					  <para
 >Sie können <guilabel
 >Schrift</guilabel
@@ -999,15 +996,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Eine Haftnotiz zeichnen. Die Notiz wird im Text angezeigt. </para>
+>Zeichnet eine Haftnotiz. Die Notiz wird im Text angezeigt. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf, klicken Sie dann mit der &LMBn; für die obere linke Ecke der Notiz, halten den Mausknopf gedrückt und ziehen den Mauszeiger zur rechten unteren Ecke der Notiz. Geben Sie den Text für die Notiz ein, klicken Sie dann auf <guibutton
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie dann die &LMB; an der oberen linken Ecke der Notiz gedrückt und ziehen Sie den Mauszeiger zur rechten unteren Ecke der Notiz. Jetzt können Sie den Text für die Notiz eingeben. Klicken Sie dann auf <guibutton
 >OK</guibutton
 > zum Speichern, auf <guibutton
->Abbrechen</guibutton
-> zum Beenden der Eingabe oder auf <guibutton
 >Löschen</guibutton
->, um den Text der Notiz zu löschen. </para>
+>, um den Text der Notiz zu löschen oder auf <guibutton
+>Abbrechen</guibutton
+>, um das Erstellen der Notiz zu verwerfen. </para>
 					  <para
 >Sie können <guilabel
 >Farbe</guilabel
@@ -1040,7 +1037,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Eine Notiz zeichnen. Die Notiz wird angezeigt, wenn Sie auf das Symbol der Notiz im Dokument doppelklicken. </para>
+>Zeichnet eine mehrzeilige Notiz. Die Notiz wird angezeigt, wenn Sie auf das Symbol der Notiz im Dokument doppelklicken. </para>
 					  <para
 >Klicken Sie auf den Werkzeugknopf, klicken Sie dann auf die Stelle im Dokument, an der Sie die Notiz einfügen möchten. Geben Sie den Text ein und klicken Sie dann auf den Knopf <guilabel
 >Diese Notiz schließen</guilabel
@@ -1073,9 +1070,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Freihandlinien zeichnen. </para>
+>Zeichnet Freihandlinien. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und klicken Sie dann mit der &LMB; für den Start der Linie, halten die Maustaste gedrückt und ziehen, um die Linie zu zeichnen. </para>
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie dann die &LMB; gedrückt und ziehen Sie, um die Linie zu zeichnen. </para>
 					  <para
 >Sie können <guilabel
 >Farbe</guilabel
@@ -1104,9 +1101,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Markierung mit einem Pfeil. </para>
+>Zeichnet einen Pfeil zwischen zwei Endpunkten. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der &LMBn; auf den Startpunkt der Linie, führen den Mauszeiger zum Endpunkt und klicken dann noch einmal. </para>
+>Klicken Sie auf den Werkzeugknopf. Klicken Sie dann mit der &LMBn;, um den Startpunkt des Pfeils zu platzieren. Führen Sie den Mauszeiger zum Endpunkt und klicken Sie dann erneut. </para>
 					  <para
 >Sie können <guilabel
 >Farbe</guilabel
@@ -1143,9 +1140,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Markierung mit einer Linie. </para>
+>Zeichnet eine Linie zwischen zwei Endpunkten. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf und dann mit der &LMBn; auf den Startpunkt der Linie, führen den Mauszeiger zum Endpunkt und klicken dann noch einmal. </para>
+>Klicken Sie auf den Werkzeugknopf. Klicken Sie dann mit der &LMBn;, um den Startpunkt der Linie zu platzieren. Führen Sie den Mauszeiger zum Endpunkt und klicken Sie dann erneut. </para>
 					  <para
 >Sie können <guilabel
 >Farbe</guilabel
@@ -1182,9 +1179,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Zeichnet ein Rechteck um einen ausgewählten Bereich. </para>
+>Zeichnet ein Rechteck um den ausgewählten Bereich. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf, klicken Sie dann mit der &LMBn; auf die linke obere Ecke des Rechtecks, halten die Maustaste gedrückt und ziehen Sie zur unteren rechten Ecke und lassen Sie die Maustaste los. </para>
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie dann die &LMB; an der linken oberen Ecke des Rechtecks gedrückt. Bewegen Sie den Mauszeiger zur unteren rechten Ecke und lassen Sie die Maustaste los, um sie zu platzieren. </para>
 					  <para
 >Sie können <guilabel
 >Typ</guilabel
@@ -1221,7 +1218,7 @@ Context menu actions like Rename Bookmarks etc.)
 					  <para
 >Zeichnet eine Ellipse oder ein Rechteck um einen ausgewählten Bereich. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf, klicken Sie dann mit der &LMBn; auf die linke obere Ecke des umschreibenden Rechtecks der Ellipse, halten die Maustaste gedrückt und ziehen Sie zur unteren rechten Ecke und lassen Sie die Maustaste los. </para>
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie dann die &LMB; an der linken oberen Ecke des umschreibenden Rechtecks der Ellipse gedrückt. Bewegen Sie den Mauszeiger zur unteren rechten Ecke und lassen Sie die Maustaste los, um sie zu platzieren. </para>
 					  <para
 >Sie können <guilabel
 >Typ</guilabel
@@ -1256,15 +1253,15 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Zeichnet ein geschlossenes Vieleck mit drei oder mehr Segmenten. Die zugehörige Notiz kann durch Doppelklicken in das Vieleck angezeigt werden. </para>
+>Zeichnet eine geschlossene Form mit drei oder mehr Segmenten. Die zugehörige Notiz kann durch Doppelklicken in das Vieleck angezeigt werden. </para>
 					  <para
->Klicken Sie auf den Werkzeugknopf, klicken Sie dann mit der &LMBn; auf den ersten Punkt des Vielecks und ziehen Sie zum zweiten Punkt und klicken Sie wieder mit der Maustaste. Führen Sie dies bis zum ersten Punkt fort, bis das Vieleck fertig ist. Geben Sie den Text für die Notiz ein, klicken Sie dann auf <guibutton
+>Klicken Sie auf den Werkzeugknopf. Klicken und halten Sie die &LMB; am ersten Eckpunkt des Vielecks gedrückt. Ziehen Sie die Maus zum zweiten Eckpunkt und klicken wieder mit der Maustaste. Führen Sie dies bis zum ersten Eckpunkt fort, bis das Vieleck fertig ist. Doppelklicken Sie, um eine Notiz zum Vieleck hinzuzufügen. Geben Sie den Text für die Notiz ein, klicken Sie dann auf <guibutton
 >OK</guibutton
 > zum Speichern, auf <guibutton
->Abbrechen</guibutton
-> zum Beenden der Eingabe oder auf <guibutton
 >Löschen</guibutton
->, um den Text der Notiz zu löschen. </para>
+>, um den Text der Notiz zu löschen, oder auf <guibutton
+>Abbrechen</guibutton
+>, um die Eingabe abzubrechen. </para>
 					  <para
 >Sie können <guilabel
 >Farbe</guilabel
@@ -1295,7 +1292,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Text oder Bilder mit voreingestellten Stempeln markieren. </para>
+>Fügt eine vordefinierte Form in das Dokument ein. </para>
 					  <para
 >Klicken Sie auf den Werkzeugknopf, um einen Stempel aus dem Auswahlfeld auszuwählen und dann mit der &LMBn; um den Stempel zu platzieren. </para>
 					  <para
@@ -1323,7 +1320,7 @@ Context menu actions like Rename Bookmarks etc.)
 > des Einrichtungsdialogs können Sie Ihre eigenen Anmerkungen wie benutzerdefinierte Stempel, Textmarkierungen oder geometrische Formen mit innerer transparenter Farbe zum Markieren von Bereichen &etc; erstellen. </para>
                                   <note>
                                       <para
->Sie können &latex;-Quelltext in Anmerkungen verwenden. Fügen Sie <userinput
+>Sie können &latex;-Quelltext in Anmerkungen verwenden. Fügen Sie dazu <userinput
 >$$<replaceable
 >code</replaceable
 >$$</userinput
@@ -1332,7 +1329,7 @@ Context menu actions like Rename Bookmarks etc.)
 > ein beliebiger gültiger &latex;-Ausdruck sein. Folgen Sie den Anweisungen auf dem Bildschirm, um den Ausdruck mit der auf Ihrem System installierten &latex;-Distribution zu rendern. </para>
                                   </note>
 				<para
->Sie können die Einstellungen für die aktuelle Anmerkung in der Anmerkungs-Werkzeugleiste selbst ändern. Die folgende Tabelle beschreibt die Funktion der Einrichtungs-Knöpfe in der Voreinstellung der Anmerkungs-Werkzeugleiste. </para>
+>Mit der Werkzeugleiste für Anmerkungen ist es möglich, das ausgewählte Werkzeug einzurichten: </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -1362,7 +1359,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um die Breite im Auswahlfeld einzustellen. </para>
+>Klicken Sie auf diesen Knopf, um die Breite im Auswahlfeld auszuwählen. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1386,7 +1383,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um die Text- oder Umrandungsfarbe für Ihre Anmerkung auszuwählen. Sie können eine der vordefinierten Farben benutzen oder mit <guimenuitem
+>Klicken Sie auf diesen Knopf, um die Text- oder Umrandungsfarbe für Ihre Anmerkung auszuwählen. Sie können eine der vordefinierten Farben verwenden oder mit <guimenuitem
 >Benutzerdefinierte Farbe</guimenuitem
 > den Farbauswahldialog öffnen. </para>
 					</entry>
@@ -1407,7 +1404,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um eine Füllfarbe für Ihre Anmerkung auszuwählen. Sie können eine der vordefinierten Farben benutzen oder mit <guimenuitem
+>Klicken Sie auf diesen Knopf, um die Füllfarbe für Ihre Anmerkung auszuwählen. Sie können eine der vordefinierten Farben verwenden oder mit <guimenuitem
 >Benutzerdefinierte Farbe</guimenuitem
 > den Farbauswahldialog öffnen. </para>
 					</entry>
@@ -1428,9 +1425,9 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um die Deckkraft für die Anmerkung im Auswahlfeld einzustellen. Der Wert <guimenuitem
+>Klicken Sie auf diesen Knopf, um die Deckkraft für Ihre Anmerkung im Auswahlfeld auszuwählen (der Wert <guimenuitem
 >100 %</guimenuitem
-> ist für deckende Anmerkungen. </para>
+> erzeugt deckende Anmerkungen). </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1449,7 +1446,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um den Dialog zur Schriftauswahl zu öffnen. </para>
+>Klicken Sie auf diesen Knopf, um den Dialog zur Schriftauswahl zu öffnen. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1464,18 +1461,18 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Erweiterte Einstellungen für die aktuelle Anmerkung </para>
+>Erweiterte Einstellungen für das aktuelle Anmerkungswerkzeug </para>
 					</entry>
 					<entry>
 					  <para
->Klicken Sie auf den Werkzeugknopf, um den allgemeinen Einrichtungsdialog für Ihre  Anmerkung zu öffnen. </para>
+>Klicken Sie auf diesen Knopf, um den allgemeinen Einrichtungsdialog für Ihre Anmerkung zu öffnen. </para>
 					</entry>
 				      </row>
 			            </tbody>
 				    </tgroup>
 				  </informaltable>
 				<para
->Es gibt auch drei Knöpfe in der voreingestellten Anmerkungs-Werkzeugleiste. </para>
+>Es gibt drei weitere Knöpfe in der Werkzeugleiste für Anmerkungen: </para>
 				<informaltable>
 				  <tgroup cols="2">
 				    <thead>
@@ -1512,7 +1509,7 @@ Context menu actions like Rename Bookmarks etc.)
 >&Alt;<keycap
 >0</keycap
 ></keycombo
-> jederzeit für die Auswahl von Anmerkungen verwenden, sogar wenn die Anmerkungs-Werkzeugleiste ausgeblendet ist. </para>
+> jederzeit für die Schnellauswahl von Anmerkungen verwenden, sogar wenn die Werkzeugleiste für Anmerkungen ausgeblendet ist. </para>
 					  </note>
 					</entry>
 				      </row>
@@ -1528,7 +1525,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Ist diese Einstellung ausgewählt, bleibt die Anmerkung ist auch nach Benutzung aktiviert. </para>
+>Ist diese Einstellung ausgewählt, bleibt das aktuelle Anmerkungswerkzeug auch nach Verwendung aktiviert. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -1543,7 +1540,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Anmerkungs-Werkzeugleiste ausblenden. </para>
+>Werkzeugleiste für Anmerkungen ausblenden. </para>
 					</entry>
 				      </row>
 			            </tbody>
@@ -1565,38 +1562,46 @@ Context menu actions like Rename Bookmarks etc.)
 > aus dem Aufklappmenü. </para>
 				<note>
 					<para
->Durch Aktivierung der Werkzeugleiste wechseln Sie in den normalen Durchsuchen-Modus. </para>
+>Durch Aktivieren der Werkzeugleiste für Anmerkungen wird automatisch in den Blättern-Modus gewechselt. </para>
 				</note>
 				<para
->Klicken Sie wieder auf den zugehörigen Knopf in der Werkzeugleiste oder drücken Sie die &Esc;-Taste, um die Eingabe der Anmerkung zu beenden. </para>
+>Sie können das Erstellen von Anmerkungen jederzeit beenden, indem Sie den Knopf der gerade verwendeten Anmerkung erneut anklicken oder die &Esc;-Taste drücken. </para>
 				<para
->Als Autor einer neu erstellten Anmerkung wird die Einstellung auf der Seite <link linkend="configannotations"
+>Für den Autor-Eintrag einer neu erstellten Anmerkung wird die Einstellung auf der Seite <link linkend="configannotations"
 ><guilabel
 >Anmerkungen</guilabel
 ></link
-> in &okular;s Einrichtungsdialog verwendet. Auf dieser Seite können auch die Einträge in der Anmerkungs-Werkzeugleiste eingerichtet werden. </para>
+> im Einrichtungsdialog von &okular; verwendet. Auf dieser Seite kann auch der Inhalt der Werkzeugleiste für Anmerkungen eingerichtet werden. </para>
 			</sect2>
 			<sect2 id="annotations-remove">
 				<title
 >Anmerkungen löschen</title>
 				<para
->Um Anmerkungen zu löschen, klicken Sie mit der &RMBn; darauf und wählen Sie dann <guimenuitem
+>Um eine Anmerkung zu entfernen, wählen Sie zuerst das „Blättern“-Werkzeug (<menuchoice
+><guimenu
+>Extras</guimenu
+><guimenuitem
+>Blättern</guimenuitem
+></menuchoice
+>), klicken Sie dann mit der &RMBn; auf die Anmerkung und wählen Sie <guimenuitem
 >Löschen</guimenuitem
-> oder wählen Sie die Anmerkung mit der &LMBn; und drücken dann die Taste &Del;. </para>
+>. Alternativ können Sie die Anmerkung mit der &LMBn; auswählen und dann die &Del;-Taste drücken. </para>
 				<para
->Wenn Sie eine Anmerkung entfernen, wird das zugehörige Fenster geschlossen, falls es geöffnet ist. </para>
-				<note>
-					<para
->Wenn es ein Dokument es nicht erlaubt, Anmerkungen zu entfernen, kann diese Einstellung ist nicht ausgewählt werden. </para>
-				</note>
+>Beim Entfernen der Anmerkung wird das zugehörige Fenster geschlossen, falls es geöffnet war. </para>
 			</sect2>
 			<sect2 id="annotations-edit">
 				<title
 >Anmerkungen bearbeiten</title>
 				<para
->Um eine Anmerkung zu bearbeiten, klicken Sie mit der &RMBn; darauf und wählen <guimenuitem
+>Um eine Anmerkung zu bearbeiten, wählen Sie zuerst das „Blättern“-Werkzeug (<menuchoice
+><guimenu
+>Extras</guimenu
+><guimenuitem
+>Blättern</guimenuitem
+></menuchoice
+>), klicken Sie dann mit der &RMBn; auf die Anmerkung und wählen Sie <guimenuitem
 >Eigenschaften</guimenuitem
-> Damit öffnen Sie einen Dialog mit allgemeinen Einstellungen (wie Farbe, Deckkraft, Autor &etc;) und spezielle Einstellungen für diesen Typ von Anmerkung. </para>
+>. Damit öffnen Sie einen Dialog mit allgemeinen Einstellungen (wie Farbe, Deckkraft, Autor &etc;) und speziellen Einstellungen für diesen Anmerkungstyp. </para>
 				<screenshot>
 				<screeninfo
 >Der Eigenschaftsdialog für Anmerkungen</screeninfo>
@@ -1615,11 +1620,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<para
 >Wenn Sie mit der &LMBn; auf eine Anmerkung klicken, wird sie ausgewählt. Symbole zur Größenänderung erscheinen auf dem Auswahlrechteck. Wird der Mauszeiger auf eines dieser 8 Symbole in den Ecken oder auf den Kanten bewegt, ändert sich das Symbol des Mauszeigers und zeigt damit den Modus zur Größenänderung an. Klicken Sie auf eine beliebige sonstige Stelle in der Anmerkung, um sie zu verschieben. Drücken Sie die Taste &Esc; oder klicken Sie außerhalb der Anmerkung, um die Auswahl abzuschalten. </para>
 				<para
->Eine Größenänderung ist nur für die Anmerkungen Haftnotiz, Textkommentar, Stempel und Ellipse möglich.</para>
+>Eine Größenänderung ist nur für die Anmerkungstypen „Haftnotiz“, „Textkommentar“, „Stempel“ und „Ellipse“ möglich.</para>
 
 				<note>
 					<para
->Bei Dokumenten mit eingeschränkten Berechtigungen (typisch für &PDF;-Dokumente) kann die Änderung einiger Einstellungen nicht erlaubt sein. </para>
+>Abhängig von den Berechtigungen des Dokuments sind möglicherweise einige Optionen deaktiviert (betrifft in der Regel nur bestimmte &PDF;-Dokumente). </para>
 				</note>
 			</sect2>
 		</sect1>
@@ -1675,6 +1680,10 @@ Context menu actions like Rename Bookmarks etc.)
 				    </mediaobject>
 				</screenshot>
 				<para
+>Das Ankreuzfeld <guilabel
+>Für alle Dokumente anzeigen</guilabel
+> kann deaktiviert werden, um nur die Lesezeichen des aktuellen Dokuments anzuzeigen. </para>
+				<para
 >Mit der Filterleiste in der Ansicht <guilabel
 >Lesezeichen</guilabel
 > kann der Inhalt der Lesezeichenliste entsprechend dem Text im Eingabefeld gefiltert werden. </para>
@@ -1684,12 +1693,6 @@ Context menu actions like Rename Bookmarks etc.)
 > oder <guiicon
 >v</guiicon
 > neben dem Dateinamen aus- oder eingeklappt werden. </para>
-				<para
->Klicken Sie auf das Symbol <inlinemediaobject
-><imageobject
-><imagedata fileref="bookmarks.png" format="PNG"/></imageobject
-></inlinemediaobject
-> unter der Liste, um nur die Lesezeichen im gerade geöffneten Dokument anzuzeigen. </para>
 				<para
 >Mit den Aktionen im Kontextmenü des Dokumenteintrags kann das Dokument geöffnet, der Eintrag umbenannt oder aus der Liste entfernt werden. Beachten Sie, dass mit dem Dokument auch alle zugehörigen Lesezeichen entfernt werden. </para>
 				<para
@@ -1852,6 +1855,24 @@ Context menu actions like Rename Bookmarks etc.)
 >okular</command
 ></userinput
 > angegeben wird.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>string</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>Legt den Befehl zum Aufruf des externen Editors fest. Sie können diesen Befehl nicht in einer bereits laufenden &okular;-Instanz festlegen. Beachten Sie, dass die Option <option
+>--unique</option
+> nicht unterstützt wird, wenn der Editorbefehl per Befehlszeile festgelegt wird.</para
 ></listitem>
 				</varlistentry>
 			</variablelist>
@@ -2949,7 +2970,7 @@ Context menu actions like Rename Bookmarks etc.)
 > <guimenu
 >Extras</guimenu
 > <guimenuitem
->Durchsuchen</guimenuitem
+>Blättern</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
@@ -3073,8 +3094,8 @@ Context menu actions like Rename Bookmarks etc.)
 					<listitem>
 						<para
 ><action
->Blendet die Werkzeugleiste für Anmerkungen ein</action
->. Mit dieser Werkzeugleiste können Sie Anmerkungen für das Dokument hinzufügen. Weitere Informationen dazu finden Sie im Kapitel <link linkend="annotations"
+>Die Werkzeugleiste für Anmerkungen einblenden</action
+>. Mit dieser Werkzeugleiste können Sie Anmerkungen zum Dokument hinzufügen. Weitere Informationen dazu finden Sie im Kapitel <link linkend="annotations"
 >Anmerkungen</link
 >.</para>
 					</listitem>
@@ -3192,242 +3213,9 @@ Context menu actions like Rename Bookmarks etc.)
 > am unteren Rand des Dokumentbereichs ein oder aus. Die Seitenzahlen werden auch in der Standard-Werkzeugleiste angezeigt.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Einstellungen</guimenu
-> <guimenuitem
->Anzeigemodule einrichten ...</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Öffnet den Dialog <link linkend="configure-backends"
->Anzeigemodule einrichten</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Einrichtung der Anzeigemodule von &okular;</title>
-	  <para
->Mit <menuchoice
-><guimenu
->Einstellungen</guimenu
-><guimenuitem
->Anzeigemodule einrichten ...</guimenuitem
-> </menuchoice
-> öffnen Sie einen Dialog für die Einrichtung einige Module, zu Zeit nur für EPUB, &PostScript;, FictionBook, Text, OpenDocument Text and &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->Der Einrichtungsdialog für die Anzeigemodule</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->Der Einrichtungsdialog für die Anzeigemodule</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Auf den Seiten für EPUB, &PostScript;, FictionBook, Mobipocket, Markdown, Text und OpenDocument Text können Sie die Schrift für das Rendern der Dokumente für diese Formate einstellen. Mit dem Knopf <guibutton
->Auswählen</guibutton
-> öffnen Sie den bekannten &kde;-Schriftendialog, Weitere Informationen dazu finden Sie in der Dokumentation zu den <ulink url="help:/fundamentals/fonts.html"
->&kde;-Grundlagen</ulink
->. </para>
-	  <para
->Im folgenden werden die Einstellungsseiten für die Module Markdown, &PostScript; und &PDF; beschrieben. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Einrichtung des Markdown-Anzeigemoduls</title>
-	    <para
->Das &okular;-Anzeigemodul Markdown auf der Grundlage der Bibliothek <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> können Sie einstellen, in dem Sie <guilabel
->Markdown</guilabel
-> in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt folgende Option: </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->SmartyPants-Formatierung aktivieren</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Ist dies aktiviert, kann &okular; <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->-Formatierung bearbeiten. Diese Formatierung ist manchmal in technischen Texten problematisch, wenn nicht nicht beabsichtige Ersetzungen vorgenommen werden, &eg; wird <literal
->(C)</literal
-> durch das Copyright-Symbol ersetzt. Diese Einstellung ist als Standard aktiviert. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Einrichtung des &PostScript;-Anzeigemoduls</title>
-	    <para
->Das &okular;-Anzeigemodul &PostScript; auf der Grundlage von <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
-> können Sie einstellen, in dem Sie dies in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt nur eine Option: </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Plattformspezifische Schriftarten verwenden</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Diese Einstellung legt fest, ob Ghostscript auch plattformspezifische Schriften verwenden soll. Ansonsten werden nur im Dokument eingebettete Schriften benutzt. Diese Einstellung ist als Standard aktiviert. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Einrichtung des &PDF;-Anzeigemoduls</title>
-	    <para
->Das &okular;-Anzeigemodul &PDF; auf der Grundlage der Bibliothek <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
-> können Sie einstellen, in dem Sie dies in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt nur eine Option: </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Anzeige dünner Linien verbessern</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Das Zeichnen von Linien in &okular; ist in zwei Schritten implementiert: Generierung und Füllung des Freistellungspfads. Beträgt die Breite einer Linie im ursprünglichen Dokument weniger als ein Pixel, kann dieses Verfahren zu Problemen führen. Für solche Linien wird der Freistellungspfad mit der Farbe gefüllt, die von der Breite des Linienteils im Freistellungspfad abhängt. Wird der Teil der Linie im Freistellungspfad sehr klein, kann der Kontrast zwischen der Form und der Hintergrundfarbe zu klein werden, um die Linie zu erkennen. Ein Gitter aus solchen Linien sieht dann sehr unschön aus. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Dünne Linie (Rot), deren Freistellungspfad (Gestrichelt) und Pixelgrenzen (Schwarz)</entry>
-			    <entry
->Anzeige dünner Linien bei geringem Kontrast</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Für die Verbesserung der Anzeige dünner Linien in &okular; gibt es zwei Einstellungen: </para>
-		    <para
->Mit der ersten Einstellung <guimenuitem
->Einfarbig</guimenuitem
-> passt &okular;den Freistellungspfad und die Position der Linie so an, dass beide auf der selben Pixelgrenze liegen. &ie; &okular; verbreitert dünne Linien auf ein Pixel des Ausgabegeräts. Dieser Modus entspricht etwa der Einstellung <guilabel
->Anzeige dünner Linien verbessern</guilabel
-> im <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Mit dieser Einstellung werden dünne Linien immer verbreitert. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Dünne Linie mit der Einstellung <guimenuitem
->Einfarbig</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Dünne Linie mit der Einstellung <guimenuitem
->Einfarbig</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->Mit der zweiten Einstellung <guimenuitem
->Form</guimenuitem
-> wird der Freistellungspfad und die Linie ebenfalls an Pixelgrenzen angepasst, aber die Intensität der Linienfarbe wird entsprechend der Breite korrigiert. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Dünne Linie mit der Einstellung <guimenuitem
->Form</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Dünne Linie mit der Einstellung <guimenuitem
->Form</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->In der Voreinstellung mit der Option <guimenuitem
->Nein</guimenuitem
-> bleibt die Anzeige dünner Linien unverändert. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->Digitale Signaturzertifikate für &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> In diesem Abschnitt können Sie eine benutzerdefinierte Zertifikatsdatenbank festlegen, die beim Hinzufügen von digitalen Signaturen zu &PDF; Dateien verwendet wird. </para>
-			<para
->Es werden auch alle verfügbaren Zertifikate in der Zertifikats-Datenbank angezeigt. </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3495,13 +3283,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Für einige der installierten Anzeigemodule ist der Menüeintrag  <menuchoice
-><guimenu
->Einstellungen</guimenu
-><guimenuitem
->Anzeigemodule einrichten ...</guimenuitem
-> </menuchoice
-> vorhanden. Damit öffnen Sie einen Dialog zur Einstellung des aktiven Anzeigemoduls. </para>
+>Abhängig von den zurzeit installierten Zusatzmodulen enthält der Dialog auch eine Liste der Module mit Einstellungsmöglichkeiten. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -3590,7 +3372,7 @@ Context menu actions like Rename Bookmarks etc.)
                                             <para
 >Ermöglicht die <ulink url="help:/fundamentals/colors.html"
 >Auswahl von Farben</ulink
-> für den Hintergrund des Dokuments, d. h. die Farbe um die angezeigte Seite. Als Voreinstellung wird die Farbe aus der &Qt;-Bibliothek benutzt, wenn diese Einstellung nicht aktiviert ist. </para>
+> für den Hintergrund des Dokuments, d. h. die Farbe um die angezeigte Seite. Als Voreinstellung wird die Farbe aus der &Qt;-Bibliothek verwendet, wenn diese Einstellung nicht aktiviert ist. </para>
 					</listitem>
 				</varlistentry>
                                 <varlistentry>
@@ -3658,7 +3440,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Wenn es für die zu öffnende Datei mehrere Anzeigemodule gibt, erhalten Sie mit dieser Einstellung einen Auswahldialog für das  Anzeigemodul. Ist diese Einstellung nicht aktiviert, benutzt &okular; das Anzeigemodul mit der höchsten Priorität.</para>
+>Wenn es für die zu öffnende Datei mehrere Anzeigemodule gibt, erhalten Sie mit dieser Einstellung einen Auswahldialog für das  Anzeigemodul. Ist diese Einstellung nicht aktiviert, verwendet &okular; das Anzeigemodul mit der höchsten Priorität.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3686,6 +3468,39 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Mit der zuletzt angesehenen Seite fortfahren</guilabel
+></term>
+					<listitem>
+						<para
+>Ob die zuletzt angesehene Seite für jedes Dokument mit den Seitendaten gespeichert und wiederhergestellt werden soll. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Bei Verwendung von „Blättern“ die Cursorbewegung am gegenüberliegenden Bildschirmrand fortsetzen</guilabel
+></term>
+					<listitem>
+						<para
+>Ermöglicht fortlaufenden Bildlauf im ganzen Dokument durch die Verwendung von <link linkend="menutools"
+>„Blättern“</link
+>. Wenn aktiviert, wird die Cursorbewegung am gegenüberliegenden Bildschirmrand fortgesetzt, wenn beim Ziehen des Dokuments die Bildschirmgrenzen berührt werden. Diese Funktion wird nur unter X11 unterstützt. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Elemente im Verlauf</guilabel
+></term>
+					<listitem>
+						<para
+>Ermöglicht es, die Länge der gespeicherten Verlaufsliste festzulegen. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term
+><guilabel
 >Übersichtsspalten:</guilabel
 ></term>
 					<listitem>
@@ -3710,7 +3525,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Mit dieser Einstellung legen Sie die Vergrößerung für Dateien fest, die zum ersten Mal geöffnet werden. Alle bereits vorher geöffneten Dateien werden in der letzten benutzen Vergrößerungsstufe angezeigt. </para>
+>Diese Einstellung legt den Vergrößerungsmodus für Dateien fest, die zum ersten Mal geöffnet werden. Alle bereits vorher geöffneten Dateien werden im zuletzt verwendeten Vergrößerungsmodus angezeigt. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3829,7 +3644,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Invertiert</action
 > die Luma (Luminanz) aller Farben. Helle und dunkle Farben werden vertauscht, aber Farbton und Sättigung bleiben unverändert. Der Kontrast in Bildern bleibt mit dieser Einstellung normalerweise besser erhalten als mit <guilabel
 >Helligkeit invertieren</guilabel
->, aber bei farbenfrohen Grafiken oder Texten ist der Kontrast normalerweise schlechter.  sRGB-Luma-Koeffizienten werden hier benutzt, aber keine Gamma-Korrektur.</para>
+>, aber bei farbenfrohen Grafiken oder Texten ist der Kontrast normalerweise schlechter.  sRGB-Luma-Koeffizienten werden hier verwendet, aber keine Gamma-Korrektur.</para>
 							</listitem>
 						</varlistentry>
 						<varlistentry>
@@ -3841,7 +3656,7 @@ Context menu actions like Rename Bookmarks etc.)
 								<para
 ><action
 >Invertiert</action
-> die Luma (Luminanz) aller Farben und benutzt symmetrische Luma-Koeffizienten. Helle und dunkle Farben werden vertauscht, aber Farbton und Sättigung bleiben unverändert. Der Effekt ist ähnlich wie mit <guilabel
+> die Luma (Luminanz) aller Farben und verwendet symmetrische Luma-Koeffizienten. Helle und dunkle Farben werden vertauscht, aber Farbton und Sättigung bleiben unverändert. Der Effekt ist ähnlich wie mit <guilabel
 >Helligkeit invertieren</guilabel
 >, aber der Kontrast bleibt in manchen Fällen besser erhalten.</para>
 								</listitem>
@@ -3888,15 +3703,27 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 ><action
 >Wählen Sie hier</action
-> das Sprachausgabemodul  (<abbrev
+> das Sprachausgabemodul (<abbrev
 >TTS</abbrev
->), das von &okular; verwendet wird. Als Voreinstellung wird <application
+>), das von &okular; verwendet werden soll. Als Voreinstellung wird <application
 >speechd</application
 > <abbrev
 >TTS</abbrev
-> benutzt. Sie können jedoch alle Sprachen und Stimmen verwenden, die im Sprachausgabesystem des Rechners installiert sind. Unter &Linux; wird als Standard <application
+> verwendet.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>Stimme der Sprachausgabe</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>Wählen Sie hier</action
+> die Stimme des Sprachausgabe-Moduls, die von &okular; verwendet werden soll. Sie können alle Sprachen und Stimmen verwenden, die im Sprachausgabesystem des Rechners installiert sind. Unter &Linux; wird als Standard <application
 >speech-dispatcher</application
-> benutzt, um die verfügbaren Stimmen festzulegen.</para>
+> verwendet, um die verfügbaren Stimmen zu ermitteln.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3922,7 +3749,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular; erreicht die beste Leistung durch Anpassung der Speichernutzung an Ihr System und Ihre Anforderungen. Je mehr Speicher Sie dem Programm zuweisen, desto schneller arbeitet es. Die Standardeinstellung ist für ein normales System richtig, aber mit der Einstellung ‚Gering‘ können Sie die Speichernutzung von &okular; einschränken oder mit der Einstellung ‚Aggressiv‘ die Leistung Ihres Systems voll ausnutzen. Mit der Einstellung „Gierig“ werden alle Seiten vorgeladen, aber der Hauptspeicher nicht vollständig belegt. Es werden maximal 50 % des gesamten oder freien Speichers benutzt.</para>
+>&okular; erreicht die beste Leistung durch Anpassung der Speichernutzung an Ihr System und Ihre Anforderungen. Je mehr Speicher Sie dem Programm zuweisen, desto schneller arbeitet es. Die Standardeinstellung ist für ein normales System richtig, aber mit der Einstellung ‚Gering‘ können Sie die Speichernutzung von &okular; einschränken oder mit der Einstellung ‚Aggressiv‘ die Leistung Ihres Systems voll ausnutzen. Mit der Einstellung „Gierig“ werden alle Seiten vorgeladen, aber der Hauptspeicher nicht vollständig belegt. Es werden maximal 50 % des gesamten oder freien Speichers verwendet.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -4060,7 +3887,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Der Effekt für den Übergang zwischen den einzelnen Seiten, sofern er nicht durch das Dokument festgelegt. Stellen Sie <guilabel
 >Zufälliger Übergang</guilabel
-> ein, damit &okular; wahllos einen der vorhandenen Effekte benutzt.</para>
+> ein, damit &okular; wahllos einen der vorhandenen Effekte verwendet.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -4121,6 +3948,22 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
+>Werkzeugleiste für Anmerkungen</guilabel
+></term>
+					<listitem>
+                                            <para
+>Ermöglicht es, zwischen <guimenuitem
+>Komplette Werkzeugleiste für Anmerkungen</guimenuitem
+> (<link linkend="annotations-add"
+>Standard-Werkzeugleiste</link
+> im oberen Abschnitt des &okular;-Fensters) und <guimenuitem
+>Schnell-Werkzeugleiste für Anmerkungen</guimenuitem
+> (Bewegliche Werkzeugleiste mit Ihren beliebtesten Werkzeugen im rechten Bereich des Dokuments) zu wechseln.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
 >Autor</guilabel
 ></term>
 					<listitem>
@@ -4135,7 +3978,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Anmerkungs-Werkzeuge</guilabel
+>Anmerkungswerkzeuge</guilabel
 ></term>
 					<listitem>
 					  <para
@@ -4153,9 +3996,9 @@ Context menu actions like Rename Bookmarks etc.)
 >Nach oben</guibutton
 >, <guibutton
 >Nach unten</guibutton
->) und ein Listenfeld mit dem Inhalt der aktuellen Werkzeugleiste mit Anmerkungen. Damit können Sie die Werkzeugleiste anpassen. </para>
+>) und ein Listenfeld mit dem Inhalt der aktuellen Werkzeugleiste für Anmerkungen. Damit können Sie die Werkzeugleiste anpassen. </para>
 					  <para
->Brauchen Sie zusätzliche Knöpfe für Anmerkungen in der Werkzeugleiste, klicken Sie auf den Knopf <guibutton
+>Benötigen Sie zusätzliche Knöpfe für Anmerkungen in der Werkzeugleiste, klicken Sie auf den Knopf <guibutton
 >Hinzufügen</guibutton
 >. Dann können Sie <guilabel
 >Name</guilabel
@@ -4166,10 +4009,10 @@ Context menu actions like Rename Bookmarks etc.)
 > für den neuen Anmerkungstyp einstellen. </para>
 					  <note>
 					    <para
->Bitte denken Sie daran, dass die Werkzeuge für Anmerkungen vielfältig eingestellt werden können. Sie können zum Beispiel zwei Knöpfe für das selbe Werkzeug in verschieden Farben benutzen. Probieren Sie aus, welche Werkzeuge in den verschiedenen möglichen Einstellungen am besten für Ihre Arbeitsweise geeignet sind. </para>
+>Bitte denken Sie daran, dass die Werkzeuge für Anmerkungen vielfältig eingestellt werden können. Sie können zum Beispiel zwei Knöpfe für das selbe Werkzeug in verschieden Farben verwenden. Probieren Sie aus, welche Werkzeuge in den verschiedenen möglichen Einstellungen am besten für Ihre Arbeitsweise geeignet sind. </para>
 					  </note>
 					  <para
->Klicken Sie auf ein Element im Listenfeld und dann auf die entsprechenden Knöpfe auf der rechten Seite, um das Element zu bearbeiten, zu löschen, oder nach unten bzw. nach oben zu verschieben. Die Kurzbefehle der Elemente (Tasten von <keycap
+>Klicken Sie auf ein Element im Listenfeld und dann auf den entsprechenden Knopf auf der rechten Seite, um das Element zu bearbeiten, zu löschen, oder nach unten bzw. nach oben zu verschieben. Die Kurzbefehle der Elemente (Tasten von <keycap
 >1</keycap
 > bis <keycap
 >9</keycap
@@ -4178,12 +4021,12 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 				<varlistentry>
 					<term
->Benutzerdefinierte Stempel benutzen</term>
+>Benutzerdefinierte Stempel verwenden</term>
 					<listitem>
 					<orderedlist>
 					<listitem
 ><para
->Erstellen Sie ein Symbol, das Sie für Ihren eigenen Stempel benutzen möchten und speichern Sie ihn in einem beliebigen Grafikformat, das von &okular; unterstützt wird.</para
+>Erstellen Sie ein Symbol, das Sie für Ihren eigenen Stempel verwenden möchten und speichern Sie ihn in einem beliebigen Grafikformat, das von &okular; unterstützt wird.</para
 ></listitem>
 					<listitem
 ><para
@@ -4255,13 +4098,13 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Hier wird der Befehl und dessen Parameter zum Aufruf des gewählten Editors mit dem Quelltext des aktuellen Dokuments eingegeben.</para>
 						<para
->Dieses Feld wird automatisch ausgefüllt, wenn Sie einen der voreingestellten Editoren benutzen. Ansonsten wählen Sie <guimenuitem
+>Dieses Feld wird automatisch ausgefüllt, wenn Sie einen der voreingestellten Editoren verwenden. Ansonsten wählen Sie <guimenuitem
 >Benutzerdefinierter Texteditor</guimenuitem
 > im Auswahlfeld <guilabel
 >Editor</guilabel
 > und lesen die Dokumentation des Editors, um den richtigen Befehl einzutragen. </para>
 						<para
->Die folgenden Platzhalter können benutzt werden:</para>
+>Die folgenden Platzhalter können verwendet werden:</para>
 						<itemizedlist>
 						  <listitem>
 						    <para
@@ -4282,6 +4125,210 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Einrichtung der Anzeigemodule von &okular;</title>
+	  <para
+>Mit <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>Okular einrichten …</guimenuitem
+> </menuchoice
+> öffnen Sie einen Dialog für die Einrichtung einiger Module, zu Zeit nur für EPUB, &PostScript;, FictionBook, Txt, OpenDocument Text und &PDF;. </para>
+	  <para
+>Auf den Seiten für EPUB, &PostScript;, FictionBook, Mobipocket, Markdown, Text und OpenDocument Text können Sie die Schrift für das Rendern der Dokumente für diese Formate einstellen. Mit dem Knopf <guibutton
+>Auswählen</guibutton
+> öffnen Sie den bekannten &kde;-Schriftendialog, Weitere Informationen dazu finden Sie in der Dokumentation zu den <ulink url="help:/fundamentals/fonts.html"
+>&kde;-Grundlagen</ulink
+>. </para>
+	  <para
+>Im folgenden werden die Einstellungsseiten für die Module Markdown, &PostScript; und &PDF; beschrieben. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Einrichtung des Markdown-Anzeigemoduls</title>
+	    <para
+>Das &okular;-Anzeigemodul Markdown auf der Grundlage der Bibliothek <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> können Sie einstellen, in dem Sie <guilabel
+>Markdown</guilabel
+> in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt folgende Option: </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>SmartyPants-Formatierung aktivieren</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Ist dies aktiviert, kann &okular; <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>-Formatierung bearbeiten. Diese Formatierung ist manchmal in technischen Texten problematisch, wenn nicht nicht beabsichtige Ersetzungen vorgenommen werden, &eg; wird <literal
+>(C)</literal
+> durch das Copyright-Symbol ersetzt. Diese Einstellung ist als Standard aktiviert. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Einrichtung des &PostScript;-Anzeigemoduls</title>
+	    <para
+>Das &okular;-Anzeigemodul &PostScript; auf der Grundlage von <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> können Sie einstellen, in dem Sie dies in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt nur eine Option: </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Plattformspezifische Schriftarten verwenden</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Diese Einstellung legt fest, ob Ghostscript auch plattformspezifische Schriften verwenden soll. Ansonsten werden nur im Dokument eingebettete Schriften verwendet. Diese Einstellung ist als Standard aktiviert. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Einrichtung des &PDF;-Anzeigemoduls</title>
+	    <para
+>Das &okular;-Anzeigemodul &PDF; auf der Grundlage der Bibliothek <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> können Sie einstellen, in dem Sie dies in der Liste auf der linken Seite des Einrichtungsdialogs auswählen. Es gibt nur eine Option: </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Anzeige dünner Linien verbessern</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Das Zeichnen von Linien in &okular; ist in zwei Schritten implementiert: Generierung und Füllung des Freistellungspfads. Beträgt die Breite einer Linie im ursprünglichen Dokument weniger als ein Pixel, kann dieses Verfahren zu Problemen führen. Für solche Linien wird der Freistellungspfad mit der Farbe gefüllt, die von der Breite des Linienteils im Freistellungspfad abhängt. Wird der Teil der Linie im Freistellungspfad sehr klein, kann der Kontrast zwischen der Form und der Hintergrundfarbe zu klein werden, um die Linie zu erkennen. Ein Gitter aus solchen Linien sieht dann sehr unschön aus. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Dünne Linie (Rot), deren Freistellungspfad (Gestrichelt) und Pixelgrenzen (Schwarz)</entry>
+			    <entry
+>Anzeige dünner Linien bei geringem Kontrast</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Für die Verbesserung der Anzeige dünner Linien in &okular; gibt es zwei Einstellungen: </para>
+		    <para
+>Mit der ersten Einstellung <guimenuitem
+>Einfarbig</guimenuitem
+> passt &okular;den Freistellungspfad und die Position der Linie so an, dass beide auf der selben Pixelgrenze liegen. &ie; &okular; verbreitert dünne Linien auf ein Pixel des Ausgabegeräts. Dieser Modus entspricht etwa der Einstellung <guilabel
+>Anzeige dünner Linien verbessern</guilabel
+> im <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Mit dieser Einstellung werden dünne Linien immer verbreitert. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dünne Linie mit der Einstellung <guimenuitem
+>Einfarbig</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dünne Linie mit der Einstellung <guimenuitem
+>Einfarbig</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>Mit der zweiten Einstellung <guimenuitem
+>Form</guimenuitem
+> wird der Freistellungspfad und die Linie ebenfalls an Pixelgrenzen angepasst, aber die Intensität der Linienfarbe wird entsprechend der Breite korrigiert. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Dünne Linie mit der Einstellung <guimenuitem
+>Form</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Dünne Linie mit der Einstellung <guimenuitem
+>Form</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>In der Voreinstellung mit der Option <guimenuitem
+>Nein</guimenuitem
+> bleibt die Anzeige dünner Linien unverändert. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>Digitale Signaturzertifikate für &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> In diesem Abschnitt können Sie eine benutzerdefinierte Zertifikatsdatenbank festlegen, die beim Hinzufügen von digitalen Signaturen zu &PDF; Dateien verwendet wird. </para>
+			<para
+>Es werden auch alle verfügbaren Zertifikate in der Zertifikats-Datenbank angezeigt. </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

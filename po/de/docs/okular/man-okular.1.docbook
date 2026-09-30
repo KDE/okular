@@ -19,11 +19,11 @@
 >yurchor@ukr.net</email
 ></author>
 <date
->2019-02-14</date>
+>2022-02-19</date>
 <releaseinfo
->Okular 1.7</releaseinfo>
+>Okular 22.04</releaseinfo>
 <productname
->KDE-Anwendungen</productname>
+>KDE Gear</productname>
 </refentryinfo>
 
 <refmeta>
@@ -82,7 +82,7 @@
 ></term>
 <listitem>
 <para
->Öffnet die angegebene Seite im Dokument.</para>
+>Seite mit der angegebenen Nummer im Dokument öffnen.</para>
 </listitem>
 </varlistentry>
 
@@ -150,7 +150,22 @@
 ></term>
 <listitem>
 <para
->Sucht eine Zeichenfolge im Text.</para>
+>Sucht nach dem angegebenen Text im Dokument und hebt ihn hervor (wenn gefunden). Es funktioniert nur, wenn genau ein Dokument als Argument für den Okular-Befehl angegeben wird.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>string</replaceable
+></option
+></term>
+<listitem>
+<para
+>Legt den Befehl zum Aufruf des externen Editors fest. Sie können diesen Befehl nicht für eine bereits laufende Okular-Instanz festlegen. Beachten Sie, dass die Option <option
+>--unique</option
+> nicht unterstützt wird, wenn der Editorbefehl per Kommandozeile festgelegt wird.</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -205,9 +220,9 @@
 ></userinput
 >).</member>
 <member
->kf5options(7)</member>
+>kf6options(7)</member>
 <member
->qt5options(7)</member>
+>qt6options(7)</member>
 <member
 >Weitere Informationen finden Sie auf der Webseite <ulink url="http://okular.kde.org/"
 >https://okular.kde.org/</ulink

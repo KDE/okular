@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2010-07-23 21:01+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -27,33 +27,33 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "sairan@computer.org"
 
-#: generator_djvu.cpp:136
+#: generator_djvu.cpp:137
 #, kde-format
 msgid "Editor"
 msgstr "Редакторы"
 
-#: generator_djvu.cpp:137
+#: generator_djvu.cpp:138
 #, kde-format
 msgid "Publisher"
 msgstr "Баспашысы"
 
-#: generator_djvu.cpp:138
+#: generator_djvu.cpp:139
 #, kde-format
 msgid "Volume"
 msgstr "Томы"
 
-#: generator_djvu.cpp:139
+#: generator_djvu.cpp:140
 #, kde-format
 msgid "Type of document"
 msgstr "Құжаттың түрі"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
 msgstr "Беймәлім"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgid "Component Files"
 msgstr "Компонент файлдары"

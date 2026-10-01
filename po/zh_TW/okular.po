@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2026-10-01 01:43+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -143,107 +143,107 @@ msgstr "Fabio D'Urso"
 msgid "Annotation improvements"
 msgstr "註記改進"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "跳到第 %1 頁"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "開啟外部檔案"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, kde-format
 msgid "Execute '%1'…"
 msgstr "執行 %1…"
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "第一頁"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "前一頁"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "下一頁"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "最後一頁"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "返回"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "往前"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "離開"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "開始展示"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "結束展示"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr "尋找…"
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, kde-format
 msgid "Go To Page…"
 msgstr "跳頁…"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, kde-format
 msgid "Play sound…"
 msgstr "播放聲音…"
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "JavaScript 文稿"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, kde-format
 msgid "Play movie…"
 msgstr "播放影片…"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "播放影片"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "停止影片"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "暫停影片"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "回復播放"
@@ -325,151 +325,151 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "移除註記"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr "此文件正試著執行外部應用程式，但為了安全起見，okular 不允許此動作。"
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "找不到用於開啟 MIME 型態為 %1 的檔案的應用程式。"
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "無法開啟暫存檔"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "列印轉換失敗"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "列印行程發生錯誤"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "列印行程無法啟動"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "列印到檔案失敗"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "印表機的狀態有問題"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "找不到要列印的檔案"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "沒有檔案可列印"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr "找不到用於列印的執行檔。請確定 CUPS lpr 執行檔可以使用。"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "頁面列印大小無效"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "無法開啟 %1。檔案不存在"
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "主旨"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "描述"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "檔案建立者"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "產生者"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "版權"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "頁面"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "已建立"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "已修改"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME 類型"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "類別"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "檔案路徑"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "檔案大小"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "頁面大小"
@@ -582,7 +582,7 @@ msgstr "調整大小成整頁"
 msgid "Scale mode:"
 msgstr "縮放模式："
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "請勿再次顯示此訊息"
@@ -3613,23 +3613,23 @@ msgstr "從目前的頁面"
 msgid "Find as you type"
 msgstr "輸入時尋找"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr "所有檔案 (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "簽名佔位欄位（點擊以簽名）"
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "簽署(&S)…"
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "簽名屬性"

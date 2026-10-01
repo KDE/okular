@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2008-12-17 12:02+0400\n"
 "Last-Translator: zayed <zayed.alsaidi@gmail.com>\n"
 "Language-Team: Arabic <linuxac-kde-arabic-team@googlegroups.com>\n"
@@ -30,33 +30,33 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "metehyi@free.fr,zayed.alsaidi@gmail.com"
 
-#: generator_djvu.cpp:136
+#: generator_djvu.cpp:137
 #, kde-format
 msgid "Editor"
 msgstr "المحرر"
 
-#: generator_djvu.cpp:137
+#: generator_djvu.cpp:138
 #, kde-format
 msgid "Publisher"
 msgstr "الناشر"
 
-#: generator_djvu.cpp:138
+#: generator_djvu.cpp:139
 #, kde-format
 msgid "Volume"
 msgstr "الحجم"
 
-#: generator_djvu.cpp:139
+#: generator_djvu.cpp:140
 #, kde-format
 msgid "Type of document"
 msgstr "نوع  المستند"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
 msgstr "مجهول"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgid "Component Files"
 msgstr "مكوّن الملفات"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_djvu\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2011-08-12 18:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -31,33 +31,33 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "fr.ivan@ukrainian-orthodox.org"
 
-#: generator_djvu.cpp:136
+#: generator_djvu.cpp:137
 #, kde-format
 msgid "Editor"
 msgstr "Редактор"
 
-#: generator_djvu.cpp:137
+#: generator_djvu.cpp:138
 #, kde-format
 msgid "Publisher"
 msgstr "Видавник"
 
-#: generator_djvu.cpp:138
+#: generator_djvu.cpp:139
 #, kde-format
 msgid "Volume"
 msgstr "Том"
 
-#: generator_djvu.cpp:139
+#: generator_djvu.cpp:140
 #, kde-format
 msgid "Type of document"
 msgstr "Тип документа"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
 msgstr "Невідома"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgid "Component Files"
 msgstr "Файли компонентів"

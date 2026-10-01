@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2013-03-20 12:24+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -27,33 +27,33 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "chetan@kompkin.com"
 
-#: generator_djvu.cpp:136
+#: generator_djvu.cpp:137
 #, kde-format
 msgid "Editor"
 msgstr "संपादक"
 
-#: generator_djvu.cpp:137
+#: generator_djvu.cpp:138
 #, kde-format
 msgid "Publisher"
 msgstr "प्रकाशक"
 
-#: generator_djvu.cpp:138
+#: generator_djvu.cpp:139
 #, kde-format
 msgid "Volume"
 msgstr "आवाज"
 
-#: generator_djvu.cpp:139
+#: generator_djvu.cpp:140
 #, kde-format
 msgid "Type of document"
 msgstr "दस्तऐवजाचा प्रकार"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgctxt "Unknown number of component files"
 msgid "Unknown"
 msgstr "अपरिचीत"
 
-#: generator_djvu.cpp:141
+#: generator_djvu.cpp:142
 #, kde-format
 msgid "Component Files"
 msgstr "घटक फाईल्स"

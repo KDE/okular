@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.3\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2025-11-26 21:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -135,111 +135,111 @@ msgstr "Fabio D'Urso"
 msgid "Annotation improvements"
 msgstr "Jegyzet tökéletesítések"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "Ugrás a(z) %1. oldalra"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "Külső fájl megnyitása"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, fuzzy, kde-format
 #| msgid "Execute '%1'..."
 msgid "Execute '%1'…"
 msgstr "Végrehajtás: „%1”…"
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "Első oldal"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Előző oldal"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Következő oldal"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "Utolsó oldal"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "Vissza"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "Előre"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "Kilépés"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "Bemutató"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "A bemutató leállítása"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "Ugrás egy oldalra"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play sound…"
 msgstr "Hang lejátszása..."
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Javascript-fájl"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, fuzzy, kde-format
 #| msgid "Play movie"
 msgid "Play movie…"
 msgstr "Film lejátszása"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "Film lejátszása"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "Film leállítása"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "Film szüneteltetése"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "Film folytatása"
@@ -321,7 +321,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "jegyzetek eltávolítása"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -330,52 +330,52 @@ msgstr ""
 "A dokumentum egy külső alkalmazást próbált elindítani, ezt biztonsági "
 "okokból a program nem engedélyezi."
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nincs kezelőalkalmazás %1 MIME-típusú fájlokhoz."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nem sikerült megnyitni egy ideiglenes fájlt"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "A nyomtatáskonverzió nem sikerült"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "A nyomtatási folyamat összeomlott"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nem sikerült elindítani a nyomtatási folyamatot"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nem sikerült nyomtatni a fájlba"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "A nyomtató érvénytelen állapotban voltcén"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nem található nyomtatandó fájlfájl a ny"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nem volt nyomtatandó fájl"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -384,92 +384,92 @@ msgstr ""
 "Nem található megfelelő bináris a nyomtatáshoz. Ellenőrizze hogy a CUPS lpr "
 "bináris elérhető-e"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Az oldal nyomtatási mérete érvénytelen"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nem sikerült megnyitni ezt a fájlt: „%1”. A fájl nem létezik"
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "Cím"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "Tárgy"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "Leírás"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "Szerző"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "Létrehozó"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "Készítő"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "Szerzői jog"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "Oldalszám"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "Létrehozási dátum"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "Utolsó módosítás"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-típus"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "Kategória"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "Kulcsszavak"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "Fájl útvonalaó"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "Fájlméret"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "Oldalméret"
@@ -583,7 +583,7 @@ msgstr "Illesztés teljes oldalra"
 msgid "Scale mode:"
 msgstr "Méretezés mód:"
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ne jelenjen meg többet ez az üzenet"
@@ -3677,25 +3677,25 @@ msgstr "Az aktuális oldaltól"
 msgid "Find as you type"
 msgstr "Keresés gépelés közben"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr "Minden fájl (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Aláírás helykitöltő (kattintson az aláíráshoz)"
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
 #| msgctxt "@action:button"
 #| msgid "Sign"
 msgid "&Sign…"
 msgstr "Aláírás"
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "Aláírás-tulajdonságok"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2026-09-25 17:53+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -138,107 +138,107 @@ msgstr "Fabio D’Urso"
 msgid "Annotation improvements"
 msgstr "Forbetringar i påteikningar"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "Gå til side %1"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "Opna ekstern fil"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, kde-format
 msgid "Execute '%1'…"
 msgstr "Køyr «%1» …"
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "Første side"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Førre side"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Neste side"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "Siste side"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "Tilbake"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "Fram"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "Avslutt"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "Start presentasjon"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "Avslutt presentasjon"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr "Finn …"
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, kde-format
 msgid "Go To Page…"
 msgstr "Gå til side …"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, kde-format
 msgid "Play sound…"
 msgstr "Spel lyd …"
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "Java-skript"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, kde-format
 msgid "Play movie…"
 msgstr "Spel film …"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "Spel film"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "Stopp film"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "Pausa film"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "Hald fram film"
@@ -320,7 +320,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "fjern påteikningar"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -329,52 +329,52 @@ msgstr ""
 "Dokumentet prøver å køyra eit eksternt program, men av tryggleiksgrunnar "
 "tillèt ikkje Okular det."
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Fann ingen program som kan opna filer av MIME-typen %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Klarte ikkje opna mellombels fil."
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Feil ved formatkonvertering for utskrift"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Utskriftsprosessen krasja"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Utskriftsprosessen klarte ikkje starta"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Klarte ikkje skriva ut til fil"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Skrivaren var i ein ugyldig tilstand"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Fann ikkje fila å skriva ut"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "Det fanst inga fil å skriva ut"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -383,93 +383,93 @@ msgstr ""
 "Fann ikkje eit passande program for utskrift. Sjå etter at CUPS-programfila "
 "«lpr» er tilgjengeleg."
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Utskriftsstorleiken for sida er ugyldig"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Klarte ikkje opna «%1». Fila finst ikkje."
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "Tittel"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "Skildring"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "Forfattar"
 
 # Dette er ein PDF-eigenskap, og tyder opphavs*program* ikkje opphavsperson.
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "Opphavsprogram"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "Produsent"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "Opphavsrett"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "Sider"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "Oppretta"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "Endra"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-type"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "Kategori"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "Filadresse"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "Filstorleik"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "Sidestorleik"
@@ -582,7 +582,7 @@ msgstr "Tilpass til sidestorleik"
 msgid "Scale mode:"
 msgstr "Skalering:"
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Ikkje vis denne meldinga igjen"
@@ -3649,23 +3649,23 @@ msgstr "Frå gjeldande side"
 msgid "Find as you type"
 msgstr "Kontinuerleg søk"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr "Alle filer (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Signatur-plasshaldar (trykk for å signera)"
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "&Signer …"
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "Sertifikateigenskapar"

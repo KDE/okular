@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2025-11-11 19:00+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -140,107 +140,107 @@ msgstr "Fabio D'Urso"
 msgid "Annotation improvements"
 msgstr "Anotācijas uzlabojumi"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "Iet uz %1. lapu"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "Atvērt ārēju datni"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, kde-format
 msgid "Execute '%1'…"
 msgstr "Izpildīt „%1“…"
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "Pirmā lapa"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Iepriekšējā lapa"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Nākamā lapa"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "Pēdējā lapa"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "Atpakaļ"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "Uz priekšu"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "Iziet"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "Sākt prezentāciju"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "Beigt prezentāciju"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr "Meklēt…"
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, kde-format
 msgid "Go To Page…"
 msgstr "Iet uz lapu…"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, kde-format
 msgid "Play sound…"
 msgstr "Atskaņot skaņu…"
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "„JavaScript“ skripts"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, kde-format
 msgid "Play movie…"
 msgstr "Atskaņot filmu…"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "Atskaņot filmu"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "Apturēt filmu"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "Pauzēt filmu"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "Turpināt atskaņot filmu"
@@ -322,7 +322,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "noņemt anotācijas"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -331,52 +331,52 @@ msgstr ""
 "Dokuments mēģina palaist ārēju programmu, bet jūsu drošībai „Okular“ to "
 "neatļauj."
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nav atrasta neviena programma datnes ar %1 mime tipu atvēršanai."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Neizdevās atvērt pagaidu datni"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Drukāšanas pārveide neizdevās"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Drukāšanas process avarēja"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Drukāšanas procesu neizdevās palaist"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Drukāšana uz datni neizdevās"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printeris atradās neatļautā stāvoklī"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Neizdevās atrast drukājamo datni"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebija datnes, ko drukāt"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -385,92 +385,92 @@ msgstr ""
 "Neizdevās atrast piemērotu bināro datni drukāšanai. Pārliecinieties, ka CUPS "
 "lpr binārā datne ir pieejama"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Nederīgs lapas drukas izmērs"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Neizdevās atvērt „%1“. Datne nepastāv"
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "Virsraksts"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "Tēma"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "Apraksts"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "Autors"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "Izveidotājs"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "Ražotājs"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "Autortiesības"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "Lapas"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "Izveidots"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "Mainīts"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tips"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "Atslēgvārdi"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "Datnes ceļš"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "Datnes izmērs"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "Lapas izmērs"
@@ -583,7 +583,7 @@ msgstr "Ietilpināt līdz pilnai lapai"
 msgid "Scale mode:"
 msgstr "Tālummaiņas režīms:"
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Turpmāk vairs nerādīt šo paziņojumu"
@@ -3666,23 +3666,23 @@ msgstr "No pašreizējās lapas"
 msgid "Find as you type"
 msgstr "Meklēt rakstīšanas laikā"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr "Visas datnes (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "Paraksta lauks (klikšķiniet, lai parakstītu)"
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "&Parakstīt…"
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "Paraksta īpašības"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdelibs4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2021-11-10 15:49+0100\n"
 "Last-Translator: Eduard Werner <edi.werner@gmx.de>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -131,111 +131,111 @@ msgstr ""
 msgid "Annotation improvements"
 msgstr "Polěpšenja za přispomnjenja"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "Dźi na stronu %1"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "Eksternu dataju wočinić"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, fuzzy, kde-format
 #| msgid "Execute '%1'..."
 msgid "Execute '%1'…"
 msgstr "'%1' wuwjesć ..."
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "Prěnja strona"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "Předchadna strona"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "Přichodna strona"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "Poslednja strona"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "Wróćo"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "Doprědka"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "Kónc"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "Prezentaciju započeć"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "Prezentaciju zakónčić"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "Dźi na stronu"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, fuzzy, kde-format
 #| msgid "Play sound..."
 msgid "Play sound…"
 msgstr "Zwuk wothrać ..."
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "JavaScript skript"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, fuzzy, kde-format
 #| msgid "Play movie"
 msgid "Play movie…"
 msgstr "Widejo wothrać"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "Widejo wothrać"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "Widejo zastajić"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "Widejo pozastajić"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "Widejo dale hrać"
@@ -321,7 +321,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "přispomnjenja wotstronić"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -330,52 +330,52 @@ msgstr ""
 "Dokument spyta eksterny program wuwjesć, štož okular z wěstotnych přičin "
 "njedowoli."
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Žana aplikacija definowana za wočinjenje datajow mimetypa %1."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Njemóžu temporarnu dataju wočinić"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konwertěrowanje za ćišć zwrěšćiło"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Ćišćenski proces je znjezbožił"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Ćišćenski proces njehodźi so startować"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Njemóžu do dataje ćišćeć"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Ćišćak njeje w korektnym stawje"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Njemóžu dataju za ćišć namakać"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "Njebě žaneje dataje za ćišć"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -384,92 +384,92 @@ msgstr ""
 "Njemóžach kmany binary namakać za ćišć. Hladajće, zo steji CUPS lpr k "
 "dispoziciji"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Wulkosć strony za ćišć njeje prawa"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Njemóžach '%1' wočinić. Dataja njeeksistuje"
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "Titl"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "Wopisanje"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "Awtor"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "Originalny awtor"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "Strony"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "Wutworjene"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "Změnjene"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME-typ"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "Klučowe słowa"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "Puć k dataji"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "Wulkosć dataje"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "Wulkosć strony"
@@ -583,7 +583,7 @@ msgstr "Na cyłu stronu"
 msgid "Scale mode:"
 msgstr "Skalěrować:"
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "Njepokaž tutu zdźělenku hišće raz"
@@ -3683,25 +3683,25 @@ msgstr "Wot aktualneje strony"
 msgid "Find as you type"
 msgstr "Pytać, jako so zapodawa"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, fuzzy, kde-format
 #| msgid "All files (*)"
 msgid "All Files (*)"
 msgstr "Wšitke dataje (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
 msgid "&Sign…"
 msgstr "Digitalnje &podpisać..."
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "Swójstwa signatury"

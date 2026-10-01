@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2026-09-26 08:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -135,107 +135,107 @@ msgstr "ფაბიო დ'ურსო"
 msgid "Annotation improvements"
 msgstr "ანოტაციის გაუმჯობესებები"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Go to page %1"
 msgstr "%1-ე გვერდზე გადასვლა"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr "გარე ფაილის გახსნა"
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, kde-format
 msgid "Execute '%1'…"
 msgstr "'%1'-ის შესრულება…"
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, kde-format
 msgid "First Page"
 msgstr "პირველი გვერდი"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr "წინა გვერდი"
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, kde-format
 msgid "Next Page"
 msgstr "შემდეგი გვერდი"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, kde-format
 msgid "Last Page"
 msgstr "ბოლო გვერდი"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr "უკან"
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, kde-format
 msgid "Forward"
 msgstr "წინ"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr "&გასვლა"
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, kde-format
 msgid "Start Presentation"
 msgstr "პრეზენტაციის დაწყება"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, kde-format
 msgid "End Presentation"
 msgstr "პრეზენტაციის დასასრული"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr "ძებნა…"
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, kde-format
 msgid "Go To Page…"
 msgstr "გადასვლა გვერდზე…"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, kde-format
 msgid "Play sound…"
 msgstr "ხმის დაკვრა…"
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr "JavaScript-ის სკრიპტი"
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, kde-format
 msgid "Play movie…"
 msgstr "ფილმის დაკვრა…"
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr "ფილმის დაკვრა"
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr "ფილმის გაჩერება"
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, kde-format
 msgid "Pause movie"
 msgstr "ფილმის შეჩერება"
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr "ფილმის გაგრძელება"
@@ -319,7 +319,7 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ანოტაციების წაშლა"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +328,52 @@ msgstr ""
 "დოკუმენტი ცდილობს, გაუშვას გარე აპლიკაცია და თქვენი უსაფრთხოებისთვის Okular "
 "მას ამის უფლებას არ აძლევს."
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME ტიპის, %1 მქონე ფაილის გასახსნელად აპლიკაცია აღმოჩენილი არაა."
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "დროებითი ფაილის გახსნის შეცდომა"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ბეჭდვის გადაყვანის შეცდომა"
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ბეჭდვის პროცესი ავარიულად დასრულდა"
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ბეჭდვის პროცესის გაშვების შეცდომა"
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ფაილში დაბეჭდვის შეცდომა"
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "პრინტერი არასწორ მდგომარეობაშია"
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "დასაბეჭდი ფაილის აღმოჩენის შეცდომა"
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr "დასაბეჭდი ფაილი ვერ ვიპოვე"
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +382,92 @@ msgstr ""
 "დაბეჭდვისთვის საჭირო გამშვები ფაილი აღმოჩენილი არაა. დარწმუნდით, რომ CUPS-ის "
 "lpr გამშვები ფაილი ხელმისაწვდომია"
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "გვერდის დასაბეჭდი ზომა არასწორია"
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ვერ გავხსენი. ფალი არ არსებობს"
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "სათაური"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "თემა"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr "აღწერა"
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, kde-format
 msgid "Author"
 msgstr "ავტორი"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, kde-format
 msgid "Creator"
 msgstr "შემქმნელი"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr "პროდუსერი"
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr "საავტორო უფლებები"
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, kde-format
 msgid "Pages"
 msgstr "გვერდები"
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr "შექმნილია"
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr "შეიცვალა"
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ტიპი"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr "კატეგორია"
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, kde-format
 msgid "File Path"
 msgstr "ფაილის ბილიკი"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, kde-format
 msgid "File Size"
 msgstr "ფაილის ზომა"
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, kde-format
 msgid "Page Size"
 msgstr "Page Size"
@@ -580,7 +580,7 @@ msgstr "სრულ გვერდში ჩატევა"
 msgid "Scale mode:"
 msgstr "გადიდების რეჟიმი:"
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr "მეტჯერ აღარ აჩვენო ეს გაფრთხილება"
@@ -3649,23 +3649,23 @@ msgstr "მიმდინარე გვერდიდან"
 msgid "Find as you type"
 msgstr "ტექსტის პოვნა აკრეფისას"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr "ყველა ფაილი (*)"
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr "ხელმოწერის ადგილმჭერი (წკაპი ხელმოსაწერად)"
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr "ხელმო&წერა…"
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, kde-format
 msgid "Signature Properties"
 msgstr "ხელმოწერის თვისებები"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2025-07-13 23:11+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -36,13 +36,13 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mikko.piippo@helsinki.fi,lliehu@kolumbus.fi,translator@legisign.org"
 
-#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2213
-#: generator_pdf.cpp:2241
+#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2220
+#: generator_pdf.cpp:2248
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Väliaikaistiedoston kirjoittaminen epäonnistui"
 
-#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2264
+#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2271
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgid "Failed removing file"
@@ -84,7 +84,7 @@ msgid "Enhance thin lines:"
 msgstr "Paranna kapeita viivoja:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1026
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1027
 #, kde-format
 msgid "No"
 msgstr "Ei"
@@ -108,19 +108,19 @@ msgid "Default scaling mode when printing:"
 msgstr "Tulostettujen sivujen oletusskaalaustapa:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:101
+#: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to printable area"
 msgstr "Sovita tulostusalueeseen"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:102
+#: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:105
 #, kde-format
 msgid "Fit to full page"
 msgstr "Sovita koko sivulle"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
-#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:103
+#: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:106
 #, kde-format
 msgid "None; print original size"
 msgstr "Ei mitään: tulosta alkuperäinen sivu"
@@ -200,29 +200,29 @@ msgstr "Saatavilla olevat varmenteet"
 msgid "&Load Signatures"
 msgstr "&Lataa allekirjoitukset"
 
-#: formfields.cpp:565 generator_pdf.cpp:2268
+#: formfields.cpp:565 generator_pdf.cpp:2275
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
 msgstr "Väliaikaistiedoston nimen muuttaminen epäonnistui"
 
-#: generator_pdf.cpp:86
+#: generator_pdf.cpp:89
 #, kde-format
 msgid "PDF Options"
 msgstr "PDF-asetukset"
 
-#: generator_pdf.cpp:88
+#: generator_pdf.cpp:91
 #, kde-format
 msgid "Print annotations"
 msgstr "Tulosta merkinnät"
 
-#: generator_pdf.cpp:89
+#: generator_pdf.cpp:92
 #, kde-format
 msgid "Include annotations in the printed document"
 msgstr "Sisällytä merkinnät tulostettavaan tiedostoon"
 
-#: generator_pdf.cpp:90
+#: generator_pdf.cpp:93
 #, kde-format
 msgid ""
 "Includes annotations in the printed document. You can disable this if you "
@@ -231,17 +231,17 @@ msgstr ""
 "Sisällytä merkinnät tulostettavaan tiedostoon. Voit poistaa tämän käytöstä, "
 "jos haluat tulostaa alkuperäisen tiedoston merkinnöittä."
 
-#: generator_pdf.cpp:92
+#: generator_pdf.cpp:95
 #, kde-format
 msgid "Force rasterization"
 msgstr "Pakota hahmonnus"
 
-#: generator_pdf.cpp:93
+#: generator_pdf.cpp:96
 #, kde-format
 msgid "Rasterize into an image before printing"
 msgstr "Hahmonna kuvaksi ennen tulostusta"
 
-#: generator_pdf.cpp:94
+#: generator_pdf.cpp:97
 #, kde-format
 msgid ""
 "Forces the rasterization of each page into an image before printing it. This "
@@ -252,53 +252,53 @@ msgstr ""
 "laatua hiukan, mutta auttaa muutoin virheellisesti tulostuvien tiedostojen "
 "tulostamisessa."
 
-#: generator_pdf.cpp:104
+#: generator_pdf.cpp:107
 #, kde-format
 msgid "Scaling mode for the printed pages"
 msgstr "Tulostettujen sivujen skaalaustapa"
 
-#: generator_pdf.cpp:105
+#: generator_pdf.cpp:108
 #, kde-format
 msgid "Scale mode:"
 msgstr "Skaalaustapa:"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1025
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1024
+#: generator_pdf.cpp:1025
 #, kde-format
 msgid "Format"
 msgstr "Muoto"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Encrypted"
 msgstr "Salattu"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Unencrypted"
 msgstr "Salaamaton"
 
-#: generator_pdf.cpp:1025
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Security"
 msgstr "Turvallisuus"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Yes"
 msgstr "Kyllä"
 
-#: generator_pdf.cpp:1026
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Optimized"
 msgstr "Optimoitu"
 
-#: generator_pdf.cpp:1511
+#: generator_pdf.cpp:1516
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -309,12 +309,12 @@ msgstr ""
 "\n"
 "Päiväys: %2"
 
-#: generator_pdf.cpp:1733
+#: generator_pdf.cpp:1739
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Käytössä Poppler %1"
 
-#: generator_pdf.cpp:1735
+#: generator_pdf.cpp:1741
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -325,17 +325,17 @@ msgstr ""
 "\n"
 "Koostettu Poppler-versiolle %2"
 
-#: generator_pdf.cpp:1770
+#: generator_pdf.cpp:1776
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1770
+#: generator_pdf.cpp:1776
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF-taustaosan asetukset"
 
-#: generator_pdf.cpp:2288
+#: generator_pdf.cpp:2295
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "

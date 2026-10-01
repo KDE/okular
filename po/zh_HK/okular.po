@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kpdf\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-26 00:43+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2006-01-10 22:45+0800\n"
 "Last-Translator: Walter Cheuk <wwycheuk@netvigator.com>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
@@ -131,114 +131,114 @@ msgstr ""
 msgid "Annotation improvements"
 msgstr "%1 屬性"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go to page %1"
 msgstr "跳至頁"
 
-#: core/action.cpp:137
+#: core/action.cpp:124
 #, kde-format
 msgid "Open external file"
 msgstr ""
 
-#: core/action.cpp:197
+#: core/action.cpp:184
 #, kde-format
 msgid "Execute '%1'…"
 msgstr ""
 
-#: core/action.cpp:294
+#: core/action.cpp:281
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgid "First Page"
 msgstr "符合頁面"
 
-#: core/action.cpp:296 part/presentationwidget.cpp:184
+#: core/action.cpp:283 part/presentationwidget.cpp:184
 #, kde-format
 msgid "Previous Page"
 msgstr ""
 
-#: core/action.cpp:298 part/presentationwidget.cpp:201
+#: core/action.cpp:285 part/presentationwidget.cpp:201
 #, fuzzy, kde-format
 msgid "Next Page"
 msgstr "符合頁面"
 
-#: core/action.cpp:300
+#: core/action.cpp:287
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgid "Last Page"
 msgstr "符合頁面"
 
-#: core/action.cpp:302
+#: core/action.cpp:289
 #, kde-format
 msgid "Back"
 msgstr ""
 
-#: core/action.cpp:304
+#: core/action.cpp:291
 #, fuzzy, kde-format
 #| msgid "Format"
 msgid "Forward"
 msgstr "格式"
 
-#: core/action.cpp:306
+#: core/action.cpp:293
 #, kde-format
 msgid "Quit"
 msgstr ""
 
-#: core/action.cpp:308
+#: core/action.cpp:295
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "Start Presentation"
 msgstr "表現"
 
-#: core/action.cpp:310
+#: core/action.cpp:297
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgid "End Presentation"
 msgstr "表現"
 
-#: core/action.cpp:312
+#: core/action.cpp:299
 #, kde-format
 msgid "Find…"
 msgstr ""
 
-#: core/action.cpp:314
+#: core/action.cpp:301
 #, fuzzy, kde-format
 #| msgid "Go to Page"
 msgid "Go To Page…"
 msgstr "跳至頁"
 
-#: core/action.cpp:365
+#: core/action.cpp:352
 #, kde-format
 msgid "Play sound…"
 msgstr ""
 
-#: core/action.cpp:433 core/action.cpp:549
+#: core/action.cpp:420 core/action.cpp:536
 #, kde-format
 msgid "JavaScript Script"
 msgstr ""
 
-#: core/action.cpp:483
+#: core/action.cpp:470
 #, fuzzy, kde-format
 msgid "Play movie…"
 msgstr "頁："
 
-#: core/action.cpp:554
+#: core/action.cpp:541
 #, kde-format
 msgid "Play movie"
 msgstr ""
 
-#: core/action.cpp:556
+#: core/action.cpp:543
 #, kde-format
 msgid "Stop movie"
 msgstr ""
 
-#: core/action.cpp:558
+#: core/action.cpp:545
 #, fuzzy, kde-format
 msgid "Pause movie"
 msgstr "頁："
 
-#: core/action.cpp:560
+#: core/action.cpp:547
 #, kde-format
 msgid "Resume movie"
 msgstr ""
@@ -320,157 +320,157 @@ msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "表現"
 
-#: core/document.cpp:4123 core/document.cpp:4129
+#: core/document.cpp:4117 core/document.cpp:4123
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
 "safety, Okular does not allow that."
 msgstr ""
 
-#: core/document.cpp:4139
+#: core/document.cpp:4133
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr ""
 
-#: core/document.cpp:4799
+#: core/document.cpp:4759
 #, fuzzy, kde-format
 #| msgid "Could not open %1"
 msgid "Could not open a temporary file"
 msgstr "無法開啟 %1"
 
-#: core/document.cpp:4801
+#: core/document.cpp:4761
 #, kde-format
 msgid "Print conversion failed"
 msgstr ""
 
-#: core/document.cpp:4803
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process crashed"
 msgstr ""
 
-#: core/document.cpp:4805
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing process could not start"
 msgstr ""
 
-#: core/document.cpp:4807
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printing to file failed"
 msgstr ""
 
-#: core/document.cpp:4809
+#: core/document.cpp:4769
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr ""
 
-#: core/document.cpp:4811
+#: core/document.cpp:4771
 #, kde-format
 msgid "Unable to find file to print"
 msgstr ""
 
-#: core/document.cpp:4813
+#: core/document.cpp:4773
 #, kde-format
 msgid "There was no file to print"
 msgstr ""
 
-#: core/document.cpp:4815
+#: core/document.cpp:4775
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
 "available"
 msgstr ""
 
-#: core/document.cpp:4817
+#: core/document.cpp:4777
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5473 part/part.cpp:1141
+#: core/document.cpp:5416 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr ""
 
-#: core/document.cpp:5982
+#: core/document.cpp:5925
 #, kde-format
 msgid "Title"
 msgstr "標題"
 
-#: core/document.cpp:5985
+#: core/document.cpp:5928
 #, kde-format
 msgid "Subject"
 msgstr "主題"
 
-#: core/document.cpp:5988
+#: core/document.cpp:5931
 #, kde-format
 msgid "Description"
 msgstr ""
 
-#: core/document.cpp:5991
+#: core/document.cpp:5934
 #, fuzzy, kde-format
 #| msgid "Author"
 msgid "Author"
 msgstr "作者"
 
-#: core/document.cpp:5994
+#: core/document.cpp:5937
 #, fuzzy, kde-format
 #| msgid "Creator"
 msgid "Creator"
 msgstr "建立者"
 
-#: core/document.cpp:5997
+#: core/document.cpp:5940
 #, kde-format
 msgid "Producer"
 msgstr ""
 
-#: core/document.cpp:6000
+#: core/document.cpp:5943
 #, kde-format
 msgid "Copyright"
 msgstr ""
 
-#: core/document.cpp:6003
+#: core/document.cpp:5946
 #, fuzzy, kde-format
 #| msgid "Pages:"
 msgid "Pages"
 msgstr "頁："
 
-#: core/document.cpp:6006
+#: core/document.cpp:5949
 #, kde-format
 msgid "Created"
 msgstr ""
 
-#: core/document.cpp:6009
+#: core/document.cpp:5952
 #, kde-format
 msgid "Modified"
 msgstr ""
 
-#: core/document.cpp:6012
+#: core/document.cpp:5955
 #, fuzzy, kde-format
 #| msgid "Type"
 msgid "MIME Type"
 msgstr "類型"
 
-#: core/document.cpp:6015
+#: core/document.cpp:5958
 #, kde-format
 msgid "Category"
 msgstr ""
 
-#: core/document.cpp:6018
+#: core/document.cpp:5961
 #, kde-format
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: core/document.cpp:6021
+#: core/document.cpp:5964
 #, fuzzy, kde-format
 msgid "File Path"
 msgstr "標題"
 
-#: core/document.cpp:6024
+#: core/document.cpp:5967
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "File Size"
 msgstr "頁："
 
-#: core/document.cpp:6027
+#: core/document.cpp:5970
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Page Size"
@@ -596,7 +596,7 @@ msgstr ""
 msgid "Scale mode:"
 msgstr ""
 
-#: core/script/js_app.cpp:206
+#: core/script/js_app.cpp:203
 #, kde-format
 msgid "Do not show this message again"
 msgstr ""
@@ -3717,23 +3717,23 @@ msgstr ""
 msgid "Find as you type"
 msgstr "找尋已停止。"
 
-#: part/formwidgets.cpp:873
+#: part/formwidgets.cpp:872
 #, kde-format
 msgid "All Files (*)"
 msgstr ""
 
-#: part/formwidgets.cpp:1283
+#: part/formwidgets.cpp:1282
 #, kde-format
 msgctxt "Digital signature"
 msgid "Signature placeholder (Click to Sign)"
 msgstr ""
 
-#: part/formwidgets.cpp:1349 part/signaturepanel.cpp:97
+#: part/formwidgets.cpp:1348 part/signaturepanel.cpp:97
 #, kde-format
 msgid "&Sign…"
 msgstr ""
 
-#: part/formwidgets.cpp:1353 part/signaturepropertiesdialog.cpp:43
+#: part/formwidgets.cpp:1352 part/signaturepropertiesdialog.cpp:43
 #, fuzzy, kde-format
 msgid "Signature Properties"
 msgstr "屬性(&P)"

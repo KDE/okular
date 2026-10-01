@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_xps\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-01 17:38+0000\n"
 "PO-Revision-Date: 2007-03-14 23:00+0900\n"
 "Last-Translator: Yukiko Bando <ybando@k6.dion.ne.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "ybando@k6.dion.ne.jp"
 
-#: generator_xps.cpp:1914
+#: generator_xps.cpp:1923
 #, kde-format
 msgid "Revision"
 msgstr "リビジョン"

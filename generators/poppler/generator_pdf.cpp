@@ -51,6 +51,7 @@
 #include <core/textpage.h>
 #include <core/utils.h>
 
+#include "core/document.h"
 #include "pdfsettings.h"
 
 #include <poppler-media.h>
@@ -72,6 +73,8 @@ Q_DECLARE_METATYPE(Poppler::FontInfo)
 
 static const int defaultPageWidth = 595;
 static const int defaultPageHeight = 842;
+
+static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::OutlineItem &outlineItem);
 
 class PDFOptionsPage : public Okular::PrintOptionsWidget
 {
@@ -663,7 +666,6 @@ static void PDFGeneratorPopplerDebugFunction(const QString &message, const QVari
 PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     : Generator(parent, args)
     , pdfdoc(nullptr)
-    , docSynopsisDirty(true)
     , xrefReconstructed(false)
     , hasVisibleOverprint(false)
     , docEmbeddedFilesDirty(true)
@@ -865,8 +867,7 @@ bool PDFGenerator::doCloseDocument()
     annotProxy = nullptr;
     pdfdoc = nullptr;
     userMutex()->unlock();
-    docSynopsisDirty = true;
-    docSyn.clear();
+    docSyn.reset();
     docEmbeddedFilesDirty = true;
     qDeleteAll(docEmbeddedFiles);
     docEmbeddedFiles.clear();
@@ -1035,8 +1036,8 @@ Okular::DocumentInfo PDFGenerator::generateDocumentInfo(const QSet<Okular::Docum
 
 const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
 {
-    if (!docSynopsisDirty) {
-        return &docSyn;
+    if (docSyn.has_value()) {
+        return &docSyn.value();
     }
 
     if (!pdfdoc) {
@@ -1051,10 +1052,14 @@ const Okular::DocumentSynopsis *PDFGenerator::generateDocumentSynopsis()
         return nullptr;
     }
 
-    addSynopsisChildren(outline, &docSyn);
+    docSyn = Okular::DocumentSynopsis();
 
-    docSynopsisDirty = false;
-    return &docSyn;
+    for (const Poppler::OutlineItem &outlineItem : outline) {
+        auto item = addOutlineItem(outlineItem);
+        docSyn->addChild(Okular::DocumentSynopsis::Element {item});
+    }
+
+    return &docSyn.value();
 }
 
 static Okular::FontInfo::FontType convertPopplerFontInfoTypeToOkularFontInfoType(Poppler::FontInfo::Type type)
@@ -1707,8 +1712,9 @@ QVariant PDFGenerator::metaData(const QString &key, const QVariant &option) cons
             fillViewportFromLinkDestination(viewport, *ld);
         }
         if (viewport.pageNumber >= 0) {
-            return viewport.toString();
+            return QVariant::fromValue(viewport);
         }
+        return QVariant();
     } else if (key == QLatin1String("DocumentTitle")) {
         userMutex()->lock();
         QString title = pdfdoc->info(QStringLiteral("Title"));
@@ -1905,31 +1911,32 @@ Okular::TextPage *PDFGenerator::abstractTextPage(const std::vector<std::unique_p
     return ktp;
 }
 
-void PDFGenerator::addSynopsisChildren(const QList<Poppler::OutlineItem> &outlineItems, QDomNode *parentDestination)
+static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::OutlineItem &outlineItem)
 {
-    for (const Poppler::OutlineItem &outlineItem : outlineItems) {
-        QDomElement item = docSyn.createElement(outlineItem.name());
-        parentDestination->appendChild(item);
+    Okular::DocumentSynopsis::ElementBuilder element(outlineItem.name());
 
-        item.setAttribute(QStringLiteral("ExternalFileName"), outlineItem.externalFileName());
-        const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
-        if (outlineDestination) {
-            const QString destinationName = outlineDestination->destinationName();
-            if (!destinationName.isEmpty()) {
-                item.setAttribute(QStringLiteral("ViewportName"), destinationName);
-            } else {
-                Okular::DocumentViewport vp;
-                fillViewportFromLinkDestination(vp, *outlineDestination);
-                item.setAttribute(QStringLiteral("Viewport"), vp.toString());
-            }
-        }
-        item.setAttribute(QStringLiteral("Open"), outlineItem.isOpen());
-        item.setAttribute(QStringLiteral("URL"), outlineItem.uri());
-
-        if (outlineItem.hasChildren()) {
-            addSynopsisChildren(outlineItem.children(), &item);
+    element.setExternalFileName(outlineItem.externalFileName());
+    const QSharedPointer<const Poppler::LinkDestination> outlineDestination = outlineItem.destination();
+    if (outlineDestination) {
+        const QString destinationName = outlineDestination->destinationName();
+        if (!destinationName.isEmpty()) {
+            element.setViewPortName(destinationName);
+        } else {
+            Okular::DocumentViewport vp;
+            fillViewportFromLinkDestination(vp, *outlineDestination);
+            element.setViewPort(vp);
         }
     }
+    element.setOpen(outlineItem.isOpen());
+    element.setUrl(outlineItem.uri());
+    if (outlineItem.hasChildren()) {
+        const auto children = outlineItem.children();
+        for (const auto &child : children) {
+            element.addChild(Okular::DocumentSynopsis::Element {addOutlineItem(child)});
+        }
+    }
+
+    return element;
 }
 
 void PDFGenerator::addAnnotations(Poppler::Page *popplerPage, Okular::Page *page)

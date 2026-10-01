@@ -317,12 +317,12 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
         return m_docSynopsis;
     }
 
-    QStack<QDomElement> stack;
+    QStack<Okular::DocumentSynopsis::ElementBuilder> stack;
 
     QList<PreBookmark>::ConstIterator it = prebookmarks.constBegin();
     QList<PreBookmark>::ConstIterator itEnd = prebookmarks.constEnd();
     for (; it != itEnd; ++it) {
-        QDomElement domel = m_docSynopsis->createElement((*it).title);
+        auto domel = Okular::DocumentSynopsis::ElementBuilder((*it).title);
         Anchor a = m_dviRenderer->findAnchor((*it).anchorName);
         if (a.isValid()) {
             Okular::DocumentViewport vp;
@@ -330,12 +330,12 @@ const Okular::DocumentSynopsis *DviGenerator::generateDocumentSynopsis()
             const Okular::Page *p = document()->page(static_cast<quint16>(a.page) - 1);
 
             fillViewportFromAnchor(vp, a, (int)p->width(), (int)p->height());
-            domel.setAttribute(QStringLiteral("Viewport"), vp.toString());
+            domel.setViewPort(vp);
         }
         if (stack.isEmpty()) {
-            m_docSynopsis->appendChild(domel);
+            m_docSynopsis->addChild(Okular::DocumentSynopsis::Element {domel});
         } else {
-            stack.top().appendChild(domel);
+            stack.top().addChild(Okular::DocumentSynopsis::Element {domel});
             stack.pop();
         }
         for (int i = 0; i < (*it).noOfChildren; ++i) {
@@ -512,7 +512,7 @@ QVariant DviGenerator::metaData(const QString &key, const QVariant &option) cons
             Okular::DocumentViewport viewport;
             fillViewportFromAnchor(viewport, anchor, page);
             if (viewport.isValid()) {
-                return viewport.toString();
+                return QVariant::fromValue(viewport);
             }
         }
     }

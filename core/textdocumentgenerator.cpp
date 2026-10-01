@@ -206,19 +206,16 @@ QList<TextDocumentGeneratorPrivate::AnnotationInfo> TextDocumentGeneratorPrivate
 
 void TextDocumentGeneratorPrivate::generateTitleInfos()
 {
-    QStack<QPair<int, QDomNode>> parentNodeStack;
-
-    QDomNode parentNode = mDocumentSynopsis;
-
-    parentNodeStack.push(qMakePair(0, parentNode));
+    QStack<QPair<int, DocumentSynopsis::ElementBuilder>> parentNodeStack;
 
     for (int i = 0; i < mTitlePositions.count(); ++i) {
         const TitlePosition &position = mTitlePositions[i];
+        std::optional<DocumentSynopsis::ElementBuilder> parentNode;
 
         Okular::DocumentViewport viewport = TextDocumentUtils::calculateViewport(mDocument, position.block);
 
-        QDomElement item = mDocumentSynopsis.createElement(position.title);
-        item.setAttribute(QStringLiteral("Viewport"), viewport.toString());
+        auto item = DocumentSynopsis::ElementBuilder(position.title);
+        item.setViewPort(viewport);
 
         int headingLevel = position.level;
 
@@ -235,8 +232,12 @@ void TextDocumentGeneratorPrivate::generateTitleInfos()
                 parentNodeStack.pop();
             }
         }
-        parentNode.appendChild(item);
-        parentNodeStack.push(qMakePair(headingLevel, QDomNode(item)));
+        if (parentNode) {
+            parentNode->addChild(Okular::DocumentSynopsis::Element {item});
+        } else {
+            mDocumentSynopsis.addChild(Okular::DocumentSynopsis::Element {item});
+        }
+        parentNodeStack.push(qMakePair(headingLevel, item));
     }
 }
 
@@ -443,7 +444,7 @@ Okular::DocumentInfo TextDocumentGenerator::generateDocumentInfo(const QSet<Docu
 const Okular::DocumentSynopsis *TextDocumentGenerator::generateDocumentSynopsis()
 {
     Q_D(TextDocumentGenerator);
-    if (!d->mDocumentSynopsis.hasChildNodes()) {
+    if (d->mDocumentSynopsis.children().isEmpty()) {
         return nullptr;
     } else {
         return &d->mDocumentSynopsis;

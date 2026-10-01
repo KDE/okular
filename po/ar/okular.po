@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-26 00:43+0000\n"
-"PO-Revision-Date: 2026-09-23 17:27+0400\n"
+"PO-Revision-Date: 2026-09-26 16:50+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -639,7 +639,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "نوع توقيع غير متاح للشهادة الحالية"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5627,10 +5627,9 @@ msgstr "خلفيات مستخدمة حديثا:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "نوع التوقيع: %1"
+msgstr "نوع التوقيع"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5677,35 +5676,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "لا شيء"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "توقيع Adobe PKCS7"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "Signature type"
-#| msgid "Unsigned signature"
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "توقيع غير موقع"
+msgstr "توقيع eIDAS أساسي"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "توقيع eIDAS مع ختم زمني"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "توقيع eIDAS مع ختم زمني للتحقق طويل الأمد"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5713,7 +5708,7 @@ msgctxt "Signature type"
 msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
-msgstr ""
+msgstr "توقيع eIDAS مع ختم زمني للتحقق طويل الأمد ودعم إعادة التحقق"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

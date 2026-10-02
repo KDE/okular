@@ -2364,6 +2364,7 @@ AnnotationPrivate *StampAnnotationPrivate::getNewAnnotationPrivate()
 {
     return new StampAnnotationPrivate();
 }
+
 /** InkAnnotation [Annotation] */
 
 class Okular::InkAnnotationPrivate : public Okular::AnnotationPrivate
@@ -3124,6 +3125,11 @@ WidgetAnnotation::WidgetAnnotation()
 {
 }
 
+WidgetAnnotation::WidgetAnnotation(WidgetAnnotationPrivate &dd)
+    : Annotation(dd)
+{
+}
+
 WidgetAnnotation::WidgetAnnotation(const QDomNode &description)
     : Annotation(*new WidgetAnnotationPrivate, description)
 {
@@ -3171,11 +3177,11 @@ Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
 #if HAVE_NEW_SIGNATURE_API
 /** SignatureAnnotation [Annotation] */
 
-class Okular::SignatureAnnotationPrivate : public Okular::AnnotationPrivate
+class Okular::SignatureAnnotationPrivate : public Okular::WidgetAnnotationPrivate
 {
 public:
     SignatureAnnotationPrivate()
-        : AnnotationPrivate()
+        : WidgetAnnotationPrivate()
         , m_pageNumber(-1)
     {
     }
@@ -3195,7 +3201,7 @@ public:
 };
 
 SignatureAnnotation::SignatureAnnotation()
-    : Annotation(*new SignatureAnnotationPrivate())
+    : WidgetAnnotation(*new SignatureAnnotationPrivate())
 {
 }
 
@@ -3310,7 +3316,7 @@ void SignatureAnnotation::store(QDomNode & /*node*/, QDomDocument & /*document*/
 
 void SignatureAnnotationPrivate::setAnnotationProperties(const QDomNode &node)
 {
-    Okular::AnnotationPrivate::setAnnotationProperties(node);
+    Okular::WidgetAnnotationPrivate::setAnnotationProperties(node);
 
     // TODO is this relevant?
 }

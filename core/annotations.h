@@ -1741,6 +1741,9 @@ public:
      */
     Action *additionalAction(AdditionalActionType type) const;
 
+protected:
+    explicit WidgetAnnotation(WidgetAnnotationPrivate &dd);
+
 private:
     Q_DECLARE_PRIVATE(WidgetAnnotation)
     Q_DISABLE_COPY(WidgetAnnotation)
@@ -1750,7 +1753,7 @@ private:
 /**
  * \since 24.12
  */
-class OKULARCORE_EXPORT SignatureAnnotation : public Annotation
+class OKULARCORE_EXPORT SignatureAnnotation : public WidgetAnnotation
 {
 public:
     /**

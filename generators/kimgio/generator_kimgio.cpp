@@ -12,6 +12,7 @@
 #include "generator_kimgio.h"
 
 #include <QBuffer>
+#include <QColorSpace>
 #include <QFile>
 #include <QImageReader>
 #include <QMimeDatabase>
@@ -94,6 +95,9 @@ bool KIMGIOGenerator::loadDocumentInternal(const QByteArray &fileData, const QSt
         exifMetadata.rotateExifQImage(m_img, exifMetadata.getImageOrientation());
     }
 #endif
+
+    // convert color space to sRGB
+    m_img.convertToColorSpace(QColorSpace::SRgb);
 
     pagesVector.resize(1);
 

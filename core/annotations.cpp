@@ -3167,11 +3167,20 @@ void WidgetAnnotation::setAdditionalAction(AdditionalActionType type, Action *ac
 Action *WidgetAnnotation::additionalAction(AdditionalActionType type) const
 {
     Q_D(const WidgetAnnotation);
+    if (!hasAdditionalActions()) {
+        return nullptr;
+    }
     if (!d->m_additionalActions.contains(type)) {
         return nullptr;
     } else {
         return d->m_additionalActions.value(type);
     }
+}
+
+bool WidgetAnnotation::hasAdditionalActions() const
+{
+    Q_D(const WidgetAnnotation);
+    return !d->m_additionalActions.isEmpty();
 }
 
 #if HAVE_NEW_SIGNATURE_API
@@ -3329,6 +3338,11 @@ bool SignatureAnnotationPrivate::canBeResized() const
 AnnotationPrivate *SignatureAnnotationPrivate::getNewAnnotationPrivate()
 {
     return new SignatureAnnotationPrivate();
+}
+
+bool SignatureAnnotation::hasAdditionalActions() const
+{
+    return false;
 }
 #endif
 

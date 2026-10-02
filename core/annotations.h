@@ -1728,6 +1728,15 @@ public:
     void store(QDomNode &parentNode, QDomDocument &document) const override;
 
     /**
+     * If this widget has Additional Actions.
+     * It is mostly provided as a hook for subclasses to
+     * deny additional actions.
+     *
+     * @since 26.12
+     */
+    virtual bool hasAdditionalActions() const;
+
+    /**
      * Sets the additional @p action of the given @p type.
      *
      * @since 0.16 (KDE 4.10)
@@ -1812,6 +1821,8 @@ public:
      * under the given parent @p node.
      */
     void store(QDomNode &node, QDomDocument &document) const override;
+
+    bool hasAdditionalActions() const override;
 
 private:
     Q_DECLARE_PRIVATE(SignatureAnnotation)

@@ -76,7 +76,7 @@ static const int defaultPageHeight = 842;
 
 static Okular::DocumentSynopsis::ElementBuilder addOutlineItem(const Poppler::OutlineItem &outlineItem);
 
-class PDFOptionsPage : public Okular::PrintOptionsWidget
+class PDFOptionsPage : public QWidget, public Okular::PrintOptionsWidgetInterface
 {
     Q_OBJECT
 
@@ -130,6 +130,11 @@ public:
     bool ignorePrintMargins() const override
     {
         return scaleMode() == FitToPage;
+    }
+
+    QWidget *widget() override
+    {
+        return this;
     }
 
     bool printAnnots()
@@ -2108,7 +2113,7 @@ QList<Okular::FormField *> PDFGenerator::getFormFields(Poppler::Page *popplerPag
     return okularFormFields;
 }
 
-Okular::PrintOptionsWidget *PDFGenerator::printConfigurationWidget() const
+Okular::PrintOptionsWidgetInterface *PDFGenerator::printConfigurationWidget() const
 {
     if (!pdfOptionsPage) {
         const_cast<PDFGenerator *>(this)->pdfOptionsPage = new PDFOptionsPage();

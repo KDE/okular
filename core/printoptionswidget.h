@@ -9,6 +9,7 @@
 
 #include <QWidget>
 
+#include "interfaces/printinterface.h"
 #include "okularcore_export.h"
 
 class QComboBox;
@@ -16,32 +17,18 @@ class QComboBox;
 namespace Okular
 {
 /**
- * @short Abstract base class for an extra print options widget in the print dialog.
- */
-class OKULARCORE_EXPORT PrintOptionsWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit PrintOptionsWidget(QWidget *parent = nullptr)
-        : QWidget(parent)
-    {
-    }
-    virtual bool ignorePrintMargins() const = 0;
-};
-
-/**
  * @short The default okular extra print options widget.
  *
- * It just implements the required method 'ignorePrintMargins()' from
- * the base class 'PrintOptionsWidget'.
+ * It implements the required methods from 'PrintOptionsWidgetInterface'.
  */
-class OKULARCORE_EXPORT DefaultPrintOptionsWidget : public PrintOptionsWidget
+class OKULARCORE_EXPORT DefaultPrintOptionsWidget : public QWidget, public PrintOptionsWidgetInterface
 {
     Q_OBJECT
 
 public:
     explicit DefaultPrintOptionsWidget(QWidget *parent = nullptr);
 
+    QWidget *widget() override;
     bool ignorePrintMargins() const override;
 
 private:

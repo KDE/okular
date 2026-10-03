@@ -95,7 +95,7 @@ public:
     bool exportTo(const QString &fileName, const Okular::ExportFormat &format) override;
 
     // [INHERITED] print interface
-    Okular::PrintOptionsWidget *printConfigurationWidget() const override;
+    Okular::PrintOptionsWidgetInterface *printConfigurationWidget() const override;
 
     // [INHERITED] save interface
     bool supportsOption(SaveOption) const override;

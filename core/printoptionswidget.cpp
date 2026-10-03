@@ -14,7 +14,7 @@
 namespace Okular
 {
 DefaultPrintOptionsWidget::DefaultPrintOptionsWidget(QWidget *parent)
-    : PrintOptionsWidget(parent)
+    : QWidget(parent)
 {
     setWindowTitle(i18n("Print Options"));
     QFormLayout *layout = new QFormLayout(this);
@@ -23,6 +23,11 @@ DefaultPrintOptionsWidget::DefaultPrintOptionsWidget(QWidget *parent)
     m_ignorePrintMargins->insertItem(0, i18n("Fit to printable area"), false);
     m_ignorePrintMargins->insertItem(1, i18n("Fit to full page"), true);
     layout->addRow(i18n("Scale mode:"), m_ignorePrintMargins);
+}
+
+QWidget *DefaultPrintOptionsWidget::widget()
+{
+    return this;
 }
 
 bool DefaultPrintOptionsWidget::ignorePrintMargins() const

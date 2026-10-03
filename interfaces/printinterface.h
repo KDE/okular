@@ -16,6 +16,25 @@ class QWidget;
 namespace Okular
 {
 /**
+ * @short Interface for an extra print options widget in the print dialog.
+ */
+class OKULARCORE_EXPORT PrintOptionsWidgetInterface
+{
+public:
+    PrintOptionsWidgetInterface() = default;
+
+    virtual ~PrintOptionsWidgetInterface()
+    {
+    }
+
+    PrintOptionsWidgetInterface(const PrintOptionsWidgetInterface &) = delete;
+    PrintOptionsWidgetInterface &operator=(const PrintOptionsWidgetInterface &) = delete;
+
+    virtual QWidget *widget() = 0;
+    virtual bool ignorePrintMargins() const = 0;
+};
+
+/**
  * @short Abstract interface for advanced printing control
  *
  * This interface defines an advanced way of interfacing with the print
@@ -51,16 +70,13 @@ public:
     PrintInterface &operator=(const PrintInterface &) = delete;
 
     /**
-     * Builds and returns a new printing configuration widget.
+     * Builds and returns a new printing configuration widget interface.
      *
-     * @note don't keep a pointer to the new constructed widget, as it
-     * will be handled elsewhere (in the Okular KPart)
+     * @note don't keep a pointer to the returned interface or its widget,
+     * as the widget will be handled elsewhere (in the Okular KPart)
      *
-     * @note The returned object should be of a PrintOptionsWidget subclass
-     * (which is not officially enforced by the signature for binary
-     * compatibility reasons).
      */
-    virtual QWidget *printConfigurationWidget() const = 0;
+    virtual PrintOptionsWidgetInterface *printConfigurationWidget() const = 0;
 };
 
 }

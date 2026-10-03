@@ -55,6 +55,7 @@ class Action;
 class MovieAction;
 class Page;
 class PixmapRequest;
+class PrintOptionsWidgetInterface;
 class RenditionAction;
 class NewSignatureData;
 struct NewSignatureDataPrivate;
@@ -830,11 +831,8 @@ public:
      * Returns a custom printer configuration page or 0 if no
      * custom printer configuration page is available.
      *
-     * The returned object should be of a PrintOptionsWidget subclass
-     * (which is not officially enforced by the signature for binary
-     * compatibility reasons).
      */
-    QWidget *printConfigurationWidget() const;
+    PrintOptionsWidgetInterface *printConfigurationWidget() const;
 
     /**
      * Fill the KConfigDialog @p dialog with the setting pages of the

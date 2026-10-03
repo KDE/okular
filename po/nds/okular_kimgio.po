@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_kimgio\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-03 00:43+0000\n"
 "PO-Revision-Date: 2010-01-25 06:53+0100\n"
 "Last-Translator: Manfred Wiese <m.j.wiese@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -30,12 +30,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "s_dibbern@web.de, m.j.wiese@web.de"
 
-#: generator_kimgio.cpp:55 generator_kimgio.cpp:82
+#: generator_kimgio.cpp:56 generator_kimgio.cpp:83
 #, kde-format
 msgid "Unable to load document: %1"
 msgstr "Dokment \"%1\" lett sik nich laden"
 
-#: generator_kimgio.cpp:80
+#: generator_kimgio.cpp:81
 #, kde-format
 msgid ""
 "This document appears malformed. Here is a best approximation of the "

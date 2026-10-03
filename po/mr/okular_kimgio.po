@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-10-03 00:43+0000\n"
 "PO-Revision-Date: 2013-03-20 12:36+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -27,12 +27,12 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "chetan@kompkin.com"
 
-#: generator_kimgio.cpp:55 generator_kimgio.cpp:82
+#: generator_kimgio.cpp:56 generator_kimgio.cpp:83
 #, kde-format
 msgid "Unable to load document: %1"
 msgstr "दस्तऐवज दाखल करू शकत नाही : %1"
 
-#: generator_kimgio.cpp:80
+#: generator_kimgio.cpp:81
 #, kde-format
 msgid ""
 "This document appears malformed. Here is a best approximation of the "

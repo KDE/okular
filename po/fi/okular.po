@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 20:13+0000\n"
-"PO-Revision-Date: 2026-03-01 19:37+0200\n"
+"PO-Revision-Date: 2026-08-25 10:36+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -642,10 +642,9 @@ msgid "Signing cancelled by user"
 msgstr "Käyttäjä perui allekirjoittamisen"
 
 #: core/signatureutils.cpp:516
-#, fuzzy, kde-format
-#| msgid "Could not sign. Wrong passphrase"
+#, kde-format
 msgid "Signing failed: Wrong passphrase"
-msgstr "Ei voitu allekirjoittaa. Väärä salasana"
+msgstr "Allekirjoittaminen epäonnistui: väärä salasana"
 
 #: core/signatureutils.cpp:518
 #, kde-kuit-format
@@ -708,7 +707,7 @@ msgstr "Aihe"
 #, kde-format
 msgctxt "Name/email on key"
 msgid "User Id"
-msgstr ""
+msgstr "Käyttäjätunniste"
 
 #: gui/certificatemodel.cpp:63
 #, kde-format
@@ -1728,15 +1727,14 @@ msgid "Add Bookmark"
 msgstr "Lisää kirjanmerkki"
 
 #: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
-#, fuzzy, kde-format
-#| msgid "Copyright"
+#, kde-format
 msgid "Copy"
-msgstr "Tekijänoikeudet"
+msgstr "Kopioi"
 
 #: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
 #, kde-format
 msgid "Paste"
-msgstr ""
+msgstr "Liitä"
 
 #: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
 #, kde-format
@@ -1763,12 +1761,10 @@ msgid "&Properties"
 msgstr "O&minaisuudet"
 
 #: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
-msgstr "&Tallenna ”%1”…"
+msgstr "A&vaa ”%1”…"
 
 #: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
 #, kde-format
@@ -2275,15 +2271,14 @@ msgstr ""
 "Näytä napsauttamalla tästä."
 
 #: part/annotwindow.cpp:250 part/annotwindow.cpp:272
-#, fuzzy, kde-format
-#| msgid "Unknown font"
+#, kde-format
 msgid "Unknown author"
-msgstr "Tuntematon fontti"
+msgstr "Tuntematon tekijä"
 
 #: part/annotwindow.cpp:253 part/annotwindow.cpp:275
 #, kde-format
 msgid "No date recognized"
-msgstr ""
+msgstr "Päiväystä ei tunnistettu"
 
 #: part/annotwindow.cpp:562
 #, kde-format
@@ -2430,12 +2425,10 @@ msgid "Validity"
 msgstr "Kelpoisuus"
 
 #: part/certificateviewer.cpp:90
-#, fuzzy, kde-format
-#| msgctxt "Spinbox prefix: Advance automatically: every n seconds"
-#| msgid "every "
+#, kde-format
 msgctxt "certificate that never expires"
 msgid "Never"
-msgstr "joka "
+msgstr "Ei koskaan"
 
 #: part/certificateviewer.cpp:94
 #, kde-format
@@ -2453,11 +2446,10 @@ msgid "SHA-256 Fingerprint"
 msgstr "SHA-256-sormenjälki"
 
 #: part/certificateviewer.cpp:107
-#, fuzzy, kde-format
-#| msgid "Fingerprints"
+#, kde-format
 msgctxt "certificate key"
 msgid "Fingerprint"
-msgstr "Sormenjäljet"
+msgstr "Sormenjälki"
 
 #: part/certificateviewer.cpp:116
 #, kde-format
@@ -2475,10 +2467,9 @@ msgid "Where do you want to save this certificate?"
 msgstr "Minne haluat tallentaa varmenteen?"
 
 #: part/certificateviewer.cpp:182
-#, fuzzy, kde-format
-#| msgid "Certificate File (*.cer)"
+#, kde-format
 msgid "Certificate File (*.asc)"
-msgstr "Varmennetiedosto (*.cer)"
+msgstr "Varmennetiedosto (*.asc)"
 
 #: part/certificateviewer.cpp:185
 #, kde-format
@@ -3000,11 +2991,10 @@ msgid "Open in continuous mode by default"
 msgstr "Avaa oletuksena jatkuvaan tilaan"
 
 #: part/dlggeneral.cpp:188
-#, fuzzy, kde-format
-#| msgid "Continue losing changes"
+#, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
-msgstr "Jatka muutokset menettäen"
+msgstr "Jatka viimeksi katsellulta sivulta"
 
 #: part/dlggeneral.cpp:195
 #, kde-format
@@ -3549,7 +3539,7 @@ msgstr "Näytä"
 #, kde-format
 msgctxt "@action:button"
 msgid "Open"
-msgstr ""
+msgstr "Avaa"
 
 #: part/embeddedfilesdialog.cpp:74
 #, kde-format
@@ -3594,12 +3584,10 @@ msgid "&View…"
 msgstr "&Näytä…"
 
 #: part/embeddedfilesdialog.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of the file to save"
-#| msgid "&Save '%1'…"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "&Open…"
-msgstr "&Tallenna ”%1”…"
+msgstr "A&vaa…"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -4385,6 +4373,8 @@ msgid ""
 "This document has elements that might be hidden or shown differently when "
 "printed. For important documents, please verify both."
 msgstr ""
+"Asiakirjassa on alkioita, jotka tulostettaessa pitänee piilottaa tai näyttää "
+"toisin. Valitse tärkeille asiakirjoille kumpikin."
 
 #: part/part.cpp:480
 #, kde-format
@@ -4519,11 +4509,9 @@ msgstr "Väritila-asetukset…"
 
 # Tekstiä käytetään viestien ”Undo %1” ja ”Redo %1” yhteydessä.
 #: part/part.cpp:835 part/part.cpp:3223
-#, fuzzy, kde-format
-#| msgctxt "Change an annotation's size"
-#| msgid "adjust annotation"
+#, kde-format
 msgid "Paste Annotation"
-msgstr "merkinnän säätö"
+msgstr "Liitä merkintä"
 
 #: part/part.cpp:853
 #, kde-format
@@ -5748,7 +5736,7 @@ msgstr "Tallenna allekirjoitettu tiedosto nimellä"
 msgctxt "Error message"
 msgid ""
 "The original file cannot be overwritten. Please choose a different filename."
-msgstr ""
+msgstr "Alkuperäistä tiedostoa ei voi korvata. Valitse toinen tiedostonimi."
 
 #: part/signaturepartutils.h:62
 #, kde-format

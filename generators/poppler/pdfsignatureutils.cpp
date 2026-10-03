@@ -266,11 +266,11 @@ Okular::SignatureInfo fromPoppler(const Poppler::SignatureValidationInfo &pInfo)
 
 PopplerCertificateStore::~PopplerCertificateStore() = default;
 
-QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(bool *userCancelled) const
+QList<Okular::CertificateInfo> PopplerCertificateStore::signingCertificates(QWidget *parent, bool *userCancelled) const
 {
     *userCancelled = false;
-    auto callback = [userCancelled](const char *element) -> char * {
-        QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr);
+    auto callback = [parent, userCancelled](const char *element) -> char * {
+        QPointer<KPasswordDialog> dialog = new KPasswordDialog(parent);
         dialog->setRevealPasswordMode(KPassword::RevealMode::OnlyNew);
         dialog->setPrompt(i18nc("%1 is the thing to open (hardware or software token, certificate DB,...)", "Enter password to open: %1", QString::fromUtf8(element)));
         if (!dialog->exec()) {

@@ -73,7 +73,7 @@ std::optional<SigningInformation> getCertificateAndPasswordForSigning(PageView *
 {
     const Okular::CertificateStore *certStore = doc->certificateStore();
     bool userCancelled, nonDateValidCerts;
-    QList<Okular::CertificateInfo> certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+    QList<Okular::CertificateInfo> certs = certStore->signingCertificatesForNow(pageView, &userCancelled, &nonDateValidCerts);
     if (userCancelled) {
         return std::nullopt;
     }

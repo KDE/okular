@@ -489,16 +489,17 @@ CertificateStore::~CertificateStore()
 {
 }
 
-QList<CertificateInfo> CertificateStore::signingCertificates(bool *userCancelled) const
+QList<CertificateInfo> CertificateStore::signingCertificates(QWidget *parent, bool *userCancelled) const
 {
+    Q_UNUSED(parent)
     *userCancelled = false;
     return QList<CertificateInfo>();
 }
 
-QList<CertificateInfo> CertificateStore::signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const
+QList<CertificateInfo> CertificateStore::signingCertificatesForNow(QWidget *parent, bool *userCancelled, bool *nonDateValidCerts) const
 {
     const QDateTime now = QDateTime::currentDateTime();
-    QList<Okular::CertificateInfo> certs = signingCertificates(userCancelled);
+    QList<Okular::CertificateInfo> certs = signingCertificates(parent, userCancelled);
     auto it = certs.begin();
     *nonDateValidCerts = false;
     while (it != certs.end()) {

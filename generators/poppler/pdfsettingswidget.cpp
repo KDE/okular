@@ -183,13 +183,13 @@ bool PDFSettingsWidget::event(QEvent *e)
         m_certificatesAsked = true;
         m_tree->clear();
 
-        // Calling st.signingCertificates(&userCancelled) from the paint event handler results
+        // Calling st.signingCertificates(this, &userCancelled) from the paint event handler results
         // in "QWidget::repaint: Recursive repaint detected" warning and a crash when the
         // certificate password dialog is closed. Delay the calling to avoid it.
         auto loadCertificatesDelayed = [this]() {
             PopplerCertificateStore st;
             bool userCancelled;
-            const QList<Okular::CertificateInfo> certs = st.signingCertificates(&userCancelled);
+            const QList<Okular::CertificateInfo> certs = st.signingCertificates(this, &userCancelled);
 
             m_pdfsw.loadSignaturesButton->setVisible(userCancelled);
 

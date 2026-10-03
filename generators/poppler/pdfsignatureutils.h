@@ -22,7 +22,7 @@ class PopplerCertificateStore : public Okular::CertificateStore
 public:
     ~PopplerCertificateStore() override;
 
-    QList<Okular::CertificateInfo> signingCertificates(bool *userCancelled) const override;
+    QList<Okular::CertificateInfo> signingCertificates(QWidget *parent, bool *userCancelled) const override;
 };
 
 class SignatureSettings

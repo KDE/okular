@@ -102,7 +102,7 @@ void SignUnsignedFieldTest::testSignUnsignedField()
     bool userCancelled, nonDateValidCerts;
     {
         EnterPasswordDialogHelper helper;
-        const QList<Okular::CertificateInfo> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+        const QList<Okular::CertificateInfo> &certs = certStore->signingCertificatesForNow(nullptr, &userCancelled, &nonDateValidCerts);
         QCOMPARE(certs.count(), 1);
     }
 
@@ -136,7 +136,7 @@ void SignUnsignedFieldTest::testSignUnsignedFieldWriteCurrentFile()
     bool userCancelled, nonDateValidCerts;
     {
         EnterPasswordDialogHelper helper;
-        const QList<Okular::CertificateInfo> &certs = certStore->signingCertificatesForNow(&userCancelled, &nonDateValidCerts);
+        const QList<Okular::CertificateInfo> &certs = certStore->signingCertificatesForNow(nullptr, &userCancelled, &nonDateValidCerts);
         QCOMPARE(certs.count(), 1);
     }
 

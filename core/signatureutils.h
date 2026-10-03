@@ -16,6 +16,8 @@
 #include <QSharedPointer>
 #include <QString>
 
+class QWidget;
+
 namespace Okular
 {
 
@@ -568,7 +570,6 @@ private:
 class OKULARCORE_EXPORT CertificateStore
 {
 public:
-    // TODO: BIC please add QWidget* parent's to the methods for showing a dialog
     /**
      * Destructor
      */
@@ -578,9 +579,10 @@ public:
      * Returns list of valid, usable signing certificates.
      *
      * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
+     * @param parent Parent for any dialog shown while retrieving certificates.
      * @since 23.08
      */
-    virtual QList<CertificateInfo> signingCertificates(bool *userCancelled) const;
+    virtual QList<CertificateInfo> signingCertificates(QWidget *parent, bool *userCancelled) const;
 
     /**
      * Returns list of valid, usable signing certificates for current date and time.
@@ -588,9 +590,10 @@ public:
      * This can ask the user for a password, userCancelled will be true if the user decided not to enter it.
      *
      * nonDateValidCerts is true if the user has signing certificates but their validity start date is in the future or past their validity end date.
+     * @param parent Parent for any dialog shown while retrieving certificates.
      * @since 23.08
      */
-    QList<CertificateInfo> signingCertificatesForNow(bool *userCancelled, bool *nonDateValidCerts) const;
+    QList<CertificateInfo> signingCertificatesForNow(QWidget *parent, bool *userCancelled, bool *nonDateValidCerts) const;
 
 protected:
     CertificateStore();

@@ -9,12 +9,24 @@
 
 #include "../core/okularcore_export.h"
 
-#include <QObject>
-
-class QWidget;
+#include <QWidget>
 
 namespace Okular
 {
+/**
+ * @short Abstract base class for an extra print options widget in the print dialog.
+ */
+class OKULARCORE_EXPORT PrintOptionsWidget : public QWidget
+{
+public:
+    explicit PrintOptionsWidget(QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
+    }
+
+    virtual bool ignorePrintMargins() const = 0;
+};
+
 /**
  * @short Abstract interface for advanced printing control
  *
@@ -56,11 +68,8 @@ public:
      * @note don't keep a pointer to the new constructed widget, as it
      * will be handled elsewhere (in the Okular KPart)
      *
-     * @note The returned object should be of a PrintOptionsWidget subclass
-     * (which is not officially enforced by the signature for binary
-     * compatibility reasons).
      */
-    virtual QWidget *printConfigurationWidget() const = 0;
+    virtual PrintOptionsWidget *printConfigurationWidget() const = 0;
 };
 
 }

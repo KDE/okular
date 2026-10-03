@@ -4784,7 +4784,7 @@ QString Document::printErrorString(PrintError error)
     return QString();
 }
 
-QWidget *Document::printConfigurationWidget() const
+PrintOptionsWidget *Document::printConfigurationWidget() const
 {
     if (d->m_generator) {
         PrintInterface *iface = qobject_cast<Okular::PrintInterface *>(d->m_generator);

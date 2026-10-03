@@ -7,28 +7,13 @@
 #ifndef PRINTOPTIONSWIDGET_H
 #define PRINTOPTIONSWIDGET_H
 
-#include <QWidget>
-
+#include "interfaces/printinterface.h"
 #include "okularcore_export.h"
 
 class QComboBox;
 
 namespace Okular
 {
-/**
- * @short Abstract base class for an extra print options widget in the print dialog.
- */
-class OKULARCORE_EXPORT PrintOptionsWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit PrintOptionsWidget(QWidget *parent = nullptr)
-        : QWidget(parent)
-    {
-    }
-    virtual bool ignorePrintMargins() const = 0;
-};
-
 /**
  * @short The default okular extra print options widget.
  *

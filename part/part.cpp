@@ -3571,7 +3571,7 @@ void Part::slotPrint()
 #else
     QPrinter printer;
 #endif
-    QWidget *printConfigWidget = nullptr;
+    PrintOptionsWidget *printConfigWidget = nullptr;
 
     // Must do certain QPrinter setup before creating QPrintDialog
     setupPrint(printer);
@@ -3612,14 +3612,8 @@ void Part::slotPrint()
 
     bool success = true;
     if (printDialog.exec()) {
-        // set option for margins if widget is of corresponding type that holds this information
-        PrintOptionsWidget *optionWidget = dynamic_cast<PrintOptionsWidget *>(printConfigWidget);
-        if (optionWidget != nullptr) {
-            printer.setFullPage(optionWidget->ignorePrintMargins());
-        } else {
-            // printConfigurationWidget() method should always return an object of type Okular::PrintOptionsWidget,
-            // (signature does not (yet) require it for ABI stability reasons), so Q_EMIT a warning if the object is of another type
-            qWarning() << "printConfigurationWidget() method did not return an Okular::PrintOptionsWidget. This is strongly discouraged!";
+        if (printConfigWidget) {
+            printer.setFullPage(printConfigWidget->ignorePrintMargins());
         }
 
         success = doPrint(printer);

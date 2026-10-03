@@ -2046,9 +2046,7 @@ void DocumentPrivate::loadSyncFile(const QString &filePath)
     const QString coreName = ts.readLine();
     // second row: version string, in the form 'Version %u'
     const QString versionstr = ts.readLine();
-    // anchor the pattern with \A and \z to match the entire subject string
-    // TODO: with Qt 5.12 QRegularExpression::anchoredPattern() can be used instead
-    static QRegularExpression versionre(QStringLiteral("\\AVersion \\d+\\z"), QRegularExpression::CaseInsensitiveOption);
+    static QRegularExpression versionre(QRegularExpression::anchoredPattern(QStringLiteral("Version \\d+")), QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match = versionre.match(versionstr);
     if (!match.hasMatch()) {
         return;

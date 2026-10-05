@@ -35,7 +35,7 @@ msgstr "overmind88@gmail.com"
 #: generator_xps.cpp:1914
 #, kde-format
 msgid "Revision"
-msgstr "Ревизия"
+msgstr "Редакция"
 
 #~ msgid "XPS Backend"
 #~ msgstr "Модуль поддержки XPS"

@@ -303,7 +303,7 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
-"Подпись: %1\n"
+"Подписано: %1\n"
 "\n"
 "Дата: %2"
 
@@ -331,7 +331,7 @@ msgstr "PDF"
 #: generator_pdf.cpp:1776
 #, kde-format
 msgid "PDF Backend Configuration"
-msgstr "Конфигурация генератора PDF"
+msgstr "Настройка поддержки формата PDF"
 
 #: generator_pdf.cpp:2295
 #, kde-format
@@ -340,7 +340,7 @@ msgid ""
 "content correctly"
 msgstr ""
 "При открытии в документе были обнаружены ошибки. Возможно, документ будет "
-"отображён неверно"
+"показан неверно"
 
 #: pdfsettingswidget.cpp:116
 #, kde-format
@@ -405,7 +405,7 @@ msgstr "Требуется перезапуск"
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
-"Требуется перезапустить Okular чтобы вступили в силу изменения расположения "
+"Требуется перезапустить Okular, чтобы вступили в силу изменения расположения "
 "каталога NSS"
 
 #: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315

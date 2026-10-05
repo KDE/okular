@@ -59,7 +59,7 @@ msgstr "Основные параметры"
 #: conf/gssettingswidget.ui:37
 #, kde-format
 msgid "&Use platform fonts"
-msgstr "Использовать &платформо-зависимые шрифты"
+msgstr "Использовать &платформозависимые шрифты"
 
 #: generator_ghostview.cpp:82
 #, kde-format

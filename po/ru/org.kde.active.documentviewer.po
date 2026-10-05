@@ -54,7 +54,7 @@ msgstr "Выдано для"
 
 #: ui/CertificateViewerPage.qml:76
 msgid "Validity"
-msgstr "Действительность"
+msgstr "Срок действия"
 
 #: ui/CertificateViewerPage.qml:81
 msgid "Issued On:"
@@ -122,7 +122,7 @@ msgstr "Добавить страницу в закладки"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
-msgstr "Эскизы"
+msgstr "Миниатюры"
 
 #: ui/OkularDrawer.qml:71
 msgid "Table of contents"
@@ -138,19 +138,19 @@ msgstr "Свойства подписи"
 
 #: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
-msgstr "Действительность"
+msgstr "Достоверность"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr "Действительность подписи:"
+msgstr "Достоверность подписи:"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr "Модификации документа:"
+msgstr "Изменения документа:"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
-msgstr "Дополнительная информация"
+msgstr "Дополнительные сведения"
 
 #: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
@@ -183,7 +183,7 @@ msgstr "Сохранить подписанную версию…"
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
 msgid "View Certificate…"
-msgstr "Показать сертификат…"
+msgstr "Просмотреть сертификат…"
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."

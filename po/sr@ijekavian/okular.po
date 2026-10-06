@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:38+0000\n"
+"POT-Creation-Date: 2026-10-06 00:44+0000\n"
 "PO-Revision-Date: 2017-12-15 12:38+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -319,26 +319,26 @@ msgstr "Настављам претрагу од почетка"
 msgid "Continuing search from bottom"
 msgstr "Настављам претрагу са дна"
 
-#: core/document.cpp:2396
+#: core/document.cpp:2394
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr ""
 "Не могу да нађем прикључак који је у стању да обради прослијеђени документ."
 
-#: core/document.cpp:2817
+#: core/document.cpp:2815
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3531
+#: core/document.cpp:3529
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Уклони тумачења"
 
-#: core/document.cpp:4117 core/document.cpp:4123
+#: core/document.cpp:4115 core/document.cpp:4121
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -347,53 +347,53 @@ msgstr ""
 "Документ покушава да изврши спољашњи програм, што због ваше безбједности "
 "Окулар не дозвољава."
 
-#: core/document.cpp:4133
+#: core/document.cpp:4131
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Није нађен ниједан програм за отварање фајла МИМЕ типа %1."
 
-#: core/document.cpp:4759
+#: core/document.cpp:4757
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Не могу да отворим привремени фајл."
 
-#: core/document.cpp:4761
+#: core/document.cpp:4759
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Претварање за штампу није успјело."
 
-#: core/document.cpp:4763
+#: core/document.cpp:4761
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Штампарски процес се срушио."
 
-#: core/document.cpp:4765
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Штампарски процес не може да се покрене."
 
-#: core/document.cpp:4767
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Штампање у фајл није успјело."
 
-#: core/document.cpp:4769
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Штампач је у погрешном стању."
 
-#: core/document.cpp:4771
+#: core/document.cpp:4769
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Не могу да нађем фајл за штампање."
 
-#: core/document.cpp:4773
+#: core/document.cpp:4771
 #, kde-format
 msgid "There was no file to print"
 msgstr "Нема фајла за штампање."
 
 # rewrite-msgid: /binary/command/
-#: core/document.cpp:4775
+#: core/document.cpp:4773
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -403,93 +403,93 @@ msgstr ""
 "буде доступна."
 
 # rewrite-msgid: /print//
-#: core/document.cpp:4777
+#: core/document.cpp:4775
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Величина странице није добра."
 
-#: core/document.cpp:5416 part/part.cpp:1141
+#: core/document.cpp:5414 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Не могу да отворим „%1“. Фајл не постоји."
 
-#: core/document.cpp:5925
+#: core/document.cpp:5923
 #, kde-format
 msgid "Title"
 msgstr "Наслов"
 
-#: core/document.cpp:5928
+#: core/document.cpp:5926
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: core/document.cpp:5931
+#: core/document.cpp:5929
 #, kde-format
 msgid "Description"
 msgstr "Опис"
 
-#: core/document.cpp:5934
+#: core/document.cpp:5932
 #, kde-format
 msgid "Author"
 msgstr "Аутор"
 
-#: core/document.cpp:5937
+#: core/document.cpp:5935
 #, kde-format
 msgid "Creator"
 msgstr "Стваралац"
 
-#: core/document.cpp:5940
+#: core/document.cpp:5938
 #, kde-format
 msgid "Producer"
 msgstr "Произвођач"
 
-#: core/document.cpp:5943
+#: core/document.cpp:5941
 #, kde-format
 msgid "Copyright"
 msgstr "Ауторска права"
 
-#: core/document.cpp:5946
+#: core/document.cpp:5944
 #, kde-format
 msgid "Pages"
 msgstr "Страница"
 
-#: core/document.cpp:5949
+#: core/document.cpp:5947
 #, kde-format
 msgid "Created"
 msgstr "Направљен"
 
-#: core/document.cpp:5952
+#: core/document.cpp:5950
 #, kde-format
 msgid "Modified"
 msgstr "Измијењен"
 
-#: core/document.cpp:5955
+#: core/document.cpp:5953
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "МИМЕ тип"
 
-#: core/document.cpp:5958
+#: core/document.cpp:5956
 #, kde-format
 msgid "Category"
 msgstr "Категорија"
 
-#: core/document.cpp:5961
+#: core/document.cpp:5959
 #, kde-format
 msgid "Keywords"
 msgstr "Кључне ријечи"
 
-#: core/document.cpp:5964
+#: core/document.cpp:5962
 #, kde-format
 msgid "File Path"
 msgstr "Путања фајла"
 
-#: core/document.cpp:5967
+#: core/document.cpp:5965
 #, kde-format
 msgid "File Size"
 msgstr "Величина фајла"
 
-#: core/document.cpp:5970
+#: core/document.cpp:5968
 #, kde-format
 msgid "Page Size"
 msgstr "Величина странице"
@@ -5422,12 +5422,12 @@ msgctxt "@title:window"
 msgid "Print"
 msgstr "Штампање"
 
-#: part/part.cpp:3650
+#: part/part.cpp:3644
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Штампање овог документа није дозвољено."
 
-#: part/part.cpp:3663
+#: part/part.cpp:3657
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5435,7 +5435,7 @@ msgstr ""
 "Не могу да одштампам документ. Непозната грешка. Пријавите ово на bugs.kde."
 "org."
 
-#: part/part.cpp:3665
+#: part/part.cpp:3659
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5444,18 +5444,18 @@ msgstr ""
 "Не могу да одштампам документ. Грешка је „%1“. Пријавите ово на bugs.kde.org."
 
 # >> @info:whatsthis
-#: part/part.cpp:3757
+#: part/part.cpp:3751
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Идите на мјесто на коме сте били прије."
 
 # >> @info:whatsthis
-#: part/part.cpp:3761
+#: part/part.cpp:3755
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Идите на мјесто на коме сте били послије."
 
-#: part/part.cpp:3786
+#: part/part.cpp:3780
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5464,7 +5464,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да направим привремени фајл "
 "<nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3798
+#: part/part.cpp:3792
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5473,7 +5473,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да отворим фајл <nobr><strong>%1</"
 "strong></nobr> зарад распакивања. Фајл неће бити учитан.</qt>"
 
-#: part/part.cpp:3802
+#: part/part.cpp:3796
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5490,7 +5490,7 @@ msgstr ""
 "Власништво и дозволе можете да провјерите ако кликнете десним на фајл у "
 "менаџеру фајлова Делфину и изаберете језичак <i>Својства</i>.</qt>"
 
-#: part/part.cpp:3824
+#: part/part.cpp:3818
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5499,7 +5499,7 @@ msgstr ""
 "<qt><strong>Грешка фајла!</strong> Не могу да распакујем <nobr><strong>%1</"
 "strong></nobr>. Фајл неће бити учитан.</qt>"
 
-#: part/part.cpp:3828
+#: part/part.cpp:3822
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5509,28 +5509,28 @@ msgstr ""
 "сигурни, покушајте да га распакујете ручно помоћу наредби из командне линије."
 "</qt>"
 
-#: part/part.cpp:3854
+#: part/part.cpp:3848
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Нема обиљеживача"
 
-#: part/part.cpp:3925
+#: part/part.cpp:3919
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Проблем при дељењу документа: %1"
 
 # >> @title:window
-#: part/part.cpp:3925 part/part.cpp:3931
+#: part/part.cpp:3919 part/part.cpp:3925
 #, kde-format
 msgid "Share"
 msgstr "Дељење"
 
-#: part/part.cpp:3929
+#: part/part.cpp:3923
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Документ успешно подељен."
 
-#: part/part.cpp:3931
+#: part/part.cpp:3925
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Подељени документ можете наћи на: <a href=\"%1\">%1</a>"

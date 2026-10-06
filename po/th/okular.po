@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:38+0000\n"
+"POT-Creation-Date: 2026-10-06 00:44+0000\n"
 "PO-Revision-Date: 2010-12-17 21:55+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -316,26 +316,26 @@ msgstr ""
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2396
+#: core/document.cpp:2394
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "ไม่พบส่วนเสริมที่จะใช้ในการจัดการกับเอกสารที่ส่งผ่านมาให้"
 
-#: core/document.cpp:2817
+#: core/document.cpp:2815
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3531
+#: core/document.cpp:3529
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "การนำเสนอ"
 
-#: core/document.cpp:4117 core/document.cpp:4123
+#: core/document.cpp:4115 core/document.cpp:4121
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -344,52 +344,52 @@ msgstr ""
 "เอกสารกำลังพยายามเรียกประมวลผลโปรแกรมภายนอก เพื่อความปลอดภัยของระบบคุณ โอกูลาร์ "
 "จะไม่อนุญาตให้มีการประมวลผล"
 
-#: core/document.cpp:4133
+#: core/document.cpp:4131
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "ไม่พบโปรแกรมสำหรับใช้เปิดแฟ้มประเภท %1"
 
-#: core/document.cpp:4759
+#: core/document.cpp:4757
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "ไม่สามารถเปิดแฟ้มชั่วคราวได้"
 
-#: core/document.cpp:4761
+#: core/document.cpp:4759
 #, kde-format
 msgid "Print conversion failed"
 msgstr "การแปลงการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4763
+#: core/document.cpp:4761
 #, kde-format
 msgid "Printing process crashed"
 msgstr "โพรเซสการพิมพ์ทำงานล้มเหลว"
 
-#: core/document.cpp:4765
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ไม่สามารถเริ่มโพรเซสการพิมพ์ได้"
 
-#: core/document.cpp:4767
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing to file failed"
 msgstr "การพิมพ์ไปยังแฟ้มทำงานล้มเหลว"
 
-#: core/document.cpp:4769
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "เครื่องพิมพ์อยู่ในสถานะที่ใช้งานไม่ได้"
 
-#: core/document.cpp:4771
+#: core/document.cpp:4769
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "ไม่สามารถค้นพบแฟ้มที่จะใช้พิมพ์"
 
-#: core/document.cpp:4773
+#: core/document.cpp:4771
 #, kde-format
 msgid "There was no file to print"
 msgstr "ไม่มีแฟ้มใดที่จะใช้ในการพิมพ์"
 
-#: core/document.cpp:4775
+#: core/document.cpp:4773
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -398,94 +398,94 @@ msgstr ""
 "ไม่สามารถค้นพบแฟ้มโปรแกรมแบบไบนารีที่เหมาะสมสำหรับใช้ในการพิมพ์ โปรดตรวจสอบว่าโปรแกรม "
 "lpr ของแพกเกจ CUPS ได้ถูกติดตั้งไว้อย่างถูกต้องแล้วหรือไม่"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4775
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5416 part/part.cpp:1141
+#: core/document.cpp:5414 part/part.cpp:1141
 #, fuzzy, kde-format
 #| msgid "Could not open \"%1\" for writing. File was not saved."
 msgid "Could not open '%1'. File does not exist"
 msgstr "แฟ้มไม่ถูกบันทึก เนื่องจากไม่สามารถเปิดแฟ้ม \"%1\" เพื่อเขียนได้ "
 
-#: core/document.cpp:5925
+#: core/document.cpp:5923
 #, kde-format
 msgid "Title"
 msgstr "ชื่อเรื่อง"
 
-#: core/document.cpp:5928
+#: core/document.cpp:5926
 #, kde-format
 msgid "Subject"
 msgstr "หัวข้อเรื่อง"
 
-#: core/document.cpp:5931
+#: core/document.cpp:5929
 #, kde-format
 msgid "Description"
 msgstr "คำอธิบาย"
 
-#: core/document.cpp:5934
+#: core/document.cpp:5932
 #, kde-format
 msgid "Author"
 msgstr "ผู้เขียน"
 
-#: core/document.cpp:5937
+#: core/document.cpp:5935
 #, kde-format
 msgid "Creator"
 msgstr "ผู้สร้าง"
 
-#: core/document.cpp:5940
+#: core/document.cpp:5938
 #, kde-format
 msgid "Producer"
 msgstr "ผู้ผลิต"
 
-#: core/document.cpp:5943
+#: core/document.cpp:5941
 #, kde-format
 msgid "Copyright"
 msgstr "ลิขสิทธิ์"
 
-#: core/document.cpp:5946
+#: core/document.cpp:5944
 #, kde-format
 msgid "Pages"
 msgstr "จำนวนหน้า"
 
-#: core/document.cpp:5949
+#: core/document.cpp:5947
 #, kde-format
 msgid "Created"
 msgstr "สร้างเมื่อ"
 
-#: core/document.cpp:5952
+#: core/document.cpp:5950
 #, kde-format
 msgid "Modified"
 msgstr "แก้ไขเมื่อ"
 
-#: core/document.cpp:5955
+#: core/document.cpp:5953
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "ประเภท Mime"
 
-#: core/document.cpp:5958
+#: core/document.cpp:5956
 #, kde-format
 msgid "Category"
 msgstr "หมวดหมู่"
 
-#: core/document.cpp:5961
+#: core/document.cpp:5959
 #, kde-format
 msgid "Keywords"
 msgstr "คำค้น/คำสำคัญ"
 
-#: core/document.cpp:5964
+#: core/document.cpp:5962
 #, kde-format
 msgid "File Path"
 msgstr "พาธของแฟ้ม"
 
-#: core/document.cpp:5967
+#: core/document.cpp:5965
 #, kde-format
 msgid "File Size"
 msgstr "ขนาดแฟ้ม"
 
-#: core/document.cpp:5970
+#: core/document.cpp:5968
 #, kde-format
 msgid "Page Size"
 msgstr "ขนาดกระดาษ"
@@ -5341,19 +5341,19 @@ msgctxt "@title:window"
 msgid "Print"
 msgstr ""
 
-#: part/part.cpp:3650
+#: part/part.cpp:3644
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "ไม่ได้รับการอนุญาตให้ทำการพิมพ์เอกสารนี้"
 
-#: part/part.cpp:3663
+#: part/part.cpp:3657
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
 msgstr ""
 "ไม่สามารถพิมพ์เอกสารได้ โดยไม่ทราบข้อผิดพลาด โปรดรายงานข้อผิดพลาดไปยัง bugs.kde.org"
 
-#: part/part.cpp:3665
+#: part/part.cpp:3659
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5362,17 +5362,17 @@ msgstr ""
 "ไม่สามารถพิมพ์เอกสารได้ รายละเอียดข้อผิดพลาดคือ \"%1\" โปรดรายงานข้อผิดพลาดไปยัง bugs."
 "kde.org"
 
-#: part/part.cpp:3757
+#: part/part.cpp:3751
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "ไปยังที่ที่คุณเคยไป ก่อน"
 
-#: part/part.cpp:3761
+#: part/part.cpp:3755
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "ไปยังที่ ที่คุณเคยไป หลังจาก"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3780
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5381,7 +5381,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถสร้างแฟ้มชั่วคราว <nobr><strong>%1</"
 "strong></nobr> ได้</qt>"
 
-#: part/part.cpp:3798
+#: part/part.cpp:3792
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5390,7 +5390,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถเปิดแฟ้ม <nobr><strong>%1</strong></"
 "nobr> เพื่อทำการคลายแฟ้มได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3802
+#: part/part.cpp:3796
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5407,7 +5407,7 @@ msgstr ""
 "คุณสามารถตรวจสอบความเป็นเจ้าของแฟ้มและสิทธิ์ที่มีได้ง่าย ๆ "
 "โดยการคลิกเมาส์ปุ่มขวาบนแฟ้มในโปรแกรมจัดการแฟ้ม 'ดอลฟิน' จากนั้นเลือกแท็บ 'คุณสมบัติ'</qt>"
 
-#: part/part.cpp:3824
+#: part/part.cpp:3818
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5416,7 +5416,7 @@ msgstr ""
 "<qt><strong>แฟ้มผิดพลาด!</strong> ไม่สามารถคลายแฟ้ม <nobr><strong>%1</strong></"
 "nobr> ได้ แฟ้มจะไม่ถูกโหลด</qt>"
 
-#: part/part.cpp:3828
+#: part/part.cpp:3822
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5425,27 +5425,27 @@ msgstr ""
 "<qt>ข้อผิดพลาดนี้ จะเกิดขึ้นเมื่อแฟ้มมีส่วนผิดพลาดภายใน หากคุณต้องการความแน่ใจ "
 "โปรดทดลองคลายแฟ้มด้วยตัวเอง โดยใช้เครื่องมือคลายแฟ้มผ่านทางบรรทัดคำสั่ง</qt>"
 
-#: part/part.cpp:3854
+#: part/part.cpp:3848
 #, kde-format
 msgid "No Bookmarks"
 msgstr "ไม่มีที่คั่นหน้าใด ๆ"
 
-#: part/part.cpp:3925
+#: part/part.cpp:3919
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr ""
 
-#: part/part.cpp:3925 part/part.cpp:3931
+#: part/part.cpp:3919 part/part.cpp:3925
 #, kde-format
 msgid "Share"
 msgstr ""
 
-#: part/part.cpp:3929
+#: part/part.cpp:3923
 #, kde-format
 msgid "Document shared successfully"
 msgstr ""
 
-#: part/part.cpp:3931
+#: part/part.cpp:3925
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""

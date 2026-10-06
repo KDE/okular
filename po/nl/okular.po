@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:38+0000\n"
+"POT-Creation-Date: 2026-10-06 00:44+0000\n"
 "PO-Revision-Date: 2026-09-26 19:01+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -314,25 +314,25 @@ msgstr "Doorgaan met zoeken vanaf het begin"
 msgid "Continuing search from bottom"
 msgstr "Doorgaan met zoeken vanaf het einde"
 
-#: core/document.cpp:2396
+#: core/document.cpp:2394
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Kon geen plugin vinden voor het openen van het  aangeleverde document."
 
-#: core/document.cpp:2817
+#: core/document.cpp:2815
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "Ondertekenen niet geïmplementeerd voor dit type document"
 
-#: core/document.cpp:3531
+#: core/document.cpp:3529
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "annotaties verwijderen"
 
-#: core/document.cpp:4117 core/document.cpp:4123
+#: core/document.cpp:4115 core/document.cpp:4121
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -341,52 +341,52 @@ msgstr ""
 "Het document probeert een extern programma uit te voeren. Voor de veiligheid "
 "van uw systeem laat Okular dit niet toe."
 
-#: core/document.cpp:4133
+#: core/document.cpp:4131
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Geen programma gevonden voor het openen van bestanden van het type %1."
 
-#: core/document.cpp:4759
+#: core/document.cpp:4757
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Kon geen tijdelijk bestand openen"
 
-#: core/document.cpp:4761
+#: core/document.cpp:4759
 #, kde-format
 msgid "Print conversion failed"
 msgstr "De afdrukconversie is mislukt"
 
-#: core/document.cpp:4763
+#: core/document.cpp:4761
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Afdrukproces is onverwacht beëindigd"
 
-#: core/document.cpp:4765
+#: core/document.cpp:4763
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Afdrukproces kon niet beginnen"
 
-#: core/document.cpp:4767
+#: core/document.cpp:4765
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Afdrukken naar bestand is mislukt"
 
-#: core/document.cpp:4769
+#: core/document.cpp:4767
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Printer was in een ongeldige status"
 
-#: core/document.cpp:4771
+#: core/document.cpp:4769
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Af te drukken bestand is niet gevonden"
 
-#: core/document.cpp:4773
+#: core/document.cpp:4771
 #, kde-format
 msgid "There was no file to print"
 msgstr "Er was geen bestand om af te drukken"
 
-#: core/document.cpp:4775
+#: core/document.cpp:4773
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -395,92 +395,92 @@ msgstr ""
 "Een geschikt programma voor afdrukken is niet gevonden. Verzeker u ervan dat "
 "het CUPS-programma lpr beschikbaar is"
 
-#: core/document.cpp:4777
+#: core/document.cpp:4775
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "De afdrukgrootte van de pagina is ongeldig"
 
-#: core/document.cpp:5416 part/part.cpp:1141
+#: core/document.cpp:5414 part/part.cpp:1141
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Kon '%1' niet openen. Bestand bestaat niet"
 
-#: core/document.cpp:5925
+#: core/document.cpp:5923
 #, kde-format
 msgid "Title"
 msgstr "Titel"
 
-#: core/document.cpp:5928
+#: core/document.cpp:5926
 #, kde-format
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: core/document.cpp:5931
+#: core/document.cpp:5929
 #, kde-format
 msgid "Description"
 msgstr "Beschrijving"
 
-#: core/document.cpp:5934
+#: core/document.cpp:5932
 #, kde-format
 msgid "Author"
 msgstr "Auteur"
 
-#: core/document.cpp:5937
+#: core/document.cpp:5935
 #, kde-format
 msgid "Creator"
 msgstr "Aangemaakt door"
 
-#: core/document.cpp:5940
+#: core/document.cpp:5938
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:5943
+#: core/document.cpp:5941
 #, kde-format
 msgid "Copyright"
 msgstr "Copyright"
 
-#: core/document.cpp:5946
+#: core/document.cpp:5944
 #, kde-format
 msgid "Pages"
 msgstr "Pagina's"
 
-#: core/document.cpp:5949
+#: core/document.cpp:5947
 #, kde-format
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: core/document.cpp:5952
+#: core/document.cpp:5950
 #, kde-format
 msgid "Modified"
 msgstr "Gewijzigd"
 
-#: core/document.cpp:5955
+#: core/document.cpp:5953
 #, kde-format
 msgid "MIME Type"
 msgstr "Mime-type"
 
-#: core/document.cpp:5958
+#: core/document.cpp:5956
 #, kde-format
 msgid "Category"
 msgstr "Categorie"
 
-#: core/document.cpp:5961
+#: core/document.cpp:5959
 #, kde-format
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: core/document.cpp:5964
+#: core/document.cpp:5962
 #, kde-format
 msgid "File Path"
 msgstr "Bestandspad"
 
-#: core/document.cpp:5967
+#: core/document.cpp:5965
 #, kde-format
 msgid "File Size"
 msgstr "Bestandsgrootte"
 
-#: core/document.cpp:5970
+#: core/document.cpp:5968
 #, kde-format
 msgid "Page Size"
 msgstr "Paginagrootte"
@@ -5066,12 +5066,12 @@ msgctxt "@title:window"
 msgid "Print"
 msgstr "Afdrukken"
 
-#: part/part.cpp:3650
+#: part/part.cpp:3644
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Het afdrukken van dit document is niet toegestaan."
 
-#: part/part.cpp:3663
+#: part/part.cpp:3657
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5079,7 +5079,7 @@ msgstr ""
 "Het document kan niet worden afgedrukt. Onbekende fout. Stuur bugrapport aan "
 "bugs.kde.org. Zie menu 'Help'."
 
-#: part/part.cpp:3665
+#: part/part.cpp:3659
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5088,17 +5088,17 @@ msgstr ""
 "Het document kan niet worden afgedrukt. Gedetailleerde fout is \"%1\". Stuur "
 "een bugrapport aan bugs.kde.org. Zie menu 'Help'."
 
-#: part/part.cpp:3757
+#: part/part.cpp:3751
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ga naar de plek waar u was voor"
 
-#: part/part.cpp:3761
+#: part/part.cpp:3755
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ga naar de plek waar u was na"
 
-#: part/part.cpp:3786
+#: part/part.cpp:3780
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5107,7 +5107,7 @@ msgstr ""
 "<qt><strong>Bestandsfout!</strong> Kon tijdelijk bestand <nobr><strong>%1</"
 "strong></nobr> niet aanmaken.</qt>"
 
-#: part/part.cpp:3798
+#: part/part.cpp:3792
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5117,7 +5117,7 @@ msgstr ""
 "strong></nobr> niet openen om uit te pakken. Het bestand zal niet worden "
 "geladen.</qt>"
 
-#: part/part.cpp:3802
+#: part/part.cpp:3796
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5130,7 +5130,7 @@ msgstr ""
 "op het bestand in de bestandsbeheerder Dolphin en dan de optie "
 "'Eigenschappen' kiest en tabblad 'Rechten' in het geopende venster.</qt>"
 
-#: part/part.cpp:3824
+#: part/part.cpp:3818
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5139,7 +5139,7 @@ msgstr ""
 "<qt><strong>Bestandsfout!</strong> Kon het bestand <nobr><strong>%1</"
 "strong></nobr> niet uitpakken. Het bestand zal niet worden geladen.</qt>"
 
-#: part/part.cpp:3828
+#: part/part.cpp:3822
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5149,27 +5149,27 @@ msgstr ""
 "zeker van te zijn kunt u proberen het bestand handmatig uit te pakken met "
 "commandoregelprogramma's.</qt>"
 
-#: part/part.cpp:3854
+#: part/part.cpp:3848
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Geen bladwijzers"
 
-#: part/part.cpp:3925
+#: part/part.cpp:3919
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Er was een probleem bij het delen van het document: %1"
 
-#: part/part.cpp:3925 part/part.cpp:3931
+#: part/part.cpp:3919 part/part.cpp:3925
 #, kde-format
 msgid "Share"
 msgstr "Delen"
 
-#: part/part.cpp:3929
+#: part/part.cpp:3923
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Document met succes gedeeld"
 
-#: part/part.cpp:3931
+#: part/part.cpp:3925
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "U kunt het gedeelde document vinden op: <a href=\"%1\">%1</a>"

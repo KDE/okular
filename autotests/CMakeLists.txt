@@ -57,6 +57,14 @@ if(Poppler_Qt6_FOUND)
         TEST_NAME "signunsignedfieldtest"
         LINK_LIBRARIES Qt6::Widgets Qt6::Test okularcore
     )
+
+    ecm_add_test(richmediatest.cpp
+        TEST_NAME "richmediatest"
+        LINK_LIBRARIES Qt6::Widgets Qt6::Test okularcore
+    )
+    if (Poppler_VERSION VERSION_GREATER_EQUAL 26.10.90)
+        target_compile_definitions(richmediatest PRIVATE HAVE_RICHMEDIA_INSTANCE_ASSET)
+    endif()
 endif()
 
 ecm_add_test(suggestedfilenametest.cpp

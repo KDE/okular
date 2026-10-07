@@ -11,6 +11,7 @@
 
 #include <QSignalSpy>
 #include <QTest>
+#include <config-okular.h>
 
 #include "../core/annotations.h"
 #include "../core/document_p.h"
@@ -34,11 +35,14 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QGraphicsView>
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QScopeGuard>
 #include <QScrollBar>
+#include <QStyleHints>
 #include <QTabletEvent>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
@@ -76,6 +80,7 @@ private Q_SLOTS:
     void testRemoveLineBreaks_data();
     void testRemoveLineBreaks();
     void testClickInternalLink();
+    void testClickOnStoppedVideo();
     void testScrollBarAndMouseWheel();
     void testOpenUrlArguments();
     void test388288();
@@ -535,6 +540,103 @@ void PartTest::testClickInternalLink()
 
     // make sure cursor goes back to being an open hand again.  Bug 421437
     QTRY_COMPARE_WITH_TIMEOUT(part.m_pageView->cursor().shape(), Qt::OpenHandCursor, 1000);
+}
+
+// A video stopped from its control bar must start again when clicked.
+// The movie file of the fixture does not exist: only the mouse handling is tested,
+// which must not depend on a multimedia backend or codec.
+void PartTest::testClickOnStoppedVideo()
+{
+#if !HAVE_MULTIMEDIA
+    QSKIP("Okular was built without Qt Multimedia, it has no video player");
+#endif
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/movie_controls.pdf")));
+    part.widget()->show();
+    if (qgetenv("KDECI_CANNOT_CREATE_WINDOWS") == "1") {
+        QSKIP("KDE CI can't create a window on this platform, skipping some gui tests");
+    }
+
+    QVERIFY(QTest::qWaitForWindowExposed(part.widget()));
+
+    part.m_document->setViewportPage(0);
+
+    // wait for pixmap
+    QTRY_VERIFY(part.m_document->page(0)->hasPixmap(part.m_pageView));
+
+    QVERIFY(QMetaObject::invokeMethod(part.m_pageView, "slotSetMouseNormal"));
+
+    QWidget *videoWidget = nullptr;
+    const QList<QWidget *> children = part.m_pageView->viewport()->findChildren<QWidget *>();
+    for (QWidget *child : children) {
+        if (child->inherits("VideoWidget")) {
+            videoWidget = child;
+        }
+    }
+    QVERIFY(videoWidget);
+    QVERIFY(!videoWidget->isVisible());
+
+    // The annotation covers the whole page
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, part.m_pageView->viewport()->rect().center());
+    QTRY_VERIFY(videoWidget->isVisible());
+
+    QToolBar *controlBar = videoWidget->findChild<QToolBar *>();
+    QVERIFY(controlBar);
+    QVERIFY(controlBar->isVisible());
+    // Index 0 is play/pause, 1 is stop
+    QAction *stopAction = controlBar->actions().at(1);
+    QVERIFY(stopAction->isEnabled());
+
+    stopAction->trigger();
+    QVERIFY(!stopAction->isEnabled());
+
+    QGraphicsView *videoView = videoWidget->findChild<QGraphicsView *>();
+    QVERIFY(videoView);
+    part.m_pageView->setFocus();
+    QTRY_VERIFY(part.m_pageView->hasFocus());
+    QTest::mouseClick(videoView->viewport(), Qt::LeftButton, Qt::NoModifier, videoView->viewport()->rect().center());
+    QVERIFY(stopAction->isEnabled());
+
+    // The keys still scroll the document
+    QVERIFY(part.m_pageView->hasFocus());
+
+    // Qt sends a double click to the widget under the cursor wherever its first press went
+    const QPoint pageCenter = part.m_pageView->viewport()->rect().center();
+    const QPoint center = videoView->viewport()->rect().center();
+    const QPointF globalCenter = videoView->viewport()->mapToGlobal(QPointF(center));
+    QStyleHints *hints = QGuiApplication::styleHints();
+    const auto restoreInterval = qScopeGuard([hints, interval = hints->mouseDoubleClickInterval()] { hints->setMouseDoubleClickInterval(interval); });
+    // Long enough for a slow machine not to run out of it between two lines
+    hints->setMouseDoubleClickInterval(60000);
+
+    // Right after the video was started from outside it, here by the page, it must not pause it
+    stopAction->trigger();
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, pageCenter);
+    QVERIFY(stopAction->isEnabled());
+    stopAction->trigger();
+    QMouseEvent doubleClick(QEvent::MouseButtonDblClick, QPointF(center), globalCenter, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(videoView->viewport(), &doubleClick);
+    QVERIFY(!stopAction->isEnabled());
+
+    // After a click on the video, it is a second click on the video
+    QTest::mouseClick(videoView->viewport(), Qt::LeftButton, Qt::NoModifier, center);
+    QVERIFY(stopAction->isEnabled());
+    stopAction->trigger();
+    QMouseEvent secondDoubleClick(QEvent::MouseButtonDblClick, QPointF(center), globalCenter, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(videoView->viewport(), &secondDoubleClick);
+    QVERIFY(stopAction->isEnabled());
+
+    // Once the interval has run out, the video takes it as a click even after a start from the page
+    hints->setMouseDoubleClickInterval(1);
+    stopAction->trigger();
+    QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, pageCenter);
+    QVERIFY(stopAction->isEnabled());
+    stopAction->trigger();
+    QTest::qWait(20);
+    QMouseEvent lateDoubleClick(QEvent::MouseButtonDblClick, QPointF(center), globalCenter, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QCoreApplication::sendEvent(videoView->viewport(), &lateDoubleClick);
+    QVERIFY(stopAction->isEnabled());
 }
 
 // Test for bug 421159, which is: When scrolling down with the scroll bar

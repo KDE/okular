@@ -15,12 +15,14 @@
 #endif
 #include <qcoreapplication.h>
 #include <qdir.h>
+#include <qelapsedtimer.h>
 #include <qevent.h>
 #if HAVE_MULTIMEDIA
 #include <qgraphicsscene.h>
 #include <qgraphicsvideoitem.h>
 #include <qgraphicsview.h>
 #endif
+#include <qguiapplication.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #if HAVE_MULTIMEDIA
@@ -28,6 +30,7 @@
 #endif
 #include <qmenu.h>
 #include <qstackedlayout.h>
+#include <qstylehints.h>
 #include <qstyleoption.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
@@ -139,6 +142,8 @@ public:
     QLabel *posterImagePage = nullptr;
     bool loaded : 1 = false;
     double repetitionsLeft = 0;
+    // Started by anything but a click on the video: the page, the poster or a link
+    QElapsedTimer startedElsewhere;
 };
 
 static QUrl urlFromUrlString(const QString &url, Okular::Document *document)
@@ -158,7 +163,10 @@ static QUrl urlFromUrlString(const QString &url, Okular::Document *document)
 
 void VideoWidget::Private::load()
 {
-    repetitionsLeft = movie->playRepetitions();
+    // Resuming from pause keeps the repetitions already played
+    if (player->playbackState() != QMediaPlayer::PausedState) {
+        repetitionsLeft = movie->playRepetitions();
+    }
     if (loaded) {
         return;
     }
@@ -285,6 +293,10 @@ VideoWidget::VideoWidget(const Okular::Annotation *annotation, Okular::Movie *mo
     d->graphicsView->setFrameShape(QFrame::NoFrame);
     d->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    // Clicking the video must not take the keyboard away from the page view
+    d->graphicsView->setFocusPolicy(Qt::NoFocus);
+    // A click on the video plays or pauses it, see eventFilter()
+    d->graphicsView->viewport()->installEventFilter(this);
 
     d->videoItem = new QGraphicsVideoItem();
     d->videoItem->setAspectRatioMode(Qt::IgnoreAspectRatio);
@@ -405,6 +417,8 @@ void VideoWidget::pageLeft()
 
 void VideoWidget::play()
 {
+    // A click on the video clears it right after, see eventFilter()
+    d->startedElsewhere.start();
     d->controlBar->setVisible(d->movie->showControls());
     d->load();
     // if d->repetitionsLeft is less than 1, we are supposed to stop midway, but not even Adobe reader does this
@@ -428,13 +442,25 @@ void VideoWidget::pause()
 
 bool VideoWidget::eventFilter(QObject *object, QEvent *event)
 {
-    if (object == d->player || object == d->posterImagePage) {
+    if (object == d->graphicsView->viewport() || object == d->posterImagePage) {
         switch (event->type()) {
-        case QEvent::MouseButtonPress: {
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonDblClick: {
             QMouseEvent *me = static_cast<QMouseEvent *>(event);
             if (me->button() == Qt::LeftButton) {
-                if (!d->player->isPlaying()) {
-                    play();
+                if (object == d->posterImagePage) {
+                    if (!d->player->isPlaying()) {
+                        play();
+                    }
+                } else if (event->type() == QEvent::MouseButtonPress) {
+                    // RichMedia videos have no control bar, a click is their play/pause button
+                    d->playOrPause();
+                    d->startedElsewhere.invalidate();
+                } else if (!d->startedElsewhere.isValid() || d->startedElsewhere.elapsed() >= QGuiApplication::styleHints()->mouseDoubleClickInterval()) {
+                    // Qt sends a double click to the widget under the cursor wherever its first press
+                    // went. It counts as a second click, unless that first press has just started the
+                    // video from the page or from its poster
+                    d->playOrPause();
                 }
                 event->accept();
             }

@@ -1,0 +1,36 @@
+%PDF-1.3
+%¿÷¢þ
+1 0 obj
+<< /Pages 2 0 R /Type /Catalog >>
+endobj
+2 0 obj
+<< /Count 1 /Kids [ 3 0 R ] /Type /Pages >>
+endobj
+3 0 obj
+<< /Annots 4 0 R /Contents 5 0 R /MediaBox [ 0 0 320 240 ] /Parent 2 0 R /Resources << >> /Type /Page >>
+endobj
+4 0 obj
+[ 6 0 R ]
+endobj
+5 0 obj
+<< /Length 0 /Filter /FlateDecode >>
+stream
+
+endstream
+endobj
+6 0 obj
+<< /A << /Mode /Once /ShowControls true >> /Movie << /Aspect [ 320 240 ] /F (movie_controls.mp4) >> /Rect [ 0 0 320 240 ] /Subtype /Movie /T (Movie) /Type /Annot >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000123 00000 n 
+0000000243 00000 n 
+0000000268 00000 n 
+0000000338 00000 n 
+trailer << /Root 1 0 R /Size 7 /ID [<49f99bdf528cf2d8d18504a24d652652><49f99bdf528cf2d8d18504a24d652652>] >>
+startxref
+518
+%%EOF

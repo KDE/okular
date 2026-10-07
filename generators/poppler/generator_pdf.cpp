@@ -275,7 +275,7 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
      * To convert a Flash/Video based RichMedia annotation to a movie, we search for the first
      * Flash/Video richmedia instance and parse the flashVars parameter for the 'source' identifier.
      * That identifier is then used to find the associated embedded file through the assets
-     * mapping.
+     * mapping. A plain video instance names its embedded file through /Asset instead
      */
     const Poppler::RichMediaAnnotation::Content *content = popplerRichMedia->content();
     if (!content) {
@@ -300,15 +300,20 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
         return emptyResult;
     }
 
-    const Poppler::RichMediaAnnotation::Params *params = instance->params();
-    if (!params) {
-        return emptyResult;
+    Poppler::EmbeddedFile *embeddedFile = nullptr;
+#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(26, 10, 90)
+    if (instance->type() == Poppler::RichMediaAnnotation::Instance::TypeVideo) {
+        embeddedFile = instance->embeddedFile();
     }
+#endif
+
+    // A plain video instance usually comes without any flashVars
+    const Poppler::RichMediaAnnotation::Params *params = instance->params();
 
     QString sourceId;
     bool playbackLoops = false;
 
-    const QStringList flashVars = params->flashVars().split(QLatin1Char('&'));
+    const QStringList flashVars = params ? params->flashVars().split(QLatin1Char('&')) : QStringList();
     for (const QString &flashVar : flashVars) {
         const int pos = flashVar.indexOf(QLatin1Char('='));
         if (pos == -1) {
@@ -325,7 +330,7 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
         }
     }
 
-    if (sourceId.isEmpty()) {
+    if (sourceId.isEmpty() && !embeddedFile) {
         return emptyResult;
     }
 
@@ -342,12 +347,11 @@ QPair<Okular::Movie *, Okular::EmbeddedFile *> createMovieFromPopplerRichMedia(c
         }
     }
 
-    if (!matchingAsset) {
-        return emptyResult;
+    if (!embeddedFile && matchingAsset) {
+        embeddedFile = matchingAsset->embeddedFile();
     }
-
-    Poppler::EmbeddedFile *embeddedFile = matchingAsset->embeddedFile();
-    if (!embeddedFile) {
+    // A video has nothing to play in a file typed as an image
+    if (!embeddedFile || embeddedFile->mimeType().startsWith(QLatin1String("image/"), Qt::CaseInsensitive)) {
         return emptyResult;
     }
 

@@ -41,11 +41,6 @@
 #include "core/document.h"
 #include "core/movie.h"
 
-const int kVideoPage = 0;
-const int kPosterPage = 1;
-
-#if HAVE_MULTIMEDIA
-
 // Inspired by SeekSlider in Dolphin's Information Panel (MediaWidget)
 SeekSlider::SeekSlider(QWidget *parent)
     : QSlider(Qt::Horizontal, parent)
@@ -90,6 +85,11 @@ void SeekSlider::mousePressEvent(QMouseEvent *event)
         QSlider::mousePressEvent(event);
     }
 }
+
+#if HAVE_MULTIMEDIA
+
+const int kVideoPage = 0;
+const int kPosterPage = 1;
 
 /* Private storage. */
 class VideoWidget::Private

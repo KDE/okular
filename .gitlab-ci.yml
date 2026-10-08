@@ -49,6 +49,7 @@ build_debian_minimal:
  only:
   - merge_requests
  before_script:
+  - sed -i 's/ deb/ deb deb-src/' /etc/apt/sources.list.d/debian.sources
   - apt-get update
   - apt-get install --yes eatmydata
   - eatmydata apt-get build-dep --yes --no-install-recommends okular

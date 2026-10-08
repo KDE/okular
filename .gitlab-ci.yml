@@ -56,6 +56,7 @@ build_debian_minimal:
   - eatmydata apt-get install --yes --no-install-recommends ninja-build
   - eatmydata apt-get remove --yes libphonon4qt6-dev qt6-multimedia-dev
   - eatmydata dpkg -L qt6-declarative-dev | while read element ; do if [ -f $element ] ; then rm $element; fi ; done
+  - sed 's/.*Qt6Qml.*//' -i /usr/lib/x86_64-linux-gnu/cmake/KF6Config/KF6ConfigConfig.cmake
  script:
   - mkdir -p build && cd build
   - cmake -DFORCE_NOT_REQUIRED_DEPENDENCIES="KF6Wallet;KF6DocTools;Qt6Qml;TIFF;LibSpectre;KExiv2Qt6;DjVuLibre;EPub;Discount;Qt6TextToSpeech" -DOKULAR_UI=desktop -G Ninja ..

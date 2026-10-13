@@ -25,6 +25,11 @@ public:
         if (m_kleopatraPath.isEmpty()) {
             m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"));
         }
+#elif defined(Q_OS_MACOS)
+        m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra"), {QCoreApplication::applicationDirPath()});
+        if (m_kleopatraPath.isEmpty()) {
+            m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
+        }
 #else
         m_kleopatraPath = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
 #endif

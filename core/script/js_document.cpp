@@ -237,6 +237,35 @@ QJSValue JSDocument::getOCGs([[maybe_unused]] int nPage) const
     return array;
 }
 
+QJSValue JSDocument::getFieldWithChildren(const QJSValue &value) const
+{
+    const QString name = value.toString();
+
+    QList<QJSValue> fields;
+    const auto root = getField(name);
+    if (!root.isUndefined()) {
+        fields << root;
+    }
+
+    QList<Page *>::const_iterator pIt = m_doc->m_pagesVector.constBegin(), pEnd = m_doc->m_pagesVector.constEnd();
+    for (; pIt != pEnd; ++pIt) {
+        const QList<Okular::FormField *> pageFields = (*pIt)->formFields();
+        for (FormField *form : pageFields) {
+            if (form->fullyQualifiedName().startsWith(value.toString() + u".")) {
+                fields << JSField::wrapField(qjsEngine(this), form, *pIt, m_fieldCache);
+            }
+        }
+    }
+
+    auto ret = qjsEngine(this)->newArray();
+
+    for (int i = 0; i < fields.length(); ++i) {
+        ret.setProperty(i, fields[i]);
+    }
+
+    return ret;
+}
+
 JSDocument::JSDocument(DocumentPrivate *doc, const std::shared_ptr<JSFieldCache> &cache, QObject *parent)
     : QObject(parent)
     , m_doc(doc)

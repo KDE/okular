@@ -71,6 +71,8 @@ public:
     Q_INVOKABLE QJSValue getNthFieldName(int nIndex) const;
     Q_INVOKABLE QJSValue getOCGs(int nPage = -1) const;
 
+    Q_INVOKABLE QJSValue getFieldWithChildren(const QJSValue &value) const;
+
 private:
     DocumentPrivate *m_doc = nullptr;
     std::shared_ptr<JSFieldCache> m_fieldCache;

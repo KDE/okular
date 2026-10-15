@@ -53,29 +53,32 @@ function AFSimple_Calculate( cFunction, cFields )
 
     for (i = 0; i < cFields.length; i++)
     {
-        var field = Doc.getField( cFields[i] );
-        var val = AFMakeNumber( field.value );
+        const fields = Doc.getFieldWithChildren(cFields[i]);
 
-        if ( cFunction === "SUM" || cFunction === "AVG" )
-        {
-            ret += val;
-        }
-        else if ( cFunction === "PRD" )
-        {
-            ret *= val;
-        }
-        else if ( cFunction === "MIN" )
-        {
-            if ( i === 0 || val < ret )
+        for (field of fields) {
+            var val = AFMakeNumber( field.value );
+
+            if ( cFunction === "SUM" || cFunction === "AVG" )
             {
-                ret = val;
+                ret += val;
             }
-        }
-        else if ( cFunction === "MAX" )
-        {
-            if ( i === 0 || val > ret )
+            else if ( cFunction === "PRD" )
             {
-                ret = val;
+                ret *= val;
+            }
+            else if ( cFunction === "MIN" )
+            {
+                if ( i === 0 || val < ret )
+                {
+                    ret = val;
+                }
+            }
+            else if ( cFunction === "MAX" )
+            {
+                if ( i === 0 || val > ret )
+                {
+                    ret = val;
+                }
             }
         }
     }

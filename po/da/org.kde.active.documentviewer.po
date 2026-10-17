@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:50+0000\n"
-"PO-Revision-Date: 2025-11-07 22:09+0100\n"
-"Last-Translator: Rasmus Rosendahl-Kaa <rasmus@rosendahl-kaa.name>\n"
+"PO-Revision-Date: 2026-10-16 21:58+0200\n"
+"Last-Translator: Øjvind Fritjof Arnfred <fritjofarnfred@protonmail.com>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,7 @@ msgstr "Fejl"
 
 #: ui/CertificateViewerPage.qml:163
 msgid "Could not export the certificate."
-msgstr ""
+msgstr "Kunne ikke eksportere certifikatet"
 
 #: ui/Main.qml:25 ui/Main.qml:66
 msgid "Okular"
@@ -96,25 +96,23 @@ msgstr ""
 
 #: ui/Main.qml:42
 msgid "Open…"
-msgstr ""
+msgstr "Åbn..."
 
 #: ui/Main.qml:49
 msgid "About"
-msgstr ""
+msgstr "Om"
 
 #: ui/Main.qml:99
 msgid "Password Needed"
-msgstr ""
+msgstr "Adgangskode påkrævet"
 
 #: ui/MainView.qml:29
 msgid "Remove bookmark"
-msgstr ""
+msgstr "Fjern bogmærke"
 
 #: ui/MainView.qml:29
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Bookmark this page"
-msgstr "Bogmærker"
+msgstr "Bogmærk denne side"
 
 #: ui/OkularDrawer.qml:57
 msgid "Thumbnails"
@@ -126,68 +124,68 @@ msgstr "Indholdsfortegnelse"
 
 #: ui/OkularDrawer.qml:99
 msgid "Signatures"
-msgstr ""
+msgstr "Signaturer"
 
 #: ui/SignaturePropertiesPage.qml:33
 msgid "Signature Properties"
-msgstr ""
+msgstr "Egenskaber for signatur"
 
 #: ui/SignaturePropertiesPage.qml:40
 msgid "Validity Status"
-msgstr ""
+msgstr "Gyldighedsstatus"
 
 #: ui/SignaturePropertiesPage.qml:46
 msgid "Signature Validity:"
-msgstr ""
+msgstr "Signaturens gyldighed:"
 
 #: ui/SignaturePropertiesPage.qml:53
 msgid "Document Modifications:"
-msgstr ""
+msgstr "Dokumentændringer:"
 
 #: ui/SignaturePropertiesPage.qml:58
 msgid "Additional Information"
-msgstr ""
+msgstr "Yderligere information"
 
 #: ui/SignaturePropertiesPage.qml:64
 msgid "Signed By:"
-msgstr ""
+msgstr "Underskrevet af:"
 
 #: ui/SignaturePropertiesPage.qml:71
 msgid "Signing Time:"
-msgstr ""
+msgstr "Tidspunkt for underskrift:"
 
 #: ui/SignaturePropertiesPage.qml:80
 msgid "Reason:"
-msgstr ""
+msgstr "Årsag:"
 
 #: ui/SignaturePropertiesPage.qml:90
 msgid "Location:"
-msgstr ""
+msgstr "Lokation"
 
 #: ui/SignaturePropertiesPage.qml:96
 msgid "Document Version"
-msgstr ""
+msgstr "Dokumentversion"
 
 #: ui/SignaturePropertiesPage.qml:104
 msgctxt "Document Revision <current> of <total>"
 msgid "Document Revision %1 of %2"
-msgstr ""
+msgstr "Dokument revision %1 af %2"
 
 #: ui/SignaturePropertiesPage.qml:108
 msgid "Save Signed Version…"
-msgstr ""
+msgstr "Gem underskrevet version..."
 
 #: ui/SignaturePropertiesPage.qml:122 ui/SignaturePropertiesPage.qml:137
 msgid "View Certificate…"
-msgstr ""
+msgstr "Se certifikat..."
 
 #: ui/SignaturePropertiesPage.qml:171
 msgid "Could not save the signature."
-msgstr ""
+msgstr "Kunne ikke gemme signaturen."
 
 #: ui/Signatures.qml:27
 msgid "Not Available"
-msgstr ""
+msgstr "Ikke tilgængelig"
 
 #: ui/ThumbnailsBase.qml:42
 msgid "No results found."
@@ -195,20 +193,20 @@ msgstr "Ingen resultater fundet."
 
 #: ui/WelcomeView.qml:43
 msgid "No document open"
-msgstr ""
+msgstr "Intet dokument åbent"
 
 #: ui/WelcomeView.qml:49
 msgctxt "in welcome screen"
 msgid "Recent Documents"
-msgstr ""
+msgstr "Nylige dokumenter"
 
 #: ui/WelcomeView.qml:108
 msgctxt "in welcome screen"
 msgid "My Documents"
-msgstr ""
+msgstr "Mine dokumenter"
 
 #~ msgid "Document viewer for Plasma Active using Okular"
-#~ msgstr "Dokumentfremviser til Plasma Active som bruger Okular"
+#~ msgstr "Dokumentviser for Plasma A"
 
 #~ msgid "Reader"
 #~ msgstr "Læser"
@@ -218,6 +216,3 @@ msgstr ""
 
 #~ msgid "Marco Martin"
 #~ msgstr "Marco Martin"
-
-#~ msgid "URL of the file to open"
-#~ msgstr "URL til filen der skal åbnes"

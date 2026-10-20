@@ -26,6 +26,7 @@
 #include <QWidget>
 
 #include <atomic>
+#include <unordered_map>
 
 class ExportImageDocumentObserver : public QObject, public Okular::DocumentObserver
 {
@@ -39,12 +40,14 @@ private Q_SLOTS:
 
 private:
     void getPixmapAndSave(int page);
+    void insertIntoLocalPixmaps(int page);
 
     Okular::Document *m_document;
     QString m_dirPath;
     QProgressDialog *m_progressDialog;
     int m_progressValue;
     bool m_progressCanceled;
+    std::unordered_map<int, QPixmap> m_localPixmaps;
 };
 
 class ExportImageDialog : public QDialog

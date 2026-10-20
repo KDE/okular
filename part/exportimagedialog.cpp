@@ -80,17 +80,17 @@ ExportImageDialog::ExportImageDialog(Okular::Document *document, QWidget *parent
     customPageRangeLayout->addWidget(m_customPageRadioButton);
     customPageRangeLayout->addWidget(m_customPageRangeLineEdit);
 
-    connect(m_allPagesRadioButton, &QRadioButton::toggled, this, [=]() {
+    connect(m_allPagesRadioButton, &QRadioButton::toggled, this, [this]() {
         m_pageStartSpinBox->setEnabled(false);
         m_pageEndSpinBox->setEnabled(false);
         m_customPageRangeLineEdit->setEnabled(false);
     });
-    connect(m_pageRangeRadioButton, &QRadioButton::toggled, this, [=]() {
+    connect(m_pageRangeRadioButton, &QRadioButton::toggled, this, [this]() {
         m_pageStartSpinBox->setEnabled(true);
         m_pageEndSpinBox->setEnabled(true);
         m_customPageRangeLineEdit->setEnabled(false);
     });
-    connect(m_customPageRadioButton, &QRadioButton::toggled, this, [=]() {
+    connect(m_customPageRadioButton, &QRadioButton::toggled, this, [this]() {
         m_pageStartSpinBox->setEnabled(false);
         m_pageEndSpinBox->setEnabled(false);
         m_customPageRangeLineEdit->setEnabled(true);
@@ -197,11 +197,17 @@ void ExportImageDialog::okClicked()
     done(Accepted);
 }
 
+void ExportImageDocumentObserver::insertIntoLocalPixmaps(int page)
+{
+    m_localPixmaps[page] = *(m_document->page(page)->getPixmap(this));
+}
+
 void ExportImageDocumentObserver::notifyPageChanged(int page, int flags)
 {
     if (!(flags & Okular::DocumentObserver::Pixmap)) {
         return;
     }
+    insertIntoLocalPixmaps(page);
     QMetaObject::invokeMethod(this, [this, page] { getPixmapAndSave(page); }, Qt::QueuedConnection);
 }
 
@@ -210,7 +216,7 @@ void ExportImageDocumentObserver::getPixmapAndSave(int page)
     if (m_progressCanceled) {
         return;
     }
-    const QPixmap *pixmap = m_document->page(page)->getPixmap(this);
+    const QPixmap *pixmap = &m_localPixmaps.at(page);
     QString fileName = QString::number(page + 1) + QStringLiteral(".png");
     QDir dir(m_dirPath);
     QString filePath = dir.filePath(fileName);
@@ -220,7 +226,7 @@ void ExportImageDocumentObserver::getPixmapAndSave(int page)
     } else {
         ++m_progressValue;
         m_progressDialog->setValue(m_progressValue);
-        if (m_progressValue == m_progressDialog->maximum()) {
+        if (m_progressValue == m_progressDialog->maximum() && m_progressDialog != nullptr) {
             delete m_progressDialog;
         }
     }

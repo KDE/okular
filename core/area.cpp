@@ -396,11 +396,17 @@ ObjectRect::~ObjectRect()
         return;
     }
 
-    if (m_objectType == Action) {
+    switch(m_objectType) {
+        case  Action:
         delete static_cast<Okular::Action *>(m_object);
-    } else if (m_objectType == SourceRef) {
+        break;
+        case  SourceRef:
         delete static_cast<Okular::SourceReference *>(m_object);
-    } else {
+        break;
+        case Image:
+        delete static_cast<QString *>(m_object);
+        break;
+        case OAnnotation:
         qCDebug(OkularCoreDebug).nospace() << "Object deletion not implemented for type '" << m_objectType << "'.";
     }
 }

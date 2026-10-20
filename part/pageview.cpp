@@ -3478,24 +3478,29 @@ bool PageView::viewportEvent(QEvent *e)
             const QPoint eventPos = contentAreaPoint(he->pos());
             const PageViewItem *pageItem = pickItemOnPoint(eventPos.x(), eventPos.y());
             const Okular::ObjectRect *rect = nullptr;
-            const Okular::Action *link = nullptr;
+            QString tip;;
             if (pageItem) {
+                qDebug() << "got pageItem";
                 double nX = pageItem->absToPageX(eventPos.x());
                 double nY = pageItem->absToPageY(eventPos.y());
                 rect = pageItem->page()->objectRect(Okular::ObjectRect::Action, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight());
                 if (rect) {
-                    link = static_cast<const Okular::Action *>(rect->object());
+                    auto link = static_cast<const Okular::Action *>(rect->object());
+                    tip = link->actionTip();
+                } else {
+                    rect = pageItem->page()->objectRect(Okular::ObjectRect::Image, nX, nY, pageItem->uncroppedWidth(), pageItem->uncroppedHeight());
+                    qDebug() << "got rect" << rect;
+                    if (rect) {
+                        tip = *(static_cast<const QString*>(rect->object()));
+                    }
                 }
             }
 
-            if (link) {
+            if (!tip.isEmpty()) {
                 QRect r = rect->boundingRect(pageItem->uncroppedWidth(), pageItem->uncroppedHeight());
                 r.translate(pageItem->uncroppedGeometry().topLeft());
                 r.translate(-contentAreaPosition());
-                QString tip = link->actionTip();
-                if (!tip.isEmpty()) {
-                    QToolTip::showText(he->globalPos(), tip, viewport(), r);
-                }
+                QToolTip::showText(he->globalPos(), tip, viewport(), r);
             }
         }
         e->accept();

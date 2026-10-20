@@ -1359,7 +1359,16 @@ QImage PDFGenerator::image(Okular::PixmapRequest *request)
         // TODO previously we extracted Image type rects too, but that needed porting to poppler
         // and as we are not doing anything with Image type rects i did not port it, have a look at
         // dead gp_outputdev.cpp on image extraction
-        page->setObjectRects(generateLinks(p->links()));
+        auto convertImages = [] (std::vector<Poppler::Page::Image> images) -> QList<Okular::ObjectRect*> {
+            QList<Okular::ObjectRect*> rects;
+            for(const auto& image : images) {
+                QPolygonF poly{image.r};
+                rects << new Okular::ObjectRect{poly, Okular::ObjectRect::Image, new QString(image.text)};
+            }
+            return rects;
+        };
+
+        page->setObjectRects(generateLinks(p->links()) + convertImages(p->images()));
         rectsGenerated[request->page()->number()] = true;
 
         resolveMediaLinkReferences(page);

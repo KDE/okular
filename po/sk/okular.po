@@ -602,6 +602,8 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"Podpisový certifikát sa nenašiel. Ak používate čipovú kartu, mohla byť "
+"vybratá alebo sa zmenilo úložisko podpisov"
 
 #: core/signatureutils.cpp:524
 #, kde-format
@@ -645,7 +647,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "Nepodporovaný typ podpisu pre aktuálny certifikát"
 
 #: core/signatureutils.cpp:536
 #, kde-format
@@ -5644,10 +5646,9 @@ msgstr "Nedávne pozadia:"
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "Signature Type: %1"
+msgstr "Typ podpisu"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5695,33 +5696,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "ŽIADNY"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 Sha1"
+msgstr "Podpis Adobe PKCS7"
 
 #: part/signaturepartutils.cpp:61
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr "Nepodpísaný podpis %1"
+msgstr "Základný podpis eIDAS"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "Podpis eIDAS s časovou pečiatkou"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "Podpis eIDAS s časovou pečiatkou na dlhodobé overenie"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5730,6 +5729,8 @@ msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
 msgstr ""
+"Podpis eIDAS s časovou pečiatkou na dlhodobé overenie a s podporou "
+"opätovného overenia"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format

@@ -2365,7 +2365,6 @@ AnnotationPrivate *StampAnnotationPrivate::getNewAnnotationPrivate()
     return new StampAnnotationPrivate();
 }
 
-#if HAVE_NEW_SIGNATURE_API
 /** SignatureAnnotation [Annotation] */
 
 class Okular::SignatureAnnotationPrivate : public Okular::AnnotationPrivate
@@ -2521,7 +2520,6 @@ AnnotationPrivate *SignatureAnnotationPrivate::getNewAnnotationPrivate()
 {
     return new SignatureAnnotationPrivate();
 }
-#endif
 
 /** InkAnnotation [Annotation] */
 

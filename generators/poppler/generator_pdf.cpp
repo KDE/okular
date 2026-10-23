@@ -609,11 +609,9 @@ Okular::Action *createLinkFromPopplerLink(std::variant<const Poppler::Link *, st
         auto popplerLinkResetForm = toSharedPointer<const Poppler::LinkResetForm>(std::move(uniquePopplerLink));
         link->setNativeHandle(popplerLinkResetForm);
     } break;
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(24, 10, 0)
     case Poppler::Link::SubmitForm: {
         // TODO
     } break;
-#endif
     }
 
     if (link) {
@@ -707,9 +705,7 @@ PDFGenerator::PDFGenerator(QObject *parent, const QVariantList &args)
     if (activeBackend == Poppler::CryptoSignBackend::GPG) {
         setActiveCertificateBackend(Okular::CertificateInfo::Backend::Gpg);
     }
-#if POPPLER_VERSION_MACRO >= QT_VERSION_CHECK(25, 02, 90)
     Poppler::setPgpSignaturesAllowed(PDFSettings::enablePgp());
-#endif
     m_signatureSettingsHandle = SignatureSettings::ref();
 }
 

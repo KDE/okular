@@ -8,8 +8,8 @@ set (RELEASE_SERVICE_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}.${RELEASE_SERVICE
 
 project(okular VERSION ${RELEASE_SERVICE_VERSION})
 
-set(QT_REQUIRED_VERSION "6.6.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
-set(KF_REQUIRED_VERSION "5.240.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
+set(QT_REQUIRED_VERSION "6.8.0") # Remember to update the QT_DEPRECATED_WARNINGS_SINCE below
+set(KF_REQUIRED_VERSION "6.13.0") # Remember to update the KF_DEPRECATED_WARNINGS_SINCE below
 
 set(OKULAR_UI "" CACHE STRING "Which Okular user interface to build. Possible values: desktop, mobile, both. Default: desktop (except on Android, where it is 'mobile')")
 
@@ -220,7 +220,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 find_package(ZLIB REQUIRED)
 
-find_package(Poppler "24.08.0" COMPONENTS Qt6)
+find_package(Poppler "25.03.0" COMPONENTS Qt6)
 set_okular_optional_package_properties(Poppler PROPERTIES
         PURPOSE "Support for PDF files in okular.")
 
@@ -274,20 +274,8 @@ set_okular_optional_package_properties(Discount PROPERTIES
         PURPOSE "Support for Markdown documents in Okular.")
 
 add_definitions(-DTRANSLATION_DOMAIN="okular")
-add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060600)
-add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x05F000)
-
-if (Poppler_VERSION VERSION_LESS 24.10.0)
-    add_definitions(-DHAVE_NEW_SIGNATURE_API=0)
-else()
-    add_definitions(-DHAVE_NEW_SIGNATURE_API=1)
-endif()
-
-if (Poppler_VERSION VERSION_LESS 24.12.0)
-    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=0)
-else()
-    add_definitions(-DHAVE_AUTOMATIC_SIGNATURE_FONT_SIZE=1)
-endif()
+add_definitions(-DQT_DEPRECATED_WARNINGS_SINCE=0x060800)
+add_definitions(-DKF_DEPRECATED_WARNINGS_SINCE=0x060D00)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} core/synctex ${CMAKE_BINARY_DIR}/core)
 

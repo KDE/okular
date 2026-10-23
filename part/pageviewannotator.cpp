@@ -374,7 +374,6 @@ private:
 
 class PickPointEngineSignature : public PickPointEngine
 {
-#if HAVE_NEW_SIGNATURE_API
 public:
     explicit PickPointEngineSignature(SignaturePartUtils::SigningInformation *info)
         : PickPointEngine(nullptr, {})
@@ -415,11 +414,9 @@ public:
         ann->setText(signatureText);
         ann->setImagePath(m_signingInformation->backgroundImagePath);
 
-#if HAVE_AUTOMATIC_SIGNATURE_FONT_SIZE
         // 0 means "Chose an appropriate size"
         ann->setLeftFontSize(0);
         ann->setFontSize(0);
-#endif
 
         // set the bounding rectangle, and make sure that the newly created
         // annotation lies within the page by translating it if necessary
@@ -451,98 +448,6 @@ private:
 
     bool m_aborted;
     SignaturePartUtils::SigningInformation *m_signingInformation;
-#else
-public:
-    PickPointEngineSignature(Okular::Document *document, PageView *pageView, SignaturePartUtils::SigningInformation *info)
-        : PickPointEngine(pageView, {})
-        , m_document(document)
-        , m_page(nullptr)
-        , m_pageView(pageView)
-        , m_startOver(false)
-        , m_aborted(false)
-        , m_signingInformation(info)
-    {
-        m_block = true;
-    }
-
-    QRect event(EventType type, Button button, Modifiers modifiers, double nX, double nY, double xScale, double yScale, const Okular::Page *page) override
-    {
-        m_page = page;
-        return PickPointEngine::event(type, button, modifiers, nX, nY, xScale, yScale, page);
-    }
-
-    QList<Okular::Annotation *> end() override
-    {
-        m_startOver = false;
-        rect.left = qMin(startpoint.x, point.x);
-        rect.top = qMin(startpoint.y, point.y);
-        rect.right = qMax(startpoint.x, point.x);
-        rect.bottom = qMax(startpoint.y, point.y);
-
-        // FIXME this is a bit arbitrary, try to figure out a better rule, potentially based in cm and not pixels?
-        if (rect.width() * m_page->width() < 100 || rect.height() * m_page->height() < 100) {
-            const KMessageBox::ButtonCode answer = KMessageBox::questionTwoActions(
-                m_pageView,
-                xi18nc("@info", "A signature of this size may be too small to read. If you would like to create a potentially more readable signature, press <interface>Start over</interface> and draw a bigger rectangle."),
-                QString(),
-                KGuiItem(i18nc("@action:button", "Start Over")),
-                KGuiItem(i18nc("@action:button", "Sign")),
-                QStringLiteral("TooSmallDigitalSignatureQuestion"));
-            if (answer == KMessageBox::PrimaryAction) {
-                m_startOver = true;
-                return {};
-            }
-        }
-        m_creationCompleted = false;
-        clicked = false;
-
-        return {};
-    }
-
-    bool isAccepted() const
-    {
-        return !m_aborted && !m_signingInformation->certificate->nickName().isEmpty();
-    }
-
-    bool userWantsToStartOver() const
-    {
-        return m_startOver;
-    }
-
-    bool isAborted() const
-    {
-        return m_aborted;
-    }
-
-    std::pair<Okular::SigningResult, QString> sign(const QString &newFilePath)
-    {
-        Okular::NewSignatureData data;
-        data.setCertNickname(m_signingInformation->certificate->nickName());
-        data.setCertSubjectCommonName(m_signingInformation->certificate->subjectInfo(Okular::CertificateInfo::CommonNameOrEmail, Okular::CertificateInfo::EmptyString::TranslatedNotAvailable));
-        data.setPassword(m_signingInformation->certificatePassword);
-        data.setDocumentPassword(m_signingInformation->documentPassword);
-        data.setPage(m_page->number());
-        data.setBoundingRectangle(rect);
-        data.setReason(m_signingInformation->reason);
-        data.setLocation(m_signingInformation->location);
-        data.setBackgroundImagePath(m_signingInformation->backgroundImagePath);
-        return m_document->sign(data, newFilePath);
-    }
-
-    SignaturePartUtils::SigningInformation *signingInformation() const
-    {
-        return m_signingInformation;
-    }
-
-private:
-    Okular::Document *m_document;
-    const Okular::Page *m_page;
-    PageView *m_pageView;
-
-    bool m_startOver;
-    bool m_aborted;
-    SignaturePartUtils::SigningInformation *m_signingInformation;
-#endif
 };
 
 /** @short PolyLineEngine */
@@ -1058,11 +963,7 @@ bool PageViewAnnotator::signatureMode() const
 void PageViewAnnotator::startSigning(SignaturePartUtils::SigningInformation *info)
 {
     m_signatureMode = true;
-#if HAVE_NEW_SIGNATURE_API
     m_engine = new PickPointEngineSignature(info);
-#else
-    m_engine = new PickPointEngineSignature(m_document, m_pageView, info);
-#endif
 }
 
 bool PageViewAnnotator::active() const
@@ -1149,14 +1050,12 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
             annotation->setAuthor(Okular::Settings::identityAuthor());
             m_document->addPageAnnotation(m_lockedItem->pageNumber(), annotation);
 
-#if HAVE_NEW_SIGNATURE_API
             if (auto signatureAnnotation = dynamic_cast<Okular::SignatureAnnotation *>(annotation)) {
                 m_pageView->startSigning(signatureAnnotation);
                 // We cannot undo adding a signature annotation
                 // clear the undo stack so we don't offer it to the user
                 m_document->clearHistory();
             }
-#endif
 
             if (annotation->openDialogAfterCreation()) {
                 m_pageView->openAnnotationWindow(annotation, m_lockedItem->pageNumber());
@@ -1166,53 +1065,11 @@ QRect PageViewAnnotator::performRouteMouseOrTabletEvent(const AnnotatorEngine::E
         if (signatureMode()) {
             const auto signEngine = static_cast<PickPointEngineSignature *>(m_engine);
 
-#if !HAVE_NEW_SIGNATURE_API
-            if (signEngine->userWantsToStartOver()) {
-                auto singingInfo = signEngine->signingInformation();
-                delete m_engine;
-                m_engine = new PickPointEngineSignature(m_document, m_pageView, singingInfo);
-                return {};
-            } else if (signEngine->isAccepted()) {
-                const QString newFilePath = SignaturePartUtils::getFileNameForNewSignedFile(m_pageView, m_document);
-
-                if (!newFilePath.isEmpty()) {
-                    const std::pair<Okular::SigningResult, QString> result = static_cast<PickPointEngineSignature *>(m_engine)->sign(newFilePath);
-                    switch (result.first) {
-                    case Okular::SigningSuccess: {
-                        Q_EMIT m_pageView->requestOpenNewlySignedFile(newFilePath, m_lockedItem->pageNumber() + 1);
-                        break;
-                    }
-                    case Okular::FieldAlreadySigned: // We should not end up here
-                    case Okular::KeyMissing:
-                    case Okular::InternalSigningError:
-                        KMessageBox::detailedError(m_pageView, errorString(result.first, static_cast<int>(result.first)), result.second);
-                        break;
-                    case Okular::GenericSigningError:
-                        KMessageBox::detailedError(m_pageView, errorString(result.first, newFilePath), result.second);
-                        break;
-                    case Okular::UserCancelled:
-                        break;
-                    case Okular::BadPassphrase:
-                        KMessageBox::detailedError(m_pageView, errorString(result.first, {}), result.second);
-                        break;
-                    case Okular::SignatureWriteFailed:
-                        KMessageBox::detailedError(m_pageView, errorString(result.first, newFilePath), result.second);
-                        break;
-                    }
-                }
-                // Exit the signature mode.
-                setSignatureMode(false);
-                selectBuiltinTool(-1, ShowTip::No);
-            }
-#else
             if (signEngine->isAccepted()) {
                 // Exit the signature mode.
                 setSignatureMode(false);
                 selectBuiltinTool(-1, ShowTip::No);
-            }
-#endif
-
-            else if (signEngine->isAborted()) {
+            } else if (signEngine->isAborted()) {
                 // Exit the signature mode.
                 setSignatureMode(false);
                 selectBuiltinTool(-1, ShowTip::No);

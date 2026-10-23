@@ -284,9 +284,7 @@ public Q_SLOTS:
     void noticeMessage(const QString &message, int duration = -1);
 
     void moveSplitter(const int sideWidgetSize);
-#if HAVE_NEW_SIGNATURE_API
     void finishSigning();
-#endif
 
 private:
     friend class PartTest;
@@ -368,9 +366,7 @@ private:
     KMessageWidget *m_printMightDifferMessage;
     KMessageWidget *m_infoMessage;
     KMessageWidget *m_signatureMessage;
-#if HAVE_NEW_SIGNATURE_API
     KMessageWidget *m_signatureInProgressMessage;
-#endif
     QPointer<ThumbnailList> m_thumbnailList;
     QPointer<PageView> m_pageView;
     QPointer<TOC> m_toc;

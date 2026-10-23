@@ -1355,7 +1355,6 @@ private:
     Q_DISABLE_COPY(StampAnnotation)
 };
 
-#if HAVE_NEW_SIGNATURE_API
 /**
  * \since 24.12
  */
@@ -1423,7 +1422,6 @@ private:
     Q_DECLARE_PRIVATE(SignatureAnnotation)
     Q_DISABLE_COPY(SignatureAnnotation)
 };
-#endif
 
 class OKULARCORE_EXPORT InkAnnotation : public Annotation
 {

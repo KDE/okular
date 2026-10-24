@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:44+0000\n"
+"POT-Creation-Date: 2026-10-24 00:47+0000\n"
 "PO-Revision-Date: 2025-08-21 15:00+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -32,19 +32,19 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "maris.kde@gmail.com, toms.trasuns@posteno.net"
 
-#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2225
-#: generator_pdf.cpp:2253
+#: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2221
+#: generator_pdf.cpp:2249
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Neizdevās rakstīt pagaidu datni"
 
-#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2276
+#: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2272
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgid "Failed removing file"
 msgstr "Neizdevās pārdēvēt pagaidu datni"
 
-#: annots.cpp:612
+#: annots.cpp:608
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Neizdevās pārdēvēt pagaidu datni"
@@ -80,7 +80,7 @@ msgid "Enhance thin lines:"
 msgstr "Uzlabot tievas līnijas:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1032
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "Nē"
@@ -196,7 +196,7 @@ msgstr "Pieejamie sertifikāti"
 msgid "&Load Signatures"
 msgstr "&Ielādēt parakstus"
 
-#: formfields.cpp:565 generator_pdf.cpp:2280
+#: formfields.cpp:559 generator_pdf.cpp:2276
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgctxt "%1 is an error message"
@@ -258,43 +258,43 @@ msgstr "Drukājamo lapu mērogošanas metode"
 msgid "Scale mode:"
 msgstr "Mērogošanas režīms:"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "Formāts"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "Šifrēts"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nešifrēts"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "Drošība"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "Jā"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "Optimizēts"
 
-#: generator_pdf.cpp:1521
+#: generator_pdf.cpp:1517
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -305,12 +305,12 @@ msgstr ""
 "\n"
 "Datums: %2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1740
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "Izmanto „Poppler“ %1"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -321,17 +321,17 @@ msgstr ""
 "\n"
 "Būvēts ar „Poppler“ %2"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF aizmugursistēmas pielāgošana"
 
-#: generator_pdf.cpp:2300
+#: generator_pdf.cpp:2296
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -340,7 +340,7 @@ msgstr ""
 "Dokumentā ir atrastas kļūdas, „Okular“ var rasties grūtības dokumentu "
 "pareizi atveidot"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:109
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -350,37 +350,37 @@ msgstr ""
 "Šie paraksti darbojas tikai starp modernam „Okular“ versijām ar ieslēgtu "
 "„GnuPG“ balstītu aizmugursistēmu"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:110
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Ieslēgt PGP parakstus"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Izdots"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgid "E-mail"
 msgstr "E-pasts"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Derīgs līdz"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:142
 #, fuzzy, kde-format
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
 msgstr "Pieejamie sertifikāti"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:164
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -389,23 +389,23 @@ msgstr ""
 "Jūs izmantojat „Poppler“ bibliotēka, kas ir būvēta bez NSS atbalsta.\n"
 "Šī iemesla dēļ digitālo parakstu pievienošana nav pieejama"
 
-#: pdfsettingswidget.cpp:198
+#: pdfsettingswidget.cpp:188
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "mūžīgi"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "Restart needed"
 msgstr "Nepieciešams pārstartēt"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "„Okular“ ir jāpārstartē pēc NSS direktorija iestatījumu izmaiņām"
 
-#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
+#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

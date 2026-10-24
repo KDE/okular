@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.2\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:44+0000\n"
+"POT-Creation-Date: 2026-10-24 00:47+0000\n"
 "PO-Revision-Date: 2025-07-12 22:26+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -30,19 +30,19 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "ulysses@fsf.hu"
 
-#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2225
-#: generator_pdf.cpp:2253
+#: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2221
+#: generator_pdf.cpp:2249
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Az átmeneti fájl írása sikertelen"
 
-#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2276
+#: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2272
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgid "Failed removing file"
 msgstr "Az átmeneti fájl átnevezése sikertelen"
 
-#: annots.cpp:612
+#: annots.cpp:608
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Az átmeneti fájl átnevezése sikertelen"
@@ -78,7 +78,7 @@ msgid "Enhance thin lines:"
 msgstr "Vékony vonalak növelése:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1032
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "Nem"
@@ -194,7 +194,7 @@ msgstr "Elérhető tanúsítványok"
 msgid "&Load Signatures"
 msgstr "Aláírások betö&ltése"
 
-#: formfields.cpp:565 generator_pdf.cpp:2280
+#: formfields.cpp:559 generator_pdf.cpp:2276
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file"
 msgctxt "%1 is an error message"
@@ -256,43 +256,43 @@ msgstr "A nyomtatott oldalak méretezési módja"
 msgid "Scale mode:"
 msgstr "Méretezési mód:"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "Formátum"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "Titkosított"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nem titkosított"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "Biztonság"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "Igen"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "Optimalizált"
 
-#: generator_pdf.cpp:1521
+#: generator_pdf.cpp:1517
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -303,12 +303,12 @@ msgstr ""
 "\n"
 "Dátum: %2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1740
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "A Poppler %1 használata"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -319,17 +319,17 @@ msgstr ""
 "\n"
 "A Poppler %2 verziójával fordítva"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF háttérprogram beállítás"
 
-#: generator_pdf.cpp:2300
+#: generator_pdf.cpp:2296
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -338,7 +338,7 @@ msgstr ""
 "Hibák találhatók a dokumentumban, az Okular nem biztos, hogy helyesen "
 "jeleníti meg annak tartalmát"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:109
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -348,37 +348,37 @@ msgstr ""
 "Ezek az aláírások csak az Okular modern verziói között működnek bekapcsolt "
 "GnuPG-alapú modul mellett"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:110
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "PGP aláírások engedélyezése"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Kiállítva neki:"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Lejárati dátum"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:142
 #, fuzzy, kde-format
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
 msgstr "Elérhető tanúsítványok"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:164
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -388,24 +388,24 @@ msgstr ""
 "fordították.\n"
 "Ezért nem lehetséges digitális aláírások hozzáadása"
 
-#: pdfsettingswidget.cpp:198
+#: pdfsettingswidget.cpp:188
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "örökké"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "Restart needed"
 msgstr "Újraindítás szükséges"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
 "Újra kell indítani az Okulart az NSS mappabeállítások megváltoztatása után."
 
-#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
+#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

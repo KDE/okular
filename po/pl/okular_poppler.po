@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:44+0000\n"
+"POT-Creation-Date: 2026-10-24 00:47+0000\n"
 "PO-Revision-Date: 2026-08-08 12:41+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -34,18 +34,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "carramba@epf.pl, lukasz.wojnilowicz@gmail.com,ignacy.kajdan@gmail.com"
 
-#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2225
-#: generator_pdf.cpp:2253
+#: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2221
+#: generator_pdf.cpp:2249
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "Nie udało się zapisać pliku tymczasowego."
 
-#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2276
+#: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2272
 #, kde-format
 msgid "Failed removing file"
 msgstr "Nie udało usunąć pliku"
 
-#: annots.cpp:612
+#: annots.cpp:608
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "Nie udało się zmienić nazwy pliku tymczasowego."
@@ -81,7 +81,7 @@ msgid "Enhance thin lines:"
 msgstr "Polepsz cienkie linie:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1032
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "Nie"
@@ -195,7 +195,7 @@ msgstr "Dostępne certyfikaty"
 msgid "&Load Signatures"
 msgstr "&Wczytaj podpisy"
 
-#: formfields.cpp:565 generator_pdf.cpp:2280
+#: formfields.cpp:559 generator_pdf.cpp:2276
 #, fuzzy, kde-format
 #| msgid "Failed renaming temporary file: %1"
 msgctxt "%1 is an error message"
@@ -257,43 +257,43 @@ msgstr "Tryb skalowania dla drukowanych stron"
 msgid "Scale mode:"
 msgstr "Tryb skalowania:"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v%1.%2"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "Format"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "Tak"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "Nie"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "Zaszyfrowany"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "Tak"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "Zoptymalizowany"
 
-#: generator_pdf.cpp:1521
+#: generator_pdf.cpp:1517
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -304,12 +304,12 @@ msgstr ""
 "\n"
 "Data: %2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1740
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "W użyciu Poppler %1"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -320,17 +320,17 @@ msgstr ""
 "\n"
 "Zbudowany przy użyciu Poppler %2"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "Ustawienia silnika PDF"
 
-#: generator_pdf.cpp:2300
+#: generator_pdf.cpp:2296
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
@@ -339,7 +339,7 @@ msgstr ""
 "W dokumencie natrafiono na pewne błędy, stąd Okular może nie być w stanie "
 "wyświetlić go poprawnie"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:109
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -348,36 +348,36 @@ msgid ""
 msgstr ""
 "Te podpisy działają tylko na nowych Okularach z włączonym silnikiem GnuPG"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:110
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "Włącz podpisy PGP"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "Wystawiony dla"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgid "E-mail"
 msgstr "E-mail"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "Data ważności"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:142
 #, kde-format
 msgctxt "@button"
 msgid "List certificates"
 msgstr "Wypisz certyfikaty"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:164
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -386,23 +386,23 @@ msgstr ""
 "Używasz biblioteki Poppler bez wbudowanej obsługi NSS.\n"
 "Z tego powodu dodawanie podpisów cyfrowych nie jest możliwe."
 
-#: pdfsettingswidget.cpp:198
+#: pdfsettingswidget.cpp:188
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "ciągle"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "Restart needed"
 msgstr "Wymagane ponowne uruchomienie"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Po zmianie ustawień katalogu NSS, musisz uruchomić Okulara ponownie"
 
-#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
+#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:44+0000\n"
+"POT-Creation-Date: 2026-10-24 00:47+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -27,18 +27,18 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "i@guoyunhe.me, tds00@qq.com"
 
-#: annots.cpp:592 formfields.cpp:539 generator_pdf.cpp:2225
-#: generator_pdf.cpp:2253
+#: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2221
+#: generator_pdf.cpp:2249
 #, kde-format
 msgid "Failed writing temporary file"
 msgstr "写入临时文件失败"
 
-#: annots.cpp:608 formfields.cpp:561 generator_pdf.cpp:2276
+#: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2272
 #, kde-format
 msgid "Failed removing file"
 msgstr "移除文件失败"
 
-#: annots.cpp:612
+#: annots.cpp:608
 #, kde-format
 msgid "Failed renaming temporary file"
 msgstr "重命名临时文件失败"
@@ -74,7 +74,7 @@ msgid "Enhance thin lines:"
 msgstr "增强细线："
 
 #. i18n: ectx: property (text), item, widget (KComboBox, kcfg_EnhanceThinLines)
-#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1032
+#: conf/pdfsettingswidget.ui:73 generator_pdf.cpp:1028
 #, kde-format
 msgid "No"
 msgstr "无"
@@ -185,7 +185,7 @@ msgstr "可用证书"
 msgid "&Load Signatures"
 msgstr "加载签名(&L)"
 
-#: formfields.cpp:565 generator_pdf.cpp:2280
+#: formfields.cpp:559 generator_pdf.cpp:2276
 #, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
@@ -243,43 +243,43 @@ msgstr "要打印页面的缩放模式"
 msgid "Scale mode:"
 msgstr "缩放模式："
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgctxt "PDF v. <version>"
 msgid "PDF v. %1.%2"
 msgstr "PDF v. %1.%2"
 
-#: generator_pdf.cpp:1030
+#: generator_pdf.cpp:1026
 #, kde-format
 msgid "Format"
 msgstr "格式"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Encrypted"
 msgstr "已加密"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Unencrypted"
 msgstr "未加密"
 
-#: generator_pdf.cpp:1031
+#: generator_pdf.cpp:1027
 #, kde-format
 msgid "Security"
 msgstr "安全性"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Yes"
 msgstr "是"
 
-#: generator_pdf.cpp:1032
+#: generator_pdf.cpp:1028
 #, kde-format
 msgid "Optimized"
 msgstr "优化"
 
-#: generator_pdf.cpp:1521
+#: generator_pdf.cpp:1517
 #, kde-format
 msgid ""
 "Signed by: %1\n"
@@ -290,12 +290,12 @@ msgstr ""
 "\n"
 "签名日期：%2"
 
-#: generator_pdf.cpp:1744
+#: generator_pdf.cpp:1740
 #, kde-format
 msgid "Using Poppler %1"
 msgstr "使用 Poppler %1"
 
-#: generator_pdf.cpp:1746
+#: generator_pdf.cpp:1742
 #, kde-format
 msgid ""
 "Using Poppler %1\n"
@@ -306,24 +306,24 @@ msgstr ""
 "\n"
 "使用 Poppler %2 构建"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF"
 msgstr "PDF"
 
-#: generator_pdf.cpp:1781
+#: generator_pdf.cpp:1777
 #, kde-format
 msgid "PDF Backend Configuration"
 msgstr "PDF 后端程序配置"
 
-#: generator_pdf.cpp:2300
+#: generator_pdf.cpp:2296
 #, kde-format
 msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr "文档中发现了错误，Okular 可能无法正确显示其内容"
 
-#: pdfsettingswidget.cpp:116
+#: pdfsettingswidget.cpp:109
 #, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
@@ -331,36 +331,36 @@ msgid ""
 "based backend activated"
 msgstr "这些签名只能在激活了 GnuPG 的 Okular 现代版本之间通用"
 
-#: pdfsettingswidget.cpp:117
+#: pdfsettingswidget.cpp:110
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
 msgstr "启用 PGP 签名"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
 msgstr "颁发给"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgid "E-mail"
 msgstr "电子邮件"
 
-#: pdfsettingswidget.cpp:147
+#: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
 msgstr "过期日期"
 
-#: pdfsettingswidget.cpp:152
+#: pdfsettingswidget.cpp:142
 #, kde-format
 msgctxt "@button"
 msgid "List certificates"
 msgstr "列出证书"
 
-#: pdfsettingswidget.cpp:174
+#: pdfsettingswidget.cpp:164
 #, kde-format
 msgid ""
 "You are using a Poppler library built without NSS support.\n"
@@ -369,23 +369,23 @@ msgstr ""
 "程序使用的 Poppler 程序库在构建时没有启用 NSS 支持。\n"
 "添加数字签名因此不可用。"
 
-#: pdfsettingswidget.cpp:198
+#: pdfsettingswidget.cpp:188
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
 msgstr "永久"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "Restart needed"
 msgstr "需要重新启动"
 
-#: pdfsettingswidget.cpp:222
+#: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "更改 NSS 目录设置后，您需要重启 Okular"
 
-#: pdfsignatureutils.cpp:275 pdfsignatureutils.cpp:315
+#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
 #, fuzzy, kde-format
 #| msgid "Enter password to open: %1"
 msgctxt ""

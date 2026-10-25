@@ -6152,21 +6152,3 @@ msgstr "Забравяне на всичко"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Скриване на приветстващия  прозорец"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "A signature of this size may be too small to read. If you would like to "
-#~ "create a potentially more readable signature, press <interface>Start "
-#~ "over</interface> and draw a bigger rectangle."
-#~ msgstr ""
-#~ "Подпис от този размер може да бъде твърде малък за четене. Ако искате да "
-#~ "създадете потенциално по-четлив подпис, натиснете<interface>Започнете "
-#~ "отново</interface> и начертайте по/голям триъгълник."
-
-#~ msgctxt "@action:button"
-#~ msgid "Start Over"
-#~ msgstr "Започване отново"
-
-#~ msgctxt "@action:button"
-#~ msgid "Sign"
-#~ msgstr "Подписване"

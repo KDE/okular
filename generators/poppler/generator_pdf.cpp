@@ -129,7 +129,7 @@ public:
 
     bool ignorePrintMargins() const override
     {
-        return scaleMode() == FitToPage;
+        return scaleMode() == FitToPage || scaleMode() == None;
     }
 
     QWidget *widget() override

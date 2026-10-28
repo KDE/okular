@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-10-28 00:58+0000\n"
 "PO-Revision-Date: 2011-08-25 19:25+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -279,69 +279,69 @@ msgstr ""
 "<qt>Pronađen je više od jednog pozadinskog servisa za MIME-vrstu:<br /><b>"
 "%1</b> (%2).<br /><br />Molim odaberite koji želite koristiti:</qt>"
 
-#: core/document.cpp:199
+#: core/document.cpp:200
 #, fuzzy, kde-format
 #| msgid "Go to page %1"
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Idi na stranicu %1"
 
-#: core/document.cpp:220
+#: core/document.cpp:221
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr ""
 
-#: core/document.cpp:222
+#: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr ""
 
-#: core/document.cpp:245
+#: core/document.cpp:246
 #, fuzzy, kde-format
 #| msgid "%1 x %2 in"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 in"
 
-#: core/document.cpp:247
+#: core/document.cpp:248
 #, fuzzy, kde-format
 #| msgid "%1 x %2 mm"
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 mm"
 
-#: core/document.cpp:1672
+#: core/document.cpp:1702
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr ""
 
-#: core/document.cpp:1675
+#: core/document.cpp:1705
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr ""
 
-#: core/document.cpp:2394
+#: core/document.cpp:2424
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Ne mogu pronaći priključak koji može obraditi proslijeđen dokument."
 
-#: core/document.cpp:2815
+#: core/document.cpp:2845
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr ""
 
-#: core/document.cpp:3526
+#: core/document.cpp:3556
 #, fuzzy, kde-format
 #| msgid "Presentation"
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "Prezentacija"
 
-#: core/document.cpp:4112 core/document.cpp:4118
+#: core/document.cpp:4142 core/document.cpp:4148
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -350,52 +350,52 @@ msgstr ""
 "Dokument pokušava izvršiti vanjsku aplikaciju pa to Okular, radi vaše "
 "sigurnosti, ne dozvoljava."
 
-#: core/document.cpp:4128
+#: core/document.cpp:4158
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nije pronađena aplikacija za otvaranje datoteke mime-vrste %1."
 
-#: core/document.cpp:4754
+#: core/document.cpp:4784
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nije moguće otvoriti privremenu datoteku"
 
-#: core/document.cpp:4756
+#: core/document.cpp:4786
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Konverzija ispisa nije uspjela"
 
-#: core/document.cpp:4758
+#: core/document.cpp:4788
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Proces ispisa se srušio"
 
-#: core/document.cpp:4760
+#: core/document.cpp:4790
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Proces ispisivanja nije moguće pokrenuti"
 
-#: core/document.cpp:4762
+#: core/document.cpp:4792
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Ispis u datoteku nije uspio"
 
-#: core/document.cpp:4764
+#: core/document.cpp:4794
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Pisač je bio u neispravnom stanju"
 
-#: core/document.cpp:4766
+#: core/document.cpp:4796
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nije moguće pronaći datoteku za ispis."
 
-#: core/document.cpp:4768
+#: core/document.cpp:4798
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nema datoteke za ispis"
 
-#: core/document.cpp:4770
+#: core/document.cpp:4800
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -404,93 +404,93 @@ msgstr ""
 "Ne mogu pronaći prikladan program za ispis. Pobrinite se da je CUPS-ov "
 "program lpr dostupan"
 
-#: core/document.cpp:4772
+#: core/document.cpp:4802
 #, kde-format
 msgid "The page print size is invalid"
 msgstr ""
 
-#: core/document.cpp:5411 part/part.cpp:1133
+#: core/document.cpp:5441 part/part.cpp:1133
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nije moguće otvoriti '%1'. Datoteka ne postoji"
 
-#: core/document.cpp:5920
+#: core/document.cpp:5950
 #, kde-format
 msgid "Title"
 msgstr "Naslov"
 
-#: core/document.cpp:5923
+#: core/document.cpp:5953
 #, kde-format
 msgid "Subject"
 msgstr "Predmet"
 
-#: core/document.cpp:5926
+#: core/document.cpp:5956
 #, kde-format
 msgid "Description"
 msgstr "Opis"
 
-#: core/document.cpp:5929
+#: core/document.cpp:5959
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: core/document.cpp:5932
+#: core/document.cpp:5962
 #, kde-format
 msgid "Creator"
 msgstr "Stvaralac"
 
-#: core/document.cpp:5935
+#: core/document.cpp:5965
 #, kde-format
 msgid "Producer"
 msgstr "Producent"
 
-#: core/document.cpp:5938
+#: core/document.cpp:5968
 #, kde-format
 msgid "Copyright"
 msgstr "Autorska prava"
 
-#: core/document.cpp:5941
+#: core/document.cpp:5971
 #, kde-format
 msgid "Pages"
 msgstr "Stranice"
 
-#: core/document.cpp:5944
+#: core/document.cpp:5974
 #, kde-format
 msgid "Created"
 msgstr "Izrađeno"
 
-#: core/document.cpp:5947
+#: core/document.cpp:5977
 #, kde-format
 msgid "Modified"
 msgstr "Mijenjano"
 
-#: core/document.cpp:5950
+#: core/document.cpp:5980
 #, fuzzy, kde-format
 #| msgid "Mime Type"
 msgid "MIME Type"
 msgstr "Mime-vrsta"
 
-#: core/document.cpp:5953
+#: core/document.cpp:5983
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:5956
+#: core/document.cpp:5986
 #, kde-format
 msgid "Keywords"
 msgstr "Ključne riječi"
 
-#: core/document.cpp:5959
+#: core/document.cpp:5989
 #, kde-format
 msgid "File Path"
 msgstr "Putanja datoteke"
 
-#: core/document.cpp:5962
+#: core/document.cpp:5992
 #, kde-format
 msgid "File Size"
 msgstr "Veličina datoteke"
 
-#: core/document.cpp:5965
+#: core/document.cpp:5995
 #, kde-format
 msgid "Page Size"
 msgstr "Veličina stranice"
@@ -629,7 +629,7 @@ msgstr "Zatvori ovu poruku"
 msgid "Not Available"
 msgstr "Nedostupan opis."
 
-#: core/signatureutils.cpp:521
+#: core/signatureutils.cpp:522
 #, kde-format
 msgctxt "signing error"
 msgid ""
@@ -637,7 +637,7 @@ msgid ""
 "been removed or the signature store changed"
 msgstr ""
 
-#: core/signatureutils.cpp:524
+#: core/signatureutils.cpp:525
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -645,23 +645,23 @@ msgid ""
 "Error code %1"
 msgstr ""
 
-#: core/signatureutils.cpp:526
+#: core/signatureutils.cpp:527
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr ""
 
-#: core/signatureutils.cpp:528
+#: core/signatureutils.cpp:529
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr ""
 
-#: core/signatureutils.cpp:530
+#: core/signatureutils.cpp:531
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr ""
 
-#: core/signatureutils.cpp:532
+#: core/signatureutils.cpp:533
 #, fuzzy, kde-kuit-format
 #| msgid "File could not be saved in '%1'. Try to save it to another location."
 msgctxt "%1 is a filename with path"
@@ -671,7 +671,7 @@ msgid ""
 msgstr ""
 "Datoteku nije moguće spremiti u '%1'. Pokušajte ju spremiti na drugo mjesto."
 
-#: core/signatureutils.cpp:534
+#: core/signatureutils.cpp:535
 #, kde-format
 msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
@@ -679,7 +679,7 @@ msgctxt ""
 msgid "Unsupported signature type for current certificate"
 msgstr ""
 
-#: core/signatureutils.cpp:536
+#: core/signatureutils.cpp:537
 #, fuzzy, kde-format
 #| msgid "Unknown File"
 msgid "Unknown signing error"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-10-28 00:58+0000\n"
 "PO-Revision-Date: 2026-09-26 08:09+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -259,47 +259,47 @@ msgstr ""
 "<qt>ამ MIME ტიპისთვის აღმოჩენილია ერთზე მეტი უკანაბოლო:<br /><b>%1</b> (%2)."
 "<br /><br />აირჩიეთ, რომელი გნებავთ, გამოიყენოთ:</qt>"
 
-#: core/document.cpp:199
+#: core/document.cpp:200
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "გვერდების უმეტესობა %1-ია."
 
-#: core/document.cpp:220
+#: core/document.cpp:221
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "პორტრეტი %1"
 
-#: core/document.cpp:222
+#: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "ლანდშაფტი %1"
 
-#: core/document.cpp:245
+#: core/document.cpp:246
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 x %2 დუიმი (%3)"
 
-#: core/document.cpp:247
+#: core/document.cpp:248
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 x %2 მმ (%3)"
 
-#: core/document.cpp:1672
+#: core/document.cpp:1702
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "ძებნის თავიდან გაგრძელება"
 
-#: core/document.cpp:1675
+#: core/document.cpp:1705
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "ძებნის ბოლოდან გაგრძელება"
 
-#: core/document.cpp:2394
+#: core/document.cpp:2424
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
@@ -307,19 +307,19 @@ msgstr ""
 "დამატება, რომელიც გადმოცემული დოკუმენტის დასამუშავებლადაა საჭირო, აღმოჩენილი "
 "არაა."
 
-#: core/document.cpp:2815
+#: core/document.cpp:2845
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "ამ დოკუმენტის ტიპისთვის ხელმოწერა განხორციელებული არაა"
 
-#: core/document.cpp:3526
+#: core/document.cpp:3556
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "ანოტაციების წაშლა"
 
-#: core/document.cpp:4112 core/document.cpp:4118
+#: core/document.cpp:4142 core/document.cpp:4148
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -328,52 +328,52 @@ msgstr ""
 "დოკუმენტი ცდილობს, გაუშვას გარე აპლიკაცია და თქვენი უსაფრთხოებისთვის Okular "
 "მას ამის უფლებას არ აძლევს."
 
-#: core/document.cpp:4128
+#: core/document.cpp:4158
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "MIME ტიპის, %1 მქონე ფაილის გასახსნელად აპლიკაცია აღმოჩენილი არაა."
 
-#: core/document.cpp:4754
+#: core/document.cpp:4784
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "დროებითი ფაილის გახსნის შეცდომა"
 
-#: core/document.cpp:4756
+#: core/document.cpp:4786
 #, kde-format
 msgid "Print conversion failed"
 msgstr "ბეჭდვის გადაყვანის შეცდომა"
 
-#: core/document.cpp:4758
+#: core/document.cpp:4788
 #, kde-format
 msgid "Printing process crashed"
 msgstr "ბეჭდვის პროცესი ავარიულად დასრულდა"
 
-#: core/document.cpp:4760
+#: core/document.cpp:4790
 #, kde-format
 msgid "Printing process could not start"
 msgstr "ბეჭდვის პროცესის გაშვების შეცდომა"
 
-#: core/document.cpp:4762
+#: core/document.cpp:4792
 #, kde-format
 msgid "Printing to file failed"
 msgstr "ფაილში დაბეჭდვის შეცდომა"
 
-#: core/document.cpp:4764
+#: core/document.cpp:4794
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "პრინტერი არასწორ მდგომარეობაშია"
 
-#: core/document.cpp:4766
+#: core/document.cpp:4796
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "დასაბეჭდი ფაილის აღმოჩენის შეცდომა"
 
-#: core/document.cpp:4768
+#: core/document.cpp:4798
 #, kde-format
 msgid "There was no file to print"
 msgstr "დასაბეჭდი ფაილი ვერ ვიპოვე"
 
-#: core/document.cpp:4770
+#: core/document.cpp:4800
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -382,92 +382,92 @@ msgstr ""
 "დაბეჭდვისთვის საჭირო გამშვები ფაილი აღმოჩენილი არაა. დარწმუნდით, რომ CUPS-ის "
 "lpr გამშვები ფაილი ხელმისაწვდომია"
 
-#: core/document.cpp:4772
+#: core/document.cpp:4802
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "გვერდის დასაბეჭდი ზომა არასწორია"
 
-#: core/document.cpp:5411 part/part.cpp:1133
+#: core/document.cpp:5441 part/part.cpp:1133
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "'%1' ვერ გავხსენი. ფალი არ არსებობს"
 
-#: core/document.cpp:5920
+#: core/document.cpp:5950
 #, kde-format
 msgid "Title"
 msgstr "სათაური"
 
-#: core/document.cpp:5923
+#: core/document.cpp:5953
 #, kde-format
 msgid "Subject"
 msgstr "თემა"
 
-#: core/document.cpp:5926
+#: core/document.cpp:5956
 #, kde-format
 msgid "Description"
 msgstr "აღწერა"
 
-#: core/document.cpp:5929
+#: core/document.cpp:5959
 #, kde-format
 msgid "Author"
 msgstr "ავტორი"
 
-#: core/document.cpp:5932
+#: core/document.cpp:5962
 #, kde-format
 msgid "Creator"
 msgstr "შემქმნელი"
 
-#: core/document.cpp:5935
+#: core/document.cpp:5965
 #, kde-format
 msgid "Producer"
 msgstr "პროდუსერი"
 
-#: core/document.cpp:5938
+#: core/document.cpp:5968
 #, kde-format
 msgid "Copyright"
 msgstr "საავტორო უფლებები"
 
-#: core/document.cpp:5941
+#: core/document.cpp:5971
 #, kde-format
 msgid "Pages"
 msgstr "გვერდები"
 
-#: core/document.cpp:5944
+#: core/document.cpp:5974
 #, kde-format
 msgid "Created"
 msgstr "შექმნილია"
 
-#: core/document.cpp:5947
+#: core/document.cpp:5977
 #, kde-format
 msgid "Modified"
 msgstr "შეიცვალა"
 
-#: core/document.cpp:5950
+#: core/document.cpp:5980
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME ტიპი"
 
-#: core/document.cpp:5953
+#: core/document.cpp:5983
 #, kde-format
 msgid "Category"
 msgstr "კატეგორია"
 
-#: core/document.cpp:5956
+#: core/document.cpp:5986
 #, kde-format
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: core/document.cpp:5959
+#: core/document.cpp:5989
 #, kde-format
 msgid "File Path"
 msgstr "ფაილის ბილიკი"
 
-#: core/document.cpp:5962
+#: core/document.cpp:5992
 #, kde-format
 msgid "File Size"
 msgstr "ფაილის ზომა"
 
-#: core/document.cpp:5965
+#: core/document.cpp:5995
 #, kde-format
 msgid "Page Size"
 msgstr "Page Size"
@@ -590,7 +590,7 @@ msgstr "მეტჯერ აღარ აჩვენო ეს გაფრ�
 msgid "Not Available"
 msgstr "ხელმიუწვდომელია"
 
-#: core/signatureutils.cpp:521
+#: core/signatureutils.cpp:522
 #, kde-format
 msgctxt "signing error"
 msgid ""
@@ -600,7 +600,7 @@ msgstr ""
 "ხელმოწერის სერტიფიკატი აღმოჩენილი არაა. თუ იყენებთ smart ბარათს, ის "
 "შეიძლება, გამოერთებულია, ან ხელმოწერის საცავი შეიცვალა"
 
-#: core/signatureutils.cpp:524
+#: core/signatureutils.cpp:525
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -610,23 +610,23 @@ msgstr ""
 "შიდა ხელმოწერის შეცდომა. მოგვწერეთ ამის შესახებ ნაბიჯებით, როგორ გავიმეოროთ "
 "იგივე. შეცდომის კოდია %1"
 
-#: core/signatureutils.cpp:526
+#: core/signatureutils.cpp:527
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "ხელმოწერის შეცდომა დოკუმენტისთვის: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:528
+#: core/signatureutils.cpp:529
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "ხელმოწერა გაუქმდა მომხმარებლის მიერ"
 
-#: core/signatureutils.cpp:530
+#: core/signatureutils.cpp:531
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "ხელმოწერა ჩავარდა: საკვანძო ფრაზა არასწორია"
 
-#: core/signatureutils.cpp:532
+#: core/signatureutils.cpp:533
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -636,7 +636,7 @@ msgstr ""
 "ხელმოწერილი დოკუმენტის ჩაწერის შეცდომა ფაილში <filename>%1</filename>. "
 "დარწმუნდით, რომ არჩეული საქაღალდის ჩაწერის უფლებები სწორია"
 
-#: core/signatureutils.cpp:534
+#: core/signatureutils.cpp:535
 #, kde-format
 msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
@@ -644,7 +644,7 @@ msgctxt ""
 msgid "Unsupported signature type for current certificate"
 msgstr "მხარდაუჭერელი ხელმოწერის ტიპი მიმდინარე სერტიფიკატისთვის"
 
-#: core/signatureutils.cpp:536
+#: core/signatureutils.cpp:537
 #, kde-format
 msgid "Unknown signing error"
 msgstr "უცნობი ხელმოწერის შეცდომა"

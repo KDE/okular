@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-10-28 00:58+0000\n"
 "PO-Revision-Date: 2026-09-28 17:11+0300\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -262,65 +262,65 @@ msgstr ""
 "<qt>Aptikta daugiau nei viena programinė sąsaja MIME tipui:<br /><b>%1</b> "
 "(%2).<br /><br />Pasirinkite, kurią naudoti:</qt>"
 
-#: core/document.cpp:199
+#: core/document.cpp:200
 #, kde-format
 msgctxt "@info %1 is a page size"
 msgid "Most pages are %1."
 msgstr "Daugelis puslapių yra %1."
 
-#: core/document.cpp:220
+#: core/document.cpp:221
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Portrait %1"
 msgstr "Stačias %1"
 
-#: core/document.cpp:222
+#: core/document.cpp:223
 #, kde-format
 msgctxt "paper type and orientation (eg: Portrait A4)"
 msgid "Landscape %1"
 msgstr "Gulsčias %1"
 
-#: core/document.cpp:245
+#: core/document.cpp:246
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 in (%3)"
 msgstr "%1 × %2 col. (%3)"
 
-#: core/document.cpp:247
+#: core/document.cpp:248
 #, kde-format
 msgctxt "%1 is width, %2 is height, %3 is paper size name"
 msgid "%1 × %2 mm (%3)"
 msgstr "%1 × %2 mm (%3)"
 
-#: core/document.cpp:1672
+#: core/document.cpp:1702
 #, kde-format
 msgid "Continuing search from beginning"
 msgstr "Tęsiama paiešką nuo pradžios"
 
-#: core/document.cpp:1675
+#: core/document.cpp:1705
 #, kde-format
 msgid "Continuing search from bottom"
 msgstr "Tęsiama paiešką nuo apačios"
 
-#: core/document.cpp:2394
+#: core/document.cpp:2424
 #, kde-format
 msgid ""
 "Can not find a plugin which is able to handle the document being passed."
 msgstr "Nepavyksta rasti įskiepio, kuris galėtų apdoroti perduodamą dokumentą."
 
-#: core/document.cpp:2815
+#: core/document.cpp:2845
 #, kde-format
 msgctxt "Unsupported action"
 msgid "Signing not implemented for this document type"
 msgstr "Šiam dokumentų tipui pasirašymas neįgyvendintas"
 
-#: core/document.cpp:3526
+#: core/document.cpp:3556
 #, kde-format
 msgctxt "remove a collection of annotations from the page"
 msgid "remove annotations"
 msgstr "šalinti anotacijas"
 
-#: core/document.cpp:4112 core/document.cpp:4118
+#: core/document.cpp:4142 core/document.cpp:4148
 #, kde-format
 msgid ""
 "The document is trying to execute an external application and, for your "
@@ -329,52 +329,52 @@ msgstr ""
 "Dokumentas bando paleisti išorinę programą ir, jūsų saugumo sumetimais, "
 "Okular to neleidžia."
 
-#: core/document.cpp:4128
+#: core/document.cpp:4158
 #, kde-format
 msgid "No application found for opening file of mimetype %1."
 msgstr "Nepavyko rasti programos, skirtos atverti mime tipą %1."
 
-#: core/document.cpp:4754
+#: core/document.cpp:4784
 #, kde-format
 msgid "Could not open a temporary file"
 msgstr "Nepavyko atverti laikinojo failo"
 
-#: core/document.cpp:4756
+#: core/document.cpp:4786
 #, kde-format
 msgid "Print conversion failed"
 msgstr "Spausdinimo keitimas nepavyko"
 
-#: core/document.cpp:4758
+#: core/document.cpp:4788
 #, kde-format
 msgid "Printing process crashed"
 msgstr "Spausdinimo procesas užstrigo"
 
-#: core/document.cpp:4760
+#: core/document.cpp:4790
 #, kde-format
 msgid "Printing process could not start"
 msgstr "Nepavyko pradėti spausdinimo proceso"
 
-#: core/document.cpp:4762
+#: core/document.cpp:4792
 #, kde-format
 msgid "Printing to file failed"
 msgstr "Nepavyko spausdinti į failą"
 
-#: core/document.cpp:4764
+#: core/document.cpp:4794
 #, kde-format
 msgid "Printer was in invalid state"
 msgstr "Spausdintuvas buvo neteisingoje būsenoje"
 
-#: core/document.cpp:4766
+#: core/document.cpp:4796
 #, kde-format
 msgid "Unable to find file to print"
 msgstr "Nepavyko rasti failo, kurį spausdinti"
 
-#: core/document.cpp:4768
+#: core/document.cpp:4798
 #, kde-format
 msgid "There was no file to print"
 msgstr "Nebuvo jokio failo, kurį spausdinti"
 
-#: core/document.cpp:4770
+#: core/document.cpp:4800
 #, kde-format
 msgid ""
 "Could not find a suitable binary for printing. Make sure CUPS lpr binary is "
@@ -383,92 +383,92 @@ msgstr ""
 "Nepavyko rasti tinkamo dvejetainio failo spausdinimui. Įsitikinkite, kad "
 "CUPS lpr dvejetainis failas yra prieinamas"
 
-#: core/document.cpp:4772
+#: core/document.cpp:4802
 #, kde-format
 msgid "The page print size is invalid"
 msgstr "Puslapio spaudinio dydis yra neteisingas"
 
-#: core/document.cpp:5411 part/part.cpp:1133
+#: core/document.cpp:5441 part/part.cpp:1133
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Nepavyko atverti „%1“. Failas nėra"
 
-#: core/document.cpp:5920
+#: core/document.cpp:5950
 #, kde-format
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: core/document.cpp:5923
+#: core/document.cpp:5953
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: core/document.cpp:5926
+#: core/document.cpp:5956
 #, kde-format
 msgid "Description"
 msgstr "Aprašas"
 
-#: core/document.cpp:5929
+#: core/document.cpp:5959
 #, kde-format
 msgid "Author"
 msgstr "Autorius"
 
-#: core/document.cpp:5932
+#: core/document.cpp:5962
 #, kde-format
 msgid "Creator"
 msgstr "Kūrėjas"
 
-#: core/document.cpp:5935
+#: core/document.cpp:5965
 #, kde-format
 msgid "Producer"
 msgstr "Gamintojas"
 
-#: core/document.cpp:5938
+#: core/document.cpp:5968
 #, kde-format
 msgid "Copyright"
 msgstr "Autorių teisės"
 
-#: core/document.cpp:5941
+#: core/document.cpp:5971
 #, kde-format
 msgid "Pages"
 msgstr "Puslapiai"
 
-#: core/document.cpp:5944
+#: core/document.cpp:5974
 #, kde-format
 msgid "Created"
 msgstr "Sukurta"
 
-#: core/document.cpp:5947
+#: core/document.cpp:5977
 #, kde-format
 msgid "Modified"
 msgstr "Modifikuota"
 
-#: core/document.cpp:5950
+#: core/document.cpp:5980
 #, kde-format
 msgid "MIME Type"
 msgstr "MIME tipas"
 
-#: core/document.cpp:5953
+#: core/document.cpp:5983
 #, kde-format
 msgid "Category"
 msgstr "Kategorija"
 
-#: core/document.cpp:5956
+#: core/document.cpp:5986
 #, kde-format
 msgid "Keywords"
 msgstr "Raktažodžiai"
 
-#: core/document.cpp:5959
+#: core/document.cpp:5989
 #, kde-format
 msgid "File Path"
 msgstr "Failo kelias"
 
-#: core/document.cpp:5962
+#: core/document.cpp:5992
 #, kde-format
 msgid "File Size"
 msgstr "Failo dydis"
 
-#: core/document.cpp:5965
+#: core/document.cpp:5995
 #, kde-format
 msgid "Page Size"
 msgstr "Puslapio dydis"
@@ -591,7 +591,7 @@ msgstr "Daugiau neberodyti šio pranešimo"
 msgid "Not Available"
 msgstr "Neprieinama"
 
-#: core/signatureutils.cpp:521
+#: core/signatureutils.cpp:522
 #, kde-format
 msgctxt "signing error"
 msgid ""
@@ -601,7 +601,7 @@ msgstr ""
 "Pasirašymo liudijimas nerastas. Jei naudojate lustinę kortelę, gali būti, "
 "kad ji buvo pašalinta arba pasikeitė parašo saugojimo vieta"
 
-#: core/signatureutils.cpp:524
+#: core/signatureutils.cpp:525
 #, kde-format
 msgctxt "%1 is a error code"
 msgid ""
@@ -611,23 +611,23 @@ msgstr ""
 "Vidinė pasirašymo klaida. Prašome apie ją pranešti kartu nurodant žingsnius, "
 "kaip ją galima būtų pakartoti. Klaidos kodas %1"
 
-#: core/signatureutils.cpp:526
+#: core/signatureutils.cpp:527
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid "Could not sign the document: <filename>%1</filename>"
 msgstr "Nepavyko pasirašyti dokumento: <filename>%1</filename>"
 
-#: core/signatureutils.cpp:528
+#: core/signatureutils.cpp:529
 #, kde-format
 msgid "Signing cancelled by user"
 msgstr "Naudotojas atsisakė pasirašymo"
 
-#: core/signatureutils.cpp:530
+#: core/signatureutils.cpp:531
 #, kde-format
 msgid "Signing failed: Wrong passphrase"
 msgstr "Nepavyko pasirašyti: Neteisinga slaptafrazė"
 
-#: core/signatureutils.cpp:532
+#: core/signatureutils.cpp:533
 #, kde-kuit-format
 msgctxt "%1 is a filename with path"
 msgid ""
@@ -637,7 +637,7 @@ msgstr ""
 "Nepavyko rašyti pasirašyto dokumento į <filename>%1</filename>, "
 "įsitikinkite, kad pasirinkote aplanką, į kurį turite leidimą rašyti"
 
-#: core/signatureutils.cpp:534
+#: core/signatureutils.cpp:535
 #, kde-format
 msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
@@ -645,7 +645,7 @@ msgctxt ""
 msgid "Unsupported signature type for current certificate"
 msgstr "Nepalaikomas parašo tipas dabartiniam liudijimui"
 
-#: core/signatureutils.cpp:536
+#: core/signatureutils.cpp:537
 #, kde-format
 msgid "Unknown signing error"
 msgstr "Nežinoma pasirašymo klaida"

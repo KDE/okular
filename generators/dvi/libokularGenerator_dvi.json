@@ -214,6 +214,6 @@
         "Version": "0.3.7"
     },
     "X-KDE-Priority": 2,
-    "X-KDE-okularAPIVersion": 1,
-    "X-KDE-okular-content-lookup": false
+    "X-KDE-okular-content-lookup": false,
+    "X-KDE-okularAPIVersion": 1
 }

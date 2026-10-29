@@ -3523,7 +3523,15 @@ void Part::slotExportAs(QAction *act)
     }
     QString filter = i18nc("File type name and pattern", "%1 (%2)", mimeType.comment(), mimeType.globPatterns().join(QLatin1Char(' ')));
 
-    QString fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+    QFileInfo currentDocumentFileInfo = QFileInfo(currentDocument());
+    QString defaultFileName = currentDocumentFileInfo.absolutePath() % QDir::separator() % currentDocumentFileInfo.baseName();
+
+    QString suffix = mimeType.preferredSuffix();
+    if (!defaultFileName.isEmpty() && !suffix.isEmpty()) {
+        defaultFileName = defaultFileName % QStringLiteral(".") % suffix;
+    }
+
+    QString fileName = QFileDialog::getSaveFileName(widget(), QString(), defaultFileName, filter);
 
     if (!fileName.isEmpty()) {
         bool saved = false;

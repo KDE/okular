@@ -734,12 +734,14 @@ public:
             ha->setHighlightType(type);
             ha->setBoundingRectangle(Okular::NormalizedRect(rect, item()->uncroppedWidth(), item()->uncroppedHeight()));
 
-            const Okular::Page *pg = item()->page();
-            QString selectedText = pg->text(selection.get(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
-            selectedText = selectedText.replace(QStringLiteral("-\n"), QString());
-            selectedText = selectedText.replace(QLatin1Char('\n'), QLatin1Char(' '));
-            selectedText = selectedText.simplified();
-            ha->setContents(selectedText);
+            if (Okular::Settings::prefillAnnotations()) {
+                const Okular::Page *pg = item()->page();
+                QString selectedText = pg->text(selection.get(), Okular::TextPage::CentralPixelTextAreaInclusionBehaviour);
+                selectedText = selectedText.replace(QStringLiteral("-\n"), QString());
+                selectedText = selectedText.replace(QLatin1Char('\n'), QLatin1Char(' '));
+                selectedText = selectedText.simplified();
+                ha->setContents(selectedText);
+            }
 
             for (const Okular::NormalizedRect &r : std::as_const(*selection)) {
                 Okular::HighlightAnnotation::Quad q;

@@ -10,6 +10,7 @@
 
 #include <KLocalizedString>
 
+#include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -39,6 +40,13 @@ DlgAnnotations::DlgAnnotations(QWidget *parent)
     authorInfoLabel->setWordWrap(true);
     layout->addRow(authorInfoLabel);
     // END Author row
+
+    // BEGIN Annotation prefill with text: Check box to choose if annotations shall be prefilled with selected text
+    QCheckBox *prefillAnnotations = new QCheckBox(this);
+    prefillAnnotations->setText(i18nc("@option:check Config dialog, annotations page", "Prefill new annotations with the selected text."));
+    prefillAnnotations->setObjectName(QStringLiteral("kcfg_PrefillAnnotations"));
+    layout->addRow(QString(), prefillAnnotations);
+    // END Annotation prefill
 
     // Silly 1Em spacer:
     layout->addRow(new QLabel(this));

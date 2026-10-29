@@ -8,6 +8,7 @@
  <signal name="builtinAnnotationToolsChanged" />
  <signal name="quickAnnotationToolsChanged" />
  <signal name="viewContinuousChanged" />
+ <signal name="rowSpacingChanged" />
  <signal name="colorModesChanged2" >
   <label>Same as colorModesChanged(), but kconfig_compiler does not allow to inherit signals, so appending a '2'.</label>
  </signal>
@@ -322,6 +323,12 @@
    <default>10</default>
     <min>0</min>
     <max>50</max>
+  </entry>
+  <entry key="RowSpacing" type="UInt" >
+   <default>12</default>
+    <min>0</min>
+    <max>50</max>
+    <emit signal="rowSpacingChanged" />
   </entry>
   <entry key="ViewColumns" type="UInt" >
    <default>3</default>

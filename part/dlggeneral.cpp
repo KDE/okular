@@ -227,6 +227,15 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     pageUpDownOverlap->setObjectName(QStringLiteral("kcfg_ScrollOverlap"));
     layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Page Up/Down overlap:"), pageUpDownOverlap);
 
+    // Spinbox: vertical page spacing
+    QSpinBox *rowSpacing = new QSpinBox(this);
+    rowSpacing->setMinimum(0);
+    rowSpacing->setMaximum(50);
+    rowSpacing->setSingleStep(1);
+    rowSpacing->setToolTip(i18nc("@info:tooltip Config dialog, general page", "Defines the vertical spacing between pages in continuous view."));
+    rowSpacing->setObjectName(QStringLiteral("kcfg_RowSpacing"));
+    layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Vertical page spacing:"), rowSpacing);
+
     // Combobox: prefer file name or full path in titlebar
     QHBoxLayout *zoomLayout = new QHBoxLayout();
     QSpinBox *customZoom = new QSpinBox(this);

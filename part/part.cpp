@@ -3529,6 +3529,7 @@ void Part::slotExportAs(QAction *act)
     QMimeDatabase mimeDatabase;
     QStringList allowedExtensions;
     QStringList extensionComments;
+    QMimeType mimeType;
 
     // Data objects for exporting images
     QString fileName;
@@ -3536,7 +3537,7 @@ void Part::slotExportAs(QAction *act)
     if (!act->data().isNull()) {
         switch (actionType) {
         case ExportFormat::PlainText: {
-            QMimeType mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
+            mimeType = mimeDatabase.mimeTypeForName(QStringLiteral("text/plain"));
             allowedExtensions << mimeType.globPatterns();
             extensionComments << mimeType.comment();
             break;
@@ -3546,9 +3547,27 @@ void Part::slotExportAs(QAction *act)
         }
         }
     } else {
-        QMimeType mimeType = m_exportFormats.at(dynamicActionId).mimeType();
+        mimeType = m_exportFormats.at(dynamicActionId).mimeType();
         allowedExtensions << mimeType.globPatterns();
         extensionComments << mimeType.comment();
+    }
+
+    // Provide a default filename to export as.
+    QFileInfo currentDocumentFileInfo = QFileInfo(currentDocument());
+    QString defaultFileName = currentDocumentFileInfo.baseName();
+    QString suffix = mimeType.preferredSuffix();
+
+    if (!defaultFileName.isEmpty() && !suffix.isEmpty()) {
+        defaultFileName = defaultFileName % QStringLiteral(".") % suffix;
+    }
+
+    // When the document is loaded from a URL, QFileInfo::asolutePath
+    // currently returns a concatenation of the ${cwd} and the URL's
+    // path to the file, e.g.:
+    //      /home/jlpicard/kde/src/okular/https://samplepdf.org/files
+    // Add a check to ensure that the absolute path is valid / exists.
+    if (QDir(currentDocumentFileInfo.absolutePath()).exists()) {
+        defaultFileName = currentDocumentFileInfo.absolutePath() % QDir::separator() % defaultFileName;
     }
 
     // Open Dialog boxes
@@ -3556,7 +3575,7 @@ void Part::slotExportAs(QAction *act)
     if (!act->data().isNull()) {
         switch (actionType) {
         case ExportFormat::PlainText:
-            fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+            fileName = QFileDialog::getSaveFileName(widget(), QString(), defaultFileName, filter);
             break;
         case ExportFormat::Image: {
             // In the context of image export, the fileName is actually dirName
@@ -3581,7 +3600,7 @@ void Part::slotExportAs(QAction *act)
             break;
         }
     } else {
-        fileName = QFileDialog::getSaveFileName(widget(), QString(), QString(), filter);
+        fileName = QFileDialog::getSaveFileName(widget(), QString(), defaultFileName, filter);
     }
 
     // Either export or cancel

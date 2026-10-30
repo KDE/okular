@@ -3555,20 +3555,21 @@ void Part::slotExportAs(QAction *act)
     // Provide a default filename to export as.
     QFileInfo currentDocumentFileInfo = QFileInfo(currentDocument());
     QString defaultFileName = currentDocumentFileInfo.baseName();
+    bool isLocalFile = m_document->currentDocument().isLocalFile();
     QString suffix = mimeType.preferredSuffix();
 
     if (!defaultFileName.isEmpty() && !suffix.isEmpty()) {
         defaultFileName = defaultFileName % QStringLiteral(".") % suffix;
     }
 
-    // When the document is loaded from a URL, QFileInfo::asolutePath
-    // currently returns a concatenation of the ${cwd} and the URL's
-    // path to the file, e.g.:
-    //      /home/jlpicard/kde/src/okular/https://samplepdf.org/files
-    // Add a check to ensure that the absolute path is valid / exists.
-    if (QDir(currentDocumentFileInfo.absolutePath()).exists()) {
-        defaultFileName = currentDocumentFileInfo.absolutePath() % QDir::separator() % defaultFileName;
+    QString writableLocation;
+    if (isLocalFile) {
+        writableLocation = currentDocumentFileInfo.absolutePath();
+    } else {
+        writableLocation = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     }
+
+    defaultFileName = writableLocation % QDir::separator() % defaultFileName;
 
     // Open Dialog boxes
     QString filter = i18nc("File type name and pattern", "%1 (%2)", extensionComments.join(QLatin1Char(' ')), allowedExtensions.join(QLatin1Char(' ')));

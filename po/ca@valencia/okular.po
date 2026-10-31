@@ -1293,7 +1293,7 @@ msgstr "Amplària %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1663,7 +1663,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:322
 #, kde-format
@@ -2657,7 +2657,7 @@ msgstr "Desplaça cap a un to negatiu"
 #, kde-format
 msgctxt "@label:listbox Config dialog, accessibility page"
 msgid "Color mode:"
-msgstr "Mode de color:"
+msgstr "Mode «Color»:"
 
 #: part/dlgaccessibility.cpp:87
 #, kde-format
@@ -3031,7 +3031,7 @@ msgstr "%v%"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:238
 #, kde-format
@@ -3178,7 +3178,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Carrega i ho manté tot en la memòria. Precarrega totes les pàgines "
-"(utilitzarà un màxim del 50% de tota la memòria o de la memòria lliure, el "
+"(utilitzarà un màxim del 50 % de tota la memòria o de la memòria lliure, el "
 "més gran dels dos)."
 
 #: part/dlgpresentation.cpp:38
@@ -3704,7 +3704,7 @@ msgstr "Zoom"
 #: part/pageview.cpp:545
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Zoom al 100%"
+msgstr "Zoom al 100 %"
 
 #: part/pageview.cpp:556
 #, kde-format
@@ -4002,7 +4002,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4512
 #, kde-format

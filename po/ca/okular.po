@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 13:02+0200\n"
+"PO-Revision-Date: 2026-10-30 11:39+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -567,7 +567,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Imatge"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2767,7 +2767,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Omple les anotacions noves amb el text seleccionat."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3056,13 +3056,13 @@ msgstr "Superposició Re/Av Pàg:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
-msgstr ""
+msgstr "Defineix l'espaiat vertical entre pàgines a la vista contínua."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Espaiat vertical de pàgines:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3623,21 +3623,19 @@ msgid "&Open…"
 msgstr "&Obre…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Camí de la sortida:"
 
 #: part/exportimagedialog.cpp:48
-#, fuzzy, kde-format
-#| msgid "Find..."
+#, kde-format
 msgid "..."
-msgstr "Cerca..."
+msgstr "..."
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3645,70 +3643,63 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Les imatges s'exportaran en una subcarpeta en aquest camí del mateix nom que "
+"el fitxer"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "E&xporta com a"
+msgstr "Exporta un interval"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "E&xporta com a"
+msgstr "Exporta-ho tot"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Pàgines"
+msgstr "Pàgines des de"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Atura"
+msgstr "a"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Exporta…"
+msgstr "Exporta"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Oblida la imatge"
+msgstr "Exporta la imatge"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "No s'ha pogut desar el fitxer %1."
+msgstr "Ha fallat en desar un fitxer %1"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Ha fallat"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "Ha fallat en crear la carpeta a on desar les imatges: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Oblida la imatge"
+msgstr "S'estan exportant les imatges"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5143,7 +5134,7 @@ msgstr "Pronuncia"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "S'han rebut opcions no vàlides."
 
 #: part/part.cpp:3641
 #, kde-format

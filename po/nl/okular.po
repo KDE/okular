@@ -20,14 +20,14 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 19:01+0200\n"
+"PO-Revision-Date: 2026-10-30 13:48+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.08.1\n"
+"X-Generator: Lokalize 26.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -576,7 +576,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Afbeelding"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2776,7 +2776,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Vul nieuwe annotaties vooraf in met de geselecteerde tekst."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3062,12 +3062,13 @@ msgstr "Overlap bij pagina omhoog/omlaag:"
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
 msgstr ""
+"Bepaalt de verticale afstand tussen pagina's in de doorlopende weergave."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Verticale afstand van pagina's:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3624,21 +3625,19 @@ msgid "&Open…"
 msgstr "&Openen…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Uitvoerpad:"
 
 #: part/exportimagedialog.cpp:48
-#, fuzzy, kde-format
-#| msgid "Find..."
+#, kde-format
 msgid "..."
-msgstr "Zoeken..."
+msgstr "..."
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3646,70 +3645,64 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"De afbeeldingen worden geëxporteerd naar een submap op dit pad, met dezelfde "
+"naam als het bestand."
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "E&xporteren als"
+msgstr "Bereik exporteren"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "E&xporteren als"
+msgstr "Alles exporteren"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Pagina's"
+msgstr "Pagina's van"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Stoppen"
+msgstr "naar"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Exporteren…"
+msgstr "Exporteren"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Afbeelding vergeten"
+msgstr "Afbeelding exporteren"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "Kon het bestand %1 niet opslaan."
+msgstr "Een bestand %1 opslaan is mislukt"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Mislukt"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
 msgstr ""
+"Het aanmaken van een map voor het opslaan van afbeeldingen is mislukt: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Afbeelding vergeten"
+msgstr "Afbeelding worden geëxporteerd"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5151,7 +5144,7 @@ msgstr "Uitspreken"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Er zijn ongeldige opties ontvangen."
 
 #: part/part.cpp:3641
 #, kde-format

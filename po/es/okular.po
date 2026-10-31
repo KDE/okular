@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 17:19+0100\n"
+"PO-Revision-Date: 2026-10-31 01:18+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.08.1\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -564,7 +564,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Imagen"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2768,7 +2768,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Rellenar las nuevas anotaciones con el texto seleccionado."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3033,7 +3033,7 @@ msgstr "Columnas del resumen:"
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%v %"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:226
 #, kde-format
@@ -3055,19 +3055,19 @@ msgstr "Solapamiento de RePág/AvPág:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
-msgstr ""
+msgstr "Define el espacio vertical entre páginas en la vista continua."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Espaciado de páginas vertical:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%v %"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:246
 #, kde-format
@@ -3618,20 +3618,19 @@ msgid "&Open…"
 msgstr "&Abrir…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Ruta de salida:"
 
 #: part/exportimagedialog.cpp:48
 #, kde-format
 msgid "..."
-msgstr ""
+msgstr "…"
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3639,70 +3638,63 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Las imágenes se exportarían en una subcarpeta de esta ruta, con el mismo "
+"nombre que el archivo"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "E&xportar como"
+msgstr "Exportar intervalo"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "E&xportar como"
+msgstr "Exportar todo"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Páginas"
+msgstr "Páginas desde"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Detener"
+msgstr "hasta"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Exportar…"
+msgstr "Exportar"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Olvidar la imagen"
+msgstr "Exportar imagen"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "No se ha podido guardar el archivo %1."
+msgstr "No se ha podido guardar el archivo %1"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Error"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "No se ha podido crear la carpeta para guardar las imágenes en: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Olvidar la imagen"
+msgstr "Exportando imágenes"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5135,7 +5127,7 @@ msgstr "Leer"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Se han recibido opciones no válidas."
 
 #: part/part.cpp:3641
 #, kde-format
@@ -6279,22 +6271,3 @@ msgstr "Olvidar todos"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Ocultar la pantalla de bienvenida"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "A signature of this size may be too small to read. If you would like to "
-#~ "create a potentially more readable signature, press <interface>Start "
-#~ "over</interface> and draw a bigger rectangle."
-#~ msgstr ""
-#~ "Una firma con ese tamaño puede ser demasiado pequeña para leerla. Si "
-#~ "desea crear una firma potencialmente más legible, pulse "
-#~ "<interface>Comenzar de nuevo</interface> y dibuje un rectángulo más "
-#~ "grande."
-
-#~ msgctxt "@action:button"
-#~ msgid "Start Over"
-#~ msgstr "Comenzar de nuevo"
-
-#~ msgctxt "@action:button"
-#~ msgid "Sign"
-#~ msgstr "Firmar"

@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 10:25+0200\n"
+"PO-Revision-Date: 2026-10-30 07:45+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -447,6 +447,7 @@ msgstr "Производитель"
 msgid "Copyright"
 msgstr "Авторское право"
 
+# BUGME: 'Pages' is used both as the document info field (number of pages, core/document.cpp) and as a radio button in the export image dialog (part/exportimagedialog.cpp) - needs a context --ayavorsky 2026-10-30
 #: core/document.cpp:5989 part/exportimagedialog.cpp:61
 #, kde-format
 msgid "Pages"
@@ -583,7 +584,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Изображение"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2786,7 +2787,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Заполнять новые примечания выделенным текстом"
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3069,12 +3070,14 @@ msgstr "Перекрытие Page Up/Down:"
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
 msgstr ""
+"Задаёт расстояние между страницами по вертикали в режиме непрерывной "
+"прокрутки."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Расстояние между страницами:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3632,21 +3635,19 @@ msgid "&Open…"
 msgstr "&Открыть…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Папка назначения:"
 
 #: part/exportimagedialog.cpp:48
-#, fuzzy, kde-format
-#| msgid "Find..."
+#, kde-format
 msgid "..."
-msgstr "Найти…"
+msgstr "…"
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3654,70 +3655,63 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Изображения будут экспортированы во вложенную папку с именем, совпадающим с "
+"именем файла"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "&Экспорт в"
+msgstr "Диапазон экспорта"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "&Экспорт в"
+msgstr "Все страницы"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Число страниц"
+msgstr "Страницы с"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Остановить"
+msgstr "по"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Экспортировать…"
+msgstr "Экспортировать"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Удалить изображение"
+msgstr "Экспорт в изображения"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
 msgstr "Не удалось сохранить файл «%1»."
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Ошибка"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "Не удалось создать папку для сохранения изображений: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Удалить изображение"
+msgstr "Экспорт изображений"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5156,7 +5150,7 @@ msgstr "Зачитать"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Получены недопустимые параметры."
 
 #: part/part.cpp:3641
 #, kde-format

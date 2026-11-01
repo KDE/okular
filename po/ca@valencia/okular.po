@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 13:02+0200\n"
+"PO-Revision-Date: 2026-10-30 11:39+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -567,7 +567,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Imatge"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -1317,7 +1317,7 @@ msgstr "Amplària %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1687,7 +1687,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:322
 #, kde-format
@@ -2767,7 +2767,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Emplena les anotacions noves amb el text seleccionat."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3057,13 +3057,13 @@ msgstr "Superposició «Re Pàg»/«Av Pàg»:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
-msgstr ""
+msgstr "Definix l'espaiat vertical entre pàgines a la vista contínua."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Espaiat vertical de pàgines:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3075,7 +3075,7 @@ msgstr "%v%"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:247
 #, kde-format
@@ -3222,7 +3222,7 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Carrega i ho manté tot en la memòria. Precarrega totes les pàgines "
-"(utilitzarà un màxim del 50% de tota la memòria o de la memòria lliure, el "
+"(utilitzarà un màxim del 50 % de tota la memòria o de la memòria lliure, el "
 "més gran dels dos)."
 
 #: part/dlgpresentation.cpp:38
@@ -3624,20 +3624,19 @@ msgid "&Open…"
 msgstr "O&bri…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Camí de l'eixida:"
 
 #: part/exportimagedialog.cpp:48
 #, kde-format
 msgid "..."
-msgstr ""
+msgstr "…"
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3645,70 +3644,64 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Les imatges s'exportaran en una subcarpeta en este camí del mateix nom que "
+"el fitxer"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "E&xporta com a"
+msgstr "Exporta un interval"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "E&xporta com a"
+msgstr "Exporta-ho tot"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Pàgines"
+msgstr "Pàgines des de"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Para"
+msgstr "a"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Exporta…"
+msgstr "Exporta"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Oblida la imatge"
+msgstr "Exporta la imatge"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "No s'ha pogut guardar el fitxer %1."
+msgstr "Ha fallat mentre es guardava un fitxer %1"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "No s'ha pogut"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
 msgstr ""
+"Ha fallat mentre es creava la carpeta a on s'han de guardar les imatges: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Oblida la imatge"
+msgstr "S'estan exportant les imatges"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -3835,7 +3828,7 @@ msgstr "Zoom"
 #: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Zoom al 100%"
+msgstr "Zoom al 100 %"
 
 #: part/pageview.cpp:557
 #, kde-format
@@ -4133,7 +4126,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4514
 #, kde-format
@@ -5146,7 +5139,7 @@ msgstr "Llig"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "S'han rebut opcions no vàlides."
 
 #: part/part.cpp:3641
 #, kde-format
@@ -6297,21 +6290,3 @@ msgstr "Oblida-ho tot"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "Oculta la pantalla de benvinguda"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "A signature of this size may be too small to read. If you would like to "
-#~ "create a potentially more readable signature, press <interface>Start "
-#~ "over</interface> and draw a bigger rectangle."
-#~ msgstr ""
-#~ "Una signatura d'esta mida pot ser massa xicoteta per a llegir. Si voleu "
-#~ "crear una signatura potencialment més llegible, premeu <interface>Torna a "
-#~ "començar</interface> i dibuixeu un rectangle més gran."
-
-#~ msgctxt "@action:button"
-#~ msgid "Start Over"
-#~ msgstr "Torna a començar"
-
-#~ msgctxt "@action:button"
-#~ msgid "Sign"
-#~ msgstr "Signa"

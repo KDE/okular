@@ -228,9 +228,9 @@ msgstr ""
 "οριστεί."
 
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
-#, kde-format
+#, fuzzy, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "Το αρχείο DVI περιέχει μια μη έγκυρη ειδική εντολή."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format
@@ -313,7 +313,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Currently generating %1 at %2 dpi..."
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "Δημιουργία της γραμματοσειράς %1 στα %2 dpi..."
+msgstr "Δημιουργείται %1 στα %2 dpi..."
 
 #: generator_dvi.cpp:293
 #, kde-format

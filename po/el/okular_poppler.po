@@ -21,55 +21,55 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 20.04.2\n"
 
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Σπύρος Γεωργαράς, Stelios"
+msgstr "Σπύρος Γεωργαράς, Stelios, Λευτέρης Τ."
 
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sng@hellug.gr, sstavra@gmail.com"
+msgstr "sng@hellug.gr, sstavra@gmail.com, tripoleft@protonmail.com"
 
 #: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2221
 #: generator_pdf.cpp:2249
-#, kde-format
+#, fuzzy, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Αποτυχία εγγραφής προσωρινού αρχείου"
 
 #: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2272
-#, kde-format
+#, fuzzy, kde-format
 msgid "Failed removing file"
-msgstr ""
+msgstr "Αποτυχία αφαίρεσης αρχείου"
 
 #: annots.cpp:608
-#, kde-format
+#, fuzzy, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Αποτυχία μετονομασίας προσωρινού αρχείου"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
-#, kde-format
+#, fuzzy, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "Ενεργοποίηση προεπισκόπησης overprint:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
-#, kde-format
+#, fuzzy, kde-format
 msgid "Never"
-msgstr ""
+msgstr "Ποτέ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
-#, kde-format
+#, fuzzy, kde-format
 msgid "Always"
-msgstr ""
+msgstr "Πάντα"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
-#, kde-format
+#, fuzzy, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Αυτόματα"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: conf/pdfsettingswidget.ui:62
@@ -100,7 +100,7 @@ msgstr "Σχήμα"
 #, fuzzy, kde-format
 #| msgid "Scaling mode for the printed pages"
 msgid "Default scaling mode when printing:"
-msgstr "Λειτουργία κλιμάκωσης για τις εκτυπωμένες σελίδες"
+msgstr "Προεπιλεγμένη λειτουργία κλιμάκωσης κατά την εκτύπωση"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:104
@@ -143,25 +143,27 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
-#, kde-format
+#, fuzzy, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Σύστημα υποστήριξης υπογραφής:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Αυτές οι υπογραφές μπορούν να επαληθευτούν μόνο από χρήστες του σύγχρονου "
+"Okular με το σύστημα υποστήριξης GnuPG ενεργό"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Να επιτρέπονται τα κλειδιά PGP για υπογραφές (επέκταση Okular)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
@@ -194,10 +196,10 @@ msgid "&Load Signatures"
 msgstr "&Φόρτωση υπογραφών"
 
 #: formfields.cpp:559 generator_pdf.cpp:2276
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
-msgstr ""
+msgstr "Αποτυχία μετονομασίας προσωρινού αρχείου: %1"
 
 #: generator_pdf.cpp:89
 #, kde-format
@@ -338,25 +340,27 @@ msgstr ""
 "περιεχόμενο σωστά"
 
 #: pdfsettingswidget.cpp:109
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@info Kind of a notice/warning"
 msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Αυτές οι υπογραφές δουλεύουν μόνο μεταξύ εκδόσεων του σύγχρονου Okular με το "
+"σύστημα υποστήριξης GnuPG ενεργό"
 
 #: pdfsettingswidget.cpp:110
 #, fuzzy, kde-format
 #| msgid "&Load Signatures"
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr "&Φόρτωση υπογραφών"
+msgstr "Ενεργοποίηση υπογραφών PGP"
 
 #: pdfsettingswidget.cpp:137
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr "Εκδόθηκε στο όνομα"
+msgstr "Εκδόθηκε σε"
 
 #: pdfsettingswidget.cpp:137
 #, kde-format
@@ -374,7 +378,7 @@ msgstr "Ημερομηνία λήξης"
 #| msgid "Available Certificates"
 msgctxt "@button"
 msgid "List certificates"
-msgstr "Διαθέσιμες πιστοποιήσεις"
+msgstr "Διαθέσιμα πιστοποιητικά"
 
 #: pdfsettingswidget.cpp:164
 #, kde-format
@@ -387,10 +391,10 @@ msgstr ""
 "Γι' αυτόν το λόγο η προσθήκη ψηφιακών υπογραφών δεν είναι διαθέσιμη"
 
 #: pdfsettingswidget.cpp:188
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "για πάντα"
 
 #: pdfsettingswidget.cpp:212
 #, kde-format
@@ -410,7 +414,7 @@ msgstr ""
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
-msgstr "Εισαγωγή κωδικού για άνοιγμα του %1:"
+msgstr "Εισαγωγή κωδικού για άνοιγμα: %1"
 
 #~ msgid "Enter Password"
 #~ msgstr "Εισαγωγή κωδικού πρόσβασης"

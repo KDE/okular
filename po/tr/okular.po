@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-30 00:52+0000\n"
-"PO-Revision-Date: 2026-09-26 20:38+0300\n"
+"PO-Revision-Date: 2026-11-03 23:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -578,7 +578,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Görsel"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2768,7 +2768,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Yeni ek açıklamaları, seçili metin ile önceden doldur"
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3051,13 +3051,13 @@ msgstr "Sayfa Yukarı/Aşağı çakışması:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous view."
-msgstr ""
+msgstr "Sürdürülen kipte, sayfalar arasındaki dikey boşluklandırmayı tanımlar."
 
 #: part/dlggeneral.cpp:237
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Dikey sayfa boşluklandırması:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3611,20 +3611,19 @@ msgid "&Open…"
 msgstr "&Aç…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Çıktı yolu:"
 
 #: part/exportimagedialog.cpp:48
 #, kde-format
 msgid "..."
-msgstr ""
+msgstr "…"
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3632,70 +3631,63 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Görseller, bu yol üzerinde, dosya ile aynı adı taşıyan bir alt klasöre dışa "
+"aktarılacaktır."
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "Farklı Dışa A&ktar"
+msgstr "Dışa aktarma erimi"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "Farklı Dışa A&ktar"
+msgstr "Tümünü dışa aktar"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Sayfalar"
+msgstr "Şu sayfadan"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Durdur"
+msgstr "şu sayfaya"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Dışa Aktar…"
+msgstr "Dışa Aktar"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Görseli Unut"
+msgstr "Görseli Dışa Aktar"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
 msgstr "%1 dosyası kaydedilemedi."
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Başarısız"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "Görsellerin kaydedileceği bir klasör oluşturulamadı: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Görseli Unut"
+msgstr "Dosya Dışa Aktarma"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5125,7 +5117,7 @@ msgstr "Konuş"
 #: part/part.cpp:3567
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Geçersiz seçenekler alındı."
 
 #: part/part.cpp:3641
 #, kde-format

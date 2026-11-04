@@ -19,10 +19,66 @@
 #include <QLabel>
 #include <QSpinBox>
 
+#include <QMouseEvent>
 #include <config-okular.h>
+#include <qapplication.h>
 #include <qspinbox.h>
 
 #include "settings.h"
+
+WrappableQCheckBox::WrappableQCheckBox(QWidget *parent, Qt::WindowFlags flags)
+    : QWidget(parent, flags)
+{
+    auto lay = new QHBoxLayout(this);
+    lay->setContentsMargins(0, 0, 0, 0);
+    m_checkbox = new QCheckBox();
+    lay->addWidget(m_checkbox, 0, Qt::AlignTop);
+    m_text = new QLabel();
+    m_text->setBuddy(m_checkbox);
+    lay->addWidget(m_text);
+    connect(m_checkbox, &QCheckBox::toggled, this, &WrappableQCheckBox::toggled);
+}
+
+void WrappableQCheckBox::setText(const QString &text)
+{
+    m_text->setText(text);
+}
+
+void WrappableQCheckBox::setWordWrap(bool wrap)
+{
+    m_text->setWordWrap(wrap);
+}
+
+void WrappableQCheckBox::leaveEvent(QEvent *event)
+{
+    m_mouseDown = 0;
+    QWidget::leaveEvent(event);
+}
+
+void WrappableQCheckBox::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::MouseButton::LeftButton) {
+        m_mouseDown = QDateTime::currentMSecsSinceEpoch();
+    }
+    QWidget::mousePressEvent(event);
+}
+
+void WrappableQCheckBox::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::MouseButton::LeftButton) {
+        qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+        if ((currentTime - m_mouseDown) < QApplication::startDragTime()) {
+            m_checkbox->animateClick();
+        }
+        m_mouseDown = 0;
+    }
+    QWidget::mouseReleaseEvent(event);
+}
+
+bool WrappableQCheckBox::isChecked() const
+{
+    return m_checkbox->isChecked();
+}
 
 DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     : QWidget(parent)
@@ -164,13 +220,15 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
         layout->addRow(programFeaturesLabel(), useRtl);
     }
 
-    QCheckBox *useFileInfoForContinuousMode = new QCheckBox(this);
+    WrappableQCheckBox *useFileInfoForContinuousMode = new WrappableQCheckBox(this);
     useFileInfoForContinuousMode->setText(i18nc("@option:check Config dialog, general page", "Use file information to determine whether to open in continuous mode by default"));
-    useFileInfoForContinuousMode->setObjectName(QStringLiteral("kcfg_UseFileInfoForViewContinuous"));
+    useFileInfoForContinuousMode->setInnerObjectName(QStringLiteral("kcfg_UseFileInfoForViewContinuous"));
+    useFileInfoForContinuousMode->setWordWrap(true);
     layout->addRow(programFeaturesLabel(), useFileInfoForContinuousMode);
 
-    QCheckBox *openInContinuousModeByDefault = new QCheckBox(this);
-    openInContinuousModeByDefault->setObjectName(QStringLiteral("kcfg_ViewContinuous"));
+    WrappableQCheckBox *openInContinuousModeByDefault = new WrappableQCheckBox(this);
+    openInContinuousModeByDefault->setInnerObjectName(QStringLiteral("kcfg_ViewContinuous"));
+    openInContinuousModeByDefault->setWordWrap(true);
     layout->addRow(programFeaturesLabel(), openInContinuousModeByDefault);
 
     auto setOpenInContinuousModeByDefaultText = [useFileInfoForContinuousMode, openInContinuousModeByDefault]() {
@@ -182,7 +240,7 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     };
 
     setOpenInContinuousModeByDefaultText();
-    connect(useFileInfoForContinuousMode, &QCheckBox::toggled, this, setOpenInContinuousModeByDefaultText);
+    connect(useFileInfoForContinuousMode, &WrappableQCheckBox::toggled, this, setOpenInContinuousModeByDefaultText);
 
     QCheckBox *continueFromLastViewedPage = new QCheckBox(this);
     continueFromLastViewedPage->setText(i18nc("@option:check Config dialog, general page", "Continue from last viewed page"));

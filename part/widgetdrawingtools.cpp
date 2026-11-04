@@ -22,7 +22,7 @@ static const int ToolXmlRole = Qt::UserRole;
 static QPixmap colorDecorationFromToolDescription(const QString &toolDescription)
 {
     QDomDocument doc;
-    doc.setContent(toolDescription, true);
+    doc.setContent(toolDescription, QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement toolElement = doc.documentElement();
     const QDomElement engineElement = toolElement.elementsByTagName(QStringLiteral("engine")).at(0).toElement();
     const QDomElement annotationElement = engineElement.elementsByTagName(QStringLiteral("annotation")).at(0).toElement();

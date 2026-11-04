@@ -791,6 +791,7 @@ void PopplerAnnotationProxy::notifyModification(const Okular::Annotation *okl_an
             break;
         }
     }
+        [[fallthrough]];
     default:
         qCDebug(OkularPdfDebug) << "Type-specific property modification is not implemented for this annotation type";
         break;

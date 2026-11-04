@@ -822,8 +822,7 @@ void Part::setupActions()
 {
     KActionCollection *ac = actionCollection();
 
-    auto manager = new KColorSchemeManager(this);
-    KActionMenu *schemeMenu = KColorSchemeMenu::createMenu(manager, this);
+    KActionMenu *schemeMenu = KColorSchemeMenu::createMenu(KColorSchemeManager::instance(), this);
     ac->addAction(QStringLiteral("colorscheme_menu"), schemeMenu->menu()->menuAction());
 
     m_copy = KStandardAction::create(KStandardAction::Copy, nullptr, nullptr, ac);

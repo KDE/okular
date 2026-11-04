@@ -143,7 +143,6 @@ Okular::CertificateInfo fromPoppler(const Poppler::CertificateInfo &pInfo)
     oInfo.setValidityStart(pInfo.validityStart());
     oInfo.setValidityEnd(pInfo.validityEnd());
     oInfo.setKeyUsageExtensions(fromPoppler(pInfo.keyUsageExtensions()));
-    oInfo.setPublicKey(pInfo.publicKey());
     oInfo.setPublicKeyType(fromPoppler(pInfo.publicKeyType()));
     oInfo.setPublicKeyStrength(pInfo.publicKeyStrength());
     oInfo.setSelfSigned(pInfo.isSelfSigned());

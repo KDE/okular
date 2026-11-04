@@ -63,9 +63,9 @@ bool Document::open()
         device = entry->createDevice();
     }
 
-    QString errorMsg;
-    if (!mDocument.setContent(device, true, &errorMsg)) {
-        setError(i18n("Invalid XML document: %1", errorMsg));
+    auto result = mDocument.setContent(device, QDomDocument::ParseOption::UseNamespaceProcessing);
+    if (!result) {
+        setError(i18n("Invalid XML document: %1", result.errorMessage));
         return false;
     }
 

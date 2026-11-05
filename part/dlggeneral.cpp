@@ -232,7 +232,7 @@ DlgGeneral::DlgGeneral(QWidget *parent, Okular::EmbedMode embedMode)
     rowSpacing->setMinimum(0);
     rowSpacing->setMaximum(50);
     rowSpacing->setSingleStep(1);
-    rowSpacing->setToolTip(i18nc("@info:tooltip Config dialog, general page", "Defines the vertical spacing between pages in continuous view."));
+    rowSpacing->setToolTip(i18nc("@info:tooltip Config dialog, general page", "Defines the vertical spacing between pages in continuous mode."));
     rowSpacing->setObjectName(QStringLiteral("kcfg_RowSpacing"));
     layout->addRow(i18nc("@label:spinbox Config dialog, general page", "Vertical page spacing:"), rowSpacing);
 

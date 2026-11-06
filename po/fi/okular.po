@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 20:13+0000\n"
-"PO-Revision-Date: 2026-08-25 10:36+0300\n"
+"PO-Revision-Date: 2026-10-22 19:31+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1359,9 +1359,7 @@ msgid ""
 "Add the current annotation to the quick annotations menu (No annotation "
 "selected)"
 msgstr ""
-"Lisää nykyinen merkintä merkintöjen pikavalikkoon (merkintöjä ei "
-"valittu)Lisää nykyinen merkintä merkintöjen pikavalikkoon (merkintöjä ei "
-"valittu)"
+"Lisää nykyinen merkintä merkintöjen pikavalikkoon (merkintöjä ei valittu)"
 
 #: part/annotationactionhandler.cpp:301
 #, kde-format
@@ -1390,9 +1388,7 @@ msgstr "Merkintäviivan paksuus"
 msgctxt "@info:tooltip"
 msgid "Annotation line width (Current annotation has no line width)"
 msgstr ""
-"Merkintäviivan paksuus (nykyisellä merkinnällä ei ole viivan "
-"paksuutta)Merkintäviivan paksuus (nykyisellä merkinnällä ei ole viivan "
-"paksuutta)"
+"Merkintäviivan paksuus (nykyisellä merkinnällä ei ole viivan paksuutta)"
 
 #: part/annotationactionhandler.cpp:313
 #, kde-format

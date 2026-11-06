@@ -5,7 +5,7 @@
 # Mikko Piippo <mikko.piippo@helsinki.fi>, 2008.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010.
 # Lasse Liehu <lliehu@kolumbus.fi>, 2011, 2013, 2014.
-# SPDX-FileCopyrightText: 2024, 2025 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Tommi Nieminen <translator@legisign.org>
 #
 # KDE Finnish translation sprint participants:
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 15:58+0000\n"
-"PO-Revision-Date: 2025-07-13 23:11+0300\n"
+"PO-Revision-Date: 2026-10-05 15:19+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -214,7 +214,7 @@ msgstr "DVI-koodi viittasi fonttiin, jota ei ole vielä määritelty."
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "DVI-tiedosto sisältää virheellinen erikoiskomennon."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format

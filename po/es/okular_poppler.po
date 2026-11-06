@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-11-06 00:48+0000\n"
 "PO-Revision-Date: 2026-09-21 00:32+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -400,7 +400,7 @@ msgstr ""
 "Es necesario reiniciar Okular tras cambiar las preferencias del directorio "
 "de NSS"
 
-#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
+#: pdfsignatureutils.cpp:268 pdfsignatureutils.cpp:308
 #, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"

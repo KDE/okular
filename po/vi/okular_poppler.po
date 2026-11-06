@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-11-06 00:48+0000\n"
 "PO-Revision-Date: 2022-05-12 12:03+0200\n"
 "Last-Translator: Phu Hung Nguyen <phu.nguyen@kdemail.net>\n"
 "Language-Team: Vietnamese <kde-l10n-vi@kde.org>\n"
@@ -396,7 +396,7 @@ msgstr "Cần khởi động lại"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Bạn cần khởi động lại Okular sau khi thay đổi thiết lập thư mục NSS"
 
-#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
+#: pdfsignatureutils.cpp:268 pdfsignatureutils.cpp:308
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-24 00:47+0000\n"
+"POT-Creation-Date: 2026-11-06 00:48+0000\n"
 "PO-Revision-Date: 2024-08-11 21:04\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -400,7 +400,7 @@ msgstr "Патрэбны перазапуск"
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "Пасля змены параметраў каталога NSS трэба перазапусціць Okular"
 
-#: pdfsignatureutils.cpp:269 pdfsignatureutils.cpp:309
+#: pdfsignatureutils.cpp:268 pdfsignatureutils.cpp:308
 #, fuzzy, kde-format
 #| msgid "Enter password to open %1:"
 msgctxt ""

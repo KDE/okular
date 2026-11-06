@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-05 00:53+0000\n"
+"POT-Creation-Date: 2026-11-06 00:48+0000\n"
 "PO-Revision-Date: 2024-09-19 17:10+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -400,7 +400,7 @@ msgstr ""
 msgid "The page print size is invalid"
 msgstr "Μη έγκυρο μέγεθος εκτύπωσης σελίδας"
 
-#: core/document.cpp:5459 part/part.cpp:1140
+#: core/document.cpp:5459 part/part.cpp:1139
 #, kde-format
 msgid "Could not open '%1'. File does not exist"
 msgstr "Αδύνατο το άνοιγμα του \"%1\". Το αρχείο δεν υπάρχει."
@@ -1724,7 +1724,7 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Σελίδα %1"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3209
+#: part/annotationmodel.cpp:324 part/part.cpp:3208
 #, kde-format
 msgid "Page %1"
 msgstr "Σελίδα %1"
@@ -1745,12 +1745,12 @@ msgid "&Open Pop-up Note"
 msgstr "Ά&νοιγμα αναδυόμενης σημείωσης"
 
 #: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2290 part/part.cpp:3215
+#: part/bookmarklist.cpp:263 part/part.cpp:2289 part/part.cpp:3214
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Αφαίρεση σελιδοδείκτη"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3217
+#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3216
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Προσθήκη σελιδοδείκτη"
@@ -2380,13 +2380,13 @@ msgstr "Εμφάνισε για όλα τα έγγραφα"
 msgid "Search…"
 msgstr "Α&ναζήτηση:"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3197
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3196
 #, fuzzy, kde-format
 #| msgid "Expand all"
 msgid "Expand All"
 msgstr "Επέκταση όλων"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3198
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3197
 #, fuzzy, kde-format
 #| msgid "Collapse all"
 msgid "Collapse All"
@@ -2398,7 +2398,7 @@ msgid "Go to This Bookmark"
 msgstr "Μετάβαση σε αυτόν το σελιδοδείκτη"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:689
-#: part/part.cpp:2485
+#: part/part.cpp:2484
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Μετονομασία σελιδοδείκτη"
@@ -3871,7 +3871,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Regular Expression"
 
-#: part/layers.cpp:33 part/part.cpp:2333
+#: part/layers.cpp:33 part/part.cpp:2332
 #, kde-format
 msgid "Layers"
 msgstr "Επίπεδα"
@@ -4111,7 +4111,7 @@ msgstr[1] "Κείμενο (%1 χαρακτήρες)"
 msgid "Copy to Clipboard"
 msgstr "Αντιγραφή στο πρόχειρο"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:841
+#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
@@ -4170,7 +4170,7 @@ msgstr "Αντιγραφή κειμένου"
 msgid "Go to '%1'"
 msgstr "Μετάβαση στην %1"
 
-#: part/pageview.cpp:4208 part/part.cpp:3220
+#: part/pageview.cpp:4208 part/part.cpp:3219
 #, kde-format
 msgid "Fit Width"
 msgstr "Προσαρμογή στο πλάτος"
@@ -4670,86 +4670,86 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Διαμόρφωση λειτουργιών χρώματος..."
 
-#: part/part.cpp:833 part/part.cpp:3225
+#: part/part.cpp:832 part/part.cpp:3224
 #, fuzzy, kde-format
 #| msgctxt "Change an annotation's size"
 #| msgid "adjust annotation"
 msgid "Paste Annotation"
 msgstr "προσαρμογή σημείωσης"
 
-#: part/part.cpp:851
+#: part/part.cpp:850
 #, kde-format
 msgid "Select All Text on Current Page"
 msgstr "Επιλογή όλου του κειμένου στην τρέχουσα σελίδα"
 
-#: part/part.cpp:864
+#: part/part.cpp:863
 #, kde-format
 msgid "Show S&idebar"
 msgstr "Εμφάνιση πλευρ&ικής γραμμής"
 
-#: part/part.cpp:873
+#: part/part.cpp:872
 #, kde-format
 msgid "Show &Page Bar"
 msgstr "Εμφάνιση γραμμής &σελίδας"
 
-#: part/part.cpp:879
+#: part/part.cpp:878
 #, kde-format
 msgid "Show &Signatures Panel"
 msgstr "Εμφάνι&ση πίνακα υπογραφών"
 
-#: part/part.cpp:890
+#: part/part.cpp:889
 #, kde-format
 msgid "&Embedded Files"
 msgstr "&Ενσωματωμένα αρχεία"
 
-#: part/part.cpp:896
+#: part/part.cpp:895
 #, kde-format
 msgid "E&xport As"
 msgstr "Ε&ξαγωγή ως"
 
-#: part/part.cpp:913
+#: part/part.cpp:912
 #, kde-format
 msgid "S&hare"
 msgstr "Δια&μοιρασμός"
 
-#: part/part.cpp:922
+#: part/part.cpp:921
 #, kde-format
 msgid "P&resentation"
 msgstr "Πα&ρουσίαση"
 
-#: part/part.cpp:929
+#: part/part.cpp:928
 #, kde-format
 msgid "Open Con&taining Folder"
 msgstr "Άνοιγμα περιέχον&τος φακέλου"
 
-#: part/part.cpp:943
+#: part/part.cpp:942
 #, fuzzy, kde-format
 #| msgid "&Import PostScript as PDF..."
 msgid "&Import PostScript as PDF…"
 msgstr "&Εισαγωγή Postscript ως PDF..."
 
-#: part/part.cpp:947
+#: part/part.cpp:946
 #, kde-format
 msgid "Switch Blackscreen Mode"
 msgstr "Εναλλαγή λειτουργίας μαύρης οθόνης"
 
-#: part/part.cpp:955
+#: part/part.cpp:954
 #, kde-format
 msgid "Erase Drawing"
 msgstr "Σβήσιμο σχεδίων"
 
-#: part/part.cpp:960
+#: part/part.cpp:959
 #, fuzzy, kde-format
 #| msgid "Configure Annotations..."
 msgid "Configure Annotations…"
 msgstr "Διαμόρφωση σημειώσεων..."
 
-#: part/part.cpp:965
+#: part/part.cpp:964
 #, kde-format
 msgid "Play/Pause Presentation"
 msgstr "Αναπαραγωγή/παύση παρουσίασης"
 
-#: part/part.cpp:1117
+#: part/part.cpp:1116
 #, kde-format
 msgid ""
 "You have just modified the open document, but this kind of document can not "
@@ -4760,27 +4760,27 @@ msgstr ""
 "εγγράφου δεν μπορεί να αποθηκευτεί.\n"
 "Όλες οι τροποποιήσεις θα χαθούν μόλις κλείσει το Okular."
 
-#: part/part.cpp:1118
+#: part/part.cpp:1117
 #, kde-format
 msgid "Document can't be saved"
 msgstr "Το έγγραφο δεν μπορεί να αποθηκευτεί"
 
-#: part/part.cpp:1147
+#: part/part.cpp:1146
 #, kde-format
 msgid "Could not open '%1' (%2) "
 msgstr "Αδυναμία ανοίγματος του '%1' (%2) "
 
-#: part/part.cpp:1200
+#: part/part.cpp:1199
 #, kde-format
 msgid "The loading of %1 has been canceled."
 msgstr "Η φόρτωση του %1 ακυρώθηκε."
 
-#: part/part.cpp:1216
+#: part/part.cpp:1215
 #, kde-format
 msgid "Could not open %1. Reason: %2"
 msgstr "Αδυναμία ανοίγματος του %1. Αιτία: %2"
 
-#: part/part.cpp:1310
+#: part/part.cpp:1309
 #, kde-format
 msgid ""
 "The program \"ps2pdf\" was not found, so Okular can not import PS files "
@@ -4789,49 +4789,49 @@ msgstr ""
 "Το πρόγραμμα \"ps2pdf\" δε βρέθηκε, έτσι το Okular δε θα μπορεί να εισάγει "
 "αρχεία PS με αυτό."
 
-#: part/part.cpp:1310
+#: part/part.cpp:1309
 #, kde-format
 msgid "ps2pdf not found"
 msgstr "Δε βρέθηκε το ps2pdf"
 
-#: part/part.cpp:1315
+#: part/part.cpp:1314
 #, kde-format
 msgid "PostScript files (%1)"
 msgstr "PostScript αρχεία (%1)"
 
-#: part/part.cpp:1330
+#: part/part.cpp:1329
 #, fuzzy, kde-format
 #| msgid "Importing PS file as PDF (this may take a while)..."
 msgid "Importing PS file as PDF (this may take a while)…"
 msgstr "Εισαγωγή αρχείου PS ως PDF (μπορεί να διαρκέσει αρκετά)..."
 
-#: part/part.cpp:1462
+#: part/part.cpp:1461
 #, fuzzy, kde-format
 #| msgid "Please enter the password to read the document:"
 msgctxt "%1 is filename of the file to open"
 msgid "Please enter the password to read the document: %1"
 msgstr "Δώστε τον κωδικό πρόσβασης για να διαβάσετε το έγγραφο:"
 
-#: part/part.cpp:1464
+#: part/part.cpp:1463
 #, fuzzy, kde-format
 #| msgid "Incorrect password. Try again:"
 msgctxt "%1 is filename of the file to open"
 msgid "Incorrect password. Try again: %1"
 msgstr "Λανθασμένος κωδικός πρόσβασης. Προσπαθήστε πάλι:"
 
-#: part/part.cpp:1475
+#: part/part.cpp:1474
 #, kde-format
 msgid "Document Password"
 msgstr "Κωδικός πρόσβασης εγγράφου"
 
-#: part/part.cpp:1598
+#: part/part.cpp:1597
 #, kde-format
 msgid "This document has XFA forms, which are currently <b>unsupported</b>."
 msgstr ""
 "Το έγγραφο αυτό περιέχει φόρμες XFA, οι οποίες προς το παρόν <b>δεν "
 "υποστηρίζονται</b>."
 
-#: part/part.cpp:1605
+#: part/part.cpp:1604
 #, kde-format
 msgid ""
 "This document has forms. Click on the button to interact with them, or use "
@@ -4840,7 +4840,7 @@ msgstr ""
 "Αυτό το έγγραφο περιέχει φόρμες. Κάντε κλικ στο κουμπί για την εμφάνισή "
 "τους, ή χρησιμοποιήστε το Προβολή -> Εμφάνιση φορμών."
 
-#: part/part.cpp:1622
+#: part/part.cpp:1621
 #, kde-format
 msgid ""
 "All editing and interactive features for this document are disabled. Please "
@@ -4850,7 +4850,7 @@ msgstr ""
 "απενεργοποιηθεί. Αποθηκεύστε ένα αντίγραφο και ανοίξτε ξανά για να "
 "επεξεργαστείτε το έγγραφο."
 
-#: part/part.cpp:1744
+#: part/part.cpp:1743
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4859,27 +4859,27 @@ msgstr ""
 "Αυτό το έγγραφο θέλει να εμφανίζεται σε πλήρη οθόνη.\n"
 "Να γίνει μετάβαση από κανονική λειτουργία σε λειτουργία παρουσίασης;"
 
-#: part/part.cpp:1746
+#: part/part.cpp:1745
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Αίτημα αλλαγής λειτουργίας προβολής"
 
-#: part/part.cpp:1747
+#: part/part.cpp:1746
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Είσοδος σε λειτουργία παρουσίασης"
 
-#: part/part.cpp:1748
+#: part/part.cpp:1747
 #, kde-format
 msgid "Deny Request"
 msgstr "Άρνηση αιτήματος"
 
-#: part/part.cpp:1838
+#: part/part.cpp:1837
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Αδυναμία ανοίγματος του %1. %2"
 
-#: part/part.cpp:1868
+#: part/part.cpp:1867
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4893,22 +4893,22 @@ msgstr ""
 "αλλαγές θα αντικατασταθούν από τις αλλαγές που έγιναν από το άλλο πρόγραμμα. "
 "<nl/><nl/>Θέλετε να συνεχίσετε με την επαναφόρτωση του αρχείου;"
 
-#: part/part.cpp:1872 part/part.cpp:1882
+#: part/part.cpp:1871 part/part.cpp:1881
 #, kde-format
 msgid "File Changed"
 msgstr "Το αρχείο άλλαξε"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1872
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Συνέχεια επαναφόρτωσης"
 
-#: part/part.cpp:1874
+#: part/part.cpp:1873
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Εγκατάλειψη επαναφόρτωσης"
 
-#: part/part.cpp:1878
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4922,27 +4922,27 @@ msgstr ""
 "αποθηκευμένες αλλαγές από τις αλλαγές του άλλου προγράμματος. <nl/><nl/"
 ">Θέλετε να συνεχίσετε με το κλείσιμο του αρχείου;"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1882
 #, kde-format
 msgid "Continue Closing"
 msgstr "Συνέχεια κλεισίματος"
 
-#: part/part.cpp:1884
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Closing"
 msgstr "Εγκατάλειψη κλεισίματος"
 
-#: part/part.cpp:1891
+#: part/part.cpp:1890
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Θέλετε να αποθηκεύσετε τις αλλαγές σας στο «%1» ή να τις απορρίψετε;"
 
-#: part/part.cpp:1891
+#: part/part.cpp:1890
 #, kde-format
 msgid "Close Document"
 msgstr "Κλείσιμο εγγράφου"
 
-#: part/part.cpp:2026
+#: part/part.cpp:2025
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4951,7 +4951,7 @@ msgstr ""
 "Αυτός ο δεσμός ενεργοποιεί μία ενέργεια κλεισίματος εγγράφου η οποία δε "
 "λειτουργεί όταν χρησιμοποιείτε τον ενσωματωμένο προβολέα."
 
-#: part/part.cpp:2032
+#: part/part.cpp:2031
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4960,60 +4960,60 @@ msgstr ""
 "Αυτός ο δεσμός ενεργοποιεί μία ενέργεια τερματισμού εφαρμογής η οποία δε "
 "λειτουργεί όταν χρησιμοποιείτε τον ενσωματωμένο προβολέα."
 
-#: part/part.cpp:2124 part/part.cpp:2144
+#: part/part.cpp:2123 part/part.cpp:2143
 #, fuzzy, kde-format
 #| msgid "Reloading the document..."
 msgid "Reloading the document…"
 msgstr "Επαναφόρτωση του εγγράφου..."
 
-#: part/part.cpp:2313 part/toc.cpp:36
+#: part/part.cpp:2312 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Περιεχόμενα"
 
-#: part/part.cpp:2342 part/signaturepanel.cpp:45
+#: part/part.cpp:2341 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Υπογραφές"
 
-#: part/part.cpp:2369
+#: part/part.cpp:2368
 #, kde-format
 msgid "Go to Page"
 msgstr "Μετακίνηση στη σελίδα"
 
-#: part/part.cpp:2392
+#: part/part.cpp:2391
 #, kde-format
 msgid "&Page:"
 msgstr "&Σελίδα:"
 
-#: part/part.cpp:2485
+#: part/part.cpp:2484
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Εισάγετε το νέο όνομα του σελιδοδείκτη:"
 
-#: part/part.cpp:2531
+#: part/part.cpp:2530
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Μετονομασία αυτού του σελιδοδείκτη"
 
-#: part/part.cpp:2534
+#: part/part.cpp:2533
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Να διαγραφεί αυτός ο σελιδοδείκτης"
 
-#: part/part.cpp:2620 part/part.cpp:2621 part/part.cpp:3575
+#: part/part.cpp:2619 part/part.cpp:2620 part/part.cpp:3574
 #: part/signaturepartutils.cpp:321
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2628 part/revisionviewer.cpp:44
+#: part/part.cpp:2627 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Αποθήκευση ως"
 
-#: part/part.cpp:2645
+#: part/part.cpp:2644
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -5023,18 +5023,18 @@ msgstr ""
 "να έχει την '%1' επέκταση. Αυτό δεν επιτρέπεται, θέλετε να επιλέξετε ένα νέο "
 "όνομα;"
 
-#: part/part.cpp:2646
+#: part/part.cpp:2645
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Μη υποστηριζόμενη επέκταση"
 
-#: part/part.cpp:2647
+#: part/part.cpp:2646
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Επιλέξτε Νέο Όνομα"
 
-#: part/part.cpp:2690
+#: part/part.cpp:2689
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -5046,17 +5046,17 @@ msgstr ""
 "Αν αποθηκεύσετε τώρα, όλες οι αλλαγές που έγιναν από το άλλο πρόγραμμα θα "
 "χαθούν. Είστε σίγουροι ότι θέλετε να συνεχίσετε;"
 
-#: part/part.cpp:2693 part/part.cpp:2712 part/part.cpp:2764
+#: part/part.cpp:2692 part/part.cpp:2711 part/part.cpp:2763
 #, kde-format
 msgid "Save - Warning"
 msgstr "Αποθήκευση - Προειδοποίηση"
 
-#: part/part.cpp:2695
+#: part/part.cpp:2694
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Αποθήκευση Αντιγράφου Αλλού"
 
-#: part/part.cpp:2711
+#: part/part.cpp:2710
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -5068,12 +5068,12 @@ msgstr ""
 "πρόσβασης και το ιστορικό αναίρεσης / ακυρώσεων αναίρεσης θα χαθεί.<br /"
 ">Θέλετε να συνεχίσετε;"
 
-#: part/part.cpp:2738
+#: part/part.cpp:2737
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Αδυναμία ανοίγματος του προσωρινού αρχείου για αποθήκευση."
 
-#: part/part.cpp:2751
+#: part/part.cpp:2750
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -5084,7 +5084,7 @@ msgstr ""
 "ανάγνωση. Δοκιμάστε να το αποθηκεύσετε σε άλλη τοποθεσία ή αλλάξτε τα "
 "δικαιώματά του αρχείου."
 
-#: part/part.cpp:2763
+#: part/part.cpp:2762
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -5094,24 +5094,24 @@ msgstr ""
 "αρχείου. Το ιστορικό αναίρεσης / ακυρώσεων αναίρεσης θα χαθεί.<br />Θέλετε "
 "να συνεχίσετε;"
 
-#: part/part.cpp:2778 part/part.cpp:2847 part/part.cpp:2868 part/part.cpp:3623
+#: part/part.cpp:2777 part/part.cpp:2846 part/part.cpp:2867 part/part.cpp:3622
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Αδυναμία αποθήκευσης αρχείου στο '%1'. Προσπαθήστε να το αποθηκεύσετε σε "
 "άλλη τοποθεσία."
 
-#: part/part.cpp:2791
+#: part/part.cpp:2790
 #, kde-format
 msgid "Filled form contents"
 msgstr "Περιεχόμενο συμπληρωμένης φόρμας"
 
-#: part/part.cpp:2794
+#: part/part.cpp:2793
 #, kde-format
 msgid "User annotations"
 msgstr "Σημειώσεις χρήστη"
 
-#: part/part.cpp:2799
+#: part/part.cpp:2798
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5122,18 +5122,18 @@ msgstr ""
 "υποστηρίζει την αποθήκευση των ακόλουθων αντικειμένων. Χρησιμοποιήστε τον "
 "τύπο <i>Αρχειοθήκης εγγράφων Okular</i> για να τα διατηρήσετε."
 
-#: part/part.cpp:2803 part/part.cpp:2825
+#: part/part.cpp:2802 part/part.cpp:2824
 #, kde-format
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: part/part.cpp:2804 part/part.cpp:2826
+#: part/part.cpp:2803 part/part.cpp:2825
 #, fuzzy, kde-format
 #| msgid "Save as Okular document archive..."
 msgid "Save as Okular document archive…"
 msgstr "Αποθήκευση ως αρχειοθήκη εγγράφων Okular..."
 
-#: part/part.cpp:2816
+#: part/part.cpp:2815
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5147,7 +5147,7 @@ msgstr ""
 "κλικ στο <i>Συνέχεια</i> για να αποθηκεύσετε το έγγραφο και να απορρίψετε "
 "αυτά τα αντικείμενα."
 
-#: part/part.cpp:2819
+#: part/part.cpp:2818
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5161,22 +5161,22 @@ msgstr ""
 "κλικ στο <i>Συνέχεια</i> για να αποθηκεύσετε, αλλά θα χάσετε αυτά τα "
 "αντικείμενα καθώς και το ιστορικό αναίρεσης / ακυρώσεων αναίρεσης."
 
-#: part/part.cpp:2821
+#: part/part.cpp:2820
 #, kde-format
 msgid "Continue"
 msgstr "Συνέχεια"
 
-#: part/part.cpp:2821
+#: part/part.cpp:2820
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Συνέχεια με απώλεια αλλαγών"
 
-#: part/part.cpp:2849
+#: part/part.cpp:2848
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Αδυναμία αποθήκευσης αρχείου στο '%1'. %2"
 
-#: part/part.cpp:2888
+#: part/part.cpp:2887
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5187,7 +5187,7 @@ msgstr ""
 "\n"
 "Το έγγραφο δεν υπάρχει πια."
 
-#: part/part.cpp:2924
+#: part/part.cpp:2923
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5196,51 +5196,51 @@ msgstr ""
 "Αδυναμία αποθήκευσης αρχείου στο '%1'. Σφάλμα: '%2'. Προσπαθήστε να το "
 "αποθηκεύσετε σε άλλη τοποθεσία."
 
-#: part/part.cpp:3195
+#: part/part.cpp:3194
 #, fuzzy, kde-format
 #| msgid "Expand whole section"
 msgid "Expand Whole Section"
 msgstr "Επέκταση όλης της ενότητας"
 
-#: part/part.cpp:3196
+#: part/part.cpp:3195
 #, fuzzy, kde-format
 #| msgid "Collapse whole section"
 msgid "Collapse Whole Section"
 msgstr "Σύμπτυξη όλης της ενότητας"
 
-#: part/part.cpp:3212
+#: part/part.cpp:3211
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Συγχρονισμός εικόνας επισκόπησης με τη σελίδα"
 
-#: part/part.cpp:3244
+#: part/part.cpp:3243
 #, kde-format
 msgid "Tools"
 msgstr "Εργαλεία"
 
-#: part/part.cpp:3432
+#: part/part.cpp:3431
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Εκφώνηση κειμένου"
 
-#: part/part.cpp:3587
+#: part/part.cpp:3586
 #, kde-format
 msgid "Invalid options have been received."
 msgstr ""
 
-#: part/part.cpp:3661
+#: part/part.cpp:3660
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: part/part.cpp:3718
+#: part/part.cpp:3717
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Η εκτύπωση αυτού του εγγράφου δεν επιτρέπεται."
 
-#: part/part.cpp:3731
+#: part/part.cpp:3730
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5248,7 +5248,7 @@ msgstr ""
 "Αδύνατη η εκτύπωση του εγγράφου. Άγνωστο σφάλμα. Παρακαλώ αναφέρετε το στο "
 "bugs.kde.org"
 
-#: part/part.cpp:3733
+#: part/part.cpp:3732
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5257,17 +5257,17 @@ msgstr ""
 "Αδύνατη η εκτύπωση του εγγράφου. Το λεπτομερές σφάλμα είναι \"%1\". Παρακαλώ "
 "αναφέρετέ το στο bugs.kde.org"
 
-#: part/part.cpp:3823
+#: part/part.cpp:3822
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Μετάβαση στο σημείο που ήσασταν πριν"
 
-#: part/part.cpp:3827
+#: part/part.cpp:3826
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Μετάβαση στο σημείο που ήσασταν μετά"
 
-#: part/part.cpp:3852
+#: part/part.cpp:3851
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5276,7 +5276,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η δημιουργία του "
 "προσωρινού αρχείου <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3864
+#: part/part.cpp:3863
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5286,7 +5286,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> για αποσυμπίεση. Το αρχείο δε θα φορτωθεί.</"
 "qt>"
 
-#: part/part.cpp:3868
+#: part/part.cpp:3867
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5300,7 +5300,7 @@ msgstr ""
 "επιλέγοντας την επιλογή 'Ιδιότητες' και επιλέγοντας την καρτέλα 'Δικαιώματα' "
 "στο ανοιχτό παράθυρο.</qt>"
 
-#: part/part.cpp:3890
+#: part/part.cpp:3889
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5309,7 +5309,7 @@ msgstr ""
 "<qt><strong>Σφάλμα Αρχείου!</strong> Δεν ήταν δυνατή η αποσυμπίεση του "
 "αρχείου <nobr><strong>%1</strong></nobr>. Το αρχείο δε θα φορτωθεί.</qt>"
 
-#: part/part.cpp:3894
+#: part/part.cpp:3893
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5319,27 +5319,27 @@ msgstr ""
 "Αν θέλετε να σιγουρευτείτε, προσπαθήστε να το αποσυμπιέσετε με χρήση "
 "εργαλείων γραμμής εντολών.</qt>"
 
-#: part/part.cpp:3920
+#: part/part.cpp:3919
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Κανένας σελιδοδείκτης"
 
-#: part/part.cpp:3991
+#: part/part.cpp:3990
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Παρουσιάστηκε πρόβλημα με το διαμοιρασμό του εγγράφου: %1"
 
-#: part/part.cpp:3991 part/part.cpp:3997
+#: part/part.cpp:3990 part/part.cpp:3996
 #, kde-format
 msgid "Share"
 msgstr "Διαμοιρασμός"
 
-#: part/part.cpp:3995
+#: part/part.cpp:3994
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Το έγγραφο μοιράστηκε με επιτυχία"
 
-#: part/part.cpp:3997
+#: part/part.cpp:3996
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Μπορείτε να βρείτε το κοινόχρηστο έγγραφο στο: <a href=\"%1\">%1</a>"

@@ -26,12 +26,16 @@ public:
     // [INHERITED] print document using already configured kprinter
     Okular::Document::PrintError print(QPrinter &printer) override;
 
+    // [INHERITED] return the table of contents from ComicInfo.xml bookmarks
+    const Okular::DocumentSynopsis *generateDocumentSynopsis() override;
+
 protected:
     bool doCloseDocument() override;
     QImage image(Okular::PixmapRequest *request) override;
 
 private:
     ComicBook::Document mDocument;
+    std::unique_ptr<Okular::DocumentSynopsis> m_docSyn;
 };
 
 #endif

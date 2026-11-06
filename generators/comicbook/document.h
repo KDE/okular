@@ -9,7 +9,10 @@
 
 #include <QStringList>
 
+#include <memory>
+
 class KArchiveDirectory;
+class QIODevice;
 class KArchive;
 class QImage;
 class Unrar;
@@ -17,6 +20,7 @@ class Directory;
 
 namespace Okular
 {
+class DocumentSynopsis;
 class Page;
 }
 
@@ -38,8 +42,15 @@ public:
 
     QString lastErrorString() const;
 
+    /**
+     * Returns a table of contents built from the Bookmark attributes of
+     * ComicInfo.xml, or nullptr if there are none. Only valid after pages().
+     */
+    std::unique_ptr<Okular::DocumentSynopsis> documentSynopsis() const;
+
 private:
     bool processArchive();
+    std::unique_ptr<QIODevice> createDevice(const QString &file) const;
 
     QStringList mPageMap;
     Directory *mDirectory;

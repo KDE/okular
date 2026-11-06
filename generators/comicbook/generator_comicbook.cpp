@@ -50,7 +50,17 @@ bool ComicBookGenerator::doCloseDocument()
 {
     mDocument.close();
 
+    m_docSyn.reset();
+
     return true;
+}
+
+const Okular::DocumentSynopsis *ComicBookGenerator::generateDocumentSynopsis()
+{
+    if (!m_docSyn) {
+        m_docSyn = mDocument.documentSynopsis();
+    }
+    return m_docSyn.get();
 }
 
 QImage ComicBookGenerator::image(Okular::PixmapRequest *request)

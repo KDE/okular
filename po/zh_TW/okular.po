@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-07 00:55+0000\n"
 "PO-Revision-Date: 2026-11-03 22:02+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3008,9 +3008,11 @@ msgid "Page Up/Down overlap:"
 msgstr "Page Up/Page Down 重疊區域："
 
 #: part/dlggeneral.cpp:235
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip Config dialog, general page"
+#| msgid "Defines the vertical spacing between pages in continuous view."
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "定義連續模式頁面間的垂直間隔。"
 
 #: part/dlggeneral.cpp:237

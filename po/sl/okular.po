@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-07 00:55+0000\n"
 "PO-Revision-Date: 2026-10-30 06:30+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3046,9 +3046,11 @@ msgid "Page Up/Down overlap:"
 msgstr "Prekrivanje Page Up/Down:"
 
 #: part/dlggeneral.cpp:235
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip Config dialog, general page"
+#| msgid "Defines the vertical spacing between pages in continuous view."
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "Določa navpični razmik med stranmi v neprekinjenem prikazu."
 
 #: part/dlggeneral.cpp:237

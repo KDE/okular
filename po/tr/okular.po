@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-07 00:55+0000\n"
 "PO-Revision-Date: 2026-11-03 23:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3048,9 +3048,11 @@ msgid "Page Up/Down overlap:"
 msgstr "Sayfa Yukarı/Aşağı çakışması:"
 
 #: part/dlggeneral.cpp:235
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info:tooltip Config dialog, general page"
+#| msgid "Defines the vertical spacing between pages in continuous view."
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "Sürdürülen kipte, sayfalar arasındaki dikey boşluklandırmayı tanımlar."
 
 #: part/dlggeneral.cpp:237

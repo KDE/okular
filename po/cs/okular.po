@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-07 00:55+0000\n"
-"PO-Revision-Date: 2026-10-31 11:34+0100\n"
+"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"PO-Revision-Date: 2026-11-07 11:09+0100\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 26.08.2\n"
+"X-Generator: Lokalize 26.08.3\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -3049,13 +3049,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Přesah Page Up/Down:"
 
 #: part/dlggeneral.cpp:235
-#, fuzzy, kde-format
-#| msgctxt "@info:tooltip Config dialog, general page"
-#| msgid "Defines the vertical spacing between pages in continuous view."
+#, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
-msgstr ""
-"Určuje vertikální vzdálenost mezi stránkami v režimu souvislého zobrazení."
+msgstr "Určuje svislou vzdálenost mezi stránkami v souvislém režimu."
 
 #: part/dlggeneral.cpp:237
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
 "PO-Revision-Date: 2009-02-26 16:58+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -3234,7 +3234,7 @@ msgstr ""
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
 #: part/dlggeneral.cpp:237

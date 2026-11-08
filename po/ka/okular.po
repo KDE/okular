@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
-"PO-Revision-Date: 2026-10-30 04:35+0100\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
+"PO-Revision-Date: 2026-11-07 04:56+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3040,8 +3040,8 @@ msgstr "Page Up/Down გადაფარვა:"
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
-msgstr "განსაზღვრავს ვერტიკალურ დაშორებას გვერდებს შორის უწყვეტ ხედში."
+msgid "Defines the vertical spacing between pages in continuous mode."
+msgstr "განსაზღვრავს ვერტიკალურ დაშორებას გვერდებს შორის უწყვეტ რეჟიმში."
 
 #: part/dlggeneral.cpp:237
 #, kde-format

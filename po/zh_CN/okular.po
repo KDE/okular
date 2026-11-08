@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -3007,7 +3007,7 @@ msgstr "上一页/下一页按钮重叠区域："
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
 #: part/dlggeneral.cpp:237

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
 "PO-Revision-Date: 2026-09-27 23:58+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -561,9 +561,9 @@ msgid "HTML"
 msgstr "HTML"
 
 #: core/generator.cpp:798
-#, kde-format
+#, fuzzy, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Изображение"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2753,10 +2753,10 @@ msgstr ""
 "заедно с документа."
 
 #: part/dlgannotations.cpp:46
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Автоматично попълване на нови бележки с избрания текст."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3037,16 +3037,18 @@ msgid "Page Up/Down overlap:"
 msgstr "Припокриване на страницата нагоре/надолу:"
 
 #: part/dlggeneral.cpp:235
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
+"Определяне на вертикалното разстояние между страниците в режим на "
+"непрекъснато скролване."
 
 #: part/dlggeneral.cpp:237
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Вертикално разстояние между страниците:"
 
 #: part/dlggeneral.cpp:242
 #, kde-format
@@ -3605,88 +3607,90 @@ msgstr "&Отваряне…"
 #, fuzzy, kde-format
 #| msgid "PGP"
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
-#, kde-format
+#, fuzzy, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Път за изход:"
 
 #: part/exportimagedialog.cpp:48
-#, kde-format
+#, fuzzy, kde-format
 msgid "..."
-msgstr ""
+msgstr "Моля, подайте текстовете за превод."
 
 #: part/exportimagedialog.cpp:50
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Изображенията ще бъдат експортирани в подпапка в този път със същото име "
+"като файла"
 
 #: part/exportimagedialog.cpp:54
 #, fuzzy, kde-format
 #| msgid "E&xport As"
 msgid "Export range"
-msgstr "Е&кспортиране като"
+msgstr "Обхват на експорта"
 
 #: part/exportimagedialog.cpp:57
 #, fuzzy, kde-format
 #| msgid "E&xport As"
 msgid "Export all"
-msgstr "Е&кспортиране като"
+msgstr "Експортиране на всички"
 
 #: part/exportimagedialog.cpp:59
 #, fuzzy, kde-format
 #| msgid "Pages"
 msgid "Pages from"
-msgstr "Страници"
+msgstr "Страници от"
 
 #: part/exportimagedialog.cpp:60
 #, fuzzy, kde-format
 #| msgctxt "stop the movie playback"
 #| msgid "Stop"
 msgid "to"
-msgstr "Спиране"
+msgstr "до"
 
 #: part/exportimagedialog.cpp:111
 #, fuzzy, kde-format
 #| msgid "Export…"
 msgid "Export"
-msgstr "Експортиране…"
+msgstr "Експортиране"
 
 #: part/exportimagedialog.cpp:130
 #, fuzzy, kde-format
 #| msgid "Forget image"
 msgid "Export Image"
-msgstr "Забравяне на  изображението"
+msgstr "Експортиране на изображение"
 
 #: part/exportimagedialog.cpp:225
 #, fuzzy, kde-format
 #| msgid "Could not save file %1."
 msgid "Failed to save a file %1"
-msgstr "Файлът %1 не можа да бъде запазен."
+msgstr "Грешка при запазване на файл %1"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
-#, kde-format
+#, fuzzy, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Грешка"
 
 #: part/exportimagedialog.cpp:252
-#, kde-format
+#, fuzzy, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "Грешка при създаване на папка за записване на изображенията: %1"
 
 #: part/exportimagedialog.cpp:255
 #, fuzzy, kde-format
 #| msgid "Forget image"
 msgid "Exporting images"
-msgstr "Забравяне на  изображението"
+msgstr "Експортиране на изображения"
 
 #: part/exportimagedialog.cpp:255
-#, kde-format
+#, fuzzy, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Отказ"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5122,9 +5126,9 @@ msgid "Speak"
 msgstr "Изговаряне на текст"
 
 #: part/part.cpp:3586
-#, kde-format
+#, fuzzy, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Получени невалидни опции."
 
 #: part/part.cpp:3660
 #, kde-format

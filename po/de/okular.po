@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
 "PO-Revision-Date: 2026-09-10 21:22+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3059,7 +3059,7 @@ msgstr "Überschneidung für die Tasten „Bild auf/ab“:"
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
+msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
 #: part/dlggeneral.cpp:237

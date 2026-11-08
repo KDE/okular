@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-06 00:48+0000\n"
-"PO-Revision-Date: 2026-10-30 07:19-0300\n"
+"POT-Creation-Date: 2026-11-08 00:12+0000\n"
+"PO-Revision-Date: 2026-11-07 05:55-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.2\n"
+"X-Generator: Lokalize 26.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3064,9 +3064,8 @@ msgstr "Sobreposição do &Page Up/Down:"
 #: part/dlggeneral.cpp:235
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
-msgid "Defines the vertical spacing between pages in continuous view."
-msgstr ""
-"Define o espaçamento vertical entre as páginas na visualização contínua."
+msgid "Defines the vertical spacing between pages in continuous mode."
+msgstr "Define o espaçamento vertical entre as páginas no modo contínuo."
 
 #: part/dlggeneral.cpp:237
 #, kde-format

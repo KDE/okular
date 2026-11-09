@@ -415,6 +415,19 @@
   </custom>
   <launchable type="desktop-id">org.kde.okular.desktop</launchable>
   <releases>
+    <release version="26.11.70" type="snapshot">
+      <description>
+        <ul>
+          <li>Support for creating eIDAS CAdES-B digital signatures in PDF documents.</li>
+          <li>Export document pages as images.</li>
+          <li>Support for PDF files using Brotli compression.</li>
+          <li>Improved digital signing workflow, including password prompts and saving signed documents.</li>
+          <li>More reliable links to headings within Markdown documents.</li>
+          <li>Configurable spacing between pages in continuous mode, including seamless viewing with no gaps.</li>
+          <li>Improved embedded audio and video playback with a new backend.</li>
+        </ul>
+      </description>
+    </release>
     <release version="26.08.3" date="2026-11-05"/>
     <release version="26.08.2" date="2026-10-08"/>
     <release version="26.08.1" date="2026-09-10"/>

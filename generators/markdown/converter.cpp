@@ -97,6 +97,16 @@ QTextDocument *Converter::convertOpenFile()
         return nullptr;
     }
 
+    // Skip UTF-8 BOM if present
+    unsigned char bom[3] = {};
+    const size_t bytesRead = fread(bom, 1, sizeof(bom), m_markdownFile);
+    if (bytesRead < sizeof(bom) || bom[0] != 0xEF || bom[1] != 0xBB || bom[2] != 0xBF) {
+        if (fseek(m_markdownFile, 0, SEEK_SET) != 0) {
+            Q_EMIT error(i18n("Failed to open the document"), -1);
+            return nullptr;
+        }
+    }
+
 #if defined(MKD_NOLINKS)
     // on discount 2 MKD_NOLINKS is a define
     MMIOT *markdownHandle = mkd_in(m_markdownFile, 0);

@@ -11,6 +11,7 @@
 #include "generators/markdown/converter.h"
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QTemporaryFile>
 #include <memory>
 
 class MarkdownTest : public QObject
@@ -26,6 +27,7 @@ private Q_SLOTS:
     void testSpecialCharsInImageFileName();
     void testStrikeThrough();
     void testHtmlTagFixup();
+    void testUtf8Bom();
 
 private:
     void findImages(QTextFrame *parent, QList<QTextImageFormat> &images);
@@ -207,6 +209,70 @@ void MarkdownTest::testHtmlTagFixup()
     {
         const QString outputHtml = Markdown::detail::fixupHtmlTags(QStringLiteral("<del>test</del>"));
         QCOMPARE(outputHtml, QStringLiteral("<s>test</s>"));
+    }
+}
+
+void MarkdownTest::testUtf8Bom()
+{
+    {
+        QTemporaryFile file(QDir::tempPath() + QStringLiteral("/markdowntest_XXXXXX.md"));
+        QVERIFY(file.open());
+        const QByteArray content = QByteArrayLiteral("\xEF\xBB\xBF# First Heading\n\nNormal text\n");
+        QCOMPARE(file.write(content), content.size());
+        file.close();
+
+        Markdown::Converter converter;
+        std::unique_ptr<QTextDocument> document(converter.convert(file.fileName()));
+        QVERIFY(document);
+
+        auto frameIter = document->rootFrame()->begin();
+        QCOMPARE_NE(frameIter, document->rootFrame()->end());
+        QCOMPARE(frameIter.currentBlock().blockFormat().headingLevel(), 1);
+        QCOMPARE(frameIter.currentBlock().text().trimmed(), QStringLiteral("First Heading"));
+
+        converter.setFancyPantsEnabled(false);
+        converter.convertAgain();
+        std::unique_ptr<QTextDocument> reconvertedDocument(converter.document());
+        QVERIFY(reconvertedDocument);
+
+        auto reconvertedIter = reconvertedDocument->rootFrame()->begin();
+        QCOMPARE_NE(reconvertedIter, reconvertedDocument->rootFrame()->end());
+        QCOMPARE(reconvertedIter.currentBlock().blockFormat().headingLevel(), 1);
+        QCOMPARE(reconvertedIter.currentBlock().text().trimmed(), QStringLiteral("First Heading"));
+    }
+
+    {
+        QTemporaryFile file(QDir::tempPath() + QStringLiteral("/markdowntest_XXXXXX.md"));
+        QVERIFY(file.open());
+        const QByteArray content = QByteArrayLiteral("# Heading Without BOM\n");
+        QCOMPARE(file.write(content), content.size());
+        file.close();
+
+        Markdown::Converter converter;
+        std::unique_ptr<QTextDocument> document(converter.convert(file.fileName()));
+        QVERIFY(document);
+
+        auto frameIter = document->rootFrame()->begin();
+        QCOMPARE_NE(frameIter, document->rootFrame()->end());
+        QCOMPARE(frameIter.currentBlock().blockFormat().headingLevel(), 1);
+        QCOMPARE(frameIter.currentBlock().text().trimmed(), QStringLiteral("Heading Without BOM"));
+    }
+
+    {
+        QTemporaryFile file(QDir::tempPath() + QStringLiteral("/markdowntest_XXXXXX.md"));
+        QVERIFY(file.open());
+        const QByteArray content = QByteArrayLiteral("ab");
+        QCOMPARE(file.write(content), content.size());
+        file.close();
+
+        Markdown::Converter converter;
+        std::unique_ptr<QTextDocument> document(converter.convert(file.fileName()));
+        QVERIFY(document);
+
+        auto frameIter = document->rootFrame()->begin();
+        QCOMPARE_NE(frameIter, document->rootFrame()->end());
+        QCOMPARE(frameIter.currentBlock().blockFormat().headingLevel(), 0);
+        QCOMPARE(frameIter.currentBlock().text().trimmed(), QStringLiteral("ab"));
     }
 }
 

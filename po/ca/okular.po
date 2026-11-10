@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-11-07 09:16+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2870,115 +2870,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Ordre:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Usa un desplaçament suau"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Aparença:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Mostra les barres de desplaçament"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Enllaça les miniatures a la pàgina"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Mostra els consells i els missatges d'informació"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Notifica els fitxers, els formularis o les signatures incrustats"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Si està disponible, mostra el títol del document en la barra de títol"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Només mostra el nom de fitxer"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Mostra el camí complet del fitxer"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Quan no es mostri el títol del document:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Usa un color de fons personalitzat:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Funcionalitats del programa:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Obre els fitxers nous en pestanyes"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Commuta a la pestanya existent si el fitxer ja està obert"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Obeeix les limitacions DRM"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Recarrega el document en canviar el fitxer"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Mostra el diàleg de selecció de dorsals"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Direcció de lectura de dreta a esquerra"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2988,7 +2988,7 @@ msgstr ""
 "Fes servir la informació de fitxer per a determinar si s'ha d'obrir en mode "
 "continu de manera predeterminada"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
@@ -2996,19 +2996,19 @@ msgstr ""
 "Per als fitxers sense informació de fitxer, obre en mode continu de manera "
 "predeterminada"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Obre en mode continu de manera predeterminada"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "Continua des de l'última pàgina visualitzada"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
@@ -3016,26 +3016,26 @@ msgstr ""
 "En usar l'eina Navega, el cursor continua al final oposat en arribar a la "
 "vora de la pantalla"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Elements a l'historial recent:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Columnes de visió general:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
 # skip-rule: k-PageUp-1
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3046,61 +3046,61 @@ msgstr ""
 "tecles de retrocedir/avançar pàgina."
 
 # skip-rule: k-PageUp-1
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Superposició Re/Av Pàg:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "Defineix l'espaiat vertical entre pàgines en el mode continu."
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr "Espaiat vertical de pàgines:"
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Ajusta a l'amplada de pàgina"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ajusta a la pàgina"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Encaixat automàtic"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Personalitzat"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3110,7 +3110,7 @@ msgstr ""
 "Defineix el mode predeterminat de zoom per als fitxers que mai s'han obert "
 "abans. Per als fitxers que s'han obert prèviament s'aplica el zoom anterior."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

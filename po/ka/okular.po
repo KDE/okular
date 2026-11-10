@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-11-07 04:56+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -2860,115 +2860,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "ბრძანება:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "გლუვი გადახვევა"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "გარეგნობა:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "ჩოჩიების ჩვენება"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "მინიატურის მიბმა გვერდზე"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "მინიშნებების და ინფორმაციის ჩვენება"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "გაფრთხილებები ჩაშენებული ფაილების, ფორმებისა და ხელმოწერების შესახებ"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "დოკუმენტის სათაურის სათაურის ზოლში ჩვენება, თუ ის ხელმისაწვდომა"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "მხოლოდ ფაილის სახელების ჩვენება"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "ფაილის სრული ბილიკის ჩვენება"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "როცა დოკუმენტის სათაური ნაჩვენები არაა:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "ფონის ფერის მითითება:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "პროგრამის თვისებები:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "ახალი ფაილების ჩანართებში გახსნა"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "გადართვა არსებულ ჩანართზე, თუ ფაილი უკვე ღიაა"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "საავტორო უფლებების დაცვა"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "დოკუმენტის თავიდან ჩატვირთვა მისი შეცვლისას"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "უკანაბოლოს არჩევის დიალოგის ჩვენება"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "მარჯვნიდან-მარცხნივ კითხვის მიმართულება"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2978,50 +2978,50 @@ msgstr ""
 "ფაილის ინფორმაციის გამოყენება დასადგენად, მოხდება თუ არა გახსნა უწყვეტ "
 "რეჟიმში"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
 "ფაილების, რომლებსაც ინფორმაცია არ აქვთ, ნაგულისხმევად გახსნა უწყვეტ რეჟიმში"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "ნაგულისხმევად გახსნა უწყვეტ რეჟიმში"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "გაგრძელება ბოლოს ნანახი გვერდიდან"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "ძებნის ხელსაწყოს გამოყენებისას, ეკრანის გადატანა ეკრანის წიბოებთან"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "ელემენტები უახლეს ისტორიაში:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "სვეტების მიმოხილვა:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3031,61 +3031,61 @@ msgstr ""
 "განსაზღვრავს, მიმდინარე ხედის ფართობიდან რამდენი იქნება ჯერ კიდევ ხილული "
 "Page Up/Down ღილაკებზე დაწოლისას."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Page Up/Down გადაფარვა:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "განსაზღვრავს ვერტიკალურ დაშორებას გვერდებს შორის უწყვეტ რეჟიმში."
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr "ვერტიკალური დაშორება გვერდებს შორის:"
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "სიგანის ჩატევა"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "გვერდის ჩატევა"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "ავტომატური ჩატევა"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "მომხმარებლის"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3096,7 +3096,7 @@ msgstr ""
 "არასდროს გახსნილა. ფაილებისთვის, რომლებიც უკვე გახსენით, წინა მასშტაბი "
 "იქნება გამოყენებული."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

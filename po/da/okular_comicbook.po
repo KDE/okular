@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2008-12-16 18:28+0100\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -27,20 +27,20 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mschlander@opensuse.org"
 
-#: document.cpp:97
+#: document.cpp:98
 #, fuzzy, kde-format
 #| msgid "Cannot open document, unrar was not found."
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr "Kan ikke åbne dokument, unrar blev ikke fundet."
 
-#: document.cpp:102
+#: document.cpp:103
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
 msgstr ""
 "Versionen af unrar på dit system er ikke egnet til åbning af comicbook-filer."
 
-#: document.cpp:131
+#: document.cpp:132
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Ukendt ComicBook-format."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-09-23 06:56+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
@@ -2824,115 +2824,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "بۇيرۇق:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "راۋان سىيرىلىشنى ئىشلىتىدۇ"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "قىياپەت:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "سىيرىغۇچنى كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "كىچىك سۈرەتنى بەتكە ئۇلايدۇ"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "ئەسكەرتىش ۋە تەپسىلىي ئۇچۇرنى كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "سىڭدۈرمە ھۆججەت، جەدۋەل ياكى ئىمزا ھەققىدە ئەسكەرتىدۇ"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "ئەگەر مۇمكىن بولسا ماۋزۇ بالداقتا پۈتۈك ماۋزۇسىنى كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "ھۆججەت ئىسمىنىلا كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "ھۆججەتنىڭ تولۇق يولىنى كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "پۈتۈك ماۋزۇسىنى كۆرسەتمىگەندە:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "ئىختىيارى تەگلىك رەڭگىنى ئىشلىتىدۇ:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "پىروگرامما ئىقتىدارى:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "يېڭى ھۆججەتنى بەتكۈچتە ئاچىدۇ"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "ئەگەر ھۆججەت ئوچۇق بولسا مەۋجۇت بەتكۈچكە ئالمىشىدۇ"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "DRM چەكلىمىسىگە بويسۇنىدۇ"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "ھۆججەت ئۆزگەرگەندە پۈتۈكنى قايتا يۈكلەيدۇ"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "كەينى ئۇچ تاللاش سۆزلەشكۈنى كۆرسىتىدۇ"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "ئوڭدىن سولغا ئوقۇش يۆنىلىشى"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2942,7 +2942,7 @@ msgstr ""
 "ھۆججەت ئۇچۇرى ئارقىلىق كۆڭۈلدىكى ئەھۋالدا ئۈزلۈكسىز ھالەتتە ئېچىش "
 "ئاچماسلىقنى بەلگىلەيدۇ"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
@@ -2950,19 +2950,19 @@ msgstr ""
 "ھۆججەت ئۇچۇرى يوق ھۆججەتكە نىسبەتەن، كۆڭۈلدىكى ئەھۋالدا ئۈزلۈكسىز ھالەتتە "
 "ئاچىدۇ"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "كۆڭۈلدىكى ئەھۋالدا ئۈزلۈكسىز ھالەتتە ئاچىدۇ"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "ئاخىرقى كۆرگەن بەتتىن داۋاملاشتۇرىدۇ"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
@@ -2970,25 +2970,25 @@ msgstr ""
 "كۆز يۈگۈرتۈش قورالى ئىشلەتكەندە، نۇر بەلگىسى ئېكران گىرۋىكىدە سۆرەلسە چەكسىز "
 "بەت ئۆرۈيدۇ"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "يېقىنقى تارىختىكى تۈر سانى:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "ئىخچام كۆرۈنۈش رەت سانى:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr ""
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -2998,61 +2998,61 @@ msgstr ""
 "ئالدى بەت ياكى كەينى بەت توپچە چېكىلىپ بەت ئۆرۈگەندە، نۆۋەتتىكى بەت كېيىنكى "
 "بەتكە ئۆرۈلگەندىن كېيىن ساقلاپ قالىدىغان كۆرۈنۈش نىسبىتى بەلگىلىنىدۇ."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "ئالدى بەت/كەينى بەت دەستىلىنىشى:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr ""
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr ""
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr ""
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "كەڭلىككە سىغدۇر"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "بەتكە سىغدۇر"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "ئۆزلۈكىدىن سىغدۇر"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "ئىختىيارى"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3060,7 +3060,7 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

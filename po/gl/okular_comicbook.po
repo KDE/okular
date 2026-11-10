@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular_comicbook\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2018-11-17 20:29+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <kde-i18n-doc@kde.org>\n"
@@ -30,19 +30,19 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mvillarino@users.sourceforge.net"
 
-#: document.cpp:97
+#: document.cpp:98
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr ""
 "Non é posíbel abrir o documento, non se atoparon nin unrar nin unarchiver."
 
-#: document.cpp:102
+#: document.cpp:103
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
 msgstr "A versión de unrar no sistema non é axeitada para abrir comicbooks."
 
-#: document.cpp:131
+#: document.cpp:132
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "Formato ComicBook descoñecido."

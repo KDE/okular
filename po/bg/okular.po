@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-09-27 23:58+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -2858,115 +2858,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Команда:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Използване на плавно превъртане"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Външен вид:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Показване на лентите за превъртане"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Връзка на &умалените копия със страницата"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Показване на по&дсказки"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Уведомяване за вградените файлове, формуляри или подписи"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Показване на заглавието на документа в заглавната лента, ако е налично"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Показване само на името на файла"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Показване на пълен път до файла"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Когато не се показва заглавието на документа:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Използване на персонализиран цвят на фона:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Възможности на програмата:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Отваряне на нови файлове в раздели"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Превключване към съществуващ раздел, ако файлът вече е отворен"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Спазване на DRM ограниченията"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Презареждане на документа при промяна на файла"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Показване на диалог за избор на бекенд"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Посока на четене отдясно наляво"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2976,7 +2976,7 @@ msgstr ""
 "Използване на информация за файла, за да се определи дали да се отваря в "
 "непрекъснат режим по подразбиране"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
@@ -2984,43 +2984,43 @@ msgstr ""
 "Отваряне в непрекъснат режим по подразбиране на файлове без информация за "
 "файла"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Отваряне в непрекъснат режим по подразбиране"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "Продължаване от последно преглежданата страница"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "Скриване на курсора при използване на инструмента за преглед"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Елементи в скорошна история"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Колони общ преглед:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3030,13 +3030,13 @@ msgstr ""
 "Определя каква част от текущата област на гледане ще остане видима при "
 "натискане на бутоните Страница нагоре/надолу."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Припокриване на страницата нагоре/надолу:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, fuzzy, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
@@ -3044,49 +3044,49 @@ msgstr ""
 "Определяне на вертикалното разстояние между страниците в режим на "
 "непрекъснато скролване."
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, fuzzy, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr "Вертикално разстояние между страниците:"
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "До широчината на страницата"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "До височината на страницата"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Автоматично напасване"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Потребителски"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3097,7 +3097,7 @@ msgstr ""
 "не са били отваряни. За файлове, които са били отворени, се прилага "
 "предишният мащаб."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

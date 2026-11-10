@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-09-14 20:10+0200\n"
 "Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -2869,115 +2869,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Príkaz:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Používať plynulé posúvanie"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Vzhľad:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Zobrazovať posuvníky"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Prepojiť náhľady so stránkou"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Zobrazovať rady a informačné správy"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Upozorniť na vložené súbory, formuláre alebo podpisy"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Zobraziť dokument v záhlaví ak je dostupný"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Zobraziť iba názov súboru"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Zobraziť celú cestu súboru"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Pri nezobrazení názvu dokumentu:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Použiť vlastnú farbu pozadia:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Funkcie programu:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Otvoriť nové súbory v kartách"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Ak je súbor už otvorený, prepnúť na existujúcu kartu"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Rešpektovať DRM obmedzenia"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Znovu načítať dokument pri zmene súboru"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Zobrazovať dialóg pre výber backendu"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Smer čítania sprava doľava"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2986,51 +2986,51 @@ msgid ""
 msgstr ""
 "Use file information to determine či sa má open in continuous mode predvolene"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
 "Pre súbory bez informácií o súbore otvoriť v nepretržitom režime predvolene"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Predvolene otvoriť v nepretržitom režime"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "Pokračovať od poslednej zobrazenej strany"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "Pri používaní nástroja prehliadania obtočiť kurzor na okrajoch obrazovky"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Items in recent history:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Stĺpce v prehľade:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3040,61 +3040,61 @@ msgstr ""
 "Určuje, koľko z aktuálnej plochy pohľadu bude stále vidieť po stlačení "
 "klávesov Page Up/Down."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Presah Page Up/Down:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr ""
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Prispôsobiť šírke"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Prispôsobiť stránke"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Automaticky prispôsobiť"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Vlastné"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3105,7 +3105,7 @@ msgstr ""
 "otvorené. Pre súbory, ktoré boli otvorené pred použitím predchádzajúceho "
 "priblíženia."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

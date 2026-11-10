@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:55+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-02-11 18:22-0600\n"
 "Last-Translator: A S Alam <aman@punlinux.org>\n"
 "Language-Team: pa\n"
@@ -2871,115 +2871,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "ਕਮਾਂਡ:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr ""
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "ਦਿੱਖ:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "ਸਕਰੋਲਪੱਟੀ ਵੇਖੋ"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "ਥੰਮਨੇਲ ਸਫ਼ੇ ਨਾਲ ਲਿੰਕ ਕਰੋ"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "ਸੰਕੇਤ ਅਤੇ ਜਾਣਕਾਰੀ ਸੁਨੇਹੇ ਵੇਖਾਓ"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "ਇਮਬੈੱਡ ਕੀਤੀਆਂ ਫਾਇਲਾਂ, ਫਾਰਮ ਜਾਂ ਦਸਤਖ਼ਤਾਂ ਬਾਰੇ ਸੂਚਨਾ ਦਿਓ"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "ਟਾਈਟਲ ਪੱਟੀ ਵਿੱਚ ਦਸਤਾਵੇਜ਼ ਟਾਈਟਲ ਤਾਂ ਵੇਖਾਓ, ਜੇ ਮੌਜੂਦ ਹੋਵੇ"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "ਸਿਰਫ਼ ਫਾਇਲ ਨਾਂ ਹੀ ਵੇਖਾਓ"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "ਪੂਰਾ ਫਾਇਲ ਪਾਥ ਵੇਖਾਓ"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "ਦਸਤਾਵੇਜ਼ ਟਾਈਟਲ ਨਾ ਵੇਖਾਉਣਾ ਹੋਵੇ ਜਦੋਂ:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "ਕਸਟਮ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "ਪ੍ਰੋਗਰਾਮ ਫੀਚਰ:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "ਨਵੀਆਂ ਫਾਇਲਾਂ ਨੂੰ ਟੈਬਾਂ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "ਜੇ ਫਾਇਲ ਪਹਿਲਾਂ ਹੀ ਖੁੱਲ੍ਹੀ ਹੋਵੇ ਤਾਂ ਮੌਜੂਦਾ ਟੈਬ ਉੱਤੇ ਜਾਓ"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "DRM ਸੀਮਾਵਾਂ ਦੀ ਪਾਲਣਾ ਕਰੋ"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "ਫਾਇਲ ਬਦਲਾਅ ਹੋਣ ਨਾਲ ਦਸਤਾਵੇਜ਼ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "ਬੈਕਐਂਡ ਚੋਣ ਡਾਈਲਾਗ ਵੇਖੋ"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "ਸੱਜਿਓ ਖੱਬੇ ਪੜ੍ਹਨ ਦੀ ਦਿਸ਼ਾ"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2987,7 +2987,7 @@ msgid ""
 "default"
 msgstr ""
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, fuzzy, kde-format
 #| msgctxt "@option:check Config dialog, general page"
 #| msgid "Open in continuous mode by default"
@@ -2995,38 +2995,38 @@ msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr "ਮੂਲ ਰੂਪ ਵਿੱਚ ਹੀ ਲਗਾਤਾਰ ਢੰਗ ਨਾਲ ਖੋਲ੍ਹੋ"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "ਮੂਲ ਰੂਪ ਵਿੱਚ ਹੀ ਲਗਾਤਾਰ ਢੰਗ ਨਾਲ ਖੋਲ੍ਹੋ"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, fuzzy, kde-format
 #| msgid "Continue losing changes"
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "ਤਬਦੀਲੀਆਂ ਗੁਆਉਣਾ ਜਾਰੀ ਰੱਖੋ"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "ਜਦੋਂ ਝਲਕ ਟੂਲ ਵਰਤਿਆ ਜਾਵੇ ਤਾਂ ਸਕਰੀਨ ਦੇ ਕੋਨਿਆਂ ਤੋਂ ਕਰਸਰ ਨੂੰ ਸਮੇਟੋ"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr ""
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "ਸੰਖੇਪ ਕਾਲਮ:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 #| msgid "%v%"
@@ -3034,7 +3034,7 @@ msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3042,25 +3042,25 @@ msgid ""
 "pressing the Page Up/Down keys."
 msgstr ""
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "ਸਫ਼ੇ ਉੱਤੋ/ਹੇਠੋਂ ਓਵਰਲੈਪ:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr ""
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, custom zoom factor"
 #| msgid "%v%"
@@ -3068,7 +3068,7 @@ msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #| msgid "100%"
@@ -3076,28 +3076,28 @@ msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, fuzzy, kde-format
 #| msgid "Fit Width"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "ਚੌੜਾਈ ਫਿੱਟ"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, fuzzy, kde-format
 #| msgid "Fit Page"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "ਸਫ਼ਾ ਫਿੱਟ"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, fuzzy, kde-format
 #| msgid "Auto Fit"
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "ਆਟੋ ਫਿੱਟ"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, fuzzy, kde-format
 #| msgctxt "item:inlistbox Config dialog, general page, default zoom"
 #| msgid "Custom"
@@ -3105,7 +3105,7 @@ msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "ਕਸਟਮ"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3113,7 +3113,7 @@ msgid ""
 "files which were opened before the previous zoom is applied."
 msgstr ""
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"

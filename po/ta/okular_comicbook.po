@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:50+0000\n"
+"POT-Creation-Date: 2026-11-10 00:55+0000\n"
 "PO-Revision-Date: 2026-05-10 15:22+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -27,14 +27,14 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
 
-#: document.cpp:97
+#: document.cpp:98
 #, kde-format
 msgid "Cannot open document, neither unrar nor unarchiver were found."
 msgstr ""
 "unrar மற்றும் unarchiver இல்லாததால் ஆவணத்தைத் திறக்க முடியவில்லை. இவற்றில் ஏதாவதொன்று "
 "இருக்க வேண்டும்."
 
-#: document.cpp:102
+#: document.cpp:103
 #, kde-format
 msgid ""
 "The version of unrar on your system is not suitable for opening comicbooks."
@@ -42,7 +42,7 @@ msgstr ""
 "உங்கள் கணினியிலுள்ள unrar நிரலின் பதிப்பு, comicbook கோப்புகளைத் திறப்பதற்கு உகந்தது "
 "அல்ல."
 
-#: document.cpp:131
+#: document.cpp:132
 #, kde-format
 msgid "Unknown ComicBook format."
 msgstr "தெரியாத ComicBook கோப்புவகை."

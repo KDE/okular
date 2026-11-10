@@ -35,8 +35,8 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
-#include <QGraphicsView>
 #include <QFrame>
+#include <QGraphicsView>
 #include <QImage>
 #include <QLineEdit>
 #include <QMenu>
@@ -668,7 +668,7 @@ void PartTest::testHoverInternalLinkShowsPreview()
     QTest::mouseMove(part.m_pageView->viewport(), linkPoint);
     QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::PointingHandCursor);
 
-    QFrame *preview = part.m_pageView->findChild<QFrame *>(QStringLiteral("OkularInternalLinkPreview"));
+    QWidget *preview = part.m_pageView->findChild<QWidget *>(QStringLiteral("OkularInternalLinkPreview"));
     QVERIFY(preview);
     QTRY_VERIFY_WITH_TIMEOUT(preview->isVisible(), 2000);
     QCOMPARE(part.m_document->currentPage(), 0u);
@@ -684,7 +684,6 @@ void PartTest::testHoverInternalLinkShowsPreview()
     QTest::mouseClick(part.m_pageView->viewport(), Qt::LeftButton, Qt::NoModifier, linkPoint);
     QTRY_VERIFY(!preview->isVisible());
 }
-
 
 void PartTest::testExternalLinkDoesNotShowPreview()
 {
@@ -708,7 +707,7 @@ void PartTest::testExternalLinkDoesNotShowPreview()
     QTest::mouseMove(part.m_pageView->viewport(), QPoint(width * 0.250, height * 0.127));
     QTRY_COMPARE(part.m_pageView->cursor().shape(), Qt::PointingHandCursor);
 
-    QFrame *preview = part.m_pageView->findChild<QFrame *>(QStringLiteral("OkularInternalLinkPreview"));
+    QWidget *preview = part.m_pageView->findChild<QWidget *>(QStringLiteral("OkularInternalLinkPreview"));
     QVERIFY(preview);
     QTest::qWait(500);
     QVERIFY(!preview->isVisible());

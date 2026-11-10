@@ -60,6 +60,7 @@
 #include <QAction>
 #include <QDebug>
 #include <QIcon>
+#include <QStyle>
 
 // system includes
 #include <array>
@@ -117,9 +118,6 @@ static const int pageflags = PagePainter::Accessibility | PagePainter::EnhanceLi
 
 static const std::array<float, 16> kZoomValues {0.12, 0.25, 0.33, 0.50, 0.66, 0.75, 1.00, 1.25, 1.50, 2.00, 4.00, 8.00, 16.00, 25.00, 50.00, 100.00};
 
-static const int linkPreviewDelayMs = 300;
-static const int linkPreviewBorderWidth = 2;
-
 // This is the length of the text that will be shown when the user is searching for a specific piece of text.
 static const int searchTextPreviewLength = 21;
 
@@ -146,19 +144,18 @@ TableSelectionPart::TableSelectionPart(PageViewItem *item_p, const Okular::Norma
 {
 }
 
-class LinkPreviewWidget : public QFrame, public Okular::DocumentObserver
+class LinkPreviewWidget : public QWidget, public Okular::DocumentObserver
 {
     Q_OBJECT
 
 public:
     LinkPreviewWidget(Okular::Document *document, QWidget *parent)
-        : QFrame(parent)
+        : QWidget(parent)
         , m_document(document)
     {
+        auto linkPreviewBorderWidth = style()->pixelMetric(QStyle::PM_ToolTipLabelFrameWidth);
         setObjectName(QStringLiteral("OkularInternalLinkPreview"));
-        setFrameStyle(QFrame::NoFrame);
         setContentsMargins(linkPreviewBorderWidth, linkPreviewBorderWidth, linkPreviewBorderWidth, linkPreviewBorderWidth);
-        setAutoFillBackground(true);
         setAttribute(Qt::WA_TransparentForMouseEvents);
         hide();
 
@@ -240,10 +237,10 @@ protected:
         Q_UNUSED(event);
 
         QPainter p(this);
-        p.fillRect(rect(), palette().color(QPalette::Base));
+        p.fillRect(rect(), palette().color(QPalette::Shadow));
 
         if (!m_page) {
-            drawBorder(&p);
+            p.fillRect(contentsRect(), palette().color(QPalette::Base));
             return;
         }
 
@@ -253,16 +250,9 @@ protected:
         PagePainter::paintCroppedPageOnPainter(&p, m_page, this, pageflags, m_fullPageSize.width(), m_fullPageSize.height(), QRect(QPoint(0, 0), contents.size()), m_crop, nullptr);
         p.translate(-contents.topLeft());
         p.setClipping(false);
-        drawBorder(&p);
     }
 
 private:
-    void drawBorder(QPainter *p)
-    {
-        p->setPen(QPen(palette().color(QPalette::Shadow), linkPreviewBorderWidth));
-        p->drawRect(rect().adjusted(linkPreviewBorderWidth / 2, linkPreviewBorderWidth / 2, -linkPreviewBorderWidth / 2, -linkPreviewBorderWidth / 2));
-    }
-
     Okular::NormalizedRect cropForPreview() const
     {
         const QSize contentsSize = contentsRect().size();
@@ -542,7 +532,7 @@ PageView::PageView(QWidget *parent, Okular::Document *document)
         const int viewportHeight = viewport()->height();
         const int availableWidth = qMax(1, viewportWidth - 2 * margin);
         const int availableHeight = qMax(1, viewportHeight - 2 * margin);
-        const QSize previewSize(availableWidth, qMin(qMax(80, viewportHeight / 3), availableHeight));
+        const QSize previewSize(availableWidth, qMin(qMax(80, viewportHeight / 2), availableHeight));
 
         const QPoint cursorPos = viewport()->mapFromGlobal(QCursor::pos());
         int x = cursorPos.x() - previewSize.width() / 2;
@@ -4548,7 +4538,7 @@ void PageView::updateLinkPreview(const Okular::ObjectRect *linkObject, const QPo
         d->linkPreviewWidget->cancel();
     }
     d->linkPreviewObject = linkObject;
-    d->linkPreviewTimer.start(linkPreviewDelayMs);
+    d->linkPreviewTimer.start(style()->styleHint(QStyle::SH_ToolTip_WakeUpDelay));
 }
 
 void PageView::hideLinkPreview()

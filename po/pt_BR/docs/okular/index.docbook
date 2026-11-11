@@ -652,7 +652,7 @@ Context menu actions like Rename Bookmarks etc.)
 >Se você quiser usar um repositório de certificados personalizado, poderá fazê-lo configurando-o na seção <link linkend="config-pdf-digital-signatures"
 >Configuração do backend &PDF;</link
 > da janela <link linkend="configure-backends"
->Configurar backends...</link
+>Configurar o Okular...</link
 >. </para>
 				<note>
 					<para
@@ -3246,244 +3246,9 @@ Context menu actions like Rename Bookmarks etc.)
 > na parte inferior do documento para poupar espaço vertical na janela do &okular;. Observe que os números de página serão exibidos na barra de ferramentas padrão de qualquer maneira.</para>
 					</listitem>
 				</varlistentry>
-				<varlistentry>
-					<term>
-						<menuchoice
-><guimenu
->Configurações</guimenu
-> <guimenuitem
->Configurar infraestruturas...</guimenuitem
-> </menuchoice>
-					</term>
-					<listitem>
-						<para
->Abre a janela <link linkend="configure-backends"
->Configuração da infraestrutura</link
->.</para>
-					</listitem>
-				</varlistentry>
 			</variablelist>
 		</sect1>
 
-	</chapter>
-	<chapter id="configure-backends">
-	  <title
->Configuração das infraestruturas do &okular;</title>
-	  <para
->Você pode configurar as infraestruturas do &okular; escolhendo <menuchoice
-><guimenu
->Configurações</guimenu
-> <guimenuitem
->Configurar infraestruturas...</guimenuitem
-></menuchoice
->. O diálogo de configuração é dividido em seis seções. Atualmente, as opções de configuração estão disponíveis apenas para as infraestruturas EPub, &PostScript;, FictionBook, Txt, Texto OpenDocument e &PDF;. </para>
-	  <screenshot>
-	    <screeninfo
->Janela de configuração das infraestruturas</screeninfo>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="configure-backends.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase
->Janela de configuração das infraestruturas</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </screenshot>
-	  <para
->Usar as páginas de configuração das infraestruturas EPub, FictionBook, Mobipocket, Markdown, TXT e Texto OpenDocument, permite-lhe definir a fonte de geração de documentos nos respectivos formatos. O botão <guibutton
->Escolher...</guibutton
-> dessas páginas abre a janela de configuração de fonte padrão do &kde;. Consulte a <ulink url="help:/fundamentals/fonts.html"
->documentação dos Fundamentos do &kde;</ulink
-> para mais detalhes. </para>
-	  <para
->A descrição das páginas de configuração das infraestruturas Markdown, &PostScript; e &PDF; pode ser encontrada abaixo. </para>
-	  <sect1 id="config-markdown">
-	    <title
->Configuração da infraestrutura Markdown</title>
-	    <para
->Você pode configurar a infraestrutura de renderização Markdown do &okular;, que é baseada no <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
->Discount</ulink
-> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Ativar a formatação SmartyPants</guilabel>
-		  </term>
-		  <listitem>
-              <para
->Quando estiver assinalada, esta opção permite ao &okular; executar o processamento da formatação do <ulink url="https://daringfireball.net/projects/smartypants/"
->SmartyPants</ulink
->. Essa formatação poderá ser problemática com textos técnicos, devido a substituições indesejadas (&eg;, substitui o <literal
->(C)</literal
-> por um símbolo de copyright). Esta opção está assinalada por padrão. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-ghostscript">
-	    <title
->Configuração da infraestrutura &PostScript;</title>
-	    <para
->Você pode configurar a infraestrutura de renderização &PostScript; do &okular;, que é baseada no <ulink url="https://www.ghostscript.com/"
->Ghostscript</ulink
->, escolhendo a opção <guilabel
->Ghostscript</guilabel
-> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Usar fontes da plataforma</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->Esta opção determina se o Ghostscript pode usar as fontes da plataforma. Se não marcada, só será permitido usar as fontes incorporadas no documento. Esta é a opção marcada por padrão. </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-	  </sect1>
-	  <sect1 id="config-pdf">
-	    <title
->Configuração da infraestrutura &PDF;</title>
-	    <para
->Você pode configurar a infraestrutura de renderização &PDF; do &okular;, que é baseada no <ulink url="https://poppler.freedesktop.org/"
->Poppler</ulink
->, escolhendo a opção <guilabel
->&PDF;</guilabel
-> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
-	    <para>
-	      <variablelist>
-		<varlistentry>
-		  <term>
-		    <guilabel
->Melhorar linhas finas</guilabel>
-		  </term>
-		  <listitem>
-		    <para
->O desenho de linhas no &okular; é feito em dois passos: a geração do caminho de recorte e o seu preenchimento. Quando a linha no documento original tem menos de um pixel, esta implementação em dois passos pode causar problemas. Para essas linhas, o caminho de recorte é preenchido com a cor de enchimento, que depende a espessura da linha dentro da área de recorte. Se a parte interna dessa área de recorte ficar muito pequena, o contraste entre a forma e a cor de fundo poderá ser muito baixo para que a linha seja perceptível. As grades dessas linhas parecerão feias. </para>
-		    <informaltable>
-		      <tgroup cols="2">
-			<tbody>
-			  <row>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			    <entry>
-			      <para>
-				<screenshot>
-				  <mediaobject>
-				    <imageobject>
-				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
-				    </imageobject>
-				  </mediaobject>
-				</screenshot>
-			      </para>
-			    </entry>
-			  </row>
-			  <row>
-			    <entry
->Linha fina (vermelho), o seu caminho de corte (linha tracejada) e os limites dos pontos (linhas pretas)</entry>
-			    <entry
->Linha fina apresentada em baixo contraste</entry>
-			  </row>
-			</tbody>
-		      </tgroup>
-		    </informaltable>
-		    <para
->Para melhorar a aparência das linhas finas, o &okular; implementa duas opções. </para>
-		    <para
->A primeira opção é a <guimenuitem
->Sólida</guimenuitem
->. Com esta opção, o &okular; ajusta o caminho de recorte e a posição da linha, de modo que o caminho de recorte e a linha estejam no mesmo limite do pixel, &ie;, o &okular; alarga as linhas finas para um pixel no dispositivo de saída. Esse modo é semelhante ao <guilabel
->Melhorar linhas finas</guilabel
-> no <trademark class="registered"
->Adobe</trademark
-> <trademark class="registered"
->Reader</trademark
->. Se esta opção estiver escolhida, as linhas finas são sempre alargadas. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-solid.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Linha fina com realce <guimenuitem
->Sólido</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Linha fina com realce <guimenuitem
->Sólido</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->A segunda opção é a <guimenuitem
->Forma</guimenuitem
->. Com esta opção, o caminho e a linha de recorte são também ajustados em nível de pixel, sendo a intensidade da linha corrigida de acordo com a sua espessura. </para>
-		    <para>
-		      <screenshot>
-			<mediaobject>
-			  <imageobject>
-			    <imagedata fileref="enhance-shape.png" format="PNG"/>
-			  </imageobject>
-			  <textobject>
-			    <phrase
->Linha fina com realce <guimenuitem
->Forma</guimenuitem
-></phrase>
-			  </textobject>
-			  <caption>
-			    <para
->Linha fina com realce <guimenuitem
->Forma</guimenuitem
-></para>
-			  </caption>
-			</mediaobject>
-		      </screenshot>
-		    </para>
-		    <para
->As linhas finas não são melhoradas por padrão (opção <guimenuitem
->Não</guimenuitem
->). </para>
-		  </listitem>
-		</varlistentry>
-	      </variablelist>
-	    </para>
-		<sect2 id="config-pdf-digital-signatures">
-			<title
->Certificados de assinatura digital em &PDF;</title>
-			<para>
-				<screenshot
-><mediaobject
-><imageobject
-><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
-></mediaobject
-></screenshot
-> Esta seção permite que você defina um banco de dados de certificados personalizado para usar ao adicionar assinaturas digitais a arquivos &PDF;. </para>
-			<para
->Também lista os certificados disponíveis no Banco de Dados de Certificados atual (se houver). </para>
-		</sect2>
-	  </sect1>
 	</chapter>
 	<chapter id="configure">
 		<title
@@ -3551,13 +3316,7 @@ Context menu actions like Rename Bookmarks etc.)
 				</mediaobject>
 			</screenshot>
 			<para
->Dependendo das infraestruturas atualmente instaladas, o item de menu <menuchoice
-><guimenu
->Configurações</guimenu
-> <guimenuitem
->Configurar infraestruturas...</guimenuitem
-></menuchoice
-> pode estar habilitado. Este diálogo de configuração em particular, contém as definições das infraestruturas que podem ser atualmente configuradas. </para>
+>Dependendo dos backends instalados atualmente, a caixa de diálogo também contém uma lista dos backends que possuem opções de configuração. </para>
 		</sect1>
 		<sect1 id="configgeneral">
 			<title
@@ -4399,6 +4158,212 @@ Context menu actions like Rename Bookmarks etc.)
 				</varlistentry>
 			</variablelist>
 		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>Configuração das infraestruturas do &okular;</title>
+	  <para
+>Você pode configurar as infraestruturas do &okular; escolhendo <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar o Okular...</guimenuitem
+></menuchoice
+>. O diálogo de configuração é dividido em seis seções. Atualmente, as opções de configuração estão disponíveis apenas para as infraestruturas EPub, &PostScript;, FictionBook, Txt, Texto OpenDocument e &PDF;. </para>
+	  <para
+>Usar as páginas de configuração das infraestruturas EPub, FictionBook, Mobipocket, Markdown, TXT e Texto OpenDocument, permite-lhe definir a fonte de geração de documentos nos respectivos formatos. O botão <guibutton
+>Escolher...</guibutton
+> dessas páginas abre a janela de configuração de fonte padrão do &kde;. Consulte a <ulink url="help:/fundamentals/fonts.html"
+>documentação dos Fundamentos do &kde;</ulink
+> para mais detalhes. </para>
+	  <para
+>A descrição das páginas de configuração das infraestruturas Markdown, &PostScript; e &PDF; pode ser encontrada abaixo. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>Configuração da infraestrutura Markdown</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização Markdown do &okular;, que é baseada no <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Ativar a formatação SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>Quando estiver assinalada, esta opção permite ao &okular; executar o processamento da formatação do <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. Essa formatação poderá ser problemática com textos técnicos, devido a substituições indesejadas (&eg;, substitui o <literal
+>(C)</literal
+> por um símbolo de copyright). Esta opção está assinalada por padrão. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>Configuração da infraestrutura &PostScript;</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização &PostScript; do &okular;, que é baseada no <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+>, escolhendo a opção <guilabel
+>Ghostscript</guilabel
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Usar fontes da plataforma</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>Esta opção determina se o Ghostscript pode usar as fontes da plataforma. Se não marcada, só será permitido usar as fontes incorporadas no documento. Esta é a opção marcada por padrão. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>Configuração da infraestrutura &PDF;</title>
+	    <para
+>Você pode configurar a infraestrutura de renderização &PDF; do &okular;, que é baseada no <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+>, escolhendo a opção <guilabel
+>&PDF;</guilabel
+> na lista à esquerda da janela de configuração. A única opção que pode ser configurada é a seguinte. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>Melhorar linhas finas</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>O desenho de linhas no &okular; é feito em dois passos: a geração do caminho de recorte e o seu preenchimento. Quando a linha no documento original tem menos de um pixel, esta implementação em dois passos pode causar problemas. Para essas linhas, o caminho de recorte é preenchido com a cor de enchimento, que depende a espessura da linha dentro da área de recorte. Se a parte interna dessa área de recorte ficar muito pequena, o contraste entre a forma e a cor de fundo poderá ser muito baixo para que a linha seja perceptível. As grades dessas linhas parecerão feias. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>Linha fina (vermelho), o seu caminho de corte (linha tracejada) e os limites dos pontos (linhas pretas)</entry>
+			    <entry
+>Linha fina apresentada em baixo contraste</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>Para melhorar a aparência das linhas finas, o &okular; implementa duas opções. </para>
+		    <para
+>A primeira opção é a <guimenuitem
+>Sólida</guimenuitem
+>. Com esta opção, o &okular; ajusta o caminho de recorte e a posição da linha, de modo que o caminho de recorte e a linha estejam no mesmo limite do pixel, &ie;, o &okular; alarga as linhas finas para um pixel no dispositivo de saída. Esse modo é semelhante ao <guilabel
+>Melhorar linhas finas</guilabel
+> no <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. Se esta opção estiver escolhida, as linhas finas são sempre alargadas. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linha fina com realce <guimenuitem
+>Sólido</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linha fina com realce <guimenuitem
+>Sólido</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>A segunda opção é a <guimenuitem
+>Forma</guimenuitem
+>. Com esta opção, o caminho e a linha de recorte são também ajustados em nível de pixel, sendo a intensidade da linha corrigida de acordo com a sua espessura. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>Linha fina com realce <guimenuitem
+>Forma</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>Linha fina com realce <guimenuitem
+>Forma</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>As linhas finas não são melhoradas por padrão (opção <guimenuitem
+>Não</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>Certificados de assinatura digital em &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> Esta seção permite que você defina um banco de dados de certificados personalizado para usar ao adicionar assinaturas digitais a arquivos &PDF;. </para>
+			<para
+>Também lista os certificados disponíveis no Banco de Dados de Certificados atual (se houver). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
 	</chapter>
 	<chapter id="credits">
 		<title

@@ -54,7 +54,7 @@ class ExportImageDialog : public QDialog
 {
     Q_OBJECT
 public:
-    enum DialogCloseCode { Accepted, Canceled, InvalidOptions };
+    enum DialogCloseCode { Accepted = QDialog::Accepted, Canceled = QDialog::Rejected, InvalidOptions = 2 };
 
     ExportImageDialog(Okular::Document *document, QWidget *parent = nullptr);
 

@@ -63,6 +63,7 @@ protected:
     // widget events
     bool event(QEvent *e) override;
     void keyPressEvent(QKeyEvent *e) override;
+    void keyReleaseEvent(QKeyEvent *e) override;
     void wheelEvent(QWheelEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
@@ -92,6 +93,7 @@ private:
     const Okular::PageTransition defaultTransition() const;
     const Okular::PageTransition defaultTransition(int) const;
     QRect routeMouseDrawingEvent(QMouseEvent *);
+    void setStandardCursor();
     void startAutoChangeTimer();
     /** @returns Configure -> Presentation -> Preferred screen */
     QScreen *defaultScreen() const;
@@ -151,7 +153,7 @@ private:
     bool m_goToPreviousPageOnRelease;
     bool m_goToNextPageOnRelease;
 
-    QCursor m_defaultPresentationCursor;
+    QCursor m_laserCursor;
 
     /** TODO Qt6: Just use QWidget::screen() instead of this. */
     static inline QScreen *oldQt_screenOf(const QWidget *widget)

@@ -163,7 +163,6 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     , m_advanceSlides(Okular::SettingsCore::slidesAdvance())
     , m_goToPreviousPageOnRelease(false)
     , m_goToNextPageOnRelease(false)
-    , m_defaultPresentationCursor(Qt::ArrowCursor)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -267,7 +266,7 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
     connect(m_document, &Okular::Document::processMovieAction, this, &PresentationWidget::slotProcessMovieAction);
     connect(m_document, &Okular::Document::processRenditionAction, this, &PresentationWidget::slotProcessRenditionAction);
 
-    if (Okular::Settings::laserPointer() == true) {
+    {
         QPixmap laserPixmap(32, 32);
         laserPixmap.fill(Qt::transparent);
 
@@ -286,18 +285,11 @@ PresentationWidget::PresentationWidget(QWidget *parent, Okular::Document *doc, D
 
         p.end();
 
-        this->m_defaultPresentationCursor = QCursor(laserPixmap, 16, 16);
-
-        setCursor(this->m_defaultPresentationCursor);
+        m_laserCursor = QCursor(laserPixmap, 16, 16);
     }
 
     // handle cursor appearance as specified in configuration
-    if (Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay) {
-        KCursor::setAutoHideCursor(this, true);
-        KCursor::setHideCursorDelay(3000);
-    } else if (Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden) {
-        setCursor(QCursor(Qt::BlankCursor));
-    }
+    setStandardCursor();
 
     setupActions();
 
@@ -341,6 +333,23 @@ PresentationWidget::~PresentationWidget()
     qDeleteAll(m_frames);
 
     qApp->removeEventFilter(this);
+}
+
+void PresentationWidget::setStandardCursor()
+{
+    switch (Okular::Settings::slidesCursor()) {
+    case Okular::Settings::EnumSlidesCursor::Hidden:
+        setCursor(QCursor(Qt::BlankCursor));
+        break;
+    case Okular::Settings::EnumSlidesCursor::Visible:
+        setCursor(QCursor(Qt::ArrowCursor));
+        break;
+    case Okular::Settings::EnumSlidesCursor::HiddenDelay:
+        setCursor(QCursor(Qt::ArrowCursor));
+        KCursor::setAutoHideCursor(this, true);
+        KCursor::setHideCursorDelay(3000);
+        break;
+    }
 }
 
 void PresentationWidget::notifySetup(const QList<Okular::Page *> &pageSet, int setupFlags)
@@ -556,7 +565,7 @@ bool PresentationWidget::eventFilter(QObject *o, QEvent *e)
         if (e->type() == QTabletEvent::TabletEnterProximity) {
             setCursor(QCursor(Qt::CrossCursor));
         } else if (e->type() == QTabletEvent::TabletLeaveProximity) {
-            setCursor(QCursor(Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden ? Qt::BlankCursor : this->m_defaultPresentationCursor));
+            setStandardCursor();
             if (Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay) {
                 // Trick KCursor to hide the cursor if needed by sending an "unknown" key press event
                 // Send also the key release to make the world happy even it's probably not needed
@@ -625,6 +634,18 @@ bool PresentationWidget::gestureEvent(QGestureEvent *event)
 
     return false;
 }
+
+void PresentationWidget::keyReleaseEvent(QKeyEvent *e)
+{
+    switch (e->key()) {
+    case Qt::Key_Control:
+        setStandardCursor();
+        break;
+    }
+
+    QWidget::keyReleaseEvent(e);
+}
+
 void PresentationWidget::keyPressEvent(QKeyEvent *e)
 {
     if (!m_isSetup) {
@@ -632,6 +653,9 @@ void PresentationWidget::keyPressEvent(QKeyEvent *e)
     }
 
     switch (e->key()) {
+    case Qt::Key_Control:
+        setCursor(m_laserCursor);
+        break;
     case Qt::Key_Left:
     case Qt::Key_Backspace:
     case Qt::Key_PageUp:
@@ -1072,10 +1096,14 @@ void PresentationWidget::testCursorOnLink(QPointF point)
                                   ((annotation != nullptr) && (annotation->subType() == Okular::Annotation::AScreen) && (GuiUtils::renditionMovieFromScreenAnnotation(static_cast<const Okular::ScreenAnnotation *>(annotation)) != nullptr)));
 
     // only react on changes (in/out from a link)
-    if ((needsHandCursor && !m_handCursor) || (!needsHandCursor && m_handCursor)) {
+    if (needsHandCursor != m_handCursor) {
         // change cursor shape
         m_handCursor = needsHandCursor;
-        setCursor(QCursor(m_handCursor ? Qt::PointingHandCursor : this->m_defaultPresentationCursor));
+        if (m_handCursor) {
+            setCursor(QCursor(Qt::PointingHandCursor));
+        } else {
+            setStandardCursor();
+        }
     }
 }
 
@@ -1666,7 +1694,7 @@ void PresentationWidget::slotChangeDrawingToolEngine(const QDomElement &element)
         delete m_drawingEngine;
         m_drawingEngine = nullptr;
         m_drawingRect = QRect();
-        setCursor(this->m_defaultPresentationCursor); // TODO Hidden cursor option
+        setStandardCursor();
     } else {
         m_drawingEngine = new SmoothPathEngine(element);
         setCursor(QCursor(QPixmap(QStringLiteral("pencil")), Qt::ArrowCursor));
@@ -1815,21 +1843,13 @@ void PresentationWidget::showTopBar(bool show)
     } else {
         m_topBar->hide();
 
-        if (Okular::Settings::slidesCursor() != Okular::Settings::EnumSlidesCursor::Hidden) {
-            setCursor(this->m_defaultPresentationCursor);
-        }
-
         // Reenable autohide if need be when leaving the toolbar
         if (Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::HiddenDelay) {
             KCursor::setAutoHideCursor(this, true);
         }
 
-        // Or hide the cursor again if hidden cursor is enabled
-        else if (Okular::Settings::slidesCursor() == Okular::Settings::EnumSlidesCursor::Hidden) {
-            // Don't hide the cursor if drawing mode is on
-            if (!m_drawingEngine) {
-                setCursor(QCursor(Qt::BlankCursor));
-            }
+        if (!m_drawingEngine) {
+            setStandardCursor();
         }
     }
 

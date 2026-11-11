@@ -2368,41 +2368,41 @@ void PartTest::testTabletProximityBehavior()
     qApp->notify(qApp, &enterProximityEvent);
 
     // The cursor should be a cross-hair
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::CrossCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
 
     // Send a leaveProximity event
     qApp->notify(qApp, &leaveProximityEvent);
 
     // After the leaveProximityEvent, the cursor should be an arrow again, because
     // we have set the slidesCursor mode to 'Visible'
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::ArrowCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::ArrowCursor));
 
     // Test with the Okular::Settings::EnumSlidesCursor::Hidden setting
     Okular::Settings::self()->setSlidesCursor(Okular::Settings::EnumSlidesCursor::Hidden);
 
     qApp->notify(qApp, &enterProximityEvent);
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::CrossCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
     qApp->notify(qApp, &leaveProximityEvent);
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::BlankCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::BlankCursor));
 
     // Moving the mouse should not bring the cursor back
     QTest::mouseMove(w, QPoint(100, 100));
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::BlankCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::BlankCursor));
 
     // First test with the Okular::Settings::EnumSlidesCursor::HiddenDelay setting
     Okular::Settings::self()->setSlidesCursor(Okular::Settings::EnumSlidesCursor::HiddenDelay);
 
     qApp->notify(qApp, &enterProximityEvent);
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::CrossCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::CrossCursor));
     qApp->notify(qApp, &leaveProximityEvent);
 
     // After the leaveProximityEvent, the cursor should be blank, because
     // we have set the slidesCursor mode to 'HiddenDelay'
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::BlankCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::BlankCursor));
 
     // Moving the mouse should bring the cursor back
     QTest::mouseMove(w, QPoint(150, 150));
-    QVERIFY(w->cursor().shape() == Qt::CursorShape(Qt::ArrowCursor));
+    QCOMPARE(w->cursor().shape(), Qt::CursorShape(Qt::ArrowCursor));
 }
 
 void PartTest::testOpenPrintPreview()

@@ -41,6 +41,7 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
+#include <QMimeDatabase>
 #include <QPushButton>
 #include <QScopeGuard>
 #include <QScrollBar>
@@ -70,6 +71,7 @@ private Q_SLOTS:
 
     void testZoomWithCrop();
     void testReload();
+    void testExportMenuReload();
     void testCanceledReload();
     void testTOCReload();
     void testForwardPDF();
@@ -193,6 +195,28 @@ void PartTest::testReload()
     QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
     part.reload();
     qApp->processEvents();
+}
+
+void PartTest::testExportMenuReload()
+{
+    QVariantList dummyArgs;
+    Okular::Part part(nullptr, dummyArgs);
+    QVERIFY(openDocument(&part, QStringLiteral(KDESRCDIR "data/file1.pdf")));
+    QMenu *menu = part.m_exportAs->menu();
+    const Okular::ExportFormat format(QStringLiteral("Test export format"), QMimeDatabase().mimeTypeForName(QStringLiteral("application/pdf")));
+    part.m_document->d->m_exportFormats.append(format);
+
+    QVERIFY(part.openUrl(part.url(), true));
+    QCOMPARE(menu->actions().count(), 3);
+    QCOMPARE(menu->actions().at(0), part.m_exportAsText);
+    QCOMPARE(menu->actions().at(1), part.m_exportAsImage);
+    QCOMPARE(menu->actions().at(2)->text(), format.description());
+
+    QVERIFY(part.openUrl(part.url(), true));
+    QCOMPARE(menu->actions().count(), 3);
+    QCOMPARE(menu->actions().at(0), part.m_exportAsText);
+    QCOMPARE(menu->actions().at(1), part.m_exportAsImage);
+    QCOMPARE(menu->actions().at(2)->text(), format.description());
 }
 
 // Test that Okular doesn't crash after a canceled reload

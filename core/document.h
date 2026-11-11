@@ -1379,6 +1379,7 @@ private:
     /// @cond PRIVATE
     friend class DocumentPrivate;
     friend class ::DocumentItem;
+    friend class PartTest;
     friend class EditAnnotationContentsCommand;
     friend class EditFormTextCommand;
     friend class EditFormListCommand;

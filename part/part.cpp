@@ -1671,6 +1671,16 @@ bool Part::openFile()
             QList<Okular::ExportFormat>::ConstIterator it = m_exportFormats.constBegin();
             QList<Okular::ExportFormat>::ConstIterator itEnd = m_exportFormats.constEnd();
             QMenu *menu = m_exportAs->menu();
+            // drop previously added entries
+            // keep permanent export actions, identified by their data.
+            const QList<QAction *> oldActs = menu->actions();
+            for (int i = 0; i < oldActs.count(); ++i) {
+                if (!oldActs.at(i)->data().isNull()) {
+                    continue;
+                }
+                menu->removeAction(oldActs.at(i));
+                delete oldActs.at(i);
+            }
             for (; it != itEnd; ++it) {
                 menu->addAction(actionForExportFormat(*it));
             }

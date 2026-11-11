@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:55+0000\n"
+"POT-Creation-Date: 2026-11-11 00:59+0000\n"
 "PO-Revision-Date: 2026-11-07 20:00+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1734,8 +1734,8 @@ msgid "Copy Text to Clipboard"
 msgstr "Kopiraj besedilo na odložišče"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
-#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
+#: part/pageview.cpp:2585 part/pageview.cpp:2935 part/pageview.cpp:2937
+#: part/pageview.cpp:3097 part/pageview.cpp:3158 part/pageview.cpp:3160
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRM prepoveduje kopiranje"
@@ -3806,210 +3806,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "od"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Zoom"
 msgstr "Približanje"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:540
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Približanje na 100 %"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Zavrti v desno"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:552
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Desno"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Zavrti v &levo"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:557
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Levo"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Original Orientation"
 msgstr "Prvotna usmerjenost"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:567
 #, kde-format
 msgid "&Trim View"
 msgstr "Obreži pogled"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:571
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Obreži robove"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:578
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Obreži na izbor"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Fit &Width"
 msgstr "Prilagodi širini"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:588
 #, kde-format
 msgid "Fit &Page"
 msgstr "Prilagodi strani"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:592
 #, kde-format
 msgid "&Auto Fit"
 msgstr "S&amodejno prilagodi"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:596
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Prilagodi ok&no strani"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:603
 #, kde-format
 msgid "&View Mode"
 msgstr "Prikaz strani"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:615
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Ena stran"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:616
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Dve strani nasproti"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:617
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Dve strani nasproti (prva stran na sredini)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Pregled"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:632
 #, kde-format
 msgid "&Continuous"
 msgstr "Zvezno"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:639
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Uporabi smer branja z desne proti levi"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:648
 #, kde-format
 msgid "&Browse"
 msgstr "&Brskanje"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:656
 #, kde-format
 msgid "&Zoom"
 msgstr "&Približanje"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:676
 #, kde-format
 msgid "Area &Selection"
 msgstr "Izbira področja"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:683
 #, kde-format
 msgid "&Text Selection"
 msgstr "Izbira besedila"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:690
 #, kde-format
 msgid "T&able Selection"
 msgstr "Izbira tabele"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:697
 #, kde-format
 msgid "&Magnifier"
 msgstr "Povečevalno steklo"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:706
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Orodja izbire"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:732
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Digitalno podpiši…"
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Govori celoten dokument"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Govori iz trenutne strani"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Govori trenutno stran"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:753
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Zaustavi govor"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:758
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Premor/Nadaljevanje govora"
 
-#: part/pageview.cpp:776
+#: part/pageview.cpp:770
 #, kde-format
 msgid "Scroll Up"
 msgstr "Drsenje navzgor"
 
-#: part/pageview.cpp:782
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Down"
 msgstr "Drsenje navzdol"
 
-#: part/pageview.cpp:788
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Eno stran višje"
 
-#: part/pageview.cpp:794
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Eno stran nižje"
 
-#: part/pageview.cpp:800
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Show Forms"
 msgstr "Pokaži obrazce"
 
-#: part/pageview.cpp:1312
+#: part/pageview.cpp:1309
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -4018,12 +4018,12 @@ msgstr[1] " Naložen %1-stranski dokument."
 msgstr[2] " Naložen %1-stranski dokument."
 msgstr[3] " Naložen %1-stranski dokument."
 
-#: part/pageview.cpp:2583
+#: part/pageview.cpp:2579
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiraj vsebino tabele v odložišče"
 
-#: part/pageview.cpp:2933
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -4032,82 +4032,82 @@ msgstr[1] "Besedilo (%1 znak)"
 msgstr[2] "Besedilo (%1 znaka)"
 msgstr[3] "Besedilo (%1 znaki)"
 
-#: part/pageview.cpp:2934 part/pageview.cpp:2956
+#: part/pageview.cpp:2928 part/pageview.cpp:2950
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiraj v odložišče"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
+#: part/pageview.cpp:2930 part/pageview.cpp:3149 part/part.cpp:840
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopiraj besedilo (brez prelomov vrstic)"
 
-#: part/pageview.cpp:2947 part/pageview.cpp:3159
+#: part/pageview.cpp:2941 part/pageview.cpp:3153
 #, kde-format
 msgid "Speak Text"
 msgstr "Izgovori besedilo"
 
-#: part/pageview.cpp:2955
+#: part/pageview.cpp:2949
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Slika (%1 × %2 slikovnih točk)"
 
-#: part/pageview.cpp:2957
+#: part/pageview.cpp:2951
 #, kde-format
 msgid "Save to File…"
 msgstr "Shrani v datoteko…"
 
-#: part/pageview.cpp:2977
+#: part/pageview.cpp:2971
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Slika [%1 × %2] je bila prekopirana na odložišče."
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Save file"
 msgstr "Shrani datoteko"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Slike (*.png *.jpeg)"
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:2976
 #, kde-format
 msgid "File not saved."
 msgstr "Datoteka ni bila shranjena."
 
-#: part/pageview.cpp:2993
+#: part/pageview.cpp:2987
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Slika [%1 × %2] je bila shranjena v datoteko %3."
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3148
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiraj besedilo"
 
-#: part/pageview.cpp:3177
+#: part/pageview.cpp:3171
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Pojdi na »%1«"
 
-#: part/pageview.cpp:4208 part/part.cpp:3219
+#: part/pageview.cpp:4206 part/part.cpp:3219
 #, kde-format
 msgid "Fit Width"
 msgstr "Prilagodi širini"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "Prilagodi strani"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "Samodejno prilagodi"
 
-#: part/pageview.cpp:4231
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4116,69 +4116,69 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1 %"
 
-#: part/pageview.cpp:4514
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Poišči »%1« z"
 
-#: part/pageview.cpp:4528
+#: part/pageview.cpp:4526
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Nastavi spletne bližnjice…"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "Sledi tej povezavi"
 
-#: part/pageview.cpp:4557
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "Zaigraj ta zvok"
 
-#: part/pageview.cpp:4559
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "Zaustavi zvok"
 
-#: part/pageview.cpp:4565
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiraj naslov povezave"
 
-#: part/pageview.cpp:4622
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Poišči »%1« v tem dokumentu"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "Dobrodošli"
 
-#: part/pageview.cpp:5281
+#: part/pageview.cpp:5274
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Izberite območje približanja. Kliknite z desnim miškinim gumbom za "
 "oddaljevanje."
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5289
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Kliknite za povečani prikaz."
 
-#: part/pageview.cpp:5313
+#: part/pageview.cpp:5306
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Narišite pravokotnik okoli besedila ali grafike, da ga kopirate."
 
-#: part/pageview.cpp:5329
+#: part/pageview.cpp:5322
 #, kde-format
 msgid "Select text"
 msgstr "Izberite besedilo"
 
-#: part/pageview.cpp:5345
+#: part/pageview.cpp:5338
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4187,7 +4187,7 @@ msgstr ""
 "Narišite pravokotnik okrog razpredelnice in nato kliknite na bližnje robove, "
 "da jo razdelite: pritisnite Esc, da izbor počistite."
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5368
+#: part/pageview.cpp:5353 part/pageview.cpp:5361
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4196,17 +4196,17 @@ msgstr ""
 "Vsa vaša potrdila za podpisovanje so neveljavna. Če je podpisovanje prej "
 "delovalo, preverite njihove datume veljavnosti."
 
-#: part/pageview.cpp:5361
+#: part/pageview.cpp:5354
 #, kde-format
 msgid "No valid certificates"
 msgstr "Ni veljavnih potrdil"
 
-#: part/pageview.cpp:5362 part/pageview.cpp:5377
+#: part/pageview.cpp:5355 part/pageview.cpp:5370
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Odpri Certificate Manager"
 
-#: part/pageview.cpp:5373
+#: part/pageview.cpp:5366
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4217,12 +4217,12 @@ msgstr ""
 "potrdil zaženite Certificate Manager.<br/>Za več informacij glejte razdelek "
 "o <a href=\"%1\">Dodajanju digitalnih podpisov</a> v priročniku."
 
-#: part/pageview.cpp:5376 part/pageview.cpp:5388
+#: part/pageview.cpp:5369 part/pageview.cpp:5381
 #, kde-format
 msgid "No certificates found"
 msgstr "Ni najdenih potrdil"
 
-#: part/pageview.cpp:5386
+#: part/pageview.cpp:5379
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4233,17 +4233,17 @@ msgstr ""
 "<a href=\"%1\">Adding Digital Signatures – Dodajanje digitalnih podpisov</a> "
 "v priročniku."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5402
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Imate neshranjene spremembe. Shranite dokument pred podpisom."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5425
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Narišite pravokotnik za vstavljanje polja podpisa"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5575
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "Narišite pravokotnik okoli območja strani, ki naj ostane vidno"
@@ -6123,7 +6123,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Ni bilo mogoče najti sestavnega dela Okular."
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6132,7 +6132,7 @@ msgstr ""
 "Kliknite, da odprete datoteko\n"
 "Kliknite in držite, da odprete nedavno datoteko"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6140,63 +6140,63 @@ msgstr ""
 "<b>Kliknite</b>, da odprete datoteko ali <b>kliknite in držite</b>, da "
 "izberete nedavno datoteko"
 
-#: shell/shell.cpp:583
+#: shell/shell.cpp:585
 #, kde-format
 msgid "Next Tab"
 msgstr "Naslednji zavihek"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:591
 #, kde-format
 msgid "Previous Tab"
 msgstr "Predhodni zavihek"
 
-#: shell/shell.cpp:597
+#: shell/shell.cpp:599
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Preklopi na zavihek %1"
 
-#: shell/shell.cpp:613
+#: shell/shell.cpp:615
 #, kde-format
 msgid "Undo close tab"
 msgstr "Razveljavi zavihek zapiranja"
 
-#: shell/shell.cpp:622
+#: shell/shell.cpp:624
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Zakleni stransko letvico"
 
-#: shell/shell.cpp:722
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All files (*)"
 msgstr "Vse datoteke (*)"
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:725
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Vse podprte datoteke (%1)"
 
-#: shell/shell.cpp:727
+#: shell/shell.cpp:729
 #, kde-format
 msgid "Open Document"
 msgstr "Odpri dokument"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Confirm Close"
 msgstr "Potrdi zaprtje"
 
-#: shell/shell.cpp:845
+#: shell/shell.cpp:847
 #, kde-format
 msgid "Close Tabs"
 msgstr "Zapri zavihke"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr ""
 "Pravkar boste zaprli %1 zavihkov. Ali ste prepričani, da želite nadaljevati?"
 
-#: shell/shell.cpp:854
+#: shell/shell.cpp:856
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Opozori me pred poskusom zaprtja več zavihkov"

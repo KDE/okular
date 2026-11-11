@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:55+0000\n"
+"POT-Creation-Date: 2026-11-11 00:59+0000\n"
 "PO-Revision-Date: 2024-12-29 22:46+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1747,8 +1747,8 @@ msgid "Copy Text to Clipboard"
 msgstr "पाठं क्लिप्बोर्ड् प्रति प्रतिलिख्यताम्"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
-#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
+#: part/pageview.cpp:2585 part/pageview.cpp:2935 part/pageview.cpp:2937
+#: part/pageview.cpp:3097 part/pageview.cpp:3158 part/pageview.cpp:3160
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "प्रतिलिपिः DRM द्वारा निषिद्धा"
@@ -3838,306 +3838,306 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "इत्यस्य"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Zoom"
 msgstr "जूम"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:540
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "100% यावत् जूम कुर्वन्तु"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Rotate &Right"
 msgstr "घुमाव &दक्षिण"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:552
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "दक्षिणः"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Rotate &Left"
 msgstr "घुमाव &वाम"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:557
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "वामः"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Original Orientation"
 msgstr "मूल अभिमुखीकरण"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:567
 #, kde-format
 msgid "&Trim View"
 msgstr "&Trim View"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:571
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Trim Margins"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:578
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Trim To &चयनम्"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Fit &Width"
 msgstr "फिट &विड्थ"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:588
 #, kde-format
 msgid "Fit &Page"
 msgstr "फिट &Page"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:592
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&ऑटो फिट"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:596
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Wi&ndow to Page इति फिट् कुर्वन्तु"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:603
 #, kde-format
 msgid "&View Mode"
 msgstr "&दृश्य मोड"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:615
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&एकल पृष्ठ"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:616
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&फेसिंग पेज"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:617
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "पृष्ठानि सम्मुखीभवन्ति (&Center First Page)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&अवलोकन"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:632
 #, kde-format
 msgid "&Continuous"
 msgstr "&निरन्तरम्"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:639
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "दक्षिणतः वामपर्यन्तं पठनदिशायाः उपयोगं कुर्वन्तु"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:648
 #, kde-format
 msgid "&Browse"
 msgstr "&ब्राउज करें"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:656
 #, kde-format
 msgid "&Zoom"
 msgstr "&ज़ूम"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:676
 #, kde-format
 msgid "Area &Selection"
 msgstr "क्षेत्र &चयन"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:683
 #, kde-format
 msgid "&Text Selection"
 msgstr "&पाठचयनम्"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:690
 #, kde-format
 msgid "T&able Selection"
 msgstr "T&able चयनम्"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:697
 #, kde-format
 msgid "&Magnifier"
 msgstr "&आवर्धक"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:706
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "चयनसाधनम्"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:732
 #, fuzzy, kde-format
 #| msgid "Digitally &Sign..."
 msgid "Digitally &Sign…"
 msgstr "अङ्कीयरूपेण &हस्ताक्षर..."
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "सम्पूर्ण दस्तावेज वदतु"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "वर्तमान पृष्ठतः वदतु"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Speak Current Page"
 msgstr "वर्तमान पृष्ठ बोलें"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:753
 #, kde-format
 msgid "Stop Speaking"
 msgstr "वक्तुं त्यजतु"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:758
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "विरामं कुरुत/पुनः वदतु"
 
-#: part/pageview.cpp:776
+#: part/pageview.cpp:770
 #, kde-format
 msgid "Scroll Up"
 msgstr "उपरि स्क्रॉल कुर्वन्तु"
 
-#: part/pageview.cpp:782
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Down"
 msgstr "Scroll Down इति"
 
-#: part/pageview.cpp:788
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "पृष्ठं उपरि स्क्रॉल कुर्वन्तु"
 
-#: part/pageview.cpp:794
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "पृष्ठं अधः स्क्रॉल कुर्वन्तु"
 
-#: part/pageview.cpp:800
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Show Forms"
 msgstr "प्रपत्राणि दर्शयन्तु"
 
-#: part/pageview.cpp:1312
+#: part/pageview.cpp:1309
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " एकपृष्ठीयं दस्तावेजं लोड् कृतवान् ।"
 msgstr[1] " %1-पृष्ठीयं दस्तावेजं लोड् कृतम् ।"
 
-#: part/pageview.cpp:2583
+#: part/pageview.cpp:2579
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "सारणीसामग्रीम् क्लिप्बोर्ड् प्रति प्रतिलिख्यताम्"
 
-#: part/pageview.cpp:2933
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "पाठ (१ वर्ण)"
 msgstr[1] "पाठः (%1 वर्णाः)"
 
-#: part/pageview.cpp:2934 part/pageview.cpp:2956
+#: part/pageview.cpp:2928 part/pageview.cpp:2950
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "क्लिप्बोर्ड् प्रति प्रतिलिख्यताम्"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
+#: part/pageview.cpp:2930 part/pageview.cpp:3149 part/part.cpp:840
 #, fuzzy, kde-format
 #| msgid "Copy Text to Clipboard"
 msgid "Copy Text (Without line breaks)"
 msgstr "पाठं क्लिप्बोर्ड् प्रति प्रतिलिख्यताम्"
 
-#: part/pageview.cpp:2947 part/pageview.cpp:3159
+#: part/pageview.cpp:2941 part/pageview.cpp:3153
 #, kde-format
 msgid "Speak Text"
 msgstr "पाठं वदतु"
 
-#: part/pageview.cpp:2955
+#: part/pageview.cpp:2949
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "चित्रम् (%1 × %2 पिक्सेल्)"
 
-#: part/pageview.cpp:2957
+#: part/pageview.cpp:2951
 #, kde-format
 msgid "Save to File…"
 msgstr "सञ्चिकायां रक्षतु..."
 
-#: part/pageview.cpp:2977
+#: part/pageview.cpp:2971
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "चित्रं [%1 × %2] क्लिप्बोर्ड् प्रति प्रतिलिखितम् ।"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Save file"
 msgstr "सञ्चिकां रक्षतु"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "चित्राणि (*.png *.jpeg)"
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:2976
 #, kde-format
 msgid "File not saved."
 msgstr "सञ्चिका न रक्षिता।"
 
-#: part/pageview.cpp:2993
+#: part/pageview.cpp:2987
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "चित्रं [%1 × %2] %3 सञ्चिकायां रक्षितम् ।"
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3148
 #, kde-format
 msgid "Copy Text"
 msgstr "पाठं प्रतिलिपितु"
 
-#: part/pageview.cpp:3177
+#: part/pageview.cpp:3171
 #, kde-format
 msgid "Go to '%1'"
 msgstr "'%1' इत्यत्र गच्छन्तु।"
 
-#: part/pageview.cpp:4208 part/part.cpp:3219
+#: part/pageview.cpp:4206 part/part.cpp:3219
 #, kde-format
 msgid "Fit Width"
 msgstr "फिट चौड़ाई"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "फिट पेज"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "ऑटो फिट"
 
-#: part/pageview.cpp:4231
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4146,68 +4146,68 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4514
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1' इत्यनेन सह अन्वेष्टुम्"
 
-#: part/pageview.cpp:4528
+#: part/pageview.cpp:4526
 #, fuzzy, kde-format
 #| msgid "Configure Web Shortcuts..."
 msgid "Configure Web Shortcuts…"
 msgstr "जालशॉर्टकट् विन्यस्तं कुर्वन्तु..."
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "अस्य लिङ्कस्य अनुसरणं कुर्वन्तु"
 
-#: part/pageview.cpp:4557
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "एतत् ध्वनिं वादयन्तु"
 
-#: part/pageview.cpp:4559
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "ध्वनिं स्थगयतु"
 
-#: part/pageview.cpp:4565
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "लिङ्क पता प्रतिलिपि कुर्वन्तु"
 
-#: part/pageview.cpp:4622
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "अस्मिन् दस्तावेजे '%1' इति अन्वेष्टुम्"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "स्वागतम्‌"
 
-#: part/pageview.cpp:5281
+#: part/pageview.cpp:5274
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "जूमिंग क्षेत्रं चिनोतु। जूम आउट् कर्तुं राइट्-क्लिक् कुर्वन्तु ।"
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5289
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "वर्धितं दृश्यं द्रष्टुं क्लिक् कुर्वन्तु ।"
 
-#: part/pageview.cpp:5313
+#: part/pageview.cpp:5306
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "प्रतिलिपिं कर्तुं पाठस्य/चित्रस्य परितः आयतं आकर्षयन्तु ।"
 
-#: part/pageview.cpp:5329
+#: part/pageview.cpp:5322
 #, kde-format
 msgid "Select text"
 msgstr "पाठं चिनोतु"
 
-#: part/pageview.cpp:5345
+#: part/pageview.cpp:5338
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4216,26 +4216,26 @@ msgstr ""
 "सारणीयाः परितः आयतं आकर्षयन्तु, ततः विभक्तुं किनारेषु समीपे क्लिक् कुर्वन्तु; स्वच्छं कर्तुं Esc "
 "नुदन्तु।"
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5368
+#: part/pageview.cpp:5353 part/pageview.cpp:5361
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
 "please check their validity dates."
 msgstr ""
 
-#: part/pageview.cpp:5361
+#: part/pageview.cpp:5354
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No valid certificates"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5362 part/pageview.cpp:5377
+#: part/pageview.cpp:5355 part/pageview.cpp:5370
 #, fuzzy, kde-format
 #| msgid "View in Certificate Manager"
 msgid "Open Certificate Manager"
 msgstr "प्रमाणपत्रप्रबन्धके पश्यन्तु"
 
-#: part/pageview.cpp:5373
+#: part/pageview.cpp:5366
 #, fuzzy, kde-format
 #| msgid ""
 #| "There are no available signing certificates.<br/>For more information, "
@@ -4249,13 +4249,13 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5376 part/pageview.cpp:5388
+#: part/pageview.cpp:5369 part/pageview.cpp:5381
 #, fuzzy, kde-format
 #| msgid "Certificates"
 msgid "No certificates found"
 msgstr "प्रमाणपत्रम्"
 
-#: part/pageview.cpp:5386
+#: part/pageview.cpp:5379
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4265,17 +4265,17 @@ msgstr ""
 "हस्ताक्षरप्रमाणपत्राणि उपलब्धानि नास्ति।<br/> अधिकविवरणार्थं कृपया पुस्तिकायां <a href="
 "\"%1\">डिजिटलहस्ताक्षराणि योजयितुं</a> इति विभागं पश्यन्तु ।"
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5402
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "भवतः अरक्षिताः परिवर्तनाः सन्ति । कृपया दस्तावेजं हस्ताक्षरं कर्तुं पूर्वं रक्षन्तु।"
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5425
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "हस्ताक्षरक्षेत्रं सम्मिलितुं आयतं आकर्षयन्तु"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5575
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "यत् पृष्ठक्षेत्रं भवन्तः दृश्यमानं स्थापयितुम् इच्छन्ति तस्य परितः आयतं आकर्षयन्तु"
@@ -6156,7 +6156,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Okular घटकं अन्वेष्टुं असमर्थः ।"
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6165,7 +6165,7 @@ msgstr ""
 "सञ्चिकां उद्घाटयितुं क्लिक् कुर्वन्तु\n"
 "अद्यतनसञ्चिकां उद्घाटयितुं क्लिक् कृत्वा धारयन्तु"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6173,62 +6173,62 @@ msgstr ""
 "सञ्चिकां उद्घाटयितुं <b>क्लिक् कुर्वन्तु</b> अथवा अद्यतनसञ्चिकां चिन्वितुं <b>क्लिक् कृत्वा "
 "धारयन्तु</b>"
 
-#: shell/shell.cpp:583
+#: shell/shell.cpp:585
 #, kde-format
 msgid "Next Tab"
 msgstr "अग्रिमः ट्याब्"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:591
 #, kde-format
 msgid "Previous Tab"
 msgstr "पूर्व ट्याब्"
 
-#: shell/shell.cpp:597
+#: shell/shell.cpp:599
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr ""
 
-#: shell/shell.cpp:613
+#: shell/shell.cpp:615
 #, kde-format
 msgid "Undo close tab"
 msgstr "पूर्ववतं कुर्वन्तु close tab"
 
-#: shell/shell.cpp:622
+#: shell/shell.cpp:624
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "ताला पार्श्वपट्टिका"
 
-#: shell/shell.cpp:722
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All files (*)"
 msgstr "सर्वाणि सञ्चिकाः (*) ."
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:725
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "सर्वाणि समर्थितसञ्चिकाः (%1)"
 
-#: shell/shell.cpp:727
+#: shell/shell.cpp:729
 #, kde-format
 msgid "Open Document"
 msgstr "Document उद्घाटयन्तु"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirm Close इति"
 
-#: shell/shell.cpp:845
+#: shell/shell.cpp:847
 #, kde-format
 msgid "Close Tabs"
 msgstr "ट्याब्स् बन्दं कुर्वन्तु"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "भवान् %1 ट्याब्स् पिधातुं प्रवृत्तः अस्ति । किं भवन्तः निश्चयेन निरन्तरं कर्तुम् इच्छन्ति?"
 
-#: shell/shell.cpp:854
+#: shell/shell.cpp:856
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "यदा अहं बहुविधं ट्याब्स् पिधातुं प्रयतन्ते तदा मां चेतयन्तु"

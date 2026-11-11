@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-10 00:55+0000\n"
+"POT-Creation-Date: 2026-11-11 00:59+0000\n"
 "PO-Revision-Date: 2026-10-31 20:10+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1724,8 +1724,8 @@ msgid "Copy Text to Clipboard"
 msgstr "انسخ النص إلى الحافظة"
 
 #: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
-#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
+#: part/pageview.cpp:2585 part/pageview.cpp:2935 part/pageview.cpp:2937
+#: part/pageview.cpp:3097 part/pageview.cpp:3158 part/pageview.cpp:3160
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "مُنع النسخ من قبل DRM"
@@ -3799,210 +3799,210 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "من"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:528
 #, kde-format
 msgid "Zoom"
 msgstr "تكبير"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:540
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "قرّب إلى 100٪"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:551
 #, kde-format
 msgid "Rotate &Right"
 msgstr "أدر للي&مين"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:552
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "يمين"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:556
 #, kde-format
 msgid "Rotate &Left"
 msgstr "أدر للي&سار"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:557
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "يسار"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:561
 #, kde-format
 msgid "Original Orientation"
 msgstr "الاتجاه الأصلي"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:567
 #, kde-format
 msgid "&Trim View"
 msgstr "ا&قتصّ العرض"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:571
 #, kde-format
 msgid "&Trim Margins"
 msgstr "ا&قتصّ الهوامش"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:578
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "اقتصّ إلى الت&حديد"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:584
 #, kde-format
 msgid "Fit &Width"
 msgstr "ملائمة ال&عرض"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:588
 #, kde-format
 msgid "Fit &Page"
 msgstr "ملائمة ال&صفحة"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:592
 #, kde-format
 msgid "&Auto Fit"
 msgstr "ملاءمة تل&قائيّة"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:596
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "لائم ال&نافذة للصفحة"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:603
 #, kde-format
 msgid "&View Mode"
 msgstr "نمط ال&عرض"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:615
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "&صفحة مفردة"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:616
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "صفحات &متقابلة"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:617
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "صفحات متقابلة (&وسِط الصفحة الأولى)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:620
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&نظرة عامة"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:632
 #, kde-format
 msgid "&Continuous"
 msgstr "&مستمر"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:639
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "اجعل اتجاه القراءة من اليمين إلى اليسار"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:648
 #, kde-format
 msgid "&Browse"
 msgstr "ت&صفّح"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:656
 #, kde-format
 msgid "&Zoom"
 msgstr "&كبر"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:676
 #, kde-format
 msgid "Area &Selection"
 msgstr "&تحديد النص"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:683
 #, kde-format
 msgid "&Text Selection"
 msgstr "تحديد ال&نص"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:690
 #, kde-format
 msgid "T&able Selection"
 msgstr "تحديد ال&جدول"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:697
 #, kde-format
 msgid "&Magnifier"
 msgstr "ال&مكبر"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:706
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "أدوات التحديد"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:732
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "&وقع رقميًا…"
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:738
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "انطق بالمستند كاملا"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:743
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "انطق بدءًا من الصفحة الحالية"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:748
 #, kde-format
 msgid "Speak Current Page"
 msgstr "انطق بالصفحة الحالية"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:753
 #, kde-format
 msgid "Stop Speaking"
 msgstr "أوقف النطق"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:758
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "ألبث/استأنف النطق"
 
-#: part/pageview.cpp:776
+#: part/pageview.cpp:770
 #, kde-format
 msgid "Scroll Up"
 msgstr "لف لأعلى"
 
-#: part/pageview.cpp:782
+#: part/pageview.cpp:776
 #, kde-format
 msgid "Scroll Down"
 msgstr "لف لأسفل"
 
-#: part/pageview.cpp:788
+#: part/pageview.cpp:782
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "التمرير لأعلى"
 
-#: part/pageview.cpp:794
+#: part/pageview.cpp:788
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "التمرير لأسفل"
 
-#: part/pageview.cpp:800
+#: part/pageview.cpp:794
 #, kde-format
 msgid "Show Forms"
 msgstr "اعرض الاستمارات"
 
-#: part/pageview.cpp:1312
+#: part/pageview.cpp:1309
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
@@ -4013,12 +4013,12 @@ msgstr[3] " حُمّلَ مستند ذو %1 صفحات."
 msgstr[4] " حُمّلَ مستند ذو %1 صفحة."
 msgstr[5] " حُمّلَ مستند ذو %1 صفحة."
 
-#: part/pageview.cpp:2583
+#: part/pageview.cpp:2579
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "انسخ محتويات الجدول إلى الحافظة"
 
-#: part/pageview.cpp:2933
+#: part/pageview.cpp:2927
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
@@ -4029,82 +4029,82 @@ msgstr[3] "نص (%1 محارف)"
 msgstr[4] "نص (%1 محرفا)"
 msgstr[5] "نص (%1 محرف)"
 
-#: part/pageview.cpp:2934 part/pageview.cpp:2956
+#: part/pageview.cpp:2928 part/pageview.cpp:2950
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "نسخ إلى الحافظة"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
+#: part/pageview.cpp:2930 part/pageview.cpp:3149 part/part.cpp:840
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "انسخ النص (دون كاسرات السطور)"
 
-#: part/pageview.cpp:2947 part/pageview.cpp:3159
+#: part/pageview.cpp:2941 part/pageview.cpp:3153
 #, kde-format
 msgid "Speak Text"
 msgstr "اقرأ النص"
 
-#: part/pageview.cpp:2955
+#: part/pageview.cpp:2949
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "صورة (%1 × %2 بكسل)"
 
-#: part/pageview.cpp:2957
+#: part/pageview.cpp:2951
 #, kde-format
 msgid "Save to File…"
 msgstr "احفظ في ملفّ…"
 
-#: part/pageview.cpp:2977
+#: part/pageview.cpp:2971
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "الصورة [%1 × %2] نسخت إلى الحافظة"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Save file"
 msgstr "احفظ الملف"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:2974
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "الصور (*.png *.jpeg)"
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:2976
 #, kde-format
 msgid "File not saved."
 msgstr "الملف لم يحفظ"
 
-#: part/pageview.cpp:2993
+#: part/pageview.cpp:2987
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "الصورة  [%1 × %2] حفظت إلى الملف %3."
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3148
 #, kde-format
 msgid "Copy Text"
 msgstr "انسخ نص"
 
-#: part/pageview.cpp:3177
+#: part/pageview.cpp:3171
 #, kde-format
 msgid "Go to '%1'"
 msgstr "اذهب إلى '%1'"
 
-#: part/pageview.cpp:4208 part/part.cpp:3219
+#: part/pageview.cpp:4206 part/part.cpp:3219
 #, kde-format
 msgid "Fit Width"
 msgstr "لائم العرض"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Fit Page"
 msgstr "لائم الصفحة"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4206
 #, kde-format
 msgid "Auto Fit"
 msgstr "لائم آليًّا"
 
-#: part/pageview.cpp:4231
+#: part/pageview.cpp:4229
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4113,67 +4113,67 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1٪"
 
-#: part/pageview.cpp:4514
+#: part/pageview.cpp:4512
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "ابحث عن '%1' باستخدام"
 
-#: part/pageview.cpp:4528
+#: part/pageview.cpp:4526
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "اضبط اختصارات الوبّ…"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4552
 #, kde-format
 msgid "Follow This Link"
 msgstr "اتبع هذه الوصلة"
 
-#: part/pageview.cpp:4557
+#: part/pageview.cpp:4555
 #, kde-format
 msgid "Play this Sound"
 msgstr "شغّل هذا الصوت"
 
-#: part/pageview.cpp:4559
+#: part/pageview.cpp:4557
 #, kde-format
 msgid "Stop Sound"
 msgstr "أوقف الصوت"
 
-#: part/pageview.cpp:4565
+#: part/pageview.cpp:4563
 #, kde-format
 msgid "Copy Link Address"
 msgstr "انسخ رابط العنوان"
 
-#: part/pageview.cpp:4622
+#: part/pageview.cpp:4620
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "ابحث عن '%1' في هذا المستند"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5153
 #, kde-format
 msgid "Welcome"
 msgstr "مرحبًا"
 
-#: part/pageview.cpp:5281
+#: part/pageview.cpp:5274
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "اختر منطقة التكبير. نقرة-يمنى للتصغير."
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5289
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "اضغط هنا لرؤية العرض المُكَبَّر"
 
-#: part/pageview.cpp:5313
+#: part/pageview.cpp:5306
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "ارسم مربعا حول النص/الصورة المراد نسخه."
 
-#: part/pageview.cpp:5329
+#: part/pageview.cpp:5322
 #, kde-format
 msgid "Select text"
 msgstr "حدد نص"
 
-#: part/pageview.cpp:5345
+#: part/pageview.cpp:5338
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4182,7 +4182,7 @@ msgstr ""
 "ارسم مستطيلًا حول الجدول، ثم انقر بالفأرة بالقرب من الحافة لتُقَسِّم؛ اضغط Esc "
 "للإلغاء."
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5368
+#: part/pageview.cpp:5353 part/pageview.cpp:5361
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4191,17 +4191,17 @@ msgstr ""
 "جميع شهادات توقيعك غير صالحة. في حال كان التوقيع يعمل من قبل، يرجى التحقق من "
 "تواريخ صلاحيتها."
 
-#: part/pageview.cpp:5361
+#: part/pageview.cpp:5354
 #, kde-format
 msgid "No valid certificates"
 msgstr "لا توجد شهادات صالحة"
 
-#: part/pageview.cpp:5362 part/pageview.cpp:5377
+#: part/pageview.cpp:5355 part/pageview.cpp:5370
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "افتح مدير الشهادات"
 
-#: part/pageview.cpp:5373
+#: part/pageview.cpp:5366
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4212,12 +4212,12 @@ msgstr ""
 "إدارتها<br/> لمزيد من المعلومات، يرجى مراجعة القسم حول <a href=\"%1\"> إضافة "
 "التوقيعات الرقمية </a> في الدليل."
 
-#: part/pageview.cpp:5376 part/pageview.cpp:5388
+#: part/pageview.cpp:5369 part/pageview.cpp:5381
 #, kde-format
 msgid "No certificates found"
 msgstr "لم يعثر على أي شهادات"
 
-#: part/pageview.cpp:5386
+#: part/pageview.cpp:5379
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4227,17 +4227,17 @@ msgstr ""
 "لا توجد شهادات توقيع متاحة. <br/> لمزيد من المعلومات، يرجى مراجعة القسم حول "
 "<a href=\"%1\"> إضافة التوقيعات الرقمية </a> في الدليل."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5402
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "لديك تغيرات غير محفوظة. رجاء احفظ المستند قبل توقيعه."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5425
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "ارسم مستطيل لإدراج حقل التوقيع"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5575
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr "ارسم مربعا حول مساحة الصفحة التي تريد أن تجعلها مرئية"
@@ -6093,7 +6093,7 @@ msgstr "هناك جلسة أوكلار فريدة مفتوحة فعلًا. لن 
 msgid "Unable to find the Okular component."
 msgstr "عجز عن إيجاد مكون أوكلار."
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6102,68 +6102,68 @@ msgstr ""
 "انقر لفتح ملف\n"
 "انقر و أمسك لفتح ملف أخير"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
 msgstr "<b>انقر</b> لفتح ملف <b>انقر وأمسك</b> لتحديد ملف حديث"
 
-#: shell/shell.cpp:583
+#: shell/shell.cpp:585
 #, kde-format
 msgid "Next Tab"
 msgstr "اللسان التالي"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:591
 #, kde-format
 msgid "Previous Tab"
 msgstr "اللسان السابق"
 
-#: shell/shell.cpp:597
+#: shell/shell.cpp:599
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "انتقل إلى اللسان %1"
 
-#: shell/shell.cpp:613
+#: shell/shell.cpp:615
 #, kde-format
 msgid "Undo close tab"
 msgstr "تراجع عن إغلاق اللسان"
 
-#: shell/shell.cpp:622
+#: shell/shell.cpp:624
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "اقفل الشريط الجانبي"
 
-#: shell/shell.cpp:722
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All files (*)"
 msgstr "كلّ الملفّات (*)"
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:725
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "كلّ الملفّات المدعومة (%1)"
 
-#: shell/shell.cpp:727
+#: shell/shell.cpp:729
 #, kde-format
 msgid "Open Document"
 msgstr "المستند المفتوح"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Confirm Close"
 msgstr "أكد الغلق"
 
-#: shell/shell.cpp:845
+#: shell/shell.cpp:847
 #, kde-format
 msgid "Close Tabs"
 msgstr "أغلق الألسنة"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "أنت على وشك غلق الألسنة %1. أمتأكد من المتابعة؟"
 
-#: shell/shell.cpp:854
+#: shell/shell.cpp:856
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "حذرني عند محاولة غلق عدة ألسنة"

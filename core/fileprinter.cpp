@@ -183,7 +183,7 @@ bool FilePrinter::pdf2psAvailable()
 
 bool FilePrinter::cupsAvailable()
 {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     // Ideally we would have access to the private Qt method
     // QCUPSSupport::cupsAvailable() to do this as it is very complex routine.
     // However, if CUPS is available then QPrinter::supportsMultipleCopies() will always return true

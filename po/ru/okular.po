@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:12+0000\n"
-"PO-Revision-Date: 2026-11-07 07:45+0200\n"
+"PO-Revision-Date: 2026-11-11 22:58+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -1330,7 +1330,7 @@ msgstr "Толщина %1"
 #, kde-format
 msgctxt "@item:inlistbox"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationactionhandler.cpp:295
 #, kde-format
@@ -1698,7 +1698,7 @@ msgctxt ""
 "@item:inlistbox Annotation opacity percentage level, make sure to include %1 "
 "in your translation"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/annotationmodel.cpp:322
 #, kde-format
@@ -1918,7 +1918,7 @@ msgstr "&Цвет:"
 #, kde-format
 msgctxt "@label:spinbox Suffix for the opacity level, e.g. '80%'"
 msgid "%v%"
-msgstr "%v%"
+msgstr "%v %"
 
 #: part/annotationwidgets.cpp:275 part/editdrawingtooldialog.cpp:68
 #, kde-format
@@ -3047,7 +3047,7 @@ msgstr "Столбцов в режиме обзора:"
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
-msgstr "%v%"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:226
 #, kde-format
@@ -3083,13 +3083,13 @@ msgstr "Расстояние между страницами:"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
-msgstr "%v%"
+msgstr "%v %"
 
 #: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
-msgstr "100%"
+msgstr "100 %"
 
 #: part/dlggeneral.cpp:247
 #, kde-format
@@ -3231,8 +3231,8 @@ msgid ""
 "maximum 50% of your total memory or your free memory, whatever is bigger.)"
 msgstr ""
 "Загружать и держать всё в памяти. Использовать предварительную загрузку всех "
-"страниц. Будет использовано не более 50% общего объёма памяти или весь объём "
-"свободной памяти — в зависимости от того, что больше."
+"страниц. Будет использовано не более 50 % общего объёма памяти или весь "
+"объём свободной памяти — в зависимости от того, что больше."
 
 #: part/dlgpresentation.cpp:38
 #, kde-format
@@ -3838,7 +3838,7 @@ msgstr "Масштаб"
 #: part/pageview.cpp:546
 #, kde-format
 msgid "Zoom to 100%"
-msgstr "Масштаб 100%"
+msgstr "Масштаб 100 %"
 
 #: part/pageview.cpp:557
 #, kde-format
@@ -4138,7 +4138,7 @@ msgctxt ""
 "so make sure you include it in your translation in order to not to break "
 "anything"
 msgid "%1%"
-msgstr "%1%"
+msgstr "%1 %"
 
 #: part/pageview.cpp:4514
 #, kde-format

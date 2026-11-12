@@ -822,8 +822,10 @@ void Part::setupActions()
 {
     KActionCollection *ac = actionCollection();
 
+#ifndef Q_OS_MACOS
     KActionMenu *schemeMenu = KColorSchemeMenu::createMenu(KColorSchemeManager::instance(), this);
     ac->addAction(QStringLiteral("colorscheme_menu"), schemeMenu->menu()->menuAction());
+#endif
 
     m_copy = KStandardAction::create(KStandardAction::Copy, nullptr, nullptr, ac);
     connect(m_copy, &QAction::triggered, this, &Part::slotCopyTextSelectionOrAnnotation);

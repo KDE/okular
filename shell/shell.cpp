@@ -896,6 +896,22 @@ void Shell::setActiveTab(int tab)
     createGUI(m_tabs[tab].part);
     m_sidebar->setVisible(isSidebarVisible);
 
+#ifdef Q_OS_MACOS
+    // On MacOS, the main preferences action gets moved to the "okular" menu to follow platform standards.
+    // To keep everything in one place, also move all further actions from the settings menu.
+    if (auto settingsMenu = findChild<QMenu *>("settings")) {
+        const auto settingsActions = settingsMenu->actions();
+        for (auto action : settingsActions) {
+            if (action->menuRole() == QAction::TextHeuristicRole || action->menuRole() == QAction::NoRole) {
+                action->setMenuRole(QAction::ApplicationSpecificRole);
+            }
+            if (action->isSeparator()) {
+                action->setVisible(false);
+            }
+        }
+    }
+#endif
+
     // dock KPart's sidebar if new and make it current
     Okular::ViewerInterface *iPart = qobject_cast<Okular::ViewerInterface *>(m_tabs[tab].part);
     Q_ASSERT(iPart);

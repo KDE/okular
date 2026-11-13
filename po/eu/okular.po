@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 00:12+0000\n"
+"POT-Creation-Date: 2026-11-13 03:37+0000\n"
 "PO-Revision-Date: 2026-10-01 21:42+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -244,7 +244,7 @@ msgstr "Eten filma"
 msgid "Resume movie"
 msgstr "Berrekin filma"
 
-#: core/audioplayer.cpp:313
+#: core/audioplayer.cpp:366
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Okular hau audio euskarririk gabe eraikita dago"
@@ -924,7 +924,7 @@ msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:410
 #, kde-format
 msgid "Author: %1"
 msgstr "Egilea: %1"
@@ -1693,12 +1693,12 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "%1 orria (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3208
+#: part/annotationmodel.cpp:324 part/part.cpp:3218
 #, kde-format
 msgid "Page %1"
 msgstr "%1 orria"
 
-#: part/annotationpopup.cpp:127
+#: part/annotationpopup.cpp:128
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1706,67 +1706,77 @@ msgid_plural "%1 Annotations"
 msgstr[0] "Idatzoharra"
 msgstr[1] "%1 idatzohar"
 
-#: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
+#: part/annotationpopup.cpp:130 part/annotationpopup.cpp:200
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Ireki ohar gainerakorra"
 
-#: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2289 part/part.cpp:3214
+#: part/annotationpopup.cpp:138 part/annotationpopup.cpp:207
+#: part/bookmarklist.cpp:263 part/part.cpp:2299 part/part.cpp:3224
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Kendu laster-marka"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3216
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:210 part/part.cpp:3226
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Gehitu laster-marka"
 
-#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
+#: part/annotationpopup.cpp:147 part/annotationpopup.cpp:214
 #, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Kopiatu"
 
-#: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
+#: part/annotationpopup.cpp:151 part/annotationpopup.cpp:218
 #, kde-format
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
+#: part/annotationpopup.cpp:156 part/annotationpopup.cpp:223
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Kopiatu testua arbelera"
 
-#: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
-#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
+#: part/annotationpopup.cpp:160 part/annotationpopup.cpp:227
+#: part/pageview.cpp:2798 part/pageview.cpp:3150 part/pageview.cpp:3152
+#: part/pageview.cpp:3312 part/pageview.cpp:3373 part/pageview.cpp:3375
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "DRMak kopiatzea debekatu du"
 
-#: part/annotationpopup.cpp:164 part/annotationpopup.cpp:231
+#: part/annotationpopup.cpp:165 part/annotationpopup.cpp:232
 #, kde-format
 msgid "&Delete"
 msgstr "&Ezabatu"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:747
+#: part/annotationpopup.cpp:179 part/annotationpopup.cpp:236 part/part.cpp:747
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Propietateak"
 
-#: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
+#: part/annotationpopup.cpp:186 part/annotationpopup.cpp:242
 #, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
 msgstr "&Ireki '%1'…"
 
-#: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
+#: part/annotationpopup.cpp:190 part/annotationpopup.cpp:246
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Gorde '%1'..."
+
+#: part/annotationpopup.cpp:256 part/pageview.cpp:4852
+#, kde-format
+msgid "Play this Sound"
+msgstr "Jo soinu hau"
+
+#: part/annotationpopup.cpp:259 part/pageview.cpp:4854
+#, kde-format
+msgid "Stop Sound"
+msgstr "Gelditu soinua"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2338,12 +2348,12 @@ msgstr "Erakutsi dokumentu guztietarako"
 msgid "Search…"
 msgstr "Bilatu..."
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3196
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3206
 #, kde-format
 msgid "Expand All"
 msgstr "Zabaldu dena"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3197
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3207
 #, kde-format
 msgid "Collapse All"
 msgstr "Tolestu dena"
@@ -2354,7 +2364,7 @@ msgid "Go to This Bookmark"
 msgstr "Joan laster-marka honetara"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:689
-#: part/part.cpp:2484
+#: part/part.cpp:2494
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Berrizendatu laster-marka"
@@ -2868,115 +2878,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Komandoa:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Erabili kiribiltze leuna"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Itxura:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Erakutsi labaintzeko-barrak"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Estekatu koadro txikiak orriarekin"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Erakutsi argibideak eta informazio-mezuak"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Txertatutako fitxategi, inprimaki edo sinaduren berri ematea"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Azaldu dokumentuaren titulua titulu-barran"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Azaldu fitxategi-izena soilik"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Azaldu fitxategiaren bide-izen osoa"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Dokumentu titulurik azaltzen ez duenean:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Erabili norberak finkatutako atzealdeko kolorea:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Programaren ezaugarriak:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Ireki fitxategi berriak fitxetan"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Aldatu dagoen fitxara fitxategia irekita badago"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Men egin DRMren mugei"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Birzamatu dokumentua fitxategia aldatzean"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Erakutsi bizkarraldeko hautapenerako elkarrizketa-koadroa"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Eskuinetik ezkerrera irakurketa noranzkoa"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -2986,7 +2996,7 @@ msgstr ""
 "Erabili fitxategiaren informazioa, era lehenetsian, modu jarraituan ireki "
 "ala ez zehazteko"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
@@ -2994,43 +3004,43 @@ msgstr ""
 "Fitxategi informaziorik ez duten fitxategiekin, ireki modu jarraitua era "
 "lehenetsian"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Ireki modu jarraitua era lehenetsian"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "Jarraitu ikusitako azken orrialdetik"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr "Arakatze tresna erabiltzean, bildu kurtsorea pantailaren ertzetan"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Historia hurbileko elementuak:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Ikuspegi orokorreko zutabeak:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%%v"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3040,61 +3050,61 @@ msgstr ""
 "Uneko bistaratze azaleratik Orri Gora/Behera teklak sakatzean oraindik "
 "ikusiko den zenbatekoa definitzen du."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Orri Gora/Behera gainezartzea:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr ""
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr ""
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%%v"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "% 100"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Doitu zabalera"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Doitu orrialdea"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Doitze automatikoa"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Neurrira"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3104,7 +3114,7 @@ msgstr ""
 "Aurrez inoiz ireki gabeko fitxategien zoom modu lehenetsia definitzen du. "
 "Aurrez ireki diren fitxategiekin aurreko zooma erabiltzen da."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3806,7 +3816,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Adierazpen erregularra"
 
-#: part/layers.cpp:33 part/part.cpp:2332
+#: part/layers.cpp:33 part/part.cpp:2342
 #, kde-format
 msgid "Layers"
 msgstr "Geruzak"
@@ -3817,304 +3827,304 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr " / "
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:729
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:741
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Zoom % 100era"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:752
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Biratu e&skuinera"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:753
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Eskuinera"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:757
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Biratu e&zkerrera"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:758
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Ezkerrera"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:762
 #, kde-format
 msgid "Original Orientation"
 msgstr "Jatorrizko orientazioa"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:768
 #, kde-format
 msgid "&Trim View"
 msgstr "&Moztu ikuspegia"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:772
 #, kde-format
 msgid "&Trim Margins"
 msgstr "&Moztu marjinak"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:779
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Moztu &hautapenera"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:785
 #, kde-format
 msgid "Fit &Width"
 msgstr "Doitu &zabalera"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:789
 #, kde-format
 msgid "Fit &Page"
 msgstr "Doitu &orrialdea"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:793
 #, kde-format
 msgid "&Auto Fit"
 msgstr "Doitze &automatikoa"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:797
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Doitu &leihoa orrialdera"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:804
 #, kde-format
 msgid "&View Mode"
 msgstr "I&kuspegi modua"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:816
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Orrialde &bakarra"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:817
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "&Aurrez-aurreko orrialdeak"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:818
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Aurrez-aurreko orrialdeak (&erdiratu aurreneko orrialdea)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:821
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "Ikuspegi &orokorra"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:833
 #, kde-format
 msgid "&Continuous"
 msgstr "&Jarraitu"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:840
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Erabili eskuinetik ezkerrera irakurtzeko noranzkoa"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:849
 #, kde-format
 msgid "&Browse"
 msgstr "&Arakatu"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:857
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:877
 #, kde-format
 msgid "Area &Selection"
 msgstr "Azalera &hautapena"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:884
 #, kde-format
 msgid "&Text Selection"
 msgstr "&Testu hautapena"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:891
 #, kde-format
 msgid "T&able Selection"
 msgstr "T&aula hautapena"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:898
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Lupa"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:907
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Hautapen tresnak"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:933
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "Digitalki &sinatu..."
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:939
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Hitz egin dokumentu osoa"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:944
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Hitz egin uneko orrialdeatik"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:949
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Hitz egin uneko orrialdea"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:954
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Gelditu hitz egitea"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:959
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Eten/Berrekin hizketa"
 
-#: part/pageview.cpp:776
+#: part/pageview.cpp:971
 #, kde-format
 msgid "Scroll Up"
 msgstr "Labaindu gora"
 
-#: part/pageview.cpp:782
+#: part/pageview.cpp:977
 #, kde-format
 msgid "Scroll Down"
 msgstr "Labaindu behera"
 
-#: part/pageview.cpp:788
+#: part/pageview.cpp:983
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Labaindu orri gora"
 
-#: part/pageview.cpp:794
+#: part/pageview.cpp:989
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Labandu orri behera"
 
-#: part/pageview.cpp:800
+#: part/pageview.cpp:995
 #, kde-format
 msgid "Show Forms"
 msgstr "Erakutsi inprimakiak"
 
-#: part/pageview.cpp:1312
+#: part/pageview.cpp:1512
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Orri bakarreko dokumentua zamatu da."
 msgstr[1] " %1 orriko dokumentua zamatu da."
 
-#: part/pageview.cpp:2583
+#: part/pageview.cpp:2792
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Kopiatu taularen edukia arbelera"
 
-#: part/pageview.cpp:2933
+#: part/pageview.cpp:3142
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Testua (karaktere 1)"
 msgstr[1] "Testua (%1 karaktere)"
 
-#: part/pageview.cpp:2934 part/pageview.cpp:2956
+#: part/pageview.cpp:3143 part/pageview.cpp:3165
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Kopiatu arbelera"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
+#: part/pageview.cpp:3145 part/pageview.cpp:3364 part/part.cpp:840
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Kopiatu testua (Lerro jauzirik gabe)"
 
-#: part/pageview.cpp:2947 part/pageview.cpp:3159
+#: part/pageview.cpp:3156 part/pageview.cpp:3368
 #, kde-format
 msgid "Speak Text"
 msgstr "Hitz egin testua"
 
-#: part/pageview.cpp:2955
+#: part/pageview.cpp:3164
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Irudia (%1 × %2 pixel)"
 
-#: part/pageview.cpp:2957
+#: part/pageview.cpp:3166
 #, kde-format
 msgid "Save to File…"
 msgstr "Gorde fitxategian..."
 
-#: part/pageview.cpp:2977
+#: part/pageview.cpp:3186
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "Irudia [%1 × %2] arbelean kopiatu da."
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:3189
 #, kde-format
 msgid "Save file"
 msgstr "Gorde fitxategia"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:3189
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Irudiak (*.png *.jpeg)"
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:3191
 #, kde-format
 msgid "File not saved."
 msgstr "Fitxategia ez da gorde."
 
-#: part/pageview.cpp:2993
+#: part/pageview.cpp:3202
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "Irudia [%1 × %2] %3 fitxategian gorde da."
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3363
 #, kde-format
 msgid "Copy Text"
 msgstr "Kopiatu testua"
 
-#: part/pageview.cpp:3177
+#: part/pageview.cpp:3386
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Joan '%1'(e)ra"
 
-#: part/pageview.cpp:4208 part/part.cpp:3219
+#: part/pageview.cpp:4433 part/part.cpp:3229
 #, kde-format
 msgid "Fit Width"
 msgstr "Doitu zabalera"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Fit Page"
 msgstr "Doitu orrialdea"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Auto Fit"
 msgstr "Doitu automatikoki"
 
-#: part/pageview.cpp:4231
+#: part/pageview.cpp:4456
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4123,67 +4133,57 @@ msgctxt ""
 msgid "%1%"
 msgstr "%%1"
 
-#: part/pageview.cpp:4514
+#: part/pageview.cpp:4809
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Bilatu '%1' honekin"
 
-#: part/pageview.cpp:4528
+#: part/pageview.cpp:4823
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Konfiguratu web-lasterbideak..."
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4849
 #, kde-format
 msgid "Follow This Link"
 msgstr "Jarraitu esteka honi"
 
-#: part/pageview.cpp:4557
-#, kde-format
-msgid "Play this Sound"
-msgstr "Jo soinu hau"
-
-#: part/pageview.cpp:4559
-#, kde-format
-msgid "Stop Sound"
-msgstr "Gelditu soinua"
-
-#: part/pageview.cpp:4565
+#: part/pageview.cpp:4860
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiatu estekaren helbidea"
 
-#: part/pageview.cpp:4622
+#: part/pageview.cpp:4917
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Bilatu '%1' dokumentu honetan"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5450
 #, kde-format
 msgid "Welcome"
 msgstr "Ongi etorri"
 
-#: part/pageview.cpp:5281
+#: part/pageview.cpp:5571
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr "Hautatu zoomaren azalera. Eskuineko-klik zooma urruntzeko."
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5586
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Klik egin handitutako ikuspegia ikusteko."
 
-#: part/pageview.cpp:5313
+#: part/pageview.cpp:5603
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Marraztu laukizuzen bat kopiatu beharreko testuen/grafikoen inguruan."
 
-#: part/pageview.cpp:5329
+#: part/pageview.cpp:5619
 #, kde-format
 msgid "Select text"
 msgstr "Hautatu testua"
 
-#: part/pageview.cpp:5345
+#: part/pageview.cpp:5635
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4192,7 +4192,7 @@ msgstr ""
 "Marraztu laukizuzen bat taularen inguruan, ondoren klik egin ertzen ondoan "
 "erdibitzeko; sakatu «Ihes» garbitzeko."
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5368
+#: part/pageview.cpp:5650 part/pageview.cpp:5658
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4201,17 +4201,17 @@ msgstr ""
 "Sinatzeko zure ziurtagiri guztiak baliogabeak dira. Aurrez sinatzeko balio "
 "izan bazuten, egiaztatu baliozkotasun-datak."
 
-#: part/pageview.cpp:5361
+#: part/pageview.cpp:5651
 #, kde-format
 msgid "No valid certificates"
 msgstr "Ez dago baliodun ziurtagiririk"
 
-#: part/pageview.cpp:5362 part/pageview.cpp:5377
+#: part/pageview.cpp:5652 part/pageview.cpp:5667
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Ireki ziurtagiri kudeatzailea"
 
-#: part/pageview.cpp:5373
+#: part/pageview.cpp:5663
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4223,12 +4223,12 @@ msgstr ""
 "gehiagorako, mesedez, begiratu eskuliburuko <a href=\"%1\">Sinadura digitala "
 "gehitzea</a> atala."
 
-#: part/pageview.cpp:5376 part/pageview.cpp:5388
+#: part/pageview.cpp:5666 part/pageview.cpp:5678
 #, kde-format
 msgid "No certificates found"
 msgstr "Ez da ziurtagiririk aurkitu"
 
-#: part/pageview.cpp:5386
+#: part/pageview.cpp:5676
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4238,18 +4238,18 @@ msgstr ""
 "Ez dago sinatzeko ziurtagiri erabilgarririk.<br/>Informazio gehiagorako, "
 "begiratu eskuliburuko <a href=\"%1\">Sinadura digitala gehitzea</a> atala."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5699
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr ""
 "Gorde gabeko aldaketak dituzu. Gorde ezazu dokumentua hura sinatu aurretik."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5722
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Marraztu laukizuzen bat sinaduraren eremua txertatzeko"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5872
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4589,7 +4589,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Konfiguratu kolore-moduak..."
 
-#: part/part.cpp:832 part/part.cpp:3224
+#: part/part.cpp:832 part/part.cpp:3234
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Itsatsi idatzoharra"
@@ -4759,7 +4759,7 @@ msgstr ""
 "Dokumentu hau editatzeko eta elkarreragiteko eginbide guztiak ezgaituta "
 "daude. Gorde kopia bat eta berrireki dokumentua editatzeko."
 
-#: part/part.cpp:1743
+#: part/part.cpp:1753
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4768,27 +4768,27 @@ msgstr ""
 "Dokumentu honek pantaila-betean erakutsia izan nahi du.\n"
 "Modu arrunta utzi eta aurkezpen moduan sartu?"
 
-#: part/part.cpp:1745
+#: part/part.cpp:1755
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Eskatu ikusteko modua aldatzea"
 
-#: part/part.cpp:1746
+#: part/part.cpp:1756
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Sartu aurkezpen moduan"
 
-#: part/part.cpp:1747
+#: part/part.cpp:1757
 #, kde-format
 msgid "Deny Request"
 msgstr "Ukatu eskaera"
 
-#: part/part.cpp:1837
+#: part/part.cpp:1847
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Ezin izan da ireki %1. %2"
 
-#: part/part.cpp:1867
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4802,22 +4802,22 @@ msgstr ""
 "programan egindakoekin ordeztuko dira.<nl/><nl/>Fitxategia birzamatzen "
 "jarraitu nahi duzu?"
 
-#: part/part.cpp:1871 part/part.cpp:1881
+#: part/part.cpp:1881 part/part.cpp:1891
 #, kde-format
 msgid "File Changed"
 msgstr "Fitxategia aldatu da"
 
-#: part/part.cpp:1872
+#: part/part.cpp:1882
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Jarraia birzamatuta"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Galarazi birzamatzea"
 
-#: part/part.cpp:1877
+#: part/part.cpp:1887
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4830,27 +4830,27 @@ msgstr ""
 "programa batek aldatu du. Itxiz gero, gorde gabeko aldaketak beste programan "
 "egindakoekin ordeztuko dira.<nl/><nl/>Fitxategia ixten jarraitu nahi duzu?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1892
 #, kde-format
 msgid "Continue Closing"
 msgstr "Jarraitu ixtea"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1893
 #, kde-format
 msgid "Abort Closing"
 msgstr "Galarazi ixtea"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1900
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Zure aldaketak \"%1\"(e)ra gorde edo baztertu nahi dituzu?"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1900
 #, kde-format
 msgid "Close Document"
 msgstr "Itxi dokumentua"
 
-#: part/part.cpp:2025
+#: part/part.cpp:2035
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4859,7 +4859,7 @@ msgstr ""
 "Esteka hau dokumentua ixteko ekintza bati lotuta dago eta eginbide hau ezin "
 "da erabili erakusle kapsulatua darabilgunean."
 
-#: part/part.cpp:2031
+#: part/part.cpp:2041
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4868,59 +4868,59 @@ msgstr ""
 "Esteka hau aplikazioa irteteko ekintza bati lotuta dago eta eginbide hau "
 "ezin da erabili erakusle kapsulatua darabilgunean."
 
-#: part/part.cpp:2123 part/part.cpp:2143
+#: part/part.cpp:2133 part/part.cpp:2153
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Dokumentua birzamatzen..."
 
-#: part/part.cpp:2312 part/toc.cpp:36
+#: part/part.cpp:2322 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Edukia"
 
-#: part/part.cpp:2341 part/signaturepanel.cpp:45
+#: part/part.cpp:2351 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Sinadurak"
 
-#: part/part.cpp:2368
+#: part/part.cpp:2378
 #, kde-format
 msgid "Go to Page"
 msgstr "Joan orrialdera"
 
-#: part/part.cpp:2391
+#: part/part.cpp:2401
 #, kde-format
 msgid "&Page:"
 msgstr "&Orria:"
 
-#: part/part.cpp:2484
+#: part/part.cpp:2494
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Sartu laster-markaren izen berria:"
 
-#: part/part.cpp:2530
+#: part/part.cpp:2540
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Berrizendatu laster-marka hau"
 
-#: part/part.cpp:2533
+#: part/part.cpp:2543
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Kendu laster-marka hau"
 
-#: part/part.cpp:2619 part/part.cpp:2620 part/part.cpp:3574
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3584
 #: part/signaturepartutils.cpp:321
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2627 part/revisionviewer.cpp:44
+#: part/part.cpp:2637 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Gorde honela"
 
-#: part/part.cpp:2644
+#: part/part.cpp:2654
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4929,18 +4929,18 @@ msgstr ""
 "Okular artxibo bat '%1' luzapenarekin amaitu gabe gordetzea hautatu duzu."
 "Halakorik ez da onartzen, izen berri bat hautatu nahi duzu?"
 
-#: part/part.cpp:2645
+#: part/part.cpp:2655
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Onartu gabeko luzapena"
 
-#: part/part.cpp:2646
+#: part/part.cpp:2656
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Hautatu izen berria"
 
-#: part/part.cpp:2689
+#: part/part.cpp:2699
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4952,17 +4952,17 @@ msgstr ""
 "gordetzen baduzu, programan egindako aldaketak galduko dira. Ziur zaude "
 "jarraitu nahi duzula?"
 
-#: part/part.cpp:2692 part/part.cpp:2711 part/part.cpp:2763
+#: part/part.cpp:2702 part/part.cpp:2721 part/part.cpp:2773
 #, kde-format
 msgid "Save - Warning"
 msgstr "Gorde - Abisua"
 
-#: part/part.cpp:2694
+#: part/part.cpp:2704
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Gorde kopia bat beste nonbait"
 
-#: part/part.cpp:2710
+#: part/part.cpp:2720
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4973,12 +4973,12 @@ msgstr ""
 "fitxategia birzamatu egin behar da. Berriz eskatuko zaizu pasahitza eta zure "
 "desegite/berregite historia galduko da.<br />Jarraitu nahi duzu?"
 
-#: part/part.cpp:2737
+#: part/part.cpp:2747
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Ezin izan da aldi baterako fitxategia gordetzeko ireki."
 
-#: part/part.cpp:2750
+#: part/part.cpp:2760
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4989,7 +4989,7 @@ msgstr ""
 "soilik delako. Saia zaitez beste kokaleku batean gordetzen edo fitxategi "
 "horren baimenak aldatzen."
 
-#: part/part.cpp:2762
+#: part/part.cpp:2772
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -4998,24 +4998,24 @@ msgstr ""
 "Gorde ondoren, uneko dokumentuaren formatuak fitxategia birzamatzea eskatzen "
 "du. Zure desegite/berregite historia galduko da.<br />Jarraitu nahi duzu?"
 
-#: part/part.cpp:2777 part/part.cpp:2846 part/part.cpp:2867 part/part.cpp:3622
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3632
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr ""
 "Fitxategia ezin izan da gorde '%1'(e)n. Saiatu beste kokaleku batean "
 "gordetzen."
 
-#: part/part.cpp:2790
+#: part/part.cpp:2800
 #, kde-format
 msgid "Filled form contents"
 msgstr "Betetako inprimakiaren edukia"
 
-#: part/part.cpp:2793
+#: part/part.cpp:2803
 #, kde-format
 msgid "User annotations"
 msgstr "Erabiltzailearen idatzoharrak"
 
-#: part/part.cpp:2798
+#: part/part.cpp:2808
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5026,17 +5026,17 @@ msgstr ""
 "onartzen ondoko elementuak gordetzea. Erabili <i>Okular dokumentu artxibo</"
 "i> formatua haiek ez galtzeko."
 
-#: part/part.cpp:2802 part/part.cpp:2824
+#: part/part.cpp:2812 part/part.cpp:2834
 #, kde-format
 msgid "Warning"
 msgstr "Abisua"
 
-#: part/part.cpp:2803 part/part.cpp:2825
+#: part/part.cpp:2813 part/part.cpp:2835
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Gorde Okular dokumentu artxibo gisa..."
 
-#: part/part.cpp:2815
+#: part/part.cpp:2825
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5049,7 +5049,7 @@ msgstr ""
 "i> formatua haiek ez galtzeko. Klik egin <i>Jarraitu</i> dokumentua gorde "
 "eta elementu hauek baztertzeko."
 
-#: part/part.cpp:2818
+#: part/part.cpp:2828
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5062,22 +5062,22 @@ msgstr ""
 "i> formatua haiek ez galtzeko. Klik egin <i>Jarraitu</i> gordetzeko, baino "
 "elementu hauek galduko dituzu baita desegiteko/berregiteko historia ere."
 
-#: part/part.cpp:2820
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue"
 msgstr "Jarraitu"
 
-#: part/part.cpp:2820
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Jarraitu aldaketak galduta"
 
-#: part/part.cpp:2848
+#: part/part.cpp:2858
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "Fitxategia ezin izan da '%1'-(e)n gorde. %2"
 
-#: part/part.cpp:2887
+#: part/part.cpp:2897
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5088,7 +5088,7 @@ msgstr ""
 "\n"
 "Dokumentua betirako joan da."
 
-#: part/part.cpp:2923
+#: part/part.cpp:2933
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5097,49 +5097,49 @@ msgstr ""
 "Fitxategia ezin izan da '%1'-(e)n gorde. Errorea: '%2'. Saiatu beste "
 "kokaleku batean gordetzen."
 
-#: part/part.cpp:3194
+#: part/part.cpp:3204
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Zabaldu atal osoa"
 
-#: part/part.cpp:3195
+#: part/part.cpp:3205
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Tolestu atal osoa"
 
-#: part/part.cpp:3211
+#: part/part.cpp:3221
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sinkronizatu koadro txikia orriarekin"
 
-#: part/part.cpp:3243
+#: part/part.cpp:3253
 #, kde-format
 msgid "Tools"
 msgstr "Tresnak"
 
-#: part/part.cpp:3431
+#: part/part.cpp:3441
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Mintzatu"
 
-#: part/part.cpp:3586
+#: part/part.cpp:3596
 #, kde-format
 msgid "Invalid options have been received."
 msgstr ""
 
-#: part/part.cpp:3660
+#: part/part.cpp:3670
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Inprimatu"
 
-#: part/part.cpp:3717
+#: part/part.cpp:3727
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Dokumentu hau inprimatzea ez da onartzen."
 
-#: part/part.cpp:3730
+#: part/part.cpp:3740
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5147,7 +5147,7 @@ msgstr ""
 "Ezin izan da dokumentua inprimatu. Errore ezezaguna. Mesedez honen berri "
 "eman hemen: bugs.kde.org"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3742
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5156,17 +5156,17 @@ msgstr ""
 "Ezin izan da dokumentua inprimatu. Errore zehatza \"%1\" da. Mesedez honen "
 "berri eman hemen: bugs.kde.org"
 
-#: part/part.cpp:3822
+#: part/part.cpp:3832
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Joan lehen zeunden lekura"
 
-#: part/part.cpp:3826
+#: part/part.cpp:3836
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Joan ondoren zeunden lekura"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3861
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5175,7 +5175,7 @@ msgstr ""
 "<qt><strong>Fitxategi errorea!</strong> Ezin izan da aldi baterako "
 "<nobr><strong>%1</strong></nobr> fitxategia sortu.</qt>"
 
-#: part/part.cpp:3863
+#: part/part.cpp:3873
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5185,7 +5185,7 @@ msgstr ""
 "strong></nobr> fitxategia deskonprimitzeko ireki. Fitxategia ez da zamatuko."
 "</qt>"
 
-#: part/part.cpp:3867
+#: part/part.cpp:3877
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5198,7 +5198,7 @@ msgstr ""
 "kudeatzailean fitxategiari eskuin-klik egin, 'Propietatek' aukera hautatu, "
 "eta irekitzen den leihoan 'Baimenak' fitxara joanda.</qt>"
 
-#: part/part.cpp:3889
+#: part/part.cpp:3899
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5207,7 +5207,7 @@ msgstr ""
 "<qt><strong>Fitxategi errorea!</strong> ezin izan da <nobr><strong>%1</"
 "strong></nobr> fitxategia deskonprimitu. Fitxategia ez da zamatuko.</qt>"
 
-#: part/part.cpp:3893
+#: part/part.cpp:3903
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5217,27 +5217,27 @@ msgstr ""
 "baduzu, saiatu fitxategia eskuz deskonprimitzen komando-erroko tresnak "
 "erabiliz.</qt>"
 
-#: part/part.cpp:3919
+#: part/part.cpp:3929
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Laster-markarik ez"
 
-#: part/part.cpp:3990
+#: part/part.cpp:4000
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Arazoa bat egon da dokumentua partekatzean: %1"
 
-#: part/part.cpp:3990 part/part.cpp:3996
+#: part/part.cpp:4000 part/part.cpp:4006
 #, kde-format
 msgid "Share"
 msgstr "Partekatu"
 
-#: part/part.cpp:3994
+#: part/part.cpp:4004
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Dokumentu partekatze arrakastatsua"
 
-#: part/part.cpp:3996
+#: part/part.cpp:4006
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr "Partekatutako dokumentua hemen aurkituko duzu: <a href=\"%1\">%1</a>"
@@ -5380,34 +5380,34 @@ msgstr "%1 pantaila"
 msgid "Exit Presentation Mode"
 msgstr "Irten aurkezpen modutik"
 
-#: part/presentationwidget.cpp:373
+#: part/presentationwidget.cpp:407
 #, kde-format
 msgid "Title: %1"
 msgstr "Izenburua: %1"
 
-#: part/presentationwidget.cpp:378
+#: part/presentationwidget.cpp:412
 #, kde-format
 msgid "Pages: %1"
 msgstr "Orrialdeak: %1"
 
-#: part/presentationwidget.cpp:379
+#: part/presentationwidget.cpp:413
 #, kde-format
 msgid "Click to begin"
 msgstr "Klik egin hasteko"
 
-#: part/presentationwidget.cpp:521
+#: part/presentationwidget.cpp:555
 #, kde-format
 msgctxt "For Presentation"
 msgid "Pause"
 msgstr "Eten"
 
-#: part/presentationwidget.cpp:524
+#: part/presentationwidget.cpp:558
 #, kde-format
 msgctxt "For Presentation"
 msgid "Play"
 msgstr "Jo"
 
-#: part/presentationwidget.cpp:1622
+#: part/presentationwidget.cpp:1675
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5418,7 +5418,7 @@ msgstr ""
 "klik egin sagua goi-eskuin izkinan ipintzean agertzen den «Irten» botoiari. "
 "Noski, leihoen artean alda dezakezu (Alt+Tab lehenetsia)"
 
-#: part/presentationwidget.cpp:1718
+#: part/presentationwidget.cpp:1771
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -6139,7 +6139,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Ezin da Okularren osagaia aurkitu."
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6148,7 +6148,7 @@ msgstr ""
 "Egin klik fitxategi bat irekitzeko\n"
 "Egin klik eta eutsi oraintsuko fitxategi bat irekitzeko"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6156,62 +6156,62 @@ msgstr ""
 "<b>Klik egin</b> fitxategi bat irekitzeko edo <b>Klik egin eta eutsi</b> "
 "oraintsuko fitxategi bat hautatzeko"
 
-#: shell/shell.cpp:583
+#: shell/shell.cpp:585
 #, kde-format
 msgid "Next Tab"
 msgstr "Hurrengo fitxa"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:591
 #, kde-format
 msgid "Previous Tab"
 msgstr "Aurreko fitxa"
 
-#: shell/shell.cpp:597
+#: shell/shell.cpp:599
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Aldatu %1 fitxara"
 
-#: shell/shell.cpp:613
+#: shell/shell.cpp:615
 #, kde-format
 msgid "Undo close tab"
 msgstr "Desegin fitxa ixtea"
 
-#: shell/shell.cpp:622
+#: shell/shell.cpp:624
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Giltzatu Alboko-barra"
 
-#: shell/shell.cpp:722
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All files (*)"
 msgstr "Fitxategi guztiak (*)"
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:725
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Onartutako fitxategi guztiak (%1)"
 
-#: shell/shell.cpp:727
+#: shell/shell.cpp:729
 #, kde-format
 msgid "Open Document"
 msgstr "Ireki dokumentua"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Confirm Close"
 msgstr "Berretsi ixtea"
 
-#: shell/shell.cpp:845
+#: shell/shell.cpp:847
 #, kde-format
 msgid "Close Tabs"
 msgstr "Itxi fitxak"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "%1 fitxa ixtera zoaz. Ziur zaude jarraitu nahi duzula?"
 
-#: shell/shell.cpp:854
+#: shell/shell.cpp:856
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Abisatu niri fitxa ugari ixten saiatzen naizenean"

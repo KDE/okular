@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Arabic "INCLUDE">
+]>
+
+<!--  Please keep this man page content in sync with Command Line Options sections of Okular handbook -->
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>دليل المستخدم أوكلار</title>
+<author
+><firstname
+>Yuri</firstname
+><surname
+>Chornoivan</surname
+> <contrib
+>صفحة دليل أوكلار.</contrib
+> <email
+>yurchor@ukr.net</email
+></author>
+<date
+>2022-02-19</date>
+<releaseinfo
+>أوكلار 22.04</releaseinfo>
+<productname
+>ترس كيدي</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>okular</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+>أوكلار</refname>
+<refpurpose
+>عارض مستندات عالمي</refpurpose>
+</refnamediv>
+<!-- body begins here -->
+<refsynopsisdiv id='synopsis'>
+<cmdsynopsis
+><command
+>أوكلار</command
+> <arg choice="opt"
+><replaceable
+>خيارات أوكلار</replaceable
+></arg
+> <arg choice="opt"
+><replaceable
+>مسار</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+
+<refsect1 id="description"
+><title
+>الوصف</title>
+<para
+>يهدف <command
+>أوكلار</command
+> إلى عرض المستندات بتنسيقات مختلفة.</para>
+
+</refsect1>
+
+<refsect1 id="options"
+><title
+>خيارات أوكلار</title>
+<variablelist>
+
+<varlistentry>
+<term
+><option
+>-p, --page <replaceable
+>رقم</replaceable
+></option
+></term>
+<listitem>
+<para
+>يفتح صفحة برقم معين في المستند.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--presentation</option
+></term>
+<listitem>
+<para
+>يبدأ المستند في وضع العرض التقديمي.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print</option
+></term>
+<listitem>
+<para
+>يبدأ مع حوار الطباعة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--print-and-exit</option
+></term>
+<listitem>
+<para
+>يبدأ مع حوار الطباعة ويخرج بعد الانتهاء من الطباعة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--unique</option
+></term>
+<listitem>
+<para
+>التحكم في النسخة الفريدة.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--noraise</option
+></term>
+<listitem>
+<para
+>يتيح منع نافذة أوكلار من البروز بعد البدء.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--find <replaceable
+>سلسلة</replaceable
+></option
+></term>
+<listitem>
+<para
+>يحاول البحث عن سلسلة معينة وإبرازها في المستند. يعمل فقط إذا مُرر مستند واحد كمعامل لأمر أوكلار.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><option
+>--editor-cmd <replaceable
+>سلسلة</replaceable
+></option
+></term>
+<listitem>
+<para
+>يضبط أمر المحرر الخارجي. لا يمكنك ضبط أمر المحرر في نسخة مشغلة مسبقًا من أوكلار. يرجى ملاحظة أن الخيار <option
+>--unique</option
+> غير مدعوم عند ضبط أمر المحرر عبر سطر الأوامر.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="arguments"
+><title
+>المعاملات</title>
+<variablelist>
+<varlistentry>
+<term
+><option
+>المسار</option
+></term>
+<listitem>
+<para
+>عنوان المستند المطلوب فتحه. لملفات PDF، يمكن تمريره كـ <replaceable
+>اسم_المستند</replaceable
+>#<replaceable
+>الوجهة_المسماة</replaceable
+> حيث تكون <replaceable
+>الوجهة_المسماة</replaceable
+> هي وجهة معينة مضمنة في المستند.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</refsect1>
+
+<refsect1 id="feedback"
+><title
+>الملاحظات</title>
+<para
+>على آي آر سي، irc.libera.chat ‎#okular أو عبر البريد الإلكتروني، okular-devel@kde.org أو على الويب، &lt;<ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+>&gt;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>راجع أيضًا</title>
+<simplelist>
+<member
+>تتوفر وثائق مستخدم أكثر تفصيلًا في <ulink url="help:/okular"
+>help:/okular</ulink
+> (إما بإدخال هذا <acronym
+>المسار</acronym
+> في كنكورر، أو بتشغيل <userinput
+><command
+>khelpcenter</command
+> <parameter
+>help:/okular</parameter
+></userinput
+>).</member>
+<member
+>kf6options(7)</member>
+<member
+>qt6options(7)</member>
+<member
+>توجد أيضًا معلومات إضافية متاحة في <ulink url="https://okular.kde.org/"
+>https://okular.kde.org/</ulink
+></member>
+</simplelist>
+</refsect1>
+
+<refsect1 id="copyright"
+><title
+>حقوق النسخ</title>
+<para
+>حقوق النسخ &copy; 2002 Wilco Greven, Christophe Devriese</para>
+<para
+>حقوق النسخ &copy; 2004-2005 Enrico Ros</para>
+<para
+>حقوق النسخ &copy; 2005 Piotr Szymanski</para>
+<para
+>حقوق النسخ &copy; 2004-2012 Albert Astals Cid</para>
+<para
+>حقوق النسخ &copy; 2006-2009 Pino Toscano</para>
+<para
+>الترخيص: رخصة جنو العمومية الإصدار 2 &lt;<ulink url="https://www.gnu.org/licenses/gpl-2.0.html"
+>https://www.gnu.org/licenses/gpl-2.0.html</ulink
+>&gt;</para>
+</refsect1>
+</refentry>
+

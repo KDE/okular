@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 00:12+0000\n"
+"POT-Creation-Date: 2026-11-13 03:37+0000\n"
 "PO-Revision-Date: 2026-11-07 05:55-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -254,7 +254,7 @@ msgstr "Pausar o filme"
 msgid "Resume movie"
 msgstr "Continuar o filme"
 
-#: core/audioplayer.cpp:313
+#: core/audioplayer.cpp:366
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Este Okular foi compilado sem suporte a áudio"
@@ -933,7 +933,7 @@ msgctxt "Unknown author"
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: gui/guiutils.cpp:189 part/presentationwidget.cpp:376
+#: gui/guiutils.cpp:189 part/presentationwidget.cpp:410
 #, kde-format
 msgid "Author: %1"
 msgstr "Autor: %1"
@@ -1710,12 +1710,12 @@ msgctxt "Page label (number)"
 msgid "Page %1 (%2)"
 msgstr "Página %1 (%2)"
 
-#: part/annotationmodel.cpp:324 part/part.cpp:3208
+#: part/annotationmodel.cpp:324 part/part.cpp:3218
 #, kde-format
 msgid "Page %1"
 msgstr "Página %1"
 
-#: part/annotationpopup.cpp:127
+#: part/annotationpopup.cpp:128
 #, kde-format
 msgctxt "Menu title"
 msgid "Annotation"
@@ -1723,67 +1723,77 @@ msgid_plural "%1 Annotations"
 msgstr[0] "Anotação"
 msgstr[1] "%1 anotações"
 
-#: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
+#: part/annotationpopup.cpp:130 part/annotationpopup.cpp:200
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Abrir a nota instantânea"
 
-#: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
-#: part/bookmarklist.cpp:263 part/part.cpp:2289 part/part.cpp:3214
+#: part/annotationpopup.cpp:138 part/annotationpopup.cpp:207
+#: part/bookmarklist.cpp:263 part/part.cpp:2299 part/part.cpp:3224
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Remover favorito"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3216
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:210 part/part.cpp:3226
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Adicionar favorito"
 
-#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
+#: part/annotationpopup.cpp:147 part/annotationpopup.cpp:214
 #, kde-format
 msgctxt "@action"
 msgid "Copy"
 msgstr "Copiar"
 
-#: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
+#: part/annotationpopup.cpp:151 part/annotationpopup.cpp:218
 #, kde-format
 msgid "Paste"
 msgstr "Colar"
 
-#: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
+#: part/annotationpopup.cpp:156 part/annotationpopup.cpp:223
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Copiar texto para a área de transferência"
 
-#: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
-#: part/pageview.cpp:2589 part/pageview.cpp:2941 part/pageview.cpp:2943
-#: part/pageview.cpp:3103 part/pageview.cpp:3164 part/pageview.cpp:3166
+#: part/annotationpopup.cpp:160 part/annotationpopup.cpp:227
+#: part/pageview.cpp:2798 part/pageview.cpp:3150 part/pageview.cpp:3152
+#: part/pageview.cpp:3312 part/pageview.cpp:3373 part/pageview.cpp:3375
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Cópia proibida pela DRM"
 
-#: part/annotationpopup.cpp:164 part/annotationpopup.cpp:231
+#: part/annotationpopup.cpp:165 part/annotationpopup.cpp:232
 #, kde-format
 msgid "&Delete"
 msgstr "&Excluir"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:747
+#: part/annotationpopup.cpp:179 part/annotationpopup.cpp:236 part/part.cpp:747
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "&Propriedades"
 
-#: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
+#: part/annotationpopup.cpp:186 part/annotationpopup.cpp:242
 #, kde-format
 msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
 msgstr "&Abrir '%1'…"
 
-#: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
+#: part/annotationpopup.cpp:190 part/annotationpopup.cpp:246
 #, kde-format
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Salvar '%1'…"
+
+#: part/annotationpopup.cpp:256 part/pageview.cpp:4852
+#, kde-format
+msgid "Play this Sound"
+msgstr "Reproduzir este som"
+
+#: part/annotationpopup.cpp:259 part/pageview.cpp:4854
+#, kde-format
+msgid "Stop Sound"
+msgstr "Parar o som"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -2355,12 +2365,12 @@ msgstr "Mostrar para todos os documentos"
 msgid "Search…"
 msgstr "Pesquisar…"
 
-#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3196
+#: part/bookmarklist.cpp:259 part/bookmarklist.cpp:293 part/part.cpp:3206
 #, kde-format
 msgid "Expand All"
 msgstr "Expandir tudo"
 
-#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3197
+#: part/bookmarklist.cpp:260 part/bookmarklist.cpp:294 part/part.cpp:3207
 #, kde-format
 msgid "Collapse All"
 msgstr "Recolher tudo"
@@ -2371,7 +2381,7 @@ msgid "Go to This Bookmark"
 msgstr "Ir para este favorito"
 
 #: part/bookmarklist.cpp:262 part/bookmarklist.cpp:299 part/part.cpp:689
-#: part/part.cpp:2484
+#: part/part.cpp:2494
 #, kde-format
 msgid "Rename Bookmark"
 msgstr "Renomear favorito"
@@ -2883,115 +2893,115 @@ msgctxt "@label:textbox Config dialog, editor page"
 msgid "Command:"
 msgstr "Comando:"
 
-#: part/dlggeneral.cpp:35
+#: part/dlggeneral.cpp:91
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Use smooth scrolling"
 msgstr "Usar rolagem suave"
 
-#: part/dlggeneral.cpp:37
+#: part/dlggeneral.cpp:93
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Appearance:"
 msgstr "Aparência:"
 
-#: part/dlggeneral.cpp:41
+#: part/dlggeneral.cpp:97
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show scrollbars"
 msgstr "Mostrar barras de rolagem"
 
-#: part/dlggeneral.cpp:48
+#: part/dlggeneral.cpp:104
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Link the thumbnails with the page"
 msgstr "Manter miniaturas em sincronia com a página"
 
-#: part/dlggeneral.cpp:55
+#: part/dlggeneral.cpp:111
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show hints and info messages"
 msgstr "Mostrar dicas e mensagens informativas"
 
-#: part/dlggeneral.cpp:61
+#: part/dlggeneral.cpp:117
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Notify about embedded files, forms, or signatures"
 msgstr "Notificar sobre arquivos, formulários ou assinaturas incorporados"
 
-#: part/dlggeneral.cpp:68
+#: part/dlggeneral.cpp:124
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Display document title in titlebar if available"
 msgstr "Exibir o título do documento na barra de título, se disponível"
 
-#: part/dlggeneral.cpp:74
+#: part/dlggeneral.cpp:130
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display file name only"
 msgstr "Exibir apenas o nome do arquivo"
 
-#: part/dlggeneral.cpp:75
+#: part/dlggeneral.cpp:131
 #, kde-format
 msgctxt "item:inlistbox Config dialog, general page"
 msgid "Display full file path"
 msgstr "Exibir a localização completa do arquivo"
 
-#: part/dlggeneral.cpp:77
+#: part/dlggeneral.cpp:133
 #, kde-format
 msgctxt "label:listbox Config dialog, general page"
 msgid "When not displaying document title:"
 msgstr "Quando não exibir o título do documento:"
 
-#: part/dlggeneral.cpp:92
+#: part/dlggeneral.cpp:148
 #, kde-format
 msgctxt "@label:listbox Config dialog, general page"
 msgid "Use custom background color:"
 msgstr "Usar cor do plano de fundo personalizada:"
 
-#: part/dlggeneral.cpp:114
+#: part/dlggeneral.cpp:170
 #, kde-format
 msgctxt "@title:group Config dialog, general page"
 msgid "Program features:"
 msgstr "Recursos do programa:"
 
-#: part/dlggeneral.cpp:121
+#: part/dlggeneral.cpp:177
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open new files in tabs"
 msgstr "Abrir novos arquivos em abas"
 
-#: part/dlggeneral.cpp:126
+#: part/dlggeneral.cpp:182
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Switch to existing tab if file is already open"
 msgstr "Alternar para a aba existente se o arquivo já estiver aberto"
 
-#: part/dlggeneral.cpp:139
+#: part/dlggeneral.cpp:195
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Obey DRM limitations"
 msgstr "Obedecer limitações do DRM"
 
-#: part/dlggeneral.cpp:148
+#: part/dlggeneral.cpp:204
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Reload document on file change"
 msgstr "Recarregar documento se o arquivo for alterado"
 
-#: part/dlggeneral.cpp:155
+#: part/dlggeneral.cpp:211
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Show backend selection dialog"
 msgstr "Mostrar diálogo de seleção de infraestrutura"
 
-#: part/dlggeneral.cpp:162
+#: part/dlggeneral.cpp:218
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Right to left reading direction"
 msgstr "Direção de leitura da direita para a esquerda"
 
-#: part/dlggeneral.cpp:168
+#: part/dlggeneral.cpp:224
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid ""
@@ -3001,51 +3011,51 @@ msgstr ""
 "Use as informações do arquivo para determinar se deve abrir no modo contínuo "
 "por padrão"
 
-#: part/dlggeneral.cpp:178
+#: part/dlggeneral.cpp:236
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
 "Para arquivos sem informações de arquivo, abrir em modo contínuo por padrão"
 
-#: part/dlggeneral.cpp:180
+#: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
 msgstr "Abrir no modo contínuo por padrão"
 
-#: part/dlggeneral.cpp:188
+#: part/dlggeneral.cpp:246
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Continue from last viewed page"
 msgstr "Continuar a partir da última pasta visualizada"
 
-#: part/dlggeneral.cpp:195
+#: part/dlggeneral.cpp:253
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "When using Browse Tool, wrap cursor at screen edges"
 msgstr ""
 "Quando usar a ferramenta de navegação, envolva o cursor nas bordas da tela"
 
-#: part/dlggeneral.cpp:203
+#: part/dlggeneral.cpp:261
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Items in recent history:"
 msgstr "Itens no histórico recente:"
 
-#: part/dlggeneral.cpp:218
+#: part/dlggeneral.cpp:276
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Overview columns:"
 msgstr "Colunas da visão geral:"
 
-#: part/dlggeneral.cpp:225
+#: part/dlggeneral.cpp:283
 #, kde-format
 msgctxt "@item:spinbox Config dialog, general page, page overlap factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:226
+#: part/dlggeneral.cpp:284
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid ""
@@ -3055,61 +3065,61 @@ msgstr ""
 "Define quanto da área de visualização atual ficará visível ao pressionar as "
 "teclas Page Up e Page Down."
 
-#: part/dlggeneral.cpp:228
+#: part/dlggeneral.cpp:286
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Page Up/Down overlap:"
 msgstr "Sobreposição do &Page Up/Down:"
 
-#: part/dlggeneral.cpp:235
+#: part/dlggeneral.cpp:293
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
 msgstr "Define o espaçamento vertical entre as páginas no modo contínuo."
 
-#: part/dlggeneral.cpp:237
+#: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
 msgstr "Espaçamento vertical da página:"
 
-#: part/dlggeneral.cpp:242
+#: part/dlggeneral.cpp:300
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, custom zoom factor"
 msgid "%v%"
 msgstr "%v%"
 
-#: part/dlggeneral.cpp:246
+#: part/dlggeneral.cpp:304
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "100%"
 msgstr "100%"
 
-#: part/dlggeneral.cpp:247
+#: part/dlggeneral.cpp:305
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Width"
 msgstr "Ajustar à largura"
 
-#: part/dlggeneral.cpp:248
+#: part/dlggeneral.cpp:306
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Fit Page"
 msgstr "Ajustar à página"
 
-#: part/dlggeneral.cpp:249
+#: part/dlggeneral.cpp:307
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Auto Fit"
 msgstr "Ajuste automático"
 
-#: part/dlggeneral.cpp:250
+#: part/dlggeneral.cpp:308
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: part/dlggeneral.cpp:251
+#: part/dlggeneral.cpp:309
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, general page, default zoom"
 msgid ""
@@ -3119,7 +3129,7 @@ msgstr ""
 "Define o modo de zoom padrão para arquivos que nunca foram abertos antes. "
 "Para arquivos que foram abertos antes do zoom anterior ser aplicado."
 
-#: part/dlggeneral.cpp:255
+#: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
@@ -3810,7 +3820,7 @@ msgctxt "Enable regular expression search in the side navigation panels"
 msgid "Regular Expression"
 msgstr "Expressão regular"
 
-#: part/layers.cpp:33 part/part.cpp:2332
+#: part/layers.cpp:33 part/part.cpp:2342
 #, kde-format
 msgid "Layers"
 msgstr "Camadas"
@@ -3821,304 +3831,304 @@ msgctxt "Layouted like: '5 [pages] of 10'"
 msgid "of"
 msgstr "de"
 
-#: part/pageview.cpp:534
+#: part/pageview.cpp:729
 #, kde-format
 msgid "Zoom"
 msgstr "Zoom"
 
-#: part/pageview.cpp:546
+#: part/pageview.cpp:741
 #, kde-format
 msgid "Zoom to 100%"
 msgstr "Ampliar para 100%"
 
-#: part/pageview.cpp:557
+#: part/pageview.cpp:752
 #, kde-format
 msgid "Rotate &Right"
 msgstr "Girar à &direita"
 
-#: part/pageview.cpp:558
+#: part/pageview.cpp:753
 #, kde-format
 msgctxt "Rotate right"
 msgid "Right"
 msgstr "Direita"
 
-#: part/pageview.cpp:562
+#: part/pageview.cpp:757
 #, kde-format
 msgid "Rotate &Left"
 msgstr "Girar à &esquerda"
 
-#: part/pageview.cpp:563
+#: part/pageview.cpp:758
 #, kde-format
 msgctxt "Rotate left"
 msgid "Left"
 msgstr "Esquerda"
 
-#: part/pageview.cpp:567
+#: part/pageview.cpp:762
 #, kde-format
 msgid "Original Orientation"
 msgstr "Orientação original"
 
-#: part/pageview.cpp:573
+#: part/pageview.cpp:768
 #, kde-format
 msgid "&Trim View"
 msgstr "Recor&tar a visualização"
 
-#: part/pageview.cpp:577
+#: part/pageview.cpp:772
 #, kde-format
 msgid "&Trim Margins"
 msgstr "Recor&tar as margens"
 
-#: part/pageview.cpp:584
+#: part/pageview.cpp:779
 #, kde-format
 msgid "Trim To &Selection"
 msgstr "Recortar à &seleção"
 
-#: part/pageview.cpp:590
+#: part/pageview.cpp:785
 #, kde-format
 msgid "Fit &Width"
 msgstr "A&justar à largura"
 
-#: part/pageview.cpp:594
+#: part/pageview.cpp:789
 #, kde-format
 msgid "Fit &Page"
 msgstr "Ajustar à &página"
 
-#: part/pageview.cpp:598
+#: part/pageview.cpp:793
 #, kde-format
 msgid "&Auto Fit"
 msgstr "&Ajuste automático"
 
-#: part/pageview.cpp:602
+#: part/pageview.cpp:797
 #, kde-format
 msgid "Fit Wi&ndow to Page"
 msgstr "Ajustar ja&nela à página"
 
-#: part/pageview.cpp:609
+#: part/pageview.cpp:804
 #, kde-format
 msgid "&View Mode"
 msgstr "Modo de e&xibição"
 
-#: part/pageview.cpp:621
+#: part/pageview.cpp:816
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Single Page"
 msgstr "Página &única"
 
-#: part/pageview.cpp:622
+#: part/pageview.cpp:817
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Facing Pages"
 msgstr "Páginas &opostas"
 
-#: part/pageview.cpp:623
+#: part/pageview.cpp:818
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "Facing Pages (&Center First Page)"
 msgstr "Páginas opostas (&centralizar a primeira página)"
 
-#: part/pageview.cpp:626
+#: part/pageview.cpp:821
 #, kde-format
 msgctxt "@item:inmenu"
 msgid "&Overview"
 msgstr "&Visão geral"
 
-#: part/pageview.cpp:638
+#: part/pageview.cpp:833
 #, kde-format
 msgid "&Continuous"
 msgstr "&Contínuo"
 
-#: part/pageview.cpp:645
+#: part/pageview.cpp:840
 #, kde-format
 msgctxt "@action page layout"
 msgid "Use Right to Left Reading Direction"
 msgstr "Usar direção de leitura da direita para a esquerda"
 
-#: part/pageview.cpp:654
+#: part/pageview.cpp:849
 #, kde-format
 msgid "&Browse"
 msgstr "&Navegar"
 
-#: part/pageview.cpp:662
+#: part/pageview.cpp:857
 #, kde-format
 msgid "&Zoom"
 msgstr "&Zoom"
 
-#: part/pageview.cpp:682
+#: part/pageview.cpp:877
 #, kde-format
 msgid "Area &Selection"
 msgstr "&Seleção de área"
 
-#: part/pageview.cpp:689
+#: part/pageview.cpp:884
 #, kde-format
 msgid "&Text Selection"
 msgstr "Seleção de &texto"
 
-#: part/pageview.cpp:696
+#: part/pageview.cpp:891
 #, kde-format
 msgid "T&able Selection"
 msgstr "Seleção de t&abela"
 
-#: part/pageview.cpp:703
+#: part/pageview.cpp:898
 #, kde-format
 msgid "&Magnifier"
 msgstr "&Lupa"
 
-#: part/pageview.cpp:712
+#: part/pageview.cpp:907
 #, kde-format
 msgctxt "@action"
 msgid "Selection Tools"
 msgstr "Ferramentas de seleção"
 
-#: part/pageview.cpp:738
+#: part/pageview.cpp:933
 #, kde-format
 msgid "Digitally &Sign…"
 msgstr "A&ssinar digitalmente…"
 
-#: part/pageview.cpp:744
+#: part/pageview.cpp:939
 #, kde-format
 msgid "Speak Whole Document"
 msgstr "Falar o documento inteiro"
 
-#: part/pageview.cpp:749
+#: part/pageview.cpp:944
 #, kde-format
 msgid "Speak From Current Page"
 msgstr "Falar a partir da página atual"
 
-#: part/pageview.cpp:754
+#: part/pageview.cpp:949
 #, kde-format
 msgid "Speak Current Page"
 msgstr "Falar a página atual"
 
-#: part/pageview.cpp:759
+#: part/pageview.cpp:954
 #, kde-format
 msgid "Stop Speaking"
 msgstr "Parar de falar"
 
-#: part/pageview.cpp:764
+#: part/pageview.cpp:959
 #, kde-format
 msgid "Pause/Resume Speaking"
 msgstr "Pausar/Continuar a fala"
 
-#: part/pageview.cpp:776
+#: part/pageview.cpp:971
 #, kde-format
 msgid "Scroll Up"
 msgstr "Rolar para cima"
 
-#: part/pageview.cpp:782
+#: part/pageview.cpp:977
 #, kde-format
 msgid "Scroll Down"
 msgstr "Rolar para baixo"
 
-#: part/pageview.cpp:788
+#: part/pageview.cpp:983
 #, kde-format
 msgid "Scroll Page Up"
 msgstr "Rolar uma página acima"
 
-#: part/pageview.cpp:794
+#: part/pageview.cpp:989
 #, kde-format
 msgid "Scroll Page Down"
 msgstr "Rolar uma página abaixo"
 
-#: part/pageview.cpp:800
+#: part/pageview.cpp:995
 #, kde-format
 msgid "Show Forms"
 msgstr "Mostrar formulários"
 
-#: part/pageview.cpp:1312
+#: part/pageview.cpp:1512
 #, kde-format
 msgid " Loaded a one-page document."
 msgid_plural " Loaded a %1-page document."
 msgstr[0] " Foi carregado um documento com uma página."
 msgstr[1] " Foi carregado um documento com %1 páginas."
 
-#: part/pageview.cpp:2583
+#: part/pageview.cpp:2792
 #, kde-format
 msgid "Copy Table Contents to Clipboard"
 msgstr "Copiar conteúdo da tabela para a área de transferência"
 
-#: part/pageview.cpp:2933
+#: part/pageview.cpp:3142
 #, kde-format
 msgid "Text (1 character)"
 msgid_plural "Text (%1 characters)"
 msgstr[0] "Texto (1 caractere)"
 msgstr[1] "Texto (%1 caracteres)"
 
-#: part/pageview.cpp:2934 part/pageview.cpp:2956
+#: part/pageview.cpp:3143 part/pageview.cpp:3165
 #, kde-format
 msgid "Copy to Clipboard"
 msgstr "Copiar para a área de transferência"
 
-#: part/pageview.cpp:2936 part/pageview.cpp:3155 part/part.cpp:840
+#: part/pageview.cpp:3145 part/pageview.cpp:3364 part/part.cpp:840
 #, kde-format
 msgid "Copy Text (Without line breaks)"
 msgstr "Copiar texto (sem quebras de linha)"
 
-#: part/pageview.cpp:2947 part/pageview.cpp:3159
+#: part/pageview.cpp:3156 part/pageview.cpp:3368
 #, kde-format
 msgid "Speak Text"
 msgstr "Falar o texto"
 
-#: part/pageview.cpp:2955
+#: part/pageview.cpp:3164
 #, kde-format
 msgid "Image (%1 × %2 pixels)"
 msgstr "Imagem (%1 x %2 pixels)"
 
-#: part/pageview.cpp:2957
+#: part/pageview.cpp:3166
 #, kde-format
 msgid "Save to File…"
 msgstr "Salvar para arquivo…"
 
-#: part/pageview.cpp:2977
+#: part/pageview.cpp:3186
 #, kde-format
 msgid "Image [%1 × %2] copied to clipboard."
 msgstr "A imagem [%1 × %2] foi copiada para a área de transferência."
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:3189
 #, kde-format
 msgid "Save file"
 msgstr "Salvar arquivo"
 
-#: part/pageview.cpp:2980
+#: part/pageview.cpp:3189
 #, kde-format
 msgid "Images (*.png *.jpeg)"
 msgstr "Imagens (*.png *.jpeg)"
 
-#: part/pageview.cpp:2982
+#: part/pageview.cpp:3191
 #, kde-format
 msgid "File not saved."
 msgstr "O arquivo não foi salvo."
 
-#: part/pageview.cpp:2993
+#: part/pageview.cpp:3202
 #, kde-format
 msgid "Image [%1 × %2] saved to %3 file."
 msgstr "A imagem [%1 × %2] foi salva no arquivo %3."
 
-#: part/pageview.cpp:3154
+#: part/pageview.cpp:3363
 #, kde-format
 msgid "Copy Text"
 msgstr "Copiar o texto"
 
-#: part/pageview.cpp:3177
+#: part/pageview.cpp:3386
 #, kde-format
 msgid "Go to '%1'"
 msgstr "Ir para '%1'"
 
-#: part/pageview.cpp:4208 part/part.cpp:3219
+#: part/pageview.cpp:4433 part/part.cpp:3229
 #, kde-format
 msgid "Fit Width"
 msgstr "Ajustar à largura"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Fit Page"
 msgstr "Ajustar à página"
 
-#: part/pageview.cpp:4208
+#: part/pageview.cpp:4433
 #, kde-format
 msgid "Auto Fit"
 msgstr "Ajuste automático"
 
-#: part/pageview.cpp:4231
+#: part/pageview.cpp:4456
 #, kde-format
 msgctxt ""
 "Zoom percentage value %1 will be replaced by the actual zoom factor value, "
@@ -4127,68 +4137,58 @@ msgctxt ""
 msgid "%1%"
 msgstr "%1%"
 
-#: part/pageview.cpp:4514
+#: part/pageview.cpp:4809
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Pesquisar por '%1' com"
 
-#: part/pageview.cpp:4528
+#: part/pageview.cpp:4823
 #, kde-format
 msgid "Configure Web Shortcuts…"
 msgstr "Configurar os atalhos da Web…"
 
-#: part/pageview.cpp:4554
+#: part/pageview.cpp:4849
 #, kde-format
 msgid "Follow This Link"
 msgstr "Seguir este link"
 
-#: part/pageview.cpp:4557
-#, kde-format
-msgid "Play this Sound"
-msgstr "Reproduzir este som"
-
-#: part/pageview.cpp:4559
-#, kde-format
-msgid "Stop Sound"
-msgstr "Parar o som"
-
-#: part/pageview.cpp:4565
+#: part/pageview.cpp:4860
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Copiar endereço do link"
 
-#: part/pageview.cpp:4622
+#: part/pageview.cpp:4917
 #, kde-format
 msgid "Search for '%1' in this document"
 msgstr "Pesquisar por '%1' neste documento"
 
-#: part/pageview.cpp:5155
+#: part/pageview.cpp:5450
 #, kde-format
 msgid "Welcome"
 msgstr "Bem-vindo"
 
-#: part/pageview.cpp:5281
+#: part/pageview.cpp:5571
 #, kde-format
 msgid "Select zooming area. Right-click to zoom out."
 msgstr ""
 "Selecione a área de zoom. Clique com o botão direito do mouse para reduzir."
 
-#: part/pageview.cpp:5296
+#: part/pageview.cpp:5586
 #, kde-format
 msgid "Click to see the magnified view."
 msgstr "Clique para ver a exibição ampliada."
 
-#: part/pageview.cpp:5313
+#: part/pageview.cpp:5603
 #, kde-format
 msgid "Draw a rectangle around the text/graphics to copy."
 msgstr "Desenhe um retângulo ao redor do texto/imagem para copiar."
 
-#: part/pageview.cpp:5329
+#: part/pageview.cpp:5619
 #, kde-format
 msgid "Select text"
 msgstr "Selecione o texto"
 
-#: part/pageview.cpp:5345
+#: part/pageview.cpp:5635
 #, kde-format
 msgid ""
 "Draw a rectangle around the table, then click near edges to divide up; press "
@@ -4197,7 +4197,7 @@ msgstr ""
 "Desenhe um retângulo ao redor da tabela, depois clique perto das bordas para "
 "dividi-las. Pressione Esc para limpar."
 
-#: part/pageview.cpp:5360 part/pageview.cpp:5368
+#: part/pageview.cpp:5650 part/pageview.cpp:5658
 #, kde-format
 msgid ""
 "All your signing certificates are invalid. In case signing worked before, "
@@ -4206,17 +4206,17 @@ msgstr ""
 "Todos os seus certificados de assinatura são inválidos. Caso a assinatura "
 "tenha funcionado antes, verifique as datas de validade."
 
-#: part/pageview.cpp:5361
+#: part/pageview.cpp:5651
 #, kde-format
 msgid "No valid certificates"
 msgstr "Nenhum certificado válido"
 
-#: part/pageview.cpp:5362 part/pageview.cpp:5377
+#: part/pageview.cpp:5652 part/pageview.cpp:5667
 #, kde-format
 msgid "Open Certificate Manager"
 msgstr "Abrir gerenciador de certificados"
 
-#: part/pageview.cpp:5373
+#: part/pageview.cpp:5663
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>Launch Certificate Manager "
@@ -4228,12 +4228,12 @@ msgstr ""
 "informações, veja a seção sobre <a href=\"%1\">Adicionando assinaturas "
 "digitais</a> no manual."
 
-#: part/pageview.cpp:5376 part/pageview.cpp:5388
+#: part/pageview.cpp:5666 part/pageview.cpp:5678
 #, kde-format
 msgid "No certificates found"
 msgstr "Nenhum certificado encontrado"
 
-#: part/pageview.cpp:5386
+#: part/pageview.cpp:5676
 #, kde-format
 msgid ""
 "There are no available signing certificates.<br/>For more information, "
@@ -4244,17 +4244,17 @@ msgstr ""
 "veja a seção sobre <a href=\"%1\">Adicionando assinaturas digitais</a> no "
 "manual."
 
-#: part/pageview.cpp:5409
+#: part/pageview.cpp:5699
 #, kde-format
 msgid "You have unsaved changes. Please save the document before signing it."
 msgstr "Você tem alterações não salvas. Salve o documento antes de assina-lo."
 
-#: part/pageview.cpp:5432
+#: part/pageview.cpp:5722
 #, kde-format
 msgid "Draw a rectangle to insert the signature field"
 msgstr "Desenhe um retângulo para inserir o campo da assinatura"
 
-#: part/pageview.cpp:5582
+#: part/pageview.cpp:5872
 #, kde-format
 msgid "Draw a rectangle around the page area you wish to keep visible"
 msgstr ""
@@ -4597,7 +4597,7 @@ msgctxt "@action"
 msgid "Configure Color Modes…"
 msgstr "Configurar modo de cor…"
 
-#: part/part.cpp:832 part/part.cpp:3224
+#: part/part.cpp:832 part/part.cpp:3234
 #, kde-format
 msgid "Paste Annotation"
 msgstr "Colar anotação"
@@ -4768,7 +4768,7 @@ msgstr ""
 "Todas as edições e recursos interativos deste documento estão desabilitados. "
 "Salve uma cópia e reabra-o para editar."
 
-#: part/part.cpp:1743
+#: part/part.cpp:1753
 #, kde-format
 msgid ""
 "This document wants to be shown full screen.\n"
@@ -4777,27 +4777,27 @@ msgstr ""
 "Este documento pretende ser mostrado em tela cheia.\n"
 "Deseja sair do modo normal e entrar no modo de apresentação?"
 
-#: part/part.cpp:1745
+#: part/part.cpp:1755
 #, kde-format
 msgid "Request to Change Viewing Mode"
 msgstr "Pedido para mudar o modo de exibição"
 
-#: part/part.cpp:1746
+#: part/part.cpp:1756
 #, kde-format
 msgid "Enter Presentation Mode"
 msgstr "Entrar do modo de apresentação"
 
-#: part/part.cpp:1747
+#: part/part.cpp:1757
 #, kde-format
 msgid "Deny Request"
 msgstr "Negar o pedido"
 
-#: part/part.cpp:1837
+#: part/part.cpp:1847
 #, kde-format
 msgid "Could not open %1. %2"
 msgstr "Não foi possível abrir %1. %2"
 
-#: part/part.cpp:1867
+#: part/part.cpp:1877
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4811,22 +4811,22 @@ msgstr ""
 "as alterações feitas em outro programa.<nl/><nl/>Deseja continuar "
 "recarregando o arquivo?"
 
-#: part/part.cpp:1871 part/part.cpp:1881
+#: part/part.cpp:1881 part/part.cpp:1891
 #, kde-format
 msgid "File Changed"
 msgstr "Arquivo modificado"
 
-#: part/part.cpp:1872
+#: part/part.cpp:1882
 #, kde-format
 msgid "Continue Reloading"
 msgstr "Continuar a recarregar"
 
-#: part/part.cpp:1873
+#: part/part.cpp:1883
 #, kde-format
 msgid "Abort Reloading"
 msgstr "Cancelar o carregamento"
 
-#: part/part.cpp:1877
+#: part/part.cpp:1887
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4840,27 +4840,27 @@ msgstr ""
 "alterações feitas em outro programa.<nl/><nl/>Deseja continuar fechando o "
 "arquivo?"
 
-#: part/part.cpp:1882
+#: part/part.cpp:1892
 #, kde-format
 msgid "Continue Closing"
 msgstr "Continuar o fechamento"
 
-#: part/part.cpp:1883
+#: part/part.cpp:1893
 #, kde-format
 msgid "Abort Closing"
 msgstr "Cancelar o fechamento"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1900
 #, kde-format
 msgid "Do you want to save your changes to \"%1\" or discard them?"
 msgstr "Deseja salvar suas alterações em \"%1\" ou descartá-las?"
 
-#: part/part.cpp:1890
+#: part/part.cpp:1900
 #, kde-format
 msgid "Close Document"
 msgstr "Fechar documento"
 
-#: part/part.cpp:2025
+#: part/part.cpp:2035
 #, kde-format
 msgid ""
 "This link points to a close document action that does not work when using "
@@ -4869,7 +4869,7 @@ msgstr ""
 "Este link aponta para uma ação que não funciona quando estiver usando o "
 "visualizador incorporado."
 
-#: part/part.cpp:2031
+#: part/part.cpp:2041
 #, kde-format
 msgid ""
 "This link points to a quit application action that does not work when using "
@@ -4878,59 +4878,59 @@ msgstr ""
 "Este link aponta para uma ação de saída do aplicativo que não funciona "
 "quando estiver usando visualizador incorporado."
 
-#: part/part.cpp:2123 part/part.cpp:2143
+#: part/part.cpp:2133 part/part.cpp:2153
 #, kde-format
 msgid "Reloading the document…"
 msgstr "Recarregando o documento…"
 
-#: part/part.cpp:2312 part/toc.cpp:36
+#: part/part.cpp:2322 part/toc.cpp:36
 #, kde-format
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: part/part.cpp:2341 part/signaturepanel.cpp:45
+#: part/part.cpp:2351 part/signaturepanel.cpp:45
 #, kde-format
 msgid "Signatures"
 msgstr "Assinaturas"
 
-#: part/part.cpp:2368
+#: part/part.cpp:2378
 #, kde-format
 msgid "Go to Page"
 msgstr "Ir para a página"
 
-#: part/part.cpp:2391
+#: part/part.cpp:2401
 #, kde-format
 msgid "&Page:"
 msgstr "&Página:"
 
-#: part/part.cpp:2484
+#: part/part.cpp:2494
 #, kde-format
 msgid "Enter the new name of the bookmark:"
 msgstr "Digitar o novo nome do favorito:"
 
-#: part/part.cpp:2530
+#: part/part.cpp:2540
 #, kde-format
 msgid "Rename this Bookmark"
 msgstr "Renomear este favorito"
 
-#: part/part.cpp:2533
+#: part/part.cpp:2543
 #, kde-format
 msgid "Remove this Bookmark"
 msgstr "Remover este favorito"
 
-#: part/part.cpp:2619 part/part.cpp:2620 part/part.cpp:3574
+#: part/part.cpp:2629 part/part.cpp:2630 part/part.cpp:3584
 #: part/signaturepartutils.cpp:321
 #, kde-format
 msgctxt "File type name and pattern"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: part/part.cpp:2627 part/revisionviewer.cpp:44
+#: part/part.cpp:2637 part/revisionviewer.cpp:44
 #, kde-format
 msgid "Save As"
 msgstr "Salvar como"
 
-#: part/part.cpp:2644
+#: part/part.cpp:2654
 #, kde-format
 msgid ""
 "You have chosen to save an Okular Archive without the file name ending with "
@@ -4939,18 +4939,18 @@ msgstr ""
 "Você escolheu salvar um arquivo do Okular sem o nome do arquivo terminar com "
 "a extensão '%1'. Isto não é permitido, deseja escolher um novo nome?"
 
-#: part/part.cpp:2645
+#: part/part.cpp:2655
 #, kde-format
 msgid "Unsupported extension"
 msgstr "Extensão não suportada"
 
-#: part/part.cpp:2646
+#: part/part.cpp:2656
 #, kde-format
 msgctxt "@action:button"
 msgid "Choose New Name"
 msgstr "Escolher novo nome"
 
-#: part/part.cpp:2689
+#: part/part.cpp:2699
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4962,17 +4962,17 @@ msgstr ""
 "salvá-lo agora, qualquer alteração feita em outro programa está perdida. Tem "
 "certeza de que deseja continuar?"
 
-#: part/part.cpp:2692 part/part.cpp:2711 part/part.cpp:2763
+#: part/part.cpp:2702 part/part.cpp:2721 part/part.cpp:2773
 #, kde-format
 msgid "Save - Warning"
 msgstr "Salvar - Aviso"
 
-#: part/part.cpp:2694
+#: part/part.cpp:2704
 #, kde-format
 msgid "Save a Copy Elsewhere"
 msgstr "Salvar uma cópia em outro lugar"
 
-#: part/part.cpp:2710
+#: part/part.cpp:2720
 #, kde-format
 msgid ""
 "The current document is protected with a password.<br />In order to save, "
@@ -4983,12 +4983,12 @@ msgstr ""
 "arquivo precisa ser recarregado. Será solicitada a senha novamente e o seu "
 "histórico para desfazer/refazer será perdido.<br />Deseja continuar?"
 
-#: part/part.cpp:2737
+#: part/part.cpp:2747
 #, kde-format
 msgid "Could not open the temporary file for saving."
 msgstr "Não foi possível abrir o arquivo temporário para salvá-lo."
 
-#: part/part.cpp:2750
+#: part/part.cpp:2760
 #, kde-kuit-format
 msgctxt "@info"
 msgid ""
@@ -4999,7 +4999,7 @@ msgstr ""
 "somente leitura. Tente salvar em outro local ou altere as permissões do "
 "arquivo."
 
-#: part/part.cpp:2762
+#: part/part.cpp:2772
 #, kde-format
 msgid ""
 "After saving, the current document format requires the file to be reloaded. "
@@ -5009,22 +5009,22 @@ msgstr ""
 "recarregado. O seu histórico para desfazer/refazer será perdido.<br />Deseja "
 "continuar?"
 
-#: part/part.cpp:2777 part/part.cpp:2846 part/part.cpp:2867 part/part.cpp:3622
+#: part/part.cpp:2787 part/part.cpp:2856 part/part.cpp:2877 part/part.cpp:3632
 #, kde-format
 msgid "File could not be saved in '%1'. Try to save it to another location."
 msgstr "O arquivo não pôde ser salvo em '%1'. Tente salvá-lo em outro local."
 
-#: part/part.cpp:2790
+#: part/part.cpp:2800
 #, kde-format
 msgid "Filled form contents"
 msgstr "Conteúdo do formulário preenchido"
 
-#: part/part.cpp:2793
+#: part/part.cpp:2803
 #, kde-format
 msgid "User annotations"
 msgstr "Anotações do usuário"
 
-#: part/part.cpp:2798
+#: part/part.cpp:2808
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5035,17 +5035,17 @@ msgstr ""
 "tem suporte à gravação dos seguintes elementos. Use o formato <i>Arquivo de "
 "documento do Okular</i> para os mantê-los."
 
-#: part/part.cpp:2802 part/part.cpp:2824
+#: part/part.cpp:2812 part/part.cpp:2834
 #, kde-format
 msgid "Warning"
 msgstr "Aviso"
 
-#: part/part.cpp:2803 part/part.cpp:2825
+#: part/part.cpp:2813 part/part.cpp:2835
 #, kde-format
 msgid "Save as Okular document archive…"
 msgstr "Salvar como arquivo de documento do Okular…"
 
-#: part/part.cpp:2815
+#: part/part.cpp:2825
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5058,7 +5058,7 @@ msgstr ""
 "documento do Okular</i> para os mantê-los. Clique em <i>Continuar</i> para "
 "salvar o documento e descartar estes elementos."
 
-#: part/part.cpp:2818
+#: part/part.cpp:2828
 #, kde-format
 msgid ""
 "You are about to save changes, but the current file format does not support "
@@ -5072,22 +5072,22 @@ msgstr ""
 "salvar, mas você irá perder estes elementos bem como o histórico de desfazer/"
 "refazer."
 
-#: part/part.cpp:2820
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue"
 msgstr "Continuar"
 
-#: part/part.cpp:2820
+#: part/part.cpp:2830
 #, kde-format
 msgid "Continue losing changes"
 msgstr "Continuar perdendo alterações"
 
-#: part/part.cpp:2848
+#: part/part.cpp:2858
 #, kde-format
 msgid "File could not be saved in '%1'. %2"
 msgstr "O arquivo não pôde ser salvo em '%1'. %2"
 
-#: part/part.cpp:2887
+#: part/part.cpp:2897
 #, kde-format
 msgid ""
 "Okular cannot copy %1 to the specified location.\n"
@@ -5098,7 +5098,7 @@ msgstr ""
 "\n"
 "O documento não existe mais."
 
-#: part/part.cpp:2923
+#: part/part.cpp:2933
 #, kde-format
 msgid ""
 "File could not be saved in '%1'. Error: '%2'. Try to save it to another "
@@ -5107,49 +5107,49 @@ msgstr ""
 "O arquivo não pôde ser salvo em '%1'. Erro: '%2'. Tente salvá-lo em outro "
 "local."
 
-#: part/part.cpp:3194
+#: part/part.cpp:3204
 #, kde-format
 msgid "Expand Whole Section"
 msgstr "Expandir seção inteira"
 
-#: part/part.cpp:3195
+#: part/part.cpp:3205
 #, kde-format
 msgid "Collapse Whole Section"
 msgstr "Recolher seção inteira"
 
-#: part/part.cpp:3211
+#: part/part.cpp:3221
 #, kde-format
 msgid "Sync Thumbnail with Page"
 msgstr "Sincronizar miniatura com a página"
 
-#: part/part.cpp:3243
+#: part/part.cpp:3253
 #, kde-format
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: part/part.cpp:3431
+#: part/part.cpp:3441
 #, kde-format
 msgctxt "@action:inmenu menu that contains actions to control text to speach"
 msgid "Speak"
 msgstr "Falar"
 
-#: part/part.cpp:3586
+#: part/part.cpp:3596
 #, kde-format
 msgid "Invalid options have been received."
 msgstr "Foram recebidas opções inválidas."
 
-#: part/part.cpp:3660
+#: part/part.cpp:3670
 #, kde-format
 msgctxt "@title:window"
 msgid "Print"
 msgstr "Imprimir"
 
-#: part/part.cpp:3717
+#: part/part.cpp:3727
 #, kde-format
 msgid "Printing this document is not allowed."
 msgstr "Não é permitido imprimir este documento."
 
-#: part/part.cpp:3730
+#: part/part.cpp:3740
 #, kde-format
 msgid ""
 "Could not print the document. Unknown error. Please report to bugs.kde.org"
@@ -5157,7 +5157,7 @@ msgstr ""
 "Não foi possível imprimir o documento. Erro desconhecido. Relate o problema "
 "em http://bugs.kde.org"
 
-#: part/part.cpp:3732
+#: part/part.cpp:3742
 #, kde-format
 msgid ""
 "Could not print the document. Detailed error is \"%1\". Please report to "
@@ -5166,17 +5166,17 @@ msgstr ""
 "Não foi possível imprimir o documento. O erro detalhado foi \"%1\". Por "
 "favor, relate o problema em http://bugs.kde.org"
 
-#: part/part.cpp:3822
+#: part/part.cpp:3832
 #, kde-format
 msgid "Go to the place you were before"
 msgstr "Ir para o local onde estava antes"
 
-#: part/part.cpp:3826
+#: part/part.cpp:3836
 #, kde-format
 msgid "Go to the place you were after"
 msgstr "Ir para o local de onde esteve depois (avança)"
 
-#: part/part.cpp:3851
+#: part/part.cpp:3861
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not create temporary file "
@@ -5185,7 +5185,7 @@ msgstr ""
 "<qt><strong>Erro no arquivo!</strong> Não é possível criar o arquivo "
 "temporário <nobr><strong>%1</strong></nobr>.</qt>"
 
-#: part/part.cpp:3863
+#: part/part.cpp:3873
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not open the file <nobr><strong>%1</"
@@ -5195,7 +5195,7 @@ msgstr ""
 "<nobr><strong>%1</strong></nobr> para descompactação. O arquivo não será "
 "carregado.</qt>"
 
-#: part/part.cpp:3867
+#: part/part.cpp:3877
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if you do not have enough permissions to "
@@ -5208,7 +5208,7 @@ msgstr ""
 "o botão direito do mouse no gerenciador de arquivos Dolphin, escolher opção "
 "'Propriedades' e selecionar a aba 'Permissões' na janela aberta.</qt>"
 
-#: part/part.cpp:3889
+#: part/part.cpp:3899
 #, kde-format
 msgid ""
 "<qt><strong>File Error!</strong> Could not uncompress the file <nobr><strong>"
@@ -5217,7 +5217,7 @@ msgstr ""
 "<qt><strong>Erro no arquivo!</strong> Não é possível descompactar o arquivo "
 "<nobr><strong>%1</strong></nobr>. O arquivo não pôde ser carregado.</qt>"
 
-#: part/part.cpp:3893
+#: part/part.cpp:3903
 #, kde-format
 msgid ""
 "<qt>This error typically occurs if the file is corrupt. If you want to be "
@@ -5227,27 +5227,27 @@ msgstr ""
 "ter certeza disso, descompacte o arquivo manualmente usando uma ferramenta "
 "de linha de comando.</qt>"
 
-#: part/part.cpp:3919
+#: part/part.cpp:3929
 #, kde-format
 msgid "No Bookmarks"
 msgstr "Sem favoritos"
 
-#: part/part.cpp:3990
+#: part/part.cpp:4000
 #, kde-format
 msgid "There was a problem sharing the document: %1"
 msgstr "Ocorreu um problema ao compartilhar o documento: %1"
 
-#: part/part.cpp:3990 part/part.cpp:3996
+#: part/part.cpp:4000 part/part.cpp:4006
 #, kde-format
 msgid "Share"
 msgstr "Compartilhar"
 
-#: part/part.cpp:3994
+#: part/part.cpp:4004
 #, kde-format
 msgid "Document shared successfully"
 msgstr "Documento compartilhado com sucesso"
 
-#: part/part.cpp:3996
+#: part/part.cpp:4006
 #, kde-format
 msgid "You can find the shared document at: <a href=\"%1\">%1</a>"
 msgstr ""
@@ -5391,34 +5391,34 @@ msgstr "Tela %1"
 msgid "Exit Presentation Mode"
 msgstr "Sair do modo de apresentação"
 
-#: part/presentationwidget.cpp:373
+#: part/presentationwidget.cpp:407
 #, kde-format
 msgid "Title: %1"
 msgstr "Título: %1"
 
-#: part/presentationwidget.cpp:378
+#: part/presentationwidget.cpp:412
 #, kde-format
 msgid "Pages: %1"
 msgstr "Páginas: %1"
 
-#: part/presentationwidget.cpp:379
+#: part/presentationwidget.cpp:413
 #, kde-format
 msgid "Click to begin"
 msgstr "Clique para começar"
 
-#: part/presentationwidget.cpp:521
+#: part/presentationwidget.cpp:555
 #, kde-format
 msgctxt "For Presentation"
 msgid "Pause"
 msgstr "Pausar"
 
-#: part/presentationwidget.cpp:524
+#: part/presentationwidget.cpp:558
 #, kde-format
 msgctxt "For Presentation"
 msgid "Play"
 msgstr "Reproduzir"
 
-#: part/presentationwidget.cpp:1622
+#: part/presentationwidget.cpp:1675
 #, kde-format
 msgid ""
 "There are two ways of exiting presentation mode, you can press either ESC "
@@ -5430,7 +5430,7 @@ msgstr ""
 "mouse estiver no canto superior direito. Além dessa opções, você pode "
 "alternar entre janelas (o padrão é Alt+TAB)"
 
-#: part/presentationwidget.cpp:1718
+#: part/presentationwidget.cpp:1771
 #, kde-format
 msgctxt ""
 "Reason for inhibiting the screensaver activation, when the presentation mode "
@@ -6145,7 +6145,7 @@ msgstr ""
 msgid "Unable to find the Okular component."
 msgstr "Não foi possível encontrar o componente do Okular."
 
-#: shell/shell.cpp:567
+#: shell/shell.cpp:569
 #, kde-format
 msgid ""
 "Click to open a file\n"
@@ -6154,7 +6154,7 @@ msgstr ""
 "Clique para abrir um arquivo.\n"
 "Clique e mantenha pressionado para abrir um arquivo recente"
 
-#: shell/shell.cpp:568
+#: shell/shell.cpp:570
 #, kde-format
 msgid ""
 "<b>Click</b> to open a file or <b>Click and hold</b> to select a recent file"
@@ -6162,62 +6162,62 @@ msgstr ""
 "<b>Clique</b> para abrir um arquivo ou <b>Clique e mantenha pressionado</b> "
 "para abrir um arquivo recente"
 
-#: shell/shell.cpp:583
+#: shell/shell.cpp:585
 #, kde-format
 msgid "Next Tab"
 msgstr "Próxima aba"
 
-#: shell/shell.cpp:589
+#: shell/shell.cpp:591
 #, kde-format
 msgid "Previous Tab"
 msgstr "Aba anterior"
 
-#: shell/shell.cpp:597
+#: shell/shell.cpp:599
 #, kde-format
 msgid "Switch to Tab %1"
 msgstr "Mudar para a aba %1"
 
-#: shell/shell.cpp:613
+#: shell/shell.cpp:615
 #, kde-format
 msgid "Undo close tab"
 msgstr "Reabrir a aba"
 
-#: shell/shell.cpp:622
+#: shell/shell.cpp:624
 #, kde-format
 msgid "Lock Sidebar"
 msgstr "Bloquear Barra lateral"
 
-#: shell/shell.cpp:722
+#: shell/shell.cpp:724
 #, kde-format
 msgid "All files (*)"
 msgstr "Todos os arquivos (*)"
 
-#: shell/shell.cpp:723
+#: shell/shell.cpp:725
 #, kde-format
 msgid "All supported files (%1)"
 msgstr "Todos os arquivos suportados (%1)"
 
-#: shell/shell.cpp:727
+#: shell/shell.cpp:729
 #, kde-format
 msgid "Open Document"
 msgstr "Abrir documento"
 
-#: shell/shell.cpp:841
+#: shell/shell.cpp:843
 #, kde-format
 msgid "Confirm Close"
 msgstr "Confirmar fechamento"
 
-#: shell/shell.cpp:845
+#: shell/shell.cpp:847
 #, kde-format
 msgid "Close Tabs"
 msgstr "Fechar abas"
 
-#: shell/shell.cpp:852
+#: shell/shell.cpp:854
 #, kde-format
 msgid "You are about to close %1 tabs. Are you sure you want to continue?"
 msgstr "Você está prestes a fechar %1 abas. Deseja continuar?"
 
-#: shell/shell.cpp:854
+#: shell/shell.cpp:856
 #, kde-format
 msgid "Warn me when I attempt to close multiple tabs"
 msgstr "Me avisar quanto eu tentar fechar múltiplas abas"

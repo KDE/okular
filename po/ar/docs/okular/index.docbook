@@ -1,0 +1,4417 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kpdf "<application
+>KPDF</application
+>">
+  <!ENTITY % Arabic "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+]>
+<!-- TODO
+add chapter about sidebar
+Show/Hide the whole thing to save screen space
+Describe all actions only possible in the navigation bars:
+Switching between documents using bookmarks
+Context menu actions like Rename Bookmarks etc.)
+ -->
+<book id="okular" lang="&language;">
+	<bookinfo>
+		<title
+>دليل أوكلار</title>
+		<authorgroup>
+			<author
+><firstname
+>Albert</firstname
+> <surname
+>Astals Cid</surname
+> <affiliation
+> <address
+>&Albert.Astals.Cid.mail;</address>
+				</affiliation>
+			</author>
+			<author
+><firstname
+>Pino</firstname
+> <surname
+>Toscano</surname
+> <affiliation
+> <address
+><email
+>pino@kde.org</email
+></address>
+				</affiliation>
+			</author>
+			<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+		</authorgroup>
+		<legalnotice
+>&FDLNotice;</legalnotice>
+		<date
+>2026-02-23</date>
+		<releaseinfo
+>26.04</releaseinfo>
+		<!-- Abstract about this handbook -->
+		<abstract>
+			<para
+>أوكلار هو عارض مستندات عام من &kde; يعتمد على كود &kpdf;.</para>
+		</abstract>
+		<keywordset>
+			<keyword
+>كيدي</keyword>
+			<keyword
+>أوكلار</keyword>
+			<keyword
+>pdf</keyword>
+			<keyword
+>ps</keyword>
+			<keyword
+>PostScript</keyword>
+			<keyword
+>TIFF</keyword>
+			<keyword
+>djvu</keyword>
+			<keyword
+>dvi</keyword>
+			<keyword
+>xps</keyword>
+			<keyword
+>comicbook</keyword>
+			<keyword
+>fictionbook</keyword>
+			<keyword
+>markdown</keyword>
+			<keyword
+>mobipocket</keyword>
+			<keyword
+>شرح</keyword>
+		</keywordset>
+	</bookinfo>
+	<chapter id="introduction">
+		<title
+>مقدمة</title>
+		<para
+>أوكلار هو عارض مستندات عام لـ &kde; يعتمد على كود تطبيق &kpdf;. بالرغم من اعتماده على كود &kpdf;، إلا أن أوكلار يمتلك ميزات فريدة مثل وضع النظرة العامة، ودعم محسّن للعروض التقديمية ودعم الشروح. </para>
+		<para
+>يدعم أوكلار الكثير من التنسيقات المختلفة مثل &PDF;، و&PostScript;، وTiff، وDjVU، والصور (png، jpg، إلخ) وXPS، وكتب الخيال، والقصص المصورة، وPlucker، وEPub، والفاكس وMarkdown. لجميع التنسيقات المدعومة وميزاتها طالع <ulink url="https://okular.kde.org/formats.php"
+> معالجات تنسيقات مستندات أوكلار</ulink
+>. </para>
+		<screenshot>
+		<screeninfo
+>نافذة أوكلار الرئيسة</screeninfo>
+		<mediaobject>
+		<imageobject>
+		<imagedata fileref="mainwindow.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+		<phrase
+>نافذة أوكلار الرئيسة</phrase>
+		</textobject>
+		</mediaobject>
+		</screenshot>
+	</chapter>
+	<chapter id="use">
+		<title
+>الاستخدام الأساسي</title>
+		<sect1 id="opening">
+			<title
+>فتح الملفات</title>
+			<para
+>لفتح أي ملف مدعوم في أوكلار، اختر <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>افتح...</guimenuitem
+> </menuchoice
+>، ثم اختر ملفًا مدعومًا في الحوار وانقر <guibutton
+>افتح</guibutton
+>. يُفترض أن يُعرض ملفك الآن في النافذة الرئيسة. </para>
+			<important>
+			  <para
+>سوف يُفتح المستند الجديد في لسان جديد إذا كان خيار <guilabel
+>افتح الملفات الجديدة في ألسنة</guilabel
+> في <link linkend="configgeneral"
+>صفحة الإعدادات العامة</link
+> مفعلًا. </para>
+                          <para
+>يمكنك إغلاق اللسان بالنقر عليه بزر الفأرة الأوسط. </para>
+                          <para
+>يمكن إعادة فتح المستند الذي أُغلق سابقًا في لسان باستخدام عنصر القائمة <menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+></shortcut
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>تراجع عن إغلاق اللسان</guimenuitem
+></menuchoice
+>. </para>
+			</important>
+			<para
+>إذا سبق لك فتح ملفات في أوكلار، يمكنك الوصول إليها بسرعة باختيارها من قائمة <menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>افتح الأخير</guisubmenu
+></menuchoice
+>. </para>
+			<para
+>أوكلار هو تطبيق &kde; المبدئي لملفات &PDF; و&PostScript;، ويُشغل عند النقر بزر الفأرة الأيسر على هذا النوع من الملفات في مدير الملفات. إذا أردت فتح أي ملف يدعم أوكلار تنسيقه، استخدم <menuchoice
+><guimenu
+>افتح بـ...</guimenu
+><guimenuitem
+>أوكلار</guimenuitem
+> </menuchoice
+> من القائمة السياقية في مدير الملفات. </para>
+			<para
+>بعد فتح الملف، ستحتاج على الأرجح لقراءته والتنقل عبره. انتقل إلى <link linkend="navigating"
+>القسم التالي</link
+> لمعرفة المزيد حول هذا الأمر. </para>
+		</sect1>
+		<sect1 id="navigating">
+			<title
+>التنقل</title>
+			<para
+>يصف هذا القسم كيف يمكنك التنقل عبر مستند في أوكلار.</para>
+			<para
+>توجد طرق متعددة للتمرير في منطقة العرض. إحداها استخدام مفتاحي السهمين لأعلى ولأسفل. يمكنك أيضًا استخدام شريط التمرير، أو عجلة الفأرة أو مفتاحي &PgUp; و &PgDn;. </para>
+			<para
+>يمكنك أيضًا استخدام مفاتيح التنقل الشبيهة بـ <application
+>vim</application
+>، وهي <keycap
+>H</keycap
+> للانتقال إلى أعلى الصفحة السابقة، و<keycap
+>L</keycap
+> للانتقال إلى أعلى الصفحة التالية، و<keycap
+>J</keycap
+> للتحرك سطرًا واحدًا للأسفل، و<keycap
+>K</keycap
+> للتحرك سطرًا واحدًا للأعلى. </para>
+			<para
+>طريقة أخرى هي الضغط المستمر على زر الفأرة الأيسر في أي مكان في المستند مع سحب الفأرة في الاتجاه المعاكس للمكان الذي تريد الانتقال إليه. لا تعمل هذه الإجراءات إلا إذا كانت أداة التصفح مفعّلة، والتي يمكنك تحديدها باختيار <menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>تصفح</guimenuitem
+></menuchoice
+>. </para>
+			<note>
+			  <para
+>عند عرض مستند في <link linkend="presentationMode"
+>وضع العرض التقديمي</link
+> استخدم مفتاحي السهمين لأعلى ولأسفل للتبديل بين الصفحات أو الشرائح. سيظهر رقم وموضع الشريحة الحالية في الطبقة العلوية في الزاوية اليمنى العليا من الشاشة. </para>
+			</note>
+			<para
+>إذا أردت قراءة مستند به صفحات عدة، استخدم ميزة التمرير الآلي في أوكلار. ابدأ التمرير الآلي بـ <keycombo action="simul"
+>&Shift;&Down;</keycombo
+> أو <keycombo action="simul"
+>&Shift;&Up;</keycombo
+>. ثم استخدم هذه المفاتيح لزيادة وإنقاص سرعة التمرير. يمكنك بدء أو إيقاف التمرير الآلي مؤقتًا بالضغط على مفتاح &Shift;؛ ويؤدي الضغط على أي مفتاح آخر إلى تعطيل هذه الميزة. </para>
+			<para
+>طريقة أخرى للتنقل عبر مستند بصفحات عدة هي استخدام مؤشر الفأرة. اسحب الصفحة للأعلى أو للأسفل، واستمر في السحب حتى عند الوصول إلى أسفل الشاشة أو أعلاها. بمجرد تجاوز حدود الصفحة، سيظهر مؤشر الفأرة في أعلى أو أسفل الشاشة مرة أخرى ويمكنك ببساطة مواصلة السحب. </para>
+			<para
+>يوفر الشريط الجانبي في الجانب الأيسر من الشاشة طريقتين إضافيتين للتنقل عبر المستند: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>إذا نقرت على مصغرة صفحة، فسيُنقل عرض المنطقة إلى تلك الصفحة. </para>
+				</listitem>
+				<listitem>
+					<para
+>إذا كان للمستند فهرس محتويات، فإن النقر على أحد عناصر الفهرس سيجلب المستند إلى الصفحة المرتبطة بذلك العنصر. </para>
+				</listitem>
+				<listitem>
+					<para
+>إذا كان المستند يحتوي على طبقات، يمكنك التحكم في الطبقات المعروضة بتحديد أو إلغاء تحديد العناصر في قائمة <guilabel
+>الطبقات</guilabel
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>إذا كان المستند يحتوي على علامات، فعّل عرض <guilabel
+>العلامات</guilabel
+> وانقر عليها للانتقال إلى الصفحة المرتبطة. إذا لم تكن العلامات تظهر للمستند الحالي فحسب، يمكنك التبديل بسرعة إلى العلامات في جميع الملفات المفتوحة مؤخرًا. </para>
+				</listitem>
+				<listitem>
+					<para
+>إذا كان المستند يحتوي على شروح، فعّل عرض <guilabel
+>الشروح</guilabel
+> وانقر على الشروح أو حددها باستخدام مفتاحي السهمين لأعلى ولأسفل واضغط على &Enter; للانتقال إلى الصفحة المرتبطة. </para>
+				</listitem>
+			</itemizedlist>
+			<para
+>تحتوي بعض المستندات على روابط. في هذه الحالة يمكنك النقر عليها وسيتحول العرض إلى الصفحة المرتبطة. إذا كان الرابط يؤدي إلى صفحة ويب أو مستند آخر، فسيُستدعى معالج &kde; المبدئي لذلك التنسيق. على سبيل المثال، النقر على رابط يشير إلى <quote
+>https://www.kde.org</quote
+> سيفتح صفحة الويب في متصفح الويب المبدئي لـ &kde;. </para>
+			<important>
+			  <para
+>تعمل روابط المستند الداخلية فقط عند استخدام <link linkend="menutools"
+>أداة التصفح</link
+>. </para>
+			</important>
+			<para
+>بالإضافة إلى ذلك، يمكنك استخدام الوظائف التالية للانتقال بسرعة إلى أماكن محددة في المستند: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>يمكنك الذهاب إلى بداية المستند باستخدام <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> أو باستخدام <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>بداية المستند</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك الذهاب إلى نهاية المستند باستخدام <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+> أو باستخدام <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>نهاية المستند</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك التقدم للأمام في المستند باستخدام &Space; أو &PgDn;. وللذهاب إلى الصفحة التالية من المستند استخدم زر شريط الأدوات <guibutton
+>الصفحة التالية</guibutton
+> أو <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>الصفحة التالية</guimenuitem
+> </menuchoice
+> في شريط القوائم. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك العودة للخلف في المستند باستخدام &Backspace; أو &PgUp;. وللذهاب إلى الصفحة السابقة استخدم زر شريط الأدوات <guibutton
+>الصفحة السابقة</guibutton
+> أو <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>الصفحة السابقة</guimenuitem
+> </menuchoice
+> في شريط القوائم. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك العودة إلى المواضع التي كنت فيها في المستند بترتيب زمني. تخيل مثلًا أنك تقرأ العبارة <quote
+>كما هو موضح في [15]، ...</quote
+> وتريد البحث بسرعة عن المرجع [15]. فتنقر عليه، وسيقفز أوكلار إلى قائمة المراجع. استخدام <keycombo
+>&Alt;&Shift;&Left;</keycombo
+> أو <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>للخلف</guimenuitem
+> </menuchoice
+> في شريط القوائم سيعيدك تمامًا إلى الموضع الذي أتيت منه. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك التقدم للأمام في المستند بعد القفز للخلف كما هو موضح أعلاه باستخدام <keycombo
+>&Alt;&Shift;&Right;</keycombo
+> أو <menuchoice
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>للأمام</guimenuitem
+> </menuchoice
+> في شريط القوائم. </para>
+				</listitem>
+				<listitem>
+					<para
+>يمكنك الذهاب إلى التطابق التالي عند البحث باستخدام مفتاحي <keycap
+>F3</keycap
+> أو &Enter; (عندما يكون التركيز على حقل نص <guilabel
+>ابحث</guilabel
+>) أو عنصر القائمة <menuchoice
+> <guimenu
+>حرر</guimenu
+> <guimenuitem
+>ابحث عن التالي</guimenuitem
+> </menuchoice
+> أو العودة إلى التطابق السابق باستخدام مفاتيح <keycombo
+>&Shift;<keysym
+>F3</keysym
+></keycombo
+> أو <keycombo
+>&Shift;&Enter;</keycombo
+> (عندما يكون التركيز على حقل نص <guilabel
+>ابحث</guilabel
+>) أو عنصر القائمة <menuchoice
+> <guimenu
+>حرر</guimenu
+> <guimenuitem
+>ابحث عن السابق</guimenuitem
+> </menuchoice
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</sect1>
+		<sect1 id="presentationMode">
+			<title
+>وضع العرض التقديمي</title>
+			<para
+>يمثل وضع العرض التقديمي طريقة أخرى لعرض المستندات في أوكلار. يمكن تفعيله من <menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>عرض تقديمي</guimenuitem
+></menuchoice
+>. وهو يعرض المستند صفحة بصفحة. وتُعرض الصفحات مع تكبير لملاءمة الصفحة، مما يعني أن الصفحة تظهر بالكامل. </para>
+			<note>
+				<para
+>يمكن لمستندات &PDF; حتى تحديد أنها تُفتح دومًا في وضع العرض التقديمي. </para>
+			</note>
+			<para
+>عندما تكون في وضع العرض التقديمي، يتوفر شريط مساعد في أعلى الشاشة. ما عليك سوى تحريك مؤشر الفأرة إلى أعلى الشاشة ليظهر. </para>
+			<screenshot>
+			<screeninfo
+>أوكلار في وضع العرض التقديمي</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="presentation.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>أوكلار في وضع العرض التقديمي</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>للتنقل بين الصفحات يمكنك استخدام زر الفأرة الأيسر (الصفحة التالية) وزر الفأرة الأيمن (الصفحة السابقة)، أو عجلة الفأرة، أو أيقونات الأسهم أو محرر السطر في الشريط العلوي، أو المفاتيح المحددة في قسم <link linkend="navigating"
+>التنقل</link
+>. </para>
+			<para
+>استخدم زر <guilabel
+>شغل/أوقف مؤقتًا</guilabel
+> في الشريط العلوي لبدء تشغيل العرض التقديمي أو إيقافه مؤقتًا، على التوالي. </para>
+			<para
+>يمكنك الخروج من وضع العرض التقديمي في أي وقت بالضغط على مفتاح &Esc; أو النقر على أيقونة <guiicon
+>أنهِ</guiicon
+> في الشريط العلوي. </para>
+			<para
+>يمكنك أيضًا الرسم على الصفحة الحالية بقلم رصاص. انقر على أيقونة <guilabel
+>بدّل وضع الرسم</guilabel
+> في الشريط العلوي لتفعيل أو تعطيل إمكانية الرسم في وضع العرض التقديمي. تُمسح الرسومات آليًا عند مغادرة وضع العرض التقديمي. يمكنك أيضًا النقر على أيقونة <guilabel
+>امسح الرسومات</guilabel
+> لإزالة الرسومات من الصفحة الحالية. </para>
+			<para
+>يدعم وضع العرض التقديمي أكثر من شاشة واحدة في إعدادات الشاشات المتعددة. ومع وجود أكثر من شاشة، سيظهر زر جديد في الشريط العلوي بأيقونة شاشة: هذا مربع منسدل يتيح لك نقل العرض التقديمي إلى أي من الشاشات الأخرى المتاحة. </para>
+			<para
+>يمتلك وضع العرض التقديمي بعض خيارات الإعداد، يمكنك العثور على وصفها في فصل <link linkend="configpresentation"
+>ضبط أوكلار</link
+>. </para>
+		</sect1>
+		<sect1 id="inverse_search">
+
+		<title
+>البحث العكسي بين محررات &latex; وأوكلار</title>
+
+		<para
+>البحث العكسي ميزة مفيدة جدًا عندما تكتب مستند &latex; بنفسك. إذا ضُبط كل شيء بشكل صحيح، يمكنك النقر داخل نافذة أوكلار بزر الفأرة <mousebutton
+>الأيسر</mousebutton
+> مع الضغط على مفتاح &Shift;. بعد ذلك يُحمّل المحرر ملف مصدر &latex; ويقفز إلى الفقرة المناسبة.</para>
+
+		<para
+>لا يمكن للبحث العكسي أن يعمل إلا إذا:</para>
+
+		<itemizedlist>
+			<listitem
+><para
+>صُرّف الملف المصدري بنجاح.</para
+></listitem>
+			<listitem
+><para
+>عرف أوكلار أي محرر ترغب في استخدامه.</para
+></listitem>
+			<listitem
+><para
+>كانت أداة التصفح مفعلة، والتي يمكنك تحديدها باختيار <menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>تصفح </guimenuitem
+></menuchoice
+>.</para
+></listitem>
+		</itemizedlist>
+
+		<para
+>باستخدام هذه الميزة في أوكلار، ستؤدي نقرة الفأرة اليسرى مع الضغط على &Shift; في مستند &DVI; أو &PDF; إلى فتح المحرر لمستند &latex; المقابل ومحاولة الانتقال إلى السطر المقابل. تذكر إخبار أوكلار باستخدام المحرر المناسب، في عنصر قائمة أوكلار <menuchoice
+><guimenu
+>إعدادات</guimenu
+><guimenuitem
+>اضبط أوكلار...</guimenuitem
+></menuchoice
+> (في صفحة <guimenuitem
+>المحرر</guimenuitem
+>).</para>
+
+		<para
+>لمزيد من التفاصيل حول ضبط المحرر يرجى الرجوع إلى <link linkend="configeditor"
+>القسم المقابل من هذا الدليل</link
+>.</para>
+
+		<screenshot>
+			<screeninfo
+>ضبط أوكلار</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="configure-editor.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>ضبط المحرر في أوكلار</phrase>
+			</textobject>
+			<caption
+><para
+>ضبط المحرر في أوكلار</para
+></caption>
+			</mediaobject>
+		</screenshot>
+	</sect1>
+	</chapter>
+
+	<chapter id="advanced">
+		<title
+>ميزات أوكلار المتقدمة</title>
+		<sect1 id="embedded-files">
+			<title
+>الملفات المضمنة</title>
+			<para
+>إذا كان المستند الحالي يحتوي على ملفات مضمنة فيه، فسيظهر شريط فوق عرض الصفحة عند فتحه لإخطارك بالملفات المضمنة. </para>
+			<screenshot>
+				<screeninfo
+>شريط الملفات المضمنة</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="embedded-files-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>شريط الملفات المضمنة</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>في هذه الحالة، يمكنك إما النقر على الرابط في نص الشريط أو اختيار <menuchoice
+><guimenu
+>ملف</guimenu
+><guimenuitem
+>الملفات المضمنة</guimenuitem
+></menuchoice
+> لفتح حوار الملفات المضمنة. يتيح لك الحوار عرض الملفات المضمنة واستخراجها. </para>
+		</sect1>
+		<sect1 id="forms">
+			<title
+>النماذج</title>
+			<para
+>إذا كان المستند الحالي يحتوي على نماذج، فسيظهر شريط فوق عرض الصفحة عند فتحه حيث يمكنك تفعيل النماذج. </para>
+			<screenshot>
+				<screeninfo
+>شريط النماذج</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="forms-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>شريط النماذج</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>في هذه الحالة، يمكنك إما النقر على <guilabel
+>أظهر النماذج</guilabel
+> في الشريط أو اختيار <menuchoice
+><guimenu
+>عرض</guimenu
+><guimenuitem
+>أظهر النماذج</guimenuitem
+></menuchoice
+> لإدخال البيانات في حقول النموذج. </para>
+		</sect1>
+		<sect1 id="signatures">
+			<title
+>التواقيع</title>
+			<para
+>إذا كان المستند الحالي يحتوي على تواقيع، فسيظهر شريط فوق عرض الصفحة بعد فتح المستند. يتيح لك فتح لوحة <guilabel
+>التواقيع</guilabel
+>. </para>
+			<screenshot>
+				<screeninfo
+>شريط التواقيع</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-bar.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>شريط التواقيع</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>باستخدام لوحة <guilabel
+>التواقيع</guilabel
+> يمكنك فحص توقيع المستند وشهادته. </para>
+			<screenshot>
+				<screeninfo
+>لوحة التواقيع</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="signatures-panel.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>لوحة التواقيع</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<note>
+				<para
+>هذه الميزة متاحة لمستندات &PDF; فقط. تحتاج إلى تثبيت الإصدارة 0.51 على الأقل من <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> للحصول على معظم معلومات التوقيع، والإصدارة 0.68 للحصول على معلومات موقع/سبب التوقيع، والإصدارة 0.73 للحصول على معلومات شهادة التوقيع. </para>
+			</note>
+			<sect2 id="adding_digital_signatures">
+				<title
+>إضافة تواقيع رقمية</title>
+				<para
+>يمكنك إضافة تواقيع رقمية إلى المستندات باستخدام الإجراء المقابل في قائمة <menuchoice
+><guimenu
+>أدوات</guimenu
+></menuchoice
+>. </para>
+				<para
+>لتتمكن من توقيع مستند، يجب أن تتوفر شهادة توقيع <acronym
+>PKCS</acronym
+> مناسبة في حاسوبك. لا يملك أوكلار القدرة على إنشاء مثل هذه الشهادات لأنها تحتاج إلى أن تُصدر من قبل سلطات الشهادات لتكون مفيدة للتحقق، إلخ. </para>
+				<para
+>تُستخدم مكتبة Poppler لمعالجة توقيع مستندات &PDF; وتستخدم Poppler مكتبة NSS لمعالجة الشهادات. عند كتابة هذا الدليل، ستحاول Poppler استخدام أحد مخازن شهادات NSS التالية بالترتيب (أول واحد يوجد): </para>
+				<itemizedlist>
+					<listitem
+><para
+>مخزن شهادات مستخدم فيرفوكس الحالي.</para
+></listitem>
+					<listitem
+><para
+>مخزن الشهادات على مستوى النظام في <filename
+>/etc/pki/nssdb</filename
+>.</para
+></listitem>
+					<listitem
+><para
+>مخزن المستخدم الحالي في <filename
+>$HOME/.pki/nssdb</filename
+></para
+></listitem>
+				</itemizedlist>
+				<para
+>إذا أردت استخدام مخزن شهادات مخصص، يمكنك فعل ذلك بضبطه في قسم <link linkend="config-pdf-digital-signatures"
+>ضبط سند &PDF; الخلفي</link
+> في مربع حوار <link linkend="configure-backends"
+>ضبط أوكلار...</link
+>. </para>
+				<note>
+					<para
+>هذه الميزة متاحة لمستندات &PDF; فقط. تحتاج إلى تثبيت الإصدارة 21.01 على الأقل من <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> لتتمكن من إضافة تواقيع رقمية إلى المستند. </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="annotations">
+			<title
+>الشروح</title>
+			<para
+>يسمح لك أوكلار بمراجعة مستنداتك وإضافة شروح عليها. </para>
+			<screenshot>
+			<screeninfo
+>شروح أوكلار</screeninfo>
+			<mediaobject>
+			<imageobject>
+			<imagedata fileref="annotations.png" format="PNG"/>
+			</imageobject>
+			<textobject>
+			<phrase
+>شروح أوكلار</phrase>
+			</textobject>
+			</mediaobject>
+			</screenshot>
+			<para
+>يملك أوكلار نوعين مختلفين من الشروح:</para>
+			<para
+>شروح النصوص مثل <guilabel
+>قلم التحديد الأصفر</guilabel
+> و <guilabel
+>تسطير أسود</guilabel
+> يمكن استخدامها مع الملفات التي تحتوي نصوصًا (مثل &PDF;).</para>
+		      <para
+>شروح رسومية مثل <guilabel
+>ملاحظة منبثقة</guilabel
+>، و <guilabel
+>ملاحظة مضمنة</guilabel
+>، و <guilabel
+>خط رسم حُرّ</guilabel
+>، و <guilabel
+>قلم تحديد</guilabel
+>، و <guilabel
+>خط مستقيم</guilabel
+>، و <guilabel
+>مضلع</guilabel
+>، و <guilabel
+>ختم</guilabel
+>، و <guilabel
+>تسطير</guilabel
+>، و <guilabel
+>قطع ناقص</guilabel
+>، و <guilabel
+>آلة كاتبة</guilabel
+>.</para>
+			  <para
+>الشروح الرسومية ليست محصورة بملفات &PDF;؛ بل يمكن استخدامها لأي تنسيق يدعمه أوكلار.</para>
+			<para
+>باستخدام قائمة <guilabel
+>الشروح</guilabel
+>، يمكنك إضافة <guilabel
+>ملاحظة منبثقة</guilabel
+> أو أي نوع آخر من الشروح لإضافة التعليقات أو تحريرها.</para>
+
+			<para
+>يملك أوكلار ميزة "أرشفة المستندات". هذا تنسيق خاص بـ أوكلار لحمل المستند بالإضافة إلى البيانات الوصفية المتنوعة المتعلقة به (الشروح حاليًا فقط). يمكنك حفظ "أرشيف مستند" من المستند المفتوح باختيار <menuchoice
+><guimenu
+>ملف</guimenu
+><guisubmenu
+>حفظ باسم</guisubmenu
+></menuchoice
+> وتحديد <guilabel
+>أرشيف مستند أوكلار</guilabel
+> في منتقي <guilabel
+>المرشح</guilabel
+>. المستندات المحفوظة بهذه الطريقة ستأخذ الامتداد <filename
+>.okular</filename
+>. لفتح أرشيف مستند أوكلار، ما عليك سوى فتحه ببرنامج أوكلار كما لو كان مستند &PDF; مثلًا. </para>
+			<para
+>يمكنك <emphasis
+>أيضًا</emphasis
+> حفظ الشروح مباشرة في ملفات &PDF;. يمكنك استخدام <menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>حفظ</guimenuitem
+></menuchoice
+> لحفظها فوق الملف الحالي أو <menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>حفظ باسم...</guimenuitem
+></menuchoice
+> لحفظها في ملف جديد. </para>
+				<note>
+					<para
+>لاحظ أن إضافة الشروح أو تحريرها أو إزالتها قد لا يكون ممكنًا في الملفات التي فُعّلت فيها إدارة الحقوق الرقمية (DRM). </para>
+				</note>
+				<note>
+				  <para
+>من الممكن <link linkend="edit-undo"
+>التراجع</link
+> عن أي إجراء شرح أو <link linkend="edit-redo"
+>إعادته</link
+> باستخدام العنصر المقابل من قائمة <guimenu
+>تحرير</guimenu
+>. كما يمكن التراجع عن الإجراء بالضغط على <keycombo
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+> وإعادة إجراء أُلغي سابقًا بالضغط على <keycombo
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+>. </para>
+				</note>
+			<para
+>يمكنك ضبط الخصائص المبدئية والمظهر لكل أداة شرح. يرجى الرجوع إلى <link linkend="configannotations"
+>القسم المقابل في هذا الدليل</link
+>. </para>
+			<sect2 id="annotations-add">
+				<title
+>إضافة الشروح</title>
+				<para
+>لإضافة شروح إلى المستند، يمكنك استخدام زر <guilabel
+>شروح سريعة</guilabel
+> في شريط أدوات أوكلار الرئيسي، أو تفعيل شريط أدوات الشروح. يُفعل هذا إما بتحديد <menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>شروح</guimenuitem
+></menuchoice
+> أو بالضغط على <keycap
+>F6</keycap
+>. بمجرد ظهور شريط أدوات الشروح، ما عليك سوى الضغط على أحد أزراره أو استخدام اختصارات لوحة المفاتيح (المفاتيح من <keycap
+>1</keycap
+> إلى <keycap
+>9</keycap
+>) لاستخدام ذلك الشرح. </para>
+				<para
+>يساعدك شريط أدوات الشروح على عمل شروح بالرسومات والأشكال والرسائل النصية. يمكنك استخدامه لتمييز مستند (مثل إضافة خطوط، قطوع ناقصة، مضلعات، أختام، تمييز، تسطير إلخ). يصف الجدول أدناه بالضبط ما تفعله المجموعة المبدئية من أزرار شريط أدوات الشروح. </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>الزر </entry>
+					<entry
+>اسم الأداة </entry>
+					<entry
+>الوصف </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-highlight.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>قلم التحديد </para>
+					</entry>
+					<entry>
+					  <para
+>يُبرز النص في المستند بلون خلفية معطى. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واسحب لتمييز قصاصة نصية. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>تمييز</guimenuitem
+>، أو <guimenuitem
+>خط متعرج</guimenuitem
+>، أو <guimenuitem
+>تسطير</guimenuitem
+> أو <guimenuitem
+>شطب</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+> لقلم التحديد. فقط انقر بزر الفأرة الأيمن على النص المميز وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>تسطير </para>
+					</entry>
+					<entry>
+					  <para
+>يسطر النص بخط مستقيم. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واسحب لتسطير قصاصة نصية. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>تمييز</guimenuitem
+>، أو <guimenuitem
+>خط متعرج</guimenuitem
+>، أو <guimenuitem
+>تسطير</guimenuitem
+> أو <guimenuitem
+>شطب</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+> للتسطير. فقط انقر بزر الفأرة الأيمن على النص المسطر وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-underline-squiggle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>خط متعرج </para>
+					</entry>
+					<entry>
+					  <para
+>يسطر النص بخط متعرج. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واسحب لتسطير قصاصة نصية بخط متعرج. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>تمييز</guimenuitem
+>، أو <guimenuitem
+>خط متعرج</guimenuitem
+>، أو <guimenuitem
+>تسطير</guimenuitem
+> أو <guimenuitem
+>شطب</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+> للتسطير. فقط انقر بزر الفأرة الأيمن على النص المسطر وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-strikethrough.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>اشطب </para>
+					</entry>
+					<entry>
+					  <para
+>يشطب على بعض النص. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واسحب لشطب قصاصة نصية. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>تمييز</guimenuitem
+>، أو <guimenuitem
+>خط متعرج</guimenuitem
+>، أو <guimenuitem
+>تسطير</guimenuitem
+> أو <guimenuitem
+>شطب</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+> للتسطير. فقط انقر بزر الفأرة الأيمن على النص المسطر وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				     <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tool-text.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>كتابة </para>
+					</entry>
+					<entry>
+					  <para
+>يضيف نصًا على خلفية شفافة. هذا مفيد لملء النماذج التي تفتقر إلى حقول نصية مدمجة قابلة للتحرير. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر حيث ترغب في إضافة الزاوية العلوية اليسرى للنص، ثم اسحب لوضع الزاوية السفلية اليمنى. اكتب نصًا، ثم اضغط على <guibutton
+>موافق</guibutton
+> لحفظه، أو <guibutton
+>امسح</guibutton
+> لمسح النص والبدء من جديد، أو <guibutton
+>إلغاء</guibutton
+> للإلغاء. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>الخط</guilabel
+> و <guilabel
+>لون النص</guilabel
+> للنص. فقط انقر بزر الفأرة الأيمن على نص الآلة الكاتبة المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-note.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>ملاحظة مضمنة </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم ملاحظة مضمنة. ستُعرض الملاحظة مضمنة كما هي. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر حيث ترغب في إضافة الزاوية العلوية اليسرى للملاحظة، ثم اسحب لوضع الزاوية السفلية اليمنى. أدخل نص الملاحظة ثم اضغط على <guibutton
+>موافق</guibutton
+> لحفظها، أو <guibutton
+>امسح</guibutton
+> لمسح نص الملاحظة، أو <guibutton
+>إلغاء</guibutton
+> لإلغاء إنشاء الملاحظة. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>الخط</guilabel
+>، و <guilabel
+>المحاذاة</guilabel
+>، و <guilabel
+>عرض الإطار</guilabel
+> للملاحظة. فقط انقر بزر الفأرة الأيمن على أيقونة الملاحظة المنشأة وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-comment.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>ملاحظة منبثقة </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم ملاحظة متعددة الأسطر. يمكن عرض الملاحظة بالنقر المزدوج على الأيقونة المنشأة في المستند. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط على المكان في المستند حيث يجب إضافة الملاحظة المنبثقة. أدخل نص الملاحظة المنبثقة ثم اضغط على زر <guilabel
+>أغلق هذه الملاحظة</guilabel
+> في الزاوية العلوية اليمنى للنافذة المنبثقة. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>الأيقونة</guilabel
+> للملاحظة. فقط انقر بزر الفأرة الأيمن على أيقونة الملاحظة المنشأة وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-freehand.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>خط رسم حُرّ </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم خطوطًا حرة الشكل. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واسحب لرسم الخط. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>العرض</guilabel
+> للخط. فقط انقر بزر الفأرة الأيمن على الخط المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-arrow.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>سهم (قائمة منسدلة) </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم سهمًا بين نقطتين. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر لوضع نقطة بداية السهم، ثم اسحب لوضع نقطة نهاية الخط واضغط مرة أخرى. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>العرض</guilabel
+>، و <guilabel
+>بداية الخط</guilabel
+>، و <guilabel
+>نهاية الخط</guilabel
+>، و <guilabel
+>طول الخط البادئ</guilabel
+>، و <guilabel
+>طول امتداد الخط البادئ</guilabel
+> للخط. فقط انقر بزر الفأرة الأيمن على الخط المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-line.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>خط مستقيم (قائمة منسدلة) </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم خطًا بين نقطتين. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر لوضع نقطة بداية الخط، ثم اسحب لوضع نقطة نهاية الخط واضغط مرة أخرى. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>العرض</guilabel
+>، و <guilabel
+>بداية الخط</guilabel
+>، و <guilabel
+>نهاية الخط</guilabel
+>، و <guilabel
+>طول الخط البادئ</guilabel
+>، و <guilabel
+>طول امتداد الخط البادئ</guilabel
+> للخط. فقط انقر بزر الفأرة الأيمن على الخط المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-rectangle.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>مستطيل (قائمة منسدلة) </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم مستطيلًا حول المنطقة المختارة. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر لوضع الزاوية العلوية اليسرى للمستطيل، ثم اسحب لوضع الزاوية السفلية اليمنى. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>مستطيل</guimenuitem
+> أو <guimenuitem
+>قطع ناقص</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>تعبئة الشكل</guilabel
+> (ولونها)، و <guilabel
+>العرض</guilabel
+> للإطار. فقط انقر بزر الفأرة الأيمن على الإطار المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-ellipse.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>قطع ناقص (قائمة منسدلة) </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم قطعًا ناقصًا أو مستطيلًا حول منطقة مختارة. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر واستمر بالضغط لوضع الزاوية العلوية اليسرى للمستطيل المحيط بالقطع الناقص، ثم اسحب لوضع الزاوية السفلية اليمنى. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>النوع</guilabel
+> (<guimenuitem
+>مستطيل</guimenuitem
+> أو <guimenuitem
+>قطع ناقص</guimenuitem
+>)، و <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>تعبئة الشكل</guilabel
+> (ولونها)، و <guilabel
+>العرض</guilabel
+> للإطار. فقط انقر بزر الفأرة الأيمن على الإطار المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-draw-polyline.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>مضلع (قائمة منسدلة) </para>
+					</entry>
+					<entry>
+					  <para
+>يرسم شكلًا مغلقًا من ثلاث قطع مستقيمة أو أكثر. يمكن عرض الملاحظة المقابلة بالنقر المزدوج داخل المضلع. </para>
+					  <para
+>اضغط على زر الأداة، ثم اضغط بزر الفأرة الأيسر لوضع الرأس الأول للمضلع، ثم اسحب لوضع الرأس الثاني. استمر حتى ترسم المضلع بالكامل وتتصل مرة أخرى بالرأس الأول. انقر مرتين لإضافة ملاحظة للمضلع. أدخل نص الملاحظة ثم اضغط على <guibutton
+>موافق</guibutton
+> لحفظها، أو <guibutton
+>امسح</guibutton
+> لمسح الملاحظة، أو <guibutton
+>إلغاء</guibutton
+> لإلغاء إدخال الملاحظة. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>اللون</guilabel
+>، و <guilabel
+>العتمة</guilabel
+>، و <guilabel
+>تعبئة الشكل</guilabel
+> (ولونها)، و <guilabel
+>العرض</guilabel
+> للمضلع. فقط انقر بزر الفأرة الأيمن على المضلع المنشأ وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-tag.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>الختم </para>
+					</entry>
+					<entry>
+					  <para
+>يدرج شكلًا محددًا مسبقًا في المستند. </para>
+					  <para
+>اضغط على زر الأداة لاختيار الختم من القائمة المنسدلة ثم اضغط بزر الفأرة الأيسر لوضع الختم. </para>
+					  <para
+>نقرة واحدة تضع ختمًا مربعًا (مفيد للأيقونات). لإضافة ختم مستطيل يمكنك الضغط بزر الفأرة الأيسر والاستمرار بالضغط لوضع النقطة العلوية اليسرى، ثم اسحب لوضع النقطة السفلية اليمنى. </para>
+					  <para
+>من الممكن تعريف <guilabel
+>العتمة</guilabel
+> و <guilabel
+>رمز الختم</guilabel
+> للختم. فقط انقر بزر الفأرة الأيمن على أيقونة الختم المنشأة وحدد عنصر قائمة <guimenuitem
+>خصائص</guimenuitem
+>. </para>
+					  <warning>
+					  	 <para
+>هذه الميزة تجريبية. الأختام المخصصة المدرجة في مستندات &PDF; ليست مرئية في قارئات &PDF; الأخرى غير أوكلار. </para>
+					  </warning>
+					</entry>
+				      </row>
+				      </tbody>
+				    </tgroup>
+				  </informaltable>
+                                  <para
+>هذه هي الشروح المبدئية التي يوفرها أوكلار. باستخدام <link linkend="configannotations"
+>صفحة الشروح</link
+> في مربع حوار الضبط يمكنك إضافة شروحك الخاصة مثل الأختام المخصصة أو تمييز النص أو شكل هندسي بلون داخلي لتمييز المناطق إلخ. </para>
+                                  <note>
+                                      <para
+>من الممكن إضافة كود &latex; في نص الشروح. لفعل ذلك، أضف <userinput
+>$$<replaceable
+>code</replaceable
+>$$</userinput
+> في نص الشرح، حيث <replaceable
+>code</replaceable
+> هو أي معادلة &latex; صالحة. اتبع التعليمات التي ستظهر على الشاشة لتصييرها باستخدام توزيعة &latex; مثبتة في حاسوبك. </para>
+                                  </note>
+				<para
+>من الممكن ضبط الأداة المحددة باستخدام شريط أدوات الشروح نفسه: </para>
+				<informaltable>
+				  <tgroup cols="3">
+				    <thead>
+				      <row>
+					<entry
+>الزر </entry>
+					<entry
+>اسم الخيار </entry>
+					<entry
+>الوصف </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-line-width.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>عرض الخط </para>
+					</entry>
+					<entry>
+					  <para
+>اضغط على هذا الزر لاختيار العرض من القائمة المنسدلة. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-format-text-color.png" format="PNG"/>
+						</imageobject
+></inlinemediaobject
+> / <inlinemediaobject
+> <imageobject>
+						  <imagedata fileref="tool-bordertool.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>لون الشرح </para>
+					</entry>
+					<entry>
+					  <para
+>اضغط على هذا الزر لاختيار لون النص أو إطار شرحك. يمكنك اختيار أحد الألوان المحددة مسبقًا أو الضغط على عنصر <guimenuitem
+>لون مخصص...</guimenuitem
+> لفتح مربع حوار اختيار الألوان. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-fill-color.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>لون تعبئة الشرح </para>
+					</entry>
+					<entry>
+					  <para
+>اضغط على هذا الزر لاختيار لون تعبئة شرحك. يمكنك اختيار أحد الألوان المحددة مسبقًا أو الضغط على عنصر <guimenuitem
+>لون مخصص...</guimenuitem
+> لفتح مربع حوار اختيار الألوان. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-edit-opacity.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>عتمة الشرح </para>
+					</entry>
+					<entry>
+					  <para
+>اضغط على هذا الزر لاختيار عتمة شرحك من القائمة المنسدلة (<guimenuitem
+>100%</guimenuitem
+> تنشئ شروحًا معتمة). </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-font-face.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>خط الشرح </para>
+					</entry>
+					<entry>
+					  <para
+>انقر على هذا الزر لفتح حوار اختيار الخط. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-settings-configure.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>إعدادات متقدمة لأداة الشرح الحالية </para>
+					</entry>
+					<entry>
+					  <para
+>انقر على هذا الزر لفتح حوار الضبط العام لشرحك. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				<para
+>توجد ثلاثة أزرار أدوات إضافية في شريط أدوات الشرح: </para>
+				<informaltable>
+				  <tgroup cols="2">
+				    <thead>
+				      <row>
+					<entry
+>الزر </entry>
+					<entry
+>الوصف </entry>
+				      </row>
+				    </thead>
+				    <tbody>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-favorite.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>أضف الشرح الحالي إلى قائمة <guilabel
+>شروح سريعة</guilabel
+> في شريط الأدوات الرئيسي. </para>
+					  <note>
+						  <para
+>يمكنك استخدام الاختصارات المبدئية من <keycombo action="simul"
+>&Alt;<keycap
+>9</keycap
+></keycombo
+> إلى <keycombo action="simul"
+>&Alt;<keycap
+>0</keycap
+></keycombo
+> لاختيار إجراءات الشرح السريع في أي وقت تشاء، حتى مع إخفاء شريط أدوات الشرح. </para>
+					  </note>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-window-pin.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>عند تفعيله، تبقى أداة الشرح الحالية نشطة بعد الاستخدام. </para>
+					</entry>
+				      </row>
+				      <row>
+					<entry>
+					  <para>
+					      <inlinemediaobject>
+						<imageobject>
+						  <imagedata fileref="tool-dialog-close.png" format="PNG"/>
+						</imageobject>
+					      </inlinemediaobject>
+					  </para>
+					</entry>
+					<entry>
+					  <para
+>أخفِ شريط أدوات الشرح. </para>
+					</entry>
+				      </row>
+			            </tbody>
+				    </tgroup>
+				  </informaltable>
+				  <para
+>بالضغط على &Shift; يمكنك تقييد زاوية شروح الخطوط والمضلعات بخطوات قدرها 15 درجة، ونسبة شروح الأشكال (مثل المستطيل والقطع الناقص) إلى 1:1. يمكنك أيضًا الحصول على زر شريط أدوات من <ulink url="help:/fundamentals/config.html#toolbars"
+>اضبط أشرطة الأدوات...</ulink
+>. </para>
+				  <para
+>يمكن ضبط محتويات قائمة <guilabel
+>شروح سريعة</guilabel
+> باستخدام <link linkend="configannotations"
+>صفحة الشروح في حوار ضبط أوكلار</link
+>. يمكن فتح هذه الصفحة بالنقر فوق زر <guilabel
+>شروح سريعة</guilabel
+>، ثم اختيار <guimenuitem
+>اضبط الشروح...</guimenuitem
+> من القائمة المنبثقة. </para>
+				<note>
+					<para
+>سيؤدي تفعيل شريط أدوات الشرح إلى الانتقال آليًا إلى وضع التصفح. </para>
+				</note>
+				<para
+>يمكنك إيقاف الشرح في أي وقت بالضغط على زر الشرح الذي تستخدمه مرة أخرى، أو بالضغط على مفتاح &Esc;. </para>
+				<para
+>سيحمل الشرح المنشأ حديثًا اسم المؤلف الذي حددته في <link linkend="configannotations"
+>صفحة <guilabel
+>الشروح</guilabel
+></link
+> في حوار ضبط أوكلار. يمكن استخدام صفحة <guilabel
+>الشروح</guilabel
+> أيضًا لضبط محتوى شريط أدوات الشروح. </para>
+			</sect2>
+			<sect2 id="annotations-remove">
+				<title
+>إزالة الشروح</title>
+				<para
+>لإزالة شرح، اختر أولًا أداة التصفح (<menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>تصفح</guimenuitem
+></menuchoice
+>) ثم انقر عليه بزر الفأرة الأيمن، واختر <guimenuitem
+>احذف</guimenuitem
+> أو اختر الشرح باستخدام زر الفأرة الأيسر واضغط مفتاح &Del;. </para>
+				<para
+>عند إزالة الشرح، ستُغلق نافذته إذا كانت مفتوحة. </para>
+			</sect2>
+			<sect2 id="annotations-edit">
+				<title
+>تحرير الشروح</title>
+				<para
+>لتحرير شرح، اختر أولًا أداة التصفح (<menuchoice
+><guimenu
+>أدوات</guimenu
+><guimenuitem
+>تصفح</guimenuitem
+></menuchoice
+>) ثم انقر على الشرح بزر الفأرة الأيمن واختر <guimenuitem
+>خصائص</guimenuitem
+>. سيظهر حوار يحتوي على إعدادات الشرح العامة (مثل اللون والعتامة، والمؤلف، إلخ) والإعدادات الخاصة بنوع ذلك الشرح. </para>
+				<screenshot>
+				<screeninfo
+>حوار خصائص الشرح</screeninfo>
+				<mediaobject>
+				<imageobject>
+				<imagedata fileref="annotation-properties.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+				<phrase
+>حوار خصائص الشرح</phrase>
+				</textobject>
+				</mediaobject>
+				</screenshot>
+				<para
+>لتحريك شرح، اضغط باستمرار على مفتاح &Ctrl;، وحرك مؤشر الفأرة فوقه ثم ابدأ السحب بزر الفأرة الأيسر. </para>
+				<para
+>إذا نقرت بزر الفأرة الأيسر على شرح، فسيُحدد. تظهر مقابض تغيير الحجم على مستطيل التحديد. عند تحريك المؤشر فوق أحد مقابض تغيير الحجم الثمانية في الزوايا أو الحواف، يتغير شكل المؤشر للإشارة إلى وضع تغيير الحجم. انقر في أي مكان آخر على الشرح لتحريكه. يؤدي الضغط على &Esc; أو النقر فوق منطقة خارج الشرح إلى إلغاء التحديد. </para>
+				<para
+>تغيير الحجم متاح فقط لأنواع شروح الملاحظة المضمنة والآلة الكاتبة والختم والقطع الناقص.</para>
+
+				<note>
+					<para
+>قد تُعطل بعض الخيارات اعتمادًا على أذون المستند (يؤثر هذا عادةً على بعض مستندات &PDF; فقط). </para>
+				</note>
+			</sect2>
+		</sect1>
+		<sect1 id="bookmark-management">
+			<title
+>إدارة العلامات</title>
+			<para
+>يمتلك أوكلار نظام علامات مرنًا للغاية. يحفظ أوكلار الموضع في الصفحة ضمن العلامة ويسمح لك بتعريف أكثر من علامة في الصفحة الواحدة. </para>
+			<para
+>لإدارة العلامات في أوكلار، يمكنك استخدام عرض <guilabel
+>العلامات</guilabel
+> من <guilabel
+>الشريط الجانبي</guilabel
+>، أو <link linkend="menubookmarks"
+>قائمة العلامات</link
+> أو القائمة السياقية لعرض المستند (انقر بزر الفأرة الأيمن لفتحها). </para>
+			<sect2 id="bookmarks-view">
+				<title
+>عرض العلامات</title>
+				<para
+>لفتح عرض <guilabel
+>العلامات</guilabel
+>، انقر فوق تبويب <guilabel
+>العلامات</guilabel
+> في الجزء العلوي من <guilabel
+>الشريط الجانبي</guilabel
+>. إذا لم يكن <guilabel
+>الشريط الجانبي</guilabel
+> معروضًا، فانقر فوق زر <guibutton
+>أظهر الشريط الجانبي</guibutton
+> في شريط الأدوات أو عنصر القائمة، أو عنصر القائمة <menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>إعدادات</guimenu
+><guimenuitem
+>أظهر الشريط الجانبي</guimenuitem
+></menuchoice
+> لجعله مرئيًا. </para>
+				<screenshot>
+				    <screeninfo
+>القائمة السياقية لعرض العلامات</screeninfo>
+				    <mediaobject>
+				      <imageobject>
+					<imagedata fileref="bookmark-management.png" format="PNG"/>
+				      </imageobject>
+				      <textobject>
+					<phrase
+>القائمة السياقية لعرض العلامات</phrase>
+				      </textobject>
+				    </mediaobject>
+				</screenshot>
+				<para
+>يمكن إلغاء تحديد خانة <guilabel
+>أظهر لكافة المستندات</guilabel
+> لإظهار العلامات من المستند الحالي فقط. </para>
+				<para
+>يمكن استخدام شريط الترشيح في الجزء العلوي من عرض <guilabel
+>العلامات</guilabel
+> لترشيح محتوى جزء قائمة العلامات وفقًا للنص الموجود في الصندوق. </para>
+				<para
+>يسمح جزء القائمة بعرض قائمة العلامات بأسلوب شجري: يمكن <quote
+>توسيع</quote
+> أو <quote
+>طي</quote
+> كل مستند في القائمة بالنقر فوق أيقونة <guiicon
+>&lt;</guiicon
+> أو <guiicon
+>v</guiicon
+> المجاورة له. </para>
+				<para
+>يمكن استخدام قائمة النقر بزر الفأرة الأيمن لعنصر المستند لفتح المستند أو إعادة تسمية عنصره أو إزالته من القائمة. تذكر أن إزالة عنصر مستند تؤدي إلى إزالة كافة العلامات في المستند المقابل. </para>
+				<para
+>تسمح قوائم النقر بزر الفأرة الأيمن لعناصر العلامات الفردية بالذهاب إلى العلامة أو إعادة تسميتها أو إزالتها. </para>
+				<para
+>يمكن استخدام قائمة النقر بزر الفأرة الأيمن للعناصر في جدول المحتويات لإنشاء علامات أو الذهاب إلى العلامة التالية أو السابقة. </para>
+		      </sect2>
+		</sect1>
+		<!-- Please keep this section content in sync with man page (man-okular.1.docbook) -->
+		<sect1 id="command-line-options">
+		    <title
+>خيارات سطر الأوامر</title>
+		    <para
+>على الرغم من أن أوكلار غالبًا ما يُشغل من قائمة برامج كدي، أو من أيقونة سطح المكتب، إلا أنه يمكن فتحه أيضًا من محث سطر الأوامر في نافذة الطرفية. توجد بعض الخيارات المفيدة المتاحة عند القيام بذلك. </para>
+		    <sect2 id="specify-a-file">
+			<title
+>حدد ملفًا</title>
+			<para
+>من خلال تحديد مسار واسم ملف معين، يمكن للمستخدم جعل أوكلار يفتح ذلك الملف مباشرة عند بدء التشغيل. قد يبدو هذا الخيار كالتالي: </para>
+			<informalexample
+><screen
+><prompt
+>%</prompt
+> <userinput
+><command
+>okular</command
+> <option
+><replaceable
+>/home/myhome/docs/mydoc.pdf</replaceable
+></option
+> </userinput
+> </screen>
+			</informalexample>
+			<note>
+			    <para
+>بالنسبة لمستندات &PDF;، يمكن إعطاء الاسم كـ <replaceable
+>document_name</replaceable
+>#<replaceable
+>named_destination</replaceable
+> حيث <replaceable
+>named_destination</replaceable
+> هي وجهة مسماة معينة مضمنة في المستند. </para>
+			</note>
+		    </sect2>
+		    <sect2 id="other-command-line-options">
+			<title
+>خيارات سطر أوامر أخرى</title>
+			<para
+>تتوفر خيارات مساعدة سطر الأوامر التالية </para>
+			<variablelist>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>-p --page <replaceable
+>number</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>افتح صفحة برقم معين في المستند. متاح أيضًا من خلال <userinput
+><command
+>okular</command
+> <option
+>-p <replaceable
+>number</replaceable
+></option
+></userinput
+></para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--presentation</option
+></userinput
+></term>
+				<listitem
+><para
+>ابدأ المستند في وضع العرض التقديمي.</para
+></listitem>
+			    </varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print</option
+></userinput
+></term>
+				<listitem
+><para
+>ابدأ بحوار الطباعة.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--print-and-exit</option
+></userinput
+></term>
+				<listitem
+><para
+>ابدأ بحوار الطباعة واخرج بعد الطباعة.</para
+></listitem>
+				</varlistentry>
+			    <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--unique</option
+></userinput
+></term>
+				<listitem
+><para
+>تحكم في النسخة الفريدة.</para
+></listitem>
+				</varlistentry>
+				<varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--noraise</option
+></userinput
+></term>
+				<listitem
+><para
+>يسمح بمنع نافذة أوكلار من البروز بعد البدء.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--find <replaceable
+>string</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>يحاول البحث عن سلسلة نصية معينة وتمييزها في المستند. يعمل فقط إذا مُرر مستند واحد كمعامل لأمر <userinput
+><command
+>okular</command
+></userinput
+>.</para
+></listitem>
+				</varlistentry>
+                <varlistentry>
+				<term
+><userinput
+><command
+>okular</command
+> <option
+>--editor-cmd <replaceable
+>string</replaceable
+></option
+></userinput
+></term>
+				<listitem
+><para
+>يحدد أمر المحرر الخارجي. لا يمكنك ضبط أمر المحرر في نسخة مشغلة مسبقًا من أوكلار. يرجى ملاحظة أن الخيار <option
+>--unique</option
+> غير مدعوم عند ضبط أمر المحرر في سطر الأوامر.</para
+></listitem>
+				</varlistentry>
+			</variablelist>
+		    </sect2>
+		</sect1>
+		<sect1 id="fit-window-to-page">
+			<title
+>لائم النافذة للصفحة</title>
+			<para
+>تقوم ميزة "لائم النافذة للصفحة" بتغيير حجم النافذة لتكون بنفس حجم الصفحة تمامًا عند معامل التقريب الحالي. إذا لم تكن الصفحة ملائمة تمامًا للشاشة، فستُكبر النافذة بحيث يظهر أكبر جزء ممكن من الصفحة. </para>
+			<para
+>يمكن الوصول إلى هذه الميزة باستخدام اختصار لوحة المفاتيح <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+>. </para>
+		</sect1>
+	</chapter>
+
+	<chapter id="primary-menu-items">
+		<title
+>شريط القائمة</title>
+
+		<sect1 id="menufile">
+			<title
+>قائمة ملف</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>افتح...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>افتح</action
+> ملفًا مدعومًا أو أرشيف مستند أوكلار. إذا كان هناك ملف مفتوح بالفعل فسيُغلق. لمزيد من المعلومات، راجع قسم <link linkend="opening"
+>فتح الملفات</link
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guisubmenu
+>افتح الأخير</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>افتح</action
+> ملفًا استُخدم سابقًا من قائمة فرعية. إذا كان هناك ملف معروض حاليًا فسيُغلق. لمزيد من المعلومات، راجع قسم <link linkend="opening"
+>فتح الملفات</link
+>. </para>
+					</listitem>
+				</varlistentry>
+				<!--
+				<varlistentry>
+					<term>
+						<menuchoice>
+							<shortcut
+><keycap
+>G</keycap
+></shortcut>
+							<guimenu
+>File</guimenu>
+							<guimenuitem
+>Get Books From Internet...</guimenuitem>
+						</menuchoice>
+					</term>
+					<listitem>
+						<para
+>to be written</para>
+					</listitem>
+				</varlistentry>
+				<-->
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>استورد PostScript كـ &PDF;...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>افتح</action
+> ملف &PostScript; وحوله إلى &PDF;. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>T</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>تراجع عن إغلاق اللسان</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أعد فتح</action
+> آخر مستند أُغلق. هذا الإجراء نشط فقط إذا أغلقت مستندًا في لسان خلال الجلسة الحالية. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>افتح المجلد المحتوي</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>افتح</action
+> المجلد الذي يحتوي على المستند الحالي في مدير ملفاتك المفضل. هذا الإجراء مفيد بشكل خاص في حالة تنزيل ملف &PDF; من الإنترنت يفتح نفسه في أوكلار. قد لا يكون موقع هذا الملف واضحًا أو يسهل العثور عليه بدون هذه الميزة. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>احفظ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>يحفظ</action
+> المستند بما في ذلك كافة التغييرات (الشروح، محتويات النماذج، إلخ)، بشرط أن تدعم خلفية المستند حفظ تلك التغييرات. إذا كانت الخلفية لا تدعم حفظ التغييرات، فسيُعطى المستخدم خيار إما تجاهلها أو حفظها مع المستند في أرشيف مستند أوكلار.</para>
+					</listitem>
+				</varlistentry>
+
+                <varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>احفظ باسم...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>يحفظ</action
+> المستند تحت اسم جديد بما في ذلك كافة التغييرات (الشروح، محتويات النماذج، إلخ)، بشرط أن تدعم خلفية المستند حفظ التغييرات. إذا كانت الخلفية لا تدعم حفظ التغييرات، فسيُعطى المستخدم خيار إما تجاهلها أو حفظها مع المستند في أرشيف مستند أوكلار.</para>
+                                        <note>
+                                        <para
+>لاحظ أنه نظرًا لطريقة التنفيذ، حتى لو لم تكن هناك تغييرات على الملف، فقد لا يكون الملف الجديد نسخة دقيقة تمامًا من الملف الأصلي (على سبيل المثال، يمكن أن يكون له بصمة SHA-1 مختلفة، إلخ). </para>
+                                        </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>أعد التحميل</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أعد تحميل</action
+> الملف المفتوح حاليًا.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>اطبع...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اطبع</action
+> المستند المعروض حاليًا. يرجى أخذ العلم بأن أوكلار يمتلك بعض الخيارات المحددة لطباعة &PDF; والمتاحة عبر الضغط على زر <guibutton
+>خيارات 
+>
+></guibutton
+> ثم اختيار <guilabel
+>خيارات &PDF;</guilabel
+>. استخدم هذه الخيارات لطباعة شروحك أو ضبط وضع التنقيط إذا واجهت مشاكل في طباعة بعض الرموز أو احتجت لتغيير وضع القياس. </para>
+                                                <note>
+                                                    <para
+>تتوفر خيارات وضع القياس فقط عند تحديد خيار <guilabel
+>فرض التنقيط</guilabel
+>. </para>
+                                                </note>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>معاينة الطباعة...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أظهر معاينة</action
+> لكيفية طباعة المستند المعروض حاليًا بالخيارات المبدئية. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>خصائص</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أعرض بعض المعلومات الأساسية</action
+> حول المستند، مثل العنوان، والمؤلف، وتاريخ الإنشاء، وتفاصيل حول الخطوط المستخدمة. تعتمد المعلومات المتاحة على نوع المستند.</para>
+						<note>
+							<para
+>يرجى الانتباه إلى المعلومات المتعلقة باستبدال الخطوط في تبويب <guilabel
+>الخطوط</guilabel
+> في حوار <guilabel
+>الخصائص</guilabel
+>. يمكن حل العديد من المشاكل المتعلقة بتصيير الخطوط عبر تثبيت الخطوط المستبدلة.</para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guimenuitem
+>ملفات مضمنة...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أظهر الملفات المضمنة</action
+> في المستند، إذا كان يحتوي على أي منها. لمزيد من المعلومات، راجع القسم المتعلق بـ <link linkend="embedded-files"
+>الملفات المضمنة</link
+>.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guisubmenu
+>صدر كـ</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>يحتوي هذا العنصر على تنسيقات التصدير التي يمكن تصدير المستند الحالي إليها. الإدخال الأول لكافة أنواع المستندات هو دائمًا <guimenuitem
+>نص مجرد...</guimenuitem
+>.</para>
+						<para
+>الإدخال الثاني هو <guimenuitem
+>أرشيف مستند</guimenuitem
+>، والذي يسمح لك بحفظ المستند مع شروحك في تنسيق أرشيف خاص بأوكلار. وبالتالي يسهل مشاركة المستند الأصلي وشروحك مع مستخدمي أوكلار الآخرين أو العمل معهم بشكل تعاوني.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>ملف</guimenu
+> <guisubmenu
+>شارك</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>يحتوي هذا العنصر على الخدمات التي يمكن استخدامها لمشاركة المستند الحالي مع الآخرين أو إرساله إلى أجهزتك. يتحكم النظام في الإدخالات الموجودة في هذه القائمة الفرعية، وهي تعتمد على تنسيق المستند الحالي وملحقات KPurpose المثبتة.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>ملف</guimenu
+> <guimenuitem
+>أنهِ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أغلق</action
+> أوكلار.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuedit">
+			<title
+>قائمة التحرير</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-undo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>تراجع</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>تراجع</action
+> عن أمر تحرير الملحوظة التوضيحية الأخير (إنشاء وإزالة الملحوظات، وتحرير خصائص الملحوظات التعسفية، ونقل الملحوظات باستخدام &Ctrl; مع السحب، وتحرير محتويات النص للملحوظة).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+					  <anchor id="edit-redo"/>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>Z</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>أعد</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+					  <para
+><action
+>أعد</action
+> خطوة التراجع الأخيرة عند تحرير الملحوظات التوضيحية.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>انسخ</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>انسخ</action
+> النص المحدد حاليًا في وضع <guibutton
+>اختيار النص</guibutton
+> إلى الحافظة.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>اختر الكل</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يختار</action
+> كامل النص (إذا كان المستند يوفره). يعمل هذا فقط في وضع <guibutton
+>اختيار النص</guibutton
+>.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>تحرير</guimenu
+> <guimenuitem
+>اختر كل النص في الصفحة الحالية</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يختار</action
+> كامل النص (إذا كان المستند يوفره) في الصفحة الحالية. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>ابحث...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>يعرض شريط البحث في أسفل منطقة العرض مما يتيح لك <action
+>البحث عن سلسلة نصية في المستند</action
+>. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F3</keycap
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>ابحث عن التالي</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>يحاول <action
+>البحث عن السلسلة النصية المبحوث عنها مسبقًا مرة أخرى</action
+> في المستند.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>تحرير</guimenu
+> <guimenuitem
+>ابحث عن السابق</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>ينتقل إلى الورود السابق لسلسلة البحث</action
+> في المستند.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menuview">
+			<title
+>قائمة العرض</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+> <guimenuitem
+>عرض تقديمي</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>ينشط</action
+> وضع العرض التقديمي. لمزيد من المعلومات، طالع القسم المتعلق <link linkend="presentationMode"
+>بوضع العرض التقديمي</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+> <guimenuitem
+>وضع ملء الشاشة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يفعل وضع ملء الشاشة</action
+>. لاحظ أن وضع ملء الشاشة يختلف عن وضع العرض التقديمي حيث أن السمة الوحيدة لوضع ملء الشاشة هي إخفاء زخارف النوافذ، وشريط القوائم وشريط الأدوات.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+> <guimenuitem
+>قرب</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يزيد التكبير</action
+> لعرض المستند.</para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>عرض</guimenu
+> <guimenuitem
+>بعد</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>ينقص التكبير</action
+> لعرض المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>قرب إلى 100%</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يقرب صورة المستند إلى الحجم الفعلي</action
+> كما هو محدد في معاملات المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>لائم العرض</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يغير التكبير</action
+> لعرض المستند إلى قيمة تجعل عرض الصفحات مساويًا لعرض منطقة عرض المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>لائم الصفحة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يغير التكبير</action
+> لعرض المستند إلى قيمة تجعل صفحة كاملة واحدة على الأقل مرئية.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>ملاءمة آلية</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يغير التكبير</action
+> لعرض المستند إلى قيمة، وبناءً على العلاقة بين حجم الصفحة ومنطقة العرض، تجعل آليًا إما عرض الصفحات مساويًا لعرض منطقة عرض المستند (مثل لائم العرض)، أو ارتفاع الصفحات مساويًا لارتفاع منطقة عرض المستند (مثل لائم الارتفاع)، أو تجعل كامل الصفحة مرئية (مثل لائم الصفحة).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guisubmenu
+>وضع العرض</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>تتيح لك هذه القائمة الفرعية اختيار وضع العرض للصفحات. الخيارات الممكنة هي: <guimenuitem
+>صفحة واحدة</guimenuitem
+> (صفحة واحدة فقط في كل صف)، <guimenuitem
+>صفحات متقابلة</guimenuitem
+> (صفحتان في كل صف، بنمط الكتاب)، <guimenuitem
+>صفحات متقابلة (توسيط الصفحة الأولى)</guimenuitem
+> و <guimenuitem
+>نظرة عامة</guimenuitem
+> (عدد الأعمدة هو المحدد في <link linkend="configure"
+>إعدادات أوكلار</link
+>).</para>
+						<para
+>بالإضافة إلى ذلك، يمكنك تفعيل وضع <guimenuitem
+>متصل</guimenuitem
+>. في الوضع المتصل، تُعرض كل صفحات المستند، ويمكنك التمرير خلالها بسلاسة. وخلاف ذلك، تُعرض صفحة واحدة فقط (أو صف واحد من الصفحات) في المرة الواحدة.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guisubmenu
+>الاتجاه</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>تتيح لك هذه القائمة الفرعية <action
+>تغيير اتجاه</action
+> صفحات المستند. </para>
+						<note>
+							<para
+>يُطبق التدوير على اتجاه كل صفحة. </para>
+						</note>
+						<para
+>يمكنك اختيار <guimenuitem
+>الاتجاه الأصلي</guimenuitem
+> لاستعادة اتجاه المستند، وتجاهل كل التدويرات التي طُبقت يدويًا. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guisubmenu
+>عرض مشذب</guisubmenu
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>تتيح لك هذه القائمة الفرعية إزالة الحواف البيضاء للصفحات عند عرض الصفحات (عنصر <guimenuitem
+>تشذيب الهوامش</guimenuitem
+>) أو تشذيب منطقة العرض لتناسب التحديد (عنصر <guimenuitem
+>تشذيب حسب التحديد</guimenuitem
+>). </para>
+						<para
+>يتيح وضع <quote
+>التشذيب حسب التحديد</quote
+> رسم تحديد فوق الصفحة المصيرة من أجل تحديد مربع إحاطة مرئي ليُطبق على <emphasis
+>كل الصفحات</emphasis
+> في المستند. اختيار مربع تشذيب صغير يفرض حدًا أدنى للأبعاد (20% من الحجم الكلي للصفحة). </para>
+						<para
+>وضع <quote
+>تشذيب الهوامش</quote
+> مستمر عبر عمليات إعادة تشغيل أوكلار. أما وضع <quote
+>التشذيب حسب التحديد</quote
+> فيُنسى عند إعادة تشغيل أوكلار. </para>
+						<para
+>عندما تبدل أوكلار من وضع <quote
+>تشذيب الهوامش</quote
+> إلى وضع <quote
+>التشذيب حسب التحديد</quote
+>، يخرج العرض من وضع <quote
+>تشذيب الهوامش</quote
+> من أجل تفاعل اختيار مربع الإحاطة. </para>
+						<para
+>يمكن إلغاء تنشيط وضع التشذيب باختيار نفس عنصر القائمة الذي نشطه مرة أخرى. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>عرض</guimenu
+> <guimenuitem
+>أظهر/أخفِ النماذج</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يظهر أو يخفي عرض</action
+> حقول النماذج في المستند. </para>
+						<note>
+							<para
+>عنصر القائمة هذا نشط فقط إذا كان المستند الحالي يحتوي على حقول نماذج. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<!-- Crtl + mouse wheel zoom in + out-->
+		</sect1>
+
+		<sect1 id="menugo">
+			<title
+>قائمة اذهب</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>اذهب</guimenu
+> <guimenuitem
+>الصفحة السابقة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اعرض الصفحة السابقة</action
+> من المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>اذهب</guimenu
+> <guimenuitem
+>الصفحة التالية</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اعرض الصفحة التالية</action
+> من المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>بداية المستند</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اذهب إلى بداية</action
+> المستند.</para>
+				  </listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>نهاية المستند</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اذهب إلى نهاية</action
+> المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Left;</keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>للخلف</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>عد إلى العرض السابق</action
+> للمستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;&Shift;&Right;</keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>للأمام</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>تحرك للأمام إلى العرض التالي</action
+> للمستند. يعمل هذا فقط إذا كنت قد تحركت للخلف من قبل.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>G</keycap
+></keycombo
+></shortcut
+> <guimenu
+>اذهب</guimenu
+> <guimenuitem
+>اذهب إلى الصفحة...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>يفتح حوارًا يتيح لك <action
+>الذهاب إلى أي صفحة</action
+> في المستند.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menubookmarks">
+			<title
+>قائمة العلامات</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+> <guimenu
+>علامات</guimenu
+> <guimenuitem
+>أضف/أزل علامة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أضف أو أزل علامة للموضع الحالي</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>علامات</guimenu
+> <guimenuitem
+>أعد تسمية العلامة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>أعد تسمية علامة للموضع الحالي</action
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>علامات</guimenu
+> <guimenuitem
+>العلامة السابقة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اذهب إلى العلامة السابقة</action
+>، أو لا تفعل شيئًا إذا لم توجد علامات قبل الحالية.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>علامات</guimenu
+> <guimenuitem
+>العلامة التالية</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>اذهب إلى العلامة التالية</action
+>، أو لا تفعل شيئًا إذا لم توجد علامات بعد الحالية.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>علامات</guimenu
+> <guimenuitem
+>لا توجد علامات</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>هذا إجراء معطل دائمًا يظهر في هذه القائمة فقط إذا كان المستند الحالي لا يحتوي على علامات. وخلاف ذلك تُعرض قائمة بكل العلامات هنا. يتيح النقر على هذه العلامات الذهاب مباشرة إلى الموضع المرتبط بها.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="menutools">
+			<title
+>قائمة الأدوات</title>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>1</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>تصفح</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>سيكون للفأرة سلوكها الطبيعي، &LMB; لسحب المستند وتتبع الروابط و &RMB; لإضافة العلامات وملاءمة العرض.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>2</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>تقريب</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ستعمل الفأرة كأداة تقريب. النقر بـ &LMB; والسحب سيقرب العرض إلى المنطقة المحددة، والنقر بـ &RMB; سيعيد المستند إلى التقريب السابق.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>3</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>اختيار منطقة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ستعمل الفأرة كأداة لاختيار منطقة مستطيلة. في هذا الوضع، سيؤدي النقر بـ &LMB; والسحب إلى رسم مربع اختيار ويوفر خيار نسخ المحتوى المحدد إلى الحافظة، أو نطق النص المحدد، أو تحويل منطقة التحديد إلى صورة وحفظها في ملف.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>4</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>اختيار النص</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ستعمل الفأرة كأداة لاختيار النص. في هذا الوضع، سيتيح النقر بـ &LMB; والسحب خيار تحديد نص المستند. بعدها، انقر فقط بـ &RMB; للنسخ إلى الحافظة أو نطق التحديد الحالي.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>اختيار جدول</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ارسم مستطيلًا حول نص الجدول، ثم انقر بـ &LMB; لتقسيم كتلة النص إلى صفوف وأعمدة. النقر بـ &LMB; على خط موجود يزيله ويدمج الصفوف أو الأعمدة المتجاورة. أخيرًا، انقر فقط بـ &RMB; لنسخ الجدول إلى الحافظة. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>6</keycap
+></keycombo
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>المكبر</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>ينشط وضع المكبر لمؤشر الفأرة. اضغط واستمر في الضغط على &LMB; لتنشيط ودجة المكبر، وحرك المؤشر للتجول في المستند. يقوم المكبر بتكبير كل بكسل في المستند إلى 10 بكسلات في ودجة المكبر.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+> <guimenu
+>أدوات</guimenu
+> <guimenuitem
+>ملحوظات توضيحية</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>افتح شريط أدوات الملحوظات التوضيحية</action
+>. يتيح لك شريط أدوات الملحوظات إضافة ملحوظات على المستند الذي تقرأه. لمزيد من المعلومات، يرجى الاطلاع على القسم الخاص <link linkend="annotations"
+>بالملحوظات التوضيحية</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>وقع رقميًا...</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يبدأ سير عمل إنشاء التوقيع الرقمي</action
+>. إضافة التوقيعات الرقمية مدعومة فقط لملفات PDF في هذه المرحلة. لمزيد من المعلومات، يرجى الاطلاع على القسم الخاص <link linkend="adding_digital_signatures"
+>بإضافة التوقيعات الرقمية</link
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>انطق المستند كاملًا</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>انطق الصفحة الحالية</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>أوقف النطق</guimenuitem
+> </menuchoice>
+					</term>
+					<term>
+						<menuchoice
+><guimenu
+>أدوات</guimenu
+> <guimenuitem
+>ألبث/استأنف النطق</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+>تتيح لك هذه العناصر نطق المستند بأكمله أو الصفحة الحالية فقط وإيقاف النطق باستخدام خدمة نطق النظام. توفر مكتبة &Qt; هذه الخدمة التي تغلف speech-dispatcher على &Linux;، وأنظمة النطق الأصلية على المنصات الأخرى. من الممكن اختيار الصوت الحالي عبر صفحة تهيئة <link linkend="configaccessibility"
+>إمكانية الوصول</link
+> في أوكلار.</para>
+						<para
+>إجراءات <guilabel
+>انطق ...</guilabel
+> مفعّلة فقط إذا كانت خدمة النطق متوفرة في النظام.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+		<sect1 id="settings-help-menu">
+			<title
+>قائمة الإعدادات والمساعدة</title>
+			<para
+>بصرف النظر عن قائمتي <guimenu
+>الإعدادات</guimenu
+> و<guimenu
+>المساعدة</guimenu
+> الشائعة لـ &kde; والموصوفة في فصل <ulink url="help:/fundamentals/menus.html"
+>القائمة</ulink
+> من وثائق أساسيات &kde;، يمتلك أوكلار مدخلات القائمة الخاصة بالتطبيق هذه:</para>
+			<variablelist>
+				<varlistentry>
+					<term>
+						<menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>أظهر الشريط الجانبي</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>يُظهر الشريط الجانبي أو يخفيه.</action
+></para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>
+						<menuchoice
+><guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>أظهر شريط الصفحة</guimenuitem
+> </menuchoice>
+					</term>
+					<listitem>
+						<para
+><action
+>بدّل شريط الصفحة</action
+> في الجزء السفلي من منطقة المستند لتوفير المساحة العمودية في نافذة أوكلار. لاحظ أن أرقام الصفحات ستُعرض في شريط الأدوات المبدئي على أي حال.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+
+	</chapter>
+	<chapter id="configure">
+		<title
+>ضبط أوكلار</title>
+		<sect1 id="configindex">
+			<title
+>ضبط عام</title>
+			<para
+>يمكنك ضبط أوكلار باختيار <menuchoice
+><guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>اضبط أوكلار...</guimenuitem
+></menuchoice
+>. ينقسم حواري الضبط إلى ستة أقسام. يصف هذا الفصل الخيارات المتاحة بالتفصيل. </para>
+			<itemizedlist>
+				<listitem>
+					<para
+><link linkend="configgeneral"
+>عام</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configaccessibility"
+>الإتاحة</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configperformance"
+>الأداء</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configpresentation"
+>عرض تقديمي</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configannotations"
+>الشروح</link
+></para>
+				</listitem>
+				<listitem>
+					<para
+><link linkend="configeditor"
+>المحرر</link
+></para>
+				</listitem>
+			</itemizedlist>
+			<screenshot>
+				<screeninfo
+>حواري الضبط</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>حواري الضبط</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<para
+>اعتمادًا على الواجهات الخلفية المثبتة حاليًا، يحتوي مربع الحوار أيضًا على قائمة بالواجهات الخلفية التي تحتوي على خيارات الضبط. </para>
+		</sect1>
+		<sect1 id="configgeneral">
+			<title
+>عام</title>
+			<variablelist>
+                <varlistentry>
+					<term
+><guilabel
+>استخدم التمرير الناعم</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيُعرض انتقال متحرك عند التمرير باستخدام عجلة الفأرة ولوحة المفاتيح.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض أشرطة التمرير</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيُعرض شريط التمرير لعرض المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اربط المصغرات بالصفحة</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان عرض المصغرات سيُظهر الصفحة الحالية دائمًا أم لا.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض تلميحات ورسائل المعلومات</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان ستُعرض بعض الرسائل المعلوماتية عند بدء التشغيل، تحميل الملف، إلخ.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>أخطر حول الملفات أو النماذج أو التوقيعات المضمنة</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان ستُعرض لوحات معلوماتية حول الملفات المضمنة أو النماذج أو التوقيعات إلخ.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض عنوان المستند في شريط العنوان إن وُجد</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيُعرض عنوان المستند الحالي في شريط عنوان نافذة أوكلار. إذا لم تُوجد بيانات وصفية للعنوان في المستند أو إذا لم يُحدد هذا العنصر، فسيُظهر أوكلار اسم ملف المستند. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>عند عدم عرض عنوان المستند</guilabel
+></term>
+					<listitem>
+					  <para
+>يمكنك اختيار أي من الخيارين، <guilabel
+>اعرض اسم الملف فقط</guilabel
+> أو <guilabel
+>اعرض مسار الملف الكامل</guilabel
+>. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>استخدم لون خلفية مخصص</guilabel
+></term>
+					<listitem>
+                                            <para
+>يسمح بـ <ulink url="help:/fundamentals/colors.html"
+>اختيار لون خلفية المستند</ulink
+> (اللون المحيط بالصفحة المعروضة). مبدئيًا، يُستخدم لون طقم أدوات &Qt; عندما لا يُحدد هذا الخيار. </para>
+					</listitem>
+				</varlistentry>
+                                <varlistentry>
+					<term
+><guilabel
+>افتح الملفات الجديدة في ألسنة</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيتم فتح المستندات الجديدة في ألسنة. الألسنة معطلة مبدئيًا.</para>
+						<para
+>الاختصارات المبدئية للتبديل بين الألسنة هي <keycombo
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> (<guilabel
+>اللسان التالي</guilabel
+>) و <keycombo
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> (<guilabel
+>اللسان السابق</guilabel
+>). </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>بدّل إلى اللسان الموجود إذا كان الملف مفتوحًا بالفعل</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان يجب على أوكلار التبديل إلى لسان إذا كان الملف مفتوحًا بالفعل بدلًا من فتح لسان جديد. هذا الخيار مفعل مبدئيًا. لا يمكن تبديله إلا إذا كان <guilabel
+>افتح الملفات الجديدة في ألسنة</guilabel
+> مفعلًا.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>أطع تقييدات DRM</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان يجب على أوكلار إطاعة قيود <firstterm
+>DRM</firstterm
+> (إدارة الحقوق الرقمية). تُستخدم تقييدات DRM لجعل من المستحيل القيام بإجراءات معينة مع مستندات &PDF;، مثل نسخ المحتوى إلى الحافظة. لاحظ أنه في بعض إعدادات أوكلار، لا يتوفر هذا الخيار.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>أعد تحميل المستند عند تغيير الملف</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان يجب فحص الملفات المفتوحة آليًا بحثًا عن تغييرات وتحديثها، إذا لزم الأمر.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض حوار اختيار الخلفية</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان يجب على أوكلار سؤال المستخدم عن الخلفية التي سيستخدمها في حال وجود أكثر من خلفية قادرة على فتح الملف الحالي. إذا لم يُحدد، فسيستخدم أوكلار الخلفية ذات الأولوية الأعلى.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اتجاه القراءة من اليمين إلى اليسار</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيتم استخدام اتجاه القراءة من اليمين إلى اليسار مبدئيًا للملفات المفتوحة. قد يكون هذا مفيدًا لـ <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>بعض أنظمة الكتابة</ulink
+>. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>افتح في النمط المستمر مبدئيًا</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيتم استخدام النمط المستمر مبدئيًا. في النمط المستمر، تُعرض كل صفحات المستند، ويمكنك التمرير بسلاسة عبرها. خلاف ذلك، تُعرض صفحة واحدة فقط (أو صف واحد من الصفحات) في المرة الواحدة. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>تابع من آخر صفحة معروضة</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيحفظ ويستعيد آخر صفحة عُرضت لكل مستند باستخدام بيانات الصفحة المخزنة. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>عند استخدام أداة التصفح، لف المؤشر عند حواف الشاشة</guilabel
+></term>
+					<listitem>
+						<para
+>يسمح بالتمرير اللانهائي حول كامل المستند باستخدام <link linkend="menutools"
+>أداة التصفح</link
+>. إذا فُعل، فسيلتف مؤشر الفأرة إلى الطرف المقابل من الشاشة عندما يلمس الحواف أثناء سحب المستند. هذه الميزة مدعومة على X11 فقط. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>العناصر في التاريخ</guilabel
+></term>
+					<listitem>
+						<para
+>يتيح ضبط طول قائمة السجل المخزنة. </para>
+					</listitem>
+				</varlistentry>
+
+				<varlistentry>
+					<term
+><guilabel
+>أعمدة النظرة العامة</guilabel
+></term>
+					<listitem>
+						<para
+>يمثل هذا الخيار عدد الأعمدة التي ستُستخدم في نمط النظرة العامة. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>تداخل مفتاح Page Up/Down</guilabel
+></term>
+					<listitem>
+						<para
+>هنا يمكنك تحديد النسبة المئوية لمنطقة العرض الحالية التي يجب أن تكون مرئية بعد الضغط على مفاتيح &PgUp;/&PgDn;. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>الحجم المبدئي</guilabel
+></term>
+					<listitem>
+						<para
+>يحدد هذا الخيار نمط التكبير المبدئي للملفات التي لم تُفتح من قبل. أما بالنسبة للملفات التي فُتحت من قبل، فيُطبق نمط التكبير السابق. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configaccessibility">
+			<title
+>الإتاحة</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>ارسم حدودًا حول الروابط</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيُرسَم إطار حول الروابط.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>غيّر الألوان</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>يُمكّن</action
+> خيارات تغيير الألوان.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>نمط الألوان</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>يحدد</action
+> نمط تغيير الألوان.</para>
+						<variablelist>
+						<varlistentry>
+							<term
+><guilabel
+>اعكس الألوان</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يعكس</action
+> الألوان في العرض، أي أن العناصر السوداء ستظهر بيضاء.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>غيّر لون الورق</guilabel
+></term>
+								<listitem>
+									<para
+><action
+>يغيّر</action
+> لون الورق، أي خلفية المستند.</para>
+                                                                        <para
+>يمكن اختيار اللون باستخدام عينة <guilabel
+>لون الورق</guilabel
+> أدناه. </para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>غيّر الألوان الداكنة والفاتحة</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يغيّر</action
+> الألوان الداكنة والفاتحة حسب تفضيلك، وهذا يعني أن الأسود لن يُصيّر كأسود بل كلون داكن مختار، والأبيض لن يُصيّر كأبيض بل كلون فاتح مختار.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>حوّل إلى أسود وأبيض</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يحوّل</action
+> المستند إلى اللونين الأسود والأبيض. يمكنك ضبط العتبة والتباين. ضبط العتبة على قيمة أعلى بتحريكها إلى اليمين سيؤدي إلى استخدام درجات رمادية أفتح.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>اعكس الإضاءة</guilabel
+></term>
+							<listitem>
+									<para
+><action
+>يعكس</action
+> إضاءة كل الألوان. ستُبدّل الألوان الفاتحة والداكنة، لكن لن تتأثر الصبغة والإشباع. عادة ما يكون التباين في الصور أسوأ مما هو عليه في <guilabel
+>عكس اللوما (sRGB خطي)</guilabel
+>.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>عكس اللوما (sRGB خطي)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يعكس</action
+> لوما كل الألوان. ستُبدّل الألوان الفاتحة والداكنة، لكن لن تتأثر الصبغة والإشباع. يُحفظ التباين في الصور بشكل أفضل منه في <guilabel
+>اعكس الإضاءة</guilabel
+>، لكن الرسوميات وتنسيق النصوص الملونة عادة ما تبدو أسوأ. يستخدم معاملات لوما sRGB، ولكن دون تصحيح غاما.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>عكس اللوما (متماثل)</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يعكس</action
+> لوما كل الألوان، باستخدام معاملات لوما متماثلة. ستُبدّل الألوان الفاتحة والداكنة، لكن لن تتأثر الصبغة والإشباع. يشبه جدا <guilabel
+>اعكس الإضاءة</guilabel
+>، لكن التباين يكون أفضل في بعض الحالات.</para>
+								</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>إزاحة صبغة موجبة</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يزيح</action
+> صبغة كل الألوان بمقدار 120 درجة. يمكن أن يخفف من بعض مشاكل التباين في الرسوميات الملونة.</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term
+><guilabel
+>إزاحة صبغة سالبة</guilabel
+></term>
+							<listitem>
+								<para
+><action
+>يزيح</action
+> صبغة كل الألوان بمقدار 240 درجة. يمكن أن يخفف من بعض مشاكل التباين في الرسوميات الملونة.</para>
+								</listitem>
+						</varlistentry>
+						</variablelist>
+                                                <note
+><para
+>يمكنك ضبط اختصارات لوحة المفاتيح وإجراءات شريط الأدوات لأوضاع الألوان باستخدام عناصر القائمة المقابلة في قائمة <guimenu
+>الإعدادات</guimenu
+> في نافذة أوكلار الرئيسة.</para
+></note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>محرك نص-إلى-صوت</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>يتيح لك اختيار</action
+> محرك النص إلى صوت (<abbrev
+>TTS</abbrev
+>) لاستخدامه في أوكلار. المحرك المبدئي هو <application
+>speechd</application
+> <abbrev
+>TTS</abbrev
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>صوت نص-إلى-كلام</guilabel
+></term>
+					<listitem>
+						<para
+><action
+>يتيح لك اختيار</action
+> صوت لمحرك النص إلى كلام لاستخدامه في أوكلار. يمكنك استخدام كل اللغات والأصوات بناءً على المصنّعات المتاحة على منصتك. في لينكس، يُستخدم speech-dispatcher مبدئيًا لتحديد الأصوات المتاحة.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configperformance">
+			<title
+>الأداء</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>مكن مؤثرات الشفافية</guilabel
+></term>
+					<listitem>
+						<para
+>يرسم التحديدات والرسوميات الخاصة الأخرى باستخدام تأثيرات الشفافية. عطل هذا الخيار لرسمها باستخدام الخطوط العريضة أو أنماط التعبئة المعتمة لزيادة السرعة في التحديدات.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>استخدام الذاكرة</guilabel
+></term>
+					<listitem>
+						<para
+>يمكن لأوكلار تحقيق أفضل أداء من خلال ضبط استخدام الذاكرة، بناءً على نظامك وذوقك. كلما زادت الذاكرة التي تسمح له باستخدامها، زادت سرعة استجابة البرنامج. التشكيلة المبدئية جيدة لكل الأنظمة، ولكن يمكنك منع أوكلار من استخدام ذاكرة أكثر من اللازم باختيار التشكيلة المنخفضة (Low)، أو تركه يستفيد إلى أقصى حد من نظامك باستخدام التشكيلة الهجومية (Aggressive). استخدم التشكيلة الشرهة (Greedy) لتحميل كل الصفحات مسبقًا دون مخاطرة بامتلاء ذاكرة النظام (سيُستخدم 50% فقط من إجمالي الذاكرة أو الذاكرة الحرة).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>خيارات التصيير</guilabel
+></term>
+					<listitem>
+						<para
+>باستخدام هذه المجموعة من الخيارات، يمكنك تحسين تصيير النصوص والصور في أوكلار. تعتمد النتيجة على الجهاز المستخدم لعرض المستند. يمكن استخدام عنصري <guilabel
+>مكن تنعيم النصوص</guilabel
+> و <guilabel
+>مكن تنعيم الرسوميات</guilabel
+> لتشغيل أو إيقاف <ulink url="https://en.wikipedia.org/wiki/Spatial_anti-aliasing"
+>التنعيم المكاني</ulink
+> للنصوص والصور في المستند على التوالي. عنصر <guilabel
+>مكن تلميح النصوص</guilabel
+> مخصص للتبديل في <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
+>تلميح الخطوط</ulink
+>. يغير التنعيم والتلميح كيفية عرض المستندات، وقد ترغب في ضبطهما حسب تفضيلك.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configpresentation">
+			<title
+>عرض تقديمي</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>تقدم كل</guilabel
+></term>
+					<listitem>
+						<para
+>يمكّن التقدم الآلي للصفحات بناءً على فترة زمنية محددة.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ابدأ من جديد بعد الصفحة الأخيرة</guilabel
+></term>
+					<listitem>
+						<para
+>عند التنقل في وضع العرض التقديمي وتجاوز الصفحة الأخيرة، ستظهر الصفحة الأولى.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>التنقل باللمس</guilabel
+></term>
+					<listitem>
+						<para
+>يتيح لك ضبط التنقل عبر شاشة اللمس من خلال النقر في العرض التقديمي باستخدام القيم الثلاث التالية:</para>
+                        <itemizedlist>
+							<listitem>
+								<para
+><guilabel
+>انقر على الجانب الأيسر/الأيمن للعودة/التقدم</guilabel
+>: النقر على النصف الأيسر (الأيمن) من الشاشة يجعل العرض ينتقل إلى الشريحة السابقة (التالية).</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>انقر في أي مكان للتقدم</guilabel
+> (مبدئي): النقر على الشاشة يجعل العرض ينتقل إلى الشريحة التالية، بغض النظر عن مكان النقر.</para>
+							</listitem>
+							<listitem>
+								<para
+><guilabel
+>معطل</guilabel
+>: النقر على الشاشة لا يفعل شيئًا.</para>
+							</listitem>
+						</itemizedlist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>لون الخلفية</guilabel
+></term>
+					<listitem>
+						<para
+>اللون الذي سيملأ جزء الشاشة غير المغطى بالصفحة عند التواجد في وضع العرض التقديمي.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>مؤشر الفأرة</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان يجب إخفاء الفأرة دائمًا، أو إظهارها دائمًا، أو إخفاؤها بعد فترة قصيرة من عدم النشاط.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض مؤشر التقدم</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كان سيتم إظهار دائرة تقدم تعرض الصفحة الحالية وإجمالي عدد الصفحات في الزاوية العلوية اليمنى من شاشة العرض التقديمي في كل مرة تغير فيها الصفحة.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>اعرض صفحة الملخص</guilabel
+></term>
+					<listitem>
+						<para
+>ما إذا كانت ستُعرض صفحة ملخص في بداية العرض التقديمي تحتوي على العنوان والمؤلف وعدد صفحات المستند.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>مكن الانتقالات</guilabel
+></term>
+					<listitem>
+						<para
+>استخدم خانة الاختيار هذه لتمكين أو تعطيل تأثيرات الانتقال بين الصفحات.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>الانتقال المبدئي</guilabel
+></term>
+					<listitem>
+						<para
+>تأثير الانتقال بين الصفحات إذا لم يحدد المستند تأثيرًا. اضبط هذا على <guilabel
+>انتقال عشوائي</guilabel
+> ليقوم أوكلار باختيار أحد التأثيرات المتاحة عشوائيًا.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>الموضع</guilabel
+></term>
+					<listitem>
+						<para
+>في هذا القسم يمكنك اختيار <guilabel
+>الشاشة</guilabel
+> المستخدمة لعرض العرض التقديمي.</para>
+						<para
+><guilabel
+>الشاشة الحالية</guilabel
+> هي نفس الشاشة التي توجد عليها نافذة أوكلار التي بدأت وضع العرض التقديمي.</para>
+						<para
+><guilabel
+>الشاشة المبدئية</guilabel
+> هي الشاشة المحددة كمبدئية في ضبط xinerama.</para>
+						<para
+><guilabel
+>الشاشة 0</guilabel
+>، <guilabel
+>الشاشة 1</guilabel
+> وإلخ هي الشاشات المتاحة.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>ضبط أداة الرسم</guilabel
+></term>
+					<listitem>
+						<para
+>إدارة ألوان قلم الرصاص المستخدم عند الرسم على الصفحات أثناء وضع العرض التقديمي.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configannotations">
+			<title
+>الشروح</title>
+			<screenshot>
+				<screeninfo
+>صفحة الشروح في حوار الضبط</screeninfo>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="configure-annotations.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase
+>صفحة الشروح في حوار الضبط</phrase>
+					</textobject>
+				</mediaobject>
+			</screenshot>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>شريط أدوات الشرح</guilabel
+></term>
+					<listitem>
+                                            <para
+>يتيح التبديل بين <guimenuitem
+>شريط أدوات الشرح الكامل</guimenuitem
+> (<link linkend="annotations-add"
+>شريط الأدوات المبدئي</link
+> في القسم العلوي من نافذة أوكلار) و <guimenuitem
+>شريط أدوات الشرح السريع</guimenuitem
+> (شريط منزلق يحتوي على أدواتك المفضلة في الجزء الأيمن من لوحة المستند).</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>المؤلف</guilabel
+></term>
+					<listitem>
+						<para
+>مؤلف المحتويات المضافة إلى المستند. المبدئي هو الاسم المأخوذ من صفحة <guilabel
+>كلمة المرور وحساب المستخدم</guilabel
+> في وحدة إعدادات النظام <guilabel
+>تفاصيل الحساب</guilabel
+>.</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>أدوات شرح</guilabel
+></term>
+					<listitem>
+					  <para
+>تُستخدم هذه اللوحة لضبط <link linkend="annotations-add"
+>شريط أدوات الشرح</link
+> الخاص بك. </para>
+					  <para
+>توجد خمسة أزرار (<guibutton
+>أضف</guibutton
+>، <guibutton
+>حرر</guibutton
+>، <guibutton
+>أزل</guibutton
+>، <guibutton
+>انقل للأعلى</guibutton
+>، <guibutton
+>انقل للأسفل</guibutton
+>) وصندوق قائمة (يسرد محتويات شريط أدوات الشرح الحالي) تُستخدم لضبط شريط الأدوات. </para>
+					  <para
+>إذا كنت بحاجة إلى إضافة زر أداة إلى شريط الأدوات، فانقر على زر <guibutton
+>أضف</guibutton
+>. يمكنك اختيار <guilabel
+>الاسم</guilabel
+> و <guilabel
+>النوع</guilabel
+> و <guilabel
+>المظهر</guilabel
+> للأداة المنشأة. </para>
+					  <note>
+					    <para
+>يرجى تذكر أن أدوات الشرح في أوكلار قابلة للضبط بشكل كبير. على سبيل المثال، يمكن أن يكون لديك زران لنفس الأداة ولكن بلونين مختلفين. لا تتردد في التجربة لاختيار مجموعة الأزرار المصممة خصيصًا لسير عملك. </para>
+					  </note>
+					  <para
+>انقر على عنصر في صندوق القائمة ثم انقر على الزر المقابل في الجزء الأيمن من الصفحة لتحرير العنصر أو إزالته أو نقله للأعلى أو للأسفل. يعتمد اختصار لوحة المفاتيح للأداة (المفاتيح من <keycap
+>1</keycap
+> إلى <keycap
+>9</keycap
+>) على موقعها في قائمة شريط أدوات الشرح. </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+>استخدام طوابع مخصصة</term>
+					<listitem>
+					<orderedlist>
+					<listitem
+><para
+>أنشئ الأيقونة التي تريد استخدامها لطابعك الخاص واحفظها بأي تنسيق رسومي يدعمه أوكلار</para
+></listitem>
+					<listitem
+><para
+>انقر على زر <guibutton
+>أضف</guibutton
+>، واختر النوع <guilabel
+>طابع</guilabel
+> وأدخل اسمًا لطابعك.</para
+></listitem>
+					<listitem
+><para
+>أدخل المسار الكامل لأيقونتك المخصصة في الصندوق المنسدل في مجموعة <guilabel
+>رمز الطابع</guilabel
+></para
+></listitem>
+					</orderedlist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+		<sect1 id="configeditor">
+			<title
+>المحرر</title>
+			<variablelist>
+				<varlistentry>
+					<term
+><guilabel
+>المحرر</guilabel
+></term>
+					<listitem>
+						<para
+>اختر المحرر الذي تريد تشغيله عندما يريد أوكلار فتح ملف مصدري. هذه هي الحالة عندما يحتوي المستند على مراجع لنقاط متنوعة (عادةً رقم الصف والعمود) من المصادر التي تم توليده منها. يدعم تنسيق DVI بشكل أصيل إضافة المعلومات حول المصادر التي تم توليد مستند LaTeX منها. يوجد نظام مماثل لمستندات PDF يسمى <acronym
+>pdfsync</acronym
+>، والذي يخزن هذه المعلومات الإضافية في ملف خارجي مسمى باسم ملف PDF نفسه (على سبيل المثال <filename
+>mydocument.pdfsync</filename
+> للملف <filename
+>mydocument.pdf</filename
+>). </para>
+						<para
+>يأتي أوكلار مع إعدادات مضبوطة مسبقًا للمحررات التالية: <ulink url="https://kate-editor.org/"
+>كايت</ulink
+>، <ulink url="https://kile.sourceforge.io/"
+>Kile</ulink
+>، <ulink url="https://www.scintilla.org/SciTE.html"
+>SciTE</ulink
+>، <ulink url="https://www.gnu.org/software/emacs/"
+>عميل إيماكس</ulink
+>، <ulink url="https://www.lyx.org/"
+>عميل LyX</ulink
+>، <ulink url="https://www.texstudio.org/"
+>TeXstudio</ulink
+>، و <ulink url="https://github.com/hannah-sten/texify-idea"
+>TeXiFy IDEA</ulink
+>. </para>
+						<note>
+						  <para
+>لاستخدام البحث العكسي في Kile، يجب عليك ترجمة ملف LaTeX الخاص بك باستخدام تشكيلة <guilabel
+>Modern</guilabel
+>. </para>
+						</note>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term
+><guilabel
+>الأمر</guilabel
+></term>
+					<listitem>
+						<para
+>هذا هو الأمر ومعاملاته لاستدعاء المحرر المختار مع الملف المصدري للمستند الحالي.</para>
+						<para
+>سيُملأ هذا الحقل آليًا إذا كنت تستخدم أحد المحررات المضبوطة مسبقًا. بخلاف ذلك، يرجى اختيار <guimenuitem
+>محرر نصوص مخصص</guimenuitem
+> في صندوق <guilabel
+>المحرر</guilabel
+> المنسدل والرجوع إلى وثائق محررك المفضل للعثور على الأمر المناسب. </para>
+						<para
+>يمكنك استخدام العناصر النائبة التالية:</para>
+						<itemizedlist>
+						  <listitem>
+						    <para
+>%f - اسم الملف</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%l - سطر الملف المطلوب الوصول إليه</para>
+						  </listitem>
+						  <listitem>
+						    <para
+>%c - عمود الملف المطلوب الوصول إليه</para>
+						  </listitem>
+						</itemizedlist>
+						<para
+>إذا لم يُحدد %f، فسيُلحق اسم المستند بالأمر المحدد.</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</sect1>
+	<sect1 id="configure-backends">
+	  <title
+>ضبط خلفيات أوكلار</title>
+	  <para
+>يمكنك ضبط خلفيات أوكلار باختيار <menuchoice
+> <guimenu
+>الإعدادات</guimenu
+> <guimenuitem
+>اضبط أوكلار...</guimenuitem
+> </menuchoice
+>. حاليًا، تُوفر خيارات الضبط لخلفيات EPub و &PostScript; و FictionBook و Txt و OpenDocument Text و &PDF; فقط. </para>
+	  <para
+>باستخدام صفحات ضبط الخلفية لـ EPub و FictionBook و Mobipocket و Markdown و TXT و OpenDocument Text، يمكنك تحديد الخط لتصيير المستندات بالتنسيقات المقابلة. يفتح زر <guibutton
+>اختر...</guibutton
+> في هذه الصفحات نافذة ضبط الخط القياسية لـ &kde;. يرجى الرجوع إلى <ulink url="help:/fundamentals/fonts.html"
+>وثائق أساسيات &kde;</ulink
+> لمزيد من التفاصيل. </para>
+	  <para
+>يمكن العثور على وصف صفحات ضبط خلفيات Markdown و &PostScript; و &PDF; أدناه. </para>
+	  <sect2 id="config-markdown">
+	    <title
+>ضبط خلفية  مارك داون</title>
+	    <para
+>يمكنك ضبط خلفية تصيير مارك داون لـ أوكلار المبنية على <ulink url="https://www.pell.portland.or.us/~orc/Code/markdown/"
+>Discount</ulink
+> باختيار <guilabel
+>مارك داون</guilabel
+> من القائمة في الجزء الأيسر من حواري الضبط. يتوفر خيار إضافي قابل للضبط كما يلي. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>مكّن تنسيقات SmartyPants</guilabel>
+		  </term>
+		  <listitem>
+              <para
+>عند تحديد هذا الخيار، سيُسمح لـ أوكلار بمعالجة تنسيق <ulink url="https://daringfireball.net/projects/smartypants/"
+>SmartyPants</ulink
+>. قد يكون هذا التنسيق مزعجًا في النصوص التقنية بسبب الاستبدالات غير المرغوب فيها (على سبيل المثال، يستبدل <literal
+>(C)</literal
+> برمز حقوق النشر). هذا الخيار محدد مبدئيًا. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-ghostscript">
+	    <title
+>ضبط خلفية &PostScript;</title>
+	    <para
+>يمكنك ضبط خلفية تصيير &PostScript; لـ أوكلار المبنية على <ulink url="https://www.ghostscript.com/"
+>Ghostscript</ulink
+> باختيار <guilabel
+>Ghostscript</guilabel
+> من القائمة في الجزء الأيسر من حواري الضبط. الخيار الوحيد القابل للضبط هو كما يلي. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>استخدم خطوط المنصة</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>يحدد هذا الخيار ما إذا كان سيُسمح لـ Ghostscript باستخدام خطوط المنصة، وإذا لم يُحدد فسيُسمح فقط باستخدام الخطوط المضمنة في المستند. هذا الخيار محدد مبدئيًا. </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+	  </sect2>
+	  <sect2 id="config-pdf">
+	    <title
+>ضبط خلفية &PDF;</title>
+	    <para
+>يمكنك ضبط خلفية تصيير &PDF; لـ أوكلار المبنية على <ulink url="https://poppler.freedesktop.org/"
+>Poppler</ulink
+> باختيار <guilabel
+>&PDF;</guilabel
+> من القائمة في الجزء الأيسر من حواري الضبط. الخيار الوحيد القابل للضبط هو كما يلي. </para>
+	    <para>
+	      <variablelist>
+		<varlistentry>
+		  <term>
+		    <guilabel
+>حسّن الخطوط الرفيعة</guilabel>
+		  </term>
+		  <listitem>
+		    <para
+>يُنفذ رسم الخطوط في أوكلار في خطوتين: توليد مسار القص وملء مسار القص هذا. عندما يكون الخط في المستند الأصلي أقل من بكسل واحد، قد يسبب هذا التنفيذ ذو الخطوتين مشاكل. بالنسبة لهذه الخطوط، يُملأ مسار القص بلون التعبئة الذي يعتمد على سمك جزء الخط داخل منطقة القص. إذا أصبح جزء الخط داخل منطقة القص صغيرًا جدًا، فقد يصبح التباين بين الشكل ولون الخلفية منخفضًا جدًا بحيث يتعذر التعرف على الخط. تبدو شبكات هذه الخطوط حينئذٍ غير جميلة على الإطلاق. </para>
+		    <informaltable>
+		      <tgroup cols="2">
+			<tbody>
+			  <row>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-thinline.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			    <entry>
+			      <para>
+				<screenshot>
+				  <mediaobject>
+				    <imageobject>
+				      <imagedata fileref="enhance-lowcontrast.png" format="PNG"/>
+				    </imageobject>
+				  </mediaobject>
+				</screenshot>
+			      </para>
+			    </entry>
+			  </row>
+			  <row>
+			    <entry
+>خط رفيع (أحمر)، مسار قصه (خط متقطع) وحدود البكسل (خطوط سوداء متصلة)</entry>
+			    <entry
+>خط رفيع معروض بتباين منخفض</entry>
+			  </row>
+			</tbody>
+		      </tgroup>
+		    </informaltable>
+		    <para
+>لتحسين مظهر الخطوط الرفيعة، يوفر أوكلار خيارين. </para>
+		    <para
+>الخيار الأول هو <guimenuitem
+>متصل</guimenuitem
+>. بهذا الخيار يعدّل أوكلار مسار القص وموضع الخط بحيث يكون مسار القص والخط على نفس حدود البكسل، أي يكبّر أوكلار الخطوط الرفيعة إلى بكسل واحد على جهاز الإخراج. يشبه هذا النمط خيار <guilabel
+>Enhance thin lines</guilabel
+> في <trademark class="registered"
+>Adobe</trademark
+> <trademark class="registered"
+>Reader</trademark
+>. إذا اختير هذا الخيار، فستُكبّر الخطوط الرفيعة دائمًا. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-solid.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>خط رفيع مع تحسين <guimenuitem
+>متصل</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>خط رفيع مع تحسين <guimenuitem
+>متصل</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>الخيار الثاني هو <guimenuitem
+>شكل</guimenuitem
+>. بهذا الخيار يُعدل مسار القص والخط إلى حدود البكسل أيضًا، ولكن تُصحح شدة الخط وفقًا لعرضه. </para>
+		    <para>
+		      <screenshot>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="enhance-shape.png" format="PNG"/>
+			  </imageobject>
+			  <textobject>
+			    <phrase
+>خط رفيع مع تحسين <guimenuitem
+>شكل</guimenuitem
+></phrase>
+			  </textobject>
+			  <caption>
+			    <para
+>خط رفيع مع تحسين <guimenuitem
+>شكل</guimenuitem
+></para>
+			  </caption>
+			</mediaobject>
+		      </screenshot>
+		    </para>
+		    <para
+>لا تُحسّن الخطوط الرفيعة مبدئيًا (خيار <guimenuitem
+>لا</guimenuitem
+>). </para>
+		  </listitem>
+		</varlistentry>
+	      </variablelist>
+	    </para>
+		<sect3 id="config-pdf-digital-signatures">
+			<title
+>شهادات التوقيع الرقمي لـ &PDF;</title>
+			<para>
+				<screenshot
+><mediaobject
+><imageobject
+><imagedata fileref="config-pdf-digital-signatures.png" format="PNG"/></imageobject
+></mediaobject
+></screenshot
+> يسمح لك هذا القسم بتعيين قاعدة بيانات شهادات مخصصة لاستخدامها عند إضافة توقيعات رقمية إلى ملفات &PDF;. </para>
+			<para
+>يسرد أيضًا الشهادات المتاحة في قاعدة بيانات الشهادات الحالية (إن وجدت). </para>
+		</sect3>
+	  </sect2>
+	</sect1>
+	</chapter>
+	<chapter id="credits">
+		<title
+>الحقوق والترخيص</title>
+
+		<itemizedlist>
+			<title
+>حقوق نشر البرنامج:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; المطور الحالي</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+			<listitem
+><para
+>Enrico Ros <email
+>eros.kde@email.it</email
+> مطور kpdf</para
+></listitem>
+		</itemizedlist>
+
+		<itemizedlist>
+			<title
+>حقوق نشر الوثائق:</title>
+			<listitem
+><para
+>&Albert.Astals.Cid; &Albert.Astals.Cid.mail; المؤلف</para
+></listitem>
+			<listitem
+><para
+>Titus Laska <email
+>titus.laska@gmx.de</email
+> بعض التحديثات والإضافات</para
+></listitem>
+			<listitem
+><para
+>Pino Toscano <email
+>pino@kde.org</email
+></para
+></listitem>
+		</itemizedlist>
+		<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+	&documentation.index;
+</book>
+
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=2:sw=2:tw=78:noet
+-->

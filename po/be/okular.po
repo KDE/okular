@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-12 00:58+0000\n"
+"POT-Creation-Date: 2026-11-13 00:55+0000\n"
 "PO-Revision-Date: 2025-01-06 19:10\n"
 "Last-Translator: Siarhei Liantsevich <serzh.by@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -246,7 +246,7 @@ msgstr "Прыпыніць відэа"
 msgid "Resume movie"
 msgstr "Узнавіць відэа"
 
-#: core/audioplayer.cpp:313
+#: core/audioplayer.cpp:366
 #, kde-format
 msgid "This Okular is built without audio support"
 msgstr "Гэтая версія Okular сабраная без падтрымкі аўдыё"
@@ -1713,7 +1713,7 @@ msgstr "Старонка %1 (%2)"
 msgid "Page %1"
 msgstr "Старонка %1"
 
-#: part/annotationpopup.cpp:127
+#: part/annotationpopup.cpp:128
 #, fuzzy, kde-format
 #| msgid "Annotation"
 #| msgid_plural "%1 Annotations"
@@ -1725,58 +1725,58 @@ msgstr[1] "%1 анатацыі"
 msgstr[2] "%1 анатацый"
 msgstr[3] "%1 анатацыі"
 
-#: part/annotationpopup.cpp:129 part/annotationpopup.cpp:199
+#: part/annotationpopup.cpp:130 part/annotationpopup.cpp:200
 #, kde-format
 msgid "&Open Pop-up Note"
 msgstr "&Адкрыць выплыўную нататку"
 
-#: part/annotationpopup.cpp:137 part/annotationpopup.cpp:206
+#: part/annotationpopup.cpp:138 part/annotationpopup.cpp:207
 #: part/bookmarklist.cpp:263 part/part.cpp:2299 part/part.cpp:3224
 #, kde-format
 msgid "Remove Bookmark"
 msgstr "Выдаліць закладку"
 
-#: part/annotationpopup.cpp:141 part/annotationpopup.cpp:209 part/part.cpp:3226
+#: part/annotationpopup.cpp:142 part/annotationpopup.cpp:210 part/part.cpp:3226
 #, kde-format
 msgid "Add Bookmark"
 msgstr "Дадаць закладку"
 
-#: part/annotationpopup.cpp:146 part/annotationpopup.cpp:213
+#: part/annotationpopup.cpp:147 part/annotationpopup.cpp:214
 #, fuzzy, kde-format
 #| msgid "Copyright"
 msgctxt "@action"
 msgid "Copy"
 msgstr "Аўтарскія правы"
 
-#: part/annotationpopup.cpp:150 part/annotationpopup.cpp:217
+#: part/annotationpopup.cpp:151 part/annotationpopup.cpp:218
 #, kde-format
 msgid "Paste"
 msgstr ""
 
-#: part/annotationpopup.cpp:155 part/annotationpopup.cpp:222
+#: part/annotationpopup.cpp:156 part/annotationpopup.cpp:223
 #, kde-format
 msgid "Copy Text to Clipboard"
 msgstr "Скапіяваць тэкст у буфер абмену"
 
-#: part/annotationpopup.cpp:159 part/annotationpopup.cpp:226
+#: part/annotationpopup.cpp:160 part/annotationpopup.cpp:227
 #: part/pageview.cpp:2798 part/pageview.cpp:3150 part/pageview.cpp:3152
 #: part/pageview.cpp:3312 part/pageview.cpp:3373 part/pageview.cpp:3375
 #, kde-format
 msgid "Copy forbidden by DRM"
 msgstr "Капіяванне забаронена DRM"
 
-#: part/annotationpopup.cpp:164 part/annotationpopup.cpp:231
+#: part/annotationpopup.cpp:165 part/annotationpopup.cpp:232
 #, kde-format
 msgid "&Delete"
 msgstr "В&ыдаліць"
 
-#: part/annotationpopup.cpp:178 part/annotationpopup.cpp:235 part/part.cpp:747
+#: part/annotationpopup.cpp:179 part/annotationpopup.cpp:236 part/part.cpp:747
 #: part/propertiesdialog.cpp:54
 #, kde-format
 msgid "&Properties"
 msgstr "У&ласцівасці"
 
-#: part/annotationpopup.cpp:185 part/annotationpopup.cpp:241
+#: part/annotationpopup.cpp:186 part/annotationpopup.cpp:242
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
@@ -1784,13 +1784,23 @@ msgctxt "%1 is the name of the file to open"
 msgid "&Open '%1'…"
 msgstr "&Захаваць \"%1\"..."
 
-#: part/annotationpopup.cpp:189 part/annotationpopup.cpp:245
+#: part/annotationpopup.cpp:190 part/annotationpopup.cpp:246
 #, fuzzy, kde-format
 #| msgctxt "%1 is the name of the file to save"
 #| msgid "&Save '%1'..."
 msgctxt "%1 is the name of the file to save"
 msgid "&Save '%1'…"
 msgstr "&Захаваць \"%1\"..."
+
+#: part/annotationpopup.cpp:256 part/pageview.cpp:4852
+#, kde-format
+msgid "Play this Sound"
+msgstr "Прайграць гэты гук"
+
+#: part/annotationpopup.cpp:259 part/pageview.cpp:4854
+#, kde-format
+msgid "Stop Sound"
+msgstr "Спыніць прайграванне"
 
 #: part/annotationpropertiesdialog.cpp:54
 #, kde-format
@@ -4211,16 +4221,6 @@ msgstr "Наладжванне сеціўных скаротаў..."
 #, kde-format
 msgid "Follow This Link"
 msgstr "Перайсці па гэтай спасылцы"
-
-#: part/pageview.cpp:4852
-#, kde-format
-msgid "Play this Sound"
-msgstr "Прайграць гэты гук"
-
-#: part/pageview.cpp:4854
-#, kde-format
-msgid "Stop Sound"
-msgstr "Спыніць прайграванне"
 
 #: part/pageview.cpp:4860
 #, kde-format

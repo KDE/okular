@@ -3,13 +3,14 @@
 # Zoran Olujic <olujicz@ns-linux.org>, 2010.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2010, 2013, 2014, 2017.
 # Dalibor Djuric <daliborddjuric@gmail.com>, 2010.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 15:58+0000\n"
-"PO-Revision-Date: 2017-09-28 17:59+0200\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-11-15 17:30+0100\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@ijekavian\n"
 "MIME-Version: 1.0\n"
@@ -26,12 +27,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Зоран Олујић"
+msgstr "Зоран Олујић,Немања Хиршл"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "olujicz@gmail.com"
+msgstr "olujicz@gmail.com,nemhirsl@gmail.com"
 
 #: dviexport.cpp:129
 #, kde-format
@@ -45,7 +46,7 @@ msgstr ""
 "<qt>Овај ДВИ фајл указује на спољашње графичке фајлове који нису у формату "
 "постскрипт, те не могу бити обрађени наредбом <tt>dvips</tt>, коју Окулар "
 "интерно користи за штампање и извоз у постскрипт. Функционалност коју "
-"захтевате недостаје у овој верзији Окулара.</qt>"
+"захтијевате недостаје у овој верзији Окулара.</qt>"
 
 #: dviexport.cpp:137
 #, kde-format
@@ -68,7 +69,7 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
-"<qt>Спољашња наредба <tt>dvips</tt>, употребљена за извоз фајла, пријавила "
+"<qt>Спољашња наредба <tt>dvips</tt>, употријебљена за извоз фајла, пријавила "
 "је грешку. Детаљнији извјештај о грешци можете наћи у <strong>дијалогу "
 "података о документу</strong>, који позивате кроз мени <i>Фајл</i>.</qt>"
 
@@ -84,7 +85,7 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
-"ДВИ фајл садржи погрешну верзију ДВИ излаза за ову наредбу. Савет: Ако "
+"ДВИ фајл садржи погрешну верзију ДВИ излаза за ову наредбу. Савјет: Ако "
 "користите словослагачки систем Омега, тада ћете морати да користите и "
 "посебну наредбу, као што је oxdvi."
 
@@ -132,7 +133,7 @@ msgstr ""
 "обично стиже у дистрибуцијама Гостскрипта, интерпретаторског система за "
 "постскрипт. Ако Гостскрипт није инсталиран, могли бисте га инсталирати сада. "
 "Ако сте сигурни да је Гостскрипт инсталиран, покушајте да извршите "
-"<tt>pdf2ps</tt> из командне линије да проверите да ли заиста ради.</"
+"<tt>pdf2ps</tt> из командне линије да провјерите да ли заиста ради.</"
 "p><p><b><tt>$PATH</tt>:</b> %2</p></qt>"
 
 #: dviFile.cpp:415
@@ -147,7 +148,7 @@ msgstr ""
 "<qt><p>ПДФ фајл <tt>%1</tt> не може да се претвори у постскрипт. Због овога "
 "неће бити приказани неки графички елементи документа.</p><p><b>Могући "
 "разлози:</b> Фајл је можда искварен, или можда уопште није ПДФ фајл. Наредба "
-"<tt>pdf2ps</tt>, коју је Окулар употребио, исписала је следеће:</"
+"<tt>pdf2ps</tt>, коју је Окулар употријебио, исписала је сљедеће:</"
 "p><p><strong>%2</strong></p></qt>"
 
 #: dviRenderer.cpp:203 dviRenderer.cpp:435
@@ -158,12 +159,12 @@ msgstr "Фајл је искварен. %1"
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr "Неки постскрипт фајлови не могу да буду угнежђени у документ. %1"
+msgstr "Неки постскрипт фајлови не могу да буду угнијежђени у документ. %1"
 
 #: dviRenderer.cpp:329
 #, kde-format
 msgid "All external PostScript files were embedded into your document."
-msgstr "Сви спољашњи постскрипт фајлови угнежђени су у документ."
+msgstr "Сви спољашњи постскрипт фајлови угнијежђени су у документ."
 
 #: dviRenderer.cpp:419
 #, kde-format
@@ -177,7 +178,7 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
-"Затражили сте од Окулара да нађе место у ДВИ фајлу које одговара реду %1 у "
+"Затражили сте од Окулара да нађе мјесто у ДВИ фајлу које одговара реду %1 у "
 "тех фајлу ‘%2’. Изгледа, међутим, да ДВИ фајл не садржи неопходне податке о "
 "изворном фајлу."
 
@@ -187,7 +188,7 @@ msgid ""
 "Okular was not able to locate the place in the DVI file which corresponds to "
 "line %1 in the TeX-file %2."
 msgstr ""
-"Окулар не може да нађе место у ДВИ фајлу које одговара реду %1 у тех фајлу "
+"Окулар не може да нађе мјесто у ДВИ фајлу које одговара реду %1 у тех фајлу "
 "‘%2’."
 
 #: dviRenderer_draw.cpp:241
@@ -218,7 +219,7 @@ msgstr "ДВИ ко̂д помиње фонт који није претходн
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "ДВИ фајл садржи лошу специјалну наредбу."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format
@@ -277,7 +278,7 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Било је проблема при извршавању <tt>kpsewhich</tt>. Последица је да "
+"<qt><p>Било је проблема при извршавању <tt>kpsewhich</tt>. Посљедица је да "
 "неки фајлови фонтова нису нађени, и документ може бити нечитљив.</"
 "p><p>Могући разлог: наредба <tt>kpsewhich</tt> можда није инсталирана на "
 "систему, или није доступна кроз тренутну путању претраге.</"
@@ -296,10 +297,9 @@ msgstr ""
 "нечитљив.</qt>"
 
 #: fontpool.cpp:471
-#, fuzzy, kde-format
-#| msgid "Currently generating %1 at %2 dpi..."
+#, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "Тренутно генеришем %1 при %2 тпи..."
+msgstr "Тренутно генеришем %1 при %2 тпи…"
 
 #: generator_dvi.cpp:293
 #, kde-format
@@ -497,73 +497,3 @@ msgstr ""
 #, kde-format
 msgid "Wrong command byte found in VF macro list: %1"
 msgstr "Погрешан командни бајт пронађен у VF макро листи: %1"
-
-#~ msgid ""
-#~ "<qt><p>Okular could not locate the program <em>dvipdfm</em> on your "
-#~ "computer. This program is essential for the export function to work. You "
-#~ "can, however, convert the DVI-file to PDF using the print function of "
-#~ "Okular, but that will often produce documents which print okay, but are "
-#~ "of inferior quality if viewed in Acrobat Reader. It may be wise to "
-#~ "upgrade to a more recent version of your TeX distribution which includes "
-#~ "the <em>dvipdfm</em> program.</p><p>Hint to the perplexed system "
-#~ "administrator: Okular uses the PATH environment variable when looking for "
-#~ "programs.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Окулар не може да нађе наредбу <tt>dvipdfm</tt> на овом рачунару. "
-#~ "Она је неопходна за рад функције извоза. ДВИ фајл можете да претворите у "
-#~ "ПДФ и употребом функције извоза у Окулару, али ће такав документ добро "
-#~ "изгледати само на папиру, док ће бити лошијег квалитета у Акробату "
-#~ "читачу. Зато је ипак најбоље да доградите дистрибуцију теха на новију "
-#~ "верзију, која садржи и наредбу <tt>dvipdfm</tt>.</p><p>Савјет збуњеном "
-#~ "систем-администратору: Окулар тражи наредбе кроз промјенљиву окружења <tt>"
-#~ "$PATH</tt>.</p></qt>"
-
-#~ msgid ""
-#~ "<qt>The external program 'dvipdfm', which was used to export the file, "
-#~ "reported an error. You might wish to look at the <strong>document info "
-#~ "dialog</strong> which you will find in the File-Menu for a precise error "
-#~ "report.</qt>"
-#~ msgstr ""
-#~ "<qt>Спољашња наредба <tt>dvipdfm</tt>, употријебљена за извоз фајла, "
-#~ "пријавила је грешку. Детаљнији извјештај о грешци можете наћи у "
-#~ "<strong>дијалогу података о документу</strong>, који позивате кроз мени "
-#~ "<i>Фајл</i>.</qt>"
-
-#~ msgid "portrait"
-#~ msgstr "портрет"
-
-#~ msgid "landscape"
-#~ msgstr "пејзаж"
-
-#~ msgid ""
-#~ "<qt><p>The Ghostview program, which Okular uses internally to display the "
-#~ "PostScript graphics that is included in this DVI file, is generally able "
-#~ "to write its output in a variety of formats. The sub-programs that "
-#~ "Ghostview uses for these tasks are called 'device drivers'; there is one "
-#~ "device driver for each format that Ghostview is able to write. Different "
-#~ "versions of Ghostview often have different sets of device drivers "
-#~ "available. It seems that the version of Ghostview that is installed on "
-#~ "this computer does not contain <strong>any</strong> of the device drivers "
-#~ "that are known to Okular.</p><p>It seems unlikely that a regular "
-#~ "installation of Ghostview would not contain these drivers. This error may "
-#~ "therefore point to a serious misconfiguration of the Ghostview "
-#~ "installation on your computer.</p><p>If you want to fix the problems with "
-#~ "Ghostview, you can use the command <strong>gs --help</strong> to display "
-#~ "the list of device drivers contained in Ghostview. Among others, Okular "
-#~ "can use the 'png256', 'jpeg' and 'pnm' drivers. Note that Okular needs to "
-#~ "be restarted to re-enable PostScript support.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>За приказивање постскрипт графике укључене у овај ДВИ фајл Окулар "
-#~ "интерно користи програм Гоствју, који може да произведе многе различите "
-#~ "формате на излазу. Потпрограми које Гоствју користи у ову сврху називају "
-#~ "се „драјверима уређаја“, по један за сваки формат који Гоствју може да "
-#~ "запише. Различита издања Гоствјуа често имају различите скупове драјвера. "
-#~ "Изгледа да издање Гоствјуа инсталирано на овом рачунару не садржи "
-#~ "<strong>ниједан</strong> драјвер познат Окулару.</p><p>Мало је вјероватно "
-#~ "да исправна инсталација Гоствјуа не садржи ниједан драјвер. Стога ова "
-#~ "грешка вјероватно указује на озбиљне грешке у постави Гоствјуа на овом "
-#~ "рачунару.</p><p>Уколико желите да отклоните проблеме са Гоствјуом, можете "
-#~ "извршити наредбу <tt>gs --help</tt> да добијете списак драјвера које "
-#~ "Гоствју садржи. Између осталих, Окулар може да користи драјвере "
-#~ "<tt>png256</tt>, <tt>jpeg</tt> и <tt>pnm</tt>. Окулар мора бити поново "
-#~ "покренут да би се поново провјерила подршка за постскрипт.</p></qt>"

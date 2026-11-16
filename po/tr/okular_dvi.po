@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 15:58+0000\n"
-"PO-Revision-Date: 2026-09-05 19:43+0300\n"
+"PO-Revision-Date: 2026-11-15 19:37+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -193,12 +193,12 @@ msgstr ""
 #: dviRenderer_draw.cpp:241
 #, kde-format
 msgid "The DVI code set a character of an unknown font."
-msgstr "DVI kodu bilinmeyen bir yazıtipinin bir karakterini atadı."
+msgstr "DVI kodu bilinmeyen bir yazı tipinin bir karakterini atadı."
 
 #: dviRenderer_draw.cpp:268 dviRenderer_prescan.cpp:669
 #, kde-format
 msgid "The DVI code referred to font #%1, which was not previously defined."
-msgstr "#%1 yazıtipine başvuran DVI kodu önceden belirtilmemiş."
+msgstr "#%1 yazı tipine başvuran DVI kodu önceden belirtilmemiş."
 
 #: dviRenderer_draw.cpp:351
 #, kde-format
@@ -213,7 +213,7 @@ msgstr "POP komutu çalıştırılırken yığın boş durumdaydı."
 #: dviRenderer_draw.cpp:487 dviRenderer_draw.cpp:496
 #, kde-format
 msgid "The DVI code referred to a font which was not previously defined."
-msgstr "DVI kodunun başvurduğu bir yazıtipi önceden tanımlanmamış."
+msgstr "DVI kodunun başvurduğu bir yazı tipi önceden tanımlanmamış."
 
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
@@ -261,7 +261,7 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
-"<qt><p>Okular, mevcut DVI dosyasını görüntülemek için gerekli tüm yazıtipi "
+"<qt><p>Okular, mevcut DVI dosyasını görüntülemek için gerekli tüm yazı tipi "
 "dosyalarının yerini belirleyemiyor. Belgeniz okunamaz olabilir.</"
 "p><p><small><b>YOL:</b> %1</small></p><p><small>%2</small></p></qt>"
 
@@ -275,7 +275,7 @@ msgid ""
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
 "<qt><p><em>kpsewhich</em> çalıştırılırken sorun oluştu. Sonuç olarak bazı "
-"yazıtipi dosyaları bulunamadı ve belgeniz okunamaz olabilir.<br/>Olası "
+"yazı tipi dosyaları bulunamadı ve belgeniz okunamaz olabilir.<br/>Olası "
 "sebep: <em>kpsewhich</em> programı sistemde kurulu olmayabilir veya geçerli "
 "arama yolunda olmayabilir.</p><p><small><b>YOL:</b> %1</small></p><p><small>"
 "%2</small></p></qt>"
@@ -287,14 +287,14 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
-"<qt><em>kpsewhich</em> tarafından yapılan yazıtipi üretimi işlemi "
-"sonlandırıldı (çıkış kodu %1, hata %2). Sonuç; bazı yazıtipleri "
+"<qt><em>kpsewhich</em> tarafından yapılan yazı tipi üretimi işlemi "
+"sonlandırıldı (çıkış kodu %1, hata %2). Sonuç; bazı yazı tipleri "
 "konumlandırılamadı ve belgeniz okunamaz durumda olabilir.</qt>"
 
 #: fontpool.cpp:471
 #, kde-format
 msgid "Currently generating %1 at %2 dpi…"
-msgstr "Şu anda %1 yazıtipi %2 DPI ile üretiliyor…"
+msgstr "Şu anda %1 yazı tipi %2 DPI ile üretiliyor…"
 
 #: generator_dvi.cpp:293
 #, kde-format
@@ -369,30 +369,31 @@ msgid ""
 "The font file %1 could be opened and read, but its font format is "
 "unsupported."
 msgstr ""
-"%1 yazıtipi dosyası açılıp okunabiliyor fakat yazıtipi biçimi desteklenmiyor."
+"%1 yazı tipi dosyası açılıp okunabiliyor fakat yazı tipi biçimi "
+"desteklenmiyor."
 
 #: TeXFont_PFB.cpp:48
 #, kde-format
 msgid "The font file %1 is broken, or it could not be opened or read."
-msgstr "%1 yazıtipi dosyası bzouk veya açılamıyor/okunamıyor."
+msgstr "%1 yazı tipi dosyası bzouk veya açılamıyor/okunamıyor."
 
 #: TeXFont_PFB.cpp:167
 #, kde-format
 msgid ""
 "FreeType reported an error when setting the character size for font file %1."
 msgstr ""
-"FreeType, %1 yazıtipi dosyası için karakter boyutu ayarlanırken hata "
+"FreeType, %1 yazı tipi dosyası için karakter boyutu ayarlanırken hata "
 "belirledi."
 
 #: TeXFont_PFB.cpp:185
 #, kde-format
 msgid "FreeType is unable to load glyph #%1 from font file %2."
-msgstr "FreeType, #%1 karakterini %2 yazıtipi dosyasından yükleyemedi."
+msgstr "FreeType, #%1 karakterini %2 yazı tipi dosyasından yükleyemedi."
 
 #: TeXFont_PFB.cpp:198
 #, kde-format
 msgid "FreeType is unable to render glyph #%1 from font file %2."
-msgstr "FreeType, #%1 karakterini %2 yazıtipi dosyasından sunamadı."
+msgstr "FreeType, #%1 karakterini %2 yazı tipi dosyasından sunamadı."
 
 #: TeXFont_PFB.cpp:212
 #, kde-format
@@ -402,23 +403,23 @@ msgstr "Glyph #%1 boş."
 #: TeXFont_PFB.cpp:214
 #, kde-format
 msgid "Glyph #%1 from font file %2 is empty."
-msgstr "%2 yazıtipi dosyasındaki %1 karakteri boş."
+msgstr "%2 yazı tipi dosyasındaki %1 karakteri boş."
 
 #: TeXFont_PFB.cpp:279
 #, kde-format
 msgid "FreeType is unable to load metric for glyph #%1 from font file %2."
 msgstr ""
-"FreeType, #%1 karakterinin boyutlarını %2 yazıtipi dosyasından yükleyemedi."
+"FreeType, #%1 karakterinin boyutlarını %2 yazı tipi dosyasından yükleyemedi."
 
 #: TeXFont_PK.cpp:69
 #, kde-format
 msgid "Cannot open font file %1."
-msgstr "%1 yazıtipi dosyası açılamadı."
+msgstr "%1 yazı tipi dosyası açılamadı."
 
 #: TeXFont_PK.cpp:116
 #, kde-format
 msgid "TexFont_PK::operator[]: Character %1 not defined in font %2"
-msgstr "TexFont_PK::operator[]: %1 karakteri %2 yazıtipinde tanımlı değil"
+msgstr "TexFont_PK::operator[]: %1 karakteri %2 yazı tipinde tanımlı değil"
 
 #: TeXFont_PK.cpp:419
 #, kde-format
@@ -433,7 +434,7 @@ msgstr "%2 dosyası içindeki %1 karakteri çok büyük"
 #: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr "Yanlış sayıda bit kaydedildi: karakter %1, yazıtipi %2"
+msgstr "Yanlış sayıda bit kaydedildi: karakter %1, yazı tipi %2"
 
 #: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
@@ -443,22 +444,22 @@ msgstr "Bozuk pk dosyası (%1), çok fazla bit"
 #: TeXFont_PK.cpp:714
 #, kde-format
 msgid "Font has non-square aspect ratio "
-msgstr "Yazıtipi kare bir görünüm oranına sahip değil "
+msgstr "Yazı tipi kare bir görünüm oranına sahip değil "
 
 #: TeXFontDefinition.cpp:106
 #, kde-format
 msgid "Cannot find font %1, file %2."
-msgstr "%1 yazıtipi, %2 dosyası bulunamadı."
+msgstr "%1 yazı tipi, %2 dosyası bulunamadı."
 
 #: TeXFontDefinition.cpp:123
 #, kde-format
 msgid "Checksum mismatch for font file %1"
-msgstr "%1 yazıtipi dosyasında denetleme hatası"
+msgstr "%1 yazı tipi dosyasında denetleme hatası"
 
 #: TeXFontDefinition.cpp:174
 #, kde-format
 msgid "Cannot recognize format for font file %1"
-msgstr "Yazıtipi dosyası %1 için biçim tanınamadı"
+msgstr "Yazı tipi dosyası %1 için biçim tanınamadı"
 
 #: util.cpp:58
 #, kde-format
@@ -484,8 +485,8 @@ msgstr ""
 "\n"
 "\n"
 "Bu muhtemelen ya Okular içerisinde bir hata bulduğunuzu\n"
-"ya da DVI dosyasının veya destek dosyalarının (yazıtipi dosyaları, \n"
-"veya sanal yazıtipi dosyaları gibi) gerçekten kötü bir şekilde\n"
+"ya da DVI dosyasının veya destek dosyalarının (yazı tipi dosyaları, \n"
+"veya sanal yazı tipi dosyaları gibi) gerçekten kötü bir şekilde\n"
 "bozuk oldukları anlamına gelir. Okular bu iletiden sonra durdurulacaktır. \n"
 "Eğer bir hata bulduğunuza veya Okular’ın bu durumda daha iyi davranması\n"
 "gerektiğine inanıyorsanız lütfen sorunu bildirin."

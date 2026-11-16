@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 00:55+0000\n"
-"PO-Revision-Date: 2026-11-07 19:43+0300\n"
+"PO-Revision-Date: 2026-11-15 19:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -678,7 +678,7 @@ msgstr "Kaynak: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "Ö&ntanımlı yazıtipi:"
+msgstr "Ö&ntanımlı yazı tipi:"
 
 #: gui/certificatemodel.cpp:51
 #, kde-format
@@ -1355,7 +1355,7 @@ msgstr "Ek açıklama matlığı (seçili açıklama yok)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (No annotation selected)"
-msgstr "Ek açıklama yazıtipi (seçili açıklama yok)"
+msgstr "Ek açıklama yazı tipi (seçili açıklama yok)"
 
 #: part/annotationactionhandler.cpp:300
 #, kde-format
@@ -1430,13 +1430,13 @@ msgstr "Ek açıklama dolgu rengi (geçerli açıklamada dolgu rengi yok)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font"
-msgstr "Ek açıklama yazıtipi"
+msgstr "Ek açıklama yazı tipi"
 
 #: part/annotationactionhandler.cpp:329
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Annotation font (Current annotation has no font)"
-msgstr "Ek açıklama yazıtipi (geçerli açıklamada yazıtipi yok)"
+msgstr "Ek açıklama yazı tipi (geçerli açıklamada yazı tipi yok)"
 
 #: part/annotationactionhandler.cpp:333
 #, kde-format
@@ -1665,7 +1665,7 @@ msgstr "Ek Açıklama Araçlarının Oran ve Şeklini Kısıtla"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Font"
-msgstr "Yazıtipi"
+msgstr "Yazı Tipi"
 
 #: part/annotationactionhandler.cpp:680
 #, kde-format
@@ -1677,7 +1677,7 @@ msgstr "Ek Açıklama Seçenekleri"
 #, kde-format
 msgctxt "@action:intoolbar Current annotation config option"
 msgid "Line width"
-msgstr "Satır genişliği"
+msgstr "Satır Genişliği"
 
 #: part/annotationactionhandler.cpp:692
 #, kde-format
@@ -1970,7 +1970,7 @@ msgstr "Paragraf"
 #: part/annotationwidgets.cpp:378
 #, kde-format
 msgid "Font:"
-msgstr "Yazıtipi:"
+msgstr "Yazı tipi:"
 
 #: part/annotationwidgets.cpp:387
 #, kde-format
@@ -5439,12 +5439,12 @@ msgstr "%1:"
 #: part/propertiesdialog.cpp:124
 #, kde-format
 msgid "&Fonts"
-msgstr "&Yazıtipleri"
+msgstr "&Yazı Tipleri"
 
 #: part/propertiesdialog.cpp:145
 #, kde-format
 msgid "Reading font information…"
-msgstr "Yazıtipi bilgisi okunuyor…"
+msgstr "Yazı tipi bilgisi okunuyor…"
 
 #: part/propertiesdialog.cpp:158
 #, kde-format
@@ -5455,7 +5455,7 @@ msgstr "Sa&yfa Boyutu"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "&Extract Font"
-msgstr "&Yazıtipini Çıkar"
+msgstr "&Yazı Tipini Çıkar"
 
 #: part/propertiesdialog.cpp:273
 #, kde-format
@@ -5529,7 +5529,7 @@ msgstr "TeX sanal"
 #: part/propertiesdialog.cpp:312
 #, kde-format
 msgid "TeX Font Metric"
-msgstr "TeX Yazıtipi Metriği"
+msgstr "TeX Yazı Tipi Metriği"
 
 #: part/propertiesdialog.cpp:315
 #, kde-format
@@ -5582,7 +5582,7 @@ msgstr "[n/a]"
 #: part/propertiesdialog.cpp:385
 #, kde-format
 msgid "Unknown font"
-msgstr "Bilinmeyen yazıtipi"
+msgstr "Bilinmeyen yazı tipi"
 
 #: part/propertiesdialog.cpp:391
 #, kde-format

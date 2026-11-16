@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 03:37+0000\n"
-"PO-Revision-Date: 2026-10-30 11:39+0100\n"
+"PO-Revision-Date: 2026-11-07 09:16+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -3064,12 +3064,10 @@ msgid "Page Up/Down overlap:"
 msgstr "Superposició «Re Pàg»/«Av Pàg»:"
 
 #: part/dlggeneral.cpp:293
-#, fuzzy, kde-format
-#| msgctxt "@info:tooltip Config dialog, general page"
-#| msgid "Defines the vertical spacing between pages in continuous view."
+#, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
-msgstr "Definix l'espaiat vertical entre pàgines a la vista contínua."
+msgstr "Definix l'espaiat vertical entre pàgines en el mode continu."
 
 #: part/dlggeneral.cpp:295
 #, kde-format

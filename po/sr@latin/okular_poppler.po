@@ -3,13 +3,14 @@
 # Zoran Olujic <olujicz@ns-linux.org>, 2010.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2010, 2012, 2013.
 # Dalibor Djuric <daliborddjuric@gmail.com>, 2010.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_poppler\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 03:37+0000\n"
-"PO-Revision-Date: 2013-03-03 22:14+0100\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-11-15 17:30+0100\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@latin\n"
 "MIME-Version: 1.0\n"
@@ -25,52 +26,52 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Zoran Olujić"
+msgstr "Zoran Olujić,Nemanja Hiršl"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "olujicz@gmail.com"
+msgstr "olujicz@gmail.com,nemhirsl@gmail.com"
 
 #: annots.cpp:588 formfields.cpp:533 generator_pdf.cpp:2225
 #: generator_pdf.cpp:2253
 #, kde-format
 msgid "Failed writing temporary file"
-msgstr ""
+msgstr "Ne mogu da upišem privremeni fajl"
 
 #: annots.cpp:604 formfields.cpp:555 generator_pdf.cpp:2276
 #, kde-format
 msgid "Failed removing file"
-msgstr ""
+msgstr "Ne mogu da uklonim fajl"
 
 #: annots.cpp:608
 #, kde-format
 msgid "Failed renaming temporary file"
-msgstr ""
+msgstr "Ne mogu da preimenujem privremeni fajl"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: conf/pdfsettingswidget.ui:19
 #, kde-format
 msgid "Enable overprint preview:"
-msgstr ""
+msgstr "Uključi pregled pretiska:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:27
 #, kde-format
 msgid "Never"
-msgstr ""
+msgstr "nikad"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:32
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "uvek"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OverprintPreviewEnabled)
 #: conf/pdfsettingswidget.ui:37
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "automatski"
 
 # skip-rule: t-line
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -103,25 +104,25 @@ msgstr "uobličene"
 #: conf/pdfsettingswidget.ui:108
 #, kde-format
 msgid "Default scaling mode when printing:"
-msgstr ""
+msgstr "Podrazumevani režim skaliranja pri štampanju:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:116 generator_pdf.cpp:104
 #, kde-format
 msgid "Fit to printable area"
-msgstr ""
+msgstr "uklapanje u oblast za štampu"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:121 generator_pdf.cpp:105
 #, kde-format
 msgid "Fit to full page"
-msgstr ""
+msgstr "uklapanje u celu stranicu"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_PrintScaleMode)
 #: conf/pdfsettingswidget.ui:126 generator_pdf.cpp:106
 #, kde-format
 msgid "None; print original size"
-msgstr ""
+msgstr "bez skaliranja; štampanje u izvornoj veličini"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:149
@@ -131,6 +132,9 @@ msgid ""
 "check if the certificates used for digital signing have been revoked since "
 "their creation."
 msgstr ""
+"Ako je ovo uključeno, Okular će se obraćati OCSP serverima trećih strana "
+"radi provere da li su sertifikati upotrebljeni za digitalno potpisivanje "
+"povučeni od kada su napravljeni."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CheckOCSPServers)
 #: conf/pdfsettingswidget.ui:152
@@ -138,12 +142,14 @@ msgstr ""
 msgid ""
 "Check revocation of digital signatures' certificates using 3rd-party servers"
 msgstr ""
+"Proveravaj povlačenje sertifikata digitalnih potpisa preko servera trećih "
+"strana"
 
 #. i18n: ectx: property (text), widget (QLabel, label_signature_backend)
 #: conf/pdfsettingswidget.ui:174
 #, kde-format
 msgid "Signature backend:"
-msgstr ""
+msgstr "Pozadina za potpise:"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:200
@@ -153,49 +159,51 @@ msgid ""
 "These signatures can only be validated by modern Okular users with GnuPG "
 "backend activated"
 msgstr ""
+"Ove potpise mogu da overe samo korisnici novijih izdanja Okulara sa "
+"uključenom pozadinom za GnuPG"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnablePgp)
 #: conf/pdfsettingswidget.ui:203
 #, kde-format
 msgctxt "@option:check"
 msgid "Allow PGP keys for signatures (Okular extension)"
-msgstr ""
+msgstr "Dozvoli PGP ključeve za potpise (proširenje Okulara)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certDBGroupBox)
 #: conf/pdfsettingswidget.ui:210
 #, kde-format
 msgid "Certificate Database"
-msgstr ""
+msgstr "Baza sertifikata"
 
 #. i18n: ectx: property (text), widget (QRadioButton, kcfg_UseDefaultCertDB)
 #: conf/pdfsettingswidget.ui:219
 #, kde-format
 msgid "Default:"
-msgstr ""
+msgstr "Podrazumevana:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, customRadioButton)
 #: conf/pdfsettingswidget.ui:226
 #, kde-format
 msgid "Custom:"
-msgstr ""
+msgstr "Posebna:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, certificatesGroup)
 #: conf/pdfsettingswidget.ui:243
 #, kde-format
 msgid "Available Certificates"
-msgstr ""
+msgstr "Dostupni sertifikati"
 
 #. i18n: ectx: property (text), widget (QPushButton, loadSignaturesButton)
 #: conf/pdfsettingswidget.ui:251
 #, kde-format
 msgid "&Load Signatures"
-msgstr ""
+msgstr "&Učitaj potpise"
 
 #: formfields.cpp:559 generator_pdf.cpp:2280
 #, kde-format
 msgctxt "%1 is an error message"
 msgid "Failed renaming temporary file: %1"
-msgstr ""
+msgstr "Ne mogu da preimenujem privremeni fajl: %1"
 
 #: generator_pdf.cpp:89
 #, kde-format
@@ -245,12 +253,12 @@ msgstr ""
 #: generator_pdf.cpp:107
 #, kde-format
 msgid "Scaling mode for the printed pages"
-msgstr ""
+msgstr "Režim skaliranja odštampanih stranica"
 
 #: generator_pdf.cpp:108
 #, kde-format
 msgid "Scale mode:"
-msgstr ""
+msgstr "Režim skaliranja:"
 
 #: generator_pdf.cpp:1030
 #, kde-format
@@ -295,11 +303,14 @@ msgid ""
 "\n"
 "Date: %2"
 msgstr ""
+"Potpisnik: %1\n"
+"\n"
+"Datum: %2"
 
 #: generator_pdf.cpp:1744
 #, kde-format
 msgid "Using Poppler %1"
-msgstr ""
+msgstr "Koristi se Poppler %1"
 
 #: generator_pdf.cpp:1746
 #, kde-format
@@ -308,6 +319,9 @@ msgid ""
 "\n"
 "Built against Poppler %2"
 msgstr ""
+"Koristi se Poppler %1\n"
+"\n"
+"Izgrađeno prema Poppleru %2"
 
 #: generator_pdf.cpp:1781
 #, kde-format
@@ -325,6 +339,8 @@ msgid ""
 "Some errors were found in the document, Okular might not be able to show the "
 "content correctly"
 msgstr ""
+"U dokumentu su nađene neke greške, Okular možda neće moći ispravno da "
+"prikaže sadržaj"
 
 #: pdfsettingswidget.cpp:109
 #, kde-format
@@ -333,35 +349,37 @@ msgid ""
 "These signatures only work between modern versions of Okular with the GnuPG "
 "based backend activated"
 msgstr ""
+"Ovi potpisi rade samo između novijih izdanja Okulara sa uključenom pozadinom "
+"zasnovanom na GnuPG‑u"
 
 #: pdfsettingswidget.cpp:110
 #, kde-format
 msgctxt "@title:dialog"
 msgid "Enable PGP Signatures"
-msgstr ""
+msgstr "Uključivanje PGP potpisa"
 
 #: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Name of the person to whom the cerficate was issued"
 msgid "Issued to"
-msgstr ""
+msgstr "izdat za"
 
 #: pdfsettingswidget.cpp:137
 #, kde-format
 msgid "E-mail"
-msgstr ""
+msgstr "e‑pošta"
 
 #: pdfsettingswidget.cpp:137
 #, kde-format
 msgctxt "Certificate expiration date"
 msgid "Expiration date"
-msgstr ""
+msgstr "datum isteka"
 
 #: pdfsettingswidget.cpp:142
 #, kde-format
 msgctxt "@button"
 msgid "List certificates"
-msgstr ""
+msgstr "Prikaži sertifikate"
 
 #: pdfsettingswidget.cpp:164
 #, kde-format
@@ -369,26 +387,29 @@ msgid ""
 "You are using a Poppler library built without NSS support.\n"
 "Adding Digital Signatures isn't available for that reason"
 msgstr ""
+"Koristite biblioteku Popplera izgrađenu bez podrške za NSS.\n"
+"Zbog toga dodavanje digitalnih potpisa nije dostupno"
 
 #: pdfsettingswidget.cpp:188
 #, kde-format
 msgctxt "certificate end validity"
 msgid "forever"
-msgstr ""
+msgstr "zauvek"
 
 #: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "Restart needed"
-msgstr ""
+msgstr "Potrebno ponovno pokretanje"
 
 #: pdfsettingswidget.cpp:212
 #, kde-format
 msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr ""
+"Morate ponovo da pokrenete Okular posle izmene postavki fascikle za NSS"
 
 #: pdfsignatureutils.cpp:268 pdfsignatureutils.cpp:308
 #, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"
-msgstr ""
+msgstr "Unesite lozinku za otvaranje: %1"

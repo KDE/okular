@@ -1,12 +1,13 @@
 # Translation of okular_markdown.po into Serbian.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2017.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: okular_markdown\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 03:37+0000\n"
-"PO-Revision-Date: 2017-09-25 19:53+0200\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-11-15 17:30+0100\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -21,18 +22,17 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Часлав Илић"
+msgstr "Часлав Илић,Немања Хиршл"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "caslav.ilic@gmx.net"
+msgstr "caslav.ilic@gmx.net,nemhirsl@gmail.com"
 
 #: converter.cpp:60 converter.cpp:96 converter.cpp:105
-#, fuzzy, kde-format
-#| msgid "Failed to compile the Markdown document."
+#, kde-format
 msgid "Failed to open the document"
-msgstr "Не могу да компилујем маркдаун документ."
+msgstr "Не могу да отворим документ"
 
 #: converter.cpp:119 converter.cpp:137
 #, kde-format
@@ -42,7 +42,7 @@ msgstr "Не могу да компилујем маркдаун докумен�
 #: generator_md.cpp:58
 #, kde-format
 msgid "Enable SmartyPants formatting"
-msgstr ""
+msgstr "Укључи форматирање SmartyPants"
 
 #: generator_md.cpp:60
 #, kde-format

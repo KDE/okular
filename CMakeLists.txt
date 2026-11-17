@@ -619,7 +619,11 @@ install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR
 
 ki18n_install(po)
 if(KF6DocTools_FOUND)
-    kdoctools_install(po)
+    if(${KF6DocTools_VERSION} VERSION_GREATER_EQUAL 6.25.0) # arabic was released here first
+        kdoctools_install(po)
+    else()
+        message(WARNING "KDocTools version too old to build the documentation")
+    endif()
 endif()
 
 ########### cmake files #################

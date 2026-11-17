@@ -618,8 +618,66 @@ endif()# End of BUILD_DESKTOP if
 install(FILES okular.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 ki18n_install(po)
+
+# Copied from KDocTools; should be upstreamed and eventually removed once we can depend on it
+# It checks that kdoctools supports a given language before trying to do do its magic
+# https://invent.kde.org/frameworks/kdoctools/-/merge_requests/111
+# hopefully it will be part of frameworks 6.34
+if (KF_REQUIRED_VERSION VERSION_GREATER_EQUAL "6.34.0")
+    message(WARNING "Please revert to kdoctools version of this function")
+endif()
+function(okular_kdoctools_install podir)
+    file(GLOB lang_dirs "${podir}/*")
+    if (NOT KDE_INSTALL_MANDIR)
+        if (MAN_INSTALL_DIR) # TODO KF6: deprecated, remove
+            set(KDE_INSTALL_MANDIR ${MAN_INSTALL_DIR})
+        else()
+            set(KDE_INSTALL_MANDIR share/man)
+        endif()
+    endif()
+    if (NOT KDE_INSTALL_DOCBUNDLEDIR)
+        if (HTML_INSTALL_DIR) # TODO KF6: deprecated, remove
+            set(KDE_INSTALL_DOCBUNDLEDIR ${HTML_INSTALL_DIR})
+        else()
+            set(KDE_INSTALL_DOCBUNDLEDIR share/doc/HTML)
+        endif()
+    endif()
+
+    foreach(lang_dir ${lang_dirs})
+        get_filename_component(lang ${lang_dir} NAME)
+
+        file(GLOB_RECURSE docbooks RELATIVE "${lang_dir}" "${lang_dir}/docs/*.docbook")
+	if (docbooks)
+	    string(REPLACE "_" "-" kdoctoolslang ${lang})
+            if (NOT EXISTS ${KDOCTOOLS_DATA_INSTALL_DIR}/kdoctools/customization/${kdoctoolslang}/strings.entities)
+                message(WARNING "This component has doc translations for ${lang} but this KDocTools doesn't support it; skipping ${lang}")
+                continue()
+	    endif()
+
+            foreach(docbook ${docbooks})
+                string(REGEX MATCH "\\.([0-9])\\.docbook" match ${docbook})
+                if (match)
+                    kdoctools_create_manpage("${lang_dir}/${docbook}" ${CMAKE_MATCH_1}
+                        INSTALL_DESTINATION ${KDE_INSTALL_MANDIR}/${lang}
+                    )
+                else()
+                    string(REGEX MATCH "^docs/(.*)/index.docbook" match ${docbook})
+                    if (match)
+                        kdoctools_create_handbook("${lang_dir}/${docbook}"
+                            INSTALL_DESTINATION ${KDE_INSTALL_DOCBUNDLEDIR}/${lang}
+                            SUBDIR ${CMAKE_MATCH_1}
+                        )
+                    endif()
+                endif()
+            endforeach()
+	endif()
+    endforeach()
+endfunction()
+
+
+
 if(KF6DocTools_FOUND)
-    kdoctools_install(po)
+    okular_kdoctools_install(po)
 endif()
 
 ########### cmake files #################

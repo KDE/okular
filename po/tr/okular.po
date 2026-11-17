@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 00:55+0000\n"
-"PO-Revision-Date: 2026-11-15 19:30+0300\n"
+"PO-Revision-Date: 2026-11-16 18:49+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3702,12 +3702,12 @@ msgstr "İptal"
 #: part/fileprinterpreview.cpp:113
 #, kde-format
 msgid "Could not load print preview part"
-msgstr "Yazdırma önizlemesi programcığı yüklenemedi"
+msgstr "Yazdırma ön izlemesi programcığı yüklenemedi"
 
 #: part/fileprinterpreview.cpp:125
 #, kde-format
 msgid "Print Preview"
-msgstr "Yazdırma Önizlemesi"
+msgstr "Yazdırma Ön İzlemesi"
 
 #: part/findbar.cpp:34 part/presentationsearchbar.cpp:63
 #, kde-format
@@ -5612,7 +5612,7 @@ msgstr "Boyut"
 #: part/revisionviewer.cpp:41
 #, kde-format
 msgid "Revision Preview"
-msgstr "Revizyon Önizlemesi"
+msgstr "Revizyon Ön İzlemesi"
 
 #: part/revisionviewer.cpp:53
 #, kde-format

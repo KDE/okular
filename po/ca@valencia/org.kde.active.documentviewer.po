@@ -123,7 +123,7 @@ msgstr "Miniatures"
 
 #: ui/OkularDrawer.qml:71
 msgid "Table of contents"
-msgstr "Taula de contingut"
+msgstr "Índex de continguts"
 
 #: ui/OkularDrawer.qml:99
 msgid "Signatures"

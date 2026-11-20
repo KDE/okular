@@ -568,7 +568,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "&Obrázok"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2778,7 +2778,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "Predvyplniť nové anotácie vybraným textom."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3060,13 +3060,13 @@ msgstr "Presah Page Up/Down:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
-msgstr ""
+msgstr "Určuje zvislú medzeru medzi stránkami v súvislom režime."
 
 #: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "Zvislá medzera medzi stránkami:"
 
 #: part/dlggeneral.cpp:300
 #, kde-format
@@ -3624,21 +3624,19 @@ msgid "&Open…"
 msgstr "&Otvoriť…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "Výstupná cesta:"
 
 #: part/exportimagedialog.cpp:48
-#, fuzzy, kde-format
-#| msgid "Find..."
+#, kde-format
 msgid "..."
-msgstr "Nájsť..."
+msgstr "..."
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
@@ -3646,70 +3644,63 @@ msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
 msgstr ""
+"Obrázky sa exportujú do podpriečinka v tejto ceste s rovnakým názvom ako "
+"súbor"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "E&xportovať ako"
+msgstr "Exportovať rozsah"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "E&xportovať ako"
+msgstr "Exportovať všetko"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "Stránok"
+msgstr "Stránky od"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "Zastaviť"
+msgstr " do "
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "Exportovať..."
+msgstr "Exportovať"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "Zabudnúť obrázok"
+msgstr "Exportovať obrázok"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "Nepodarilo sa uložiť súbor %1."
+msgstr "Súbor %1 sa nepodarilo uložiť"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "Zlyhalo"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "Nepodarilo sa vytvoriť priečinok na uloženie obrázkov: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "Zabudnúť obrázok"
+msgstr "Exportujú sa obrázky"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5124,7 +5115,7 @@ msgstr "Čítať"
 #: part/part.cpp:3596
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "Boli prijaté neplatné voľby."
 
 #: part/part.cpp:3670
 #, kde-format

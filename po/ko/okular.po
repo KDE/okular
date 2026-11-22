@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 03:37+0000\n"
-"PO-Revision-Date: 2026-09-29 00:16+0200\n"
+"PO-Revision-Date: 2026-11-21 22:46+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -558,7 +558,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "그림(&I)"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -2747,7 +2747,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "새로운 주석을 선택한 텍스트로 미리 채웁니다."
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3023,13 +3023,13 @@ msgstr "Page Up/Down 겹침 정도:"
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
-msgstr ""
+msgstr "연속 모드에서 쪽간 수직 간격을 정의합니다."
 
 #: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "수직 쪽 간격:"
 
 #: part/dlggeneral.cpp:300
 #, kde-format
@@ -3583,92 +3583,81 @@ msgid "&Open…"
 msgstr "열기(&O)…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "출력 경로:"
 
 #: part/exportimagedialog.cpp:48
-#, fuzzy, kde-format
-#| msgid "Find..."
+#, kde-format
 msgid "..."
-msgstr "찾기..."
+msgstr "..."
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
 msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
-msgstr ""
+msgstr "이 경로 내에 파일 이름과 동일한 이름으로 그림을 내보냅니다"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "다음으로 내보내기(&X)"
+msgstr "범위 내보내기"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "다음으로 내보내기(&X)"
+msgstr "모두 내보내기"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "쪽 수"
+msgstr "시작 쪽"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "정지"
+msgstr "끝 쪽"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "내보내기…"
+msgstr "내보내기"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "이미지 잊기"
+msgstr "그림 내보내기"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "파일 %1을(를) 저장할 수 없습니다."
+msgstr "%1 파일을 저장할 수 없음"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "실패함"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "그림을 저장할 폴더를 만들 수 없음: %1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "이미지 잊기"
+msgstr "그림 내보내는 중"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5067,7 +5056,7 @@ msgstr "말하기"
 #: part/part.cpp:3596
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "잘못된 옵션을 받았습니다."
 
 #: part/part.cpp:3670
 #, kde-format
@@ -5769,22 +5758,22 @@ msgstr "eIDAS 서명, 장기 유효성 검증을 위한 타임스탬프 포함, 
 #, kde-format
 msgctxt "file types in a file open dialog"
 msgid "Images (%1)"
-msgstr "이미지(%1)"
+msgstr "그림 (%1)"
 
 #: part/signaturepartutils.cpp:223
 #, kde-format
 msgid "Select background image"
-msgstr "배경 이미지 선택"
+msgstr "배경 그림 선택"
 
 #: part/signaturepartutils.cpp:228
 #, kde-format
 msgid "Forget image"
-msgstr "이미지 잊기"
+msgstr "그림 잊기"
 
 #: part/signaturepartutils.cpp:229
 #, kde-format
 msgid "Forget all images"
-msgstr "모든 이미지 잊기"
+msgstr "모든 그림 잊기"
 
 #: part/signaturepartutils.cpp:272
 #, kde-format

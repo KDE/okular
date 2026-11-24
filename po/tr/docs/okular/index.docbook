@@ -170,7 +170,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 > menüsünden geri ulaşabilirsiniz. </para>
 			<para
->&okular;, &PDF; ve &PostScript; dosyaları için öntanımlı &kde; uygulamasıdır. Bu dosyaları açmak için dosya yöneticisinde üzerilerine &LMB; ile tıklamanız yeterlidir. &okular; tarafından desteklenen herhangi başka bir dosyayı açmak için dosya yöneticisinde dosyanın bağlam menüsünden <menuchoice
+>&okular;, &PDF; ve &PostScript; dosyaları için varsayılan &kde; uygulamasıdır. Bu dosyaları açmak için dosya yöneticisinde üzerilerine &LMB; ile tıklamanız yeterlidir. &okular; tarafından desteklenen herhangi başka bir dosyayı açmak için dosya yöneticisinde dosyanın bağlam menüsünden <menuchoice
 ><guimenu
 >Birlikte Aç…</guimenu
 ><guimenuitem
@@ -254,9 +254,9 @@ Context menu actions like Rename Bookmarks etc.)
 				</listitem>
 			</itemizedlist>
 			<para
->Bazı belgelerde bağlantılar bulunur. Bu durumda üzerlerine tıklayabilirsiniz; görünüm, bağlantı verdiği sayfaya dönüşür. Bağlantı bir web sayfasına veya başka bir belgeye ise, o biçim için öntanımlı olan &kde; işleyicisi çağrılacaktır. Örneğin, <quote
+>Bazı belgelerde bağlantılar bulunur. Bu durumda üzerlerine tıklayabilirsiniz; görünüm, bağlantı verdiği sayfaya dönüşür. Bağlantı bir web sayfasına veya başka bir belgeye ise, o biçim için varsayılan olan &kde; işleyicisi çağrılacaktır. Örneğin, <quote
 >https://www.kde.org</quote
-> adresine işaret eden bir bağlantıya tıklamak, web sayfasını öntanımlı &kde; web tarayıcısında açacaktır. </para>
+> adresine işaret eden bir bağlantıya tıklamak, web sayfasını varsayılan &kde; web tarayıcısında açacaktır. </para>
 			<important>
 			  <para
 >Belgede bulunan bağlantılar yalnızca <link linkend="menutools"
@@ -758,7 +758,7 @@ Context menu actions like Rename Bookmarks etc.)
 > yaparak yinelemek olanaklıdır. </para>
 				</note>
 			<para
->Her bir ek açıklama aracının öntanımlı özelliklerini ve görünüşünü yapılandırabilirsiniz. Lütfen belgelendirmenin <link linkend="configannotations"
+>Her bir ek açıklama aracının varsayılan özelliklerini ve görünüşünü yapılandırabilirsiniz. Lütfen belgelendirmenin <link linkend="configannotations"
 >ilgili bölümüne</link
 > bir göz atın. </para>
 			<sect2 id="annotations-add">
@@ -781,7 +781,7 @@ Context menu actions like Rename Bookmarks etc.)
 >9</keycap
 > arası düğmeler). </para>
 				<para
->Ek açıklama araç çubuğu; çizimler, şekiller ve metin iletileriyle ek açıklamalar oluşturmanıza yardımcı olur. Bir belgeyi işaretlemek için ek açıklama araç çubuğunu kullanabilirsiniz (örneğin; çizgiler, elipsler, çokgenler, damgalar, vurgular, alt çizgiler vb. eklemek için). Aşağıdaki tablo, öntanımlı ek açıklama araç çubuğu düğmeleri kümesinin tam olarak ne yaptığını açıklamaktadır. </para>
+>Ek açıklama araç çubuğu; çizimler, şekiller ve metin iletileriyle ek açıklamalar oluşturmanıza yardımcı olur. Bir belgeyi işaretlemek için ek açıklama araç çubuğunu kullanabilirsiniz (örneğin; çizgiler, elipsler, çokgenler, damgalar, vurgular, alt çizgiler vb. eklemek için). Aşağıdaki tablo, varsayılan ek açıklama araç çubuğu düğmeleri kümesinin tam olarak ne yaptığını açıklamaktadır. </para>
 				<informaltable>
 				  <tgroup cols="3">
 				    <thead>
@@ -978,10 +978,10 @@ Context menu actions like Rename Bookmarks etc.)
 >’e tıklayın. </para>
 					  <para
 >Metnin <guilabel
->Yazıtipi</guilabel
->’ni ve <guilabel
->Metin rengi</guilabel
->’ni tanımlamak olanaklıdır. Oluşturulan metnin üzerine sağ tıklayın ve <guimenuitem
+>yazı tipini</guilabel
+> ve <guilabel
+>metin rengini</guilabel
+> tanımlamak olanaklıdır. Oluşturulan metnin üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1013,16 +1013,16 @@ Context menu actions like Rename Bookmarks etc.)
 >’e tıklayın. </para>
 					  <para
 >Notun <guilabel
->Renk</guilabel
->’ini, <guilabel
->Matlık</guilabel
->’ını <guilabel
->Yazıtipi</guilabel
->’ni, <guilabel
->Hizalama</guilabel
->’sını ve <guilabel
->Kenarlık genişliği</guilabel
->’ni tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
+>rengini</guilabel
+>, <guilabel
+>matlığını</guilabel
+> <guilabel
+>yazı tipini</guilabel
+>, <guilabel
+>hizalamasını</guilabel
+> ve <guilabel
+>kenarlık genişliğini</guilabel
+> tanımlamak olanaklıdır. Oluşturulan notun üzerine sağ tıklayın ve <guimenuitem
 >Özellikler</guimenuitem
 > menü ögesini seçin. </para>
 					</entry>
@@ -1325,7 +1325,7 @@ Context menu actions like Rename Bookmarks etc.)
 				    </tgroup>
 				  </informaltable>
                                   <para
->Bunlar &okular; tarafından sağlanan öntanımlı ek açıklamaladır. Yapılandırma iletişim kutusunun <link linkend="configannotations"
+>Bunlar &okular; tarafından sağlanan varsayılan ek açıklamaladır. Yapılandırma iletişim kutusunun <link linkend="configannotations"
 >Ek Açıklamalar</link
 > sayfasını kullanarak, bölgeleri vb. vurgulamak için özel damgalar, metin işaretlemesi veya iç renkli geometrik şekil gibi kendi açıklamalarınızı ekleyebilirsiniz. </para>
                                   <note>
@@ -1452,11 +1452,11 @@ Context menu actions like Rename Bookmarks etc.)
 					</entry>
 					<entry>
 					  <para
->Ek açıklama yazıtipi </para>
+>Ek açıklama yazı tipi </para>
 					</entry>
 					<entry>
 					  <para
->Yazıtipi seçimi iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
+>Yazı tipi seçimi iletişim kutusunu açmak için bu düğmeye tıklayın. </para>
 					</entry>
 				      </row>
 				      <row>
@@ -2032,7 +2032,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >Geçerli belgeyi içeren klasörü yeğlediğiniz dosya yöneticisinde <action
 >açar</action
->. Bu, özellikle internetten indirdiğiniz ve &okular; ile açılan bir &PDF; dosyasını bulmak için yararlıdır. Dosyanın konumu açık olmayabilir veya bu özellik olmadan bulması zor olabilir. Ancak günümüzde çoğu web tarayıcısı indirmeler için sistem öntanımlısı İndirmeler klasörünü kullanır. </para>
+>. Bu, özellikle internetten indirdiğiniz ve &okular; ile açılan bir &PDF; dosyasını bulmak için yararlıdır. Dosyanın konumu açık olmayabilir veya bu özellik olmadan bulması zor olabilir. Ancak günümüzde çoğu web tarayıcısı indirmeler için sistem varsayılanı İndirmeler klasörünü kullanır. </para>
 					</listitem>
 				</varlistentry>
 
@@ -2148,13 +2148,13 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenu
 >Dosya</guimenu
 > <guimenuitem
->Yazdırma Önizlemesi…</guimenuitem
+>Baskı Ön İzleme…</guimenuitem
 > </menuchoice>
 					</term>
 					<listitem>
 						<para
->Şu anda görüntülenen belgenin öntanımlı seçeneklerle yazdırılması durumunda nasıl görüneceğinin <action
->bir önizlemesini gösterin</action
+>Şu anda görüntülenen belgenin varsayılan seçeneklerle yazdırılması durumunda nasıl görüneceğinin <action
+>bir ön izlemesini gösterin</action
 >. </para>
 					</listitem>
 				</varlistentry>
@@ -2176,7 +2176,7 @@ Context menu actions like Rename Bookmarks etc.)
 					</term>
 					<listitem>
 						<para
->Belge hakkında; başlığı, yazarı, oluşturulma tarihi ve kullanılan yazıtipleri gibi bilgileri içeren <action
+>Belge hakkında; başlığı, yazarı, oluşturulma tarihi ve kullanılan yazı tipleri gibi bilgileri içeren <action
 >bazı temel bilgileri görüntüleyin</action
 >. Kullanılabilir bilgiler, belgenin türüne bağlı olarak değişir.</para>
 						<note>
@@ -2184,8 +2184,8 @@ Context menu actions like Rename Bookmarks etc.)
 >Lütfen <guilabel
 >Özellikler</guilabel
 > iletişim kutusunun <guilabel
->Yazıtipleri</guilabel
-> sekmesindeki yazıtipi değiştirme ile ilgili bilgilere dikkat edin. Yazıtipi sunumu ile ilgili birçok sorun, değiştirilen yazıtiplerini kurarak çözülebilir.</para>
+>Yazı Tipleri</guilabel
+> sekmesindeki yazı tipi değiştirme ile ilgili bilgilere dikkat edin. Yazı tipi sunumu ile ilgili birçok sorun, değiştirilen yazı tiplerini kurarak çözülebilir.</para>
 						</note>
 					</listitem>
 				</varlistentry>
@@ -3227,7 +3227,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >&okular; penceresinde dikey alandan tasarruf etmek için belge alanının alt kısmında bulunan <action
 >sayfa çubuğunu açar/kapatır</action
->. Sayfa numaraları her halükarda öntanımlı araç çubuğunda gösterileceklerdir.</para>
+>. Sayfa numaraları her halükarda varsayılan araç çubuğunda gösterileceklerdir.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3389,7 +3389,7 @@ Context menu actions like Rename Bookmarks etc.)
                                             <para
 ><ulink url="help:/fundamentals/colors.html"
 >Belge arka plan rengi seçimini</ulink
-> etkinleştirir (görüntülenen sayfa etrafındaki renk). Bu seçenek işaretlenmediğinde öntanımlı olarak &Qt; araç kiti rengi kullanılır. </para>
+> etkinleştirir (görüntülenen sayfa etrafındaki renk). Bu seçenek işaretlenmediğinde varsayılan olarak &Qt; araç kiti rengi kullanılır. </para>
 					</listitem>
 				</varlistentry>
                                 <varlistentry>
@@ -3399,9 +3399,9 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Yeni belgelerin sekmelerde açılıp açılmayacağı. Sekmeler öntanımlı olarak devre dışıdır.</para>
+>Yeni belgelerin sekmelerde açılıp açılmayacağı. Sekmeler varsayılan olarak devre dışıdır.</para>
 						<para
->Sekmeler arasında geçiş yapmak için öntanımlı kısayollar: <keycombo
+>Sekmeler arasında geçiş yapmak için varsayılan kısayollar: <keycombo
 >&Ctrl;<keycap
 >.</keycap
 ></keycombo
@@ -3423,7 +3423,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Dosya zaten açıksa yeni bir sekme açmak yerine &okular;’ın var olan bir sekmeye geçip geçmeyeceği. Bu seçenek öntanımlı olarak etkindir. Yalnızca <guilabel
+>Dosya zaten açıksa yeni bir sekme açmak yerine &okular;’ın var olan bir sekmeye geçip geçmeyeceği. Bu seçenek varsayılan olarak etkindir. Yalnızca <guilabel
 >Yeni dosyaları sekmelerde aç</guilabel
 > etkinse açılabilir/kapatılabilir.</para>
 					</listitem>
@@ -3467,7 +3467,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Açık dosyalar için öntanımlı olarak sağdan sola okuma yönünün kullanılıp kullanılmayacağı. <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
+>Açık dosyalar için varsayılan olarak sağdan sola okuma yönünün kullanılıp kullanılmayacağı. <ulink url="https://en.wikipedia.org/wiki/Right-to-left"
 >Bazı yazma sistemleri</ulink
 > için yararlı olabilir. </para>
 					</listitem>
@@ -3475,11 +3475,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Öntanımlı olarak sürdürülen kipte aç</guilabel
+>Varsayılan olarak sürdürülen kipte aç</guilabel
 ></term>
 					<listitem>
 						<para
->Sürdürülen kipin öntanımlı olarak kullanılıp kullanılmayacağı. Sürdürülen kipte belgenin tüm sayfaları gösterilir ve bunlar arasında sorunsuz bir şekilde gezinebilirsiniz. Aksi takdirde, aynı anda yalnızca bir sayfa (veya sayfaların bir satırı) gösterilir. </para>
+>Sürdürülen kipin varsayılan olarak kullanılıp kullanılmayacağı. Sürdürülen kipte belgenin tüm sayfaları gösterilir ve bunlar arasında sorunsuz bir şekilde gezinebilirsiniz. Aksi takdirde, aynı anda yalnızca bir sayfa (veya sayfaların bir satırı) gösterilir. </para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3538,11 +3538,11 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Öntanımlı yakınlaştırma</guilabel
+>Varsayılan yakınlaştırma</guilabel
 ></term>
 					<listitem>
 						<para
->Bu seçenek, daha önce hiç açılmamış dosyalar için öntanımlı yakınlaştırma kipini belirtir. Önceki yakınlaştırma kipi uygulanmadan önce açılan dosyalar için. </para>
+>Bu seçenek, daha önce hiç açılmamış dosyalar için varsayılan yakınlaştırma kipini belirtir. Önceki yakınlaştırma kipi uygulanmadan önce açılan dosyalar için. </para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3722,7 +3722,7 @@ Context menu actions like Rename Bookmarks etc.)
 >TTS</abbrev
 >) işletkesini <action
 >seçmenize olanak tanır</action
->. Öntanımlı uygulama, <application
+>. Varsayılan uygulama, <application
 >speechd</application
 > <abbrev
 >TTS</abbrev
@@ -3738,7 +3738,7 @@ Context menu actions like Rename Bookmarks etc.)
 						<para
 >&okular; tarafından kullanılacak konuşma işletkesi için bir ses <action
 >seçmenize</action
-> olanak tanır. Platformunuzdaki kullanılabilir sentezleyicilere bağlı olarak tüm dilleri ve sesleri kullanabilirsiniz. &Linux;’ta, kullanılabilir sesleri belirlemek için öntanımlı olarak speech-dispatcher kullanılır.</para>
+> olanak tanır. Platformunuzdaki kullanılabilir sentezleyicilere bağlı olarak tüm dilleri ve sesleri kullanabilirsiniz. &Linux;’ta, kullanılabilir sesleri belirlemek için varsayılan olarak speech-dispatcher kullanılır.</para>
 					</listitem>
 				</varlistentry>
 			</variablelist>
@@ -3754,7 +3754,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Saydamlık efektlerini kullanarak seçimler ve diğer özel grafikler çizin. Ana hat veya mat dolgu biçemlerini kullanarak bunları çizme seçeneğini devre dışı bırakın ve seçimlerdeki hızı artırın.</para>
+>Saydamlık efektlerini kullanarak seçimler ve diğer özel grafikler çizin. Ana hat veya mat dolgu stillerini kullanarak bunları çizme seçeneğini devre dışı bırakın ve seçimlerdeki hızı artırın.</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3764,7 +3764,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->&okular;, sisteminize ve zevklerinize göre bellek kullanımını ayarlayarak en iyi başarımı elde edebilir. Ne kadar çok bellek kullanmasına izin verirseniz program o kadar hızlı davranır. Öntanımlı profil her sistem için iyidir; ancak Düşük profilini seçerek &okular;’ın gereğinden fazla bellek kullanmasını önleyebilir veya Yoğun’u kullanarak sisteminizden en iyi şekilde yararlanmasını sağlayabilirsiniz. Sistem belleğinin aşırı dolma riski olmadan tüm sayfaları önceden yüklemek için Çok Yoğun profilini kullanın (toplam belleğin veya boş belleğin yalnızca %​50’si kullanılacaktır).</para>
+>&okular;, sisteminize ve zevklerinize göre bellek kullanımını ayarlayarak en iyi başarımı elde edebilir. Ne kadar çok bellek kullanmasına izin verirseniz program o kadar hızlı davranır. Varsayılan profil her sistem için iyidir; ancak Düşük profilini seçerek &okular;’ın gereğinden fazla bellek kullanmasını önleyebilir veya Yoğun’u kullanarak sisteminizden en iyi şekilde yararlanmasını sağlayabilirsiniz. Sistem belleğinin aşırı dolma riski olmadan tüm sayfaları önceden yüklemek için Çok Yoğun profilini kullanın (toplam belleğin veya boş belleğin yalnızca %​50’si kullanılacaktır).</para>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -3783,7 +3783,7 @@ Context menu actions like Rename Bookmarks etc.)
 > sırasıyla açıp kapatmak için kullanılabilir. <guilabel
 >Metin düzgünleştirmeyi etkinleştir</guilabel
 > ögesi ise <ulink url="https://en.wikipedia.org/wiki/Font_hinting"
->yazıtipi düzgünleştirme</ulink
+>yazı tipi düzgünleştirme</ulink
 > için bir anahtar olarak kullanılır. Kenar yumuşatma ve düzgünleştirme, belgelerin görüntülenme biçimini değiştirir; bunları tercihinize göre ayarlamak isteyebilirsiniz.</para>
 					</listitem>
 				</varlistentry>
@@ -3832,7 +3832,7 @@ Context menu actions like Rename Bookmarks etc.)
 								<para
 ><guilabel
 >İleri gitmek için herhangi bir yere dokun</guilabel
-> (öntanımlı): Ekrana dokunulduğunda, ekranın neresine dokunulursa dokunulsun sunum bir sonraki slayda geçer.</para>
+> (varsayılan): Ekrana dokunulduğunda, ekranın neresine dokunulursa dokunulsun sunum bir sonraki slayda geçer.</para>
 							</listitem>
 							<listitem>
 								<para
@@ -3896,7 +3896,7 @@ Context menu actions like Rename Bookmarks etc.)
 				<varlistentry>
 					<term
 ><guilabel
->Öntanımlı geçiş</guilabel
+>Varsayılan geçiş</guilabel
 ></term>
 					<listitem>
 						<para
@@ -3921,8 +3921,8 @@ Context menu actions like Rename Bookmarks etc.)
 >, sunum kipini başlatan &okular; penceresinin olduğu ekrandır.</para>
 						<para
 ><guilabel
->Öntanımlı Ekran</guilabel
->, xinerama yapılandırmasında öntanımlı olarak imlenen ekrandır.</para>
+>Varsayılan Ekran</guilabel
+>, xinerama yapılandırmasında varsayılan olarak imlenen ekrandır.</para>
 						<para
 ><guilabel
 >Ekran 0</guilabel
@@ -3970,7 +3970,7 @@ Context menu actions like Rename Bookmarks etc.)
 ><guimenuitem
 >Tam Ek Açıklama Araç Çubuğu</guimenuitem
 > (&okular; penceresinin üst kısmındaki <link linkend="annotations-add"
->öntanımlı araç çubuğu</link
+>varsayılan araç çubuğu</link
 >) ve <guimenuitem
 >Tez Ek Açıklama Araç Çubuğu</guimenuitem
 > (belge bölmesinin sağ kısmında favori araçlarınızın bulunduğu kayan araç çubuğu) arasında geçiş yapılmasına izin verir.</para>
@@ -3983,7 +3983,7 @@ Context menu actions like Rename Bookmarks etc.)
 ></term>
 					<listitem>
 						<para
->Bir belgeye eklenen içeriğin yazarı. Öntanımlı yazar adı, &systemsettings; <guilabel
+>Bir belgeye eklenen içeriğin yazarı. Varsayılan yazar adı, &systemsettings; <guilabel
 >Hesap Ayrıntıları</guilabel
 > modülünün <guilabel
 >Parola ve Kullanıcı Hesabı</guilabel
@@ -4152,9 +4152,9 @@ Context menu actions like Rename Bookmarks etc.)
 ></menuchoice
 > seçimini yaparak yapılandırabilirsiniz. Şu anda yalnızca; EPub, &PostScript;, FictionBook, Txt, OpenDocument Text ve &PDF; arka uçları için yapılandırma seçenekleri sağlanır. </para>
 	  <para
->EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazıtipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
+>EPub, FictionBook, Mobipocket, Markdown, TXT ve OpenDocument Text için arka uç yapılandırma sayfalarını kullanarak belgeleri ilgili biçimlerde sunmak için yazı tipini tanımlayabilirsiniz. Bu sayfalardaki <guibutton
 >Seç…</guibutton
-> düğmesi, standart &kde; yazıtipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
+> düğmesi, standart &kde; yazı tipi yapılandırma penceresini açar. Ayrıntılar için <ulink url="help:/fundamentals/fonts.html"
 >&kde; Temelleri belgelendirmesine</ulink
 > başvurun. </para>
 	  <para
@@ -4181,7 +4181,7 @@ Context menu actions like Rename Bookmarks etc.)
 >SmartyPants</ulink
 > biçimlendirmesini işlemesine olanak tanır. Bu biçimlendirme türü teknik metinlerde sorun yaratabilir; çünkü istenmeyebilecek değişimler yapar (örneğin, <literal
 >(C)</literal
->’yi telif hakkı sembolüyle değiştirir). Bu seçenek öntanımlı olarak işaretlidir. </para>
+>’yi telif hakkı sembolüyle değiştirir). Bu seçenek varsayılan olarak işaretlidir. </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -4201,11 +4201,11 @@ Context menu actions like Rename Bookmarks etc.)
 		<varlistentry>
 		  <term>
 		    <guilabel
->Platform yazıtiplerini kullan</guilabel>
+>Platform yazı tiplerini kullan</guilabel>
 		  </term>
 		  <listitem>
 		    <para
->Bu seçenek Ghostscript’in platform yazıtiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazıtiplerinin kullanımına izin verilir. Bu seçenek öntanımlı olarak işaretlidir. </para>
+>Bu seçenek Ghostscript’in platform yazı tiplerini kullanmasına izin verilip verilmeyeceğini belirler; işaretlenmezse yalnızca belgeye gömülü yazı tiplerinin kullanımına izin verilir. Bu seçenek varsayılan olarak işaretlidir. </para>
 		  </listitem>
 		</varlistentry>
 	      </variablelist>
@@ -4325,7 +4325,7 @@ Context menu actions like Rename Bookmarks etc.)
 		      </screenshot>
 		    </para>
 		    <para
->İnce çizgiler öntanımlı olarak iyileştirilmezler (<guimenuitem
+>İnce çizgiler varsayılan olarak iyileştirilmezler (<guimenuitem
 >Hayır</guimenuitem
 > seçeneği). </para>
 		  </listitem>

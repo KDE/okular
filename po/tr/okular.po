@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kdegraphics-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-13 00:55+0000\n"
-"PO-Revision-Date: 2026-11-18 19:25+0300\n"
+"PO-Revision-Date: 2026-11-23 18:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -678,7 +678,7 @@ msgstr "Kaynak: %1"
 #: core/textdocumentsettings.cpp:34
 #, kde-format
 msgid "&Default Font:"
-msgstr "Ö&ntanımlı yazı tipi:"
+msgstr "&Varsayılan yazı tipi:"
 
 #: gui/certificatemodel.cpp:51
 #, kde-format
@@ -2995,7 +2995,7 @@ msgid ""
 "Use file information to determine whether to open in continuous mode by "
 "default"
 msgstr ""
-"Öntanımlı olarak sürdürülen kipte açmayı belirlemek için dosya bilgisini "
+"Varsayılan olarak sürdürülen kipte açmayı belirlemek için dosya bilgisini "
 "kullan"
 
 #: part/dlggeneral.cpp:236
@@ -3003,13 +3003,13 @@ msgstr ""
 msgctxt "@option:check Config dialog, general page"
 msgid "For files without file information, open in continuous mode by default"
 msgstr ""
-"Dosya bilgisi olmayan dosyalar için öntanımlı olarak sürdürülen kipte aç"
+"Dosya bilgisi olmayan dosyalar için varsayılan olarak sürdürülen kipte aç"
 
 #: part/dlggeneral.cpp:238
 #, kde-format
 msgctxt "@option:check Config dialog, general page"
 msgid "Open in continuous mode by default"
-msgstr "Öntanımlı olarak sürdürülen kipte aç"
+msgstr "Varsayılan olarak sürdürülen kipte aç"
 
 #: part/dlggeneral.cpp:246
 #, kde-format
@@ -3112,14 +3112,14 @@ msgid ""
 "Defines the default zoom mode for files which were never opened before. For "
 "files which were opened before the previous zoom is applied."
 msgstr ""
-"Daha önce açılmamış dosyalar için öntanımlı yakınlaştırma kipini tanımlar.\n"
+"Daha önce açılmamış dosyalar için varsayılan yakınlaştırma kipini tanımlar.\n"
 "Daha önce açılan dosyalara önceki yakınlaştırma oranı uygulanır."
 
 #: part/dlggeneral.cpp:313
 #, kde-format
 msgctxt "label:listbox Config dialog, general page, default zoom"
 msgid "Default zoom:"
-msgstr "Öntanımlı yakınlaştırma:"
+msgstr "Varsayılan yakınlaştırma:"
 
 #: part/dlgperformance.cpp:26
 #, kde-format
@@ -3143,7 +3143,7 @@ msgstr "Düşük"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, performance page, memory usage"
 msgid "Normal (default)"
-msgstr "Normal (öntanımlı)"
+msgstr "Normal (varsayılan)"
 
 #: part/dlgperformance.cpp:37
 #, kde-format
@@ -3432,7 +3432,7 @@ msgstr "Yukarı sil"
 #, kde-format
 msgctxt "@label:listbox Config dialog, presentation page, transitions"
 msgid "Default transition:"
-msgstr "Öntanımlı geçiş:"
+msgstr "Varsayılan geçiş:"
 
 #: part/dlgpresentation.cpp:130
 #, kde-format
@@ -3458,7 +3458,7 @@ msgstr "Geçerli ekran"
 #, kde-format
 msgctxt "@item:inlistbox Config dialog, presentation page, preferred screen"
 msgid "Default Screen"
-msgstr "Öntanımlı ekran"
+msgstr "Varsayılan ekran"
 
 #: part/dlgpresentation.cpp:178
 #, kde-format
@@ -5405,7 +5405,7 @@ msgid ""
 msgstr ""
 "Sunum kipinden çıkmanın iki yolu vardır; ESC düğmesine veya fareyi sağ üst "
 "köşeye götürdüğünüzde görünen çıkış düğmesine basabilirsiniz. Pencereler "
-"arasında da dolaşmak olanaklıdır (öntanımlı olarak Alt+Sekme)."
+"arasında da dolaşmak olanaklıdır (varsayılan olarak Alt+Sekme)."
 
 #: part/presentationwidget.cpp:1771
 #, kde-format
@@ -6001,12 +6001,12 @@ msgstr "Aşağı &Taşı"
 #: part/widgetdrawingtools.cpp:105
 #, kde-format
 msgid "Default Drawing Tool #%1"
-msgstr "Öntanımlı Çizim Aracı #%1"
+msgstr "Varsayılan Çizim Aracı #%1"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format
 msgid "There's already a tool with that name. Using a default one"
-msgstr "Bu ada sahip bir araç zaten var. Öntanımlı olan kullanılıyor"
+msgstr "Bu ada sahip bir araç zaten var. Varsayılan olan kullanılıyor"
 
 #: part/widgetdrawingtools.cpp:139 part/widgetdrawingtools.cpp:183
 #, kde-format

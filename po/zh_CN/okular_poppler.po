@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular_poppler.pot\n"
-"X-Crowdin-File-ID: 48902\n"
+"X-Crowdin-File: /kf6-stable/messages/okular/okular_poppler.pot\n"
+"X-Crowdin-File-ID: 51872\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -386,8 +386,7 @@ msgid "You need to restart Okular after changing the NSS directory settings"
 msgstr "更改 NSS 目录设置后，您需要重启 Okular"
 
 #: pdfsignatureutils.cpp:268 pdfsignatureutils.cpp:308
-#, fuzzy, kde-format
-#| msgid "Enter password to open: %1"
+#, kde-format
 msgctxt ""
 "%1 is the thing to open (hardware or software token, certificate DB,...)"
 msgid "Enter password to open: %1"

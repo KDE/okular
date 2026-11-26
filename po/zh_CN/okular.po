@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/okular/okular.pot\n"
-"X-Crowdin-File-ID: 48904\n"
+"X-Crowdin-File: /kf6-stable/messages/okular/okular.pot\n"
+"X-Crowdin-File-ID: 50804\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -561,7 +561,7 @@ msgstr "HTML"
 #: core/generator.cpp:798
 #, kde-format
 msgid "&Image"
-msgstr ""
+msgstr "图像(&I)"
 
 #: core/printoptionswidget.cpp:19
 #, kde-format
@@ -600,6 +600,7 @@ msgid ""
 "Signing certificate not found. If you are using a smartcard, it might have "
 "been removed or the signature store changed"
 msgstr ""
+"没有找到签名证书。如果您正在使用智能卡，它可能已被移除或其签名存储已被更改"
 
 #: core/signatureutils.cpp:525
 #, kde-format
@@ -641,7 +642,7 @@ msgctxt ""
 "Unlikely error; user can choose a signature/key-combo and everything "
 "possible should be valid combinations"
 msgid "Unsupported signature type for current certificate"
-msgstr ""
+msgstr "当前证书不支持的签名类型"
 
 #: core/signatureutils.cpp:537
 #, kde-format
@@ -2741,7 +2742,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check Config dialog, annotations page"
 msgid "Prefill new annotations with the selected text."
-msgstr ""
+msgstr "用选中的文本预填新批注。"
 
 #: part/dlgannotations.cpp:56
 #, kde-format
@@ -3018,13 +3019,13 @@ msgstr "上一页/下一页按钮重叠区域："
 #, kde-format
 msgctxt "@info:tooltip Config dialog, general page"
 msgid "Defines the vertical spacing between pages in continuous mode."
-msgstr ""
+msgstr "定义连续翻页模式下页面之间的垂直间距。"
 
 #: part/dlggeneral.cpp:295
 #, kde-format
 msgctxt "@label:spinbox Config dialog, general page"
 msgid "Vertical page spacing:"
-msgstr ""
+msgstr "垂直页面间距："
 
 #: part/dlggeneral.cpp:300
 #, kde-format
@@ -3575,91 +3576,81 @@ msgid "&Open…"
 msgstr "打开(&O)…"
 
 #: part/exportimagedialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "PGP"
+#, kde-format
 msgid "PNG"
-msgstr "PGP"
+msgstr "PNG"
 
 #: part/exportimagedialog.cpp:44
 #, kde-format
 msgid "Output path:"
-msgstr ""
+msgstr "输出路径："
 
 #: part/exportimagedialog.cpp:48
 #, kde-format
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #: part/exportimagedialog.cpp:50
 #, kde-format
 msgid ""
 "The images would be exported in a subfolder in this path of the same name as "
 "the file"
-msgstr ""
+msgstr "图像将导出到此路径下与文件同名的子文件夹中。"
 
 #: part/exportimagedialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export range"
-msgstr "导出为(&X)"
+msgstr "导出范围"
 
 #: part/exportimagedialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "E&xport As"
+#, kde-format
 msgid "Export all"
-msgstr "导出为(&X)"
+msgstr "导出全部"
 
 #: part/exportimagedialog.cpp:59
-#, fuzzy, kde-format
-#| msgid "Pages"
+#, kde-format
 msgid "Pages from"
-msgstr "页数"
+msgstr "页面范围从"
 
 #: part/exportimagedialog.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "stop the movie playback"
-#| msgid "Stop"
+#, kde-format
 msgid "to"
-msgstr "停止"
+msgstr "到"
 
 #: part/exportimagedialog.cpp:111
-#, fuzzy, kde-format
-#| msgid "Export…"
+#, kde-format
 msgid "Export"
-msgstr "导出…"
+msgstr "导出"
 
 #: part/exportimagedialog.cpp:130
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Export Image"
-msgstr "忘记图像"
+msgstr "导出图像"
 
 #: part/exportimagedialog.cpp:225
-#, fuzzy, kde-format
-#| msgid "Could not save file %1."
+#, kde-format
 msgid "Failed to save a file %1"
-msgstr "无法保存文件 %1。"
+msgstr "保存文件失败 %1"
 
 #: part/exportimagedialog.cpp:225 part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed"
-msgstr ""
+msgstr "已失败"
 
 #: part/exportimagedialog.cpp:252
 #, kde-format
 msgid "Failed creating folder to save images to: %1"
-msgstr ""
+msgstr "创建用于保存图像的文件夹失败：%1"
 
 #: part/exportimagedialog.cpp:255
-#, fuzzy, kde-format
-#| msgid "Forget image"
+#, kde-format
 msgid "Exporting images"
-msgstr "忘记图像"
+msgstr "导出图像"
 
 #: part/exportimagedialog.cpp:255
 #, kde-format
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: part/fileprinterpreview.cpp:113
 #, kde-format
@@ -5046,7 +5037,7 @@ msgstr "朗读"
 #: part/part.cpp:3596
 #, kde-format
 msgid "Invalid options have been received."
-msgstr ""
+msgstr "接收到无效的选项。"
 
 #: part/part.cpp:3670
 #, kde-format
@@ -5653,10 +5644,9 @@ msgstr "最近背景："
 
 #. i18n: ectx: property (text), widget (QLabel, signatureTypeLabel)
 #: part/selectcertificatedialog.ui:152
-#, fuzzy, kde-format
-#| msgid "Signature Type: %1"
+#, kde-format
 msgid "Signature Type"
-msgstr "签名类型：%1"
+msgstr "签名类型"
 
 #: part/side_reviews.cpp:64
 #, kde-format
@@ -5703,33 +5693,31 @@ msgctxt ""
 "This string is describing a default entry that generally shouldn't be shown "
 "to the user. To a point where it would be a coding bug somewhere to have it"
 msgid "NONE"
-msgstr ""
+msgstr "无"
 
 #: part/signaturepartutils.cpp:59
-#, fuzzy, kde-format
-#| msgctxt "Digital signature type"
-#| msgid "Adobe PKCS7 Sha1"
+#, kde-format
 msgctxt "Signature type"
 msgid "Adobe PKCS7 signature"
-msgstr "Adobe PKCS7 SHA1"
+msgstr "Adobe PKCS7 签名"
 
 #: part/signaturepartutils.cpp:61
 #, kde-format
 msgctxt "Signature type"
 msgid "Basic eIDAS signature"
-msgstr ""
+msgstr "基本 eIDAS 签名"
 
 #: part/signaturepartutils.cpp:63
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp"
-msgstr ""
+msgstr "带时间戳的 eIDAS 签名"
 
 #: part/signaturepartutils.cpp:65
 #, kde-format
 msgctxt "Signature type"
 msgid "eIDAS signature with timestamp for long term validation"
-msgstr ""
+msgstr "带时间戳的 eIDAS 签名，用于长期验证"
 
 #: part/signaturepartutils.cpp:67
 #, kde-format
@@ -5737,7 +5725,7 @@ msgctxt "Signature type"
 msgid ""
 "eIDAS signature with timestamp for long term validation and support for re-"
 "validation"
-msgstr ""
+msgstr "带有时间戳的 eIDAS 签名，用于长期验证，支持重新验证"
 
 #: part/signaturepartutils.cpp:222
 #, kde-format
@@ -6166,20 +6154,3 @@ msgstr "忘记所有"
 #, kde-format
 msgid "Hide welcome screen"
 msgstr "隐藏欢迎屏幕"
-
-#~ msgctxt "@info"
-#~ msgid ""
-#~ "A signature of this size may be too small to read. If you would like to "
-#~ "create a potentially more readable signature, press <interface>Start "
-#~ "over</interface> and draw a bigger rectangle."
-#~ msgstr ""
-#~ "签名的尺寸可能太小，难以阅读。如果您想要创建一个更易阅读的签名，请点击 "
-#~ "<interface>重新绘制</interface> 按钮，然后绘制一个更大的矩形。"
-
-#~ msgctxt "@action:button"
-#~ msgid "Start Over"
-#~ msgstr "从头开始"
-
-#~ msgctxt "@action:button"
-#~ msgid "Sign"
-#~ msgstr "签名"

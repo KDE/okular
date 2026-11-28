@@ -54,7 +54,7 @@
   <name xml:lang="sv">Okular</name>
   <name xml:lang="ta">ஆக்குலர்</name>
   <name xml:lang="tr">Okular</name>
-  <name xml:lang="ug">Okular پۈتۈك كۆرگۈچ</name>
+  <name xml:lang="ug">Okular</name>
   <name xml:lang="uk">Okular</name>
   <name xml:lang="vi">Okular</name>
   <name xml:lang="zh-CN">Okular 文档查看器</name>
@@ -100,6 +100,7 @@
   <summary xml:lang="sv">Visa och kommentera dokument</summary>
   <summary xml:lang="ta">ஆவணங்களைப் பாரத்து குறிப்பிடலாம்</summary>
   <summary xml:lang="tr">Belgeler görüntüleyin ve onlara not ekleyin</summary>
+  <summary xml:lang="ug">پۈتۈكنى كۆرسىتىپ ۋە ئىزاھلايدۇ</summary>
   <summary xml:lang="uk">Перегляд і анотування документів</summary>
   <summary xml:lang="zh-CN">查看和批注文档</summary>
   <summary xml:lang="zh-TW">檢視或註記文件</summary>
@@ -134,6 +135,7 @@
     <p xml:lang="sr-ijekavianlatin">Okular je univerzalni prikazivač dokumenata, koji razvija KDE. Radi na većem broju platformi, uključujući Linux, Windows, MacOS, BSD‑ove, itd.</p>
     <p xml:lang="sv">Okular är en universell dokumentvisare utvecklad av KDE. Okular fungerar på flera plattformar, inklusive men inte begränsat till Linux, Windows, macOS, *BSD, etc.</p>
     <p xml:lang="tr">Okular, KDE tarafından geliştirilen çok amaçlı bir belge görüntüleyicisidir. Okular; Linux, Windows, macOS, *BSD, vb. dahil; ancak bunlarla sınırlı olmayan birden çok platformda çalışır.</p>
+    <p xml:lang="ug">Okular پىروگراممىسى KDE ئىجاد قىلغان ھەممىباب پۈتۈك ئوقۇغۇچ. Okular كۆپ سۇپىدا ئىشلەيدۇ، ئۇلار Linux، Windows، macOS، *BSD قاتارلىقلار بار.</p>
     <p xml:lang="uk">Okular є універсальною програмою для перегляду документів, розробленою KDE. Okular може працювати на багатьох програмних платформах, зокрема Linux, Windows, macOS, *BSD тощо.</p>
     <p xml:lang="zh-CN">Okular 是一款由 KDE 开发的通用文档查看器。它支持在多种平台上运行，包括且不限于 Linux、Windows、macOS、* BSD 等。</p>
     <p xml:lang="zh-TW">Okular 是一款由 KDE 開發的通用文件檢視器。Okular 能在多個平台上運作，包含但不限於 Linux、Windows、macOS 以及各種 BSD 等。</p>
@@ -232,6 +234,7 @@
       <li xml:lang="sv">Format som stöds: PDF, PS, Tiff, DjVu, bilder, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
       <li xml:lang="ta">ஆதரிக்கப்படும் கோப்பு வகைகள்: PDF, PS, Tiff, DjVu, படங்கள், DVI, XPS, Fiction Book, வரைகதை புத்தகம், Plucker, EPub, Fax</li>
       <li xml:lang="tr">Desteklenen biçimler: PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
+      <li xml:lang="ug">قوللايدىغان پىچىم: PDF، PS، Tiff، DjVu، Images، DVI، XPS، Fiction Book، Comic Book، Plucker، EPub، Fax</li>
       <li xml:lang="uk">Підтримувані формати: PDF, PS, Tiff, DjVu, зображення, DVI, XPS, Fiction Book, комікси, Plucker, EPub, факси.</li>
       <li xml:lang="zh-CN">支持的格式：PDF、PS、TIFF、DjVu、图像、DVI、XPS、ODT、FictionBook (FB*)、Comic Book (CB*)、Plucker、EPub、传真</li>
       <li xml:lang="zh-TW">支援的檔案格式：PDF, PS, Tiff, DjVu, Images, DVI, XPS, Fiction Book, Comic Book, Plucker, EPub, Fax</li>
@@ -284,6 +287,7 @@
       <li xml:lang="sv">Sidorad med innehåll, miniatyrbilder, granskningar och bokmärken</li>
       <li xml:lang="ta">பொருளடக்கம், சிறுபடங்கள், குறிப்புகள், மற்றும் நினைவுக்குறிகளை காட்டும் ஓரப்பட்டை</li>
       <li xml:lang="tr">İçindekiler, küçük görseller, incelemeler ve yer imleri bulunan kenar çubuğu</li>
+      <li xml:lang="ug">يان بالداقتا مەزمۇن، كىچىك سۈرەت، ئىزاھ ۋە خەتكۈشنى كۆرسىتەلەيدۇ</li>
       <li xml:lang="uk">Бічні панелі зі списками змісту, мініатюрами сторінок, можливість рецензування та додавання закладок.</li>
       <li xml:lang="vi">Thanh bên với mục lục, hình nhỏ, nhận xét và dấu nhớ</li>
       <li xml:lang="zh-CN">侧栏可以显示目录、页面缩略图、批注和书签</li>
@@ -337,6 +341,7 @@
       <li xml:lang="sv">Stöd för kommentarer</li>
       <li xml:lang="ta">குறிப்புகளை ஆதரிக்கும்</li>
       <li xml:lang="tr">Ek açıklamalar desteği</li>
+      <li xml:lang="ug">ئىزاھ قوللاش</li>
       <li xml:lang="uk">Підтримка анотування.</li>
       <li xml:lang="vi">Hỗ trợ chú dẫn</li>
       <li xml:lang="zh-CN">支持批注功能</li>
@@ -394,6 +399,7 @@
       <caption xml:lang="sv">Läsa handbok i Okular</caption>
       <caption xml:lang="ta">ஆக்குலரில் ஓர் கையேடை படித்தல்</caption>
       <caption xml:lang="tr">Okular ile belgelendirme okuma</caption>
+      <caption xml:lang="ug">Okular دا قوللانما ئوقۇش</caption>
       <caption xml:lang="uk">Читання підручника в Okular</caption>
       <caption xml:lang="vi">Đọc sổ tay trong Okular</caption>
       <caption xml:lang="zh-CN">使用 Okular 阅读产品说明书</caption>

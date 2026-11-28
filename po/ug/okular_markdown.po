@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-11 00:59+0000\n"
-"PO-Revision-Date: 2026-09-23 06:56+0900\n"
+"PO-Revision-Date: 2026-11-25 09:17-0500\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.9\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.10\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,12 +31,12 @@ msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 #: converter.cpp:60 converter.cpp:96 converter.cpp:105
 #, kde-format
 msgid "Failed to open the document"
-msgstr ""
+msgstr "پۈتۈكنى ئاچالمىدى"
 
 #: converter.cpp:119 converter.cpp:137
 #, kde-format
 msgid "Failed to compile the Markdown document."
-msgstr ""
+msgstr "Markdown پۈتۈكنى ھاسىللىيالمىدى."
 
 #: generator_md.cpp:58
 #, kde-format
@@ -46,9 +46,9 @@ msgstr "SmartyPants پىچىمىنى قوزغات"
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #: generator_md.cpp:60
 #, kde-format
 msgid "Markdown Backend Configuration"
-msgstr ""
+msgstr "Markdown ئارقا ئۇچ سەپلىمىسى"

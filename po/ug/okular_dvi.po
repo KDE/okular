@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: okular_dvi\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 15:58+0000\n"
-"PO-Revision-Date: 2026-09-23 06:56+0900\n"
+"PO-Revision-Date: 2026-11-25 09:16-0500\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -37,6 +37,10 @@ msgid ""
 "functionality that you require is therefore unavailable in this version of "
 "Okular.</qt>"
 msgstr ""
+"<qt>بۇ DVI ھۆججەت غەيرى PostScript پىچىمىدىكى سىرتقى گىرافىكنى نەقىل ئالغان، "
+"بۇ نەشرىدىكى Okular مەزكۇر پىچىمنى قوللىمايدۇ، چۈنكى Okular ئىچكى قىسىمدا "
+"بېسىش ياكى PostScript پىچىمىقا چىقىرىشقا  ئىشلىتىدىغان <em>dvips</em> "
+"پىروگراممىسى مەزكۇر پىچىمنى بىر تەرەپ قىلالمايدۇ.</qt>"
 
 #: dviexport.cpp:137
 #, kde-format
@@ -46,6 +50,10 @@ msgid ""
 "perplexed system administrator: Okular uses the PATH environment variable "
 "when looking for programs.</p></qt>"
 msgstr ""
+"<qt><p>Okular كومپيۇتېرىڭىزدىن <em>dvips</em> نى تاپالمىدى، بۇ پىروگرامما "
+"چىقىرىش ئىقتىدارىنىڭ ئىشلىشى ئۈچۈن زۆرۈر.</p><p>بولۇپمۇ سىستېما باشقۇرغۇچىغا "
+"تەييارلانغان دوستانە ئەسكەرتىش: Okular پىروگراممىسى PATH مۇھىم ئۆزگەرگۈچىسى "
+"ئارقىلىق پىروگراممىنى ئىزدەيدۇ.</p></qt>"
 
 #: dviexport.cpp:231
 #, kde-format
@@ -55,6 +63,9 @@ msgid ""
 "dialog</strong> which you will find in the File-Menu for a precise error "
 "report.</qt>"
 msgstr ""
+"<qt>ھۆججەت چىقىرىشقا ئىشلىتىدىغان سىرتقى پىروگرامما «dvips» بىر خاتالىقنى "
+"مەلۇم قىلدى. تىزىملىك بالداقتىكى ھۆججەت تىزىملىكىدىن <strong>پۈتۈك ئۇچۇرى "
+"سۆزلەشكۈ</strong> نى ئېچىپ، تەپسىلىي خاتالىق دوكلاتىنى كۆرەلەيسىز.</qt>"
 
 #: dviFile.cpp:91
 #, kde-format
@@ -68,12 +79,17 @@ msgid ""
 "Hint: If you use the typesetting system Omega, you have to use a special "
 "program, such as oxdvi."
 msgstr ""
+"بۇ DVI ھۆججەت مەزكۇر پىروگراممىغا نىسبەتەن خاتا نەشرىدىكى DVI چىقىرىش نەشرى "
+"بار. ئەسكەرتىش: ئەگەر Omega بەتچىلىك سىستېمىسىنى ئىشلىتىۋاتقان بولسىڭىز، بۇ "
+"پۈتۈكنى oxdvi غا ئوخشاش ئالاھىدە پىروگراممىدا ئېچىشىڭىز كېرەك."
 
 #: dviFile.cpp:134
 #, kde-format
 msgid ""
 "The DVI file is badly corrupted. Okular was not able to find the postamble."
 msgstr ""
+"بۇ DVI ھۆججەت ئېغىر دەرىجىدە بۇزۇلغان. Okular ئۇنىڭ ئاخىرى يەنى ئارقا ماس "
+"كېلىش كودىنى تاپالمىدى."
 
 #: dviFile.cpp:148
 #, kde-format
@@ -105,6 +121,16 @@ msgid ""
 "strong> from the command line to check if it really works.</p><p><em>PATH:</"
 "em> %2</p></qt>"
 msgstr ""
+"<qt><p>سىرتقى پىروگرامما <strong>pdf2ps</strong> نى قوزغىتالمايدۇ. بۇ PDF "
+"ھۆججەت %1 نى PostScript پىچىمىغا ئايلاندۇرالمايدۇ. پۈتۈكتىكى بەزى گىرافىك "
+"ئېلېمېنتنى كۆرسەتمەيدۇ.</p><p><b>مۇمكىن بولغان سەۋەب:</b>بۇ سىستېمىغا "
+"<strong>pdf2ps</strong> ئورنىتىلمىغان بولۇشى مۇمكىن ياكى نۆۋەتتىكى "
+"پىروگرامما ئىزدەش يولىدا ئۇنى تاپالمىدى.</p><p><b>ھەل قىلىش ئۇسۇلى:</"
+"b><strong>pdf2ps</strong> پىروگراممىسى ghostscript PostScript كود يەشكۈچ "
+"بىلەن بىللە تارقىتىلىدۇ. ئەگەر سىستېمىڭىزغا ghostscript ئورنىتىلمىغان بولسا، "
+"ھازىر ئۇنى ئورنىتىڭ. ئەگەر سىستېمىڭىزغا ghostscript ئورنىتىلغان بولسا، "
+"بۇيرۇق قۇرىدا <strong>pdf2ps</strong> پىروگراممىنى ئىجرا قىلىشنى سىناپ، "
+"ئادەتتىكىدەك ئىشلەمدۇ يوق تەكشۈرۈڭ.</p><p><em>PATH:</em> %2</p></qt>"
 
 #: dviFile.cpp:415
 #, kde-format
@@ -115,16 +141,21 @@ msgid ""
 "This is the output of the <strong>pdf2ps</strong> program that Okular used:</"
 "p><p><strong>%2</strong></p></qt>"
 msgstr ""
+"<qt><p>بۇ PDF ھۆججەت %1 نى PostScript پىچىمىغا ئايلاندۇرالمايدۇ. پۈتۈكتىكى "
+"بەزى گىرافىك ئېلېمېنت كۆرسىتىلمەيدۇ.</p><p><b>مۇمكىن بولغان سەۋەب:</b>%1 "
+"ھۆججەت بۇزۇلغان بولۇشى مۇمكىن ياكى PDF ھۆججەت بولماسلىقىمۇ مۇمكىن. بۇ Okular "
+"نىڭ <strong>pdf2ps</strong> نى چاقىرغاندىكى چىقىرىشى:</p><p><strong>%2</"
+"strong></p></qt>"
 
 #: dviRenderer.cpp:203 dviRenderer.cpp:435
 #, kde-format
 msgid "File corruption. %1"
-msgstr ""
+msgstr "ھۆججەت بۇزۇلغان. %1"
 
 #: dviRenderer.cpp:326
 #, kde-format
 msgid "Not all PostScript files could be embedded into your document. %1"
-msgstr ""
+msgstr "ھەممە PostScript ھۆججەتنى پۈتۈككە سىڭدۈرگىلى بولۇشى ناتايىن. %1"
 
 #: dviRenderer.cpp:329
 #, kde-format
@@ -143,6 +174,9 @@ msgid ""
 "to line %1 in the TeX-file %2. It seems, however, that the DVI file does not "
 "contain the necessary source file information. "
 msgstr ""
+"سىز Okular دىن DVI ھۆججەتتىكى TeX ھۆججەت %2 نىڭ %1-قۇرىغا ئورۇن بەلگىلەشنى "
+"ئىلتىماس قىلدىڭىز. بىراق، مەزكۇر DVI ھۆججەتتە زۆرۈر بولغان مەنبە ھۆججەت "
+"ئۇچۇرى كەم. "
 
 #: dviRenderer.cpp:604
 #, kde-format
@@ -180,7 +214,7 @@ msgstr "DVI كودى ئىشلەتكەن خەت نۇسخىسى ئالدىن ئې�
 #: dviRenderer_draw.cpp:514 dviRenderer_prescan.cpp:802
 #, kde-format
 msgid "The DVI file contains an invalid special command."
-msgstr ""
+msgstr "بۇ DVI ھۆججەتتە ئىناۋەتسىز ئالاھىدە بۇيرۇق بار."
 
 #: dviRenderer_draw.cpp:542
 #, kde-format
@@ -224,6 +258,9 @@ msgid ""
 "to display the current DVI file. Your document might be unreadable.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
+"<qt><p>Okular نۆۋەتتىكى DVI ھۆججەتنى كۆرسىتىشكە زۆرۈر بولغان ھەممە خەت نۇسخا "
+"ھۆججىتىنى تاپالمىدى. بۇ پۈتۈكنى ئوقۇغۇدەك كۆرسىتەلمەسلىكى مۇمكىن.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:273
 #, kde-format
@@ -234,6 +271,11 @@ msgid ""
 "your system, or it cannot be found in the current search path.</"
 "p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 msgstr ""
+"<qt><p><em>kpsewhich</em> نى ئىجرا قىلىۋاتقاندا مەسىلە كۆرۈلدى. بەزى خەت "
+"نۇسخىسىنىڭ ئورنىنى بەلگىلىيەلمىدى، پۈتۈكنى ئوقۇغىلى بولماسلىقى مۇمكىن.<br/"
+">مۇمكىن بولغان سەۋەب: مەزكۇر سىستېمىغا <em>kpsewhich</em> پىروگراممىسى "
+"ئورنىتىلمىغان بولۇشى مۇمكىن ياكى ئۇنى نۆۋەتتىكى ئىزدەش يولىدىن تاپالمىدى.</"
+"p><p><small><b>PATH:</b> %1</small></p><p><small>%2</small></p></qt>"
 
 #: fontpool.cpp:294
 #, kde-format
@@ -242,6 +284,9 @@ msgid ""
 "error %2). As a result, some font files could not be located, and your "
 "document might be unreadable.</qt>"
 msgstr ""
+"<qt><em>kpsewhich</em> تەمىنلىگەن خەت نۇسخا ھاسىللاش مەشغۇلاتى توختىتىلدى "
+"(چېكىنىش كودى: %1، خاتالىق %2). شۇڭا بەزى خەت نۇسخىلىرىنىڭ ئورنىنى "
+"بەلگىلىيەلمىدى، پۈتۈكنى ئوقۇغىلى بولماسلىقى مۇمكىن.</qt>"
 
 #: fontpool.cpp:471
 #, kde-format
@@ -265,11 +310,16 @@ msgid ""
 "any of the Ghostview device drivers that are known to Okular. PostScript "
 "support has therefore been turned off in Okular."
 msgstr ""
+"بۇ كومپيۇتېرغا ئورنىتىلغان Ghostview نەشرىدە Okular قوللايدىغان ھېچقانداق "
+"Ghostview ئۈسكۈنە قوزغاتقۇ ئورنىتىلمىغان. شۇ سەۋەبتىن Okular دا PostScript "
+"قوللاش تاقالدى."
 
 #: special.cpp:36
 #, kde-format
 msgid "That makes 25 errors. Further error messages will not be printed."
 msgstr ""
+"25 خاتالىق يۈز بەردى. پىروگرامما تېخىمۇ كۆپ خاتالىق ئۇچۇرىنى بېسىپ "
+"چىقارمايدۇ."
 
 #: special.cpp:232
 #, kde-format
@@ -277,6 +327,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Color pop command issued when the color "
 "stack is empty."
 msgstr ""
+"«%1» DVI ھۆججەتنىڭ %2-بېتىدە خاتالىق بار. رەڭ دەستىسى بوش بولغاندا رەڭ "
+"قاڭقىش خاتالىقى كۆرۈلىدۇ."
 
 #: special.cpp:318
 #, kde-format
@@ -284,6 +336,8 @@ msgid ""
 "Malformed parameter in the epsf special command.\n"
 "Expected a float to follow %1 in %2"
 msgstr ""
+"epsf ئالاھىدە بۇيرۇقىنىڭ ئۆزگەرگۈچىسىدە خاتالىق بار.\n"
+"%2 دىكى %1 دىن كېيىن كەسىر سان كېلىشى كېرەك"
 
 #: special.cpp:446
 #, kde-format
@@ -291,6 +345,8 @@ msgid ""
 "File not found: \n"
 " %1"
 msgstr ""
+"ھۆججەت تېپىلمىدى:\n"
+"%1"
 
 #: special.cpp:695
 #, kde-format
@@ -298,6 +354,8 @@ msgid ""
 "Error in DVIfile '%1', page %2. Could not interpret angle in text rotation "
 "special."
 msgstr ""
+"«%1» DVI ھۆججەتنىڭ %2-بېتىدە خاتالىق بار. تېكىستنى ئايلاندۇرىدىغان ئالاھىدە "
+"بۇيرۇقنىڭ بۇلۇڭىنى يېشەلمىدى."
 
 #: special.cpp:714
 #, kde-format
@@ -375,7 +433,7 @@ msgstr "%2 ھۆججىتىدىكى %1 ھەرپ بەك چوڭ"
 #: TeXFont_PK.cpp:590 TeXFont_PK.cpp:680
 #, kde-format
 msgid "Wrong number of bits stored:  char. %1, font %2"
-msgstr ""
+msgstr "ھەرپنىڭ خانە سانى خاتا ساقلانغان: ھەرپ %1، خەت نۇسخا %2"
 
 #: TeXFont_PK.cpp:593 TeXFont_PK.cpp:683
 #, kde-format
@@ -423,6 +481,16 @@ msgid ""
 "found a bug, or that Okular should behave better in this situation\n"
 "please report the problem."
 msgstr ""
+"\n"
+"\n"
+"بەلكىم سىز Okular دىكى بىر كەمتۈكلۈكنى بايقىغان بولۇشىڭىز مۇمكىن،\n"
+"مەزكۇر DVI ھۆججەت ياكى ياردەمچى ھۆججەت (مەسىلەن، خەت نۇسخا ھۆججەت،\n"
+" مەۋھۇم خەت نۇسخا ھۆججەتكە ئوخشاش) ئېغىر بۇزۇلغان بولۇشى مۇمكىن.\n"
+"Okular بۇ ئۇچۇر يېپىلغاندىن كېيىن چېكىنىدۇ.\n"
+"ئەگەر بۇ Okular نىڭ بىر كەمتۈكلۈكى دەپ قارىسىڭىز،\n"
+"ياكى Okular بۇ خىل ئەھۋالدىكى مەشغۇلات ئۇسۇلىنى ئۆزگەرتىشى كېرەك دەپ "
+"قارىسىڭىز،\n"
+"مەسىلىنى مەلۇم قىلىڭ."
 
 #: vf.cpp:165
 #, kde-format
